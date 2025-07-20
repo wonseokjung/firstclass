@@ -1,46 +1,98 @@
-# Getting Started with Create React App
+# FirstClass - AI Education Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+FirstClass는 MasterClass에서 영감을 받은 AI 교육 플랫폼입니다. 모든 사람에게 양질의 AI 교육 기회를 제공하는 것이 목표입니다.
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+- **MasterClass-inspired Design**: 다크 테마와 세련된 UI
+- **Multiple Course Categories**: Basic/Free Courses, ChatGPT Mastery, Google AI Expert, Business Strategy, AI Documentaries
+- **Responsive Design**: 데스크톱, 태블릿, 모바일 최적화
+- **Interactive Learning**: 퀴즈, 진도 추적, 비디오 강의
+- **SEO Optimized**: 검색 엔진 최적화 및 접근성 개선
 
-### `npm start`
+## 🎯 Course Categories
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Basic/Free Courses
+- Google AI 완전정복
+- AI 비즈니스 전략
+- ChatGPT의 정석
+- AI 교육의 격차들 (다큐멘터리)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Specialized Categories
+- **ChatGPT Mastery**: ChatGPT 전문 활용법
+- **Google AI Expert**: Google AI 도구 마스터하기
+- **Business Strategy**: AI를 활용한 비즈니스 전략
+- **AI Documentaries**: AI 교육 관련 다큐멘터리
 
-### `npm test`
+## 🛠 Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Frontend**: React 18, TypeScript
+- **Styling**: CSS3, CSS Variables
+- **Icons**: Lucide React
+- **Routing**: React Router
+- **Build Tool**: Create React App
 
-### `npm run build`
+## 📦 Getting Started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prerequisites
+- Node.js 16+ 
+- npm or yarn
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+# Clone the repository
+git clone https://github.com/wonseokjung/firstclass.git
 
-### `npm run eject`
+# Navigate to project directory
+cd firstclass
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# Install dependencies
+npm install
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Start development server
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The app will open at [http://localhost:3000](http://localhost:3000)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 🏗 Available Scripts
 
-## Learn More
+- `npm start` - Development server
+- `npm test` - Run tests
+- `npm run build` - Production build
+- `npm run eject` - Eject from Create React App
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📱 Responsive Breakpoints
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Desktop**: 4-column grid
+- **Tablet** (≤1024px): 3-column grid
+- **Small Tablet** (≤768px): 2-column grid
+- **Mobile** (≤480px): 1-column grid
+
+## 🎨 Design System
+
+- **Primary Color**: #cf2b4a (FirstClass Red)
+- **Background**: #000 (Pure Black)
+- **Card Aspect Ratio**: 2:3 (Vertical)
+- **Typography**: Inter Font Family
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 👥 Team
+
+Created by Connect AI LAB for democratizing AI education.
+
+---
+
+**FirstClass** - Empowering everyone with AI education 🚀
