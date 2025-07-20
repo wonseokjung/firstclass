@@ -126,8 +126,8 @@ const documentaryClasses: Course[] = [
   }
 ];
 
-// 코딩 전문 코스 (현재 비어있음)
-const codingClasses: Course[] = [];
+// 코딩 전문 코스 (현재 비어있음) - 향후 사용 예정
+// const codingClasses: Course[] = [];
 
 interface MainPageProps {
   onCourseSelect: (courseId: number) => void;
