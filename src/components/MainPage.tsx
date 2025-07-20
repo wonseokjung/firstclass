@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Play, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 
@@ -135,10 +135,53 @@ interface MainPageProps {
 }
 
 const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) => {
+  const gridRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [focusedGrid, setFocusedGrid] = React.useState(0);
+
   const handleCourseClick = (course: Course) => {
     // 모든 코스는 onCourseSelect로 처리 (다큐멘터리도 포함)
     onCourseSelect(course.id);
   };
+
+  // 방향키 핸들러
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        
+        const currentGrid = gridRefs.current[focusedGrid];
+        if (!currentGrid) return;
+
+        const scrollAmount = 260; // 카드 너비 + 간격
+        
+        if (event.key === 'ArrowLeft') {
+          currentGrid.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        } else if (event.key === 'ArrowRight') {
+          currentGrid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+      } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        event.preventDefault();
+        
+        const maxGrids = gridRefs.current.length;
+        if (event.key === 'ArrowUp' && focusedGrid > 0) {
+          setFocusedGrid(focusedGrid - 1);
+        } else if (event.key === 'ArrowDown' && focusedGrid < maxGrids - 1) {
+          setFocusedGrid(focusedGrid + 1);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [focusedGrid]);
+
+  // 그리드에 포커스 표시
+  useEffect(() => {
+    const currentGrid = gridRefs.current[focusedGrid];
+    if (currentGrid) {
+      currentGrid.focus();
+    }
+  }, [focusedGrid]);
 
   return (
     <div className="masterclass-container">
@@ -206,7 +249,12 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
             </div>
           </div>
           
-          <div className="masterclass-grid">
+          <div 
+            className="masterclass-grid"
+            ref={(el) => { gridRefs.current[0] = el; }}
+            tabIndex={0}
+            data-grid-index={0}
+          >
             {aiMasterClasses.map((course) => (
               <div key={course.id} className="masterclass-card">
                 <div className="card-image-container">
@@ -261,7 +309,12 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
             </div>
           </div>
           
-          <div className="masterclass-grid">
+          <div 
+            className="masterclass-grid"
+            ref={(el) => { gridRefs.current[1] = el; }}
+            tabIndex={0}
+            data-grid-index={1}
+          >
             {chatGPTClasses.map((course) => (
               <div key={course.id} className="masterclass-card">
                 <div className="card-image-container">
@@ -316,7 +369,12 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
             </div>
           </div>
           
-          <div className="masterclass-grid">
+          <div 
+            className="masterclass-grid"
+            ref={(el) => { gridRefs.current[2] = el; }}
+            tabIndex={0}
+            data-grid-index={2}
+          >
             {googleAIClasses.map((course) => (
               <div key={course.id} className="masterclass-card">
                 <div className="card-image-container">
@@ -371,7 +429,12 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
             </div>
           </div>
           
-          <div className="masterclass-grid">
+          <div 
+            className="masterclass-grid"
+            ref={(el) => { gridRefs.current[3] = el; }}
+            tabIndex={0}
+            data-grid-index={3}
+          >
             {businessClasses.map((course) => (
               <div key={course.id} className="masterclass-card">
                 <div className="card-image-container">
@@ -426,7 +489,12 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
             </div>
           </div>
           
-          <div className="masterclass-grid">
+          <div 
+            className="masterclass-grid"
+            ref={(el) => { gridRefs.current[4] = el; }}
+            tabIndex={0}
+            data-grid-index={4}
+          >
             {documentaryClasses.map((course) => (
               <div key={course.id} className="masterclass-card">
                 <div className="card-image-container">
