@@ -256,7 +256,7 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
             data-grid-index={0}
           >
             {aiMasterClasses.map((course) => (
-              <div key={course.id} className="masterclass-card">
+              <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>
                 <div className="card-image-container">
                   <OptimizedImage 
                     src={course.image} 
@@ -269,10 +269,13 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
                   <div className="card-overlay">
                     <button 
                       className="watch-trailer-btn"
-                      onClick={() => handleCourseClick(course)}
+                      onClick={(e) => {
+                        e.stopPropagation(); // 이벤트 버블링 방지
+                        handleCourseClick(course);
+                      }}
                     >
                       <Play size={16} />
-                      {course.isDocumentary ? 'Watch Documentary' : 'Watch Trailer'}
+                      {course.isDocumentary ? 'Watch Documentary' : 'Watch Course'}
                     </button>
                   </div>
                 </div>
@@ -316,7 +319,7 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
             data-grid-index={1}
           >
             {chatGPTClasses.map((course) => (
-              <div key={course.id} className="masterclass-card">
+              <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>
                 <div className="card-image-container">
                   <OptimizedImage 
                     src={course.image} 
@@ -329,10 +332,13 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
                   <div className="card-overlay">
                     <button 
                       className="watch-trailer-btn"
-                      onClick={() => handleCourseClick(course)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCourseClick(course);
+                      }}
                     >
                       <Play size={16} />
-                      Watch Trailer
+                      Watch Course
                     </button>
                   </div>
                 </div>
@@ -376,7 +382,7 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
             data-grid-index={2}
           >
             {googleAIClasses.map((course) => (
-              <div key={course.id} className="masterclass-card">
+              <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>
                 <div className="card-image-container">
                   <OptimizedImage 
                     src={course.image} 
@@ -389,10 +395,13 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
                   <div className="card-overlay">
                     <button 
                       className="watch-trailer-btn"
-                      onClick={() => handleCourseClick(course)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCourseClick(course);
+                      }}
                     >
                       <Play size={16} />
-                      Watch Trailer
+                      Watch Course
                     </button>
                   </div>
                 </div>
@@ -436,7 +445,7 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
             data-grid-index={3}
           >
             {businessClasses.map((course) => (
-              <div key={course.id} className="masterclass-card">
+              <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>
                 <div className="card-image-container">
                   <OptimizedImage 
                     src={course.image} 
@@ -449,10 +458,13 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
                   <div className="card-overlay">
                     <button 
                       className="watch-trailer-btn"
-                      onClick={() => handleCourseClick(course)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCourseClick(course);
+                      }}
                     >
                       <Play size={16} />
-                      Watch Trailer
+                      Watch Course
                     </button>
                   </div>
                 </div>
@@ -496,7 +508,7 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
             data-grid-index={4}
           >
             {documentaryClasses.map((course) => (
-              <div key={course.id} className="masterclass-card">
+              <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>
                 <div className="card-image-container">
                   <OptimizedImage 
                     src={course.image} 
@@ -509,7 +521,10 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
                   <div className="card-overlay">
                     <button 
                       className="watch-trailer-btn"
-                      onClick={() => handleCourseClick(course)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCourseClick(course);
+                      }}
                     >
                       <Play size={16} />
                       Watch Documentary
@@ -528,15 +543,14 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
         </section>
       </main>
 
-      {/* 하단 구독 정보 */}
-      <footer className="subscription-footer">
-        <div className="subscription-content">
-          <span className="subscription-text">
-            Starting at ₩10,000/month (billed annually) for all classes and sessions
-          </span>
-          <button className="subscription-cta" onClick={onPaymentClick}>
-            Get CLATHON
-          </button>
+      {/* 하단 회사 정보 */}
+      <footer className="company-footer">
+        <div className="company-content">
+          <div className="company-info">
+            <h3 className="company-name">커넥젼에이아이 ConnexionAI</h3>
+            <p className="company-address">서울특별시 서초구 강남대로61길 17, 1901호</p>
+            <p className="company-slogan">AI 교육의 완주를 함께</p>
+          </div>
         </div>
       </footer>
     </div>
