@@ -17,6 +17,7 @@ const MainPage = React.lazy(() => import('./components/MainPage'));
 const ChatGPTCoursePage = React.lazy(() => import('./components/ChatGPTCoursePage'));
 const GoogleAICoursePage = React.lazy(() => import('./components/GoogleAICoursePage'));
 const AIBusinessCoursePage = React.lazy(() => import('./components/AIBusinessCoursePage'));
+const AICodingCoursePage = React.lazy(() => import('./components/AICodingCoursePage'));
 const AIEducationDocumentaryPage = React.lazy(() => import('./components/AIEducationDocumentaryPage'));
 const PaymentPage = React.lazy(() => import('./components/PaymentPage'));
 
@@ -32,8 +33,11 @@ const MainPageWrapper = () => {
       // Google AI 클래스 (ID 3)인 경우 Google AI 페이지로 이동
       navigate('/google-ai');
     } else if (courseId === 4) {
-      // EMMA WATSON AI Ethics (ID 4)인 경우 AI Business 페이지로 이동
+      // AI Business 클래스 (ID 4)인 경우 AI Business 페이지로 이동
       navigate('/ai-business');
+    } else if (courseId === 5) {
+      // AI Coding 클래스 (ID 5)인 경우 AI Coding 페이지로 이동
+      navigate('/ai-coding');
     } else {
       navigate('/course');
     }
@@ -81,6 +85,16 @@ const AIBusinessCoursePageWrapper = () => {
   return <AIBusinessCoursePage onBack={handleBack} />;
 };
 
+const AICodingCoursePageWrapper = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/');
+  };
+
+  return <AICodingCoursePage onBack={handleBack} />;
+};
+
 const AIEducationDocumentaryPageWrapper = () => {
   const navigate = useNavigate();
 
@@ -121,6 +135,7 @@ function App() {
             <Route path="/course" element={<ChatGPTCoursePageWrapper />} />
             <Route path="/google-ai" element={<GoogleAICoursePageWrapper />} />
             <Route path="/ai-business" element={<AIBusinessCoursePageWrapper />} />
+            <Route path="/ai-coding" element={<AICodingCoursePageWrapper />} />
             <Route path="/documentary" element={<AIEducationDocumentaryPageWrapper />} />
             <Route path="/payment" element={<PaymentPageWrapper />} />
           </Routes>

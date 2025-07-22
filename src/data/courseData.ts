@@ -424,25 +424,25 @@ export const getQuizProgress = (): Record<number, { score: number; passed: boole
 
 export const aiBusinessCourse: Course = {
   id: 'ai-business-mastery',
-  title: 'AI 비즈니스 마스터리',
-  description: 'AI를 활용한 실전 비즈니스 전략! 스타트업부터 대기업까지 성공 사례와 실무 노하우',
+  title: 'AI 비즈니스 전략',
+  description: 'AI 시대 새로운 부의 창출 전략! AI 커머스부터 구독자 확보까지 실전 노하우 완전정복',
   category: 'AI 비즈니스',
   instructor: 'AI 멘토 JAY',
-  rating: 4.8,
-  studentCount: 89,
-  totalDuration: '24시간',
-  price: 199000, // 19만 9천원
-  isPaid: true,
+  rating: 4.9,
+  studentCount: 1247,
+  totalDuration: '5시간 52분',
+  price: 0, // 무료
+  isPaid: false,
   createdAt: new Date('2024-01-15'),
   updatedAt: new Date('2024-01-15'),
   lessons: [
     {
       id: 1,
-      title: '1강. AI 비즈니스 시장 분석',
-      duration: '45분',
+      title: '1강. [AI,새로운 부의 지도] AI 시대, 부의 규칙은 어떻게 바뀌었는가',
+      duration: '1시간 5분',
       completed: false,
-      description: 'AI 비즈니스 트렌드와 시장 기회 분석. 성공 기업들의 AI 도입 전략을 심층 분석합니다.',
-      videoUrl: 'https://youtu.be/sample1',
+      description: 'AI 혁명은 단순히 새로운 도구의 등장이 아닌, 지난 수백 년간 이어져 온 부의 생성 규칙 자체를 바꾸고 있습니다. 노동의 대가로 돈을 버는 시대는 저물고, AI라는 생산수단을 통해 가치를 창출하는 새로운 자본가의 시대가 열렸습니다. 이 거대한 변화의 본질을 꿰뚫고, AI 커머스라는 구체적인 기회를 통해 새로운 부의 흐름에 합류하는 방법을 제시합니다.',
+      videoUrl: 'https://youtu.be/3eGWEyW0Olc',
       hasQuiz: true,
       quiz: {
         id: 1,
@@ -453,47 +453,367 @@ export const aiBusinessCourse: Course = {
           {
             id: 1,
             type: 'multiple',
-            question: 'AI 비즈니스에서 가장 중요한 성공 요소는?',
-            options: ['기술력', '데이터', '비즈니스 모델', '모든 것'],
-            correctAnswer: 3,
-            explanation: 'AI 비즈니스 성공을 위해서는 기술, 데이터, 비즈니스 모델이 모두 중요합니다.'
+            question: 'AI 시대에 부의 규칙이 바뀐 핵심 이유는 무엇인가요?',
+            options: ['기술 발전', '노동에서 자본 중심으로 패러다임 전환', '글로벌 경제 변화', '코로나19 영향'],
+            correctAnswer: 1,
+            explanation: 'AI 시대는 노동의 대가로 돈을 버는 시대에서 AI라는 생산수단을 통해 가치를 창출하는 새로운 자본가의 시대로 패러다임이 전환되었습니다.'
+          },
+          {
+            id: 2,
+            type: 'multiple',
+            question: 'AI 커머스의 핵심 수익 구조는?',
+            options: ['광고 수익만', '제품 판매만', 'AI로 콘텐츠 생성 + 커머스 연결', '구독료 수익'],
+            correctAnswer: 2,
+            explanation: 'AI로 콘텐츠를 만들고 이를 커머스로 연결하는 새로운 수익 모델이 AI 커머스의 핵심입니다.'
+          },
+          {
+            id: 3,
+            type: 'true-false',
+            question: '구글 VEO를 활용하면 광고 영상을 10분 만에 제작할 수 있습니다.',
+            correctAnswer: 1,
+            explanation: '영상에서 실제로 구글 VEO AI를 활용하여 광고 영상을 10분 만에 제작하는 실전 시연을 보여줍니다.'
           }
         ]
       }
     },
     {
       id: 2,
-      title: '2강. AI 스타트업 창업 전략',
-      duration: '50분',
+      title: '2강. [AI인사이트] 0원으로 구독자 1000명? 완전 무료 AI 구글 VEO2+Capcut',
+      duration: '1시간 2분',
       completed: false,
-      description: 'AI 스타트업 창업부터 투자 유치까지. 실제 성공 사례를 통한 실전 가이드',
-      videoUrl: 'https://youtu.be/sample2'
+      description: '유튜브 수익창출 요건인 구독자 1000명을 0원으로 달성하는 실전 전략! 틱톡, 30만 인스타그램, 4만 유튜브 채널을 키운 JAY의 콘텐츠 노하우를 공개합니다. 완전 무료 AI Veo + CapCut을 활용한 구독자 증가 전략과 알고리즘 분석을 통한 성공 사례를 직접 확인하세요.',
+      videoUrl: 'https://youtu.be/1xVON92uhtI',
+      hasQuiz: true,
+      quiz: {
+        id: 2,
+        lessonId: 2,
+        requiredScore: 80,
+        timeLimit: 10,
+        questions: [
+          {
+            id: 1,
+            type: 'multiple',
+            question: '구독자 1000명 달성을 위해 가장 중요한 요소는?',
+            options: ['운', '기획력과 실행력', '고가 장비', '유료 광고'],
+            correctAnswer: 1,
+            explanation: '영상에서 강조하는 것은 운이 아닌 체계적인 기획력과 꾸준한 실행력이 구독자 증가의 핵심임을 보여줍니다.'
+          },
+          {
+            id: 2,
+            type: 'true-false',
+            question: 'CapCut은 완전 무료로 영상 편집이 가능한 도구입니다.',
+            correctAnswer: 1,
+            explanation: 'CapCut은 완전 무료로 사용할 수 있는 AI 편집 툴로, 초보자도 쉽게 전문적인 영상을 만들 수 있습니다.'
+          },
+          {
+            id: 3,
+            type: 'multiple',
+            question: '알고리즘에 잘 노출되기 위한 핵심 전략은?',
+            options: ['제목만 잘 만들기', '썸네일만 예쁘게', '글로벌 콘텐츠 트렌드 분석 + 로컬라이징', '많이 업로드하기'],
+            correctAnswer: 2,
+            explanation: '글로벌 콘텐츠 성공 사례를 분석하고 이를 한국 상황에 맞게 로컬라이징하는 것이 알고리즘 최적화의 핵심입니다.'
+          }
+        ]
+      }
     },
     {
       id: 3,
-      title: '3강. 기업 AI 도입 컨설팅',
-      duration: '40분',
+      title: '3강. [AI인사이트] 0원으로 구독자 10,000명? 완전 무료 AI 챗지피티, 구글 VEO2, 노션',
+      duration: '1시간 8분',
       completed: false,
-      description: '기존 기업의 AI 도입 전략. ROI 분석부터 조직 변화 관리까지',
-      videoUrl: 'https://youtu.be/sample3'
+      description: 'AI는 어렵다? 그건 예전 이야기입니다. 스마트폰만 있어도 누구나 인공지능을 활용해 삶을 바꿀 수 있어요! 복잡한 기술 설명 없이, 하루 10분이면 따라할 수 있는 AI 루틴을 소개합니다. 50, 60대도 바로 할 수 있는 AI 활용법으로 구독자 10,000명까지 도달하는 실전 가이드입니다.',
+      videoUrl: 'https://youtu.be/x1_ZNsjhjPo',
+      hasQuiz: true,
+      quiz: {
+        id: 3,
+        lessonId: 3,
+        requiredScore: 80,
+        timeLimit: 10,
+        questions: [
+          {
+            id: 1,
+            type: 'multiple',
+            question: 'AI 학습 원리를 활용한 습관 만들기의 핵심은?',
+            options: ['한 번에 많이 하기', '매일 조금씩 꾸준히', '주말에 몰아서', '기분 좋을 때만'],
+            correctAnswer: 1,
+            explanation: 'AI 학습 원리처럼 매일 조금씩 꾸준히 하는 것이 습관 형성과 실력 향상의 핵심입니다.'
+          },
+          {
+            id: 2,
+            type: 'true-false',
+            question: 'ChatGPT로 트렌드를 활용한 영상 기획이 가능합니다.',
+            correctAnswer: 1,
+            explanation: 'ChatGPT를 활용하면 현재 트렌드를 분석하고 이를 바탕으로 효과적인 영상 기획을 할 수 있습니다.'
+          },
+          {
+            id: 3,
+            type: 'multiple',
+            question: '노션을 활용한 콘텐츠 관리의 장점은?',
+            options: ['예쁜 디자인', '체계적인 계획 수립과 실행 관리', '무료 사용', '모든 것'],
+            correctAnswer: 3,
+            explanation: '노션은 예쁜 디자인, 체계적인 관리, 무료 사용 등 모든 장점을 가진 올인원 도구입니다.'
+          }
+        ]
+      }
     },
     {
       id: 4,
-      title: '4강. AI 제품 기획 & 개발',
-      duration: '55분',
+      title: '4강. AI가 당신의 직업을 바꾸고 있습니다. 살아남는 사람은 이렇게 준비합니다',
+      duration: '1시간 12분',
       completed: false,
-      description: 'AI 제품의 기획부터 출시까지. MVP 개발과 시장 검증 방법론',
-      videoUrl: 'https://youtu.be/sample4'
+      description: 'AI 시대가 불러온 일자리 지각변동에 어떻게 대비해야 할까요? 글로벌 빅테크 기업들의 대규모 구조조정부터 고연봉 지식 노동 직업의 대체까지, 위기 속에서도 발견할 수 있는 새로운 기회와 개인의 생존 전략을 제시합니다. 20대 신입사원부터 50~60대 베테랑까지 모두가 알아야 할 AI 시대 생존법입니다.',
+      videoUrl: 'https://youtu.be/Ljw_3lL7oIE',
+      hasQuiz: true,
+      quiz: {
+        id: 4,
+        lessonId: 4,
+        requiredScore: 80,
+        timeLimit: 10,
+        questions: [
+          {
+            id: 1,
+            type: 'multiple',
+            question: 'AI 시대에 가장 먼저 대체될 가능성이 높은 직업군은?',
+            options: ['육체 노동직', '고연봉 지식 노동직', '서비스직', '창작직'],
+            correctAnswer: 1,
+            explanation: '영상에서는 고연봉 지식 노동직이 AI에 의해 가장 먼저 대체될 가능성이 높다고 설명합니다.'
+          },
+          {
+            id: 2,
+            type: 'true-false',
+            question: 'AI 시대에는 인간 10명이 하던 일을 AI 활용 능력을 갖춘 1명이 해낼 수 있습니다.',
+            correctAnswer: 1,
+            explanation: '영상에서 강조하는 핵심 메시지로, AI를 활용할 수 있는 사람의 생산성이 극대화된다는 내용입니다.'
+          },
+          {
+            id: 3,
+            type: 'multiple',
+            question: 'AI 시대 개인의 최고 생존 전략은 무엇인가요?',
+            options: ['기존 스킬 강화', 'AI 공부하기', '직업 바꾸기', '은퇴 준비'],
+            correctAnswer: 1,
+            explanation: '영상에서는 AI를 공부하는 것이 현시대 최고의 생존 전략이라고 강조합니다.'
+          }
+        ]
+      }
     },
     {
       id: 5,
-      title: '5강. AI 마케팅 & 세일즈',
-      duration: '35분',
+      title: '5강. AI 하나로 10명 몫을 해낸다 – 생존하는 1인이 되는 법',
+      duration: '1시간 25분',
       completed: false,
-      description: 'AI 제품의 마케팅 전략과 B2B 세일즈. 고객 니즈 분석과 제안 방법',
-      videoUrl: 'https://youtu.be/sample5'
+      description: 'AI 하나만으로도 10명이 하던 업무를 해내는 현실과 그 속에서 살아남기 위한 구체적 전략을 알려드립니다. AI 자동화를 통한 1인 기업/직장인이 갖춰야 할 핵심 역량과 실행 가능한 3단계 방법론을 제시합니다.',
+      videoUrl: 'https://youtu.be/o69O3qJKC3c',
+      hasQuiz: true,
+      quiz: {
+        id: 5,
+        lessonId: 5,
+        requiredScore: 80,
+        timeLimit: 10,
+        questions: [
+          {
+            id: 1,
+            type: 'multiple',
+            question: 'AI 시대 생존을 위한 3단계 방법론의 순서는?',
+            options: ['활용 → 이해 → 일상화', '이해 → 활용 → 일상화', '일상화 → 이해 → 활용', '이해 → 일상화 → 활용'],
+            correctAnswer: 1,
+            explanation: 'AI 활용을 위한 체계적 접근은 이해 → 활용 → 일상화의 3단계로 진행됩니다.'
+          },
+          {
+            id: 2,
+            type: 'multiple',
+            question: '영상에서 소개한 AI 자동화 도구가 아닌 것은?',
+            options: ['ChatGPT', 'Cursor AI', 'Photoshop', 'Gemini'],
+            correctAnswer: 2,
+            explanation: 'ChatGPT, Cursor AI, Gemini는 AI 자동화 도구로 소개되었지만, Photoshop은 언급되지 않았습니다.'
+          },
+          {
+            id: 3,
+            type: 'true-false',
+            question: '1인 기업과 직장인 모두에게 AI 역량이 필요하다고 강조합니다.',
+            correctAnswer: 1,
+            explanation: '영상에서는 1인 기업가와 직장인 구분 없이 모든 사람에게 AI 역량이 필수라고 강조합니다.'
+          }
+        ]
+      }
     }
   ]
 };
 
-export const allCourses = [chatGPTCourse, aiBusinessCourse]; 
+export const aiCodingCourse: Course = {
+  id: 'ai-coding-mastery',
+  title: 'AI 코딩 완전정복',
+  description: 'AI를 활용한 차세대 코딩! GitHub Copilot부터 Claude까지 모든 AI 코딩 도구 마스터하기',
+  category: 'AI Coding',
+  instructor: 'AI 멘토 JAY',
+  rating: 4.9,
+  studentCount: 156,
+  totalDuration: '5시간 34분',
+  price: 0, // 무료
+  isPaid: false,
+  createdAt: new Date('2024-01-01'),
+  updatedAt: new Date('2024-01-01'),
+  lessons: [
+    {
+      id: 1,
+      title: '1강. 구글이 만든 "무료" 제미나이 CLI, 성능은 그냥 미쳤습니다',
+      duration: '19분',
+      completed: false,
+      description: '웹사이트 외주 비용 수백만 원, 이제 정말 옛날이야기입니다. 구글이 공개한 역대급 무료 코딩 AI, 제미나이(Gemini) CLI를 실전 테스트! AI에게 채팅하듯 명령하는 것만으로 웹사이트를 만들고 전 세계에 배포까지. 홈페이지 제작 비용 때문에 사업을 망설이던 예비 창업가, 코딩 공부에 좌절했던 분들을 위한 필수 영상입니다.',
+      videoUrl: 'https://youtu.be/6Ib1IeKXL6s',
+      hasQuiz: true,
+      quiz: {
+        id: 1,
+        lessonId: 1,
+        requiredScore: 70,
+        timeLimit: 5,
+        questions: [
+          {
+            id: 1,
+            type: 'multiple',
+            question: '제미나이 CLI의 설치 명령어는 무엇인가요?',
+            options: ['npm install gemini', 'npm install -g @google/gemini-cli', 'pip install gemini-cli', 'yarn add gemini'],
+            correctAnswer: 1,
+            explanation: '제미나이 CLI는 "npm install -g @google/gemini-cli" 명령어로 전역 설치합니다.'
+          },
+          {
+            id: 2,
+            type: 'multiple',
+            question: '제미나이 CLI로 웹사이트 개발하는 4단계 순서는?',
+            options: ['설치 → 대화 → 코딩 → 배포', '기획 → 설치 → 코딩 → 테스트', '환경준비 → 설치 → 코딩 → 배포', '모두 정답'],
+            correctAnswer: 2,
+            explanation: '영상에서 소개한 순서는 1) 개발 환경 준비 2) AI 설치 & 첫 대화 3) AI와 채팅하며 쇼핑몰 만들기 4) 전 세계에 무료 공개(배포)입니다.'
+          },
+          {
+            id: 3,
+            type: 'true-false',
+            question: '제미나이 CLI는 맥과 윈도우 모두에서 사용 가능합니다.',
+            correctAnswer: 1,
+            explanation: '제미나이 CLI는 크로스플랫폼으로 맥과 윈도우 모두에서 사용할 수 있습니다.'
+          }
+        ]
+      }
+    },
+    {
+      id: 2,
+      title: '2강. 비용 0원, 1시간 만에 AI로 "돈 버는 사업"을 만들었습니다',
+      duration: '1시간 45분',
+      completed: false,
+      description: '정말로 1시간 만에, 돈 한 푼 안 쓰고 사업을 만드는 것이 가능할까요? 코딩 1도 모르는 분들을 위해 구글 AI만으로 직접 도전! 아이디어 구상부터 실제 작동하는 웹사이트 개발, 전 세계 배포, 그리고 홍보 영상 제작까지 AI 비즈니스 챌린지의 모든 과정을 1초도 숨김없이 전부 공개합니다.',
+      videoUrl: 'https://youtu.be/MRu12ldUCUg',
+      hasQuiz: true,
+      quiz: {
+        id: 2,
+        lessonId: 2,
+        requiredScore: 80,
+        timeLimit: 10,
+        questions: [
+          {
+            id: 1,
+            type: 'multiple',
+            question: '영상에서 1시간 만에 완성한 결과물은 무엇인가요?',
+            options: ['모바일 앱', '실제 작동하는 웹사이트', 'PDF 문서', 'YouTube 채널'],
+            correctAnswer: 1,
+            explanation: '영상에서는 1시간 만에 실제 작동하는 웹사이트를 개발하고 전 세계에 배포하는 과정을 보여줍니다.'
+          },
+          {
+            id: 2,
+            type: 'true-false',
+            question: '이 프로젝트는 코딩 지식이 전혀 없어도 따라할 수 있습니다.',
+            correctAnswer: 1,
+            explanation: '영상은 "코딩 1도 모르는 여러분을 위해" 만들어졌으며, AI 도구만으로 개발하는 방법을 보여줍니다.'
+          },
+          {
+            id: 3,
+            type: 'multiple',
+            question: 'AI 비즈니스 챌린지에 포함된 과정이 아닌 것은?',
+            options: ['아이디어 구상', '웹사이트 개발', '전 세계 배포', '투자자 미팅'],
+            correctAnswer: 3,
+            explanation: '아이디어 구상, 웹사이트 개발, 전 세계 배포, 홍보 영상 제작은 포함되지만 투자자 미팅은 언급되지 않았습니다.'
+          }
+        ]
+      }
+    },
+    {
+      id: 3,
+      title: '3강. 내가 50억짜리 AI 회사를 폐업하고 깨달은 "무자본 창업"의 모든 것',
+      duration: '1시간 30분',
+      completed: false,
+      description: '50억 가치를 인정받았던 AI 스타트업을 제 손으로 폐업했습니다. 지난 4년간의 처절한 실패 경험을 통해, 왜 지금이 오히려 0원 무자본 창업의 역사상 가장 완벽한 골든타임인지 깨달았습니다. 과거 스타트업들이 왜 95%나 망할 수밖에 없었는지, 그리고 AI 시대에 당신이 그 실패를 반복하지 않기 위해 반드시 알아야 할 비밀을 모두 담았습니다.',
+      videoUrl: 'https://youtu.be/tA06bsovpWw',
+      hasQuiz: true,
+      quiz: {
+        id: 3,
+        lessonId: 3,
+        requiredScore: 80,
+        timeLimit: 10,
+        questions: [
+          {
+            id: 1,
+            type: 'multiple',
+            question: '95%의 스타트업이 망하는 근본적인 원인과 관련된 개념은?',
+            options: ['자금 부족', 'MVP & 아하! 모멘트', '경쟁 심화', '인재 부족'],
+            correctAnswer: 1,
+            explanation: '영상에서는 MVP(최소기능제품)와 아하! 모멘트의 부재가 95% 스타트업 실패의 근본 원인이라고 설명합니다.'
+          },
+          {
+            id: 2,
+            type: 'true-false',
+            question: '현재가 무자본 AI 창업의 골든타임이라고 주장합니다.',
+            correctAnswer: 1,
+            explanation: '영상에서는 AI 시대인 지금이 0원 무자본 창업의 역사상 가장 완벽한 골든타임이라고 강조합니다.'
+          },
+          {
+            id: 3,
+            type: 'multiple',
+            question: 'AI 시대 창업의 가장 큰 장점은 무엇인가요?',
+            options: ['높은 수익', '실패해도 무조건 이기는 게임', '쉬운 성공', '빠른 성장'],
+            correctAnswer: 1,
+            explanation: '영상 마지막 부분에서 "실패해도 당신이 무조건 이기는 게임인 이유"를 설명하며 이것이 AI 시대 창업의 핵심 장점임을 강조합니다.'
+          }
+        ]
+      }
+    },
+    {
+      id: 4,
+      title: '4강. 0원으로 60분 만에 수익화! AI 비즈니스 만들기 실전',
+      duration: '2시간 20분',
+      completed: false,
+      description: '단 60분 만에, 0원으로 바로 수익화 가능한 AI 비즈니스 만드는 방법을 실시간으로 공개합니다. Gemini CLI, Claude Code, Cursor AI — 3개의 최신 AI 툴을 직접 비교 분석해서, 가장 효율적으로 AI 수익화를 시작하는 노하우를 알려드립니다. AI 개발자가 아니어도, 프로그래밍 몰라도 썸네일부터 비즈니스 기획, 실행까지 바로 따라할 수 있는 라이브 실전편입니다.',
+      videoUrl: 'https://youtube.com/live/G1rbCTjp26I',
+      hasQuiz: true,
+      quiz: {
+        id: 4,
+        lessonId: 4,
+        requiredScore: 80,
+        timeLimit: 10,
+        questions: [
+          {
+            id: 1,
+            type: 'multiple',
+            question: '영상에서 비교 분석하는 3개의 최신 AI 툴은?',
+            options: ['ChatGPT, Bard, Claude', 'Gemini CLI, Claude Code, Cursor AI', 'VEO, Runway, Sora', 'Notion, Figma, Canva'],
+            correctAnswer: 1,
+            explanation: 'Gemini CLI, Claude Code, Cursor AI 3개의 최신 AI 툴을 직접 비교 분석한다고 명시되어 있습니다.'
+          },
+          {
+            id: 2,
+            type: 'true-false',
+            question: '이 강의는 AI 개발자나 프로그래밍 지식이 있어야만 들을 수 있습니다.',
+            correctAnswer: 0,
+            explanation: '"AI 개발자가 아니어도, 프로그래밍 몰라도 OK!"라고 명시되어 있어 초보자도 충분히 따라할 수 있습니다.'
+          },
+          {
+            id: 3,
+            type: 'multiple',
+            question: '이 실전편에서 다루는 범위는?',
+            options: ['기획만', '개발만', '썸네일부터 비즈니스 기획, 실행까지', '마케팅만'],
+            correctAnswer: 2,
+            explanation: '썸네일부터 비즈니스 기획, 실행까지 전체 프로세스를 모두 다루는 종합 실전편입니다.'
+          }
+        ]
+      }
+    }
+  ]
+};
+
+export const allCourses = [chatGPTCourse, aiBusinessCourse, aiCodingCourse]; 

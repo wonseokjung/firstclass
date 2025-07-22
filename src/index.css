@@ -321,24 +321,33 @@ body {
 
 /* 마스터클래스 그리드 */
 .masterclass-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
   gap: 24px;
   outline: none;
   transition: var(--transition);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* iOS 터치 스크롤 최적화 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  /* 터치 스와이프를 위한 추가 설정 */
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
+}
+
+.masterclass-grid::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 /* 키보드 포커스 시 그리드 하이라이트 */
 .masterclass-grid:focus {
   outline: 2px solid var(--color-primary);
-  outline-offset: 4px;
+  outline-offset: 2px;
   border-radius: var(--border-radius);
 }
 
-/* 개별 카드는 고정 크기 유지 */
-.masterclass-card {
-  max-width: 100%;
-}
+
 
 /* 마스터클래스 카드 */
 .masterclass-card {
@@ -348,6 +357,10 @@ body {
   transition: var(--transition-slow);
   cursor: pointer;
   position: relative;
+  flex: 0 0 300px; /* flex-grow: 0, flex-shrink: 0, flex-basis: 300px */
+  width: 300px;
+  min-width: 300px;
+  scroll-snap-align: start; /* 터치 스크롤 시 카드 정렬 */
 }
 
 .masterclass-card:hover {
@@ -1758,8 +1771,13 @@ body {
 /* 반응형 디자인 */
 @media (max-width: 1024px) {
   .masterclass-grid {
-    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+  }
+  
+  .masterclass-card {
+    flex: 0 0 280px;
+    width: 280px;
+    min-width: 280px;
   }
   
   .masterclass-section {
@@ -1793,6 +1811,11 @@ body {
 }
 
 @media (max-width: 768px) {
+  /* 모바일에서 방향키 버튼 숨기기 - 터치 스와이프 사용 */
+  .section-nav {
+    display: none !important;
+  }
+
   /* 헤더 모바일 최적화 */
   .masterclass-header-original {
     padding: 12px 0; /* 기본 16px → 12px */
@@ -1837,6 +1860,7 @@ body {
     flex-direction: column;
     gap: 20px;
     text-align: center;
+    justify-content: center;
   }
   
   .section-title-mc {
@@ -1844,27 +1868,38 @@ body {
     line-height: 1.2;
   }
   
-  /* 그리드 모바일 최적화 - 태블릿에서도 가로 스크롤 */
-  .masterclass-grid {
-    display: flex;
-    overflow-x: auto;
-    gap: 16px;
-    padding: 0 20px;
-    margin: 0 -20px;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  
-  .masterclass-grid::-webkit-scrollbar {
+  /* 모바일에서 네비게이션 화살표 숨기기 */
+  .section-nav {
     display: none;
   }
   
-  .masterclass-card {
-    min-width: 200px;
-    max-width: 200px;
+  /* 모바일에서 Watch Course 버튼 숨기기 */
+  .watch-trailer-btn {
+    display: none;
+  }
+  
+  /* 그리드 모바일 최적화 - 태블릿에서도 가로 스크롤 */
+  .masterclass-grid {
+    gap: 16px;
+    padding: 0 20px;
+    margin: 0 -20px;
+    scroll-snap-type: x proximity;
+  }
+  
+    .masterclass-card {
+    flex: 0 0 250px;
+    width: 250px;
+    min-width: 250px;
     flex-shrink: 0;
     scroll-snap-align: start;
+    /* 모바일에서 터치 피드백 개선 */
+    -webkit-tap-highlight-color: rgba(207, 43, 74, 0.1);
+  }
+  
+  /* 모바일에서 카드 터치 시 스케일 효과 */
+  .masterclass-card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
   }
   
   .masterclass-section {
@@ -1980,13 +2015,23 @@ body {
   
   /* 메인 콘텐츠 모바일 최적화 */
   .masterclass-main {
-    padding: 40px 0;
+    padding: 32px 0 48px 0; /* 상단은 줄이고 하단은 늘림 */
+  }
+  
+  /* 부드러운 스크롤 */
+  html {
+    scroll-behavior: smooth !important;
   }
   
   .masterclass-section {
-    padding: 0 16px;
-    margin-bottom: 50px;
+    padding: 0 0 24px 0; /* 하단 패딩 추가 */
+    margin-bottom: 40px; /* 섹션 간격 줄임 */
     position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* 섹션 구분선 */
+  }
+  
+  .masterclass-section:last-child {
+    border-bottom: none; /* 마지막 섹션은 구분선 없음 */
   }
   
   /* 모바일 스크롤 인디케이터 비활성화 */
@@ -2001,43 +2046,80 @@ body {
     line-height: 1.3;
   }
   
+  /* 작은 모바일에서도 네비게이션 화살표 숨기기 */
+  .section-nav {
+    display: none;
+  }
+  
+  /* 작은 모바일에서도 Watch Course 버튼 숨기기 */
+  .watch-trailer-btn {
+    display: none;
+  }
+  
   /* 모바일에서 가로 스크롤 슬라이더로 변경 */
   .masterclass-grid {
-    display: flex;
-    overflow-x: auto;
     gap: 16px;
-    padding: 0 16px;
-    margin: 0 -16px;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
+    padding: 0 20px;
+    scroll-snap-type: x proximity;
   }
   
-  .masterclass-grid::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
-  }
-  
-  /* 카드 모바일 최적화 */
+  /* 카드 모바일 최적화 - 일부 겹침으로 스와이프 힌트 */
   .masterclass-card {
-    min-width: 240px;
-    max-width: 240px;
+    flex: 0 0 calc(100vw - 60px);
+    width: calc(100vw - 60px);
+    min-width: calc(100vw - 60px);
+    max-width: calc(100vw - 60px);
     flex-shrink: 0;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
+    /* 작은 모바일에서도 터치 피드백 */
+    -webkit-tap-highlight-color: rgba(207, 43, 74, 0.1);
+  }
+  
+  /* 작은 모바일에서도 카드 터치 시 스케일 효과 */
+  .masterclass-card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
   }
   
   .instructor-name {
-    font-size: 13px;
-    letter-spacing: 0.5px;
+    font-size: 14px !important;
+    letter-spacing: 0.3px !important;
+    margin-bottom: 8px !important;
   }
   
   .course-description {
-    font-size: 10px;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    opacity: 0.9 !important;
+  }
+  
+  /* 카드 이미지 최적화 */
+  .card-image-container {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+  }
+  
+  .instructor-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
   }
   
   /* 섹션 헤더 모바일 최적화 */
   .section-header-mc {
     position: relative !important;
-    padding: 0 60px 0 16px !important; /* 화살표 공간 확보 */
+    padding: 24px 60px 20px 20px !important; /* 화살표 공간 확보 */
+    margin-bottom: 16px !important;
+  }
+  
+  .section-title-mc {
+    font-size: 20px !important;
+    line-height: 1.2 !important;
+  }
+  
+  .highlight-category {
+    font-size: 20px !important;
+    font-weight: 600 !important;
   }
   
   /* 네비게이션 화살표 모바일 최적화 */
@@ -2052,19 +2134,20 @@ body {
   }
   
   .nav-arrow {
-    width: 56px !important;
-    height: 56px !important;
-    background: rgba(0, 0, 0, 0.7) !important;
-    border: 2px solid rgba(255, 255, 255, 0.3) !important;
-    backdrop-filter: blur(8px) !important;
-    font-size: 20px !important;
+    width: 40px !important;
+    height: 40px !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(6px) !important;
+    font-size: 16px !important;
+    opacity: 0.8 !important;
   }
   
   .nav-arrow:hover,
   .nav-arrow:active {
-    background: rgba(0, 0, 0, 0.9) !important;
-    border-color: rgba(255, 255, 255, 0.5) !important;
-    transform: scale(1.05) !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    opacity: 1 !important;
   }
   
   /* 푸터 모바일 최적화 - 더 작게 */
@@ -2152,18 +2235,25 @@ body {
       opacity: 1 !important; /* 모바일에서 항상 표시 */
     }
     
-    /* 터치 영역 적정 크기로 조정 */
+    /* 모바일에서 버튼 크기 및 위치 조정 */
     .watch-trailer-btn {
-      padding: 12px 20px;
-      font-size: 14px;
+      padding: 8px 16px;
+      font-size: 13px;
       font-weight: 500;
-      border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-      min-height: 40px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      min-height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
+    }
+    
+    /* 버튼 위치를 왼쪽 아래로 이동 */
+    .card-overlay {
+      justify-content: flex-start !important;
+      align-items: flex-end !important;
+      padding: 16px !important;
     }
     
     /* 카드 전체를 터치 가능하게 */

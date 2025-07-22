@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, TrendingUp, Award, Timer, Search, ChevronDown } from 'lucide-react';
-import { aiBusinessCourse, saveProgress, getProgress, calculateProgressPercentage, getCompletedLessonsCount, saveQuizResult, getQuizProgress } from '../data/courseData';
+import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, MessageSquare, Award, Timer, Search, ChevronDown } from 'lucide-react';
+import { aiCodingCourse, saveProgress, getProgress, calculateProgressPercentage, getCompletedLessonsCount, saveQuizResult, getQuizProgress } from '../data/courseData';
 
-interface AIBusinessCoursePageProps {
+interface AICodingCoursePageProps {
   onBack: () => void;
 }
 
-const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) => {
+const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
   const [currentLesson, setCurrentLesson] = useState<number>(1);
   const [videoUrl, setVideoUrl] = useState<string>('');
   const [lessonsProgress, setLessonsProgress] = useState<Record<number, boolean>>({});
@@ -21,8 +21,8 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
   
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  // AI 비즈니스 강의 데이터
-  const course = aiBusinessCourse;
+  // AI Coding 강의 데이터
+  const course = aiCodingCourse;
 
   useEffect(() => {
     // 저장된 진도 불러오기
@@ -178,27 +178,33 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
               <span className="logo-text">CLATHON</span>
             </div>
             <div className="browse-dropdown">
-              <button className="browse-btn">
-                둘러보기 <ChevronDown size={16} />
+              <button 
+                className="browse-btn"
+                aria-label="Browse AI & Technology courses"
+                aria-expanded="false"
+              >
+                AI & Technology <ChevronDown size={16} />
               </button>
             </div>
           </div>
           
           <div className="search-container">
-            <Search size={20} className="search-icon" />
+            <Search size={20} className="search-icon" aria-hidden="true" />
             <input 
               type="text" 
-              placeholder="오늘 무엇을 배우고 싶으신가요?" 
+              placeholder="What do you want to learn..." 
               className="search-input"
+              aria-label="Search for courses"
+              role="searchbox"
             />
           </div>
           
           <div className="header-right">
-            <button className="nav-link">기업용</button>
-            <button className="nav-link">선물</button>
-            <button className="nav-link">요금제</button>
-            <button className="nav-link">로그인</button>
-            <button className="cta-button" onClick={onBack}>메인으로</button>
+            <button className="nav-link">At Work</button>
+            <button className="nav-link">Gifts</button>
+            <button className="nav-link">View Plans</button>
+            <button className="nav-link">Log In</button>
+            <button className="cta-button" onClick={onBack}>Get CLATHON</button>
           </div>
         </div>
       </header>
@@ -214,7 +220,7 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
                 {course.title}
               </h1>
               <p className="hero-subtitle">
-                EMMA WATSON과 함께하는 AI 윤리 완전정복! 책임감 있는 AI 활용을 위한 체계적인 학습
+                AI를 활용한 차세대 코딩! GitHub Copilot부터 Claude까지 모든 AI 코딩 도구를 마스터하여 생산성을 10배 올리는 실전 가이드
               </p>
               
               {/* 강의 메타 정보 */}
@@ -263,7 +269,7 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
               ) : (
                 <div className="video-placeholder">
                   <div className="video-placeholder-content">
-                    <TrendingUp size={64} className="video-placeholder-icon" />
+                    <MessageSquare size={64} className="video-placeholder-icon" />
                     <h3>강의를 선택해주세요</h3>
                     <p>오른쪽 커리큘럼에서 학습하고 싶은 강의를 선택하세요.</p>
                   </div>
@@ -341,7 +347,7 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
         <div className="course-sidebar">
           <div className="sidebar-header">
             <h3>강의 커리큘럼</h3>
-            <p>총 {course.lessons.length}강의 AI 윤리 마스터 과정</p>
+            <p>총 {course.lessons.length}강의 체계적인 학습 과정</p>
           </div>
           
           <div className="lesson-list">
@@ -484,4 +490,4 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
   );
 };
 
-export default AIBusinessCoursePage; 
+export default AICodingCoursePage; 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { Play, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 
@@ -18,6 +18,17 @@ interface Course {
 
 // Basic/Free Courses 데이터
 const aiMasterClasses: Course[] = [
+  {
+    id: 5,
+    instructor: 'AI CODING',
+    title: 'AI 코딩 완전정복',
+    subtitle: 'GitHub Copilot부터 Claude까지 모든 AI 코딩 도구',
+    description: 'AI를 활용한 차세대 코딩! 생산성 10배 올리는 실전 가이드',
+    image: '/images/aicoding.png',
+    isNew: true,
+    category: 'AI Coding',
+    isDocumentary: false
+  },
   {
     id: 3,
     instructor: 'GOOGLE AI',
@@ -126,8 +137,20 @@ const documentaryClasses: Course[] = [
   }
 ];
 
-// 코딩 전문 코스 (현재 비어있음) - 향후 사용 예정
-// const codingClasses: Course[] = [];
+// AI 코딩 전문 코스
+const aiCodingClasses: Course[] = [
+  {
+    id: 5,
+    instructor: 'AI CODING',
+    title: 'AI 코딩 완전정복',
+    subtitle: 'GitHub Copilot부터 Claude까지 모든 AI 코딩 도구',
+    description: 'AI를 활용한 차세대 코딩! 생산성 10배 올리는 실전 가이드',
+    image: '/images/aicoding.png',
+    isNew: true,
+    category: 'AI Coding',
+    isDocumentary: false
+  }
+];
 
 interface MainPageProps {
   onCourseSelect: (courseId: number) => void;
@@ -136,52 +159,27 @@ interface MainPageProps {
 
 const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) => {
   const gridRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [focusedGrid, setFocusedGrid] = React.useState(0);
 
   const handleCourseClick = (course: Course) => {
     // 모든 코스는 onCourseSelect로 처리 (다큐멘터리도 포함)
     onCourseSelect(course.id);
   };
 
-  // 방향키 핸들러
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-        event.preventDefault();
-        
-        const currentGrid = gridRefs.current[focusedGrid];
-        if (!currentGrid) return;
+  // 화살표 버튼으로 그리드 스크롤하기
+  const handleGridScroll = useCallback((gridIndex: number, direction: 'left' | 'right') => {
+    const currentGrid = gridRefs.current[gridIndex];
+    if (!currentGrid) return;
 
-        const scrollAmount = 260; // 카드 너비 + 간격
-        
-        if (event.key === 'ArrowLeft') {
-          currentGrid.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        } else if (event.key === 'ArrowRight') {
-          currentGrid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
-      } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-        event.preventDefault();
-        
-        const maxGrids = gridRefs.current.length;
-        if (event.key === 'ArrowUp' && focusedGrid > 0) {
-          setFocusedGrid(focusedGrid - 1);
-        } else if (event.key === 'ArrowDown' && focusedGrid < maxGrids - 1) {
-          setFocusedGrid(focusedGrid + 1);
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [focusedGrid]);
-
-  // 그리드에 포커스 표시
-  useEffect(() => {
-    const currentGrid = gridRefs.current[focusedGrid];
-    if (currentGrid) {
-      currentGrid.focus();
+    const scrollAmount = 324; // 카드 너비(300px) + 간격(24px)
+    
+    if (direction === 'left') {
+      currentGrid.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+      currentGrid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
-  }, [focusedGrid]);
+  }, []);
+
+
 
   return (
     <div className="masterclass-container">
@@ -225,24 +223,28 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
         </div>
       </header>
 
+
+
       {/* 마스터클래스 스타일 메인 콘텐츠 */}
       <main className="masterclass-main">
         {/* Basic/Free Courses 섹션 */}
         <section className="masterclass-section">
           <div className="section-header-mc">
             <h2 className="section-title-mc">
-              <span className="highlight-category">Basic/Free Courses</span>
+              <span className="highlight-category">Trending</span>
             </h2>
             <div className="section-nav">
               <button 
                 className="nav-arrow"
                 aria-label="Previous AI & Technology courses"
+                onClick={() => handleGridScroll(0, 'left')}
               >
                 <ChevronLeft size={24} />
               </button>
               <button 
                 className="nav-arrow"
                 aria-label="Next AI & Technology courses"
+                onClick={() => handleGridScroll(0, 'right')}
               >
                 <ChevronRight size={24} />
               </button>
@@ -252,8 +254,6 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
           <div 
             className="masterclass-grid"
             ref={(el) => { gridRefs.current[0] = el; }}
-            tabIndex={0}
-            data-grid-index={0}
           >
             {aiMasterClasses.map((course) => (
               <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>
@@ -300,12 +300,14 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
               <button 
                 className="nav-arrow"
                 aria-label="Previous ChatGPT courses"
+                onClick={() => handleGridScroll(1, 'left')}
               >
                 <ChevronLeft size={24} />
               </button>
               <button 
                 className="nav-arrow"
                 aria-label="Next ChatGPT courses"
+                onClick={() => handleGridScroll(1, 'right')}
               >
                 <ChevronRight size={24} />
               </button>
@@ -315,8 +317,6 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
           <div 
             className="masterclass-grid"
             ref={(el) => { gridRefs.current[1] = el; }}
-            tabIndex={0}
-            data-grid-index={1}
           >
             {chatGPTClasses.map((course) => (
               <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>
@@ -363,12 +363,14 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
               <button 
                 className="nav-arrow"
                 aria-label="Previous Google AI courses"
+                onClick={() => handleGridScroll(2, 'left')}
               >
                 <ChevronLeft size={24} />
               </button>
               <button 
                 className="nav-arrow"
                 aria-label="Next Google AI courses"
+                onClick={() => handleGridScroll(2, 'right')}
               >
                 <ChevronRight size={24} />
               </button>
@@ -378,8 +380,6 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
           <div 
             className="masterclass-grid"
             ref={(el) => { gridRefs.current[2] = el; }}
-            tabIndex={0}
-            data-grid-index={2}
           >
             {googleAIClasses.map((course) => (
               <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>
@@ -426,12 +426,14 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
               <button 
                 className="nav-arrow"
                 aria-label="Previous Business courses"
+                onClick={() => handleGridScroll(3, 'left')}
               >
                 <ChevronLeft size={24} />
               </button>
               <button 
                 className="nav-arrow"
                 aria-label="Next Business courses"
+                onClick={() => handleGridScroll(3, 'right')}
               >
                 <ChevronRight size={24} />
               </button>
@@ -441,10 +443,71 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
           <div 
             className="masterclass-grid"
             ref={(el) => { gridRefs.current[3] = el; }}
-            tabIndex={0}
-            data-grid-index={3}
           >
             {businessClasses.map((course) => (
+              <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>
+                <div className="card-image-container">
+                  <OptimizedImage 
+                    src={course.image} 
+                    alt={course.instructor}
+                    className="instructor-image"
+                    loading="lazy"
+                    placeholder="true"
+                  />
+                  {course.isNew && <div className="new-badge">New</div>}
+                  <div className="card-overlay">
+                    <button 
+                      className="watch-trailer-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCourseClick(course);
+                      }}
+                    >
+                      <Play size={16} />
+                      Watch Course
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="card-content">
+                  <div className="instructor-name">{course.instructor}</div>
+                  <div className="divider"></div>
+                  <div className="course-description">{course.description}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* AI 코딩 전문 섹션 */}
+        <section className="masterclass-section">
+          <div className="section-header-mc">
+            <h2 className="section-title-mc">
+              <span className="highlight-category">AI Coding Expert</span>
+            </h2>
+            <div className="section-nav">
+              <button 
+                className="nav-arrow"
+                aria-label="Previous AI Coding courses"
+                onClick={() => handleGridScroll(4, 'left')}
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button 
+                className="nav-arrow"
+                aria-label="Next AI Coding courses"
+                onClick={() => handleGridScroll(4, 'right')}
+              >
+                <ChevronRight size={24} />
+              </button>
+            </div>
+          </div>
+          
+          <div 
+            className="masterclass-grid"
+            ref={(el) => { gridRefs.current[4] = el; }}
+          >
+            {aiCodingClasses.map((course) => (
               <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>
                 <div className="card-image-container">
                   <OptimizedImage 
@@ -489,12 +552,14 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
               <button 
                 className="nav-arrow"
                 aria-label="Previous Documentary courses"
+                onClick={() => handleGridScroll(5, 'left')}
               >
                 <ChevronLeft size={24} />
               </button>
               <button 
                 className="nav-arrow"
                 aria-label="Next Documentary courses"
+                onClick={() => handleGridScroll(5, 'right')}
               >
                 <ChevronRight size={24} />
               </button>
@@ -503,9 +568,7 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
           
           <div 
             className="masterclass-grid"
-            ref={(el) => { gridRefs.current[4] = el; }}
-            tabIndex={0}
-            data-grid-index={4}
+            ref={(el) => { gridRefs.current[5] = el; }}
           >
             {documentaryClasses.map((course) => (
               <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>

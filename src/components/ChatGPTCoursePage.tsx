@@ -170,35 +170,41 @@ const ChatGPTCoursePage: React.FC<ChatGPTCoursePageProps> = ({ onBack }) => {
   return (
     <div className="masterclass-container">
       {/* 헤더 */}
-      <header className="masterclass-header">
+      <header className="masterclass-header-original">
         <div className="header-content">
           <div className="header-left">
-            <div className="logo">
+            <div className="logo" onClick={onBack} style={{ cursor: 'pointer' }}>
               <span className="logo-icon">C</span>
               <span className="logo-text">CLATHON</span>
             </div>
             <div className="browse-dropdown">
-              <button className="browse-btn">
-                둘러보기 <ChevronDown size={16} />
+              <button 
+                className="browse-btn"
+                aria-label="Browse AI & Technology courses"
+                aria-expanded="false"
+              >
+                AI & Technology <ChevronDown size={16} />
               </button>
             </div>
           </div>
           
           <div className="search-container">
-            <Search size={20} className="search-icon" />
+            <Search size={20} className="search-icon" aria-hidden="true" />
             <input 
               type="text" 
-              placeholder="오늘 무엇을 배우고 싶으신가요?" 
+              placeholder="What do you want to learn..." 
               className="search-input"
+              aria-label="Search for courses"
+              role="searchbox"
             />
           </div>
           
           <div className="header-right">
-            <button className="nav-link">기업용</button>
-            <button className="nav-link">선물</button>
-            <button className="nav-link">요금제</button>
-            <button className="nav-link">로그인</button>
-            <button className="cta-button" onClick={onBack}>메인으로</button>
+            <button className="nav-link">At Work</button>
+            <button className="nav-link">Gifts</button>
+            <button className="nav-link">View Plans</button>
+            <button className="nav-link">Log In</button>
+            <button className="cta-button" onClick={onBack}>Get CLATHON</button>
           </div>
         </div>
       </header>

@@ -24,7 +24,7 @@ const AIEducationDocumentaryPage: React.FC<AIEducationDocumentaryPageProps> = ({
       <header className="masterclass-header-original">
         <div className="header-content">
           <div className="header-left">
-            <div className="logo">
+            <div className="logo" onClick={onBack} style={{ cursor: 'pointer' }}>
               <span className="logo-icon">C</span>
               <span className="logo-text">CLATHON</span>
             </div>
