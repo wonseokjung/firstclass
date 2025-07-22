@@ -20,13 +20,13 @@ const AIEducationDocumentaryPage: React.FC<AIEducationDocumentaryPageProps> = ({
 
   return (
     <div className="masterclass-container">
-      {/* FirstClass 스타일 헤더 */}
+      {/* CLATHON 스타일 헤더 */}
       <header className="masterclass-header-original">
         <div className="header-content">
           <div className="header-left">
             <div className="logo">
-              <span className="logo-icon">F</span>
-              <span className="logo-text">FirstClass</span>
+              <span className="logo-icon">C</span>
+              <span className="logo-text">CLATHON</span>
             </div>
             <div className="browse-dropdown">
               <button className="browse-btn">
@@ -49,7 +49,7 @@ const AIEducationDocumentaryPage: React.FC<AIEducationDocumentaryPageProps> = ({
             <button className="nav-link">Gifts</button>
             <button className="nav-link">View Plans</button>
             <button className="nav-link">Log In</button>
-            <button className="cta-button" onClick={onBack}>← Back to FirstClass</button>
+            <button className="cta-button" onClick={onBack}>← Back to CLATHON</button>
           </div>
         </div>
       </header>
@@ -197,7 +197,7 @@ const AIEducationDocumentaryPage: React.FC<AIEducationDocumentaryPageProps> = ({
             Starting at ₩10,000/month (billed annually) for all classes and sessions
           </span>
           <button className="subscription-cta" onClick={onBack}>
-            Get FirstClass
+                          Get CLATHON
           </button>
         </div>
       </footer>

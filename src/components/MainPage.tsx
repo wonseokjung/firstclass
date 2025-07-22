@@ -190,8 +190,8 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
         <div className="header-content">
           <div className="header-left">
             <div className="logo">
-              <span className="logo-icon">F</span>
-              <span className="logo-text">FirstClass</span>
+              <span className="logo-icon">C</span>
+              <span className="logo-text">CLATHON</span>
             </div>
             <div className="browse-dropdown">
               <button 
@@ -220,7 +220,7 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
             <button className="nav-link">Gifts</button>
             <button className="nav-link">View Plans</button>
             <button className="nav-link">Log In</button>
-            <button className="cta-button">Get FirstClass</button>
+            <button className="cta-button">Get CLATHON</button>
           </div>
         </div>
       </header>
@@ -535,7 +535,7 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick }) =
             Starting at ₩10,000/month (billed annually) for all classes and sessions
           </span>
           <button className="subscription-cta" onClick={onPaymentClick}>
-            Get FirstClass
+            Get CLATHON
           </button>
         </div>
       </footer>

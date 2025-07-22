@@ -174,8 +174,8 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
         <div className="header-content">
           <div className="header-left">
             <div className="logo">
-              <span className="logo-icon">F</span>
-              <span className="logo-text">FirstClass</span>
+                              <span className="logo-icon">C</span>
+                <span className="logo-text">CLATHON</span>
             </div>
             <div className="browse-dropdown">
               <button className="browse-btn">
