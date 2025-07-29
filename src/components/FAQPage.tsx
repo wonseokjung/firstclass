@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, ArrowLeft, Phone, Mail, Clock } from 'lucide-react';
+import { ChevronDown, Phone, Mail, Clock } from 'lucide-react';
 
 interface FAQPageProps {
   onBack: () => void;
