@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#cf2b4a" />
+    
+    <!-- SEO 메타태그 -->
+    <meta name="description" content="FirstClass - 프리미엄 AI 교육 플랫폼. Google AI, ChatGPT, VEO3 등 최신 AI 기술을 전문가와 함께 배워보세요. 무료 강의부터 실전 프로젝트까지!" />
+    <meta name="keywords" content="AI 교육, 구글 AI, ChatGPT, VEO3, 온라인 강의, 인공지능, 머신러닝, FirstClass" />
+    <meta name="author" content="FirstClass" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://firstclass.ai/" />
+    <meta property="og:title" content="FirstClass - 프리미엄 AI 교육 플랫폼" />
+    <meta property="og:description" content="전문가와 함께 배우는 최신 AI 기술. Google AI, ChatGPT, VEO3 완전정복!" />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image.jpg" />
+    <meta property="og:locale" content="ko_KR" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://firstclass.ai/" />
+    <meta property="twitter:title" content="FirstClass - 프리미엄 AI 교육 플랫폼" />
+    <meta property="twitter:description" content="전문가와 함께 배우는 최신 AI 기술. Google AI, ChatGPT, VEO3 완전정복!" />
+    <meta property="twitter:image" content="%PUBLIC_URL%/og-image.jpg" />
+    
+    <!-- Apple -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="FirstClass" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    
+    <!-- PWA -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- 폰트 프리로딩 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    
+    <!-- DNS 프리페치 -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="//youtube.com">
+    <link rel="dns-prefetch" href="//youtu.be">
+    
+    <!-- 구조화된 데이터 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "FirstClass",
+      "description": "프리미엄 AI 교육 플랫폼",
+      "url": "https://firstclass.ai",
+      "logo": "https://firstclass.ai/logo.png",
+      "sameAs": [
+        "https://youtube.com/@connectailab"
+      ],
+      "offers": {
+        "@type": "Course",
+        "name": "Google AI 완전정복",
+        "description": "구글 AI 기술을 전문가와 함께 배우는 완전한 강의",
+        "provider": {
+          "@type": "Organization",
+          "name": "FirstClass"
+        }
+      }
+    }
+    </script>
+    
+    <title>FirstClass - 프리미엄 AI 교육 플랫폼 | Google AI, ChatGPT 완전정복</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    
+    <!-- 서비스 워커 등록 -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+              console.log('SW registered: ', registration);
+            }, function(registrationError) {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>
