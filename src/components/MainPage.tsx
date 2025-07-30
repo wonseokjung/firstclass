@@ -158,8 +158,22 @@ const aiCodingClasses: Course[] = [
   }
 ];
 
-// 프리미엄 강의 (9월 1일 런칭 예정)
+// 프리미엄 강의
 const premiumClasses: Course[] = [
+  {
+    id: 6,
+    instructor: 'AI 멘토 JAY',
+    title: '바이브코딩으로 돈벌기',
+    subtitle: 'Cursor AI로 나 혼자 끝내는 1인 개발 수익화',
+    description: '🚀 월 1000만원 수익 달성을 위한 실전 바이브코딩 마스터클래스',
+    image: '/images/aicoding.png',
+    isNew: true,
+    category: 'AI 바이브코딩',
+    isDocumentary: false,
+    isPremium: true,
+    price: 199000,
+    originalPrice: 398000
+  },
   {
     id: 999,
     instructor: '정원석',
@@ -264,7 +278,7 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
           </div>
           
           <div className="header-right">
-            <button className="nav-link">At Work</button>
+            <button className="nav-link" onClick={() => window.location.href = '/ceo'}>CEO</button>
             <button className="nav-link" onClick={onFAQClick}>FAQ</button>
             <button className="nav-link">View Plans</button>
             <button className="nav-link">Log In</button>
@@ -375,24 +389,41 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
                     placeholder="true"
                   />
                   <div className="premium-badge">PREMIUM</div>
-                  <div className="launch-overlay">
-                    <div className="launch-info">
-                      <span className="launch-text">🚀 Coming Soon</span>
-                      <span className="launch-countdown">2024년 9월 1일</span>
+                  {course.isComingSoon ? (
+                    <>
+                      <div className="launch-overlay">
+                        <div className="launch-info">
+                          <span className="launch-text">🚀 Coming Soon</span>
+                          <span className="launch-countdown">2024년 9월 1일</span>
+                        </div>
+                      </div>
+                      <div className="card-overlay premium-overlay">
+                        <button 
+                          className="watch-trailer-btn premium-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEnrollClick(e, course.title || course.description, course.price || 299000);
+                          }}
+                        >
+                          <Play size={16} />
+                          🔥 사전예약
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="card-overlay premium-overlay">
+                      <button 
+                        className="watch-trailer-btn premium-btn available"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCourseClick(course);
+                        }}
+                      >
+                        <Play size={16} />
+                        🚀 바로 수강하기
+                      </button>
                     </div>
-                  </div>
-                  <div className="card-overlay premium-overlay">
-                    <button 
-                      className="watch-trailer-btn premium-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleEnrollClick(e, course.title || course.description, course.price || 299000);
-                      }}
-                    >
-                      <Play size={16} />
-                      🔥 사전예약
-                    </button>
-                  </div>
+                  )}
                 </div>
                 
                 <div className="card-content premium-content">
@@ -402,7 +433,12 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
                   <div className="premium-price-info">
                     <span className="price premium-price">₩{course.price?.toLocaleString()}</span>
                     <span className="original-price premium-original">₩{course.originalPrice?.toLocaleString()}</span>
-                    <span className="discount-badge premium-discount">40% 런칭할인</span>
+                    <span className="discount-badge premium-discount">
+                      {course.originalPrice && course.price 
+                        ? `${Math.round((1 - course.price / course.originalPrice) * 100)}% ${course.isComingSoon ? '런칭할인' : '할인'}`
+                        : '할인'
+                      }
+                    </span>
                   </div>
                 </div>
               </div>
@@ -637,6 +673,8 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
             ))}
           </div>
         </section>
+
+
 
         {/* 다큐멘터리 전문 섹션 */}
         <section className="masterclass-section">

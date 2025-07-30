@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './index.css';
 
@@ -19,13 +19,24 @@ const GoogleAICoursePage = React.lazy(() => import('./components/GoogleAICourseP
 const AIBusinessCoursePage = React.lazy(() => import('./components/AIBusinessCoursePage'));
 const AICodingCoursePage = React.lazy(() => import('./components/AICodingCoursePage'));
 const AIEducationDocumentaryPage = React.lazy(() => import('./components/AIEducationDocumentaryPage'));
+const VibeCodingCoursePage = React.lazy(() => import('./components/VibeCodingCoursePage'));
 const PaymentPage = React.lazy(() => import('./components/PaymentPage'));
 const PromptEngineeringMasterPage = React.lazy(() => import('./components/PromptEngineeringMasterPage'));
 const FAQPage = React.lazy(() => import('./components/FAQPage'));
+const CEOPage = React.lazy(() => import('./components/CEOPage'));
 
 // 각 페이지 컴포넌트를 래핑해서 useNavigate 사용
 const MainPageWrapper = () => {
   const navigate = useNavigate();
+
+  // 404 페이지에서 리다이렉트된 경우 처리
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectPath = urlParams.get('redirect');
+    if (redirectPath) {
+      navigate('/' + redirectPath);
+    }
+  }, [navigate]);
 
   const handleCourseSelect = (courseId: number) => {
     // 다큐멘터리 (ID 2)인 경우 다큐멘터리 페이지로 이동
@@ -40,6 +51,9 @@ const MainPageWrapper = () => {
     } else if (courseId === 5) {
       // AI Coding 클래스 (ID 5)인 경우 AI Coding 페이지로 이동
       navigate('/ai-coding');
+    } else if (courseId === 6) {
+      // 바이브코딩 클래스 (ID 6)인 경우 바이브코딩 페이지로 이동
+      navigate('/vibe-coding');
     } else if (courseId === 999) {
       // 프롬프트의정석 (ID 999)인 경우 프롬프트 엔지니어링 페이지로 이동
       navigate('/prompt-engineering');
@@ -115,6 +129,16 @@ const AIEducationDocumentaryPageWrapper = () => {
   return <AIEducationDocumentaryPage onBack={handleBack} />;
 };
 
+const VibeCodingCoursePageWrapper = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/');
+  };
+
+  return <VibeCodingCoursePage onBack={handleBack} />;
+};
+
 const PaymentPageWrapper = () => {
   const navigate = useNavigate();
 
@@ -159,6 +183,18 @@ const FAQPageWrapper = () => {
   );
 };
 
+const CEOPageWrapper = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/');
+  };
+
+  return (
+    <CEOPage onBack={handleBack} />
+  );
+};
+
 function App() {
   return (
     <Router>
@@ -171,9 +207,11 @@ function App() {
             <Route path="/ai-business" element={<AIBusinessCoursePageWrapper />} />
             <Route path="/ai-coding" element={<AICodingCoursePageWrapper />} />
             <Route path="/documentary" element={<AIEducationDocumentaryPageWrapper />} />
+            <Route path="/vibe-coding" element={<VibeCodingCoursePageWrapper />} />
             <Route path="/payment" element={<PaymentPageWrapper />} />
             <Route path="/prompt-engineering" element={<PromptEngineeringMasterPageWrapper />} />
             <Route path="/faq" element={<FAQPageWrapper />} />
+            <Route path="/ceo" element={<CEOPageWrapper />} />
           </Routes>
         </Suspense>
       </div>

@@ -1187,7 +1187,240 @@ export const premiumClasses = [
     isNew: true,
     isPremium: true,
     launchDate: '2024-09-01'
-  }
+    }
 ];
 
-export const allCourses = [chatGPTCourse, aiBusinessCourse, aiCodingCourse, premiumCourse]; 
+export const vibeCodingCourse: Course = {
+  id: 'vibe-coding-money-making',
+  title: '바이브코딩으로 돈벌기 - Cursor AI 완전정복',
+  description: '🚀 Cursor AI로 나 혼자 끝내는 1인 개발 수익화! 월 1000만원 수익 달성을 위한 실전 바이브코딩 마스터클래스',
+  category: 'AI 바이브코딩',
+  instructor: 'AI 멘토 JAY',
+  rating: 4.9,
+  studentCount: 89,
+  totalDuration: '12시간 30분',
+  price: 199000,
+  isPaid: true,
+  createdAt: new Date('2024-07-29'),
+  updatedAt: new Date('2024-07-29'),
+  lessons: [
+    {
+      id: 1,
+      title: '1강. 🔥 바이브코딩이 뭔가요? Cursor AI로 혼자서 앱 만들어 돈벌기 시작',
+      duration: '45분',
+      completed: false,
+      description: '바이브코딩의 정의부터 Cursor AI 설치, 첫 번째 수익형 앱까지! 월 1000만원 버는 1인 개발자들의 비밀을 공개합니다. 개발 경험 전혀 없어도 OK!',
+      videoUrl: 'https://youtu.be/example-vibe1',
+      hasQuiz: true,
+      quiz: {
+        id: 1,
+        lessonId: 1,
+        requiredScore: 80,
+        timeLimit: 10,
+        questions: [
+          {
+            id: 1,
+            type: 'multiple',
+            question: '바이브코딩의 핵심 철학은 무엇인가요?',
+            options: ['완벽한 코드 작성', '빠른 프로토타이핑과 수익화', '복잡한 알고리즘 구현', '대규모 팀 협업'],
+            correctAnswer: 1,
+            explanation: '바이브코딩은 완벽함보다는 빠른 실행과 검증, 그리고 실제 수익 창출에 중점을 둡니다.'
+          },
+          {
+            id: 2,
+            type: 'true-false',
+            question: 'Cursor AI는 개발 경험이 없어도 사용할 수 있습니다.',
+            correctAnswer: 1,
+            explanation: 'Cursor AI는 자연어로 코드를 생성해주기 때문에 개발 경험이 없어도 충분히 활용 가능합니다.'
+          }
+        ]
+      }
+    },
+    {
+      id: 2,
+      title: '2강. 💡 아이디어를 돈이 되는 앱으로 바꾸는 검증 프로세스',
+      duration: '55분',
+      completed: false,
+      description: '좋은 아이디어는 많지만 돈이 되는 아이디어는 드뭅니다. MVP 설계부터 시장 검증까지, 실패하지 않는 앱 기획의 모든 것을 배워보세요.',
+      videoUrl: 'https://youtu.be/example-vibe2',
+      hasQuiz: true,
+      quiz: {
+        id: 2,
+        lessonId: 2,
+        requiredScore: 80,
+        timeLimit: 10,
+        questions: [
+          {
+            id: 1,
+            type: 'multiple',
+            question: 'MVP(Minimum Viable Product)의 가장 중요한 목적은?',
+            options: ['완벽한 기능 구현', '빠른 시장 검증', '예쁜 디자인', '많은 기능 포함'],
+            correctAnswer: 1,
+            explanation: 'MVP는 최소한의 기능으로 시장의 반응을 빠르게 검증하는 것이 핵심 목적입니다.'
+          }
+        ]
+      }
+    },
+    {
+      id: 3,
+      title: '3강. 🛠️ Cursor AI와 함께하는 실전 앱 개발 - Todo부터 커머스까지',
+      duration: '1시간 20분',
+      completed: false,
+      description: 'Cursor AI의 진짜 파워를 경험해보세요! 간단한 Todo 앱부터 수익형 커머스 앱까지, 실제 개발 과정을 라이브로 진행합니다.',
+      videoUrl: 'https://youtu.be/example-vibe3',
+      hasQuiz: true,
+      quiz: {
+        id: 3,
+        lessonId: 3,
+        requiredScore: 80,
+        timeLimit: 15,
+        questions: [
+          {
+            id: 1,
+            type: 'multiple',
+            question: 'Cursor AI에서 효과적인 프롬프트 작성법은?',
+            options: ['간단하게만 작성', '구체적이고 맥락이 있는 설명', '코드만 요청', '영어로만 작성'],
+            correctAnswer: 1,
+            explanation: '구체적인 요구사항과 맥락을 포함한 프롬프트가 더 정확한 코드를 생성합니다.'
+          }
+        ]
+      }
+    },
+    {
+      id: 4,
+      title: '4강. 🎨 Figma MCP 연동으로 디자인을 코드로 바로 변환하기',
+      duration: '50분',
+      completed: false,
+      description: 'Figma에서 디자인한 것을 바로 코드로! MCP(Model Context Protocol) 연동으로 디자인-개발 간 간극을 없애는 혁신적인 워크플로우를 경험하세요.',
+      videoUrl: 'https://youtu.be/example-vibe4',
+      hasQuiz: true
+    },
+    {
+      id: 5,
+      title: '5강. 🗄️ Supabase로 데이터베이스 없이 백엔드 구축하기',
+      duration: '1시간 10분',
+      completed: false,
+      description: '복잡한 서버 구축은 이제 그만! Supabase로 인증, 데이터베이스, API를 한 번에 해결하고 확장 가능한 앱을 만들어보세요.',
+      videoUrl: 'https://youtu.be/example-vibe5',
+      hasQuiz: true,
+      quiz: {
+        id: 5,
+        lessonId: 5,
+        requiredScore: 80,
+        timeLimit: 10,
+        questions: [
+          {
+            id: 1,
+            type: 'multiple',
+            question: 'Supabase의 가장 큰 장점은?',
+            options: ['무료 사용', 'PostgreSQL 기반', '복잡한 백엔드를 간단하게', '모든 것'],
+            correctAnswer: 3,
+            explanation: 'Supabase는 무료 사용 가능, PostgreSQL 기반의 안정성, 복잡한 백엔드 간소화 등 모든 장점을 제공합니다.'
+          }
+        ]
+      }
+    },
+    {
+      id: 6,
+      title: '6강. 💰 수익화 전략 - SaaS, 커미션, 구독까지 모든 비즈니스 모델',
+      duration: '1시간 5분',
+      completed: false,
+      description: '앱을 만들었다면 이제 돈을 벌어야죠! SaaS, 커미션, 구독, 광고 등 다양한 수익화 모델을 실제 사례와 함께 배워보세요.',
+      videoUrl: 'https://youtu.be/example-vibe6',
+      hasQuiz: true,
+      quiz: {
+        id: 6,
+        lessonId: 6,
+        requiredScore: 85,
+        timeLimit: 15,
+        questions: [
+          {
+            id: 1,
+            type: 'multiple',
+            question: '1인 개발자에게 가장 적합한 초기 수익 모델은?',
+            options: ['대규모 광고', '프리미엄 구독', '단순한 일회성 결제', 'B2B 영업'],
+            correctAnswer: 2,
+            explanation: '초기에는 복잡한 모델보다는 단순한 일회성 결제로 시작해서 점차 확장하는 것이 효과적입니다.'
+          }
+        ]
+      }
+    },
+    {
+      id: 7,
+      title: '7강. 🚀 배포와 운영 - Vercel, Netlify로 5분만에 전세계 배포',
+      duration: '40분',
+      completed: false,
+      description: '만든 앱을 전세계에 공개하세요! Vercel, Netlify를 활용한 초간단 배포부터 도메인 연결, HTTPS 설정까지 한 번에!',
+      videoUrl: 'https://youtu.be/example-vibe7',
+      hasQuiz: true
+    },
+    {
+      id: 8,
+      title: '8강. 📈 성장 해킹 - 사용자 확보부터 바이럴까지',
+      duration: '1시간',
+      completed: false,
+      description: '좋은 앱을 만들었다면 이제 사람들이 알아야 합니다. Product Hunt 런칭, 소셜미디어 마케팅, 바이럴 기법까지 실전 그로스 해킹을 배워보세요.',
+      videoUrl: 'https://youtu.be/example-vibe8',
+      hasQuiz: true,
+      quiz: {
+        id: 8,
+        lessonId: 8,
+        requiredScore: 80,
+        timeLimit: 12,
+        questions: [
+          {
+            id: 1,
+            type: 'multiple',
+            question: 'Product Hunt 런칭의 핵심 성공 요소는?',
+            options: ['완벽한 제품', '사전 커뮤니티 구축', '높은 가격', '복잡한 기능'],
+            correctAnswer: 1,
+            explanation: 'Product Hunt에서 성공하려면 런칭 전에 미리 관심있는 사용자들의 커뮤니티를 구축하는 것이 중요합니다.'
+          }
+        ]
+      }
+    },
+    {
+      id: 9,
+      title: '9강. 🔧 유지보수와 확장 - 사용자 피드백을 코드로 바로 반영',
+      duration: '45분',
+      completed: false,
+      description: '출시는 시작일 뿐! 사용자 피드백을 받아 Cursor AI로 빠르게 개선하고, 새로운 기능을 추가하는 지속 가능한 개발 프로세스를 익혀보세요.',
+      videoUrl: 'https://youtu.be/example-vibe9',
+      hasQuiz: true
+    },
+    {
+      id: 10,
+      title: '10강. 💎 실전 프로젝트 - 30분만에 수익형 앱 만들어 런칭하기',
+      duration: '1시간 30분',
+      completed: false,
+      description: '🔥 최종 실전 미션! 아이디어 기획부터 개발, 배포, 마케팅까지 모든 과정을 30분만에 완주하는 극한의 바이브코딩 챌린지입니다!',
+      videoUrl: 'https://youtu.be/example-vibe10',
+      hasQuiz: true,
+      quiz: {
+        id: 10,
+        lessonId: 10,
+        requiredScore: 90,
+        timeLimit: 20,
+        questions: [
+          {
+            id: 1,
+            type: 'multiple',
+            question: '바이브코딩으로 성공하기 위한 가장 중요한 마인드셋은?',
+            options: ['완벽주의', '빠른 실행과 반복', '복잡한 계획', '혼자만의 작업'],
+            correctAnswer: 1,
+            explanation: '바이브코딩의 핵심은 완벽함을 추구하기보다는 빠르게 만들고, 테스트하고, 개선하는 반복적인 과정입니다.'
+          },
+          {
+            id: 2,
+            type: 'true-false',
+            question: '1인 개발자도 월 1000만원 이상의 수익을 올릴 수 있습니다.',
+            correctAnswer: 1,
+            explanation: '실제로 많은 1인 개발자들이 바이브코딩 방식으로 월 1000만원 이상의 수익을 달성하고 있습니다.'
+          }
+        ]
+      }
+    }
+  ]
+};
+
+export const allCourses = [chatGPTCourse, aiBusinessCourse, aiCodingCourse, premiumCourse, vibeCodingCourse]; 
