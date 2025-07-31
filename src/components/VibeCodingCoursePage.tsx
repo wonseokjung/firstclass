@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Users, Star, Calendar, CheckCircle, Play } from 'lucide-react';
+import { Clock, Users, Star, CheckCircle, Play } from 'lucide-react';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { vibeCodingCourse } from '../data/courseData';
 
@@ -17,7 +17,6 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
   const course = vibeCodingCourse;
   const originalPrice = 398000;
   const currentPrice = 199000;
-  const discount = Math.round(((originalPrice - currentPrice) / originalPrice) * 100);
 
   useEffect(() => {
     const initializeTossPayments = async () => {
