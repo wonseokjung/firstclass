@@ -196,9 +196,11 @@ interface MainPageProps {
   onCourseSelect: (courseId: number) => void;
   onPaymentClick: () => void;
   onFAQClick: () => void;
+  onLoginClick: () => void;
+  onSignUpClick: () => void;
 }
 
-const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onFAQClick }) => {
+const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onFAQClick, onLoginClick, onSignUpClick }) => {
   const gridRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   // 결제 모달 state
@@ -281,8 +283,8 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
             <button className="nav-link" onClick={() => window.location.href = '/ceo'}>CEO</button>
             <button className="nav-link" onClick={onFAQClick}>FAQ</button>
             <button className="nav-link">View Plans</button>
-            <button className="nav-link">Log In</button>
-            <button className="cta-button">Get CLATHON</button>
+            <button className="nav-link" onClick={onLoginClick}>Log In</button>
+            <button className="cta-button" onClick={onSignUpClick}>회원가입</button>
           </div>
         </div>
       </header>

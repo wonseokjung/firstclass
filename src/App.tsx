@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './index.css';
+import AzureTableService from './services/azureTableService';
 
 // LoadingSpinner 컴포넌트 인라인 정의
 const LoadingSpinner: React.FC = () => (
@@ -24,6 +25,8 @@ const PaymentPage = React.lazy(() => import('./components/PaymentPage'));
 const PromptEngineeringMasterPage = React.lazy(() => import('./components/PromptEngineeringMasterPage'));
 const FAQPage = React.lazy(() => import('./components/FAQPage'));
 const CEOPage = React.lazy(() => import('./components/CEOPage'));
+const LoginPage = React.lazy(() => import('./components/LoginPage'));
+const SignUpPage = React.lazy(() => import('./components/SignUpPage'));
 
 // 각 페이지 컴포넌트를 래핑해서 useNavigate 사용
 const MainPageWrapper = () => {
@@ -66,15 +69,25 @@ const MainPageWrapper = () => {
     navigate('/payment');
   };
 
-  const handleFAQClick = () => {
+    const handleFAQClick = () => {
     navigate('/faq');
+  };
+
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
+  const handleSignUpClick = () => {
+    navigate('/signup');
   };
 
   return (
     <MainPage 
-      onCourseSelect={handleCourseSelect}
+      onCourseSelect={handleCourseSelect} 
       onPaymentClick={handlePaymentClick}
       onFAQClick={handleFAQClick}
+      onLoginClick={handleLoginClick}
+      onSignUpClick={handleSignUpClick}
     />
   );
 };
@@ -195,7 +208,45 @@ const CEOPageWrapper = () => {
   );
 };
 
+const LoginPageWrapper = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/');
+  };
+
+  return (
+    <LoginPage onBack={handleBack} />
+  );
+};
+
+const SignUpPageWrapper = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/');
+  };
+
+  return (
+    <SignUpPage onBack={handleBack} />
+  );
+};
+
 function App() {
+  // 앱 시작 시 Azure Table Storage 테이블 초기화
+  useEffect(() => {
+    const initializeApp = async () => {
+      try {
+        await AzureTableService.initializeTables();
+        console.log('CLATHON Azure Tables initialized successfully');
+      } catch (error) {
+        console.error('Failed to initialize Azure Tables:', error);
+      }
+    };
+
+    initializeApp();
+  }, []);
+
   return (
     <Router>
       <div className="App">
@@ -212,6 +263,8 @@ function App() {
             <Route path="/prompt-engineering" element={<PromptEngineeringMasterPageWrapper />} />
             <Route path="/faq" element={<FAQPageWrapper />} />
             <Route path="/ceo" element={<CEOPageWrapper />} />
+            <Route path="/login" element={<LoginPageWrapper />} />
+            <Route path="/signup" element={<SignUpPageWrapper />} />
           </Routes>
         </Suspense>
       </div>
