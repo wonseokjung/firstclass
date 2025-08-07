@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Clock, Users, Star, CheckCircle, Play } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { vibeCodingCourse } from '../data/courseData';
+import { ClathonAzureService } from '../services/azureTableService';
 
 interface VibeCodingCoursePageProps {
   onBack: () => void;
 }
 
 const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [tossPayments, setTossPayments] = useState<any>(null);
+  const [hasAccess, setHasAccess] = useState(false);
+  const [isCheckingAccess, setIsCheckingAccess] = useState(true);
 
   // 토스페이먼츠 테스트 클라이언트 키
   const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
@@ -17,6 +22,39 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
   const course = vibeCodingCourse;
   const originalPrice = 398000;
   const currentPrice = 199000;
+
+  // 🔒 수강 권한 확인
+  useEffect(() => {
+    const checkAccess = async () => {
+      const userInfo = localStorage.getItem('clathon_user');
+      if (!userInfo) {
+        alert('로그인이 필요합니다.');
+        navigate('/login');
+        return;
+      }
+
+      const user = JSON.parse(userInfo);
+      const courseId = '바이브코딩으로-돈벌기';
+
+      try {
+        const accessGranted = await ClathonAzureService.hasAccess(user.userId, courseId);
+        if (!accessGranted) {
+          alert('이 강의를 수강하려면 먼저 결제해주세요.');
+          navigate('/');
+          return;
+        }
+        setHasAccess(true);
+      } catch (error) {
+        console.error('수강 권한 확인 실패:', error);
+        alert('수강 권한을 확인하는 중 오류가 발생했습니다.');
+        navigate('/');
+      } finally {
+        setIsCheckingAccess(false);
+      }
+    };
+
+    checkAccess();
+  }, [navigate]);
 
   useEffect(() => {
     const initializeTossPayments = async () => {
@@ -28,8 +66,10 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
       }
     };
 
-    initializeTossPayments();
-  }, []);
+    if (hasAccess) {
+      initializeTossPayments();
+    }
+  }, [hasAccess]);
 
   const handlePayment = async () => {
     if (!tossPayments) {
@@ -57,6 +97,41 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
       setIsLoading(false);
     }
   };
+
+  // 🔄 접근 권한 확인 중
+  if (isCheckingAccess) {
+    return (
+      <div className="course-page">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">수강 권한을 확인하는 중...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ❌ 접근 권한 없음
+  if (!hasAccess) {
+    return (
+      <div className="course-page">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="text-red-500 text-6xl mb-4">🔒</div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">접근 권한이 없습니다</h2>
+            <p className="text-gray-600 mb-4">바이브코딩 강의를 수강하려면 먼저 결제해주세요.</p>
+            <button 
+              onClick={() => navigate('/')}
+              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            >
+              메인으로 돌아가기
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="course-page">

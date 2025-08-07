@@ -1,8 +1,17 @@
 // Azure SDK 대신 REST API 직접 호출 사용
 import { v4 as uuidv4 } from 'uuid';
 
-// Azure Table Storage 단일 테이블 SAS URL (users 테이블 하나로 모든 데이터 관리)
-const CLATHON_TABLE_URL = 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-08-06T01:38:29Z&se=2030-10-02T09:53:00Z&spr=https&sv=2024-11-04&sig=eKj3S3wr0QyWiDhA8EJzgE6c7LAlIcysVdqiqjffb%2Bw%3D&tn=users';
+// Azure Table Storage SAS URLs 설정 (모든 테이블)
+const AZURE_SAS_URLS = {
+  users: 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-08-06T01:38:29Z&se=2030-10-02T09:53:00Z&spr=https&sv=2024-11-04&sig=eKj3S3wr0QyWiDhA8EJzgE6c7LAlIcysVdqiqjffb%2Bw%3D&tn=users',
+  courses: 'https://clathonstorage.table.core.windows.net/courses?sp=raud&st=2025-08-06T01:39:22Z&se=2029-06-05T09:54:00Z&spr=https&sv=2024-11-04&sig=j1%2FNcNopIo3415hYpRY5bqSMR33fg1AadNh2bQMNUuE%3D&tn=courses',
+  payments: 'https://clathonstorage.table.core.windows.net/payments?sp=raud&st=2025-08-06T01:39:55Z&se=2029-10-06T09:54:00Z&spr=https&sv=2024-11-04&sig=nwK6qacO00MBEDiscjsz4Cd%2FAUMSSJ6Lyy4bodsmdk0%3D&tn=payments',
+  enrollments: 'https://clathonstorage.table.core.windows.net/enrollments?sp=raud&st=2025-08-06T01:40:51Z&se=2029-11-06T09:55:00Z&spr=https&sv=2024-11-04&sig=MqVKIT%2FxFSx2bECNUEgm2VG%2FSYD4KVdBzFKtApATsRU%3D&tn=enrollments',
+  sessions: 'https://clathonstorage.table.core.windows.net/sessions?sp=raud&st=2025-08-06T01:41:39Z&se=2032-07-08T09:56:00Z&spr=https&sv=2024-11-04&sig=KRQcJlFcV4oYI7XbvCe%2FacE9R%2Fi%2Fm3UCLOjWDK2iZcI%3D&tn=sessions',
+  test: 'https://clathonstorage.table.core.windows.net/test?sp=r&st=2025-08-05T09:07:41Z&se=2029-01-05T17:22:00Z&spr=https&sv=2024-11-04&sig=4UxjbdBZ6wEc4EmLkhrgd3damrkUFDK0367ateKhuTI%3D&tn=test',
+  // 단일 테이블 접근법을 위한 통합 테이블 (문제 해결 시 활성화 예정)
+  clathon: 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-08-06T01:38:29Z&se=2030-10-02T09:53:00Z&spr=https&sv=2024-11-04&sig=eKj3S3wr0QyWiDhA8EJzgE6c7LAlIcysVdqiqjffb%2Bw%3D&tn=users'
+};
 
 // 환경변수에서 Connection String 가져오기 (백업용) - 현재는 SAS URL 사용으로 미사용
 // const CONNECTION_STRING = process.env.REACT_APP_AZURE_STORAGE_CONNECTION_STRING || 
@@ -297,11 +306,11 @@ export class AzureTableService {
         mode: 'cors',
       });
       
-                if (response.ok) {
+      if (response.ok) {
             await response.json(); // 데이터 읽기만 하고 사용하지 않음
             console.log(`✅ ${tableName} 테이블 연결 성공! (상태: ${response.status})`);
             results[tableName] = true;
-          } else {
+      } else {
             console.log(`❌ ${tableName} 테이블 연결 실패 (상태: ${response.status})`);
             results[tableName] = false;
             allTablesSuccess = false;
@@ -888,21 +897,21 @@ export class AzureTableService {
     } catch (error: any) {
       console.error('❌ Azure 세션 검증 실패, LocalStorage 사용:', error.message);
       
-      try {
-        const sessions = JSON.parse(localStorage.getItem('clathon_sessions') || '[]');
-        const session = sessions.find((s: UserSession) => 
-          s.partitionKey === userId && s.rowKey === sessionId
-        );
-        
-        if (!session) {
+    try {
+      const sessions = JSON.parse(localStorage.getItem('clathon_sessions') || '[]');
+      const session = sessions.find((s: UserSession) => 
+        s.partitionKey === userId && s.rowKey === sessionId
+      );
+      
+      if (!session) {
           console.log('❌ LocalStorage에서 세션을 찾을 수 없음:', sessionId);
-          return false;
-        }
-        
-        const now = new Date();
-        const expiresAt = new Date(session.expiresAt);
-        
-        const isValid = now < expiresAt;
+        return false;
+      }
+      
+      const now = new Date();
+      const expiresAt = new Date(session.expiresAt);
+      
+      const isValid = now < expiresAt;
         console.log(`⚠️ LocalStorage 세션 유효성 검사:`, sessionId, isValid);
       return isValid;
     } catch (error) {
@@ -1021,21 +1030,24 @@ export class AzureTableService {
   }
 }
 
-// === Azure 단일 테이블 데이터 관리 시스템 ===
+// === ✅ 새로운 Azure 단일 테이블 시스템 (users 테이블만 사용) ===
 // users 테이블 하나로 모든 데이터 관리:
-// - PartitionKey: 데이터 타입 (USER, PURCHASE, COURSE, SESSION)
+// - PartitionKey: 데이터 타입 (USER, PURCHASE)
 // - RowKey: 고유 ID
 // - 추가 컬럼들로 각 데이터 타입별 정보 저장
+
+const USERS_TABLE_URL = 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-08-06T01:38:29Z&se=2030-10-02T09:53:00Z&spr=https&sv=2024-11-04&sig=eKj3S3wr0QyWiDhA8EJzgE6c7LAlIcysVdqiqjffb%2Bw%3D&tn=users';
+
 export class ClathonAzureService {
   
   // Azure 단일 테이블에 데이터 저장
   private static async azureSingleRequest(method: string = 'GET', body?: any, entityId?: string): Promise<any> {
-    let url = CLATHON_TABLE_URL;
+    let url = USERS_TABLE_URL;
     
     // 특정 엔티티 조회/수정/삭제시 URL 구성
     if (entityId && method !== 'POST') {
       const [partitionKey, rowKey] = entityId.split('|');
-      url = `${CLATHON_TABLE_URL.split('?')[0]}(PartitionKey='${encodeURIComponent(partitionKey)}',RowKey='${encodeURIComponent(rowKey)}')${CLATHON_TABLE_URL.includes('?') ? '&' + CLATHON_TABLE_URL.split('?')[1] : ''}`;
+      url = `${USERS_TABLE_URL.split('?')[0]}(PartitionKey='${encodeURIComponent(partitionKey)}',RowKey='${encodeURIComponent(rowKey)}')${USERS_TABLE_URL.includes('?') ? '&' + USERS_TABLE_URL.split('?')[1] : ''}`;
     }
     
     const headers: Record<string, string> = {
@@ -1114,7 +1126,7 @@ export class ClathonAzureService {
   static async loginUser(email: string, password: string) {
     // 이메일로 사용자 검색
     const filterQuery = `$filter=dataType eq 'USER' and email eq '${encodeURIComponent(email)}'`;
-    const url = `${CLATHON_TABLE_URL}&${filterQuery}`;
+    const url = `${USERS_TABLE_URL}&${filterQuery}`;
     
     const response = await fetch(url, {
       method: 'GET',
@@ -1170,7 +1182,7 @@ export class ClathonAzureService {
   static async hasAccess(userId: string, courseId: string): Promise<boolean> {
     try {
       const filterQuery = `$filter=dataType eq 'PURCHASE' and userId eq '${encodeURIComponent(userId)}' and courseId eq '${encodeURIComponent(courseId)}'`;
-      const url = `${CLATHON_TABLE_URL}&${filterQuery}`;
+      const url = `${USERS_TABLE_URL}&${filterQuery}`;
       
       const response = await fetch(url, {
         method: 'GET',
@@ -1216,6 +1228,53 @@ export class ClathonAzureService {
   private static async verifyPassword(password: string, hashedPassword: string): Promise<boolean> {
     const hashToVerify = await this.hashPassword(password);
     return hashToVerify === hashedPassword;
+  }
+
+  // 사용자가 구매한 모든 강의 조회
+  static async getUserPurchases(userId: string) {
+    try {
+      const filterQuery = `$filter=dataType eq 'PURCHASE' and userId eq '${encodeURIComponent(userId)}'`;
+      const url = `${USERS_TABLE_URL}&${filterQuery}`;
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json;odata=nometadata',
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const purchases = data.value || [];
+        
+        // 만료일 기준으로 정렬 (최신 구매순)
+        purchases.sort((a: any, b: any) => new Date(b.purchaseDate).getTime() - new Date(a.purchaseDate).getTime());
+        
+        console.log(`✅ 사용자 구매 내역 조회: ${purchases.length}개 강의`);
+        return purchases;
+      }
+      
+      return [];
+    } catch (error) {
+      console.error('사용자 구매 내역 조회 실패:', error);
+      return [];
+    }
+  }
+
+  // 사용자의 활성 강의 목록 (만료되지 않은 강의만)
+  static async getActiveCourses(userId: string) {
+    const allPurchases = await this.getUserPurchases(userId);
+    const now = new Date();
+    
+    const activeCourses = allPurchases.filter((purchase: any) => {
+      const expiresAt = new Date(purchase.expiresAt);
+      return now <= expiresAt && purchase.status === 'completed';
+    });
+    
+    console.log(`✅ 활성 강의: ${activeCourses.length}개`);
+    return activeCourses;
   }
 }
 

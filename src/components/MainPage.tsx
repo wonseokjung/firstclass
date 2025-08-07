@@ -202,7 +202,7 @@ interface MainPageProps {
 }
 
 const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onFAQClick, onLoginClick, onSignUpClick }) => {
-  const gridRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const gridRefs = useRef<(HTMLDivElement | null)[]>(new Array(7).fill(null)); // 7개 섹션 (프리미엄 추가)
   
   // 결제 모달 state
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -693,7 +693,82 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
           </div>
         </section>
 
-
+        {/* 프리미엄 강의 섹션 */}
+        <section className="masterclass-section">
+          <div className="section-header-mc">
+            <h2 className="section-title-mc">
+              <span className="highlight-category">Premium Courses</span>
+              <span className="premium-badge">💎 PREMIUM</span>
+            </h2>
+            <div className="section-nav">
+              <button 
+                className="nav-arrow"
+                aria-label="Previous Premium courses"
+                onClick={() => handleGridScroll(6, 'left')}
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button 
+                className="nav-arrow"
+                aria-label="Next Premium courses"
+                onClick={() => handleGridScroll(6, 'right')}
+              >
+                <ChevronRight size={24} />
+              </button>
+            </div>
+          </div>
+          
+          <div 
+            className="masterclass-grid"
+            ref={(el) => { gridRefs.current[6] = el; }}
+          >
+            {premiumClasses.map((course) => (
+              <div key={course.id} className="masterclass-card premium-card" onClick={() => handleCourseClick(course)}>
+                <div className="card-image-container">
+                  <OptimizedImage 
+                    src={course.image} 
+                    alt={course.instructor}
+                    className="instructor-image"
+                    loading="lazy"
+                    placeholder="true"
+                  />
+                  <div className="premium-badge-overlay">
+                    {course.isComingSoon ? 'COMING SOON' : `₩${course.price?.toLocaleString()}`}
+                  </div>
+                  <div className="card-overlay">
+                    <button 
+                      className="watch-trailer-btn premium-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (course.isComingSoon) {
+                          alert('곧 출시 예정입니다!');
+                        } else {
+                          handlePaymentClick(course);
+                        }
+                      }}
+                    >
+                      <Play size={16} />
+                      {course.isComingSoon ? 'Coming Soon' : 'Purchase Course'}
+                    </button>
+                  </div>
+                </div>
+                <div className="course-info">
+                  <h3 className="course-title">{course.title}</h3>
+                  <p className="course-subtitle">{course.subtitle}</p>
+                  <p className="course-description">{course.description}</p>
+                  {!course.isComingSoon && (
+                    <div className="price-info">
+                      <span className="current-price">₩{course.price?.toLocaleString()}</span>
+                      {course.originalPrice && (
+                        <span className="original-price">₩{course.originalPrice.toLocaleString()}</span>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* 다큐멘터리 전문 섹션 */}
         <section className="masterclass-section">
