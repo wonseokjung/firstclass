@@ -2,6 +2,7 @@ import React, { useRef, useCallback, useState } from 'react';
 import { Play, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 import PaymentComponent from './PaymentComponent';
+import { ClathonAzureService } from '../services/azureTableService';
 
 // 강의 타입 정의
 interface Course {
@@ -226,6 +227,22 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
 
   const handlePaymentSuccess = (paymentData: any) => {
     console.log('결제 성공:', paymentData);
+    
+    // 🚀 Azure 단일 테이블에 구매 정보 저장
+    const userInfo = localStorage.getItem('clathon_user');
+    if (userInfo && selectedCourse) {
+      const user = JSON.parse(userInfo);
+      const courseId = selectedCourse.title.toLowerCase().replace(/\s+/g, '-');
+      
+      ClathonAzureService.purchaseCourse(
+        user.userId, 
+        courseId, 
+        selectedCourse.title, 
+        selectedCourse.price
+      );
+      console.log(`✅ Azure 구매 완료: ${courseId}`);
+    }
+    
     alert('결제가 완료되었습니다! 수강을 시작해보세요.');
     setShowPaymentModal(false);
     setSelectedCourse(null);

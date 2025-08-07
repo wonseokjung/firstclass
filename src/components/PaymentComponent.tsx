@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
+import { ClathonAzureService } from '../services/azureTableService';
 
 interface PaymentComponentProps {
   courseTitle: string;

@@ -1,17 +1,8 @@
 // Azure SDK 대신 REST API 직접 호출 사용
 import { v4 as uuidv4 } from 'uuid';
 
-// Azure Table Storage SAS URLs 설정 (모든 테이블)
-const AZURE_SAS_URLS = {
-  users: 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-08-06T01:38:29Z&se=2030-10-02T09:53:00Z&spr=https&sv=2024-11-04&sig=eKj3S3wr0QyWiDhA8EJzgE6c7LAlIcysVdqiqjffb%2Bw%3D&tn=users',
-  courses: 'https://clathonstorage.table.core.windows.net/courses?sp=raud&st=2025-08-06T01:39:22Z&se=2029-06-05T09:54:00Z&spr=https&sv=2024-11-04&sig=j1%2FNcNopIo3415hYpRY5bqSMR33fg1AadNh2bQMNUuE%3D&tn=courses',
-  payments: 'https://clathonstorage.table.core.windows.net/payments?sp=raud&st=2025-08-06T01:39:55Z&se=2029-10-06T09:54:00Z&spr=https&sv=2024-11-04&sig=nwK6qacO00MBEDiscjsz4Cd%2FAUMSSJ6Lyy4bodsmdk0%3D&tn=payments',
-  enrollments: 'https://clathonstorage.table.core.windows.net/enrollments?sp=raud&st=2025-08-06T01:40:51Z&se=2029-11-06T09:55:00Z&spr=https&sv=2024-11-04&sig=MqVKIT%2FxFSx2bECNUEgm2VG%2FSYD4KVdBzFKtApATsRU%3D&tn=enrollments',
-  sessions: 'https://clathonstorage.table.core.windows.net/sessions?sp=raud&st=2025-08-06T01:41:39Z&se=2032-07-08T09:56:00Z&spr=https&sv=2024-11-04&sig=KRQcJlFcV4oYI7XbvCe%2FacE9R%2Fi%2Fm3UCLOjWDK2iZcI%3D&tn=sessions',
-  test: 'https://clathonstorage.table.core.windows.net/test?sp=r&st=2025-08-05T09:07:41Z&se=2029-01-05T17:22:00Z&spr=https&sv=2024-11-04&sig=4UxjbdBZ6wEc4EmLkhrgd3damrkUFDK0367ateKhuTI%3D&tn=test',
-  // 단일 테이블 접근법을 위한 통합 테이블 (문제 해결 시 활성화 예정)
-  clathon: 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-08-06T01:38:29Z&se=2030-10-02T09:53:00Z&spr=https&sv=2024-11-04&sig=eKj3S3wr0QyWiDhA8EJzgE6c7LAlIcysVdqiqjffb%2Bw%3D&tn=users'
-};
+// Azure Table Storage 단일 테이블 SAS URL (users 테이블 하나로 모든 데이터 관리)
+const CLATHON_TABLE_URL = 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-08-06T01:38:29Z&se=2030-10-02T09:53:00Z&spr=https&sv=2024-11-04&sig=eKj3S3wr0QyWiDhA8EJzgE6c7LAlIcysVdqiqjffb%2Bw%3D&tn=users';
 
 // 환경변수에서 Connection String 가져오기 (백업용) - 현재는 SAS URL 사용으로 미사용
 // const CONNECTION_STRING = process.env.REACT_APP_AZURE_STORAGE_CONNECTION_STRING || 
@@ -1027,6 +1018,204 @@ export class AzureTableService {
       console.error('❌ 수강 권한 확인 실패:', error.message);
       return { hasAccess: false, reason: '수강 권한 확인 중 오류가 발생했습니다.' };
     }
+  }
+}
+
+// === Azure 단일 테이블 데이터 관리 시스템 ===
+// users 테이블 하나로 모든 데이터 관리:
+// - PartitionKey: 데이터 타입 (USER, PURCHASE, COURSE, SESSION)
+// - RowKey: 고유 ID
+// - 추가 컬럼들로 각 데이터 타입별 정보 저장
+export class ClathonAzureService {
+  
+  // Azure 단일 테이블에 데이터 저장
+  private static async azureSingleRequest(method: string = 'GET', body?: any, entityId?: string): Promise<any> {
+    let url = CLATHON_TABLE_URL;
+    
+    // 특정 엔티티 조회/수정/삭제시 URL 구성
+    if (entityId && method !== 'POST') {
+      const [partitionKey, rowKey] = entityId.split('|');
+      url = `${CLATHON_TABLE_URL.split('?')[0]}(PartitionKey='${encodeURIComponent(partitionKey)}',RowKey='${encodeURIComponent(rowKey)}')${CLATHON_TABLE_URL.includes('?') ? '&' + CLATHON_TABLE_URL.split('?')[1] : ''}`;
+    }
+    
+    const headers: Record<string, string> = {
+      'Accept': 'application/json;odata=nometadata',
+      'Content-Type': 'application/json',
+    };
+    
+    if (method === 'PUT' || method === 'DELETE') {
+      headers['If-Match'] = '*';
+    }
+    
+    const options: RequestInit = {
+      method,
+      headers,
+      mode: 'cors',
+    };
+    
+    if (body && (method === 'POST' || method === 'PUT')) {
+      // Azure 형식으로 변환
+      const azureEntity: any = {};
+      for (const [key, value] of Object.entries(body)) {
+        let azureKey = key;
+        if (key === 'partitionKey') azureKey = 'PartitionKey';
+        else if (key === 'rowKey') azureKey = 'RowKey';
+        
+        azureEntity[azureKey] = value || '';
+      }
+      
+      options.body = JSON.stringify(azureEntity);
+      console.log(`🔧 Azure 단일 테이블 ${method}:`, azureEntity);
+    }
+    
+    try {
+      const response = await fetch(url, options);
+      
+      if (response.ok) {
+        if (method === 'DELETE') return { success: true };
+        const text = await response.text();
+        return text ? JSON.parse(text) : { success: true };
+      } else {
+        const errorText = await response.text();
+        console.error(`Azure 단일 테이블 ${method} 오류:`, response.status, errorText);
+        throw new Error(`Azure ${method} 실패: ${response.status}`);
+      }
+    } catch (error: any) {
+      console.error(`Azure 단일 테이블 ${method} 요청 실패:`, error.message);
+      throw error;
+    }
+  }
+
+  // 사용자 등록
+  static async registerUser(userData: { email: string; name: string; password: string; marketingAgreed: boolean }) {
+    const userId = uuidv4();
+    const passwordHash = await this.hashPassword(userData.password);
+    
+    const userEntity = {
+      partitionKey: 'USER',
+      rowKey: userId,
+      dataType: 'USER',
+      email: userData.email,
+      name: userData.name,
+      passwordHash,
+      emailVerified: false,
+      marketingAgreed: userData.marketingAgreed,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      lastLoginAt: ''
+    };
+    
+    await this.azureSingleRequest('POST', userEntity);
+    console.log('✅ Azure 단일 테이블에 사용자 등록 성공:', userData.email);
+    return userEntity;
+  }
+
+  // 사용자 로그인
+  static async loginUser(email: string, password: string) {
+    // 이메일로 사용자 검색
+    const filterQuery = `$filter=dataType eq 'USER' and email eq '${encodeURIComponent(email)}'`;
+    const url = `${CLATHON_TABLE_URL}&${filterQuery}`;
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json;odata=nometadata',
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      if (data.value && data.value.length > 0) {
+        const user = data.value[0];
+        const isValid = await this.verifyPassword(password, user.passwordHash);
+        
+        if (isValid) {
+          console.log('✅ Azure 단일 테이블 로그인 성공:', email);
+          return user;
+        }
+      }
+    }
+    
+    throw new Error('로그인 실패');
+  }
+
+  // 강의 구매
+  static async purchaseCourse(userId: string, courseId: string, courseTitle: string, amount: number) {
+    const purchaseId = uuidv4();
+    const now = new Date();
+    const expiresAt = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000); // 3개월
+    
+    const purchaseEntity = {
+      partitionKey: 'PURCHASE',
+      rowKey: purchaseId,
+      dataType: 'PURCHASE',
+      userId,
+      courseId,
+      courseTitle,
+      amount,
+      status: 'completed',
+      purchaseDate: now.toISOString(),
+      expiresAt: expiresAt.toISOString(),
+      createdAt: now.toISOString()
+    };
+    
+    await this.azureSingleRequest('POST', purchaseEntity);
+    console.log(`✅ Azure 단일 테이블에 강의 구매 저장: ${courseId}`);
+    return purchaseEntity;
+  }
+
+  // 수강 권한 확인
+  static async hasAccess(userId: string, courseId: string): Promise<boolean> {
+    try {
+      const filterQuery = `$filter=dataType eq 'PURCHASE' and userId eq '${encodeURIComponent(userId)}' and courseId eq '${encodeURIComponent(courseId)}'`;
+      const url = `${CLATHON_TABLE_URL}&${filterQuery}`;
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json;odata=nometadata',
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.value && data.value.length > 0) {
+          const purchase = data.value[0];
+          const now = new Date();
+          const expiresAt = new Date(purchase.expiresAt);
+          
+          if (now <= expiresAt && purchase.status === 'completed') {
+            console.log(`✅ Azure 수강 권한 확인: ${courseId}`);
+            return true;
+          }
+        }
+      }
+      
+      console.log(`❌ Azure 수강 권한 없음: ${courseId}`);
+      return false;
+    } catch (error) {
+      console.error('Azure 수강 권한 확인 실패:', error);
+      return false;
+    }
+  }
+
+  // 비밀번호 해시화
+  private static async hashPassword(password: string): Promise<string> {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password + 'clathon_salt_2024');
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  // 비밀번호 검증
+  private static async verifyPassword(password: string, hashedPassword: string): Promise<boolean> {
+    const hashToVerify = await this.hashPassword(password);
+    return hashToVerify === hashedPassword;
   }
 }
 
