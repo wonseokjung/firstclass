@@ -88,9 +88,9 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
       // 결제 성공 시 Azure에 구매 정보 저장 (실제로는 successUrl에서 처리됨)
       console.log('결제 요청 완료:', paymentResult);
       
-    } catch (error) {
+    } catch (error: any) {
       console.error('결제 오류:', error);
-      if (error.code === 'USER_CANCEL') {
+      if (error?.code === 'USER_CANCEL') {
         alert('결제가 취소되었습니다.');
       } else {
         alert('결제 중 오류가 발생했습니다.');
@@ -136,7 +136,7 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
             <div className="intro-content">
               <div className="intro-text">
                 <h1 className="course-title">{course.title}</h1>
-                <p className="course-subtitle">{course.subtitle}</p>
+                <p className="course-subtitle">Cursor AI로 나 혼자 끝내는 1인 개발 수익화</p>
                 <div className="course-stats">
                   <div className="stat">
                     <Clock size={16} />
