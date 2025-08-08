@@ -220,6 +220,12 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
     setShowPaymentModal(true);
   };
 
+  // 프리미엄 강의 결제 핸들러
+  const handlePaymentClick = (course: Course) => {
+    setSelectedCourse({ title: course.title, price: course.price || 0 });
+    setShowPaymentModal(true);
+  };
+
   const handlePaymentClose = () => {
     setShowPaymentModal(false);
     setSelectedCourse(null);
@@ -743,12 +749,12 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
                         if (course.isComingSoon) {
                           alert('곧 출시 예정입니다!');
                         } else {
-                          handlePaymentClick(course);
+                          handleCourseClick(course); // 강의 페이지로 이동
                         }
                       }}
                     >
                       <Play size={16} />
-                      {course.isComingSoon ? 'Coming Soon' : 'Purchase Course'}
+                      {course.isComingSoon ? 'Coming Soon' : '바로수강하기'}
                     </button>
                   </div>
                 </div>

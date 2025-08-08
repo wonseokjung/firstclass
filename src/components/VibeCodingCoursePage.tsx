@@ -38,16 +38,10 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
 
       try {
         const accessGranted = await ClathonAzureService.hasAccess(user.userId, courseId);
-        if (!accessGranted) {
-          alert('이 강의를 수강하려면 먼저 결제해주세요.');
-          navigate('/');
-          return;
-        }
-        setHasAccess(true);
+        setHasAccess(accessGranted); // 결제 여부와 상관없이 페이지는 보여줌
       } catch (error) {
         console.error('수강 권한 확인 실패:', error);
-        alert('수강 권한을 확인하는 중 오류가 발생했습니다.');
-        navigate('/');
+        setHasAccess(false);
       } finally {
         setIsCheckingAccess(false);
       }
@@ -82,17 +76,25 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
     try {
       const orderId = `vibecoding_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
-      await tossPayments.requestPayment('카드', {
+      const paymentResult = await tossPayments.requestPayment('카드', {
         amount: currentPrice,
         orderId: orderId,
         orderName: course.title,
         customerName: '클래튼 수강생',
-        successUrl: `${window.location.origin}/payment/success`,
+        successUrl: `${window.location.origin}/payment/success?course=vibe-coding`,
         failUrl: `${window.location.origin}/payment/fail`,
       });
+
+      // 결제 성공 시 Azure에 구매 정보 저장 (실제로는 successUrl에서 처리됨)
+      console.log('결제 요청 완료:', paymentResult);
+      
     } catch (error) {
       console.error('결제 오류:', error);
-      alert('결제가 취소되었습니다.');
+      if (error.code === 'USER_CANCEL') {
+        alert('결제가 취소되었습니다.');
+      } else {
+        alert('결제 중 오류가 발생했습니다.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -112,21 +114,93 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
     );
   }
 
-  // ❌ 접근 권한 없음
+  // 💳 결제가 필요한 경우 - 결제 페이지 표시
   if (!hasAccess) {
     return (
       <div className="course-page">
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <div className="text-red-500 text-6xl mb-4">🔒</div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">접근 권한이 없습니다</h2>
-            <p className="text-gray-600 mb-4">바이브코딩 강의를 수강하려면 먼저 결제해주세요.</p>
-            <button 
-              onClick={() => navigate('/')}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            >
-              메인으로 돌아가기
+        {/* 헤더 */}
+        <header className="course-header">
+          <div className="container">
+            <button onClick={onBack} className="back-button">
+              ← 돌아가기
             </button>
+            <div className="header-actions">
+              <button className="header-btn">공유</button>
+            </div>
+          </div>
+        </header>
+
+        {/* 강의 소개 섹션 */}
+        <div className="course-intro">
+          <div className="container">
+            <div className="intro-content">
+              <div className="intro-text">
+                <h1 className="course-title">{course.title}</h1>
+                <p className="course-subtitle">{course.subtitle}</p>
+                <div className="course-stats">
+                  <div className="stat">
+                    <Clock size={16} />
+                    <span>20+ 시간</span>
+                  </div>
+                  <div className="stat">
+                    <Users size={16} />
+                    <span>1,200+ 수강생</span>
+                  </div>
+                  <div className="stat">
+                    <Star size={16} />
+                    <span>4.9 (850+ 리뷰)</span>
+                  </div>
+                </div>
+                
+                {/* 가격 정보 */}
+                <div className="pricing-section">
+                  <div className="price-display">
+                    <span className="current-price">₩{currentPrice.toLocaleString()}</span>
+                    <span className="original-price">₩{originalPrice.toLocaleString()}</span>
+                    <span className="discount-badge">50% 할인</span>
+                  </div>
+                  
+                  {/* 결제 버튼 */}
+                  <button 
+                    className="enroll-button"
+                    onClick={handlePayment}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? '결제 처리 중...' : '지금 수강하기'}
+                  </button>
+                  
+                  <div className="payment-info">
+                    <p>✅ 평생 소장 가능</p>
+                    <p>✅ 3개월 수강 기간</p>
+                    <p>✅ 모바일/PC 모든 기기 지원</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 커리큘럼 미리보기 */}
+        <div className="curriculum-preview">
+          <div className="container">
+            <h2>🎯 이런 것들을 배워요</h2>
+            <div className="preview-grid">
+              <div className="preview-item">
+                <CheckCircle className="icon" />
+                <h3>Cursor AI 완전 정복</h3>
+                <p>AI 코딩 도구의 모든 기능을 마스터합니다</p>
+              </div>
+              <div className="preview-item">
+                <CheckCircle className="icon" />
+                <h3>1인 개발 수익화</h3>
+                <p>혼자서도 월 1000만원 수익을 만드는 방법</p>
+              </div>
+              <div className="preview-item">
+                <CheckCircle className="icon" />
+                <h3>실전 프로젝트</h3>
+                <p>수익화 가능한 실제 프로젝트를 완성합니다</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
