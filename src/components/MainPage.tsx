@@ -189,7 +189,7 @@ const premiumClasses: Course[] = [
     launchDate: '2024-09-01',
     price: 299000,
     originalPrice: 499000,
-    isComingSoon: true
+    isComingSoon: false
   }
 ];
 
