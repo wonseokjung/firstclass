@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Clock, Users, Star, Calendar, CheckCircle, Play } from 'lucide-react';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { premiumCourse } from '../data/courseData';
-import AzureTableService from '../services/azureTableService';
 
 interface PromptEngineeringMasterPageProps {
   onBack: () => void;
