@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Clock, Users, Star, CheckCircle, Play } from 'lucide-react';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { vibeCodingCourse } from '../data/courseData';
+import AzureTableService from '../services/azureTableService';
 
 interface VibeCodingCoursePageProps {
   onBack: () => void;
 }
 
 const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [tossPayments, setTossPayments] = useState<any>(null);
+  const [hasAccess, setHasAccess] = useState(false);
+  const [isCheckingAccess, setIsCheckingAccess] = useState(true);
 
   // 토스페이먼츠 테스트 클라이언트 키
   const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
@@ -19,6 +24,27 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
   const currentPrice = 199000;
 
   useEffect(() => {
+    const checkAccessAndInitialize = async () => {
+      const userInfo = localStorage.getItem('clathon_user');
+      
+      if (userInfo) {
+        try {
+          const user = JSON.parse(userInfo);
+          const courseId = 'vibe-coding';
+          
+          // Azure에서 수강 권한 확인
+          const accessResult = await AzureTableService.hasAccess(user.userId, courseId);
+          setHasAccess(accessResult.hasAccess);
+          
+          console.log('🔍 수강 권한 확인:', accessResult);
+        } catch (error) {
+          console.error('수강 권한 확인 실패:', error);
+        }
+      }
+      
+      setIsCheckingAccess(false);
+    };
+
     const initializeTossPayments = async () => {
       try {
         const tossPaymentsInstance = await loadTossPayments(clientKey);
@@ -28,10 +54,19 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
       }
     };
 
+    checkAccessAndInitialize();
     initializeTossPayments();
   }, []);
 
   const handlePayment = async () => {
+    // 로그인 체크
+    const userInfo = localStorage.getItem('clathon_user');
+    if (!userInfo) {
+      alert('결제하려면 먼저 로그인해주세요!');
+      navigate('/login');
+      return;
+    }
+
     if (!tossPayments) {
       alert('결제 시스템을 초기화하는 중입니다. 잠시 후 다시 시도해주세요.');
       return;

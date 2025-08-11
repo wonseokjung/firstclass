@@ -44,25 +44,10 @@ const initializeAzureClients = () => {
   console.log('✅ 모든 Azure SAS 토큰 설정 완료!');
   console.log('📋 실제 Azure Table Storage 다중 테이블 연결 준비 완료!');
   console.log('🚀 쓰기 권한(sp=raud) 포함으로 완전한 CRUD 작업 가능!');
-  
-  // LocalStorage도 백업용으로 초기화
-  initializeLocalStorage();
+  console.log('❌ LocalStorage 사용 안함 - Azure 완전 전환!');
 };
 
-// LocalStorage 초기화 함수
-const initializeLocalStorage = () => {
-  const tables = ['users', 'courses', 'payments', 'enrollments', 'sessions'];
-  
-  tables.forEach(table => {
-    const key = `clathon_${table}`;
-    if (!localStorage.getItem(key)) {
-      localStorage.setItem(key, JSON.stringify([]));
-    }
-  });
-  
-  console.log('✅ LocalStorage 백업 데이터 구조 초기화 완료');
-  console.log('📋 초기화된 테이블:', tables.map(t => `clathon_${t}`).join(', '));
-};
+// LocalStorage 사용 안함 - Azure 완전 전환!
 
 // 설정이 되어있다면 즉시 초기화, 아니면 나중에 초기화
 if (isConnectionConfigured) {

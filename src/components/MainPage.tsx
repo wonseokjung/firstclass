@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Play, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 import PaymentComponent from './PaymentComponent';
-import { ClathonAzureService } from '../services/azureTableService';
+import AzureTableService from '../services/azureTableService';
 
 // 강의 타입 정의
 interface Course {
@@ -215,9 +215,18 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
     onCourseSelect(course.id);
   };
 
-  // 결제 관련 핸들러
+  // 결제 관련 핸들러 - 로그인 체크 포함
   const handleEnrollClick = (e: React.MouseEvent, courseTitle: string, price: number = 199000) => {
     e.stopPropagation();
+    
+    // 로그인 상태 확인 (localStorage에서 로그인 정보 체크)
+    const userInfo = localStorage.getItem('clathon_user');
+    if (!userInfo) {
+      alert('결제하려면 먼저 로그인해주세요!');
+      navigate('/login');
+      return;
+    }
+    
     setSelectedCourse({ title: courseTitle, price });
     setShowPaymentModal(true);
   };
@@ -227,8 +236,32 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
     setSelectedCourse(null);
   };
 
-  const handlePaymentSuccess = (paymentData: any) => {
+  const handlePaymentSuccess = async (paymentData: any) => {
     console.log('결제 성공:', paymentData);
+    
+    // Azure에 구매 정보 저장
+    const userInfo = localStorage.getItem('clathon_user');
+    if (userInfo && selectedCourse) {
+      try {
+        const user = JSON.parse(userInfo);
+        const courseId = selectedCourse.title.toLowerCase().replace(/\s+/g, '-');
+        
+        // Azure Table Storage에 구매 정보 저장
+        await AzureTableService.createPayment({
+          userId: user.userId,
+          courseId: courseId,
+          courseTitle: selectedCourse.title,
+          amount: selectedCourse.price,
+          status: 'completed',
+          paymentMethod: 'card'
+        });
+        
+        console.log('✅ Azure에 구매 정보 저장 완료:', courseId);
+      } catch (error) {
+        console.error('❌ 구매 정보 저장 실패:', error);
+      }
+    }
+    
     alert('결제가 완료되었습니다! 수강을 시작해보세요.');
     setShowPaymentModal(false);
     setSelectedCourse(null);
