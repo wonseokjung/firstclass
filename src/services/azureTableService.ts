@@ -1153,6 +1153,102 @@ export class ClathonAzureService {
     throw new Error('로그인 실패');
   }
 
+  // Azure 기반 세션 관리
+  private static sessionToken: string | null = null;
+  private static currentUserCache: any = null;
+
+  // 세션 생성 (로그인 시)
+  static async createSession(user: any): Promise<string> {
+    const sessionToken = uuidv4();
+    const sessionEntity = {
+      partitionKey: 'SESSION',
+      rowKey: sessionToken,
+      dataType: 'SESSION',
+      userId: user.rowKey,
+      email: user.email,
+      name: user.name,
+      createdAt: new Date().toISOString(),
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24시간
+    };
+
+    await this.azureSingleRequest('POST', sessionEntity);
+    this.sessionToken = sessionToken;
+    this.currentUserCache = user;
+    
+    console.log('✅ Azure 세션 생성:', sessionToken);
+    return sessionToken;
+  }
+
+  // 현재 로그인된 사용자 정보 가져오기 (Azure 기반)
+  static async getCurrentUser(): Promise<{ userId: string; email: string; name: string } | null> {
+    if (!this.sessionToken) return null;
+    if (this.currentUserCache) return this.currentUserCache;
+
+    try {
+      // Azure에서 세션 확인
+      const filterQuery = `$filter=dataType eq 'SESSION' and rowKey eq '${encodeURIComponent(this.sessionToken)}'`;
+      const url = `${USERS_TABLE_URL}&${filterQuery}`;
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json;odata=nometadata',
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.value && data.value.length > 0) {
+          const session = data.value[0];
+          
+          // 세션 만료 체크
+          if (new Date() > new Date(session.expiresAt)) {
+            await this.logout();
+            return null;
+          }
+
+          const userInfo = {
+            userId: session.userId,
+            email: session.email,
+            name: session.name
+          };
+          
+          this.currentUserCache = userInfo;
+          return userInfo;
+        }
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('세션 확인 실패:', error);
+      return null;
+    }
+  }
+
+  // 세션 토큰 설정 (클라이언트에서 사용)
+  static setSessionToken(token: string) {
+    this.sessionToken = token;
+    this.currentUserCache = null;
+  }
+
+  // 사용자 로그아웃 (Azure 세션 정리)
+  static async logout() {
+    if (this.sessionToken) {
+      try {
+        // Azure에서 세션 삭제
+        await this.azureSingleRequest('DELETE', null, `SESSION|${this.sessionToken}`);
+        console.log('✅ Azure 세션 삭제 완료');
+      } catch (error) {
+        console.error('세션 삭제 실패:', error);
+      }
+    }
+    
+    this.sessionToken = null;
+    this.currentUserCache = null;
+  }
+
   // 강의 구매
   static async purchaseCourse(userId: string, courseId: string, courseTitle: string, amount: number) {
     const purchaseId = uuidv4();

@@ -67,12 +67,11 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
       // Azure 단일 테이블로 사용자 인증
       const user = await ClathonAzureService.loginUser(formData.email, formData.password);
       
-      // 로컬 스토리지에 사용자 정보 저장
-      localStorage.setItem('clathon_user', JSON.stringify({
-        userId: user.rowKey,
-        email: user.email,
-        name: user.name
-      }));
+      // Azure 기반 세션 생성
+      const sessionToken = await ClathonAzureService.createSession(user);
+      
+      // 세션 토큰만 로컬에 임시 저장 (완전한 Azure 전환까지의 브릿지)
+      localStorage.setItem('clathon_session', sessionToken);
 
       alert(`${user.name}님, 환영합니다!`);
       navigate('/');

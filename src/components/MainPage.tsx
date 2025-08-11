@@ -214,8 +214,28 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
   };
 
   // 결제 관련 핸들러
-  const handleEnrollClick = (e: React.MouseEvent, courseTitle: string, price: number = 199000) => {
+  const handleEnrollClick = async (e: React.MouseEvent, courseTitle: string, price: number = 199000) => {
     e.stopPropagation();
+    
+    // Azure 기반 로그인 체크
+    const sessionToken = localStorage.getItem('clathon_session');
+    if (!sessionToken) {
+      alert('결제하려면 먼저 로그인해주세요!');
+      navigate('/login');
+      return;
+    }
+
+    // 세션 토큰 설정 및 사용자 정보 확인
+    ClathonAzureService.setSessionToken(sessionToken);
+    const currentUser = await ClathonAzureService.getCurrentUser();
+    
+    if (!currentUser) {
+      alert('세션이 만료되었습니다. 다시 로그인해주세요!');
+      localStorage.removeItem('clathon_session');
+      navigate('/login');
+      return;
+    }
+    
     setSelectedCourse({ title: courseTitle, price });
     setShowPaymentModal(true);
   };
@@ -227,22 +247,26 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
     setSelectedCourse(null);
   };
 
-  const handlePaymentSuccess = (paymentData: any) => {
+  const handlePaymentSuccess = async (paymentData: any) => {
     console.log('결제 성공:', paymentData);
     
-    // 🚀 Azure 단일 테이블에 구매 정보 저장
-    const userInfo = localStorage.getItem('clathon_user');
-    if (userInfo && selectedCourse) {
-      const user = JSON.parse(userInfo);
-      const courseId = selectedCourse.title.toLowerCase().replace(/\s+/g, '-');
+    // 🚀 Azure 기반 구매 정보 저장
+    const sessionToken = localStorage.getItem('clathon_session');
+    if (sessionToken && selectedCourse) {
+      ClathonAzureService.setSessionToken(sessionToken);
+      const currentUser = await ClathonAzureService.getCurrentUser();
       
-      ClathonAzureService.purchaseCourse(
-        user.userId, 
-        courseId, 
-        selectedCourse.title, 
-        selectedCourse.price
-      );
-      console.log(`✅ Azure 구매 완료: ${courseId}`);
+      if (currentUser) {
+        const courseId = selectedCourse.title.toLowerCase().replace(/\s+/g, '-');
+        
+        await ClathonAzureService.purchaseCourse(
+          currentUser.userId, 
+          courseId, 
+          selectedCourse.title, 
+          selectedCourse.price
+        );
+        console.log(`✅ Azure 구매 완료: ${courseId}`);
+      }
     }
     
     alert('결제가 완료되었습니다! 수강을 시작해보세요.');

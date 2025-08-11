@@ -66,6 +66,25 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
   }, [hasAccess]);
 
   const handlePayment = async () => {
+    // Azure 기반 로그인 체크
+    const sessionToken = localStorage.getItem('clathon_session');
+    if (!sessionToken) {
+      alert('결제하려면 먼저 로그인해주세요!');
+      navigate('/login');
+      return;
+    }
+
+    // 세션 유효성 확인
+    ClathonAzureService.setSessionToken(sessionToken);
+    const currentUser = await ClathonAzureService.getCurrentUser();
+    
+    if (!currentUser) {
+      alert('세션이 만료되었습니다. 다시 로그인해주세요!');
+      localStorage.removeItem('clathon_session');
+      navigate('/login');
+      return;
+    }
+
     if (!tossPayments) {
       alert('결제 시스템을 초기화하는 중입니다. 잠시 후 다시 시도해주세요.');
       return;
