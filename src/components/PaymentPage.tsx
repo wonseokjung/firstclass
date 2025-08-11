@@ -22,6 +22,13 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ courseId, onSuccess, onBack }
 
   // 토스 페이먼츠 결제 처리
   const handlePayment = async () => {
+    // 로그인 체크
+    const userInfo = localStorage.getItem('clathon_user');
+    if (!userInfo) {
+      alert('결제하려면 먼저 로그인해주세요!');
+      return;
+    }
+
     if (!agreedToTerms || !agreedToPrivacy) {
       alert('이용약관과 개인정보처리방침에 동의해주세요.');
       return;

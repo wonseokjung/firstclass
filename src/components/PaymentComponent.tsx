@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
-// import { ClathonAzureService } from '../services/azureTableService'; // 현재 미사용
 
 interface PaymentComponentProps {
   courseTitle: string;
@@ -35,6 +34,13 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
   }, []);
 
   const handlePayment = async () => {
+    // 로그인 체크
+    const userInfo = localStorage.getItem('clathon_user');
+    if (!userInfo) {
+      alert('결제하려면 먼저 로그인해주세요!');
+      return;
+    }
+
     if (!tossPayments) {
       alert('결제 시스템을 초기화하는 중입니다. 잠시 후 다시 시도해주세요.');
       return;
@@ -77,6 +83,13 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
   };
 
   const handleOtherPayment = async (method: string) => {
+    // 로그인 체크
+    const userInfo = localStorage.getItem('clathon_user');
+    if (!userInfo) {
+      alert('결제하려면 먼저 로그인해주세요!');
+      return;
+    }
+
     if (!tossPayments) return;
 
     setIsLoading(true);
