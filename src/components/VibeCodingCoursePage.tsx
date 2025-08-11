@@ -33,7 +33,7 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
           const courseId = 'vibe-coding';
           
           // Azure에서 수강 권한 확인
-          const accessResult = await AzureTableService.hasAccess(user.userId, courseId);
+          const accessResult = await AzureTableService.checkCourseAccess(user.userId, courseId);
           setHasAccess(accessResult.hasAccess);
           
           console.log('🔍 수강 권한 확인:', accessResult);
@@ -93,6 +93,20 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
     }
   };
 
+  // 로딩 중일 때
+  if (isCheckingAccess) {
+    return (
+      <div className="course-page">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">수강 권한을 확인하는 중...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="course-page">
       {/* 헤더 */}
@@ -107,8 +121,41 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
 
       <div className="course-content">
         <div className="container">
-          {/* 강의 소개 섹션 */}
-          <div className="course-intro-section">
+          {hasAccess ? (
+            // 수강 권한이 있는 경우 - 실제 강의 내용
+            <div className="enrolled-content">
+              <h1 className="enrolled-title">🎉 {course.title}</h1>
+              <p className="enrolled-message">수강 중인 강의입니다. 강의를 시작해보세요!</p>
+              
+              <div className="course-curriculum">
+                <h2>📚 강의 커리큘럼</h2>
+                <div className="lesson-list">
+                  <div className="lesson-item">
+                    <Play size={20} />
+                    <span>1. Cursor AI 기본 설정과 시작하기</span>
+                    <span className="lesson-duration">45분</span>
+                  </div>
+                  <div className="lesson-item">
+                    <Play size={20} />
+                    <span>2. MCP로 Figma 연동하여 디자인 자동화</span>
+                    <span className="lesson-duration">60분</span>
+                  </div>
+                  <div className="lesson-item">
+                    <Play size={20} />
+                    <span>3. Supabase 연동 및 백엔드 구축</span>
+                    <span className="lesson-duration">75분</span>
+                  </div>
+                  <div className="lesson-item">
+                    <Play size={20} />
+                    <span>4. 수익화 전략과 런칭 가이드</span>
+                    <span className="lesson-duration">90분</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            // 수강 권한이 없는 경우 - 강의 소개 및 결제
+            <div className="course-intro-section">
             <div className="course-info">
               <div className="course-badge">🚀 바이브코딩 마스터클래스</div>
               <h1 className="course-title">{course.title}</h1>
@@ -230,6 +277,8 @@ const VibeCodingCoursePage: React.FC<VibeCodingCoursePageProps> = ({ onBack }) =
             </button>
             <div className="cta-note">⏰ 한정 할인가 • 7일 무조건 환불 보장</div>
           </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

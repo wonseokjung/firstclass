@@ -250,9 +250,7 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
         await AzureTableService.createPayment({
           userId: user.userId,
           courseId: courseId,
-          courseTitle: selectedCourse.title,
           amount: selectedCourse.price,
-          status: 'completed',
           paymentMethod: 'card'
         });
         
