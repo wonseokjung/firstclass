@@ -12,6 +12,7 @@ const PromptEngineeringMasterPage: React.FC<PromptEngineeringMasterPageProps> = 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [tossPayments, setTossPayments] = useState<any>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -31,6 +32,12 @@ const PromptEngineeringMasterPage: React.FC<PromptEngineeringMasterPageProps> = 
   const launchDate = new Date('2025-09-01T00:00:00').getTime();
 
   useEffect(() => {
+    // 로그인 상태 체크
+    const checkLoginStatus = () => {
+      const userInfo = localStorage.getItem('clathon_user');
+      setIsLoggedIn(!!userInfo);
+    };
+
     const initializeTossPayments = async () => {
       try {
         const tossPaymentsInstance = await loadTossPayments(clientKey);
@@ -41,7 +48,18 @@ const PromptEngineeringMasterPage: React.FC<PromptEngineeringMasterPageProps> = 
       }
     };
 
+    checkLoginStatus();
     initializeTossPayments();
+
+    // 로그인 상태 변화 감지를 위한 이벤트 리스너
+    const handleStorageChange = () => {
+      checkLoginStatus();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   // 카운트다운 타이머
@@ -65,12 +83,15 @@ const PromptEngineeringMasterPage: React.FC<PromptEngineeringMasterPageProps> = 
     return () => clearInterval(timer);
   }, [launchDate]);
 
+  const handleLoginRequired = () => {
+    alert('결제하려면 먼저 로그인해주세요!');
+    navigate('/login');
+  };
+
   const handleEarlyBirdPayment = async () => {
     // 로그인 체크
-    const userInfo = localStorage.getItem('clathon_user');
-    if (!userInfo) {
-      alert('결제하려면 먼저 로그인해주세요!');
-      navigate('/login');
+    if (!isLoggedIn) {
+      handleLoginRequired();
       return;
     }
 
@@ -323,21 +344,25 @@ const PromptEngineeringMasterPage: React.FC<PromptEngineeringMasterPageProps> = 
                 {/* 사전예약 버튼 - 메인페이지와 동일한 스타일 */}
                 <button 
                   className="watch-trailer-btn premium-btn"
-                  onClick={handleEarlyBirdPayment}
+                  onClick={isLoggedIn ? handleEarlyBirdPayment : handleLoginRequired}
                   disabled={isLoading || !tossPayments}
                   style={{
                     width: '100%',
                     maxWidth: '300px',
                     padding: '15px 30px',
-                    fontSize: '1.1rem'
+                    fontSize: '1.1rem',
+                    opacity: !isLoggedIn ? '0.7' : '1'
                   }}
                 >
                   <Play size={16} />
-                  {isLoading ? '결제 진행 중...' : '🔥 사전예약'}
+                  {isLoading ? '결제 진행 중...' : 
+                   !isLoggedIn ? '🔒 로그인 후 이용 가능' : '🔥 사전예약'}
                 </button>
 
                 <p style={{ fontSize: '0.8rem', opacity: '0.7', marginTop: '15px' }}>
-                  💳 토스페이먼츠로 안전하게 결제됩니다
+                  {isLoggedIn 
+                    ? '💳 토스페이먼츠로 안전하게 결제됩니다' 
+                    : '🔐 먼저 로그인한 후 결제해주세요'}
                 </p>
               </div>
             </div>
