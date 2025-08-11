@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Clock, Users, Star, Calendar, CheckCircle, Play } from 'lucide-react';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { premiumCourse } from '../data/courseData';
+import AzureTableService from '../services/azureTableService';
 
 interface PromptEngineeringMasterPageProps {
   onBack: () => void;
 }
 
 const PromptEngineeringMasterPage: React.FC<PromptEngineeringMasterPageProps> = ({ onBack }) => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [tossPayments, setTossPayments] = useState<any>(null);
   const [timeLeft, setTimeLeft] = useState({
@@ -64,6 +67,14 @@ const PromptEngineeringMasterPage: React.FC<PromptEngineeringMasterPageProps> = 
   }, [launchDate]);
 
   const handleEarlyBirdPayment = async () => {
+    // 로그인 체크
+    const userInfo = localStorage.getItem('clathon_user');
+    if (!userInfo) {
+      alert('결제하려면 먼저 로그인해주세요!');
+      navigate('/login');
+      return;
+    }
+
     if (!tossPayments) {
       alert('결제 시스템을 초기화하는 중입니다. 잠시 후 다시 시도해주세요.');
       return;
@@ -86,7 +97,7 @@ const PromptEngineeringMasterPage: React.FC<PromptEngineeringMasterPageProps> = 
           orderId: orderId,
           orderName: `[얼리버드] ${course.title}`,
           customerName: '클래튼 수강생',
-          successUrl: `${window.location.origin}/payment/success`,
+          successUrl: `${window.location.origin}/payment/success?course=prompt-engineering`,
           failUrl: `${window.location.origin}/payment/fail`,
         });
 
@@ -102,7 +113,7 @@ const PromptEngineeringMasterPage: React.FC<PromptEngineeringMasterPageProps> = 
           orderId: orderId,
           orderName: `[얼리버드] ${course.title}`,
           customerName: '클래튼 수강생',
-          successUrl: `${window.location.origin}/payment/success`,
+          successUrl: `${window.location.origin}/payment/success?course=prompt-engineering`,
           failUrl: `${window.location.origin}/payment/fail`,
           card: {
             useEscrow: false,

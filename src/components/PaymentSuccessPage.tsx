@@ -1,11 +1,83 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CheckCircle, ArrowLeft, Star, Clock, Users } from 'lucide-react';
+import AzureTableService from '../services/azureTableService';
 
 interface PaymentSuccessPageProps {
   onBack: () => void;
 }
 
 const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
+  const [isProcessing, setIsProcessing] = useState(true);
+  const [courseName, setCourseName] = useState('');
+
+  useEffect(() => {
+    const processPurchase = async () => {
+      try {
+        // URL에서 course 파라미터 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseParam = urlParams.get('course');
+        
+        const userInfo = localStorage.getItem('clathon_user');
+        
+        if (userInfo && courseParam) {
+          const user = JSON.parse(userInfo);
+          
+          let courseData = {
+            id: '',
+            title: '',
+            price: 0
+          };
+          
+          // 강의별 정보 설정
+          if (courseParam === 'vibe-coding') {
+            courseData = {
+              id: 'vibe-coding',
+              title: '바이브코딩으로 돈벌기',
+              price: 199000
+            };
+            setCourseName('바이브코딩으로 돈벌기');
+          } else if (courseParam === 'prompt-engineering') {
+            courseData = {
+              id: 'prompt-engineering', 
+              title: '프롬프트의정석',
+              price: 299000
+            };
+            setCourseName('프롬프트의정석');
+          }
+          
+          if (courseData.id) {
+            // Azure에 구매 정보 저장
+            await AzureTableService.createPayment({
+              userId: user.userId,
+              courseId: courseData.id,
+              amount: courseData.price,
+              paymentMethod: 'card'
+            });
+            
+            console.log(`✅ Azure에 구매 정보 저장 완료: ${courseData.title}`);
+          }
+        }
+      } catch (error) {
+        console.error('❌ 구매 정보 저장 실패:', error);
+      } finally {
+        setIsProcessing(false);
+      }
+    };
+
+    processPurchase();
+  }, []);
+
+  if (isProcessing) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 py-12 px-4 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">구매 정보를 처리하는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 py-12 px-4">
       <div className="max-w-2xl mx-auto">
@@ -29,7 +101,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           </h1>
           
           <p className="text-lg text-gray-600 mb-8">
-            축하합니다! 강의 결제가 성공적으로 완료되었습니다.<br />
+            축하합니다! {courseName ? `"${courseName}"` : '강의'} 결제가 성공적으로 완료되었습니다.<br />
             이제 바로 학습을 시작하실 수 있습니다.
           </p>
 
