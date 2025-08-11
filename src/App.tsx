@@ -155,6 +155,14 @@ const VibeCodingCoursePageWrapper = () => {
 const PaymentPageWrapper = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const userInfo = localStorage.getItem('clathon_user');
+    if (!userInfo) {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+    }
+  }, [navigate]);
+
   const handleBack = () => {
     navigate('/');
   };
@@ -162,6 +170,12 @@ const PaymentPageWrapper = () => {
   const handlePaymentSuccess = () => {
     navigate('/course');
   };
+
+  // Render payment page only if user is logged in
+  const userInfo = localStorage.getItem('clathon_user');
+  if (!userInfo) {
+    return <LoadingSpinner />; // or some other placeholder while redirecting
+  }
 
   return (
     <PaymentPage 
