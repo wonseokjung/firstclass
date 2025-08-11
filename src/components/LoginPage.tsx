@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronRight, Search, Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { ClathonAzureService } from '../services/azureTableService';
+import AzureTableService from '../services/azureTableService';
 
 interface LoginPageProps {
   onBack: () => void;
@@ -64,14 +64,25 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
     setIsLoading(true);
     
     try {
-      // Azure 단일 테이블로 사용자 인증
-      const user = await ClathonAzureService.loginUser(formData.email, formData.password);
+      // Azure Table Storage로 사용자 인증
+      const user = await AzureTableService.validateUser(formData.email, formData.password);
       
-      // Azure 기반 세션 생성
-      const sessionToken = await ClathonAzureService.createSession(user);
+      if (!user) {
+        setErrors({ general: '이메일 또는 비밀번호가 올바르지 않습니다.' });
+        setIsLoading(false);
+        return;
+      }
+
+      // 세션 생성
+      const sessionId = await AzureTableService.createSession(user.rowKey);
       
-      // 세션 토큰만 로컬에 임시 저장 (완전한 Azure 전환까지의 브릿지)
-      localStorage.setItem('clathon_session', sessionToken);
+      // 로컬 스토리지에 사용자 정보 저장
+      localStorage.setItem('clathon_user', JSON.stringify({
+        userId: user.rowKey,
+        email: user.email,
+        name: user.name,
+        sessionId: sessionId
+      }));
 
       alert(`${user.name}님, 환영합니다!`);
       navigate('/');

@@ -1,4 +1,5 @@
 import React, { useRef, useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Play, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 import PaymentComponent from './PaymentComponent';
@@ -189,7 +190,7 @@ const premiumClasses: Course[] = [
     launchDate: '2024-09-01',
     price: 299000,
     originalPrice: 499000,
-    isComingSoon: false
+    isComingSoon: true
   }
 ];
 
@@ -202,7 +203,8 @@ interface MainPageProps {
 }
 
 const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onFAQClick, onLoginClick, onSignUpClick }) => {
-  const gridRefs = useRef<(HTMLDivElement | null)[]>(new Array(7).fill(null)); // 7개 섹션 (프리미엄 추가)
+  const navigate = useNavigate();
+  const gridRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   // 결제 모달 state
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -214,61 +216,19 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
   };
 
   // 결제 관련 핸들러
-  const handleEnrollClick = async (e: React.MouseEvent, courseTitle: string, price: number = 199000) => {
+  const handleEnrollClick = (e: React.MouseEvent, courseTitle: string, price: number = 199000) => {
     e.stopPropagation();
-    
-    // Azure 기반 로그인 체크
-    const sessionToken = localStorage.getItem('clathon_session');
-    if (!sessionToken) {
-      alert('결제하려면 먼저 로그인해주세요!');
-      navigate('/login');
-      return;
-    }
-
-    // 세션 토큰 설정 및 사용자 정보 확인
-    ClathonAzureService.setSessionToken(sessionToken);
-    const currentUser = await ClathonAzureService.getCurrentUser();
-    
-    if (!currentUser) {
-      alert('세션이 만료되었습니다. 다시 로그인해주세요!');
-      localStorage.removeItem('clathon_session');
-      navigate('/login');
-      return;
-    }
-    
     setSelectedCourse({ title: courseTitle, price });
     setShowPaymentModal(true);
   };
-
-
 
   const handlePaymentClose = () => {
     setShowPaymentModal(false);
     setSelectedCourse(null);
   };
 
-  const handlePaymentSuccess = async (paymentData: any) => {
+  const handlePaymentSuccess = (paymentData: any) => {
     console.log('결제 성공:', paymentData);
-    
-    // 🚀 Azure 기반 구매 정보 저장
-    const sessionToken = localStorage.getItem('clathon_session');
-    if (sessionToken && selectedCourse) {
-      ClathonAzureService.setSessionToken(sessionToken);
-      const currentUser = await ClathonAzureService.getCurrentUser();
-      
-      if (currentUser) {
-        const courseId = selectedCourse.title.toLowerCase().replace(/\s+/g, '-');
-        
-        await ClathonAzureService.purchaseCourse(
-          currentUser.userId, 
-          courseId, 
-          selectedCourse.title, 
-          selectedCourse.price
-        );
-        console.log(`✅ Azure 구매 완료: ${courseId}`);
-      }
-    }
-    
     alert('결제가 완료되었습니다! 수강을 시작해보세요.');
     setShowPaymentModal(false);
     setSelectedCourse(null);
@@ -719,82 +679,7 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
           </div>
         </section>
 
-        {/* 프리미엄 강의 섹션 */}
-        <section className="masterclass-section">
-          <div className="section-header-mc">
-            <h2 className="section-title-mc">
-              <span className="highlight-category">Premium Courses</span>
-              <span className="premium-badge">💎 PREMIUM</span>
-            </h2>
-            <div className="section-nav">
-              <button 
-                className="nav-arrow"
-                aria-label="Previous Premium courses"
-                onClick={() => handleGridScroll(6, 'left')}
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <button 
-                className="nav-arrow"
-                aria-label="Next Premium courses"
-                onClick={() => handleGridScroll(6, 'right')}
-              >
-                <ChevronRight size={24} />
-              </button>
-            </div>
-          </div>
-          
-          <div 
-            className="masterclass-grid"
-            ref={(el) => { gridRefs.current[6] = el; }}
-          >
-            {premiumClasses.map((course) => (
-              <div key={course.id} className="masterclass-card premium-card" onClick={() => handleCourseClick(course)}>
-                <div className="card-image-container">
-                  <OptimizedImage 
-                    src={course.image} 
-                    alt={course.instructor}
-                    className="instructor-image"
-                    loading="lazy"
-                    placeholder="true"
-                  />
-                  <div className="premium-badge-overlay">
-                    {course.isComingSoon ? 'COMING SOON' : `₩${course.price?.toLocaleString()}`}
-                  </div>
-                  <div className="card-overlay">
-                    <button 
-                      className="watch-trailer-btn premium-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (course.isComingSoon) {
-                          alert('곧 출시 예정입니다!');
-                        } else {
-                          handleCourseClick(course); // 강의 페이지로 이동
-                        }
-                      }}
-                    >
-                      <Play size={16} />
-                      {course.isComingSoon ? 'Coming Soon' : '바로수강하기'}
-                    </button>
-                  </div>
-                </div>
-                <div className="course-info">
-                  <h3 className="course-title">{course.title}</h3>
-                  <p className="course-subtitle">{course.subtitle}</p>
-                  <p className="course-description">{course.description}</p>
-                  {!course.isComingSoon && (
-                    <div className="price-info">
-                      <span className="current-price">₩{course.price?.toLocaleString()}</span>
-                      {course.originalPrice && (
-                        <span className="original-price">₩{course.originalPrice.toLocaleString()}</span>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+
 
         {/* 다큐멘터리 전문 섹션 */}
         <section className="masterclass-section">

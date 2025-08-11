@@ -306,11 +306,11 @@ export class AzureTableService {
         mode: 'cors',
       });
       
-      if (response.ok) {
+                if (response.ok) {
             await response.json(); // 데이터 읽기만 하고 사용하지 않음
             console.log(`✅ ${tableName} 테이블 연결 성공! (상태: ${response.status})`);
             results[tableName] = true;
-      } else {
+          } else {
             console.log(`❌ ${tableName} 테이블 연결 실패 (상태: ${response.status})`);
             results[tableName] = false;
             allTablesSuccess = false;
@@ -897,21 +897,21 @@ export class AzureTableService {
     } catch (error: any) {
       console.error('❌ Azure 세션 검증 실패, LocalStorage 사용:', error.message);
       
-    try {
-      const sessions = JSON.parse(localStorage.getItem('clathon_sessions') || '[]');
-      const session = sessions.find((s: UserSession) => 
-        s.partitionKey === userId && s.rowKey === sessionId
-      );
-      
-      if (!session) {
+      try {
+        const sessions = JSON.parse(localStorage.getItem('clathon_sessions') || '[]');
+        const session = sessions.find((s: UserSession) => 
+          s.partitionKey === userId && s.rowKey === sessionId
+        );
+        
+        if (!session) {
           console.log('❌ LocalStorage에서 세션을 찾을 수 없음:', sessionId);
-        return false;
-      }
-      
-      const now = new Date();
-      const expiresAt = new Date(session.expiresAt);
-      
-      const isValid = now < expiresAt;
+          return false;
+        }
+        
+        const now = new Date();
+        const expiresAt = new Date(session.expiresAt);
+        
+        const isValid = now < expiresAt;
         console.log(`⚠️ LocalStorage 세션 유효성 검사:`, sessionId, isValid);
       return isValid;
     } catch (error) {
@@ -1027,350 +1027,6 @@ export class AzureTableService {
       console.error('❌ 수강 권한 확인 실패:', error.message);
       return { hasAccess: false, reason: '수강 권한 확인 중 오류가 발생했습니다.' };
     }
-  }
-}
-
-// === ✅ 새로운 Azure 단일 테이블 시스템 (users 테이블만 사용) ===
-// users 테이블 하나로 모든 데이터 관리:
-// - PartitionKey: 데이터 타입 (USER, PURCHASE)
-// - RowKey: 고유 ID
-// - 추가 컬럼들로 각 데이터 타입별 정보 저장
-
-const USERS_TABLE_URL = 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-08-06T01:38:29Z&se=2030-10-02T09:53:00Z&spr=https&sv=2024-11-04&sig=eKj3S3wr0QyWiDhA8EJzgE6c7LAlIcysVdqiqjffb%2Bw%3D&tn=users';
-
-export class ClathonAzureService {
-  
-  // Azure 단일 테이블에 데이터 저장
-  private static async azureSingleRequest(method: string = 'GET', body?: any, entityId?: string): Promise<any> {
-    let url = USERS_TABLE_URL;
-    
-    // 특정 엔티티 조회/수정/삭제시 URL 구성
-    if (entityId && method !== 'POST') {
-      const [partitionKey, rowKey] = entityId.split('|');
-      url = `${USERS_TABLE_URL.split('?')[0]}(PartitionKey='${encodeURIComponent(partitionKey)}',RowKey='${encodeURIComponent(rowKey)}')${USERS_TABLE_URL.includes('?') ? '&' + USERS_TABLE_URL.split('?')[1] : ''}`;
-    }
-    
-    const headers: Record<string, string> = {
-      'Accept': 'application/json;odata=nometadata',
-      'Content-Type': 'application/json',
-    };
-    
-    if (method === 'PUT' || method === 'DELETE') {
-      headers['If-Match'] = '*';
-    }
-    
-    const options: RequestInit = {
-      method,
-      headers,
-      mode: 'cors',
-    };
-    
-    if (body && (method === 'POST' || method === 'PUT')) {
-      // Azure 형식으로 변환
-      const azureEntity: any = {};
-      for (const [key, value] of Object.entries(body)) {
-        let azureKey = key;
-        if (key === 'partitionKey') azureKey = 'PartitionKey';
-        else if (key === 'rowKey') azureKey = 'RowKey';
-        
-        azureEntity[azureKey] = value || '';
-      }
-      
-      options.body = JSON.stringify(azureEntity);
-      console.log(`🔧 Azure 단일 테이블 ${method}:`, azureEntity);
-    }
-    
-    try {
-      const response = await fetch(url, options);
-      
-      if (response.ok) {
-        if (method === 'DELETE') return { success: true };
-        const text = await response.text();
-        return text ? JSON.parse(text) : { success: true };
-      } else {
-        const errorText = await response.text();
-        console.error(`Azure 단일 테이블 ${method} 오류:`, response.status, errorText);
-        throw new Error(`Azure ${method} 실패: ${response.status}`);
-      }
-    } catch (error: any) {
-      console.error(`Azure 단일 테이블 ${method} 요청 실패:`, error.message);
-      throw error;
-    }
-  }
-
-  // 사용자 등록
-  static async registerUser(userData: { email: string; name: string; password: string; marketingAgreed: boolean }) {
-    const userId = uuidv4();
-    const passwordHash = await this.hashPassword(userData.password);
-    
-    const userEntity = {
-      partitionKey: 'USER',
-      rowKey: userId,
-      dataType: 'USER',
-      email: userData.email,
-      name: userData.name,
-      passwordHash,
-      emailVerified: false,
-      marketingAgreed: userData.marketingAgreed,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      lastLoginAt: ''
-    };
-    
-    await this.azureSingleRequest('POST', userEntity);
-    console.log('✅ Azure 단일 테이블에 사용자 등록 성공:', userData.email);
-    return userEntity;
-  }
-
-  // 사용자 로그인
-  static async loginUser(email: string, password: string) {
-    // 이메일로 사용자 검색
-    const filterQuery = `$filter=dataType eq 'USER' and email eq '${encodeURIComponent(email)}'`;
-    const url = `${USERS_TABLE_URL}&${filterQuery}`;
-    
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json;odata=nometadata',
-        'Content-Type': 'application/json',
-      },
-      mode: 'cors',
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      if (data.value && data.value.length > 0) {
-        const user = data.value[0];
-        const isValid = await this.verifyPassword(password, user.passwordHash);
-        
-        if (isValid) {
-          console.log('✅ Azure 단일 테이블 로그인 성공:', email);
-          return user;
-        }
-      }
-    }
-    
-    throw new Error('로그인 실패');
-  }
-
-  // Azure 기반 세션 관리
-  private static sessionToken: string | null = null;
-  private static currentUserCache: any = null;
-
-  // 세션 생성 (로그인 시)
-  static async createSession(user: any): Promise<string> {
-    const sessionToken = uuidv4();
-    const sessionEntity = {
-      partitionKey: 'SESSION',
-      rowKey: sessionToken,
-      dataType: 'SESSION',
-      userId: user.rowKey,
-      email: user.email,
-      name: user.name,
-      createdAt: new Date().toISOString(),
-      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24시간
-    };
-
-    await this.azureSingleRequest('POST', sessionEntity);
-    this.sessionToken = sessionToken;
-    this.currentUserCache = user;
-    
-    console.log('✅ Azure 세션 생성:', sessionToken);
-    return sessionToken;
-  }
-
-  // 현재 로그인된 사용자 정보 가져오기 (Azure 기반)
-  static async getCurrentUser(): Promise<{ userId: string; email: string; name: string } | null> {
-    if (!this.sessionToken) return null;
-    if (this.currentUserCache) return this.currentUserCache;
-
-    try {
-      // Azure에서 세션 확인
-      const filterQuery = `$filter=dataType eq 'SESSION' and rowKey eq '${encodeURIComponent(this.sessionToken)}'`;
-      const url = `${USERS_TABLE_URL}&${filterQuery}`;
-      
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json;odata=nometadata',
-          'Content-Type': 'application/json',
-        },
-        mode: 'cors',
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        if (data.value && data.value.length > 0) {
-          const session = data.value[0];
-          
-          // 세션 만료 체크
-          if (new Date() > new Date(session.expiresAt)) {
-            await this.logout();
-            return null;
-          }
-
-          const userInfo = {
-            userId: session.userId,
-            email: session.email,
-            name: session.name
-          };
-          
-          this.currentUserCache = userInfo;
-          return userInfo;
-        }
-      }
-      
-      return null;
-    } catch (error) {
-      console.error('세션 확인 실패:', error);
-      return null;
-    }
-  }
-
-  // 세션 토큰 설정 (클라이언트에서 사용)
-  static setSessionToken(token: string) {
-    this.sessionToken = token;
-    this.currentUserCache = null;
-  }
-
-  // 사용자 로그아웃 (Azure 세션 정리)
-  static async logout() {
-    if (this.sessionToken) {
-      try {
-        // Azure에서 세션 삭제
-        await this.azureSingleRequest('DELETE', null, `SESSION|${this.sessionToken}`);
-        console.log('✅ Azure 세션 삭제 완료');
-      } catch (error) {
-        console.error('세션 삭제 실패:', error);
-      }
-    }
-    
-    this.sessionToken = null;
-    this.currentUserCache = null;
-  }
-
-  // 강의 구매
-  static async purchaseCourse(userId: string, courseId: string, courseTitle: string, amount: number) {
-    const purchaseId = uuidv4();
-    const now = new Date();
-    const expiresAt = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000); // 3개월
-    
-    const purchaseEntity = {
-      partitionKey: 'PURCHASE',
-      rowKey: purchaseId,
-      dataType: 'PURCHASE',
-      userId,
-      courseId,
-      courseTitle,
-      amount,
-      status: 'completed',
-      purchaseDate: now.toISOString(),
-      expiresAt: expiresAt.toISOString(),
-      createdAt: now.toISOString()
-    };
-    
-    await this.azureSingleRequest('POST', purchaseEntity);
-    console.log(`✅ Azure 단일 테이블에 강의 구매 저장: ${courseId}`);
-    return purchaseEntity;
-  }
-
-  // 수강 권한 확인
-  static async hasAccess(userId: string, courseId: string): Promise<boolean> {
-    try {
-      const filterQuery = `$filter=dataType eq 'PURCHASE' and userId eq '${encodeURIComponent(userId)}' and courseId eq '${encodeURIComponent(courseId)}'`;
-      const url = `${USERS_TABLE_URL}&${filterQuery}`;
-      
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json;odata=nometadata',
-          'Content-Type': 'application/json',
-        },
-        mode: 'cors',
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        if (data.value && data.value.length > 0) {
-          const purchase = data.value[0];
-          const now = new Date();
-          const expiresAt = new Date(purchase.expiresAt);
-          
-          if (now <= expiresAt && purchase.status === 'completed') {
-            console.log(`✅ Azure 수강 권한 확인: ${courseId}`);
-            return true;
-          }
-        }
-      }
-      
-      console.log(`❌ Azure 수강 권한 없음: ${courseId}`);
-      return false;
-    } catch (error) {
-      console.error('Azure 수강 권한 확인 실패:', error);
-      return false;
-    }
-  }
-
-  // 비밀번호 해시화
-  private static async hashPassword(password: string): Promise<string> {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(password + 'clathon_salt_2024');
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  }
-
-  // 비밀번호 검증
-  private static async verifyPassword(password: string, hashedPassword: string): Promise<boolean> {
-    const hashToVerify = await this.hashPassword(password);
-    return hashToVerify === hashedPassword;
-  }
-
-  // 사용자가 구매한 모든 강의 조회
-  static async getUserPurchases(userId: string) {
-    try {
-      const filterQuery = `$filter=dataType eq 'PURCHASE' and userId eq '${encodeURIComponent(userId)}'`;
-      const url = `${USERS_TABLE_URL}&${filterQuery}`;
-      
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json;odata=nometadata',
-          'Content-Type': 'application/json',
-        },
-        mode: 'cors',
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const purchases = data.value || [];
-        
-        // 만료일 기준으로 정렬 (최신 구매순)
-        purchases.sort((a: any, b: any) => new Date(b.purchaseDate).getTime() - new Date(a.purchaseDate).getTime());
-        
-        console.log(`✅ 사용자 구매 내역 조회: ${purchases.length}개 강의`);
-        return purchases;
-      }
-      
-      return [];
-    } catch (error) {
-      console.error('사용자 구매 내역 조회 실패:', error);
-      return [];
-    }
-  }
-
-  // 사용자의 활성 강의 목록 (만료되지 않은 강의만)
-  static async getActiveCourses(userId: string) {
-    const allPurchases = await this.getUserPurchases(userId);
-    const now = new Date();
-    
-    const activeCourses = allPurchases.filter((purchase: any) => {
-      const expiresAt = new Date(purchase.expiresAt);
-      return now <= expiresAt && purchase.status === 'completed';
-    });
-    
-    console.log(`✅ 활성 강의: ${activeCourses.length}개`);
-    return activeCourses;
   }
 }
 

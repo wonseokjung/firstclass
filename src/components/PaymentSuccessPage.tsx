@@ -1,58 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { CheckCircle, ArrowLeft, Star, Clock, Users } from 'lucide-react';
-import { ClathonAzureService } from '../services/azureTableService';
 
 interface PaymentSuccessPageProps {
   onBack: () => void;
 }
 
 const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
-  const [isProcessing, setIsProcessing] = useState(true);
-
-  useEffect(() => {
-    const processPurchase = async () => {
-      try {
-        // URL에서 course 파라미터 확인
-        const urlParams = new URLSearchParams(window.location.search);
-        const courseParam = urlParams.get('course');
-        
-        if (courseParam === 'vibe-coding') {
-          const userInfo = localStorage.getItem('clathon_user');
-          if (userInfo) {
-            const user = JSON.parse(userInfo);
-            
-            // Azure에 구매 정보 저장
-            await ClathonAzureService.purchaseCourse(
-              user.userId,
-              '바이브코딩으로-돈벌기',
-              '바이브코딩으로 돈벌기',
-              199000
-            );
-            
-            console.log('✅ 바이브코딩 강의 구매 완료!');
-          }
-        }
-      } catch (error) {
-        console.error('구매 처리 중 오류:', error);
-      } finally {
-        setIsProcessing(false);
-      }
-    };
-
-    processPurchase();
-  }, []);
-
-  if (isProcessing) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 py-12 px-4 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">구매 정보를 처리하는 중...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 py-12 px-4">
       <div className="max-w-2xl mx-auto">

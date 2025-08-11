@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronRight, Search, Mail, Lock, Eye, EyeOff, AlertCircle, User, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { ClathonAzureService } from '../services/azureTableService';
+import AzureTableService from '../services/azureTableService';
 
 interface SignUpPageProps {
   onBack: () => void;
@@ -120,8 +120,16 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
     setIsLoading(true);
     
     try {
-      // Azure 단일 테이블에 사용자 등록
-      const newUser = await ClathonAzureService.registerUser({
+      // 이메일 중복 확인
+      const existingUser = await AzureTableService.getUserByEmail(formData.email);
+      if (existingUser) {
+        setErrors({ email: '이미 등록된 이메일입니다.' });
+        setIsLoading(false);
+        return;
+      }
+
+      // Azure Table Storage에 사용자 생성
+      const newUser = await AzureTableService.createUser({
         email: formData.email,
         name: formData.name,
         password: formData.password,
