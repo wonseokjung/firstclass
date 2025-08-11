@@ -220,11 +220,11 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
     setShowPaymentModal(true);
   };
 
-  // 프리미엄 강의 결제 핸들러
-  const handlePaymentClick = (course: Course) => {
-    setSelectedCourse({ title: course.title, price: course.price || 0 });
-    setShowPaymentModal(true);
-  };
+  // 프리미엄 강의 결제 핸들러 (현재 미사용 - 향후 직접 결제용)
+  // const handlePaymentClick = (course: Course) => {
+  //   setSelectedCourse({ title: course.title, price: course.price || 0 });
+  //   setShowPaymentModal(true);
+  // };
 
   const handlePaymentClose = () => {
     setShowPaymentModal(false);
