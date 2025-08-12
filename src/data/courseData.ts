@@ -1423,4 +1423,4 @@ export const vibeCodingCourse: Course = {
   ]
 };
 
-export const allCourses = [chatGPTCourse, aiBusinessCourse, aiCodingCourse, premiumCourse, vibeCodingCourse]; 
+export const allCourses = [chatGPTCourse, aiBusinessCourse, aiCodingCourse, premiumCourse]; 

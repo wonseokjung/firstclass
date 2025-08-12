@@ -274,6 +274,14 @@ body {
   background: var(--color-gray-500);
 }
 
+.user-welcome {
+  color: var(--color-white);
+  font-size: 14px;
+  padding: 8px 12px;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
 .cta-button {
   background: var(--color-primary);
   color: var(--color-white);
@@ -477,6 +485,10 @@ body {
   margin-bottom: 8px;
   letter-spacing: 1px;
   text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 .divider {
@@ -491,6 +503,13 @@ body {
   color: var(--color-gray-200);
   font-weight: 400;
   line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  max-height: 2.8em;
 }
 
 /* 다큐멘터리 페이지 스타일 */
@@ -1048,12 +1067,16 @@ body {
     font-size: 24px !important;
     line-height: 1.2;
     margin-bottom: 12px;
+    -webkit-line-clamp: 2 !important;
+    max-height: 2.4em !important;
   }
   
   .course-hero .hero-subtitle {
     font-size: 16px !important;
     line-height: 1.4;
     margin-bottom: 20px;
+    -webkit-line-clamp: 2 !important;
+    max-height: 2.8em !important;
   }
   
   /* 메타 정보 모바일 스타일 */
@@ -1273,11 +1296,25 @@ body {
 .course-hero .hero-title {
   font-size: 36px;
   margin-bottom: 16px;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
 }
 
 .course-hero .hero-subtitle {
   font-size: 18px;
   margin-bottom: 24px;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
 }
 
 .sidebar-header {
@@ -1368,7 +1405,11 @@ body {
   line-height: 1.3;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  max-height: 2.6em; /* 2줄 높이 제한 */
 }
 
 .lesson-meta {
@@ -1467,6 +1508,13 @@ body {
   font-weight: 600;
   color: white;
   margin-bottom: 12px;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
 }
 
 .lesson-description {
@@ -2623,6 +2671,12 @@ body {
   color: #1f2937;
   margin: 0 0 16px 0;
   line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
 }
 
 .price-display {
@@ -3413,12 +3467,7 @@ body {
   }
 }
 
-/* VibeCodingCoursePage 스타일 */
-.course-page {
-  background: var(--color-black);
-  color: var(--color-white);
-  min-height: 100vh;
-}
+
 
 .course-header {
   background: rgba(0, 0, 0, 0.8);
@@ -3502,6 +3551,12 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
 }
 
 .course-description {
@@ -3509,6 +3564,12 @@ body {
   line-height: 1.6;
   color: var(--color-gray-100);
   margin-bottom: 2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
 }
 
 .course-stats {
@@ -3856,6 +3917,8 @@ body {
   
   .course-title {
     font-size: 2rem;
+    -webkit-line-clamp: 2 !important;
+    max-height: 4rem !important;
   }
   
   .course-stats {
@@ -4677,5 +4740,332 @@ body {
   
   .auth-benefits {
     order: -1;
+  }
+}
+
+/* ==================== USER DASHBOARD PAGE ==================== */
+
+.dashboard-page {
+  min-height: 100vh;
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+.dashboard-content {
+  padding: 40px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-container {
+  padding: 0 20px;
+}
+
+/* 프로필 섹션 */
+.profile-section {
+  background: linear-gradient(135deg, var(--color-gray-600), var(--color-gray-500));
+  border-radius: var(--border-radius-lg);
+  padding: 30px;
+  margin-bottom: 30px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+}
+
+.profile-info h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.profile-email {
+  color: var(--color-gray-100);
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.stat-badge {
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* 통계 그리드 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: var(--color-gray-600);
+  border-radius: var(--border-radius-lg);
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: var(--transition);
+}
+
+.stat-card:hover {
+  background: var(--color-gray-500);
+  transform: translateY(-2px);
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  background: var(--color-primary);
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+}
+
+.stat-number {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: var(--color-white);
+}
+
+.stat-label {
+  color: var(--color-gray-100);
+  font-size: 14px;
+}
+
+/* 섹션 제목 */
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--color-white);
+}
+
+/* 수강 강의 섹션 */
+.enrolled-courses-section {
+  margin-bottom: 40px;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.course-card {
+  background: var(--color-gray-600);
+  border-radius: var(--border-radius-lg);
+  padding: 25px;
+  transition: var(--transition);
+}
+
+.course-card:hover {
+  background: var(--color-gray-500);
+  transform: translateY(-2px);
+}
+
+.course-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.course-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-white);
+  flex: 1;
+}
+
+.course-status {
+  padding: 4px 12px;
+  border-radius: var(--border-radius);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.course-status.active {
+  background: var(--color-success);
+  color: var(--color-white);
+}
+
+.course-status.completed {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.course-status.paused {
+  background: var(--color-gray-300);
+  color: var(--color-white);
+}
+
+.course-progress {
+  margin-bottom: 15px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--color-gray-400);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 14px;
+  color: var(--color-gray-100);
+}
+
+.course-meta {
+  margin-bottom: 20px;
+}
+
+.course-meta p {
+  font-size: 14px;
+  color: var(--color-gray-100);
+  margin-bottom: 5px;
+}
+
+.course-continue-btn {
+  width: 100%;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  padding: 12px;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.course-continue-btn:hover {
+  background: var(--color-primary-hover);
+}
+
+/* 빈 상태 */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-gray-100);
+}
+
+.empty-icon {
+  color: var(--color-gray-300);
+  margin-bottom: 20px;
+}
+
+.empty-state h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--color-white);
+}
+
+.empty-state p {
+  margin-bottom: 30px;
+}
+
+/* 추천 섹션 */
+.recommendations-section {
+  margin-bottom: 40px;
+}
+
+.recommendation-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.recommendation-card {
+  background: var(--color-gray-600);
+  border-radius: var(--border-radius-lg);
+  padding: 25px;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.recommendation-card:hover {
+  background: var(--color-gray-500);
+  transform: translateY(-2px);
+}
+
+.recommendation-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--color-white);
+}
+
+.recommendation-card p {
+  color: var(--color-gray-100);
+  margin-bottom: 20px;
+}
+
+.recommendation-btn {
+  background: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.recommendation-btn:hover {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* 대시보드 반응형 디자인 */
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 20px 0;
+  }
+  
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .recommendation-cards {
+    grid-template-columns: 1fr;
   }
 }

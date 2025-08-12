@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronRight, Search, Mail, Lock, Eye, EyeOff, AlertCircle, User, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import AzureTableService from '../services/azureTableService';
+import AzureTableService, { User as UserType } from '../services/azureTableService';
 
 interface SignUpPageProps {
   onBack: () => void;
@@ -129,12 +129,13 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
       }
 
       // Azure Table Storage에 사용자 생성
-      const newUser = await AzureTableService.createUser({
+      const userData = {
         email: formData.email,
         name: formData.name,
         password: formData.password,
         marketingAgreed: agreements.marketing
-      });
+      };
+      const newUser = await AzureTableService.createUser(userData);
 
       console.log('회원가입 성공:', newUser);
       alert(`${newUser.name}님, 회원가입이 완료되었습니다! 로그인해주세요.`);

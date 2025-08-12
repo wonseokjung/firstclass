@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Play, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
@@ -163,25 +163,11 @@ const aiCodingClasses: Course[] = [
 // 프리미엄 강의
 const premiumClasses: Course[] = [
   {
-    id: 6,
-    instructor: 'AI 멘토 JAY',
-    title: '바이브코딩으로 돈벌기',
-    subtitle: 'Cursor AI로 나 혼자 끝내는 1인 개발 수익화',
-    description: '🚀 월 1000만원 수익 달성을 위한 실전 바이브코딩 마스터클래스',
-    image: '/images/aicoding.png',
-    isNew: true,
-    category: 'AI 바이브코딩',
-    isDocumentary: false,
-    isPremium: true,
-    price: 199000,
-    originalPrice: 398000
-  },
-  {
     id: 999,
-    instructor: '정원석',
-    title: '프롬프트의정석',
+    instructor: 'Google OPAL 전문가',
+    title: 'Google OPAL 업무 자동화',
     subtitle: '🚀 Coming Soon - 2024.09.01 런칭 예정',
-    description: '🔥 얼리버드 특가! ChatGPT, Claude, Gemini까지 완벽 마스터하는 프롬프트 엔지니어링의 모든 것',
+    description: '🤖 코드 없이 자연어로 만드는 AI 미니앱! Google OPAL로 업무 자동화부터 워크플로우 체이닝까지',
     image: '/images/ai-automation.jpg',
     isNew: true,
     category: 'Premium',
@@ -209,6 +195,50 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
   // 결제 모달 state
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<{title: string; price: number} | null>(null);
+  
+  // 로그인 상태 관리
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userInfo, setUserInfo] = useState<any>(null);
+
+  // 로그인 상태 확인
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const storedUserInfo = localStorage.getItem('clathon_user');
+      if (storedUserInfo) {
+        try {
+          const parsedUserInfo = JSON.parse(storedUserInfo);
+          setIsLoggedIn(true);
+          setUserInfo(parsedUserInfo);
+          console.log('👤 로그인된 사용자 확인:', parsedUserInfo.email);
+        } catch (error) {
+          console.error('사용자 정보 파싱 오류:', error);
+          localStorage.removeItem('clathon_user');
+          setIsLoggedIn(false);
+          setUserInfo(null);
+        }
+      } else {
+        setIsLoggedIn(false);
+        setUserInfo(null);
+      }
+    };
+
+    checkLoginStatus();
+
+    // localStorage 변화 감지
+    const handleStorageChange = () => {
+      checkLoginStatus();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    // 페이지 포커스 시에도 확인 (같은 탭에서의 변화 감지)
+    window.addEventListener('focus', checkLoginStatus);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('focus', checkLoginStatus);
+    };
+  }, []);
 
   const handleCourseClick = (course: Course) => {
     // 모든 코스는 onCourseSelect로 처리 (다큐멘터리도 포함)
@@ -316,9 +346,34 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
           <div className="header-right">
             <button className="nav-link" onClick={() => window.location.href = '/ceo'}>CEO</button>
             <button className="nav-link" onClick={onFAQClick}>FAQ</button>
-            <button className="nav-link">View Plans</button>
-            <button className="nav-link" onClick={onLoginClick}>Log In</button>
-            <button className="cta-button" onClick={onSignUpClick}>회원가입</button>
+            {isLoggedIn ? (
+              <>
+                <button 
+                  className="nav-link" 
+                  onClick={() => navigate('/dashboard')}
+                >
+                  마이페이지
+                </button>
+                <span className="user-welcome">안녕하세요, {userInfo?.name || userInfo?.email}님!</span>
+                <button 
+                  className="nav-link" 
+                  onClick={() => {
+                    localStorage.removeItem('clathon_user');
+                    setIsLoggedIn(false);
+                    setUserInfo(null);
+                    alert('로그아웃되었습니다.');
+                  }}
+                >
+                  로그아웃
+                </button>
+              </>
+            ) : (
+              <>
+                <button className="nav-link">View Plans</button>
+                <button className="nav-link" onClick={onLoginClick}>Log In</button>
+                <button className="cta-button" onClick={onSignUpClick}>회원가입</button>
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -415,8 +470,8 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
             ref={(el) => { gridRefs.current[1] = el; }}
           >
             {premiumClasses.map((course) => (
-              <div key={course.id} className="masterclass-card premium-card" onClick={() => handleCourseClick(course)}>
-                <div className="card-image-container premium-image">
+              <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>
+                <div className="card-image-container">
                   <OptimizedImage 
                     src={course.image} 
                     alt={course.instructor}
@@ -433,9 +488,9 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
                           <span className="launch-countdown">2024년 9월 1일</span>
                         </div>
                       </div>
-                      <div className="card-overlay premium-overlay">
+                      <div className="card-overlay">
                         <button 
-                          className="watch-trailer-btn premium-btn"
+                          className="watch-trailer-btn"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleEnrollClick(e, course.title || course.description, course.price || 299000);
@@ -447,9 +502,9 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
                       </div>
                     </>
                   ) : (
-                    <div className="card-overlay premium-overlay">
+                    <div className="card-overlay">
                       <button 
-                        className="watch-trailer-btn premium-btn available"
+                        className="watch-trailer-btn"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleCourseClick(course);
@@ -460,22 +515,6 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
                       </button>
                     </div>
                   )}
-                </div>
-                
-                <div className="card-content premium-content">
-                  <div className="instructor-name premium-instructor">{course.instructor}</div>
-                  <div className="divider premium-divider"></div>
-                  <div className="course-description premium-description">{course.description}</div>
-                  <div className="premium-price-info">
-                    <span className="price premium-price">₩{course.price?.toLocaleString()}</span>
-                    <span className="original-price premium-original">₩{course.originalPrice?.toLocaleString()}</span>
-                    <span className="discount-badge premium-discount">
-                      {course.originalPrice && course.price 
-                        ? `${Math.round((1 - course.price / course.originalPrice) * 100)}% ${course.isComingSoon ? '런칭할인' : '할인'}`
-                        : '할인'
-                      }
-                    </span>
-                  </div>
                 </div>
               </div>
             ))}

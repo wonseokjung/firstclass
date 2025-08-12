@@ -4,11 +4,11 @@ import { Clock, Users, Star, Calendar, CheckCircle, Play } from 'lucide-react';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { premiumCourse } from '../data/courseData';
 
-interface PromptEngineeringMasterPageProps {
+interface WorkflowAutomationMasterPageProps {
   onBack: () => void;
 }
 
-const PromptEngineeringMasterPage: React.FC<PromptEngineeringMasterPageProps> = ({ onBack }) => {
+const WorkflowAutomationMasterPage: React.FC<WorkflowAutomationMasterPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [tossPayments, setTossPayments] = useState<any>(null);
@@ -23,7 +23,83 @@ const PromptEngineeringMasterPage: React.FC<PromptEngineeringMasterPageProps> = 
   // 토스페이먼츠 테스트 클라이언트 키
   const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
 
-  const course = premiumCourse;
+  // OPAL 업무 자동화 강의 데이터
+  const course = {
+    ...premiumCourse,
+    title: 'Google OPAL 업무 자동화 마스터',
+    lessons: [
+      {
+        id: 1,
+        title: '1강. Google OPAL 소개와 기본 개념',
+        duration: '45분',
+        description: 'Google OPAL의 혁신적인 AI 미니앱 개발 도구를 이해하고, 자연어로 워크플로우를 만드는 기본 개념을 학습합니다.',
+        hasQuiz: true
+      },
+      {
+        id: 2,
+        title: '2강. 첫 번째 AI 미니앱 만들기',
+        duration: '55분',
+        description: '간단한 텍스트 처리 앱부터 시작해서 OPAL의 시각적 편집기 사용법을 마스터합니다.',
+        hasQuiz: true
+      },
+      {
+        id: 3,
+        title: '3강. 워크플로우 체이닝과 프롬프트 연결',
+        duration: '1시간 10분',
+        description: '여러 AI 모델과 프롬프트를 연결하여 복잡한 업무 처리 워크플로우를 구축하는 방법을 배웁니다.',
+        hasQuiz: true
+      },
+      {
+        id: 4,
+        title: '4강. 데이터 처리와 분석 자동화',
+        duration: '1시간',
+        description: '스프레드시트 데이터를 AI로 분석하고 인사이트를 자동 생성하는 미니앱을 만들어봅니다.',
+        hasQuiz: true
+      },
+      {
+        id: 5,
+        title: '5강. 콘텐츠 생성 워크플로우 구축',
+        duration: '50분',
+        description: '블로그, 소셜미디어, 이메일 콘텐츠를 자동 생성하는 마케팅 도구를 OPAL로 개발합니다.',
+        hasQuiz: true
+      },
+      {
+        id: 6,
+        title: '6강. 고객 서비스 챗봇 만들기',
+        duration: '1시간 15분',
+        description: 'FAQ부터 복잡한 문의까지 처리하는 스마트 고객 서비스 시스템을 구축합니다.',
+        hasQuiz: true
+      },
+      {
+        id: 7,
+        title: '7강. 업무 보고서 자동화',
+        duration: '45분',
+        description: '주간/월간 보고서를 자동으로 생성하고 시각화하는 업무 도구를 개발합니다.',
+        hasQuiz: false
+      },
+      {
+        id: 8,
+        title: '8강. 앱 공유와 배포 전략',
+        duration: '40분',
+        description: '만든 OPAL 앱을 팀원들과 공유하고 조직 내 확산시키는 전략을 학습합니다.',
+        hasQuiz: false
+      },
+      {
+        id: 9,
+        title: '9강. 고급 API 연동과 외부 도구 활용',
+        duration: '1시간 5분',
+        description: 'Google Workspace, Slack, Notion 등 외부 도구와 연동하여 완전한 업무 자동화를 구현합니다.',
+        hasQuiz: true
+      },
+      {
+        id: 10,
+        title: '10강. 실무 프로젝트: 종합 업무 자동화 시스템',
+        duration: '1시간 30분',
+        description: '실제 회사 업무 프로세스를 분석하고 OPAL로 완전 자동화하는 종합 프로젝트를 진행합니다.',
+        hasQuiz: false
+      }
+    ]
+  };
   const originalPrice = 499000;
   const earlyBirdPrice = 299000;
   const discount = Math.round(((originalPrice - earlyBirdPrice) / originalPrice) * 100);
@@ -100,48 +176,23 @@ const PromptEngineeringMasterPage: React.FC<PromptEngineeringMasterPageProps> = 
       return;
     }
 
-    // 토스페이먼츠 객체 확인용 디버깅
-    console.log('tossPayments 객체:', tossPayments);
-    console.log('tossPayments.payment 함수:', tossPayments.payment);
-
     setIsLoading(true);
 
     try {
       const orderId = `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
-      // 토스페이먼츠 API 방식 확인 및 다양한 방식 시도
-      if (typeof tossPayments.payment === 'function') {
-        // 방식 1: PaymentComponent와 동일한 방식
-        const payment = tossPayments.payment({
-          amount: earlyBirdPrice,
-          orderId: orderId,
-          orderName: `[얼리버드] ${course.title}`,
-          customerName: '클래튼 수강생',
-          successUrl: `${window.location.origin}/payment/success?course=prompt-engineering`,
-          failUrl: `${window.location.origin}/payment/fail`,
-        });
-
-        await payment.requestPayment('카드', {
-          card: {
-            useEscrow: false,
-          },
-        });
-      } else if (typeof tossPayments.requestPayment === 'function') {
-        // 방식 2: 직접 requestPayment 호출
-        await tossPayments.requestPayment('카드', {
-          amount: earlyBirdPrice,
-          orderId: orderId,
-          orderName: `[얼리버드] ${course.title}`,
-          customerName: '클래튼 수강생',
-          successUrl: `${window.location.origin}/payment/success?course=prompt-engineering`,
-          failUrl: `${window.location.origin}/payment/fail`,
-          card: {
-            useEscrow: false,
-          },
-        });
-      } else {
-        throw new Error('토스페이먼츠 API 함수를 찾을 수 없습니다.');
-      }
+      // 토스페이먼츠 직접 requestPayment 호출 (SDK 버전에 맞게)
+      await tossPayments.requestPayment('카드', {
+        amount: earlyBirdPrice,
+        orderId: orderId,
+        orderName: `[얼리버드] ${course.title}`,
+        customerName: '클래튼 수강생',
+        successUrl: `${window.location.origin}/payment/success?course=workflow-automation`,
+        failUrl: `${window.location.origin}/payment/fail`,
+        card: {
+          useEscrow: false,
+        },
+      });
 
     } catch (error: any) {
       console.error('결제 실패:', error);
@@ -195,10 +246,10 @@ const PromptEngineeringMasterPage: React.FC<PromptEngineeringMasterPageProps> = 
               </div>
               
               <h1 className="hero-title">
-                {course.title}
+                Google OPAL 업무 자동화 마스터
               </h1>
               <p className="hero-subtitle">
-                {course.description}
+                🤖 코드 없이 자연어로 만드는 AI 미니앱 워크플로우! Google OPAL로 업무 자동화부터 AI 도구 체이닝까지 완벽 마스터하세요
               </p>
               
               {/* 강의 메타 정보 */}
@@ -209,11 +260,11 @@ const PromptEngineeringMasterPage: React.FC<PromptEngineeringMasterPageProps> = 
                 </div>
                 <div className="meta-item">
                   <Users size={16} />
-                  <span>정원석</span>
+                  <span>Google OPAL 전문가</span>
                 </div>
                 <div className="meta-item">
                   <Clock size={16} />
-                  <span>{course.totalDuration}</span>
+                  <span>8시간 30분</span>
                 </div>
                 <div className="meta-item">
                   <Calendar size={16} />
@@ -449,4 +500,4 @@ const PromptEngineeringMasterPage: React.FC<PromptEngineeringMasterPageProps> = 
   );
 };
 
-export default PromptEngineeringMasterPage; 
+export default WorkflowAutomationMasterPage; 

@@ -20,13 +20,16 @@ const GoogleAICoursePage = React.lazy(() => import('./components/GoogleAICourseP
 const AIBusinessCoursePage = React.lazy(() => import('./components/AIBusinessCoursePage'));
 const AICodingCoursePage = React.lazy(() => import('./components/AICodingCoursePage'));
 const AIEducationDocumentaryPage = React.lazy(() => import('./components/AIEducationDocumentaryPage'));
-const VibeCodingCoursePage = React.lazy(() => import('./components/VibeCodingCoursePage'));
+
 const PaymentPage = React.lazy(() => import('./components/PaymentPage'));
-const PromptEngineeringMasterPage = React.lazy(() => import('./components/PromptEngineeringMasterPage'));
+const WorkflowAutomationMasterPage = React.lazy(() => import('./components/WorkflowAutomationMasterPage'));
 const FAQPage = React.lazy(() => import('./components/FAQPage'));
 const CEOPage = React.lazy(() => import('./components/CEOPage'));
 const LoginPage = React.lazy(() => import('./components/LoginPage'));
 const SignUpPage = React.lazy(() => import('./components/SignUpPage'));
+const UserDashboardPage = React.lazy(() => import('./components/UserDashboardPage'));
+const PaymentSuccessPage = React.lazy(() => import('./components/PaymentSuccessPage'));
+const PaymentFailPage = React.lazy(() => import('./components/PaymentFailPage'));
 
 // 각 페이지 컴포넌트를 래핑해서 useNavigate 사용
 const MainPageWrapper = () => {
@@ -54,12 +57,10 @@ const MainPageWrapper = () => {
     } else if (courseId === 5) {
       // AI Coding 클래스 (ID 5)인 경우 AI Coding 페이지로 이동
       navigate('/ai-coding');
-    } else if (courseId === 6) {
-      // 바이브코딩 클래스 (ID 6)인 경우 바이브코딩 페이지로 이동
-      navigate('/vibe-coding');
+
     } else if (courseId === 999) {
-      // 프롬프트의정석 (ID 999)인 경우 프롬프트 엔지니어링 페이지로 이동
-      navigate('/prompt-engineering');
+      // 업무 자동화 코스 (ID 999)인 경우 워크플로우 자동화 페이지로 이동
+      navigate('/workflow-automation');
     } else {
       navigate('/course');
     }
@@ -142,15 +143,7 @@ const AIEducationDocumentaryPageWrapper = () => {
   return <AIEducationDocumentaryPage onBack={handleBack} />;
 };
 
-const VibeCodingCoursePageWrapper = () => {
-  const navigate = useNavigate();
 
-  const handleBack = () => {
-    navigate('/');
-  };
-
-  return <VibeCodingCoursePage onBack={handleBack} />;
-};
 
 const PaymentPageWrapper = () => {
   const navigate = useNavigate();
@@ -186,7 +179,7 @@ const PaymentPageWrapper = () => {
   );
 };
 
-const PromptEngineeringMasterPageWrapper = () => {
+const WorkflowAutomationMasterPageWrapper = () => {
   const navigate = useNavigate();
 
   const handleBack = () => {
@@ -194,7 +187,7 @@ const PromptEngineeringMasterPageWrapper = () => {
   };
 
   return (
-    <PromptEngineeringMasterPage onBack={handleBack} />
+    <WorkflowAutomationMasterPage onBack={handleBack} />
   );
 };
 
@@ -246,6 +239,42 @@ const SignUpPageWrapper = () => {
   );
 };
 
+const UserDashboardPageWrapper = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/');
+  };
+
+  return (
+    <UserDashboardPage onBack={handleBack} />
+  );
+};
+
+const PaymentSuccessPageWrapper = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/');
+  };
+
+  return (
+    <PaymentSuccessPage onBack={handleBack} />
+  );
+};
+
+const PaymentFailPageWrapper = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/');
+  };
+
+  return (
+    <PaymentFailPage onBack={handleBack} />
+  );
+};
+
 function App() {
   // 앱 시작 시 Azure Table Storage 테이블 초기화
   useEffect(() => {
@@ -272,13 +301,17 @@ function App() {
             <Route path="/ai-business" element={<AIBusinessCoursePageWrapper />} />
             <Route path="/ai-coding" element={<AICodingCoursePageWrapper />} />
             <Route path="/documentary" element={<AIEducationDocumentaryPageWrapper />} />
-            <Route path="/vibe-coding" element={<VibeCodingCoursePageWrapper />} />
+
             <Route path="/payment" element={<PaymentPageWrapper />} />
-            <Route path="/prompt-engineering" element={<PromptEngineeringMasterPageWrapper />} />
+            <Route path="/workflow-automation" element={<WorkflowAutomationMasterPageWrapper />} />
+            <Route path="/prompt-engineering" element={<WorkflowAutomationMasterPageWrapper />} />
             <Route path="/faq" element={<FAQPageWrapper />} />
             <Route path="/ceo" element={<CEOPageWrapper />} />
             <Route path="/login" element={<LoginPageWrapper />} />
             <Route path="/signup" element={<SignUpPageWrapper />} />
+            <Route path="/dashboard" element={<UserDashboardPageWrapper />} />
+            <Route path="/payment/success" element={<PaymentSuccessPageWrapper />} />
+            <Route path="/payment/fail" element={<PaymentFailPageWrapper />} />
           </Routes>
         </Suspense>
       </div>
