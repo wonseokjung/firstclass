@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronRight, Search, Mail, Lock, Eye, EyeOff, AlertCircle, User, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import AzureTableService, { User as UserType } from '../services/azureTableService';
+import AzureTableService from '../services/azureTableService';
 
 interface SignUpPageProps {
   onBack: () => void;

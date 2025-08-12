@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CheckCircle, ArrowLeft, Star, Clock, Users } from 'lucide-react';
+import { CheckCircle, Star, Clock, Users } from 'lucide-react';
 import AzureTableService from '../services/azureTableService';
 
 interface PaymentSuccessPageProps {
