@@ -1,52 +1,30 @@
-import React from 'react';
-import { ChevronRight, Search, Award, Building, GraduationCap, Briefcase, Users, Globe, Trophy, Target, Youtube, Instagram } from 'lucide-react';
+import React, { useState } from 'react';
+import { ChevronRight, Award, Building, GraduationCap, Briefcase, Users, Globe, Trophy, Target, Youtube, Instagram, X } from 'lucide-react';
+import NavigationBar from './NavigationBar';
 
 interface CEOPageProps {
   onBack: () => void;
 }
 
 const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
+  const [selectedTranscript, setSelectedTranscript] = useState<string | null>(null);
+
+  const openTranscriptModal = (imageSrc: string) => {
+    setSelectedTranscript(imageSrc);
+  };
+
+  const closeTranscriptModal = () => {
+    setSelectedTranscript(null);
+  };
+
   return (
     <div className="ceo-page">
-      {/* 헤더 */}
-      <header className="masterclass-header-original">
-        <div className="header-content">
-          <div className="header-left">
-            <div className="logo" onClick={onBack} style={{ cursor: 'pointer' }}>
-              <span className="logo-icon">C</span>
-              <span className="logo-text">CLATHON</span>
-            </div>
-            <div className="browse-dropdown">
-              <button 
-                className="browse-btn"
-                aria-label="Browse AI & Technology courses"
-                aria-expanded="false"
-              >
-                AI & Technology <ChevronRight size={16} />
-              </button>
-            </div>
-          </div>
-          
-          <div className="search-container">
-            <Search size={20} className="search-icon" aria-hidden="true" />
-            <input 
-              type="text" 
-              placeholder="What do you want to learn..." 
-              className="search-input"
-              aria-label="Search for courses"
-              role="searchbox"
-            />
-          </div>
-          
-          <div className="header-right">
-            <button className="nav-link" onClick={onBack}>돌아가기</button>
-            <button className="nav-link">FAQ</button>
-            <button className="nav-link">View Plans</button>
-            <button className="nav-link">Log In</button>
-            <button className="cta-button">Get CLATHON</button>
-          </div>
-        </div>
-      </header>
+      {/* 통일된 네비게이션바 */}
+      <NavigationBar 
+        onBack={onBack}
+        showSearch={true}
+        breadcrumbText="CEO 소개"
+      />
 
       {/* CEO 프로필 메인 섹션 */}
       <div className="ceo-content">
@@ -97,25 +75,73 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           </div>
         </div>
 
-        {/* 학력 섹션 */}
+        {/* 학력 및 공식 성적증명서 섹션 */}
         <div className="ceo-section">
           <div className="ceo-container">
             <h2 className="section-title">
               <GraduationCap size={24} />
-              학력
+              학력 & 공식 성적증명서
             </h2>
             <div className="education-grid">
               <div className="education-card">
                 <div className="degree-level">석사</div>
                 <h3 className="university">일리노이공대</h3>
                 <p className="university-english">Illinois Institute of Technology</p>
-                <p className="major">Data Science</p>
+                <p className="major">Data Science (MS)</p>
+                <div className="transcript-section">
+                  <h4 className="transcript-title">📜 Official Transcript</h4>
+                  <div className="transcript-image-container">
+                    <img 
+                      src="/images/transcript-masters.png" 
+                      alt="일리노이공대 석사 공식 성적증명서"
+                      className="transcript-image"
+                      onClick={() => openTranscriptModal("/images/transcript-masters.png")}
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const fallback = target.nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = 'block';
+                      }}
+                    />
+                    <div className="transcript-placeholder" style={{ display: 'none' }}>
+                      <div className="placeholder-content">
+                        <GraduationCap size={48} />
+                        <p>석사 성적증명서</p>
+                        <small>Illinois Institute of Technology 공식 성적증명서</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className="education-card">
                 <div className="degree-level">학사</div>
                 <h3 className="university">뉴욕시립대</h3>
                 <p className="university-english">City University of New York - Baruch College</p>
-                <p className="major">Data Science</p>
+                <p className="major">Data Science (BS)</p>
+                <div className="transcript-section">
+                  <h4 className="transcript-title">📜 Official Transcript</h4>
+                  <div className="transcript-image-container">
+                    <img 
+                      src="/images/transcript-bachelors.png" 
+                      alt="뉴욕시립대 학사 공식 성적증명서"
+                      className="transcript-image"
+                      onClick={() => openTranscriptModal("/images/transcript-bachelors.png")}
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const fallback = target.nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = 'block';
+                      }}
+                    />
+                    <div className="transcript-placeholder" style={{ display: 'none' }}>
+                      <div className="placeholder-content">
+                        <GraduationCap size={48} />
+                        <p>학사 성적증명서</p>
+                        <small>City University of New York - Baruch College 공식 성적증명서</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -258,6 +284,22 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           </div>
         </div>
       </div>
+
+      {/* 성적증명서 확대보기 모달 */}
+      {selectedTranscript && (
+        <div className="transcript-modal" onClick={closeTranscriptModal}>
+          <div className="transcript-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="transcript-modal-close" onClick={closeTranscriptModal}>
+              <X size={20} />
+            </button>
+            <img 
+              src={selectedTranscript} 
+              alt="성적증명서 확대보기" 
+              style={{ maxWidth: '100%', maxHeight: '100%' }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

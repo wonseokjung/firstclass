@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, Phone, Mail, Clock } from 'lucide-react';
+import NavigationBar from './NavigationBar';
 
 interface FAQPageProps {
   onBack: () => void;
@@ -358,21 +359,12 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
 
   return (
     <div className="masterclass-container">
-      {/* 헤더 */}
-      <header className="masterclass-header-original">
-        <div className="header-content">
-          <div className="header-left">
-            <div className="logo" onClick={onBack} style={{ cursor: 'pointer' }}>
-              <span className="logo-icon">C</span>
-              <span className="logo-text">CLATHON</span>
-            </div>
-          </div>
-          
-          <div className="header-right">
-            <button className="cta-button" onClick={onBack}>홈으로 돌아가기</button>
-          </div>
-        </div>
-      </header>
+      {/* 통일된 네비게이션바 */}
+      <NavigationBar 
+        onBack={onBack}
+        showSearch={true}
+        breadcrumbText="FAQ"
+      />
 
       {/* FAQ 메인 콘텐츠 */}
       <div className="faq-container" style={{ 

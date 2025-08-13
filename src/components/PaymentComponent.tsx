@@ -4,6 +4,7 @@ import { loadTossPayments } from '@tosspayments/payment-sdk';
 interface PaymentComponentProps {
   courseTitle: string;
   price: number;
+  userInfo: any;
   onClose: () => void;
   onSuccess: (paymentData: any) => void;
 }
@@ -11,6 +12,7 @@ interface PaymentComponentProps {
 const PaymentComponent: React.FC<PaymentComponentProps> = ({ 
   courseTitle, 
   price, 
+  userInfo,
   onClose, 
   onSuccess 
 }) => {
@@ -35,7 +37,6 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
 
   const handlePayment = async () => {
     // 로그인 체크
-    const userInfo = localStorage.getItem('clathon_user');
     if (!userInfo) {
       alert('결제하려면 먼저 로그인해주세요!');
       return;
@@ -84,7 +85,6 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
 
   const handleOtherPayment = async (method: string) => {
     // 로그인 체크
-    const userInfo = localStorage.getItem('clathon_user');
     if (!userInfo) {
       alert('결제하려면 먼저 로그인해주세요!');
       return;

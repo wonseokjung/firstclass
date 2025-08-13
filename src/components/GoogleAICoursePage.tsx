@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, MessageSquare, Award, Timer, Search, ChevronDown } from 'lucide-react';
+import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, MessageSquare, Award, Timer } from 'lucide-react';
+import NavigationBar from './NavigationBar';
 
 interface GoogleAICoursePageProps {
   onBack: () => void;
@@ -340,39 +341,12 @@ const GoogleAICoursePage: React.FC<GoogleAICoursePageProps> = ({ onBack }) => {
 
   return (
     <div className="masterclass-container">
-              {/* CLATHON 스타일 헤더 */}
-        <header className="masterclass-header-original">
-          <div className="header-content">
-            <div className="header-left">
-              <div className="logo" onClick={onBack} style={{ cursor: 'pointer' }}>
-                <span className="logo-icon">C</span>
-                <span className="logo-text">CLATHON</span>
-              </div>
-            <div className="browse-dropdown">
-              <button className="browse-btn">
-                AI & Technology <ChevronDown size={16} />
-              </button>
-            </div>
-          </div>
-          
-          <div className="search-container">
-            <Search size={20} className="search-icon" />
-            <input 
-              type="text" 
-              placeholder="What do you want to learn..." 
-              className="search-input"
-            />
-          </div>
-          
-          <div className="header-right">
-            <button className="nav-link">At Work</button>
-            <button className="nav-link">Gifts</button>
-            <button className="nav-link">View Plans</button>
-            <button className="nav-link">Log In</button>
-                            <button className="cta-button" onClick={onBack}>← Back to CLATHON</button>
-          </div>
-        </div>
-      </header>
+      {/* 통일된 네비게이션바 */}
+      <NavigationBar 
+        onBack={onBack}
+        showSearch={true}
+        breadcrumbText="Google AI 완전정복"
+      />
 
       {/* 메인 콘텐츠 영역 - 2열 레이아웃 */}
       <div className="course-layout">

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'clathon-v1.0.0';
+const CACHE_NAME = 'clathon-v1.0.1';
 const urlsToCache = [
   '/',
   '/manifest.json'
@@ -35,6 +35,12 @@ self.addEventListener('fetch', function(event) {
     return;
   }
 
+  // POST, PUT, DELETE 요청은 캐시하지 않음
+  if (event.request.method !== 'GET') {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then(function(response) {
@@ -50,16 +56,19 @@ self.addEventListener('fetch', function(event) {
               return response;
             }
 
-            // 응답 복제 (스트림은 한 번만 사용 가능)
-            var responseToCache = response.clone();
+            // GET 요청만 캐시에 저장
+            if (event.request.method === 'GET') {
+              // 응답 복제 (스트림은 한 번만 사용 가능)
+              var responseToCache = response.clone();
 
-            caches.open(CACHE_NAME)
-              .then(function(cache) {
-                cache.put(event.request, responseToCache);
-              })
-              .catch(error => {
-                console.warn('Failed to update cache:', error);
-              });
+              caches.open(CACHE_NAME)
+                .then(function(cache) {
+                  cache.put(event.request, responseToCache);
+                })
+                .catch(error => {
+                  console.warn('Failed to update cache:', error);
+                });
+            }
 
             return response;
           }

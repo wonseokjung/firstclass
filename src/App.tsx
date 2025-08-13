@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import './index.css';
 import AzureTableService from './services/azureTableService';
 
@@ -96,9 +96,22 @@ const MainPageWrapper = () => {
 const ChatGPTCoursePageWrapper = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const userInfo = sessionStorage.getItem('clathon_user_session');
+    if (!userInfo) {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+    }
+  }, [navigate]);
+
   const handleBack = () => {
     navigate('/');
   };
+
+  const userInfo = sessionStorage.getItem('clathon_user_session');
+  if (!userInfo) {
+    return <LoadingSpinner />;
+  }
 
   return <ChatGPTCoursePage onBack={handleBack} />;
 };
@@ -106,9 +119,22 @@ const ChatGPTCoursePageWrapper = () => {
 const GoogleAICoursePageWrapper = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const userInfo = sessionStorage.getItem('clathon_user_session');
+    if (!userInfo) {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+    }
+  }, [navigate]);
+
   const handleBack = () => {
     navigate('/');
   };
+
+  const userInfo = sessionStorage.getItem('clathon_user_session');
+  if (!userInfo) {
+    return <LoadingSpinner />;
+  }
 
   return <GoogleAICoursePage onBack={handleBack} />;
 };
@@ -116,9 +142,22 @@ const GoogleAICoursePageWrapper = () => {
 const AIBusinessCoursePageWrapper = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const userInfo = sessionStorage.getItem('clathon_user_session');
+    if (!userInfo) {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+    }
+  }, [navigate]);
+
   const handleBack = () => {
     navigate('/');
   };
+
+  const userInfo = sessionStorage.getItem('clathon_user_session');
+  if (!userInfo) {
+    return <LoadingSpinner />;
+  }
 
   return <AIBusinessCoursePage onBack={handleBack} />;
 };
@@ -126,9 +165,22 @@ const AIBusinessCoursePageWrapper = () => {
 const AICodingCoursePageWrapper = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const userInfo = sessionStorage.getItem('clathon_user_session');
+    if (!userInfo) {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+    }
+  }, [navigate]);
+
   const handleBack = () => {
     navigate('/');
   };
+
+  const userInfo = sessionStorage.getItem('clathon_user_session');
+  if (!userInfo) {
+    return <LoadingSpinner />;
+  }
 
   return <AICodingCoursePage onBack={handleBack} />;
 };
@@ -149,7 +201,7 @@ const PaymentPageWrapper = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userInfo = localStorage.getItem('clathon_user');
+    const userInfo = sessionStorage.getItem('clathon_user_session');
     if (!userInfo) {
       alert('로그인이 필요합니다.');
       navigate('/login');
@@ -165,7 +217,7 @@ const PaymentPageWrapper = () => {
   };
 
   // Render payment page only if user is logged in
-  const userInfo = localStorage.getItem('clathon_user');
+  const userInfo = sessionStorage.getItem('clathon_user_session');
   if (!userInfo) {
     return <LoadingSpinner />; // or some other placeholder while redirecting
   }
@@ -182,9 +234,22 @@ const PaymentPageWrapper = () => {
 const WorkflowAutomationMasterPageWrapper = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const userInfo = sessionStorage.getItem('clathon_user_session');
+    if (!userInfo) {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+    }
+  }, [navigate]);
+
   const handleBack = () => {
     navigate('/');
   };
+
+  const userInfo = sessionStorage.getItem('clathon_user_session');
+  if (!userInfo) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <WorkflowAutomationMasterPage onBack={handleBack} />

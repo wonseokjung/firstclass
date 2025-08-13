@@ -380,17 +380,18 @@ export const chatGPTCourse: Course = {
 // 학습 진도 관리를 위한 로컬 스토리지 키
 export const PROGRESS_STORAGE_KEY = 'chatgpt-course-progress';
 
-// 학습 진도 저장
+// 임시 메모리 저장소 (세션 동안만 유지)
+let tempProgress: Record<number, boolean> = {};
+
+// 학습 진도 저장 (임시 메모리에만)
 export const saveProgress = (lessonId: number, completed: boolean) => {
-  const progress = getProgress();
-  progress[lessonId] = completed;
-  localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(progress));
+  tempProgress[lessonId] = completed;
+  console.log('📚 학습 진도 저장 (메모리):', { lessonId, completed });
 };
 
-// 학습 진도 불러오기
+// 학습 진도 불러오기 (임시 메모리에서)
 export const getProgress = (): Record<number, boolean> => {
-  const saved = localStorage.getItem(PROGRESS_STORAGE_KEY);
-  return saved ? JSON.parse(saved) : {};
+  return tempProgress;
 };
 
 // 진도율 계산
@@ -409,17 +410,18 @@ export const getCompletedLessonsCount = (): number => {
 // 퀴즈 진도 관리를 위한 로컬 스토리지 키
 export const QUIZ_PROGRESS_KEY = 'chatgpt-quiz-progress';
 
-// 퀴즈 결과 저장
+// 임시 퀴즈 결과 저장소 (세션 동안만 유지)
+let tempQuizProgress: Record<number, { score: number; passed: boolean; completedAt: string }> = {};
+
+// 퀴즈 결과 저장 (임시 메모리에만)
 export const saveQuizResult = (lessonId: number, score: number, passed: boolean) => {
-  const quizProgress = getQuizProgress();
-  quizProgress[lessonId] = { score, passed, completedAt: new Date().toISOString() };
-  localStorage.setItem(QUIZ_PROGRESS_KEY, JSON.stringify(quizProgress));
+  tempQuizProgress[lessonId] = { score, passed, completedAt: new Date().toISOString() };
+  console.log('🎯 퀴즈 결과 저장 (메모리):', { lessonId, score, passed });
 };
 
-// 퀴즈 진도 불러오기
+// 퀴즈 진도 불러오기 (임시 메모리에서)
 export const getQuizProgress = (): Record<number, { score: number; passed: boolean; completedAt: string }> => {
-  const saved = localStorage.getItem(QUIZ_PROGRESS_KEY);
-  return saved ? JSON.parse(saved) : {};
+  return tempQuizProgress;
 };
 
 export const aiBusinessCourse: Course = {

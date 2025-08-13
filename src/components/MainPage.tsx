@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Play, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 import PaymentComponent from './PaymentComponent';
@@ -190,6 +190,7 @@ interface MainPageProps {
 
 const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onFAQClick, onLoginClick, onSignUpClick }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const gridRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   // 결제 모달 state
@@ -199,45 +200,42 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
   // 로그인 상태 관리
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
+  const [enrolledCourses, setEnrolledCourses] = useState<Set<string>>(new Set());
 
-  // 로그인 상태 확인
+  // 로그인 상태 확인 (sessionStorage에서)
   useEffect(() => {
-    const checkLoginStatus = () => {
-      const storedUserInfo = localStorage.getItem('clathon_user');
+    const checkLoginStatus = async () => {
+      const storedUserInfo = sessionStorage.getItem('clathon_user_session');
       if (storedUserInfo) {
         try {
           const parsedUserInfo = JSON.parse(storedUserInfo);
           setIsLoggedIn(true);
           setUserInfo(parsedUserInfo);
           console.log('👤 로그인된 사용자 확인:', parsedUserInfo.email);
+          
+          // 수강 중인 강좌 목록 가져오기
+          console.log('🔍 사용자 수강 정보 조회 시작:', parsedUserInfo.email);
+          const userEnrollments = await AzureTableService.getUserEnrollmentsByEmail(parsedUserInfo.email);
+          console.log('📋 Azure에서 가져온 수강 정보:', userEnrollments);
+          
+          const enrolledCourseIds = new Set(userEnrollments.map(course => course.courseId));
+          setEnrolledCourses(enrolledCourseIds);
+          console.log('📚 수강 중인 강좌 ID 목록:', Array.from(enrolledCourseIds));
         } catch (error) {
           console.error('사용자 정보 파싱 오류:', error);
-          localStorage.removeItem('clathon_user');
+          sessionStorage.removeItem('clathon_user_session');
           setIsLoggedIn(false);
           setUserInfo(null);
+          setEnrolledCourses(new Set());
         }
       } else {
         setIsLoggedIn(false);
         setUserInfo(null);
+        setEnrolledCourses(new Set());
       }
     };
 
     checkLoginStatus();
-
-    // localStorage 변화 감지
-    const handleStorageChange = () => {
-      checkLoginStatus();
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    
-    // 페이지 포커스 시에도 확인 (같은 탭에서의 변화 감지)
-    window.addEventListener('focus', checkLoginStatus);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('focus', checkLoginStatus);
-    };
   }, []);
 
   const handleCourseClick = (course: Course) => {
@@ -246,14 +244,20 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
   };
 
   // 결제 관련 핸들러 - 로그인 체크 포함
-  const handleEnrollClick = (e: React.MouseEvent, courseTitle: string, price: number = 199000) => {
+  const handleEnrollClick = (e: React.MouseEvent, courseTitle: string, price: number = 199000, courseId?: string) => {
     e.stopPropagation();
     
-    // 로그인 상태 확인 (localStorage에서 로그인 정보 체크)
-    const userInfo = localStorage.getItem('clathon_user');
-    if (!userInfo) {
+    // 로그인 상태 확인
+    if (!isLoggedIn || !userInfo) {
       alert('결제하려면 먼저 로그인해주세요!');
       navigate('/login');
+      return;
+    }
+    
+    // 수강 상태 확인 (workflow-automation 강좌의 경우)
+    if (courseId && enrolledCourses.has(courseId)) {
+      alert('이미 수강 중인 강좌입니다! 대시보드에서 학습을 이어가세요.');
+      navigate('/dashboard');
       return;
     }
     
@@ -270,21 +274,26 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
     console.log('결제 성공:', paymentData);
     
     // Azure에 구매 정보 저장
-    const userInfo = localStorage.getItem('clathon_user');
     if (userInfo && selectedCourse) {
       try {
-        const user = JSON.parse(userInfo);
         const courseId = selectedCourse.title.toLowerCase().replace(/\s+/g, '-');
         
         // Azure Table Storage에 구매 정보 저장
         await AzureTableService.createPayment({
-          userId: user.userId,
+          email: userInfo.email,  // userId → email로 변경
           courseId: courseId,
           amount: selectedCourse.price,
           paymentMethod: 'card'
         });
         
         console.log('✅ Azure에 구매 정보 저장 완료:', courseId);
+        
+        // 수강 중인 강좌 목록 업데이트
+        setEnrolledCourses(prev => {
+          const newSet = new Set(prev);
+          newSet.add(courseId);
+          return newSet;
+        });
       } catch (error) {
         console.error('❌ 구매 정보 저장 실패:', error);
       }
@@ -358,10 +367,11 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
                 <button 
                   className="nav-link" 
                   onClick={() => {
-                    localStorage.removeItem('clathon_user');
+                    sessionStorage.removeItem('clathon_user_session');
                     setIsLoggedIn(false);
                     setUserInfo(null);
                     alert('로그아웃되었습니다.');
+                    navigate('/', { replace: true });
                   }}
                 >
                   로그아웃
@@ -493,11 +503,16 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
                           className="watch-trailer-btn"
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleEnrollClick(e, course.title || course.description, course.price || 299000);
+                            handleEnrollClick(e, course.title || course.description, course.price || 299000, 'workflow-automation');
+                          }}
+                          disabled={enrolledCourses.has('workflow-automation')}
+                          style={{
+                            opacity: enrolledCourses.has('workflow-automation') ? '0.6' : '1',
+                            cursor: enrolledCourses.has('workflow-automation') ? 'not-allowed' : 'pointer'
                           }}
                         >
                           <Play size={16} />
-                          🔥 사전예약
+                          {enrolledCourses.has('workflow-automation') ? '✅ 수강 중' : '🔥 사전예약'}
                         </button>
                       </div>
                     </>
@@ -851,6 +866,7 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onF
           <PaymentComponent
             courseTitle={selectedCourse.title}
             price={selectedCourse.price}
+            userInfo={userInfo}
             onClose={handlePaymentClose}
             onSuccess={handlePaymentSuccess}
           />

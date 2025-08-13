@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, TrendingUp, Award, Timer, Search, ChevronDown } from 'lucide-react';
+import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, TrendingUp, Award, Timer } from 'lucide-react';
 import { aiBusinessCourse, saveProgress, getProgress, calculateProgressPercentage, getCompletedLessonsCount, saveQuizResult, getQuizProgress } from '../data/courseData';
+import NavigationBar from './NavigationBar';
 
 interface AIBusinessCoursePageProps {
   onBack: () => void;
@@ -169,39 +170,12 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
 
   return (
     <div className="masterclass-container">
-      {/* 헤더 */}
-      <header className="masterclass-header-original">
-        <div className="header-content">
-          <div className="header-left">
-            <div className="logo" onClick={onBack} style={{ cursor: 'pointer' }}>
-              <span className="logo-icon">C</span>
-              <span className="logo-text">CLATHON</span>
-            </div>
-            <div className="browse-dropdown">
-              <button className="browse-btn">
-                둘러보기 <ChevronDown size={16} />
-              </button>
-            </div>
-          </div>
-          
-          <div className="search-container">
-            <Search size={20} className="search-icon" />
-            <input 
-              type="text" 
-              placeholder="오늘 무엇을 배우고 싶으신가요?" 
-              className="search-input"
-            />
-          </div>
-          
-          <div className="header-right">
-            <button className="nav-link">기업용</button>
-            <button className="nav-link">선물</button>
-            <button className="nav-link">요금제</button>
-            <button className="nav-link">로그인</button>
-            <button className="cta-button" onClick={onBack}>메인으로</button>
-          </div>
-        </div>
-      </header>
+      {/* 통일된 네비게이션바 */}
+      <NavigationBar 
+        onBack={onBack}
+        showSearch={true}
+        breadcrumbText="AI 비즈니스 전략"
+      />
 
       {/* 메인 콘텐츠 영역 - 2열 레이아웃 */}
       <div className="course-layout">

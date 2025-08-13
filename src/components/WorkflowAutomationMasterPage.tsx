@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Clock, Users, Star, Calendar, CheckCircle, Play } from 'lucide-react';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { premiumCourse } from '../data/courseData';
+import AzureTableService from '../services/azureTableService';
+import NavigationBar from './NavigationBar';
 
 interface WorkflowAutomationMasterPageProps {
   onBack: () => void;
@@ -13,6 +15,9 @@ const WorkflowAutomationMasterPage: React.FC<WorkflowAutomationMasterPageProps> 
   const [isLoading, setIsLoading] = useState(false);
   const [tossPayments, setTossPayments] = useState<any>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userInfo, setUserInfo] = useState<any>(null);
+  const [isAlreadyEnrolled, setIsAlreadyEnrolled] = useState(false);
+  const [checkingEnrollment, setCheckingEnrollment] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -108,11 +113,35 @@ const WorkflowAutomationMasterPage: React.FC<WorkflowAutomationMasterPageProps> 
   const launchDate = new Date('2025-09-01T00:00:00').getTime();
 
   useEffect(() => {
-    // 로그인 상태 체크
-    const checkLoginStatus = () => {
-      const userInfo = localStorage.getItem('clathon_user');
-      setIsLoggedIn(!!userInfo);
+    // sessionStorage에서 로그인 상태 확인
+    const checkLoginStatus = async () => {
+      const storedUserInfo = sessionStorage.getItem('clathon_user_session');
+      setIsLoggedIn(!!storedUserInfo);
+      
+      if (storedUserInfo) {
+        try {
+          const parsedUserInfo = JSON.parse(storedUserInfo);
+          setUserInfo(parsedUserInfo);
+          
+          // 수강 상태 확인
+          setCheckingEnrollment(true);
+          const enrolled = await AzureTableService.isUserEnrolledInCourse(
+            parsedUserInfo.email, 
+            'workflow-automation'
+          );
+          setIsAlreadyEnrolled(enrolled);
+          setCheckingEnrollment(false);
+        } catch (error) {
+          console.error('사용자 정보 확인 실패:', error);
+          setCheckingEnrollment(false);
+        }
+      } else {
+        setUserInfo(null);
+        setIsAlreadyEnrolled(false);
+      }
     };
+
+    checkLoginStatus();
 
     const initializeTossPayments = async () => {
       try {
@@ -124,17 +153,19 @@ const WorkflowAutomationMasterPage: React.FC<WorkflowAutomationMasterPageProps> 
       }
     };
 
-    checkLoginStatus();
     initializeTossPayments();
 
-    // 로그인 상태 변화 감지를 위한 이벤트 리스너
+    // storage 이벤트 감지 (다른 탭에서 로그인/로그아웃 시)
     const handleStorageChange = () => {
       checkLoginStatus();
     };
 
     window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('focus', checkLoginStatus); // 페이지 포커스 시에도 확인
+
     return () => {
       window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('focus', checkLoginStatus);
     };
   }, []);
 
@@ -166,7 +197,8 @@ const WorkflowAutomationMasterPage: React.FC<WorkflowAutomationMasterPageProps> 
 
   const handleEarlyBirdPayment = async () => {
     // 로그인 체크
-    if (!isLoggedIn) {
+    const userInfo = sessionStorage.getItem('clathon_user_session');
+    if (!userInfo) {
       handleLoginRequired();
       return;
     }
@@ -208,21 +240,12 @@ const WorkflowAutomationMasterPage: React.FC<WorkflowAutomationMasterPageProps> 
 
   return (
     <div className="masterclass-container">
-      {/* 헤더 */}
-      <header className="masterclass-header-original">
-        <div className="header-content">
-          <div className="header-left">
-            <div className="logo" onClick={onBack} style={{ cursor: 'pointer' }}>
-              <span className="logo-icon">C</span>
-              <span className="logo-text">CLATHON</span>
-            </div>
-          </div>
-          
-          <div className="header-right">
-            <button className="cta-button" onClick={onBack}>홈으로 돌아가기</button>
-          </div>
-        </div>
-      </header>
+      {/* 통일된 네비게이션바 */}
+      <NavigationBar 
+        onBack={onBack}
+        showSearch={false}
+        breadcrumbText="Workflow Automation Master"
+      />
 
       {/* 메인 콘텐츠 영역 */}
       <div className="course-layout">
@@ -395,23 +418,27 @@ const WorkflowAutomationMasterPage: React.FC<WorkflowAutomationMasterPageProps> 
                 {/* 사전예약 버튼 - 메인페이지와 동일한 스타일 */}
                 <button 
                   className="watch-trailer-btn premium-btn"
-                  onClick={isLoggedIn ? handleEarlyBirdPayment : handleLoginRequired}
-                  disabled={isLoading || !tossPayments}
+                  onClick={isLoggedIn && !isAlreadyEnrolled ? handleEarlyBirdPayment : handleLoginRequired}
+                  disabled={isLoading || !tossPayments || checkingEnrollment || isAlreadyEnrolled}
                   style={{
                     width: '100%',
                     maxWidth: '300px',
                     padding: '15px 30px',
                     fontSize: '1.1rem',
-                    opacity: !isLoggedIn ? '0.7' : '1'
+                    opacity: (!isLoggedIn || isAlreadyEnrolled) ? '0.7' : '1'
                   }}
                 >
                   <Play size={16} />
-                  {isLoading ? '결제 진행 중...' : 
-                   !isLoggedIn ? '🔒 로그인 후 이용 가능' : '🔥 사전예약'}
+                  {checkingEnrollment ? '수강 상태 확인 중...' :
+                   isLoading ? '결제 진행 중...' : 
+                   !isLoggedIn ? '🔒 로그인 후 이용 가능' : 
+                   isAlreadyEnrolled ? '✅ 이미 수강 중입니다' : '🔥 사전예약'}
                 </button>
 
                 <p style={{ fontSize: '0.8rem', opacity: '0.7', marginTop: '15px' }}>
-                  {isLoggedIn 
+                  {isAlreadyEnrolled 
+                    ? '🎓 이미 수강 중인 강좌입니다' :
+                   isLoggedIn 
                     ? '💳 토스페이먼츠로 안전하게 결제됩니다' 
                     : '🔐 먼저 로그인한 후 결제해주세요'}
                 </p>

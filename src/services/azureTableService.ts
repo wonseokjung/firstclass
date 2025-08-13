@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 // Azure Table Storage SAS URLs 설정 (단일 Users 테이블만 사용)
 const AZURE_SAS_URLS = {
-  users: 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-08-06T01:38:29Z&se=2030-10-02T09:53:00Z&spr=https&sv=2024-11-04&sig=eKj3S3wr0QyWiDhA8EJzgE6c7LAlIcysVdqiqjffb%2Bw%3D&tn=users'
+  users: 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-08-13T02:04:25Z&se=2030-10-13T10:19:00Z&spr=https&sv=2024-11-04&sig=ulo8yMTJqBhKB%2FeeIKycUxl8knzpbDkClU6NTaPrHYw%3D&tn=users'
 };
 
 // 환경변수에서 Connection String 가져오기 (백업용) - 현재는 SAS URL 사용으로 미사용
@@ -28,17 +28,7 @@ if (!isConnectionConfigured) {
 
 // Azure SAS URL 기반 초기화 함수
 const initializeAzureClients = () => {
-  console.log('🌐 Azure Table Storage 단일 Users 테이블 SAS URL 연결 준비...');
-  console.log('📋 설정된 테이블:');
-  Object.keys(AZURE_SAS_URLS).forEach(tableName => {
-    console.log(`  ✅ ${tableName}: ${AZURE_SAS_URLS[tableName as keyof typeof AZURE_SAS_URLS].substring(0, 80)}...`);
-  });
-  
-  console.log('✅ Azure SAS 토큰 설정 완료!');
-  console.log('📋 실제 Azure Table Storage 단일 Users 테이블 연결 준비 완료!');
-  console.log('🚀 쓰기 권한(sp=raud) 포함으로 완전한 CRUD 작업 가능!');
-  console.log('🎯 모든 데이터를 Users 테이블에 통합 저장!');
-  console.log('❌ LocalStorage 사용 안함 - Azure 완전 전환!');
+  console.log('✅ Azure Table Storage 연결 완료');
 };
 
 // LocalStorage 사용 안함 - Azure 완전 전환!
@@ -182,12 +172,18 @@ export class AzureTableService {
     entityId?: string
   ): Promise<any> {
     const baseUrl = AZURE_SAS_URLS[tableName];
+    
+    // 🔧 디버깅: 업데이트용 SAS URL 확인  
+    if (method !== 'GET') {
+      console.log(`🔗 ${method} 요청용 SAS URL:`, baseUrl.substring(0, 100) + '...');
+    }
+    
     let url = baseUrl;
     
     // 특정 엔티티 조회/수정/삭제시 URL 구성
     if (entityId && method !== 'POST') {
       const [partitionKey, rowKey] = entityId.split('|');
-      url = `${baseUrl.split('?')[0]}(PartitionKey='${encodeURIComponent(partitionKey)}',RowKey='${encodeURIComponent(rowKey)}')${baseUrl.includes('?') ? '&' + baseUrl.split('?')[1] : ''}`;
+      url = `${baseUrl.split('?')[0]}(PartitionKey='${encodeURIComponent(partitionKey)}',RowKey='${encodeURIComponent(rowKey)}')${baseUrl.includes('?') ? '?' + baseUrl.split('?')[1] : ''}`;
     }
     
     const headers: Record<string, string> = {
@@ -219,6 +215,9 @@ export class AzureTableService {
       console.log(`🔧 Azure ${method} 요청 엔티티:`, azureEntity);
     }
     
+    // 🔗 디버깅: 최종 요청 URL 출력  
+    console.log(`🔗 Final Azure Request URL: ${url}`);
+    
     try {
       const response = await fetch(url, options);
       
@@ -247,6 +246,11 @@ export class AzureTableService {
     
     // Azure Table Storage는 정확한 키 이름을 요구합니다
     for (const [key, value] of Object.entries(entity)) {
+      // 🔧 odata 메타데이터 제외 (Azure 검색 결과에서 오는 불필요한 메타데이터)
+      if (key.startsWith('odata.')) {
+        continue;
+      }
+      
       let azureKey = key;
       let azureValue = value;
       
@@ -356,6 +360,9 @@ export class AzureTableService {
     try {
       // 🚀 Azure에서 사용자 검색 시도!
       console.log('🔍 Azure Users 테이블에서 사용자 검색 중...', email);
+      
+      // 🔧 디버깅: 사용 중인 SAS URL 확인
+      console.log(`🔗 조회용 SAS URL:`, AZURE_SAS_URLS.users.substring(0, 100) + '...');
       
       // Azure Table Storage에서 쿼리 (이메일로 필터링)
       const baseUrl = AZURE_SAS_URLS.users;
@@ -490,7 +497,7 @@ export class AzureTableService {
     
     const user: User = {
       partitionKey: 'users',
-      rowKey: userId,
+      rowKey: userData.email, // UUID 대신 이메일 사용
       email: userData.email,
       name: userData.name,
       passwordHash,
@@ -550,42 +557,77 @@ export class AzureTableService {
     }
   }
 
-  // 사용자 수강 정보 조회 (Users 테이블에서)
-  static async getUserEnrollmentsFromUsers(userId: string): Promise<EnrolledCourse[]> {
+  // 사용자 수강 정보 조회 (Users 테이블에서) - 이메일 기반
+  static async getUserEnrollmentsByEmail(email: string): Promise<EnrolledCourse[]> {
     try {
-      console.log('🔍 사용자 수강 정보 조회 중 (Users 테이블)...', userId);
+      console.log('🔍 수강 정보 조회:', email);
       
-      const user = await this.getUserById(userId);
-      if (!user || !user.enrolledCourses) {
-        console.log('📚 수강 중인 강의가 없습니다.');
+      let user = await this.getUserByEmail(email);
+      console.log('👤 조회된 사용자 정보:', user ? { email: user.email, rowKey: user.rowKey, hasEnrolledCourses: !!user.enrolledCourses } : 'null');
+      
+      if (!user) {
+        console.log('❌ 사용자 없음:', email);
         return [];
       }
       
+      if (!user || !user.enrolledCourses) {
+        console.log('📚 수강 중인 강의가 없습니다. enrolledCourses 필드:', user.enrolledCourses);
+        return [];
+      }
+      
+      console.log('📝 enrolledCourses 원본 데이터:', user.enrolledCourses);
+      
       // JSON 문자열 파싱 (통합 데이터 구조 지원)
       const userData = JSON.parse(user.enrolledCourses);
+      console.log('📊 파싱된 userData:', userData);
+      
       let enrolledCourses: EnrolledCourse[] = [];
       
       if (Array.isArray(userData)) {
         // 기존 단순 배열 형태
+        console.log('📋 기존 배열 형태 데이터 감지');
         enrolledCourses = userData;
       } else if (userData.enrollments) {
         // 새로운 통합 구조 (enrollments + payments)
+        console.log('📋 새로운 통합 구조 데이터 감지');
         enrolledCourses = userData.enrollments;
+      } else {
+        console.log('⚠️ 알 수 없는 데이터 구조:', userData);
       }
       
       console.log('✅ 수강 정보 조회 성공:', enrolledCourses.length, '개 강의');
+      console.log('📚 수강 강의 목록:', enrolledCourses);
       console.log('📊 결제 정보도 함께 저장됨:', userData.payments?.length || 0, '개 결제');
       
       return enrolledCourses;
     } catch (error: any) {
       console.error('❌ 수강 정보 조회 실패:', error.message);
+      console.error('❌ 오류 상세:', error);
       return [];
     }
   }
 
-  // 사용자에게 강의 구매+수강신청 추가 (Users 테이블에 모든 정보 저장)
+  // 특정 강좌 수강 상태 확인 (이메일 + 강좌 ID 기반)
+  static async isUserEnrolledInCourse(email: string, courseId: string): Promise<boolean> {
+    try {
+      console.log('🔍 강좌 수강 상태 확인:', email, '→', courseId);
+      
+      const enrolledCourses = await this.getUserEnrollmentsByEmail(email);
+      const isEnrolled = enrolledCourses.some(course => 
+        course.courseId === courseId && course.status === 'active'
+      );
+      
+      console.log(isEnrolled ? '✅ 이미 수강 중' : '❌ 미수강', ':', courseId);
+      return isEnrolled;
+    } catch (error: any) {
+      console.error('❌ 수강 상태 확인 실패:', error.message);
+      return false;
+    }
+  }
+
+  // 사용자에게 강의 구매+수강신청 추가 (Users 테이블에 모든 정보 저장) - 이메일 기반
   static async addPurchaseAndEnrollmentToUser(userData: {
-    userId: string;
+    email: string;  // userId → email로 변경
     courseId: string;
     title: string;
     amount: number;
@@ -593,8 +635,7 @@ export class AzureTableService {
     externalPaymentId?: string;
   }): Promise<{payment: any, enrollment: EnrolledCourse}> {
     try {
-      console.log('🛒 사용자 테이블에 구매+수강신청 정보 추가 중...', userData.courseId);
-      console.log('🔍 찾으려는 사용자 ID:', userData.userId);
+      console.log('🛒 구매 처리 중:', userData.email);
       
       // 결제 정보 생성
       const paymentId = `payment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -622,86 +663,55 @@ export class AzureTableService {
         learningTimeMinutes: 0 // 초기 학습시간 0분
       };
       
-      // 기존 사용자 정보 조회
-      let user = await this.getUserById(userData.userId);
+      // 기존 사용자 정보 조회 - 이메일로 조회
+      let user = await this.getUserByEmail(userData.email);
+      console.log('🔍 getUserByEmail 결과:', user);
+      
+      // 🚨 사용자가 존재하지만 실제 엔티티가 없는 경우 체크
+      if (user && user.rowKey) {
+        console.log('🔍 실제 엔티티 존재 확인 시작. RowKey:', user.rowKey);
+        console.log('🔍 확인할 PartitionKey:', user.partitionKey || 'users');
+        
+        try {
+          // 실제로 해당 RowKey로 엔티티가 존재하는지 직접 확인
+          const actualUser = await this.azureRequest('users', 'GET', null, `users|${user.rowKey}`);
+          console.log('✅ 실제 사용자 엔티티 확인됨:', user.rowKey);
+          console.log('✅ 확인된 사용자 데이터:', { 
+            rowKey: actualUser.rowKey, 
+            email: actualUser.email,
+            partitionKey: actualUser.partitionKey 
+          });
+        } catch (checkError: any) {
+          console.error('❌ GET 요청 실패 상세 정보:');
+          console.error('❌ RowKey:', user.rowKey);
+          console.error('❌ 요청 URL 패턴:', `users|${user.rowKey}`);
+          console.error('❌ 오류 메시지:', checkError.message);
+          console.error('❌ 오류 전체:', checkError);
+          
+          console.warn('⚠️ getUserByEmail이 반환한 사용자가 실제로는 존재하지 않음:', user.rowKey);
+          console.warn('⚠️ 이는 Azure 테이블 데이터 불일치 또는 권한 문제일 수 있습니다');
+          user = null; // 존재하지 않는 사용자로 처리
+        }
+      }
+      
       if (!user) {
-        console.error('❌ 사용자를 찾을 수 없음:', userData.userId);
-        
-        // 사용자를 찾을 수 없는 경우, 로컬스토리지에서 현재 로그인된 사용자의 실제 ID 확인
-        const currentUser = localStorage.getItem('clathon_user');
-        if (currentUser) {
-          const parsedUser = JSON.parse(currentUser);
-          console.log('🔍 로컬스토리지의 사용자 정보:', parsedUser);
-          console.log('📧 저장된 이메일:', parsedUser.email);
-          
-          // 이메일로 사용자 재검색
-          if (parsedUser.email) {
-            console.log('📧 이메일로 사용자 재검색:', parsedUser.email);
-            user = await this.getUserByEmail(parsedUser.email);
-            if (user) {
-              console.log('✅ 이메일로 사용자 발견:', user.rowKey);
-              console.log('🔍 실제 Azure 사용자 정보:', {
-                partitionKey: user.partitionKey,
-                rowKey: user.rowKey,
-                email: user.email,
-                name: user.name
-              });
-              console.log('📋 Azure 전체 사용자 객체:', user);
-              
-              // 로컬스토리지의 사용자 ID를 실제 ID로 업데이트
-              const updatedUserInfo = {
-                ...parsedUser,
-                userId: user.rowKey
-              };
-              localStorage.setItem('clathon_user', JSON.stringify(updatedUserInfo));
-              console.log('🔄 로컬스토리지 사용자 ID 업데이트 완료');
-            }
-          }
-        }
-        
-        if (!user) {
-          // 최후의 수단: 현재 로그인된 사용자 정보로 새 사용자 생성
-          console.log('🆕 사용자가 존재하지 않음. 새 사용자 생성 시도...');
-          const currentUser = localStorage.getItem('clathon_user');
-          if (currentUser) {
-            const parsedUser = JSON.parse(currentUser);
-            const newUser = {
-              partitionKey: 'users',
-              rowKey: parsedUser.userId,
-              email: parsedUser.email,
-              name: parsedUser.name,
-              passwordHash: 'temp_hash', // 임시 해시
-              emailVerified: true,
-              marketingAgreed: false,
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-              lastLoginAt: new Date().toISOString(),
-              enrolledCourses: '[]',
-              totalEnrolledCourses: 0,
-              completedCourses: 0,
-              totalLearningTimeMinutes: 0
-            };
-            
-            try {
-              await this.azureRequest('users', 'POST', newUser, `users|${parsedUser.userId}`);
-              console.log('✅ 새 사용자 생성 성공:', parsedUser.email);
-              user = newUser;
-            } catch (createError: any) {
-              console.error('❌ 사용자 생성 실패:', createError.message);
-            }
-          }
-          
-          if (!user) {
-            throw new Error('사용자를 찾을 수 없습니다. 다시 로그인해주세요.');
-          }
-        }
+        // ❌❌❌ 절대 새로운 사용자 생성하지 않음! ❌❌❌
+        // ❌❌❌ 기존 사용자만 업데이트! 새 사용자 생성 금지! ❌❌❌
+        console.error('❌ 사용자를 찾을 수 없습니다:', userData.email);
+        throw new Error(`사용자를 찾을 수 없습니다: ${userData.email}. 기존 사용자만 업데이트 가능합니다.`);
+      }
+
+      // 🔧 UUID RowKey 사용자는 그대로 유지하고 업데이트만 수행
+      if (user.rowKey !== userData.email) {
+        console.log('📝 UUID RowKey 사용자 발견. 기존 RowKey 유지하여 업데이트:', user.rowKey, 'for email:', userData.email);
+        // 마이그레이션하지 않고 기존 UUID RowKey로 업데이트 진행
       }
       
       // 기존 수강 정보 파싱
       let enrolledCourses: EnrolledCourse[] = [];
       let payments: any[] = [];
       
-      if (user.enrolledCourses) {
+      if (user && user.enrolledCourses) {
         try {
           const userData = JSON.parse(user.enrolledCourses);
           if (Array.isArray(userData)) {
@@ -737,7 +747,12 @@ export class AzureTableService {
         payments: payments
       };
       
-      // 사용자 정보 업데이트
+      // user가 null이면 기본값으로 생성
+      if (!user) {
+        throw new Error('사용자 정보를 찾을 수 없습니다.');
+      }
+
+      // 사용자 정보 업데이트 - 기존 RowKey 유지
       const updatedUser = {
         ...user,
         enrolledCourses: JSON.stringify(allUserData),
@@ -747,14 +762,13 @@ export class AzureTableService {
         updatedAt: new Date().toISOString()
       };
       
-      // Azure에 업데이트 (MERGE 방식 시도 후 PUT)
+      // Azure에 업데이트 - 기존 user.rowKey 사용 (UUID든 이메일이든 상관없이)
       try {
         await this.azureRequest('users', 'MERGE', updatedUser, `users|${user.rowKey}`);
-        console.log('✅ MERGE 방식으로 사용자 업데이트 성공 (구매+수강 통합)');
+        console.log('✅ 구매 완료 (MERGE with RowKey:', user.rowKey, ')');
       } catch (mergeError: any) {
-        console.log('⚠️ MERGE 실패, PUT 방식 시도:', mergeError.message);
         await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
-        console.log('✅ PUT 방식으로 사용자 업데이트 성공 (구매+수강 통합)');
+        console.log('✅ 구매 완료 (PUT with RowKey:', user.rowKey, ')');
       }
       
       return { payment, enrollment: newEnrollment };
@@ -764,9 +778,9 @@ export class AzureTableService {
     }
   }
 
-  // 새로운 통합 구매 프로세스 (Users 테이블만 사용)
+  // 새로운 통합 구매 프로세스 (Users 테이블만 사용) - 이메일 기반
   static async purchaseAndEnrollCourseUnified(purchaseData: {
-    userId: string;
+    email: string;  // userId → email로 변경
     courseId: string;
     amount: number;
     paymentMethod: string;
@@ -828,9 +842,9 @@ export class AzureTableService {
     }
   }
 
-  // === 결제 정보 생성 메서드 (Users 테이블 통합 방식) ===
+  // === 결제 정보 생성 메서드 (Users 테이블 통합 방식) === - 이메일 기반
   static async createPayment(paymentData: {
-    userId: string;
+    email: string;  // userId → email로 변경
     courseId: string;
     amount: number;
     paymentMethod: string;

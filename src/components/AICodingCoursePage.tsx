@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, MessageSquare, Award, Timer, Search, ChevronDown } from 'lucide-react';
+import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, MessageSquare, Award, Timer } from 'lucide-react';
+import NavigationBar from './NavigationBar';
 import { aiCodingCourse, saveProgress, getProgress, calculateProgressPercentage, getCompletedLessonsCount, saveQuizResult, getQuizProgress } from '../data/courseData';
 
 interface AICodingCoursePageProps {
@@ -169,45 +170,12 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
 
   return (
     <div className="masterclass-container">
-      {/* 헤더 */}
-      <header className="masterclass-header-original">
-        <div className="header-content">
-          <div className="header-left">
-            <div className="logo" onClick={onBack} style={{ cursor: 'pointer' }}>
-              <span className="logo-icon">C</span>
-              <span className="logo-text">CLATHON</span>
-            </div>
-            <div className="browse-dropdown">
-              <button 
-                className="browse-btn"
-                aria-label="Browse AI & Technology courses"
-                aria-expanded="false"
-              >
-                AI & Technology <ChevronDown size={16} />
-              </button>
-            </div>
-          </div>
-          
-          <div className="search-container">
-            <Search size={20} className="search-icon" aria-hidden="true" />
-            <input 
-              type="text" 
-              placeholder="What do you want to learn..." 
-              className="search-input"
-              aria-label="Search for courses"
-              role="searchbox"
-            />
-          </div>
-          
-          <div className="header-right">
-            <button className="nav-link">At Work</button>
-            <button className="nav-link">Gifts</button>
-            <button className="nav-link">View Plans</button>
-            <button className="nav-link">Log In</button>
-            <button className="cta-button" onClick={onBack}>Get CLATHON</button>
-          </div>
-        </div>
-      </header>
+      {/* 통일된 네비게이션바 */}
+      <NavigationBar 
+        onBack={onBack}
+        showSearch={true}
+        breadcrumbText="AI 코딩 완전정복"
+      />
 
       {/* 메인 콘텐츠 영역 - 2열 레이아웃 */}
       <div className="course-layout">

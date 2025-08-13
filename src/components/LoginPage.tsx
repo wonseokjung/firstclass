@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { ChevronRight, Search, Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { ChevronRight, Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AzureTableService from '../services/azureTableService';
+import NavigationBar from './NavigationBar';
 
 interface LoginPageProps {
   onBack: () => void;
@@ -75,15 +76,19 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
 
       // 세션 생성
       const sessionId = await AzureTableService.createSession(user.rowKey);
-      
-      // 로컬 스토리지에 사용자 정보 저장
-      localStorage.setItem('clathon_user', JSON.stringify({
+
+      // 세션 동안 사용자 정보 유지 (localStorage도 함께 저장)
+      const userInfo = {
         userId: user.rowKey,
         email: user.email,
         name: user.name,
         sessionId: sessionId
-      }));
-
+      };
+      
+      sessionStorage.setItem('clathon_user_session', JSON.stringify(userInfo));
+      localStorage.setItem('clathon_user', JSON.stringify(userInfo));
+      console.log('💾 사용자 세션 정보 저장:', userInfo);
+      
       alert(`${user.name}님, 환영합니다!`);
       navigate('/');
       
@@ -101,45 +106,13 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
 
   return (
     <div className="auth-page">
-      {/* 헤더 */}
-      <header className="masterclass-header-original">
-        <div className="header-content">
-          <div className="header-left">
-            <div className="logo" onClick={onBack} style={{ cursor: 'pointer' }}>
-              <span className="logo-icon">C</span>
-              <span className="logo-text">CLATHON</span>
-            </div>
-            <div className="browse-dropdown">
-              <button 
-                className="browse-btn"
-                aria-label="Browse AI & Technology courses"
-                aria-expanded="false"
-              >
-                AI & Technology <ChevronRight size={16} />
-              </button>
-            </div>
-          </div>
-          
-          <div className="search-container">
-            <Search size={20} className="search-icon" aria-hidden="true" />
-            <input 
-              type="text" 
-              placeholder="What do you want to learn..." 
-              className="search-input"
-              aria-label="Search for courses"
-              role="searchbox"
-            />
-          </div>
-          
-          <div className="header-right">
-            <button className="nav-link" onClick={onBack}>돌아가기</button>
-            <button className="nav-link">FAQ</button>
-            <button className="nav-link">View Plans</button>
-            <button className="nav-link" onClick={handleSignUpClick}>회원가입</button>
-            <button className="cta-button">Get CLATHON</button>
-          </div>
-        </div>
-      </header>
+      {/* 통일된 네비게이션바 */}
+      <NavigationBar 
+        onBack={onBack}
+        showSearch={true}
+        breadcrumbText="로그인"
+        onSignUpClick={handleSignUpClick}
+      />
 
       {/* 로그인 폼 */}
       <div className="auth-content">

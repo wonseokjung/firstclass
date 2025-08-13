@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Play, Search, ChevronDown, Globe, Heart, Target, Award } from 'lucide-react';
+import { Play, Globe, Heart, Target, Award } from 'lucide-react';
+import NavigationBar from './NavigationBar';
 
 interface AIEducationDocumentaryPageProps {
   onBack: () => void;
@@ -20,39 +21,12 @@ const AIEducationDocumentaryPage: React.FC<AIEducationDocumentaryPageProps> = ({
 
   return (
     <div className="masterclass-container">
-      {/* CLATHON 스타일 헤더 */}
-      <header className="masterclass-header-original">
-        <div className="header-content">
-          <div className="header-left">
-            <div className="logo" onClick={onBack} style={{ cursor: 'pointer' }}>
-              <span className="logo-icon">C</span>
-              <span className="logo-text">CLATHON</span>
-            </div>
-            <div className="browse-dropdown">
-              <button className="browse-btn">
-                AI & Technology <ChevronDown size={16} />
-              </button>
-            </div>
-          </div>
-          
-          <div className="search-container">
-            <Search size={20} className="search-icon" />
-            <input 
-              type="text" 
-              placeholder="What do you want to learn..." 
-              className="search-input"
-            />
-          </div>
-          
-          <div className="header-right">
-            <button className="nav-link">At Work</button>
-            <button className="nav-link">Gifts</button>
-            <button className="nav-link">View Plans</button>
-            <button className="nav-link">Log In</button>
-            <button className="cta-button" onClick={onBack}>← Back to CLATHON</button>
-          </div>
-        </div>
-      </header>
+      {/* 통일된 네비게이션바 */}
+      <NavigationBar 
+        onBack={onBack}
+        showSearch={true}
+        breadcrumbText="AI 교육의 격차들"
+      />
 
       {/* 메인 콘텐츠 */}
       <main className="documentary-main">

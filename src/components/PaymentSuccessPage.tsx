@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CheckCircle, Star, Clock, Users } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import AzureTableService from '../services/azureTableService';
 
 interface PaymentSuccessPageProps {
@@ -7,6 +8,7 @@ interface PaymentSuccessPageProps {
 }
 
 const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
+  const location = useLocation();
   const [isProcessing, setIsProcessing] = useState(true);
   const [courseName, setCourseName] = useState('');
 
@@ -17,11 +19,28 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         const urlParams = new URLSearchParams(window.location.search);
         const courseParam = urlParams.get('course');
         
-        const userInfo = localStorage.getItem('clathon_user');
+        // 사용자 정보는 location.state에서 가져오기
+        const userInfo = location.state?.user;
         
-        if (userInfo && courseParam) {
-          const user = JSON.parse(userInfo);
-          
+        // 여러 저장소에서 사용자 정보 확인 (우선순위: sessionStorage > localStorage > location.state)
+        let user = null;
+        
+        // 사용자 정보 가져오기 (우선순위: sessionStorage > localStorage > location.state)
+        const sessionUserInfo = sessionStorage.getItem('clathon_user_session');
+        if (sessionUserInfo) {
+          user = JSON.parse(sessionUserInfo);
+        } else {
+          const localUserInfo = localStorage.getItem('clathon_user');
+          if (localUserInfo) {
+            user = JSON.parse(localUserInfo);
+          } else if (userInfo) {
+            user = userInfo;
+          }
+        }
+        
+        console.log('💳 결제 처리:', user?.email, '→', courseParam);
+        
+        if (user && courseParam) {
           let courseData = {
             id: '',
             title: '',
@@ -32,32 +51,32 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           if (courseParam === 'prompt-engineering' || courseParam === 'workflow-automation') {
             courseData = {
               id: 'workflow-automation', 
-              title: 'Google OPAL 업무 자동화',
+              title: 'Workflow Automation Master',
               price: 299000
             };
-            setCourseName('Google OPAL 업무 자동화');
+            setCourseName('Workflow Automation Master');
           }
           
-          if (courseData.id) {
-            // Azure에 구매 정보 저장 - 실패 시 에러 표시하지 않고 성공으로 처리
+          if (courseData.id && user.email) {
             try {
-              await AzureTableService.createPayment({
-                userId: user.userId,
+              
+              const result = await AzureTableService.createPayment({
+                email: user.email,
                 courseId: courseData.id,
                 amount: courseData.price,
                 paymentMethod: 'card'
               });
               
-              console.log(`✅ Azure에 구매 정보 저장 완료: ${courseData.title}`);
+              console.log(`✅ ${courseData.title} 구매 완료`);
             } catch (paymentError) {
-              console.warn('⚠️ Azure 저장 실패 - 사용자에게는 성공으로 표시:', paymentError);
-              // 사용자에게는 성공으로 표시하되, 실제로는 저장되지 않음
-              // 관리자가 로그를 통해 확인하여 수동으로 처리 가능
+              console.error('❌ 구매 실패:', paymentError);
             }
+          } else {
+            console.warn('⚠️ 구매 정보 부족');
           }
         }
       } catch (error) {
-        console.error('❌ 구매 정보 저장 실패:', error);
+        console.error('❌ 결제 처리 실패:', error);
       } finally {
         setIsProcessing(false);
       }
