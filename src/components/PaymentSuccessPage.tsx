@@ -12,12 +12,23 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
   const [isProcessing, setIsProcessing] = useState(true);
   const [courseName, setCourseName] = useState('');
 
+  // 페이지 로드 즉시 로그 출력
+  console.log('🎉 PaymentSuccessPage 컴포넌트 로드됨!');
+  console.log('📍 현재 URL:', window.location.href);
+  console.log('📍 location.search:', location.search);
+  console.log('📍 location.state:', location.state);
+
   useEffect(() => {
+    console.log('🚀 PaymentSuccessPage useEffect 시작!');
+    
     const processPurchase = async () => {
       try {
+        console.log('🔄 processPurchase 함수 실행!');
+        
         // URL에서 course 파라미터 가져오기
         const urlParams = new URLSearchParams(window.location.search);
         const courseParam = urlParams.get('course');
+        console.log('📋 URL courseParam:', courseParam);
         
         // 사용자 정보는 location.state에서 가져오기
         const userInfo = location.state?.user;
