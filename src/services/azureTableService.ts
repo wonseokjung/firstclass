@@ -207,7 +207,7 @@ export class AzureTableService {
       mode: 'cors',
     };
     
-    if (body && (method === 'POST' || method === 'PUT')) {
+    if (body && (method === 'POST' || method === 'PUT' || method === 'MERGE')) {
       // Azure Table Storage용 엔티티 변환
       const azureEntity = this.convertToAzureEntity(body);
       options.body = JSON.stringify(azureEntity);
