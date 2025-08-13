@@ -377,7 +377,6 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
               </>
             ) : (
               <>
-                <button className="nav-link">View Plans</button>
                 <button className="nav-link" onClick={onLoginClick}>Log In</button>
                 <button className="cta-button" onClick={onSignUpClick}>회원가입</button>
               </>
