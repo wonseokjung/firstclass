@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { XCircle, Home, RotateCcw, AlertTriangle, RefreshCw, Sparkles } from 'lucide-react';
+import { XCircle, Home, AlertTriangle, RefreshCw } from 'lucide-react';
 import NavigationBar from './NavigationBar';
 
 interface PaymentFailPageProps {
