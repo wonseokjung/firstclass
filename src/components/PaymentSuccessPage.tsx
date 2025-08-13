@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CheckCircle, Star, Clock, Users, ArrowRight, Sparkles, Award, Play } from 'lucide-react';
+import { CheckCircle, Star, Clock, ArrowRight, Sparkles, Award, Play } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import AzureTableService from '../services/azureTableService';
 import NavigationBar from './NavigationBar';
