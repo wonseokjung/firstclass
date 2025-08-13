@@ -21,7 +21,7 @@ const AIBusinessCoursePage = React.lazy(() => import('./components/AIBusinessCou
 const AICodingCoursePage = React.lazy(() => import('./components/AICodingCoursePage'));
 const AIEducationDocumentaryPage = React.lazy(() => import('./components/AIEducationDocumentaryPage'));
 
-const PaymentPage = React.lazy(() => import('./components/PaymentPage'));
+
 const WorkflowAutomationMasterPage = React.lazy(() => import('./components/WorkflowAutomationMasterPage'));
 const FAQPage = React.lazy(() => import('./components/FAQPage'));
 const CEOPage = React.lazy(() => import('./components/CEOPage'));
@@ -66,9 +66,7 @@ const MainPageWrapper = () => {
     }
   };
 
-  const handlePaymentClick = () => {
-    navigate('/payment');
-  };
+
 
     const handleFAQClick = () => {
     navigate('/faq');
@@ -84,8 +82,7 @@ const MainPageWrapper = () => {
 
   return (
     <MainPage 
-      onCourseSelect={handleCourseSelect} 
-      onPaymentClick={handlePaymentClick}
+      onCourseSelect={handleCourseSelect}
       onFAQClick={handleFAQClick}
       onLoginClick={handleLoginClick}
       onSignUpClick={handleSignUpClick}
@@ -197,39 +194,7 @@ const AIEducationDocumentaryPageWrapper = () => {
 
 
 
-const PaymentPageWrapper = () => {
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    const userInfo = sessionStorage.getItem('clathon_user_session');
-    if (!userInfo) {
-      alert('로그인이 필요합니다.');
-      navigate('/login');
-    }
-  }, [navigate]);
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
-  const handlePaymentSuccess = () => {
-    navigate('/course');
-  };
-
-  // Render payment page only if user is logged in
-  const userInfo = sessionStorage.getItem('clathon_user_session');
-  if (!userInfo) {
-    return <LoadingSpinner />; // or some other placeholder while redirecting
-  }
-
-  return (
-    <PaymentPage 
-      courseId="ai-business-mastery"
-      onSuccess={handlePaymentSuccess}
-      onBack={handleBack} 
-    />
-  );
-};
 
 const WorkflowAutomationMasterPageWrapper = () => {
   const navigate = useNavigate();
@@ -367,7 +332,7 @@ function App() {
             <Route path="/ai-coding" element={<AICodingCoursePageWrapper />} />
             <Route path="/documentary" element={<AIEducationDocumentaryPageWrapper />} />
 
-            <Route path="/payment" element={<PaymentPageWrapper />} />
+
             <Route path="/workflow-automation" element={<WorkflowAutomationMasterPageWrapper />} />
             <Route path="/prompt-engineering" element={<WorkflowAutomationMasterPageWrapper />} />
             <Route path="/faq" element={<FAQPageWrapper />} />

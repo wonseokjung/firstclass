@@ -182,13 +182,12 @@ const premiumClasses: Course[] = [
 
 interface MainPageProps {
   onCourseSelect: (courseId: number) => void;
-  onPaymentClick: () => void;
   onFAQClick: () => void;
   onLoginClick: () => void;
   onSignUpClick: () => void;
 }
 
-const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onFAQClick, onLoginClick, onSignUpClick }) => {
+const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLoginClick, onSignUpClick }) => {
   const navigate = useNavigate();
   const gridRefs = useRef<(HTMLDivElement | null)[]>([]);
   
