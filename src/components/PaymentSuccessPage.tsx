@@ -60,7 +60,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           if (courseData.id && user.email) {
             try {
               
-              const result = await AzureTableService.createPayment({
+              await AzureTableService.createPayment({
                 email: user.email,
                 courseId: courseData.id,
                 amount: courseData.price,
@@ -83,7 +83,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
     };
 
     processPurchase();
-  }, []);
+  }, [location.state?.user]);
 
   if (isProcessing) {
     return (

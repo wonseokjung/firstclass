@@ -1,5 +1,4 @@
 // Azure SDK 대신 REST API 직접 호출 사용
-import { v4 as uuidv4 } from 'uuid';
 
 // Azure Table Storage SAS URLs 설정 (단일 Users 테이블만 사용)
 const AZURE_SAS_URLS = {
@@ -492,7 +491,6 @@ export class AzureTableService {
       throw new Error('저장소 연결이 설정되지 않았습니다.');
     }
     
-    const userId = uuidv4();
     const passwordHash = await hashPassword(userData.password);
     
     const user: User = {

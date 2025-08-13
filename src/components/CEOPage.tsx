@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronRight, Award, Building, GraduationCap, Briefcase, Users, Globe, Trophy, Target, Youtube, Instagram, X } from 'lucide-react';
+import { Award, Building, GraduationCap, Briefcase, Users, Globe, Trophy, Target, Youtube, Instagram, X } from 'lucide-react';
 import NavigationBar from './NavigationBar';
 
 interface CEOPageProps {

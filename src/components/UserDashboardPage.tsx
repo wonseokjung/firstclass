@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { ChevronRight, User, BookOpen, Clock, Award, TrendingUp, Play, Star, Users, Calendar, CheckCircle, BarChart3, Target, Zap, Settings } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { BookOpen, Clock, Award, Play, Calendar, Zap } from 'lucide-react';
 import AzureTableService from '../services/azureTableService';
 import NavigationBar from './NavigationBar';
 
@@ -18,7 +18,6 @@ interface UserStats {
 
 const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [userInfo, setUserInfo] = useState<any>(null);
   const [userStats, setUserStats] = useState<UserStats>({
     totalCourses: 0,
@@ -78,12 +77,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
     return Math.round((userStats.completedCourses / userStats.totalCourses) * 100);
   };
 
-  const handleLogout = () => {
-    sessionStorage.removeItem('clathon_user_session');
-    localStorage.removeItem('clathon_user');
-    alert('로그아웃되었습니다.');
-    navigate('/');
-  };
+
 
   if (isLoading) {
     return (

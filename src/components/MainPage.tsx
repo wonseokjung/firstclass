@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Play, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 import PaymentComponent from './PaymentComponent';
@@ -190,7 +190,6 @@ interface MainPageProps {
 
 const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onPaymentClick, onFAQClick, onLoginClick, onSignUpClick }) => {
   const navigate = useNavigate();
-  const location = useLocation();
   const gridRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   // 결제 모달 state

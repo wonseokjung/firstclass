@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronRight, Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AzureTableService from '../services/azureTableService';
 import NavigationBar from './NavigationBar';

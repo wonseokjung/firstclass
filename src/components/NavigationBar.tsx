@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Search, ChevronDown } from 'lucide-react';
 
 interface NavigationBarProps {
@@ -22,7 +22,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   breadcrumbText
 }) => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
 

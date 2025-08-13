@@ -15,7 +15,7 @@ const WorkflowAutomationMasterPage: React.FC<WorkflowAutomationMasterPageProps> 
   const [isLoading, setIsLoading] = useState(false);
   const [tossPayments, setTossPayments] = useState<any>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userInfo, setUserInfo] = useState<any>(null);
+
   const [isAlreadyEnrolled, setIsAlreadyEnrolled] = useState(false);
   const [checkingEnrollment, setCheckingEnrollment] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
@@ -121,7 +121,6 @@ const WorkflowAutomationMasterPage: React.FC<WorkflowAutomationMasterPageProps> 
       if (storedUserInfo) {
         try {
           const parsedUserInfo = JSON.parse(storedUserInfo);
-          setUserInfo(parsedUserInfo);
           
           // 수강 상태 확인
           setCheckingEnrollment(true);
@@ -136,7 +135,6 @@ const WorkflowAutomationMasterPage: React.FC<WorkflowAutomationMasterPageProps> 
           setCheckingEnrollment(false);
         }
       } else {
-        setUserInfo(null);
         setIsAlreadyEnrolled(false);
       }
     };
