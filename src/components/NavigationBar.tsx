@@ -81,7 +81,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
     } else {
       return (
         <>
-          <button className="nav-link">View Plans</button>
           <button className="nav-link" onClick={onLoginClick || (() => navigate('/login'))}>Log In</button>
           <button className="cta-button" onClick={onSignUpClick || (() => navigate('/signup'))}>회원가입</button>
         </>
