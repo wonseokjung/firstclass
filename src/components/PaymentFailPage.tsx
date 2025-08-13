@@ -271,25 +271,25 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
               number: "1",
               title: "카드 정보 확인",
               description: "카드번호, 유효기간, CVC 번호를 정확히 입력했는지 확인",
-              color: "from-blue-500 to-blue-600"
+              backgroundColor: 'linear-gradient(135deg, #3b82f6, #2563eb)'
             },
             {
               number: "2",
               title: "한도 확인",
               description: "카드 한도나 일일/월 결제 한도 초과 여부 확인",
-              color: "from-green-500 to-green-600"
+              backgroundColor: 'linear-gradient(135deg, #10b981, #059669)'
             },
             {
               number: "3",
               title: "해외결제 설정",
               description: "해외결제가 차단되어 있다면 카드사에 문의",
-              color: "from-purple-500 to-purple-600"
+              backgroundColor: 'linear-gradient(135deg, #8b5cf6, #7c3aed)'
             },
             {
               number: "4",
               title: "다른 결제수단",
               description: "다른 카드나 결제수단 이용해보기",
-              color: "from-yellow-500 to-yellow-600"
+              backgroundColor: 'linear-gradient(135deg, #eab308, #ca8a04)'
             }
           ].map((item, index) => (
             <div key={index} style={{ 
@@ -312,7 +312,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
               <div style={{
                 width: '48px',
                 height: '48px',
-                background: `linear-gradient(135deg, ${item.color.split(' ')[0].replace('from-', '#')} ${item.color.split(' ')[0] === 'from-blue-500' ? 'blue' : item.color.split(' ')[0] === 'from-green-500' ? 'green' : item.color.split(' ')[0] === 'from-purple-500' ? 'purple' : 'yellow'}, ${item.color.split(' ')[2].replace('to-', '#')} ${item.color.split(' ')[2] === 'to-blue-600' ? 'blue' : item.color.split(' ')[2] === 'to-green-600' ? 'green' : item.color.split(' ')[2] === 'to-purple-600' ? 'purple' : 'yellow'})`,
+                background: item.backgroundColor,
                 borderRadius: '8px',
                 display: 'flex',
                 alignItems: 'center',

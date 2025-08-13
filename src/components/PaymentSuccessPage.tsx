@@ -262,10 +262,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             flexDirection: 'column', 
             gap: '16px', 
             justifyContent: 'center', 
-            marginBottom: '64px',
-            '@media (min-width: 640px)': {
-              flexDirection: 'row'
-            }
+            marginBottom: '64px'
           }}>
             <button
               onClick={() => window.location.href = '/dashboard'}
