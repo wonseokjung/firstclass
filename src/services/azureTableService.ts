@@ -794,18 +794,24 @@ export class AzureTableService {
         'ai-코딩-완전정복': 'AI 코딩 완전정복',
         'google-ai-완전정복': 'Google AI 완전정복',
         'ai-교육-다큐멘터리': 'AI 교육 다큐멘터리',
+        'workflow-automation': 'Workflow Automation Master',
         'workflow-automation-master': 'Workflow Automation Master'
       };
       
       const courseTitle = courseTitleMap[purchaseData.courseId] || purchaseData.courseId;
       
       // Users 테이블에 모든 정보 저장
+      console.log('📊 addPurchaseAndEnrollmentToUser 호출:', {
+        ...purchaseData,
+        title: courseTitle
+      });
+      
       const result = await this.addPurchaseAndEnrollmentToUser({
         ...purchaseData,
         title: courseTitle
       });
       
-      console.log('✅ 통합 강좌 구매 프로세스 완료!', purchaseData.courseId);
+      console.log('✅ 통합 강좌 구매 프로세스 완료!', purchaseData.courseId, '최종 결과:', result);
       
       return result;
     } catch (error: any) {
@@ -849,15 +855,16 @@ export class AzureTableService {
     externalPaymentId?: string;
   }): Promise<any> {
     try {
-      console.log('💳 결제 정보 생성 중...', paymentData.courseId);
+      console.log('💳 결제 정보 생성 중...', paymentData);
       
       // 통합 구매+수강신청 프로세스 호출
       const result = await this.purchaseAndEnrollCourseUnified(paymentData);
       
-      console.log('✅ 결제 정보 생성 완료:', paymentData.courseId);
+      console.log('✅ 결제 정보 생성 완료:', paymentData.courseId, '결과:', result);
       return result.payment;
     } catch (error: any) {
       console.error('❌ 결제 정보 생성 실패:', error.message);
+      console.error('❌ 결제 오류 상세:', error);
       throw new Error(`결제 정보 생성 실패: ${error.message}`);
     }
   }

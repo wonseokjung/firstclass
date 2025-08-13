@@ -59,20 +59,37 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           
           if (courseData.id && user.email) {
             try {
-              
-              await AzureTableService.createPayment({
+              console.log('🚀 Azure 구매 처리 시작:', {
                 email: user.email,
                 courseId: courseData.id,
                 amount: courseData.price,
                 paymentMethod: 'card'
               });
               
-              console.log(`✅ ${courseData.title} 구매 완료`);
-            } catch (paymentError) {
+              const result = await AzureTableService.createPayment({
+                email: user.email,
+                courseId: courseData.id,
+                amount: courseData.price,
+                paymentMethod: 'card'
+              });
+              
+              console.log(`✅ ${courseData.title} 구매 완료, 결과:`, result);
+            } catch (paymentError: any) {
               console.error('❌ 구매 실패:', paymentError);
+              console.error('❌ 구매 실패 상세:', {
+                errorMessage: paymentError?.message || String(paymentError),
+                errorStack: paymentError?.stack,
+                courseData,
+                user: { email: user.email, name: user.name }
+              });
             }
           } else {
-            console.warn('⚠️ 구매 정보 부족');
+            console.warn('⚠️ 구매 정보 부족:', {
+              hasCourseId: !!courseData.id,
+              hasUserEmail: !!user?.email,
+              courseData,
+              user
+            });
           }
         }
       } catch (error) {
