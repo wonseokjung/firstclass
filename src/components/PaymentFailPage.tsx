@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { XCircle, Home, RotateCcw } from 'lucide-react';
+import { XCircle, Home, RotateCcw, AlertTriangle, RefreshCw, Sparkles } from 'lucide-react';
+import NavigationBar from './NavigationBar';
 
 interface PaymentFailPageProps {
   onBack: () => void;
@@ -33,141 +34,391 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: '#000' }}>
-      {/* 헤더 */}
-      <header className="relative z-10 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2" onClick={onBack} style={{ cursor: 'pointer' }}>
-            <div className="w-10 h-10 bg-[#cf2b4a] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">C</span>
+    <div className="masterclass-container">
+      <NavigationBar 
+        onBack={onBack}
+        showSearch={false}
+        breadcrumbText="결제 실패"
+      />
+
+      {/* 실패 히어로 섹션 */}
+      <div style={{ 
+        position: 'relative', 
+        paddingTop: '80px', 
+        paddingBottom: '120px', 
+        overflow: 'hidden',
+        background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, transparent 50%, rgba(239, 68, 68, 0.1) 100%)'
+      }}>
+        
+        {/* 애니메이션 파티클 */}
+        <div style={{ position: 'absolute', inset: '0' }}>
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              style={{
+                position: 'absolute',
+                left: `${20 + (i * 12)}%`,
+                top: `${20 + (i % 3) * 20}%`,
+                animation: `bounce 3s infinite ${i * 0.2}s`
+              }}
+            >
+              <AlertTriangle style={{ width: '16px', height: '16px', color: 'rgba(239, 68, 68, 0.4)' }} />
             </div>
-            <span className="text-white text-xl font-bold">CLATHON</span>
-          </div>
-          
-          <button 
-            onClick={onBack}
-            className="px-6 py-2 bg-[#cf2b4a] text-white rounded-lg hover:bg-[#b8243f] transition-colors duration-200 font-medium"
-          >
-            홈으로 돌아가기
-          </button>
+          ))}
         </div>
-      </header>
 
-      {/* 메인 콘텐츠 */}
-      <div className="flex items-center justify-center min-h-[calc(100vh-80px)] px-4">
-        <div className="max-w-2xl w-full mx-auto">
-          {/* 실패 메시지 카드 */}
-          <div className="bg-white rounded-3xl shadow-2xl p-12 text-center mb-8">
-            {/* 실패 아이콘 */}
-            <div className="relative mb-8">
-              <div className="w-24 h-24 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
-                <XCircle className="w-14 h-14 text-white" />
+        <div style={{ 
+          position: 'relative', 
+          maxWidth: '1024px', 
+          margin: '0 auto', 
+          textAlign: 'center', 
+          padding: '0 24px' 
+        }}>
+          {/* 메인 실패 아이콘 */}
+          <div style={{ position: 'relative', marginBottom: '32px' }}>
+            <div style={{ 
+              width: '128px', 
+              height: '128px', 
+              margin: '0 auto', 
+              position: 'relative' 
+            }}>
+              <div style={{
+                position: 'absolute',
+                inset: '0',
+                background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                borderRadius: '50%',
+                animation: 'pulse 2s infinite'
+              }}></div>
+              <div style={{
+                position: 'absolute',
+                inset: '8px',
+                background: 'white',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <XCircle style={{ width: '64px', height: '64px', color: '#ef4444' }} />
               </div>
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center">
-                <span className="text-lg">⚠️</span>
+              <div style={{
+                position: 'absolute',
+                top: '-16px',
+                right: '-16px',
+                width: '48px',
+                height: '48px',
+                background: 'linear-gradient(135deg, #f97316, #ea580c)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                animation: 'bounce 1s infinite'
+              }}>
+                <span style={{ fontSize: '24px' }}>⚠️</span>
               </div>
-            </div>
-            
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              결제에 실패했습니다
-            </h1>
-            
-            <p className="text-xl text-gray-600 mb-12 leading-relaxed">
-              결제 처리 중 문제가 발생했습니다.<br />
-              아래 내용을 확인하시고 다시 시도해주세요.
-            </p>
-
-            {/* 오류 정보 */}
-            <div className="bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl p-8 mb-10 text-left">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">🔍 오류 정보</h3>
-              <div className="bg-red-100 border-l-4 border-red-500 p-6 rounded-lg">
-                {errorInfo.code && (
-                  <p className="text-red-800 mb-3 font-medium">
-                    <strong>오류 코드:</strong> <span className="font-mono bg-red-200 px-2 py-1 rounded">{errorInfo.code}</span>
-                  </p>
-                )}
-                <p className="text-red-800 font-medium">
-                  <strong>메시지:</strong> {errorInfo.message}
-                </p>
-              </div>
-            </div>
-
-            {/* 해결 방법 안내 */}
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 mb-10 text-left">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">💡 해결 방법</h3>
-              <div className="grid gap-4">
-                <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-blue-600 font-bold text-sm">1</span>
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900 mb-1">카드 정보 확인</p>
-                    <p className="text-gray-600 text-sm">카드번호, 유효기간, CVC 번호를 정확히 입력했는지 확인해주세요.</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-green-600 font-bold text-sm">2</span>
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900 mb-1">한도 확인</p>
-                    <p className="text-gray-600 text-sm">카드 한도나 일일/월 결제 한도를 초과하지 않았는지 확인해주세요.</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-purple-600 font-bold text-sm">3</span>
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900 mb-1">해외결제 설정</p>
-                    <p className="text-gray-600 text-sm">해외결제가 차단되어 있다면 카드사에 문의해주세요.</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-yellow-600 font-bold text-sm">4</span>
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900 mb-1">다른 결제수단</p>
-                    <p className="text-gray-600 text-sm">다른 카드나 결제수단을 이용해보세요.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 액션 버튼 */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={handleRetry}
-                className="flex-1 bg-gradient-to-r from-[#cf2b4a] to-[#b8243f] hover:from-[#b8243f] hover:to-[#a01e36] text-white font-bold py-4 px-8 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2"
-              >
-                <RotateCcw size={20} />
-                <span>🔄 다시 결제하기</span>
-              </button>
-              
-              <button
-                onClick={onBack}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-4 px-8 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2"
-              >
-                <Home size={20} />
-                <span>🏠 메인으로 돌아가기</span>
-              </button>
             </div>
           </div>
 
-          {/* 고객센터 안내 */}
-          <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-2xl p-6 text-center shadow-xl border border-gray-700">
-            <p className="text-gray-300 text-sm leading-relaxed">
-              💡 <span className="text-white font-semibold">문제가 계속 발생하면 고객센터로 연락주세요.</span><br />
-              📞 <span className="text-[#cf2b4a] font-medium">070-2359-3515</span> | 📧 <span className="text-[#cf2b4a] font-medium">contact@clathon.com</span><br />
-              <span className="text-gray-400">평일 09:00-18:00 (주말 및 공휴일 제외)</span>
-            </p>
+          {/* 실패 메시지 */}
+          <h1 style={{ 
+            fontSize: '48px', 
+            fontWeight: 'bold', 
+            color: 'white', 
+            marginBottom: '24px',
+            background: 'linear-gradient(to right, white, #ccc)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
+          }}>
+            결제 실패
+          </h1>
+          
+          <p style={{ 
+            fontSize: '20px', 
+            color: '#ccc', 
+            marginBottom: '16px', 
+            lineHeight: '1.6' 
+          }}>
+            결제 처리 중 문제가 발생했습니다.
+            <br />아래 내용을 확인하시고 다시 시도해주세요.
+          </p>
+          
+          {/* 오류 정보 */}
+          {(errorInfo.code || errorInfo.message) && (
+            <div style={{
+              background: 'rgba(239, 68, 68, 0.1)',
+              border: '1px solid rgba(239, 68, 68, 0.3)',
+              borderRadius: '12px',
+              padding: '20px',
+              marginBottom: '32px',
+              textAlign: 'left'
+            }}>
+              <h3 style={{ color: '#ef4444', fontWeight: 'bold', marginBottom: '12px' }}>
+                🔍 오류 정보
+              </h3>
+              {errorInfo.code && (
+                <p style={{ color: '#fca5a5', marginBottom: '8px' }}>
+                  <strong>오류 코드:</strong> <span style={{ 
+                    fontFamily: 'monospace', 
+                    background: 'rgba(239, 68, 68, 0.2)', 
+                    padding: '4px 8px', 
+                    borderRadius: '4px' 
+                  }}>{errorInfo.code}</span>
+                </p>
+              )}
+              <p style={{ color: '#fca5a5' }}>
+                <strong>메시지:</strong> {errorInfo.message}
+              </p>
+            </div>
+          )}
+
+          {/* CTA 버튼들 */}
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '16px', 
+            justifyContent: 'center', 
+            marginBottom: '64px'
+          }}>
+            <button
+              onClick={handleRetry}
+              style={{
+                background: 'linear-gradient(to right, #cf2b4a, #a01e36)',
+                color: 'white',
+                fontWeight: 'bold',
+                padding: '16px 32px',
+                borderRadius: '12px',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                fontSize: '16px'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'scale(1.05)';
+                e.currentTarget.style.background = 'linear-gradient(to right, #a01e36, #8a1929)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.background = 'linear-gradient(to right, #cf2b4a, #a01e36)';
+              }}
+            >
+              <RefreshCw style={{ width: '20px', height: '20px' }} />
+              <span>다시 결제하기</span>
+            </button>
+            
+            <button
+              onClick={onBack}
+              style={{
+                border: '1px solid #333',
+                background: 'transparent',
+                color: 'white',
+                fontWeight: '500',
+                padding: '16px 32px',
+                borderRadius: '12px',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                fontSize: '16px'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'scale(1.05)';
+                e.currentTarget.style.borderColor = '#cf2b4a';
+                e.currentTarget.style.color = '#cf2b4a';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.borderColor = '#333';
+                e.currentTarget.style.color = 'white';
+              }}
+            >
+              <Home style={{ width: '20px', height: '20px' }} />
+              <span>메인으로 돌아가기</span>
+            </button>
           </div>
         </div>
       </div>
+
+      {/* 해결 방법 안내 섹션 */}
+      <div style={{ maxWidth: '1536px', margin: '0 auto', padding: '0 24px 80px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+          <h2 style={{ 
+            fontSize: '32px', 
+            fontWeight: 'bold', 
+            color: 'white', 
+            marginBottom: '16px' 
+          }}>
+            💡 해결 방법
+          </h2>
+          <p style={{ color: '#ccc', fontSize: '18px' }}>
+            다음 사항들을 확인해보세요
+          </p>
+        </div>
+
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+          gap: '24px', 
+          marginBottom: '64px' 
+        }}>
+          {[
+            {
+              number: "1",
+              title: "카드 정보 확인",
+              description: "카드번호, 유효기간, CVC 번호를 정확히 입력했는지 확인",
+              color: "from-blue-500 to-blue-600"
+            },
+            {
+              number: "2",
+              title: "한도 확인",
+              description: "카드 한도나 일일/월 결제 한도 초과 여부 확인",
+              color: "from-green-500 to-green-600"
+            },
+            {
+              number: "3",
+              title: "해외결제 설정",
+              description: "해외결제가 차단되어 있다면 카드사에 문의",
+              color: "from-purple-500 to-purple-600"
+            },
+            {
+              number: "4",
+              title: "다른 결제수단",
+              description: "다른 카드나 결제수단 이용해보기",
+              color: "from-yellow-500 to-yellow-600"
+            }
+          ].map((item, index) => (
+            <div key={index} style={{ 
+              background: '#111', 
+              border: '1px solid #333', 
+              borderRadius: '12px', 
+              padding: '24px', 
+              height: '100%',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.borderColor = 'rgba(207, 43, 74, 0.5)';
+              e.currentTarget.style.transform = 'scale(1.05)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.borderColor = '#333';
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+            >
+              <div style={{
+                width: '48px',
+                height: '48px',
+                background: `linear-gradient(135deg, ${item.color.split(' ')[0].replace('from-', '#')} ${item.color.split(' ')[0] === 'from-blue-500' ? 'blue' : item.color.split(' ')[0] === 'from-green-500' ? 'green' : item.color.split(' ')[0] === 'from-purple-500' ? 'purple' : 'yellow'}, ${item.color.split(' ')[2].replace('to-', '#')} ${item.color.split(' ')[2] === 'to-blue-600' ? 'blue' : item.color.split(' ')[2] === 'to-green-600' ? 'green' : item.color.split(' ')[2] === 'to-purple-600' ? 'purple' : 'yellow'})`,
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '16px',
+                fontSize: '20px',
+                fontWeight: 'bold',
+                color: 'white'
+              }}>
+                {item.number}
+              </div>
+              <h3 style={{ 
+                fontSize: '20px', 
+                fontWeight: 'bold', 
+                color: 'white', 
+                marginBottom: '8px' 
+              }}>
+                {item.title}
+              </h3>
+              <p style={{ color: '#ccc', fontSize: '14px', lineHeight: '1.5' }}>
+                {item.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* 고객센터 안내 */}
+        <div style={{
+          background: 'linear-gradient(to right, #111, #1a1a1a)',
+          border: '1px solid #333',
+          borderRadius: '12px',
+          padding: '32px',
+          textAlign: 'center'
+        }}>
+          <div style={{
+            width: '48px',
+            height: '48px',
+            background: 'linear-gradient(135deg, #cf2b4a, #a01e36)',
+            borderRadius: '8px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 16px'
+          }}>
+            <span style={{ color: 'white', fontWeight: 'bold', fontSize: '20px' }}>💡</span>
+          </div>
+          <h3 style={{ 
+            fontSize: '20px', 
+            fontWeight: 'bold', 
+            color: 'white', 
+            marginBottom: '16px' 
+          }}>
+            문제가 계속 발생하면 고객센터로 연락주세요
+          </h3>
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '24px', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            color: '#ccc'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span>📞</span>
+              <span style={{ color: '#cf2b4a', fontWeight: '500' }}>070-2359-3515</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span>📧</span>
+              <span style={{ color: '#cf2b4a', fontWeight: '500' }}>contact@clathon.com</span>
+            </div>
+          </div>
+          <p style={{ color: '#999', fontSize: '14px', marginTop: '16px' }}>
+            평일 09:00-18:00 (주말 및 공휴일 제외)
+          </p>
+        </div>
+      </div>
+
+      {/* 푸터 */}
+      <footer className="footer">
+        <div className="footer-content">
+          <div className="footer-section">
+            <div className="footer-brand">
+              <div className="logo">
+                <span>CLATHON</span>
+              </div>
+              <p>AI 시대를 위한 실무 교육 플랫폼</p>
+            </div>
+          </div>
+          
+          <div className="footer-section">
+            <h4>연락처</h4>
+            <p>📞 070-2359-3515</p>
+            <p>📧 contact@clathon.com</p>
+          </div>
+          
+          <div className="footer-section">
+            <h4>운영시간</h4>
+            <p>평일 09:00-18:00</p>
+            <p>주말/공휴일 휴무</p>
+          </div>
+        </div>
+        
+        <div className="footer-bottom">
+          <p>&copy; 2024 CLATHON. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 };

@@ -146,73 +146,186 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
       />
 
       {/* 성공 히어로 섹션 */}
-      <div className="relative pt-20 pb-32 overflow-hidden">
-        {/* 배경 그라데이션 */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#cf2b4a]/20 via-transparent to-[#cf2b4a]/10"></div>
+      <div style={{ 
+        position: 'relative', 
+        paddingTop: '80px', 
+        paddingBottom: '120px', 
+        overflow: 'hidden',
+        background: 'linear-gradient(135deg, rgba(207, 43, 74, 0.2) 0%, transparent 50%, rgba(207, 43, 74, 0.1) 100%)'
+      }}>
         
         {/* 애니메이션 파티클 */}
-        <div className="absolute inset-0">
+        <div style={{ position: 'absolute', inset: '0' }}>
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
-              className="absolute animate-bounce"
               style={{
+                position: 'absolute',
                 left: `${20 + (i * 12)}%`,
                 top: `${20 + (i % 3) * 20}%`,
-                animationDelay: `${i * 0.2}s`,
-                animationDuration: '3s'
+                animation: `bounce 3s infinite ${i * 0.2}s`
               }}
             >
-              <Sparkles className="w-4 h-4 text-[#cf2b4a]/40" />
+              <Sparkles style={{ width: '16px', height: '16px', color: 'rgba(207, 43, 74, 0.4)' }} />
             </div>
           ))}
         </div>
 
-        <div className="relative max-w-4xl mx-auto text-center px-6">
+        <div style={{ 
+          position: 'relative', 
+          maxWidth: '1024px', 
+          margin: '0 auto', 
+          textAlign: 'center', 
+          padding: '0 24px' 
+        }}>
           {/* 메인 성공 아이콘 */}
-          <div className="relative mb-8">
-            <div className="w-32 h-32 mx-auto relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#cf2b4a] to-[#a01e36] rounded-full animate-pulse"></div>
-              <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center">
-                <CheckCircle className="w-16 h-16 text-[#cf2b4a]" />
+          <div style={{ position: 'relative', marginBottom: '32px' }}>
+            <div style={{ 
+              width: '128px', 
+              height: '128px', 
+              margin: '0 auto', 
+              position: 'relative' 
+            }}>
+              <div style={{
+                position: 'absolute',
+                inset: '0',
+                background: 'linear-gradient(135deg, #cf2b4a, #a01e36)',
+                borderRadius: '50%',
+                animation: 'pulse 2s infinite'
+              }}></div>
+              <div style={{
+                position: 'absolute',
+                inset: '8px',
+                background: 'white',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <CheckCircle style={{ width: '64px', height: '64px', color: '#cf2b4a' }} />
               </div>
-              <div className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center animate-bounce">
-                <span className="text-2xl">🎉</span>
+              <div style={{
+                position: 'absolute',
+                top: '-16px',
+                right: '-16px',
+                width: '48px',
+                height: '48px',
+                background: 'linear-gradient(135deg, #fbbf24, #f97316)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                animation: 'bounce 1s infinite'
+              }}>
+                <span style={{ fontSize: '24px' }}>🎉</span>
               </div>
             </div>
           </div>
 
           {/* 성공 메시지 */}
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            <span className="bg-gradient-to-r from-white to-[#ccc] bg-clip-text text-transparent">
-              결제 완료!
-            </span>
+          <h1 style={{ 
+            fontSize: '48px', 
+            fontWeight: 'bold', 
+            color: 'white', 
+            marginBottom: '24px',
+            background: 'linear-gradient(to right, white, #ccc)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
+          }}>
+            결제 완료!
           </h1>
           
-          <p className="text-xl md:text-2xl text-[#ccc] mb-4 leading-relaxed">
+          <p style={{ 
+            fontSize: '20px', 
+            color: '#ccc', 
+            marginBottom: '16px', 
+            lineHeight: '1.6' 
+          }}>
             축하합니다! 
-            <span className="text-[#cf2b4a] font-semibold mx-2">{courseName || '강의'}</span>
+            <span style={{ color: '#cf2b4a', fontWeight: '600', margin: '0 8px' }}>
+              {courseName || '강의'}
+            </span>
             결제가 성공적으로 완료되었습니다
           </p>
           
-          <p className="text-lg text-[#999] mb-12">
+          <p style={{ 
+            fontSize: '18px', 
+            color: '#999', 
+            marginBottom: '48px' 
+          }}>
             이제 바로 학습을 시작하고 새로운 스킬을 마스터해보세요! 🚀
           </p>
 
           {/* CTA 버튼들 */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '16px', 
+            justifyContent: 'center', 
+            marginBottom: '64px',
+            '@media (min-width: 640px)': {
+              flexDirection: 'row'
+            }
+          }}>
             <button
               onClick={() => window.location.href = '/dashboard'}
-              className="group bg-gradient-to-r from-[#cf2b4a] to-[#a01e36] hover:from-[#a01e36] hover:to-[#8a1929] text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
+              style={{
+                background: 'linear-gradient(to right, #cf2b4a, #a01e36)',
+                color: 'white',
+                fontWeight: 'bold',
+                padding: '16px 32px',
+                borderRadius: '12px',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                fontSize: '16px'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'scale(1.05)';
+                e.currentTarget.style.background = 'linear-gradient(to right, #a01e36, #8a1929)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.background = 'linear-gradient(to right, #cf2b4a, #a01e36)';
+              }}
             >
-              <Play className="w-6 h-6" />
+              <Play style={{ width: '24px', height: '24px' }} />
               <span>강의 시청하기</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight style={{ width: '20px', height: '20px' }} />
             </button>
             
             <button
               onClick={onBack}
-              className="group border border-[#333] hover:border-[#cf2b4a] text-white hover:text-[#cf2b4a] font-medium py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
+              style={{
+                border: '1px solid #333',
+                background: 'transparent',
+                color: 'white',
+                fontWeight: '500',
+                padding: '16px 32px',
+                borderRadius: '12px',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                fontSize: '16px'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'scale(1.05)';
+                e.currentTarget.style.borderColor = '#cf2b4a';
+                e.currentTarget.style.color = '#cf2b4a';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.borderColor = '#333';
+                e.currentTarget.style.color = 'white';
+              }}
             >
               <span>메인으로 돌아가기</span>
             </button>
