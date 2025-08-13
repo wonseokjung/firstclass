@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { CheckCircle, Star, Clock, Users } from 'lucide-react';
+import { CheckCircle, Star, Clock, Users, ArrowRight, Sparkles, Award, Play } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import AzureTableService from '../services/azureTableService';
+import NavigationBar from './NavigationBar';
 
 interface PaymentSuccessPageProps {
   onBack: () => void;
@@ -115,11 +116,21 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
 
   if (isProcessing) {
     return (
-      <div className="min-h-screen" style={{ background: '#000' }}>
-        <div className="flex items-center justify-center min-h-screen px-4">
+      <div className="masterclass-container">
+        <NavigationBar 
+          onBack={onBack}
+          showSearch={false}
+          breadcrumbText="결제 완료"
+        />
+        
+        <div className="flex items-center justify-center min-h-[calc(100vh-80px)] px-4">
           <div className="text-center">
-            <div className="w-16 h-16 border-4 border-[#cf2b4a] border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-            <p className="text-xl text-white font-medium">결제 정보를 처리 중입니다...</p>
+            <div className="relative mb-8">
+              <div className="w-20 h-20 border-4 border-[#cf2b4a] border-t-transparent rounded-full animate-spin mx-auto"></div>
+              <div className="absolute inset-0 w-20 h-20 border-4 border-transparent border-t-[#cf2b4a]/30 rounded-full animate-spin mx-auto" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
+            </div>
+            <h2 className="text-2xl font-bold text-white mb-2">결제 정보를 처리 중입니다</h2>
+            <p className="text-[#ccc] animate-pulse">잠시만 기다려주세요...</p>
           </div>
         </div>
       </div>
@@ -127,124 +138,189 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: '#000' }}>
-      {/* 헤더 */}
-      <header className="relative z-10 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2" onClick={onBack} style={{ cursor: 'pointer' }}>
-            <div className="w-10 h-10 bg-[#cf2b4a] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">C</span>
+    <div className="masterclass-container">
+      <NavigationBar 
+        onBack={onBack}
+        showSearch={false}
+        breadcrumbText="결제 완료"
+      />
+
+      {/* 성공 히어로 섹션 */}
+      <div className="relative pt-20 pb-32 overflow-hidden">
+        {/* 배경 그라데이션 */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#cf2b4a]/20 via-transparent to-[#cf2b4a]/10"></div>
+        
+        {/* 애니메이션 파티클 */}
+        <div className="absolute inset-0">
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute animate-bounce"
+              style={{
+                left: `${20 + (i * 12)}%`,
+                top: `${20 + (i % 3) * 20}%`,
+                animationDelay: `${i * 0.2}s`,
+                animationDuration: '3s'
+              }}
+            >
+              <Sparkles className="w-4 h-4 text-[#cf2b4a]/40" />
             </div>
-            <span className="text-white text-xl font-bold">CLATHON</span>
-          </div>
-          
-          <button 
-            onClick={onBack}
-            className="px-6 py-2 bg-[#cf2b4a] text-white rounded-lg hover:bg-[#b8243f] transition-colors duration-200 font-medium"
-          >
-            홈으로 돌아가기
-          </button>
+          ))}
         </div>
-      </header>
 
-      {/* 메인 콘텐츠 */}
-      <div className="flex items-center justify-center min-h-[calc(100vh-80px)] px-4">
-        <div className="max-w-2xl w-full mx-auto">
-          {/* 성공 메시지 카드 */}
-          <div className="bg-white rounded-3xl shadow-2xl p-12 text-center mb-8">
-            {/* 성공 아이콘 */}
-            <div className="relative mb-8">
-              <div className="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
-                <CheckCircle className="w-14 h-14 text-white" />
+        <div className="relative max-w-4xl mx-auto text-center px-6">
+          {/* 메인 성공 아이콘 */}
+          <div className="relative mb-8">
+            <div className="w-32 h-32 mx-auto relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#cf2b4a] to-[#a01e36] rounded-full animate-pulse"></div>
+              <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center">
+                <CheckCircle className="w-16 h-16 text-[#cf2b4a]" />
               </div>
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
-                <span className="text-lg">🎉</span>
+              <div className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center animate-bounce">
+                <span className="text-2xl">🎉</span>
               </div>
-            </div>
-            
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              결제가 완료되었습니다!
-            </h1>
-            
-            <p className="text-xl text-gray-600 mb-12 leading-relaxed">
-              축하합니다! <span className="font-semibold text-[#cf2b4a]">{courseName || '강의'}</span> 결제가 성공적으로 완료되었습니다.<br />
-              이제 바로 학습을 시작하실 수 있습니다.
-            </p>
-
-            {/* 다음 단계 안내 */}
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 mb-10 text-left">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">🚀 다음 단계</h3>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="w-6 h-6 text-green-600" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900 mb-1">강의 시청</p>
-                    <p className="text-gray-600 text-sm">메인 페이지에서 구매한 강의를 바로 시청할 수 있습니다.</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900 mb-1">진도 관리</p>
-                    <p className="text-gray-600 text-sm">학습 진도가 자동으로 저장되어 언제든 이어서 볼 수 있습니다.</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Star className="w-6 h-6 text-purple-600" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900 mb-1">퀴즈 도전</p>
-                    <p className="text-gray-600 text-sm">각 강의 후 퀴즈를 풀어보며 학습 내용을 확인하세요.</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Users className="w-6 h-6 text-yellow-600" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900 mb-1">수료증 발급</p>
-                    <p className="text-gray-600 text-sm">모든 강의를 완주하면 수료증을 받을 수 있습니다.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 액션 버튼 */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={() => window.location.href = '/dashboard'}
-                className="flex-1 bg-gradient-to-r from-[#cf2b4a] to-[#b8243f] hover:from-[#b8243f] hover:to-[#a01e36] text-white font-bold py-4 px-8 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
-              >
-                🎯 강의 시청하기
-              </button>
-              
-              <button
-                onClick={onBack}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-4 px-8 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
-              >
-                🏠 메인으로 돌아가기
-              </button>
             </div>
           </div>
 
-          {/* 고객센터 안내 */}
-          <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-2xl p-6 text-center shadow-xl border border-gray-700">
-            <p className="text-gray-300 text-sm leading-relaxed">
-              💡 <span className="text-white font-semibold">궁금한 점이 있으시면 언제든 문의해주세요.</span><br />
-              📞 <span className="text-[#cf2b4a] font-medium">070-2359-3515</span> | 📧 <span className="text-[#cf2b4a] font-medium">contact@clathon.com</span><br />
-              <span className="text-gray-400">평일 09:00-18:00 (주말 및 공휴일 제외)</span>
-            </p>
+          {/* 성공 메시지 */}
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+            <span className="bg-gradient-to-r from-white to-[#ccc] bg-clip-text text-transparent">
+              결제 완료!
+            </span>
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-[#ccc] mb-4 leading-relaxed">
+            축하합니다! 
+            <span className="text-[#cf2b4a] font-semibold mx-2">{courseName || '강의'}</span>
+            결제가 성공적으로 완료되었습니다
+          </p>
+          
+          <p className="text-lg text-[#999] mb-12">
+            이제 바로 학습을 시작하고 새로운 스킬을 마스터해보세요! 🚀
+          </p>
+
+          {/* CTA 버튼들 */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <button
+              onClick={() => window.location.href = '/dashboard'}
+              className="group bg-gradient-to-r from-[#cf2b4a] to-[#a01e36] hover:from-[#a01e36] hover:to-[#8a1929] text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
+            >
+              <Play className="w-6 h-6" />
+              <span>강의 시청하기</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+            
+            <button
+              onClick={onBack}
+              className="group border border-[#333] hover:border-[#cf2b4a] text-white hover:text-[#cf2b4a] font-medium py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
+            >
+              <span>메인으로 돌아가기</span>
+            </button>
           </div>
         </div>
       </div>
+
+      {/* 다음 단계 안내 섹션 */}
+      <div className="max-w-6xl mx-auto px-6 pb-20">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            🚀 다음 단계
+          </h2>
+          <p className="text-[#ccc] text-lg">
+            이제 학습 여정을 시작해보세요
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {[
+            {
+              icon: Play,
+              title: "강의 시청",
+              description: "구매한 강의를 바로 시청하세요",
+              color: "from-blue-500 to-blue-600"
+            },
+            {
+              icon: Clock,
+              title: "진도 관리",
+              description: "자동으로 저장되는 학습 진도",
+              color: "from-green-500 to-green-600"
+            },
+            {
+              icon: Star,
+              title: "퀴즈 도전",
+              description: "학습 내용을 확인하는 퀴즈",
+              color: "from-purple-500 to-purple-600"
+            },
+            {
+              icon: Award,
+              title: "수료증 발급",
+              description: "완주 시 받는 공식 수료증",
+              color: "from-yellow-500 to-yellow-600"
+            }
+          ].map((step, index) => (
+            <div key={index} className="group">
+              <div className="bg-[#111] border border-[#333] rounded-xl p-6 h-full hover:border-[#cf2b4a]/50 transition-all duration-300 hover:transform hover:scale-105">
+                <div className={`w-12 h-12 bg-gradient-to-br ${step.color} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                  <step.icon className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
+                <p className="text-[#ccc] text-sm leading-relaxed">{step.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* 고객센터 안내 */}
+        <div className="bg-gradient-to-r from-[#111] to-[#1a1a1a] border border-[#333] rounded-xl p-8 text-center">
+          <div className="flex items-center justify-center mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-[#cf2b4a] to-[#a01e36] rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xl">💡</span>
+            </div>
+          </div>
+          <h3 className="text-xl font-bold text-white mb-4">궁금한 점이 있으시면 언제든 문의해주세요</h3>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center text-[#ccc]">
+            <div className="flex items-center space-x-2">
+              <span>📞</span>
+              <span className="text-[#cf2b4a] font-medium">070-2359-3515</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span>📧</span>
+              <span className="text-[#cf2b4a] font-medium">contact@clathon.com</span>
+            </div>
+          </div>
+          <p className="text-[#999] text-sm mt-4">평일 09:00-18:00 (주말 및 공휴일 제외)</p>
+        </div>
+      </div>
+
+      {/* 푸터 */}
+      <footer className="footer">
+        <div className="footer-content">
+          <div className="footer-section">
+            <div className="footer-brand">
+              <div className="logo">
+                <span>CLATHON</span>
+              </div>
+              <p>AI 시대를 위한 실무 교육 플랫폼</p>
+            </div>
+          </div>
+          
+          <div className="footer-section">
+            <h4>연락처</h4>
+            <p>📞 070-2359-3515</p>
+            <p>📧 contact@clathon.com</p>
+          </div>
+          
+          <div className="footer-section">
+            <h4>운영시간</h4>
+            <p>평일 09:00-18:00</p>
+            <p>주말/공휴일 휴무</p>
+          </div>
+        </div>
+        
+        <div className="footer-bottom">
+          <p>&copy; 2024 CLATHON. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 };
