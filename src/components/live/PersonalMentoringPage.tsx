@@ -93,64 +93,41 @@ const PersonalMentoringPage: React.FC<PersonalMentoringPageProps> = ({ onBack })
   const packages: Package[] = [
     {
       id: 'basic',
-      name: '베이직',
-      sessions: 10,
+      name: '5회권',
+      sessions: 5,
       duration: 50,
-      price: 800000,
-      originalPrice: 1000000,
+      price: 500000,
+      originalPrice: 750000,
       features: [
-        '10회 1:1 세션 (회당 50분)',
+        '5회 1:1 세션 (회당 50분)',
         '개인 맞춤 커리큘럼',
         '실시간 Q&A',
         '세션별 피드백',
         '학습 자료 제공',
-        '3개월 수강 기간'
+        '2개월 수강 기간'
       ],
       recommended: false,
-      savings: '20만원 절약'
+      savings: '25만원 절약'
     },
     {
       id: 'standard',
-      name: '스탠다드',
-      sessions: 20,
+      name: '10회권',
+      sessions: 10,
       duration: 50,
-      price: 1500000,
-      originalPrice: 2000000,
+      price: 900000,
+      originalPrice: 1200000,
       features: [
-        '20회 1:1 세션 (회당 50분)',
+        '10회 1:1 세션 (회당 50분)',
         '개인 맞춤 커리큘럼',
         '실시간 Q&A',
         '세션별 상세 피드백',
         '학습 자료 + 실습 과제',
-        '6개월 수강 기간',
+        '3개월 수강 기간',
         '중간 진도 점검',
         '포트폴리오 리뷰'
       ],
       recommended: true,
-      savings: '50만원 절약'
-    },
-    {
-      id: 'premium',
-      name: '프리미엄',
-      sessions: 30,
-      duration: 50,
-      price: 2500000,
-      originalPrice: 3500000,
-      features: [
-        '30회 1:1 세션 (회당 50분)',
-        '개인 맞춤 커리큘럼',
-        '실시간 Q&A',
-        '세션별 상세 피드백',
-        '학습 자료 + 실습 과제',
-        '9개월 수강 기간',
-        '중간 진도 점검',
-        '포트폴리오 리뷰',
-        '24시간 채팅 상담',
-        '취업/이직 컨설팅',
-        '개인 프로젝트 멘토링'
-      ],
-      recommended: false,
-      savings: '100만원 절약'
+      savings: '30만원 절약'
     }
   ];
 
@@ -183,7 +160,7 @@ const PersonalMentoringPage: React.FC<PersonalMentoringPageProps> = ({ onBack })
     
     setSelectedPackage(packageId);
     const selectedPkg = packages.find(pkg => pkg.id === packageId);
-    alert(`${selectedPkg?.name} 패키지 선택! 곧 결제 시스템이 연결됩니다.`);
+    alert(`${selectedPkg?.name} 선택! 곧 결제 시스템이 연결됩니다.`);
   };
 
   return (
@@ -566,7 +543,7 @@ const PersonalMentoringPage: React.FC<PersonalMentoringPageProps> = ({ onBack })
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
-            멘토링 패키지
+            멘토링 이용권
           </h2>
           
           <p style={{
@@ -575,7 +552,7 @@ const PersonalMentoringPage: React.FC<PersonalMentoringPageProps> = ({ onBack })
             fontSize: '1.2rem',
             marginBottom: '60px'
           }}>
-            목표에 맞는 패키지를 선택하고 전문가와 함께 성장하세요
+            목표에 맞는 이용권을 선택하고 전문가와 함께 성장하세요
           </p>
 
           <div style={{
@@ -699,7 +676,7 @@ const PersonalMentoringPage: React.FC<PersonalMentoringPageProps> = ({ onBack })
                     transition: 'all 0.3s ease'
                   }}
                 >
-                  {pkg.name} 선택하기
+                  {pkg.name} 구매하기
                 </button>
               </div>
             ))}

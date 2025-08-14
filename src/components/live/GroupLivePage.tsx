@@ -24,7 +24,7 @@ interface GroupSession {
 
 const GroupLivePage: React.FC<GroupLivePageProps> = ({ onBack }) => {
   const navigate = useNavigate();
-  const [selectedPackage, setSelectedPackage] = useState<'starter' | 'regular' | 'premium'>('regular');
+  // selectedPackage 제거 - 개별 세션 결제로 변경
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // 임시 데이터 - 추후 Azure Table Storage에서 가져올 예정
@@ -73,59 +73,7 @@ const GroupLivePage: React.FC<GroupLivePageProps> = ({ onBack }) => {
     }
   ];
 
-  const packages = [
-    {
-      id: 'starter',
-      name: '스타터',
-      price: 199000,
-      sessions: '주 2회',
-      duration: '90분',
-      features: [
-        '월 8회 그룹 세션',
-        '기초/중급 과정 참여',
-        '실시간 Q&A',
-        '세션 녹화본 제공',
-        '학습 자료 제공'
-      ],
-      recommended: false
-    },
-    {
-      id: 'regular',
-      name: '레귤러',
-      price: 299000,
-      sessions: '주 3회',
-      duration: '90분',
-      features: [
-        '월 12회 그룹 세션',
-        '모든 레벨 과정 참여',
-        '실시간 Q&A',
-        '세션 녹화본 제공',
-        '학습 자료 제공',
-        '개별 피드백',
-        '카카오톡 그룹 참여'
-      ],
-      recommended: true
-    },
-    {
-      id: 'premium',
-      name: '프리미엄',
-      price: 399000,
-      sessions: '무제한',
-      duration: '90분',
-      features: [
-        '모든 그룹 세션 무제한',
-        '고급 과정 우선 참여',
-        '실시간 Q&A',
-        '세션 녹화본 제공',
-        '학습 자료 제공',
-        '개별 피드백',
-        '카카오톡 그룹 참여',
-        '월 1회 1:1 상담',
-        '취업/이직 멘토링'
-      ],
-      recommended: false
-    }
-  ];
+  // 패키지 제거 - 1회성 결제로 변경
 
   useEffect(() => {
     const storedUserInfo = sessionStorage.getItem('clathon_user_session');
@@ -143,18 +91,7 @@ const GroupLivePage: React.FC<GroupLivePageProps> = ({ onBack }) => {
     alert('곧 신청 기능이 오픈됩니다! 현재는 베타 테스트 중입니다.');
   };
 
-  const handlePackageSelect = (packageId: 'starter' | 'regular' | 'premium') => {
-    if (!isLoggedIn) {
-      alert('로그인이 필요합니다.');
-      navigate('/login');
-      return;
-    }
-    
-    setSelectedPackage(packageId);
-    // 임시로 알림 - 추후 결제 시스템 연결
-    const selectedPkg = packages.find(pkg => pkg.id === packageId);
-    alert(`${selectedPkg?.name} 패키지 선택! 곧 결제 시스템이 연결됩니다.`);
-  };
+  // 패키지 선택 함수 제거 - 개별 세션 결제로 변경
 
   const getLevelColor = (level: string) => {
     switch (level) {
@@ -363,7 +300,7 @@ const GroupLivePage: React.FC<GroupLivePageProps> = ({ onBack }) => {
       </section>
 
       {/* 예정된 세션 */}
-      <section style={{ padding: '80px 20px', background: '#000000' }}>
+      <section id="upcoming-sessions" style={{ padding: '80px 20px', background: '#000000' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{
             fontSize: '2.5rem',
@@ -532,7 +469,7 @@ const GroupLivePage: React.FC<GroupLivePageProps> = ({ onBack }) => {
         </div>
       </section>
 
-      {/* 패키지 선택 */}
+      {/* 결제 방식 안내 */}
       <section style={{ padding: '80px 20px', background: '#000000' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{
@@ -544,7 +481,7 @@ const GroupLivePage: React.FC<GroupLivePageProps> = ({ onBack }) => {
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
-            월 구독 패키지
+            간편한 세션별 결제
           </h2>
           
           <p style={{
@@ -553,7 +490,7 @@ const GroupLivePage: React.FC<GroupLivePageProps> = ({ onBack }) => {
             fontSize: '1.2rem',
             marginBottom: '60px'
           }}>
-            목표에 맞는 패키지를 선택하고 지속적으로 성장하세요
+            원하는 세션만 골라서 참여하세요. 부담 없는 1회 결제 시스템입니다.
           </p>
 
           <div style={{
@@ -561,108 +498,83 @@ const GroupLivePage: React.FC<GroupLivePageProps> = ({ onBack }) => {
             gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
             gap: '30px'
           }}>
-            {packages.map((pkg) => (
-              <div key={pkg.id} style={{
-                background: pkg.recommended 
-                  ? 'linear-gradient(135deg, rgba(207, 43, 74, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)'
-                  : 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
-                borderRadius: '20px',
-                padding: '40px',
-                border: pkg.recommended 
-                  ? '2px solid #cf2b4a'
-                  : '1px solid rgba(255, 255, 255, 0.1)',
-                position: 'relative',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-5px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
+              borderRadius: '20px',
+              padding: '40px',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              textAlign: 'center'
+            }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #cf2b4a 0%, #ff4d6d 100%)',
+                borderRadius: '50%',
+                width: '60px',
+                height: '60px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 20px auto'
               }}>
-                
-                {pkg.recommended && (
-                  <div style={{
-                    position: 'absolute',
-                    top: '-12px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    background: 'linear-gradient(135deg, #cf2b4a 0%, #ff4d6d 100%)',
-                    color: 'white',
-                    padding: '6px 20px',
-                    borderRadius: '20px',
-                    fontSize: '0.9rem',
-                    fontWeight: '600'
-                  }}>
-                    <Star size={16} style={{ marginRight: '4px', display: 'inline' }} />
-                    추천
-                  </div>
-                )}
-
-                <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-                  <h3 style={{
-                    color: 'white',
-                    fontSize: '1.8rem',
-                    fontWeight: '700',
-                    marginBottom: '8px'
-                  }}>
-                    {pkg.name}
-                  </h3>
-                  
-                  <div style={{
-                    color: '#cf2b4a',
-                    fontSize: '3rem',
-                    fontWeight: '700',
-                    marginBottom: '8px'
-                  }}>
-                    ₩{pkg.price.toLocaleString()}
-                  </div>
-                  
-                  <div style={{ color: '#cccccc', fontSize: '1rem' }}>
-                    {pkg.sessions} • {pkg.duration}
-                  </div>
-                </div>
-
-                <ul style={{
-                  listStyle: 'none',
-                  padding: 0,
-                  marginBottom: '30px'
-                }}>
-                  {pkg.features.map((feature, index) => (
-                    <li key={index} style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      marginBottom: '12px',
-                      color: '#cccccc'
-                    }}>
-                      <CheckCircle size={16} color="#10B981" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-                <button
-                  onClick={() => handlePackageSelect(pkg.id as 'starter' | 'regular' | 'premium')}
-                  style={{
-                    width: '100%',
-                    background: pkg.recommended
-                      ? 'linear-gradient(135deg, #cf2b4a 0%, #ff4d6d 100%)'
-                      : 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
-                    color: 'white',
-                    border: pkg.recommended ? 'none' : '1px solid rgba(255, 255, 255, 0.2)',
-                    padding: '16px 24px',
-                    borderRadius: '12px',
-                    fontSize: '1.1rem',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease'
-                  }}
-                >
-                  {pkg.name} 선택하기
-                </button>
+                <CheckCircle size={28} color="white" />
               </div>
-            ))}
+              <h3 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px' }}>1회 결제</h3>
+              <p style={{ color: '#cccccc', lineHeight: '1.6' }}>
+                관심 있는 세션만 선택해서 결제하세요. 
+                월 구독 부담 없이 자유롭게 참여할 수 있습니다.
+              </p>
+            </div>
+
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
+              borderRadius: '20px',
+              padding: '40px',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              textAlign: 'center'
+            }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #cf2b4a 0%, #ff4d6d 100%)',
+                borderRadius: '50%',
+                width: '60px',
+                height: '60px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 20px auto'
+              }}>
+                <Clock size={28} color="white" />
+              </div>
+              <h3 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px' }}>즉시 확정</h3>
+              <p style={{ color: '#cccccc', lineHeight: '1.6' }}>
+                결제 완료 즉시 세션 참여가 확정됩니다. 
+                Zoom 링크와 자료는 이메일로 발송됩니다.
+              </p>
+            </div>
+
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
+              borderRadius: '20px',
+              padding: '40px',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              textAlign: 'center'
+            }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #cf2b4a 0%, #ff4d6d 100%)',
+                borderRadius: '50%',
+                width: '60px',
+                height: '60px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 20px auto'
+              }}>
+                <Shield size={28} color="white" />
+              </div>
+              <h3 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px' }}>환불 보장</h3>
+              <p style={{ color: '#cccccc', lineHeight: '1.6' }}>
+                세션 시작 24시간 전까지 100% 환불 가능합니다. 
+                안전하고 부담 없는 결제 시스템입니다.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -698,7 +610,8 @@ const GroupLivePage: React.FC<GroupLivePageProps> = ({ onBack }) => {
               if (!isLoggedIn) {
                 navigate('/login');
               } else {
-                handlePackageSelect('regular');
+                // 첫 번째 세션으로 스크롤
+                document.querySelector('#upcoming-sessions')?.scrollIntoView({ behavior: 'smooth' });
               }
             }}
             style={{
@@ -717,7 +630,7 @@ const GroupLivePage: React.FC<GroupLivePageProps> = ({ onBack }) => {
             }}
           >
             <Play size={24} />
-            무료 체험 신청하기
+            세션 선택하기
             <ArrowRight size={20} />
           </button>
 
