@@ -1,9 +1,10 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Play, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 import PaymentComponent from './PaymentComponent';
 import AzureTableService from '../services/azureTableService';
+import NavigationBar from './NavigationBar';
 
 // 강의 타입 정의
 interface Course {
@@ -320,70 +321,12 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
 
   return (
     <div className="masterclass-container">
-      {/* 마스터클래스 스타일 헤더 */}
-      <header className="masterclass-header-original">
-        <div className="header-content">
-          <div className="header-left">
-            <div className="logo">
-              <span className="logo-icon">C</span>
-              <span className="logo-text">CLATHON</span>
-            </div>
-            <div className="browse-dropdown">
-              <button 
-                className="browse-btn"
-                aria-label="Browse AI & Technology courses"
-                aria-expanded="false"
-              >
-                AI & Technology <ChevronDown size={16} />
-              </button>
-            </div>
-          </div>
-          
-          <div className="search-container">
-            <Search size={20} className="search-icon" aria-hidden="true" />
-            <input 
-              type="text" 
-              placeholder="What do you want to learn..." 
-              className="search-input"
-              aria-label="Search for courses"
-              role="searchbox"
-            />
-          </div>
-          
-          <div className="header-right">
-            <button className="nav-link" onClick={() => window.location.href = '/ceo'}>CEO</button>
-            <button className="nav-link" onClick={onFAQClick}>FAQ</button>
-            {isLoggedIn ? (
-              <>
-                <button 
-                  className="nav-link" 
-                  onClick={() => navigate('/dashboard')}
-                >
-                  마이페이지
-                </button>
-                <span className="user-welcome">안녕하세요, {userInfo?.name || userInfo?.email}님!</span>
-                <button 
-                  className="nav-link" 
-                  onClick={() => {
-                    sessionStorage.removeItem('clathon_user_session');
-                    setIsLoggedIn(false);
-                    setUserInfo(null);
-                    alert('로그아웃되었습니다.');
-                    navigate('/', { replace: true });
-                  }}
-                >
-                  로그아웃
-                </button>
-              </>
-            ) : (
-              <>
-                <button className="nav-link" onClick={onLoginClick}>Log In</button>
-                <button className="cta-button" onClick={onSignUpClick}>회원가입</button>
-              </>
-            )}
-          </div>
-        </div>
-      </header>
+      {/* 통일된 네비게이션바 */}
+      <NavigationBar 
+        onFAQClick={onFAQClick}
+        onLoginClick={onLoginClick}
+        onSignUpClick={onSignUpClick}
+      />
 
 
 
