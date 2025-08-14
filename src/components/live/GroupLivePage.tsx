@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Users, Clock, Calendar, Star, CheckCircle, ArrowRight, Play, Zap, Target, TrendingUp } from 'lucide-react';
+import { Users, Clock, Calendar, Star, CheckCircle, ArrowRight, Play, Zap, Target, TrendingUp, Shield } from 'lucide-react';
 import NavigationBar from '../NavigationBar';
 
 interface GroupLivePageProps {
