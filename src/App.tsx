@@ -31,6 +31,10 @@ const UserDashboardPage = React.lazy(() => import('./components/UserDashboardPag
 const PaymentSuccessPage = React.lazy(() => import('./components/PaymentSuccessPage'));
 const PaymentFailPage = React.lazy(() => import('./components/PaymentFailPage'));
 
+// 라이브 학습 페이지들
+const GroupLivePage = React.lazy(() => import('./components/live/GroupLivePage'));
+const PersonalMentoringPage = React.lazy(() => import('./components/live/PersonalMentoringPage'));
+
 // 각 페이지 컴포넌트를 래핑해서 useNavigate 사용
 const MainPageWrapper = () => {
   const navigate = useNavigate();
@@ -305,6 +309,30 @@ const PaymentFailPageWrapper = () => {
   );
 };
 
+const GroupLivePageWrapper = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/');
+  };
+
+  return (
+    <GroupLivePage onBack={handleBack} />
+  );
+};
+
+const PersonalMentoringPageWrapper = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/');
+  };
+
+  return (
+    <PersonalMentoringPage onBack={handleBack} />
+  );
+};
+
 function App() {
   // 앱 시작 시 Azure Table Storage 테이블 초기화
   useEffect(() => {
@@ -342,6 +370,8 @@ function App() {
             <Route path="/dashboard" element={<UserDashboardPageWrapper />} />
             <Route path="/payment/success" element={<PaymentSuccessPageWrapper />} />
             <Route path="/payment/fail" element={<PaymentFailPageWrapper />} />
+            <Route path="/group-live" element={<GroupLivePageWrapper />} />
+            <Route path="/personal-mentoring" element={<PersonalMentoringPageWrapper />} />
           </Routes>
         </Suspense>
       </div>

@@ -108,6 +108,8 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
         {/* 데스크탑 네비게이션 */}
         <div className="header-right desktop-nav">
           <button className="nav-link" onClick={() => navigate('/ceo')}>소개</button>
+          <button className="nav-link" onClick={() => navigate('/group-live')}>그룹 학습</button>
+          <button className="nav-link" onClick={() => navigate('/personal-mentoring')}>1:1 학습</button>
           <button className="nav-link" onClick={onFAQClick || (() => navigate('/faq'))}>FAQ</button>
           {renderAuthButtons()}
         </div>
@@ -131,6 +133,18 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               onClick={() => handleMobileNavClick(() => navigate('/ceo'))}
             >
               소개
+            </button>
+            <button 
+              className="mobile-nav-link" 
+              onClick={() => handleMobileNavClick(() => navigate('/group-live'))}
+            >
+              그룹 학습
+            </button>
+            <button 
+              className="mobile-nav-link" 
+              onClick={() => handleMobileNavClick(() => navigate('/personal-mentoring'))}
+            >
+              1:1 학습
             </button>
             <button 
               className="mobile-nav-link" 
