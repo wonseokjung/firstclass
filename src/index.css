@@ -5482,6 +5482,15 @@ body {
   .mobile-menu-toggle {
     display: block;
   }
+  
+  /* 모바일에서 헤더 레이아웃 조정 */
+  .header-content {
+    justify-content: space-between !important;
+  }
+  
+  .header-left {
+    flex: none !important;
+  }
 }
 
 @media (min-width: 769px) {
