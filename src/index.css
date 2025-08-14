@@ -5486,10 +5486,18 @@ body {
   /* 모바일에서 헤더 레이아웃 조정 */
   .header-content {
     justify-content: space-between !important;
+    flex-direction: row !important;
+    gap: 0 !important;
   }
   
   .header-left {
     flex: none !important;
+  }
+  
+  .masterclass-header-original .header-content {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    padding: 0 20px !important;
   }
 }
 
