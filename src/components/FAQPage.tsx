@@ -441,7 +441,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
             fontSize: '3rem', 
             fontWeight: '700', 
             marginBottom: '20px',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(135deg, #cf2b4a 0%, #ff4757 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text'
@@ -498,8 +498,8 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
                 fontSize: '1.8rem', 
                 fontWeight: '600', 
                 marginBottom: '30px',
-                color: '#667eea',
-                borderBottom: '2px solid rgba(102, 126, 234, 0.3)',
+                color: '#cf2b4a',
+                borderBottom: '2px solid rgba(207, 43, 74, 0.3)',
                 paddingBottom: '10px'
               }}>
                 {category.category}
@@ -571,7 +571,8 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
 
         {/* 추가 지원 섹션 */}
         <div className="additional-support" style={{
-          background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1))',
+          background: 'rgba(207, 43, 74, 0.1)',
+          border: '1px solid rgba(207, 43, 74, 0.3)',
           padding: '40px',
           borderRadius: '20px',
           textAlign: 'center',
@@ -586,7 +587,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
           <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <button 
               style={{
-                background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                background: 'linear-gradient(135deg, #cf2b4a, #ff4757)',
                 color: 'white',
                 border: 'none',
                 padding: '15px 30px',
@@ -596,7 +597,8 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px'
+                gap: '8px',
+                transition: 'all 0.3s ease'
               }}
             >
               <Phone size={16} />
@@ -604,9 +606,9 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
             </button>
             <button 
               style={{
-                background: 'rgba(255, 255, 255, 0.1)',
-                color: 'inherit',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
+                background: 'transparent',
+                color: '#cf2b4a',
+                border: '2px solid #cf2b4a',
                 padding: '15px 30px',
                 borderRadius: '50px',
                 fontSize: '1rem',
@@ -614,7 +616,8 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px'
+                gap: '8px',
+                transition: 'all 0.3s ease'
               }}
             >
               <Mail size={16} />
