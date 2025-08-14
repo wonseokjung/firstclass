@@ -23,7 +23,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
       <NavigationBar 
         onBack={onBack}
         showSearch={true}
-        breadcrumbText="CEO 소개"
+        breadcrumbText="CLATHON 소개"
       />
 
       {/* CEO 프로필 메인 섹션 */}
@@ -52,12 +52,12 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
               </div>
               
               <div className="ceo-intro">
-                <h1 className="ceo-name">정원석 (Jay)</h1>
-                <p className="ceo-title">커넥젼에이아이 대표 & AI 멘토</p>
+                <h1 className="ceo-name">CLATHON (클라톤)</h1>
+                <p className="ceo-title">차별화된 AI 교육 플랫폼</p>
                 <p className="ceo-description">
-                  진짜 AI 교육을 하기 위한 열정과 진정성으로 달려왔습니다. 
-                  15년간 AI 연구와 사업을 통해 쌓은 실전 경험으로, 
-                  차세대 AI 인재 양성과 혁신적인 AI 솔루션 개발을 선도하고 있습니다.
+                  단순히 수강만 하는 교육이 아닌, 실제로 AI를 활용할 수 있게 만드는 교육 시스템을 구축했습니다. 
+                  검증된 멘토들과 함께하는 실전 중심 교육으로, 
+                  진짜 AI 역량을 키우고 실무에서 바로 활용할 수 있는 인재를 양성합니다.
                 </p>
                 
                 <div className="ceo-social">
@@ -75,12 +75,131 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           </div>
         </div>
 
-        {/* 학력 및 공식 성적증명서 섹션 */}
+        {/* CLATHON 교육 시스템 섹션 */}
         <div className="ceo-section">
           <div className="ceo-container">
             <h2 className="section-title">
-              <GraduationCap size={24} />
-              학력 & 공식 성적증명서
+              <Target size={24} />
+              CLATHON 교육 시스템
+            </h2>
+            
+            <div className="education-grid">
+              <div className="education-card">
+                <div className="degree-level">무료 강의</div>
+                <h3 className="university">AI 기초 입문</h3>
+                <p className="university-english">Foundation Level</p>
+                <p className="major">ChatGPT, Google AI, 코딩 기초</p>
+                <div className="transcript-section">
+                  <h4 className="transcript-title">🎯 학습 목표</h4>
+                  <ul className="feature-list">
+                    <li>AI 도구 기본 사용법 익히기</li>
+                    <li>프롬프트 엔지니어링 기초</li>
+                    <li>실생활 AI 활용 방법</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="education-card">
+                <div className="degree-level">유료 강의</div>
+                <h3 className="university">AI 실전 마스터</h3>
+                <p className="university-english">Professional Level</p>
+                <p className="major">심화 프로젝트 & 워크플로우</p>
+                <div className="transcript-section">
+                  <h4 className="transcript-title">🚀 핵심 기능</h4>
+                  <ul className="feature-list">
+                    <li>실무 프로젝트 완성</li>
+                    <li>자동화 시스템 구축</li>
+                    <li>수익화 전략 수립</li>
+                    <li>포트폴리오 제작</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="education-card">
+                <div className="degree-level">그룹 라이브</div>
+                <h3 className="university">소그룹 실시간 클래스</h3>
+                <p className="university-english">Group Live Session</p>
+                <p className="major">5-10명 소그룹 (90분/회)</p>
+                <div className="transcript-section">
+                  <h4 className="transcript-title">👥 특징</h4>
+                  <ul className="feature-list">
+                    <li>실시간 질의응답</li>
+                    <li>동료 학습자와 상호작용</li>
+                    <li>그룹 프로젝트 진행</li>
+                    <li>경제적인 가격</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="education-card">
+                <div className="degree-level">1:1 라이브</div>
+                <h3 className="university">개인 맞춤 멘토링</h3>
+                <p className="university-english">Personal Mentoring</p>
+                <p className="major">완전 개인화 교육 (50분/회)</p>
+                <div className="transcript-section">
+                  <h4 className="transcript-title">⭐ 프리미엄 서비스</h4>
+                  <ul className="feature-list">
+                    <li>개인 목표 맞춤 커리큘럼</li>
+                    <li>실시간 1:1 피드백</li>
+                    <li>상담 기반 가격 책정</li>
+                    <li>멘토 직접 선택 가능</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 검증된 멘토 시스템 섹션 */}
+        <div className="ceo-section">
+          <div className="ceo-container">
+            <h2 className="section-title">
+              <Users size={24} />
+              검증된 멘토 시스템
+            </h2>
+            
+            <div className="mentor-verification">
+              <div className="verification-card">
+                <div className="verification-icon">
+                  <GraduationCap size={32} />
+                </div>
+                <h3>학력 검증</h3>
+                <p>대학원 이상 학위 보유자만 선발하며, 모든 학력 정보를 투명하게 공개합니다.</p>
+              </div>
+              
+              <div className="verification-card">
+                <div className="verification-icon">
+                  <Briefcase size={32} />
+                </div>
+                <h3>실무 경력 검증</h3>
+                <p>최소 3년 이상의 AI 관련 실무 경험을 보유한 전문가들로 구성됩니다.</p>
+              </div>
+              
+              <div className="verification-card">
+                <div className="verification-icon">
+                  <Trophy size={32} />
+                </div>
+                <h3>포트폴리오 검증</h3>
+                <p>GitHub, 논문, 프로젝트 등 공개 가능한 실제 성과물을 통해 실력을 검증합니다.</p>
+              </div>
+              
+              <div className="verification-card">
+                <div className="verification-icon">
+                  <Globe size={32} />
+                </div>
+                <h3>정보 완전 공개</h3>
+                <p>모든 멘토의 학력, 경력, 포트폴리오, 전문 분야를 투명하게 공개합니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 대표 멘토 정원석 소개 섹션 */}
+        <div className="ceo-section">
+          <div className="ceo-container">
+            <h2 className="section-title">
+              <Award size={24} />
+              대표 멘토 - 정원석 (Jay)
             </h2>
             <div className="education-grid">
               <div className="education-card">

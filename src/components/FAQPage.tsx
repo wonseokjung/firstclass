@@ -19,8 +19,69 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
 
   const faqData = [
     {
-      category: "결제 및 환불",
+      category: "CLATHON 교육 시스템",
       items: [
+        {
+          question: "CLATHON은 다른 AI 교육과 어떻게 다른가요?",
+          answer: `
+            <div>
+              <h4>🎯 CLATHON의 차별화된 AI 교육 시스템</h4>
+              
+              <h5>🔸 실전 중심 교육</h5>
+              <ul>
+                <li><strong>단순 수강이 아닌 실제 활용:</strong> 수강생이 직접 AI 도구를 사용해 결과물을 만드는 것이 목표</li>
+                <li><strong>프로젝트 기반 학습:</strong> 이론보다는 실무에서 바로 활용 가능한 스킬 습득</li>
+                <li><strong>개인 맞춤형 학습:</strong> 각자의 목표와 수준에 맞는 커리큘럼 제공</li>
+              </ul>
+
+              <h5>🔸 검증된 멘토 시스템</h5>
+              <ul>
+                <li><strong>학력 검증:</strong> 대학원 이상의 학력 및 관련 전공 확인</li>
+                <li><strong>실무 경력 검증:</strong> 3년 이상의 실제 AI 업무 경험</li>
+                <li><strong>포트폴리오 검증:</strong> GitHub, 논문, 프로젝트 등 공개 자료 확인</li>
+                <li><strong>투명한 정보 공개:</strong> 모든 멘토의 학력, 경력, 포트폴리오 완전 공개</li>
+              </ul>
+
+              <h5>🔸 다양한 학습 방식</h5>
+              <ul>
+                <li><strong>무료 강의:</strong> AI 기초 개념 및 도구 소개</li>
+                <li><strong>유료 강의:</strong> 심화 학습 및 실전 프로젝트</li>
+                <li><strong>그룹 라이브 클래스:</strong> 소그룹 실시간 학습 (5-10명)</li>
+                <li><strong>1:1 라이브 클래스:</strong> 개인 맞춤형 멘토링</li>
+              </ul>
+            </div>
+          `
+        },
+        {
+          question: "1:1 라이브 클래스는 어떻게 진행되나요?",
+          answer: `
+            <div>
+              <h4>👨‍🏫 1:1 라이브 클래스 시스템</h4>
+              
+              <h5>🔸 진행 방식</h5>
+              <ul>
+                <li><strong>화상 회의:</strong> Zoom 또는 Google Meet를 통한 실시간 멘토링</li>
+                <li><strong>화면 공유:</strong> 실시간 코드 작성 및 도구 사용 실습</li>
+                <li><strong>맞춤형 커리큘럼:</strong> 개인의 목표와 수준에 맞는 학습 계획</li>
+                <li><strong>과제 및 피드백:</strong> 세션 후 개인 과제 제공 및 다음 세션에서 리뷰</li>
+              </ul>
+
+              <h5>🔸 패키지 옵션</h5>
+              <ul>
+                <li><strong>10회권:</strong> 기초부터 중급까지 (3개월 완성)</li>
+                <li><strong>20회권:</strong> 고급 프로젝트 및 실무 적용 (6개월 완성)</li>
+                <li><strong>세션당 50분:</strong> 충분한 학습 시간 보장</li>
+              </ul>
+
+              <h5>🔸 가격 정책</h5>
+              <ul>
+                <li><strong>상담 기반 가격 책정:</strong> 개인의 목표, 수준, 멘토 등급에 따라 결정</li>
+                <li><strong>투명한 가격 공개:</strong> 상담 후 명확한 가격 및 커리큘럼 제시</li>
+                <li><strong>무료 체험:</strong> 첫 상담 및 1회 세션 무료 제공</li>
+              </ul>
+            </div>
+          `
+        },
         {
           question: "강의 환불 정책이 어떻게 되나요?",
           answer: `
