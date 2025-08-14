@@ -173,7 +173,6 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
       {/* 통일된 네비게이션바 */}
       <NavigationBar 
         onBack={onBack}
-        showSearch={true}
         breadcrumbText="AI 코딩 완전정복"
       />
 

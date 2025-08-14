@@ -37,7 +37,6 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
     <div className="masterclass-container">
       <NavigationBar 
         onBack={onBack}
-        showSearch={false}
         breadcrumbText="결제 실패"
       />
 

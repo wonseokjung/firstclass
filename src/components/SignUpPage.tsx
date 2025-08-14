@@ -163,7 +163,6 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
       {/* 통일된 네비게이션바 */}
       <NavigationBar 
         onBack={onBack}
-        showSearch={true}
         breadcrumbText="회원가입"
         onLoginClick={handleLoginClick}
       />

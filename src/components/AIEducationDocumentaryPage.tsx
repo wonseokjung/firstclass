@@ -24,7 +24,6 @@ const AIEducationDocumentaryPage: React.FC<AIEducationDocumentaryPageProps> = ({
       {/* 통일된 네비게이션바 */}
       <NavigationBar 
         onBack={onBack}
-        showSearch={true}
         breadcrumbText="AI 교육의 격차들"
       />
 

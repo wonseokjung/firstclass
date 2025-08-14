@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, ChevronDown } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 interface NavigationBarProps {
   onBack?: () => void;
   onFAQClick?: () => void;
   onLoginClick?: () => void;
   onSignUpClick?: () => void;
-  showSearch?: boolean;
-  searchPlaceholder?: string;
   breadcrumbText?: string;
 }
 
@@ -17,13 +15,12 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   onFAQClick,
   onLoginClick,
   onSignUpClick,
-  showSearch = true,
-  searchPlaceholder = "What do you want to learn...",
   breadcrumbText
 }) => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     // 로그인 상태 확인
@@ -55,8 +52,18 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
     localStorage.removeItem('clathon_user');
     setIsLoggedIn(false);
     setUserInfo(null);
+    setIsMobileMenuOpen(false);
     alert('로그아웃되었습니다.');
     navigate('/', { replace: true });
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleMobileNavClick = (action: () => void) => {
+    action();
+    setIsMobileMenuOpen(false);
   };
 
   const renderAuthButtons = () => {
@@ -96,36 +103,79 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
             <span className="logo-icon">C</span>
             <span className="logo-text">CLATHON</span>
           </div>
-          <div className="browse-dropdown">
-            <button 
-              className="browse-btn"
-              aria-label="Browse AI & Technology courses"
-              aria-expanded="false"
-            >
-              {breadcrumbText || "AI & Technology"} <ChevronDown size={16} />
-            </button>
-          </div>
         </div>
         
-        {showSearch && (
-          <div className="search-container">
-            <Search size={20} className="search-icon" aria-hidden="true" />
-            <input 
-              type="text" 
-              placeholder={searchPlaceholder}
-              className="search-input"
-              aria-label="Search for courses"
-              role="searchbox"
-            />
-          </div>
-        )}
-        
-        <div className="header-right">
-          <button className="nav-link" onClick={() => window.location.href = '/ceo'}>CEO</button>
+        {/* 데스크탑 네비게이션 */}
+        <div className="header-right desktop-nav">
+          <button className="nav-link" onClick={() => navigate('/ceo')}>소개</button>
           <button className="nav-link" onClick={onFAQClick || (() => navigate('/faq'))}>FAQ</button>
           {renderAuthButtons()}
         </div>
+
+        {/* 모바일 햄버거 메뉴 버튼 */}
+        <button 
+          className="mobile-menu-toggle"
+          onClick={toggleMobileMenu}
+          aria-label="메뉴 열기/닫기"
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
+
+      {/* 모바일 메뉴 */}
+      {isMobileMenuOpen && (
+        <div className="mobile-menu">
+          <div className="mobile-menu-content">
+            <button 
+              className="mobile-nav-link" 
+              onClick={() => handleMobileNavClick(() => navigate('/ceo'))}
+            >
+              소개
+            </button>
+            <button 
+              className="mobile-nav-link" 
+              onClick={() => handleMobileNavClick(onFAQClick || (() => navigate('/faq')))}
+            >
+              FAQ
+            </button>
+            
+            {isLoggedIn ? (
+              <>
+                <button 
+                  className="mobile-nav-link" 
+                  onClick={() => handleMobileNavClick(() => navigate('/dashboard'))}
+                >
+                  마이페이지
+                </button>
+                <div className="mobile-user-info">
+                  안녕하세요, {userInfo?.name || userInfo?.email}님!
+                </div>
+                <button 
+                  className="mobile-nav-link logout" 
+                  onClick={handleLogout}
+                >
+                  로그아웃
+                </button>
+              </>
+            ) : (
+              <>
+                <button 
+                  className="mobile-nav-link" 
+                  onClick={() => handleMobileNavClick(onLoginClick || (() => navigate('/login')))}
+                >
+                  로그인
+                </button>
+                <button 
+                  className="mobile-nav-link cta" 
+                  onClick={() => handleMobileNavClick(onSignUpClick || (() => navigate('/signup')))}
+                >
+                  회원가입
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </header>
   );
 };

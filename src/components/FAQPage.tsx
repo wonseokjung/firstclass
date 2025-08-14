@@ -423,7 +423,6 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
       {/* 통일된 네비게이션바 */}
       <NavigationBar 
         onBack={onBack}
-        showSearch={true}
         breadcrumbText="FAQ"
       />
 

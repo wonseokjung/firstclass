@@ -344,7 +344,6 @@ const GoogleAICoursePage: React.FC<GoogleAICoursePageProps> = ({ onBack }) => {
       {/* 통일된 네비게이션바 */}
       <NavigationBar 
         onBack={onBack}
-        showSearch={true}
         breadcrumbText="Google AI 완전정복"
       />
 

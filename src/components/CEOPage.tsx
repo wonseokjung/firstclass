@@ -22,7 +22,6 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
       {/* 통일된 네비게이션바 */}
       <NavigationBar 
         onBack={onBack}
-        showSearch={true}
         breadcrumbText="CLATHON 소개"
       />
 

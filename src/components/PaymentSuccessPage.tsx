@@ -119,7 +119,6 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
       <div className="masterclass-container">
         <NavigationBar 
           onBack={onBack}
-          showSearch={false}
           breadcrumbText="결제 완료"
         />
         
@@ -141,7 +140,6 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
     <div className="masterclass-container">
       <NavigationBar 
         onBack={onBack}
-        showSearch={false}
         breadcrumbText="결제 완료"
       />
 
@@ -219,9 +217,9 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               }}>
                 <span style={{ fontSize: '24px' }}>🎉</span>
               </div>
+              </div>
             </div>
-          </div>
-
+            
           {/* 성공 메시지 */}
           <h1 style={{ 
             fontSize: '48px', 
@@ -233,8 +231,8 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             WebkitTextFillColor: 'transparent'
           }}>
             결제 완료!
-          </h1>
-          
+            </h1>
+            
           <p style={{ 
             fontSize: '20px', 
             color: '#ccc', 
@@ -326,10 +324,10 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             >
               <span>메인으로 돌아가기</span>
             </button>
-          </div>
-        </div>
-      </div>
-
+                  </div>
+                  </div>
+                </div>
+                
       {/* 다음 단계 안내 섹션 */}
       <div className="max-w-6xl mx-auto px-6 pb-20">
         <div className="text-center mb-16">
@@ -339,7 +337,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           <p className="text-[#ccc] text-lg">
             이제 학습 여정을 시작해보세요
           </p>
-        </div>
+                  </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {[
@@ -375,24 +373,24 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
                 <p className="text-[#ccc] text-sm leading-relaxed">{step.description}</p>
-              </div>
+                  </div>
             </div>
           ))}
-        </div>
-
+                </div>
+                
         {/* 고객센터 안내 */}
         <div className="bg-gradient-to-r from-[#111] to-[#1a1a1a] border border-[#333] rounded-xl p-8 text-center">
           <div className="flex items-center justify-center mb-4">
             <div className="w-12 h-12 bg-gradient-to-br from-[#cf2b4a] to-[#a01e36] rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">💡</span>
-            </div>
-          </div>
+                  </div>
+                </div>
           <h3 className="text-xl font-bold text-white mb-4">궁금한 점이 있으시면 언제든 문의해주세요</h3>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center text-[#ccc]">
             <div className="flex items-center space-x-2">
               <span>📞</span>
               <span className="text-[#cf2b4a] font-medium">070-2359-3515</span>
-            </div>
+              </div>
             <div className="flex items-center space-x-2">
               <span>📧</span>
               <span className="text-[#cf2b4a] font-medium">contact@clathon.com</span>
@@ -413,7 +411,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               <p>AI 시대를 위한 실무 교육 플랫폼</p>
             </div>
           </div>
-          
+
           <div className="footer-section">
             <h4>연락처</h4>
             <p>📞 070-2359-3515</p>
@@ -429,7 +427,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         
         <div className="footer-bottom">
           <p>&copy; 2024 CLATHON. All rights reserved.</p>
-        </div>
+      </div>
       </footer>
     </div>
   );

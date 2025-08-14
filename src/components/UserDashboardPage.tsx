@@ -95,8 +95,6 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
       {/* 통일된 네비게이션바 */}
       <NavigationBar 
         onBack={onBack}
-        showSearch={true}
-        searchPlaceholder="수강 중인 강의를 검색하세요..."
         breadcrumbText="내 학습 현황"
       />
 
