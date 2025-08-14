@@ -2429,7 +2429,7 @@ body {
 
 /* Footer Styles - Black & Red Theme */
 .footer {
-  background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+  background: #000000;
   border-top: 1px solid rgba(207, 43, 74, 0.2);
   color: white;
   padding: 60px 0 20px;
@@ -2486,7 +2486,7 @@ body {
 }
 
 .footer-section p {
-  color: #ccc;
+  color: #ffffff;
   line-height: 1.6;
   margin-bottom: 8px;
   transition: color 0.3s ease;
@@ -2499,6 +2499,7 @@ body {
 .business-info p {
   margin-bottom: 8px;
   font-size: 0.95rem;
+  color: #ffffff;
 }
 
 .business-info strong {
@@ -2516,7 +2517,7 @@ body {
 }
 
 .footer-section ul li a {
-  color: #999;
+  color: #ffffff;
   text-decoration: none;
   transition: all 0.3s ease;
   position: relative;
@@ -2550,11 +2551,11 @@ body {
   border-top: 1px solid rgba(207, 43, 74, 0.2);
   margin-top: 40px;
   text-align: center;
-  background: linear-gradient(135deg, rgba(207, 43, 74, 0.05) 0%, transparent 100%);
+  background: #000000;
 }
 
 .footer-bottom p {
-  color: #666;
+  color: #ffffff;
   font-size: 0.9rem;
   margin: 0;
 }
