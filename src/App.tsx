@@ -31,9 +31,10 @@ const UserDashboardPage = React.lazy(() => import('./components/UserDashboardPag
 const PaymentSuccessPage = React.lazy(() => import('./components/PaymentSuccessPage'));
 const PaymentFailPage = React.lazy(() => import('./components/PaymentFailPage'));
 
-// 라이브 학습 페이지들
-const GroupLivePage = React.lazy(() => import('./components/live/GroupLivePage'));
-const PersonalMentoringPage = React.lazy(() => import('./components/live/PersonalMentoringPage'));
+// 라이브 학습 페이지들 (현재 사용하지 않음)
+// const GroupLivePage = React.lazy(() => import('./components/live/GroupLivePage'));
+// const PersonalMentoringPage = React.lazy(() => import('./components/live/PersonalMentoringPage'));
+// const CorporateMentoringPage = React.lazy(() => import('./components/CorporateMentoringPage'));
 
 // 각 페이지 컴포넌트를 래핑해서 useNavigate 사용
 const MainPageWrapper = () => {
@@ -49,303 +50,196 @@ const MainPageWrapper = () => {
   }, [navigate]);
 
   const handleCourseSelect = (courseId: number) => {
-    // 다큐멘터리 (ID 2)인 경우 다큐멘터리 페이지로 이동
-    if (courseId === 2) {
-      navigate('/documentary');
-    } else if (courseId === 3) {
-      // Google AI 클래스 (ID 3)인 경우 Google AI 페이지로 이동
-      navigate('/google-ai');
-    } else if (courseId === 4) {
-      // AI Business 클래스 (ID 4)인 경우 AI Business 페이지로 이동
-      navigate('/ai-business');
-    } else if (courseId === 5) {
-      // AI Coding 클래스 (ID 5)인 경우 AI Coding 페이지로 이동
-      navigate('/ai-coding');
-
-    } else if (courseId === 999) {
-      // 업무 자동화 코스 (ID 999)인 경우 워크플로우 자동화 페이지로 이동
-      navigate('/workflow-automation');
-    } else {
-      navigate('/course');
+    switch(courseId) {
+      case 1:
+        navigate('/chatgpt-course');
+        break;
+      case 2:
+        navigate('/google-ai-course');
+        break;
+      case 3:
+        navigate('/ai-business-course');
+        break;
+      case 4:
+        navigate('/ai-coding-course');
+        break;
+      case 5:
+        navigate('/ai-education-documentary');
+        break;
+      case 6:
+        navigate('/workflow-automation-master');
+        break;
+      case 999: // Premium Course - Google OPAL 업무 자동화
+        navigate('/workflow-automation-master');
+        break;
+      default:
+        console.log('Unknown course ID:', courseId);
+        console.log('사용 가능한 강의 ID: 1(ChatGPT), 2(Google AI), 3(AI Business), 4(AI Coding), 5(AI Documentary), 6(Workflow), 999(Premium)');
     }
-  };
-
-
-
-    const handleFAQClick = () => {
-    navigate('/faq');
-  };
-
-  const handleLoginClick = () => {
-    navigate('/login');
-  };
-
-  const handleSignUpClick = () => {
-    navigate('/signup');
   };
 
   return (
     <MainPage 
       onCourseSelect={handleCourseSelect}
-      onFAQClick={handleFAQClick}
-      onLoginClick={handleLoginClick}
-      onSignUpClick={handleSignUpClick}
+      onFAQClick={() => navigate('/faq')}
+      onLoginClick={() => navigate('/login')}
+      onSignUpClick={() => navigate('/signup')}
     />
   );
 };
 
 const ChatGPTCoursePageWrapper = () => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const userInfo = sessionStorage.getItem('clathon_user_session');
-    if (!userInfo) {
-      alert('로그인이 필요합니다.');
-      navigate('/login');
-    }
-  }, [navigate]);
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
-  const userInfo = sessionStorage.getItem('clathon_user_session');
-  if (!userInfo) {
-    return <LoadingSpinner />;
-  }
-
-  return <ChatGPTCoursePage onBack={handleBack} />;
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <ChatGPTCoursePage onBack={() => navigate('/')} />
+    </Suspense>
+  );
 };
 
 const GoogleAICoursePageWrapper = () => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const userInfo = sessionStorage.getItem('clathon_user_session');
-    if (!userInfo) {
-      alert('로그인이 필요합니다.');
-      navigate('/login');
-    }
-  }, [navigate]);
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
-  const userInfo = sessionStorage.getItem('clathon_user_session');
-  if (!userInfo) {
-    return <LoadingSpinner />;
-  }
-
-  return <GoogleAICoursePage onBack={handleBack} />;
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <GoogleAICoursePage onBack={() => navigate('/')} />
+    </Suspense>
+  );
 };
 
 const AIBusinessCoursePageWrapper = () => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const userInfo = sessionStorage.getItem('clathon_user_session');
-    if (!userInfo) {
-      alert('로그인이 필요합니다.');
-      navigate('/login');
-    }
-  }, [navigate]);
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
-  const userInfo = sessionStorage.getItem('clathon_user_session');
-  if (!userInfo) {
-    return <LoadingSpinner />;
-  }
-
-  return <AIBusinessCoursePage onBack={handleBack} />;
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <AIBusinessCoursePage onBack={() => navigate('/')} />
+    </Suspense>
+  );
 };
 
 const AICodingCoursePageWrapper = () => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const userInfo = sessionStorage.getItem('clathon_user_session');
-    if (!userInfo) {
-      alert('로그인이 필요합니다.');
-      navigate('/login');
-    }
-  }, [navigate]);
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
-  const userInfo = sessionStorage.getItem('clathon_user_session');
-  if (!userInfo) {
-    return <LoadingSpinner />;
-  }
-
-  return <AICodingCoursePage onBack={handleBack} />;
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <AICodingCoursePage onBack={() => navigate('/')} />
+    </Suspense>
+  );
 };
 
 const AIEducationDocumentaryPageWrapper = () => {
   const navigate = useNavigate();
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
-  return <AIEducationDocumentaryPage onBack={handleBack} />;
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <AIEducationDocumentaryPage onBack={() => navigate('/')} />
+    </Suspense>
+  );
 };
-
-
-
-
 
 const WorkflowAutomationMasterPageWrapper = () => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const userInfo = sessionStorage.getItem('clathon_user_session');
-    if (!userInfo) {
-      alert('로그인이 필요합니다.');
-      navigate('/login');
-    }
-  }, [navigate]);
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
-  const userInfo = sessionStorage.getItem('clathon_user_session');
-  if (!userInfo) {
-    return <LoadingSpinner />;
-  }
-
   return (
-    <WorkflowAutomationMasterPage onBack={handleBack} />
+    <Suspense fallback={<LoadingSpinner />}>
+      <WorkflowAutomationMasterPage onBack={() => navigate('/')} />
+    </Suspense>
   );
 };
 
 const FAQPageWrapper = () => {
   const navigate = useNavigate();
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
   return (
-    <FAQPage onBack={handleBack} />
+    <Suspense fallback={<LoadingSpinner />}>
+      <FAQPage onBack={() => navigate('/')} />
+    </Suspense>
   );
 };
 
 const CEOPageWrapper = () => {
   const navigate = useNavigate();
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
   return (
-    <CEOPage onBack={handleBack} />
+    <Suspense fallback={<LoadingSpinner />}>
+      <CEOPage onBack={() => navigate('/')} />
+    </Suspense>
   );
 };
 
 const LoginPageWrapper = () => {
   const navigate = useNavigate();
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
   return (
-    <LoginPage onBack={handleBack} />
+    <Suspense fallback={<LoadingSpinner />}>
+      <LoginPage onBack={() => navigate('/')} />
+    </Suspense>
   );
 };
 
 const SignUpPageWrapper = () => {
   const navigate = useNavigate();
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
   return (
-    <SignUpPage onBack={handleBack} />
+    <Suspense fallback={<LoadingSpinner />}>
+      <SignUpPage onBack={() => navigate('/')} />
+    </Suspense>
   );
 };
 
 const UserDashboardPageWrapper = () => {
   const navigate = useNavigate();
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
   return (
-    <UserDashboardPage onBack={handleBack} />
+    <Suspense fallback={<LoadingSpinner />}>
+      <UserDashboardPage onBack={() => navigate('/')} />
+    </Suspense>
   );
 };
 
 const PaymentSuccessPageWrapper = () => {
   const navigate = useNavigate();
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
   return (
-    <PaymentSuccessPage onBack={handleBack} />
+    <Suspense fallback={<LoadingSpinner />}>
+      <PaymentSuccessPage onBack={() => navigate('/')} />
+    </Suspense>
   );
 };
 
 const PaymentFailPageWrapper = () => {
   const navigate = useNavigate();
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
   return (
-    <PaymentFailPage onBack={handleBack} />
+    <Suspense fallback={<LoadingSpinner />}>
+      <PaymentFailPage onBack={() => navigate('/')} />
+    </Suspense>
   );
 };
 
-const GroupLivePageWrapper = () => {
-  const navigate = useNavigate();
+// 멘토링 페이지 래퍼들 (현재 사용하지 않음)
+// const GroupLivePageWrapper = () => {
+//   const navigate = useNavigate();
+//   const handleBack = () => {
+//     navigate('/');
+//   };
+//   return (
+//     <GroupLivePage onBack={handleBack} />
+//   );
+// };
 
-  const handleBack = () => {
-    navigate('/');
-  };
+// const PersonalMentoringPageWrapper = () => {
+//   const navigate = useNavigate();
+//   const handleBack = () => {
+//     navigate('/');
+//   };
+//   return (
+//     <PersonalMentoringPage onBack={handleBack} />
+//   );
+// };
 
-  return (
-    <GroupLivePage onBack={handleBack} />
-  );
-};
-
-const PersonalMentoringPageWrapper = () => {
-  const navigate = useNavigate();
-
-  const handleBack = () => {
-    navigate('/');
-  };
-
-  return (
-    <PersonalMentoringPage onBack={handleBack} />
-  );
-};
+// const CorporateMentoringPageWrapper = () => {
+//   const navigate = useNavigate();
+//   const handleBack = () => {
+//     navigate('/');
+//   };
+//   return (
+//     <CorporateMentoringPage onBack={handleBack} />
+//   );
+// };
 
 function App() {
-  // 앱 시작 시 Azure Table Storage 테이블 초기화
   useEffect(() => {
-    const initializeApp = async () => {
-      try {
-        await AzureTableService.initializeTables();
-        console.log('CLATHON Azure Tables initialized successfully');
-      } catch (error) {
-        console.error('Failed to initialize Azure Tables:', error);
-      }
-    };
-
-    initializeApp();
+    // Azure Table Service 초기화
+    AzureTableService.initializeTables();
   }, []);
 
   return (
@@ -354,15 +248,12 @@ function App() {
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
             <Route path="/" element={<MainPageWrapper />} />
-            <Route path="/course" element={<ChatGPTCoursePageWrapper />} />
-            <Route path="/google-ai" element={<GoogleAICoursePageWrapper />} />
-            <Route path="/ai-business" element={<AIBusinessCoursePageWrapper />} />
-            <Route path="/ai-coding" element={<AICodingCoursePageWrapper />} />
-            <Route path="/documentary" element={<AIEducationDocumentaryPageWrapper />} />
-
-
-            <Route path="/workflow-automation" element={<WorkflowAutomationMasterPageWrapper />} />
-            <Route path="/prompt-engineering" element={<WorkflowAutomationMasterPageWrapper />} />
+            <Route path="/chatgpt-course" element={<ChatGPTCoursePageWrapper />} />
+            <Route path="/google-ai-course" element={<GoogleAICoursePageWrapper />} />
+            <Route path="/ai-business-course" element={<AIBusinessCoursePageWrapper />} />
+            <Route path="/ai-coding-course" element={<AICodingCoursePageWrapper />} />
+            <Route path="/ai-education-documentary" element={<AIEducationDocumentaryPageWrapper />} />
+            <Route path="/workflow-automation-master" element={<WorkflowAutomationMasterPageWrapper />} />
             <Route path="/faq" element={<FAQPageWrapper />} />
             <Route path="/ceo" element={<CEOPageWrapper />} />
             <Route path="/login" element={<LoginPageWrapper />} />
@@ -370,8 +261,7 @@ function App() {
             <Route path="/dashboard" element={<UserDashboardPageWrapper />} />
             <Route path="/payment/success" element={<PaymentSuccessPageWrapper />} />
             <Route path="/payment/fail" element={<PaymentFailPageWrapper />} />
-            <Route path="/group-live" element={<GroupLivePageWrapper />} />
-            <Route path="/personal-mentoring" element={<PersonalMentoringPageWrapper />} />
+            {/* 멘토링 라우트들 제거됨 - 강의 사이트에 집중 */}
           </Routes>
         </Suspense>
       </div>

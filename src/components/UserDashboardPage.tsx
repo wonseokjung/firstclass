@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Clock, Award, Play, Calendar, Zap } from 'lucide-react';
+import { BookOpen, Clock, Award, Play, Calendar, Zap, Users, Video } from 'lucide-react';
 import AzureTableService from '../services/azureTableService';
 import NavigationBar from './NavigationBar';
 
@@ -325,6 +325,247 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
           </div>
         </div>
       </section>
+
+      {/* 멘토링 세션 섹션 제거됨 - 강의 사이트에 집중 */}
+      {false && (
+        <section style={{ 
+          padding: '60px 20px', 
+          background: '#000000',
+          borderTop: '1px solid #222'
+        }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            <h2 style={{
+              color: 'white',
+              fontSize: '2rem',
+              fontWeight: '700',
+              marginBottom: '30px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px'
+            }}>
+              <Users size={28} color="#cf2b4a" />
+              다가오는 멘토링 세션
+            </h2>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+              gap: '20px'
+            }}>
+              {/* 멘토링 세션 제거됨 */}
+              {[].map((session: any, index: number) => {
+                        const sessionDate = new Date(session.scheduledTime);
+        const isToday = sessionDate.toDateString() === new Date().toDateString();
+
+                return (
+                  <div key={session.sessionId} style={{
+                    background: isToday 
+                      ? 'linear-gradient(135deg, rgba(207, 43, 74, 0.2) 0%, rgba(26, 26, 26, 0.8) 100%)'
+                      : 'rgba(26, 26, 26, 0.8)',
+                    border: isToday ? '2px solid #cf2b4a' : '1px solid #333',
+                    borderRadius: '16px',
+                    padding: '24px',
+                    transition: 'all 0.3s ease',
+                    position: 'relative'
+                  }}>
+                    {isToday && (
+                      <div style={{
+                        position: 'absolute',
+                        top: '12px',
+                        right: '12px',
+                        background: '#cf2b4a',
+                        color: 'white',
+                        padding: '4px 8px',
+                        borderRadius: '8px',
+                        fontSize: '0.7rem',
+                        fontWeight: '600'
+                      }}>
+                        오늘
+                      </div>
+                    )}
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      marginBottom: '16px'
+                    }}>
+                      <div style={{
+                        background: '#cf2b4a',
+                        borderRadius: '50%',
+                        width: '48px',
+                        height: '48px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}>
+                        <Video size={20} color="white" />
+                      </div>
+                      <div>
+                        <h3 style={{
+                          color: 'white',
+                          fontSize: '1.2rem',
+                          fontWeight: '600',
+                          margin: '0 0 4px 0'
+                        }}>
+                          멘토링 세션 #{session.sessionNumber}
+                        </h3>
+                        <p style={{
+                          color: '#cf2b4a',
+                          fontSize: '0.9rem',
+                          margin: 0
+                        }}>
+                          정원석 (JAY) 멘토
+                        </p>
+                      </div>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      marginBottom: '8px'
+                    }}>
+                      <Calendar size={16} color="#999" />
+                      <span style={{ color: '#ccc', fontSize: '0.9rem' }}>
+                        {sessionDate.toLocaleDateString('ko-KR', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                          weekday: 'long'
+                        })}
+                      </span>
+                    </div>
+
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      marginBottom: '16px'
+                    }}>
+                      <Clock size={16} color="#999" />
+                      <span style={{ color: '#ccc', fontSize: '0.9rem' }}>
+                        {sessionDate.toLocaleTimeString('ko-KR', {
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}
+                      </span>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        if (session.meetingLink) {
+                          window.open(session.meetingLink, '_blank');
+                        } else {
+                          alert('세션 링크가 아직 생성되지 않았습니다.');
+                        }
+                      }}
+                      style={{
+                        width: '100%',
+                        background: isToday 
+                          ? 'linear-gradient(135deg, #cf2b4a 0%, #ff4d6d 100%)'
+                          : 'rgba(255, 255, 255, 0.1)',
+                        border: isToday ? 'none' : '1px solid #333',
+                        color: 'white',
+                        borderRadius: '8px',
+                        padding: '12px',
+                        fontSize: '0.9rem',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px'
+                      }}
+                    >
+                      <Video size={16} />
+                      {isToday ? '지금 참여하기' : 'Google Meet 링크'}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            {false && (
+              <div style={{ textAlign: 'center', marginTop: '30px' }}>
+                <button
+                  onClick={() => {
+                    // 모든 세션 보기 기능 추후 구현
+                    alert('모든 세션 보기 기능은 곧 추가됩니다.');
+                  }}
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    border: '1px solid #333',
+                    color: '#ccc',
+                    borderRadius: '8px',
+                    padding: '12px 24px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  모든 세션 보기 (0개)
+                </button>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* 멘토링 CTA 제거됨 - 강의 사이트에 집중 */}
+      {false && (
+        <section style={{ 
+          padding: '60px 20px', 
+          background: '#000000',
+          borderTop: '1px solid #222'
+        }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+            <div style={{
+              background: 'rgba(207, 43, 74, 0.1)',
+              border: '1px solid rgba(207, 43, 74, 0.3)',
+              borderRadius: '16px',
+              padding: '40px',
+            }}>
+              <Users size={48} color="#cf2b4a" style={{ marginBottom: '20px' }} />
+              <h3 style={{
+                color: 'white',
+                fontSize: '1.5rem',
+                fontWeight: '600',
+                marginBottom: '12px'
+              }}>
+                1:1 멘토링으로 더 빠르게 성장하세요
+              </h3>
+              <p style={{
+                color: '#ccc',
+                fontSize: '1rem',
+                marginBottom: '24px',
+                lineHeight: '1.6'
+              }}>
+                AI 전문가 정원석과의 개인 맞춤형 멘토링으로<br />
+                실무에서 바로 활용할 수 있는 스킬을 습득하세요.
+              </p>
+              <button
+                onClick={() => navigate('/personal-mentoring')}
+                style={{
+                  background: 'linear-gradient(135deg, #cf2b4a 0%, #ff4d6d 100%)',
+                  border: 'none',
+                  color: 'white',
+                  borderRadius: '12px',
+                  padding: '14px 28px',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+              >
+                <Users size={20} />
+                1:1 멘토링 신청하기
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* 수강 중인 강의 섹션 */}
       <section style={{ padding: '80px 0', background: '#000' }}>

@@ -26,12 +26,16 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
   const course = aiCodingCourse;
 
   useEffect(() => {
-    // 저장된 진도 불러오기
-    const savedProgress = getProgress();
+    // 사용자 정보 가져오기
+    const userInfo = sessionStorage.getItem('clathon_user_session');
+    const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
+    
+    // 저장된 진도 불러오기 (사용자별)
+    const savedProgress = getProgress('ai-coding-course', userEmail);
     setLessonsProgress(savedProgress);
     
-    // 퀴즈 완료 상태 불러오기
-    const quizProgress = getQuizProgress();
+    // 퀴즈 완료 상태 불러오기 (사용자별)
+    const quizProgress = getQuizProgress('ai-coding-course', userEmail);
     const quizCompletedState: Record<number, boolean> = {};
     Object.keys(quizProgress).forEach(key => {
       quizCompletedState[parseInt(key)] = quizProgress[parseInt(key)].passed;
@@ -48,8 +52,13 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
   }, [course]);
 
   const currentLessonData = course.lessons.find(lesson => lesson.id === currentLesson);
-  const progressPercentage = calculateProgressPercentage();
-  const completedLessonsCount = getCompletedLessonsCount();
+  
+  // 사용자 정보 가져오기 (진도 계산용)
+  const userInfo = sessionStorage.getItem('clathon_user_session');
+  const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
+  
+  const progressPercentage = calculateProgressPercentage('ai-coding-course', course.lessons.length, userEmail);
+  const completedLessonsCount = getCompletedLessonsCount('ai-coding-course', userEmail);
 
   const getEmbedUrl = (url: string) => {
     // YouTube URL 처리
@@ -67,11 +76,16 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
     return url;
   };
 
-  const toggleLessonComplete = useCallback((lessonId: number) => {
+  const toggleLessonComplete = useCallback(async (lessonId: number) => {
     const newProgress = { ...lessonsProgress };
     newProgress[lessonId] = !newProgress[lessonId];
     setLessonsProgress(newProgress);
-    saveProgress(lessonId, newProgress[lessonId]);
+    
+    // 사용자별 진도 저장
+    const userInfo = sessionStorage.getItem('clathon_user_session');
+    const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
+    
+    await saveProgress('ai-coding-course', lessonId, newProgress[lessonId], userEmail);
   }, [lessonsProgress]);
 
   const handleLessonClick = (lessonId: number) => {
@@ -131,7 +145,7 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
   };
 
   // 퀴즈 제출
-  const submitQuiz = useCallback(() => {
+  const submitQuiz = useCallback(async () => {
     if (!currentLessonData?.quiz) return;
     
     let correctAnswers = 0;
@@ -144,12 +158,16 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
     const score = Math.round((correctAnswers / currentLessonData.quiz.questions.length) * 100);
     const passed = score >= currentLessonData.quiz.requiredScore;
     
-    saveQuizResult(currentLesson, score, passed);
+    // 사용자별 퀴즈 결과 저장
+    const userInfo = sessionStorage.getItem('clathon_user_session');
+    const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
+    
+    await saveQuizResult('ai-coding-course', currentLesson, score, passed, userEmail);
     setQuizCompleted(prev => ({ ...prev, [currentLesson]: passed }));
     
     // 퀴즈 통과 시 강의 완료 처리
     if (passed) {
-      toggleLessonComplete(currentLesson);
+      await toggleLessonComplete(currentLesson);
     }
     
     alert(`퀴즈 결과: ${score}점 (${passed ? '통과' : '재시도 필요'})`);

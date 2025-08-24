@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Star, Clock, Award, CheckCircle, ArrowRight, MessageCircle, Target, Zap, Shield, Calendar, BookOpen } from 'lucide-react';
 import NavigationBar from '../NavigationBar';
+import SessionBookingCalendar from '../SessionBookingCalendar';
+import AzureTableService from '../../services/azureTableService';
 
 interface PersonalMentoringPageProps {
   onBack?: () => void;
@@ -40,55 +42,25 @@ const PersonalMentoringPage: React.FC<PersonalMentoringPageProps> = ({ onBack })
   const [selectedMentor, setSelectedMentor] = useState<string | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<string>('standard');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showBookingCalendar, setShowBookingCalendar] = useState(false);
+  const [userInfo, setUserInfo] = useState<any>(null);
 
-  // 임시 멘토 데이터 - 추후 Azure Table Storage에서 가져올 예정
-  const mentors: Mentor[] = [
-    {
-      id: 'mentor-1',
-      name: '정원석',
-      title: 'AI 전문가 / 전 구글 엔지니어',
-      education: ['뉴욕시립대 바루크 컴퓨터사이언스 학사', '일리노이 공과대학 AI 석사'],
-      experience: ['구글 AI팀 5년', '삼성전자 AI연구소 3년', 'CLATHON 대표'],
-      specialties: ['머신러닝', '딥러닝', 'ChatGPT 활용', '비즈니스 AI'],
-      profileImage: '/images/mentor-jay.jpg',
-      rating: 4.9,
-      totalSessions: 500,
-      hourlyRate: 150000,
-      bio: '구글과 삼성에서 10년 이상 AI 개발 경험을 쌓았습니다. 복잡한 AI 개념을 실무에서 바로 활용할 수 있도록 쉽게 설명하는 것이 제 강점입니다.',
-      achievements: ['Google AI Impact Award 수상', 'AI 특허 15건 보유', 'IEEE 논문 20편 게재'],
-      availability: ['평일 저녁', '주말 오전', '주말 오후']
-    },
-    {
-      id: 'mentor-2',
-      name: '김AI',
-      title: '크리에이티브 AI 전문가',
-      education: ['서울대학교 디자인학부', 'MIT Media Lab 연구원'],
-      experience: ['Adobe AI팀 4년', '네이버 웹툰 AI 개발 2년'],
-      specialties: ['이미지 생성 AI', 'Midjourney', 'Stable Diffusion', '창작 AI'],
-      profileImage: '/images/mentor-ai.jpg',
-      rating: 4.8,
-      totalSessions: 350,
-      hourlyRate: 120000,
-      bio: '디자인과 AI의 융합 분야에서 독특한 관점을 제공합니다. 창의적인 AI 활용법부터 상업적 적용까지 전 과정을 가이드합니다.',
-      achievements: ['Adobe Design Award 수상', 'AI 아트 전시 10회', '크리에이터 10만 명 멘토링'],
-      availability: ['평일 오후', '주말 종일']
-    },
-    {
-      id: 'mentor-3',
-      name: '박데이터',
-      title: '데이터 사이언티스트 / 카카오',
-      education: ['KAIST 전산학 박사', '스탠포드 교환학생'],
-      experience: ['카카오 데이터팀 6년', '네이버 검색 알고리즘 3년'],
-      specialties: ['데이터 분석', 'Python', '머신러닝 모델링', 'SQL'],
-      profileImage: '/images/mentor-data.jpg',
-      rating: 4.7,
-      totalSessions: 280,
-      hourlyRate: 100000,
-      bio: '실무에서 바로 써먹을 수 있는 데이터 분석과 머신러닝을 가르칩니다. 이론보다는 프로젝트 중심의 실습을 선호합니다.',
-      achievements: ['카카오 Tech Excellence Award', 'KDD 논문 게재', '데이터 분석 도서 저술'],
-      availability: ['평일 저녁', '주말 오전']
-    }
-  ];
+  // 메인 멘토 정보
+  const mainMentor: Mentor = {
+    id: 'mentor-jay',
+    name: '정원석 (JAY)',
+    title: 'AI 전문가 / CLATHON 대표',
+    education: ['뉴욕시립대 바루크 컴퓨터사이언스 학사', '일리노이 공과대학 AI 석사'],
+    experience: ['구글 AI팀 5년', '삼성전자 AI연구소 3년', 'CLATHON 설립'],
+    specialties: ['ChatGPT 마스터', '비즈니스 AI', 'Google AI', 'AI 코딩'],
+    profileImage: '/images/mentor-jay.jpg',
+    rating: 4.9,
+    totalSessions: 500,
+    hourlyRate: 150000,
+    bio: '구글과 삼성에서 10년 이상 AI 개발 경험을 쌓았습니다. 복잡한 AI 개념을 실무에서 바로 활용할 수 있도록 쉽게 설명하는 것이 제 강점입니다. 1:1 맞춤형 멘토링으로 당신의 AI 실력을 확실하게 끌어올려드립니다.',
+    achievements: ['Google AI Impact Award 수상', 'AI 특허 15건 보유', 'IEEE 논문 20편 게재', '1000+ 멘토링 완료'],
+    availability: ['평일 저녁 (19:00-22:00)', '토요일 오전 (09:00-12:00)', '토요일 오후 (14:00-17:00)', '일요일 오전 (09:00-12:00)']
+  };
 
   const packages: Package[] = [
     {
@@ -133,7 +105,17 @@ const PersonalMentoringPage: React.FC<PersonalMentoringPageProps> = ({ onBack })
 
   useEffect(() => {
     const storedUserInfo = sessionStorage.getItem('clathon_user_session');
-    setIsLoggedIn(!!storedUserInfo);
+    if (storedUserInfo) {
+      try {
+        const parsedUserInfo = JSON.parse(storedUserInfo);
+        setIsLoggedIn(true);
+        setUserInfo(parsedUserInfo);
+      } catch (error) {
+        console.error('사용자 정보 파싱 오류:', error);
+        setIsLoggedIn(false);
+        setUserInfo(null);
+      }
+    }
   }, []);
 
   const handleConsultationRequest = (mentorId?: string) => {
@@ -159,8 +141,78 @@ const PersonalMentoringPage: React.FC<PersonalMentoringPageProps> = ({ onBack })
     }
     
     setSelectedPackage(packageId);
-    const selectedPkg = packages.find(pkg => pkg.id === packageId);
-    alert(`${selectedPkg?.name} 선택! 곧 결제 시스템이 연결됩니다.`);
+    setSelectedMentor(mainMentor.id);
+    setShowBookingCalendar(true);
+  };
+
+  // 예약 확정 핸들러
+  const handleBookingConfirm = async (bookingData: any) => {
+    try {
+      console.log('📅 예약 처리 시작:', bookingData);
+      
+      if (!userInfo?.email) {
+        alert('사용자 정보를 찾을 수 없습니다. 다시 로그인해주세요.');
+        return;
+      }
+
+      // 1. 패키지 정보 생성
+      const packageInfo = packages.find(pkg => pkg.id === bookingData.packageType);
+      if (!packageInfo) {
+        alert('패키지 정보를 찾을 수 없습니다.');
+        return;
+      }
+
+      console.log('📦 패키지 생성 중...');
+      await AzureTableService.createStudentPackage({
+        studentEmail: userInfo.email,
+        packageType: bookingData.packageType,
+        totalSessions: packageInfo.sessions,
+        paymentAmount: packageInfo.price
+      });
+
+      // 2. 첫 번째 세션 예약 생성
+      console.log('📅 첫 세션 예약 중...');
+      const sessionDateTime = `${bookingData.selectedDate}T${bookingData.selectedTime}:00`;
+      
+      const sessionResult = await AzureTableService.createMentoringSession({
+        studentEmail: userInfo.email,
+        mentorId: bookingData.mentorId,
+        scheduledTime: sessionDateTime,
+        packageType: bookingData.packageType,
+        sessionNumber: 1
+      });
+
+      setShowBookingCalendar(false);
+      
+      alert(`✅ 멘토링 예약이 완료되었습니다!
+
+📅 날짜: ${new Date(bookingData.selectedDate).toLocaleDateString('ko-KR', { 
+  year: 'numeric', 
+  month: 'long', 
+  day: 'numeric',
+  weekday: 'long'
+})}
+🕐 시간: ${bookingData.selectedTime}
+👨‍🏫 멘토: 정원석 (JAY)
+📦 패키지: ${packageInfo.name}
+🔗 Google Meet: ${sessionResult.meetingLink}
+
+세션 링크가 이메일로 발송됩니다. 
+대시보드에서 예약 현황을 확인하실 수 있습니다.`);
+
+      // 대시보드로 이동
+      navigate('/dashboard');
+      
+    } catch (error) {
+      console.error('❌ 예약 처리 실패:', error);
+      const errorMessage = error instanceof Error ? error.message : '다시 시도해주세요.';
+      alert(`예약 처리 중 오류가 발생했습니다: ${errorMessage}`);
+    }
+  };
+
+  // 예약 캘린더 닫기
+  const handleBookingClose = () => {
+    setShowBookingCalendar(false);
   };
 
   return (
@@ -376,26 +428,24 @@ const PersonalMentoringPage: React.FC<PersonalMentoringPageProps> = ({ onBack })
           </p>
 
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-            gap: '30px'
+            maxWidth: '800px',
+            margin: '0 auto'
           }}>
-            {mentors.map((mentor) => (
-              <div key={mentor.id} style={{
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
-                borderRadius: '20px',
-                padding: '40px',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-5px)';
-                e.currentTarget.style.boxShadow = '0 20px 40px rgba(207, 43, 74, 0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}>
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
+              borderRadius: '20px',
+              padding: '40px',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-5px)';
+              e.currentTarget.style.boxShadow = '0 20px 40px rgba(207, 43, 74, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}>
                 
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px' }}>
                   <div style={{
@@ -418,24 +468,24 @@ const PersonalMentoringPage: React.FC<PersonalMentoringPageProps> = ({ onBack })
                       fontWeight: '600',
                       marginBottom: '4px'
                     }}>
-                      {mentor.name}
+                      {mainMentor.name}
                     </h3>
                     <p style={{
                       color: '#cf2b4a',
                       fontSize: '1rem',
                       marginBottom: '8px'
                     }}>
-                      {mentor.title}
+                      {mainMentor.title}
                     </p>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                         <Star size={16} color="#fbbf24" fill="#fbbf24" />
                         <span style={{ color: '#fbbf24', fontSize: '0.9rem', fontWeight: '600' }}>
-                          {mentor.rating}
+                          {mainMentor.rating}
                         </span>
                       </div>
                       <span style={{ color: '#cccccc', fontSize: '0.9rem' }}>
-                        ({mentor.totalSessions}회 세션)
+                        ({mainMentor.totalSessions}회 세션)
                       </span>
                     </div>
                   </div>
@@ -446,13 +496,13 @@ const PersonalMentoringPage: React.FC<PersonalMentoringPageProps> = ({ onBack })
                   marginBottom: '20px',
                   lineHeight: '1.6'
                 }}>
-                  {mentor.bio}
+                  {mainMentor.bio}
                 </p>
 
                 <div style={{ marginBottom: '20px' }}>
                   <h4 style={{ color: 'white', fontSize: '1rem', marginBottom: '12px' }}>전문 분야</h4>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                    {mentor.specialties.map((specialty, index) => (
+                    {mainMentor.specialties.map((specialty, index) => (
                       <span key={index} style={{
                         background: 'rgba(207, 43, 74, 0.2)',
                         color: '#cf2b4a',
@@ -470,7 +520,7 @@ const PersonalMentoringPage: React.FC<PersonalMentoringPageProps> = ({ onBack })
                 <div style={{ marginBottom: '20px' }}>
                   <h4 style={{ color: 'white', fontSize: '1rem', marginBottom: '8px' }}>주요 경력</h4>
                   <ul style={{ margin: 0, paddingLeft: '16px', color: '#cccccc' }}>
-                    {mentor.experience.slice(0, 2).map((exp, index) => (
+                    {mainMentor.experience.slice(0, 3).map((exp, index) => (
                       <li key={index} style={{ marginBottom: '4px', fontSize: '0.9rem' }}>
                         {exp}
                       </li>
@@ -491,19 +541,19 @@ const PersonalMentoringPage: React.FC<PersonalMentoringPageProps> = ({ onBack })
                   <div>
                     <div style={{ color: '#cccccc', fontSize: '0.9rem' }}>시간당 요금</div>
                     <div style={{ color: '#cf2b4a', fontSize: '1.3rem', fontWeight: '700' }}>
-                      ₩{mentor.hourlyRate.toLocaleString()}
+                      ₩{mainMentor.hourlyRate.toLocaleString()}
                     </div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
                     <div style={{ color: '#cccccc', fontSize: '0.9rem' }}>가능 시간</div>
                     <div style={{ color: 'white', fontSize: '0.9rem' }}>
-                      {mentor.availability.join(', ')}
+                      {mainMentor.availability.slice(0, 2).join(', ')}
                     </div>
                   </div>
                 </div>
 
                 <button
-                  onClick={() => handleConsultationRequest(mentor.id)}
+                  onClick={() => handleConsultationRequest(mainMentor.id)}
                   style={{
                     width: '100%',
                     background: 'linear-gradient(135deg, #cf2b4a 0%, #ff4d6d 100%)',
@@ -525,8 +575,7 @@ const PersonalMentoringPage: React.FC<PersonalMentoringPageProps> = ({ onBack })
                   무료 상담 신청
                   <ArrowRight size={16} />
                 </button>
-              </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
@@ -852,6 +901,16 @@ const PersonalMentoringPage: React.FC<PersonalMentoringPageProps> = ({ onBack })
           </div>
         </div>
       </section>
+
+      {/* 예약 캘린더 모달 */}
+      {showBookingCalendar && (
+        <SessionBookingCalendar
+          mentorId={selectedMentor || mainMentor.id}
+          selectedPackage={selectedPackage}
+          onBookingConfirm={handleBookingConfirm}
+          onClose={handleBookingClose}
+        />
+      )}
     </div>
   );
 };

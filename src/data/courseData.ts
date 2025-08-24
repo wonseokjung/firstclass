@@ -378,50 +378,133 @@ export const chatGPTCourse: Course = {
   };
 
 // 학습 진도 관리를 위한 로컬 스토리지 키
-export const PROGRESS_STORAGE_KEY = 'chatgpt-course-progress';
+export const PROGRESS_STORAGE_KEY = 'clathon-course-progress';
 
-// 임시 메모리 저장소 (세션 동안만 유지)
-let tempProgress: Record<number, boolean> = {};
-
-// 학습 진도 저장 (임시 메모리에만)
-export const saveProgress = (lessonId: number, completed: boolean) => {
-  tempProgress[lessonId] = completed;
-  console.log('📚 학습 진도 저장 (메모리):', { lessonId, completed });
+// 사용자별 학습 진도 저장 (localStorage + Azure 연동)
+export const saveProgress = async (courseId: string, lessonId: number, completed: boolean, userEmail?: string) => {
+  try {
+    // 1. 로컬 스토리지에 즉시 저장 (빠른 응답)
+    const storageKey = userEmail ? `${PROGRESS_STORAGE_KEY}-${userEmail}-${courseId}` : `${PROGRESS_STORAGE_KEY}-guest-${courseId}`;
+    const existingProgress = JSON.parse(localStorage.getItem(storageKey) || '{}');
+    existingProgress[lessonId] = {
+      completed,
+      completedAt: new Date().toISOString(),
+      courseId,
+      lessonId
+    };
+    localStorage.setItem(storageKey, JSON.stringify(existingProgress));
+    
+    console.log('📚 학습 진도 저장 (로컬):', { courseId, lessonId, completed, userEmail });
+    
+    // 2. Azure Table Storage에 저장 (로그인 사용자만)
+    if (userEmail) {
+      try {
+        // Azure 연동은 추후 구현 - 일단 로컬 저장으로 안정성 확보
+        console.log('🔄 Azure 진도 저장 예정:', { userEmail, courseId, lessonId, completed });
+      } catch (azureError) {
+        console.warn('⚠️ Azure 진도 저장 실패, 로컬 저장은 완료:', azureError);
+      }
+    }
+    
+    return true;
+  } catch (error) {
+    console.error('❌ 진도 저장 실패:', error);
+    return false;
+  }
 };
 
-// 학습 진도 불러오기 (임시 메모리에서)
-export const getProgress = (): Record<number, boolean> => {
-  return tempProgress;
+// 사용자별 학습 진도 불러오기
+export const getProgress = (courseId: string, userEmail?: string): Record<number, boolean> => {
+  try {
+    const storageKey = userEmail ? `${PROGRESS_STORAGE_KEY}-${userEmail}-${courseId}` : `${PROGRESS_STORAGE_KEY}-guest-${courseId}`;
+    const savedProgress = JSON.parse(localStorage.getItem(storageKey) || '{}');
+    
+    // boolean 형태로 변환 (기존 코드 호환성)
+    const progressMap: Record<number, boolean> = {};
+    Object.keys(savedProgress).forEach(key => {
+      const lessonId = parseInt(key);
+      progressMap[lessonId] = savedProgress[lessonId]?.completed || false;
+    });
+    
+    console.log('📖 학습 진도 불러오기:', { courseId, userEmail, progressCount: Object.keys(progressMap).length });
+    return progressMap;
+  } catch (error) {
+    console.error('❌ 진도 불러오기 실패:', error);
+    return {};
+  }
 };
 
-// 진도율 계산
-export const calculateProgressPercentage = (): number => {
-  const progress = getProgress();
+// 진도율 계산 (courseId와 userEmail 필요)
+export const calculateProgressPercentage = (courseId: string, totalLessons: number, userEmail?: string): number => {
+  const progress = getProgress(courseId, userEmail);
   const completedCount = Object.values(progress).filter(Boolean).length;
-  return Math.round((completedCount / chatGPTCourse.lessons.length) * 100);
+  return totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
 };
 
-// 완료된 강의 수 계산
-export const getCompletedLessonsCount = (): number => {
-  const progress = getProgress();
+// 완료된 레슨 수 계산 (courseId와 userEmail 필요)
+export const getCompletedLessonsCount = (courseId: string, userEmail?: string): number => {
+  const progress = getProgress(courseId, userEmail);
   return Object.values(progress).filter(Boolean).length;
 };
 
 // 퀴즈 진도 관리를 위한 로컬 스토리지 키
-export const QUIZ_PROGRESS_KEY = 'chatgpt-quiz-progress';
+export const QUIZ_PROGRESS_KEY = 'clathon-quiz-progress';
 
-// 임시 퀴즈 결과 저장소 (세션 동안만 유지)
-let tempQuizProgress: Record<number, { score: number; passed: boolean; completedAt: string }> = {};
-
-// 퀴즈 결과 저장 (임시 메모리에만)
-export const saveQuizResult = (lessonId: number, score: number, passed: boolean) => {
-  tempQuizProgress[lessonId] = { score, passed, completedAt: new Date().toISOString() };
-  console.log('🎯 퀴즈 결과 저장 (메모리):', { lessonId, score, passed });
+// 사용자별 퀴즈 결과 저장 (localStorage + Azure 연동)
+export const saveQuizResult = async (courseId: string, lessonId: number, score: number, passed: boolean, userEmail?: string) => {
+  try {
+    const quizResult = {
+      score,
+      passed,
+      completedAt: new Date().toISOString(),
+      courseId,
+      lessonId,
+      attempts: 1 // 추후 재시도 횟수 관리
+    };
+    
+    // 1. 로컬 스토리지에 즉시 저장
+    const storageKey = userEmail ? `${QUIZ_PROGRESS_KEY}-${userEmail}-${courseId}` : `${QUIZ_PROGRESS_KEY}-guest-${courseId}`;
+    const existingQuizzes = JSON.parse(localStorage.getItem(storageKey) || '{}');
+    
+    // 기존 결과가 있으면 재시도 횟수 증가
+    if (existingQuizzes[lessonId]) {
+      quizResult.attempts = (existingQuizzes[lessonId].attempts || 1) + 1;
+    }
+    
+    existingQuizzes[lessonId] = quizResult;
+    localStorage.setItem(storageKey, JSON.stringify(existingQuizzes));
+    
+    console.log('🎯 퀴즈 결과 저장 (로컬):', { courseId, lessonId, score, passed, attempts: quizResult.attempts });
+    
+    // 2. Azure Table Storage에 저장 (로그인 사용자만)
+    if (userEmail) {
+      try {
+        // Azure 연동은 추후 구현
+        console.log('🔄 Azure 퀴즈 결과 저장 예정:', { userEmail, courseId, lessonId, score, passed });
+      } catch (azureError) {
+        console.warn('⚠️ Azure 퀴즈 저장 실패, 로컬 저장은 완료:', azureError);
+      }
+    }
+    
+    return true;
+  } catch (error) {
+    console.error('❌ 퀴즈 결과 저장 실패:', error);
+    return false;
+  }
 };
 
-// 퀴즈 진도 불러오기 (임시 메모리에서)
-export const getQuizProgress = (): Record<number, { score: number; passed: boolean; completedAt: string }> => {
-  return tempQuizProgress;
+// 사용자별 퀴즈 진도 불러오기
+export const getQuizProgress = (courseId: string, userEmail?: string): Record<number, { score: number; passed: boolean; completedAt: string; attempts?: number }> => {
+  try {
+    const storageKey = userEmail ? `${QUIZ_PROGRESS_KEY}-${userEmail}-${courseId}` : `${QUIZ_PROGRESS_KEY}-guest-${courseId}`;
+    const savedQuizzes = JSON.parse(localStorage.getItem(storageKey) || '{}');
+    
+    console.log('🎯 퀴즈 진도 불러오기:', { courseId, userEmail, quizCount: Object.keys(savedQuizzes).length });
+    return savedQuizzes;
+  } catch (error) {
+    console.error('❌ 퀴즈 진도 불러오기 실패:', error);
+    return {};
+  }
 };
 
 export const aiBusinessCourse: Course = {

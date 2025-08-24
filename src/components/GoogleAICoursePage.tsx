@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, MessageSquare, Award, Timer } from 'lucide-react';
+import { saveProgress, getProgress, saveQuizResult, getQuizProgress } from '../data/courseData';
 import NavigationBar from './NavigationBar';
 
 interface GoogleAICoursePageProps {
@@ -212,6 +213,22 @@ const GoogleAICoursePage: React.FC<GoogleAICoursePageProps> = ({ onBack }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
+    // 사용자 정보 가져오기
+    const userInfo = sessionStorage.getItem('clathon_user_session');
+    const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
+    
+    // 저장된 진도 불러오기 (사용자별)
+    const savedProgress = getProgress('google-ai-course', userEmail);
+    setLessonsProgress(savedProgress);
+    
+    // 퀴즈 완료 상태 불러오기 (사용자별)
+    const quizProgress = getQuizProgress('google-ai-course', userEmail);
+    const quizCompletedState: Record<number, boolean> = {};
+    Object.keys(quizProgress).forEach(key => {
+      quizCompletedState[parseInt(key)] = quizProgress[parseInt(key)].passed;
+    });
+    setQuizCompleted(quizCompletedState);
+    
     if (googleAICourse.lessons.length > 0) {
       setCurrentLesson(googleAICourse.lessons[0].id);
       const firstLesson = googleAICourse.lessons[0];
@@ -237,10 +254,16 @@ const GoogleAICoursePage: React.FC<GoogleAICoursePageProps> = ({ onBack }) => {
     return url;
   };
 
-  const toggleLessonComplete = useCallback((lessonId: number) => {
+  const toggleLessonComplete = useCallback(async (lessonId: number) => {
     const newProgress = { ...lessonsProgress };
     newProgress[lessonId] = !newProgress[lessonId];
     setLessonsProgress(newProgress);
+    
+    // 사용자별 진도 저장
+    const userInfo = sessionStorage.getItem('clathon_user_session');
+    const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
+    
+    await saveProgress('google-ai-course', lessonId, newProgress[lessonId], userEmail);
   }, [lessonsProgress]);
 
   const handleLessonClick = (lessonId: number) => {
@@ -300,7 +323,7 @@ const GoogleAICoursePage: React.FC<GoogleAICoursePageProps> = ({ onBack }) => {
   };
 
   // 퀴즈 제출
-  const submitQuiz = useCallback(() => {
+  const submitQuiz = useCallback(async () => {
     if (!currentLessonData?.quiz) return;
     
     let correctAnswers = 0;
@@ -313,11 +336,16 @@ const GoogleAICoursePage: React.FC<GoogleAICoursePageProps> = ({ onBack }) => {
     const score = Math.round((correctAnswers / currentLessonData.quiz.questions.length) * 100);
     const passed = score >= currentLessonData.quiz.requiredScore;
     
+    // 사용자별 퀴즈 결과 저장
+    const userInfo = sessionStorage.getItem('clathon_user_session');
+    const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
+    
+    await saveQuizResult('google-ai-course', currentLesson, score, passed, userEmail);
     setQuizCompleted(prev => ({ ...prev, [currentLesson]: passed }));
     
     // 퀴즈 통과 시 강의 완료 처리
     if (passed) {
-      toggleLessonComplete(currentLesson);
+      await toggleLessonComplete(currentLesson);
     }
     
     alert(`퀴즈 결과: ${score}점 (${passed ? '통과' : '재시도 필요'})`);

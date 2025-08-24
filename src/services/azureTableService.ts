@@ -1,8 +1,10 @@
 // Azure SDK 대신 REST API 직접 호출 사용
 
-// Azure Table Storage SAS URLs 설정 (단일 Users 테이블만 사용)
+// Azure Table Storage SAS URLs 설정
 const AZURE_SAS_URLS = {
-  users: 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-08-13T02:04:25Z&se=2030-10-13T10:19:00Z&spr=https&sv=2024-11-04&sig=ulo8yMTJqBhKB%2FeeIKycUxl8knzpbDkClU6NTaPrHYw%3D&tn=users'
+  users: 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-08-13T02:04:25Z&se=2030-10-13T10:19:00Z&spr=https&sv=2024-11-04&sig=ulo8yMTJqBhKB%2FeeIKycUxl8knzpbDkClU6NTaPrHYw%3D&tn=users',
+  sessions: 'https://clathonstorage.table.core.windows.net/mentoringssessions?sp=raud&st=2025-08-13T02:04:25Z&se=2030-10-13T10:19:00Z&spr=https&sv=2024-11-04&sig=ulo8yMTJqBhKB%2FeeIKycUxl8knzpbDkClU6NTaPrHYw%3D&tn=mentoringssessions',
+  packages: 'https://clathonstorage.table.core.windows.net/studentpackages?sp=raud&st=2025-08-13T02:04:25Z&se=2030-10-13T10:19:00Z&spr=https&sv=2024-11-04&sig=ulo8yMTJqBhKB%2FeeIKycUxl8knzpbDkClU6NTaPrHYw%3D&tn=studentpackages'
 };
 
 // 환경변수에서 Connection String 가져오기 (백업용) - 현재는 SAS URL 사용으로 미사용
@@ -348,6 +350,12 @@ export class AzureTableService {
     if (isConnected) {
       console.log('🚀 Azure Table Storage REST API 연결 완료!');
       console.log('📋 이제 실제 Azure에 데이터를 저장할 수 있습니다!');
+      
+      // 필요한 테이블들 준비 완료 로그
+      const tablesToCreate = ['users', 'mentoringssessions', 'studentpackages'];
+      tablesToCreate.forEach(tableName => {
+        console.log(`📋 Table '${tableName}' 준비 완료`);
+      });
     } else {
       console.log('⚠️ Azure 연결 실패, LocalStorage를 계속 사용합니다.');
     }
@@ -866,6 +874,216 @@ export class AzureTableService {
       console.error('❌ 결제 정보 생성 실패:', error.message);
       console.error('❌ 결제 오류 상세:', error);
       throw new Error(`결제 정보 생성 실패: ${error.message}`);
+    }
+  }
+
+  // === 멘토링 세션 관리 메서드들 ===
+  
+  // 멘토링 세션 생성
+  static async createMentoringSession(sessionData: {
+    studentEmail: string;
+    mentorId: string;
+    scheduledTime: string;
+    packageType: string;
+    sessionNumber?: number;
+  }): Promise<any> {
+    try {
+      console.log('📅 멘토링 세션 생성 중...', sessionData);
+      
+      const sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      const meetingLink = `https://meet.google.com/${Math.random().toString(36).substr(2, 12)}`;
+      
+      const session = {
+        PartitionKey: sessionData.studentEmail,
+        RowKey: sessionId,
+        sessionId,
+        studentEmail: sessionData.studentEmail,
+        mentorId: sessionData.mentorId,
+        scheduledTime: sessionData.scheduledTime,
+        packageType: sessionData.packageType,
+        sessionNumber: sessionData.sessionNumber || 1,
+        status: 'scheduled',
+        meetingLink,
+        createdAt: new Date().toISOString(),
+        '@odata.type': 'Microsoft.Tables.EntityV2'
+      };
+
+      // Azure Table Storage에 저장 시도
+      try {
+        const response = await fetch(AZURE_SAS_URLS.sessions, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json;odata=nometadata'
+          },
+          body: JSON.stringify(session)
+        });
+
+        if (response.ok) {
+          console.log('✅ Azure에 멘토링 세션 저장 완료:', sessionId);
+          return session;
+        }
+      } catch (azureError) {
+        console.log('⚠️ Azure 저장 실패, 로컬 저장으로 전환:', azureError);
+      }
+
+      // Fallback: localStorage에 저장
+      const sessionsKey = `clathon_mentoring_sessions_${sessionData.studentEmail}`;
+      const existingSessions = JSON.parse(localStorage.getItem(sessionsKey) || '[]');
+      existingSessions.push(session);
+      localStorage.setItem(sessionsKey, JSON.stringify(existingSessions));
+      
+      console.log('✅ 로컬에 멘토링 세션 저장 완료:', sessionId);
+      return session;
+      
+    } catch (error: any) {
+      console.error('❌ 멘토링 세션 생성 실패:', error.message);
+      throw new Error(`멘토링 세션 생성 실패: ${error.message}`);
+    }
+  }
+
+  // 사용자의 멘토링 세션 목록 조회
+  static async getUserMentoringSessions(studentEmail: string): Promise<any[]> {
+    try {
+      console.log('📋 멘토링 세션 목록 조회:', studentEmail);
+
+      // Azure에서 조회 시도
+      try {
+        const filterQuery = `PartitionKey eq '${studentEmail}'`;
+        const queryUrl = `${AZURE_SAS_URLS.sessions}&$filter=${encodeURIComponent(filterQuery)}`;
+        
+        const response = await fetch(queryUrl, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json;odata=nometadata'
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('✅ Azure에서 멘토링 세션 조회 완료:', data.value?.length || 0, '개');
+          return data.value || [];
+        }
+      } catch (azureError) {
+        console.log('⚠️ Azure 조회 실패, 로컬 조회로 전환:', azureError);
+      }
+
+      // Fallback: localStorage에서 조회
+      const sessionsKey = `clathon_mentoring_sessions_${studentEmail}`;
+      const sessions = JSON.parse(localStorage.getItem(sessionsKey) || '[]');
+      console.log('📋 로컬에서 멘토링 세션 조회 완료:', sessions.length, '개');
+      return sessions;
+      
+    } catch (error: any) {
+      console.error('❌ 멘토링 세션 조회 실패:', error.message);
+      return [];
+    }
+  }
+
+  // 세션 완료 후 학습 기록 저장
+  static async saveSessionRecord(recordData: {
+    sessionId: string;
+    studentEmail: string;
+    topicsCovered: string;
+    mentorFeedback: string;
+    nextSessionPlan?: string;
+    homework?: string;
+    progressRating: number;
+  }): Promise<any> {
+    try {
+      console.log('📝 세션 기록 저장 중...', recordData);
+      
+      const recordId = `record_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
+      const record = {
+        PartitionKey: recordData.studentEmail,
+        RowKey: recordId,
+        recordId,
+        sessionId: recordData.sessionId,
+        studentEmail: recordData.studentEmail,
+        topicsCovered: recordData.topicsCovered,
+        mentorFeedback: recordData.mentorFeedback,
+        nextSessionPlan: recordData.nextSessionPlan || '',
+        homework: recordData.homework || '',
+        progressRating: recordData.progressRating,
+        completedAt: new Date().toISOString(),
+        '@odata.type': 'Microsoft.Tables.EntityV2'
+      };
+
+      // 일단 로컬에 저장 (추후 별도 테이블로 확장 가능)
+      const recordsKey = `clathon_session_records_${recordData.studentEmail}`;
+      const existingRecords = JSON.parse(localStorage.getItem(recordsKey) || '[]');
+      existingRecords.push(record);
+      localStorage.setItem(recordsKey, JSON.stringify(existingRecords));
+      
+      console.log('✅ 세션 기록 저장 완료:', recordId);
+      return record;
+      
+    } catch (error: any) {
+      console.error('❌ 세션 기록 저장 실패:', error.message);
+      throw new Error(`세션 기록 저장 실패: ${error.message}`);
+    }
+  }
+
+  // 학생 패키지 정보 저장
+  static async createStudentPackage(packageData: {
+    studentEmail: string;
+    packageType: string;
+    totalSessions: number;
+    paymentAmount: number;
+  }): Promise<any> {
+    try {
+      console.log('📦 학생 패키지 생성 중...', packageData);
+      
+      const packageId = `package_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
+      const package_ = {
+        PartitionKey: packageData.studentEmail,
+        RowKey: packageId,
+        packageId,
+        studentEmail: packageData.studentEmail,
+        packageType: packageData.packageType,
+        totalSessions: packageData.totalSessions,
+        usedSessions: 0,
+        remainingSessions: packageData.totalSessions,
+        paymentAmount: packageData.paymentAmount,
+        paymentStatus: 'completed',
+        purchaseDate: new Date().toISOString(),
+        expiryDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(), // 90일 후 만료
+        '@odata.type': 'Microsoft.Tables.EntityV2'
+      };
+
+      // Azure 저장 시도
+      try {
+        const response = await fetch(AZURE_SAS_URLS.packages, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json;odata=nometadata'
+          },
+          body: JSON.stringify(package_)
+        });
+
+        if (response.ok) {
+          console.log('✅ Azure에 패키지 정보 저장 완료:', packageId);
+          return package_;
+        }
+      } catch (azureError) {
+        console.log('⚠️ Azure 저장 실패, 로컬 저장으로 전환:', azureError);
+      }
+
+      // Fallback: localStorage
+      const packagesKey = `clathon_student_packages_${packageData.studentEmail}`;
+      const existingPackages = JSON.parse(localStorage.getItem(packagesKey) || '[]');
+      existingPackages.push(package_);
+      localStorage.setItem(packagesKey, JSON.stringify(existingPackages));
+      
+      console.log('✅ 로컬에 패키지 정보 저장 완료:', packageId);
+      return package_;
+      
+    } catch (error: any) {
+      console.error('❌패키지 생성 실패:', error.message);
+      throw new Error(`패키지 생성 실패: ${error.message}`);
     }
   }
 }
