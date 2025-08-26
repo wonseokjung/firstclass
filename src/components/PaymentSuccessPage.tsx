@@ -4,6 +4,48 @@ import { useLocation } from 'react-router-dom';
 import AzureTableService from '../services/azureTableService';
 import NavigationBar from './NavigationBar';
 
+// 토스페이먼츠 결제 승인 API 호출 함수
+const confirmPayment = async (paymentKey: string, orderId: string, amount: number) => {
+  // 🚨 임시 라이브 모드 (실제 결제 테스트)
+  const FORCE_LIVE_MODE = true; // TODO: 테스트 후 false로 변경
+  const isLiveMode = process.env.NODE_ENV === 'production' || FORCE_LIVE_MODE;
+  
+  const secretKey = isLiveMode
+    ? 'live_sk_AQ92ymxN34P4R5EKxBkO3ajRKXvd'  // 라이브 시크릿 키
+    : 'test_sk_zXLkKEypNArWmo50nX3lmeaxYG5R';   // 테스트 시크릿 키
+  
+  console.log(`💳 결제 승인 API 모드: ${isLiveMode ? '🔴 LIVE' : '🟡 TEST'}`);
+  
+  const basicAuth = btoa(`${secretKey}:`);
+  
+  try {
+    const response = await fetch('https://api.tosspayments.com/v1/payments/confirm', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${basicAuth}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        paymentKey,
+        orderId,
+        amount,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || '결제 승인 실패');
+    }
+
+    const paymentData = await response.json();
+    console.log('✅ 결제 승인 완료:', paymentData);
+    return paymentData;
+  } catch (error) {
+    console.error('❌ 결제 승인 실패:', error);
+    throw error;
+  }
+};
+
 interface PaymentSuccessPageProps {
   onBack: () => void;
 }
@@ -26,10 +68,29 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
       try {
         console.log('🔄 processPurchase 함수 실행!');
         
-        // URL에서 course 파라미터 가져오기
+        // URL에서 결제 정보 가져오기
         const urlParams = new URLSearchParams(window.location.search);
         const courseParam = urlParams.get('course');
-        console.log('📋 URL courseParam:', courseParam);
+        const paymentKey = urlParams.get('paymentKey');
+        const orderId = urlParams.get('orderId');
+        const amount = urlParams.get('amount');
+        
+        console.log('📋 URL 파라미터:', { courseParam, paymentKey, orderId, amount });
+        
+        // 토스페이먼츠 결제 승인 처리
+        if (paymentKey && orderId && amount) {
+          console.log('💳 토스페이먼츠 결제 승인 시작...');
+          try {
+            const paymentResult = await confirmPayment(paymentKey, orderId, parseInt(amount));
+            console.log('✅ 결제 승인 성공:', paymentResult);
+          } catch (error) {
+            console.error('❌ 결제 승인 실패:', error);
+            alert('결제 승인 중 오류가 발생했습니다. 고객센터로 문의해주세요.');
+            return;
+          }
+        } else {
+          console.log('⚠️ 결제 승인 파라미터 없음 (테스트 결제 또는 기존 방식)');
+        }
         
         // 사용자 정보는 location.state에서 가져오기
         const userInfo = location.state?.user;

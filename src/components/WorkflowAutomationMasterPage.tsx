@@ -5,6 +5,7 @@ import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { premiumCourse } from '../data/courseData';
 import AzureTableService from '../services/azureTableService';
 import NavigationBar from './NavigationBar';
+import { getPaymentConfig } from '../config/payment';
 
 interface WorkflowAutomationMasterPageProps {
   onBack: () => void;
@@ -25,8 +26,8 @@ const WorkflowAutomationMasterPage: React.FC<WorkflowAutomationMasterPageProps> 
     seconds: 0
   });
 
-  // 토스페이먼츠 테스트 클라이언트 키
-  const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
+  // 토스페이먼츠 설정 불러오기
+  const { clientKey } = getPaymentConfig();
 
   // OPAL 업무 자동화 강의 데이터
   const course = {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
+import { getPaymentConfig, createPaymentRequest, validateApiKey } from '../config/payment';
 
 interface PaymentComponentProps {
   courseTitle: string;
@@ -19,21 +20,27 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [tossPayments, setTossPayments] = useState<any>(null);
 
-  // 토스페이먼츠 테스트 클라이언트 키
-  const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
+  // 토스페이먼츠 설정 가져오기
+  const paymentConfig = getPaymentConfig();
 
   useEffect(() => {
     const initializeTossPayments = async () => {
       try {
-        const tossPaymentsInstance = await loadTossPayments(clientKey);
+        // API 키 검증
+        if (!validateApiKey(paymentConfig.clientKey)) {
+          throw new Error('Invalid API Key');
+        }
+
+        const tossPaymentsInstance = await loadTossPayments(paymentConfig.clientKey);
         setTossPayments(tossPaymentsInstance);
+        console.log(`✅ 토스페이먼츠 초기화 완료 (${paymentConfig.environment} 환경)`);
       } catch (error) {
-        console.error('토스페이먼츠 초기화 실패:', error);
+        console.error('❌ 토스페이먼츠 초기화 실패:', error);
       }
     };
 
     initializeTossPayments();
-  }, []);
+  }, [paymentConfig]);
 
   const handlePayment = async () => {
     // 로그인 체크
@@ -53,19 +60,21 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
       // 주문 ID 생성 (실제로는 서버에서 생성해야 함)
       const orderId = `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
-      // 결제 요청
-      const payment = tossPayments.payment({
+      // 결제 요청 데이터 생성
+      const paymentRequest = createPaymentRequest({
         amount: price,
         orderId: orderId,
         orderName: courseTitle,
-        customerName: '클래튼 수강생',
-        successUrl: `${window.location.origin}/payment/success`,
-        failUrl: `${window.location.origin}/payment/fail`,
+        customerName: userInfo?.name || 'CLATHON 수강생'
       });
+
+      console.log('💳 결제 요청:', paymentRequest);
+
+      // 결제 요청
+      const payment = tossPayments.payment(paymentRequest);
 
       // 카드 결제 실행
       await payment.requestPayment('카드', {
-        // 추가 결제 정보
         card: {
           useEscrow: false,
         },
