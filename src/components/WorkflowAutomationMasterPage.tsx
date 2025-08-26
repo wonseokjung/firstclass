@@ -166,7 +166,7 @@ const WorkflowAutomationMasterPage: React.FC<WorkflowAutomationMasterPageProps> 
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('focus', checkLoginStatus);
     };
-  }, []);
+  }, [clientKey]);
 
   // 카운트다운 타이머
   useEffect(() => {

@@ -18,7 +18,6 @@ export interface PaymentConfig {
 
 // 현재 환경 감지 (개발/프로덕션)
 const isProduction = process.env.NODE_ENV === 'production';
-const isDevelopment = process.env.NODE_ENV === 'development';
 
 // 도메인 설정
 const DOMAIN = isProduction 
