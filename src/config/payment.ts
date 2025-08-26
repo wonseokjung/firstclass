@@ -22,12 +22,12 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 // 도메인 설정
 const DOMAIN = isProduction 
-  ? 'https://clathon-web.azurestaticapps.net'
+  ? 'https://www.clathon.com'  // 🎯 실제 배포 도메인으로 수정
   : window.location.origin;
 
 // 토스페이먼츠 키 설정
 // 🚨 임시 라이브 키 테스트 모드 (개발 환경에서 라이브 키 사용)
-const FORCE_LIVE_MODE = true; // TODO: 테스트 후 false로 변경
+const FORCE_LIVE_MODE = false; // 🎯 프로덕션에서만 라이브 키 사용
 
 const useLiveKey = isProduction || FORCE_LIVE_MODE;
 
