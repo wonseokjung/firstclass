@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Clock, Rocket, Calendar, Bell } from 'lucide-react';
+import { X, Rocket } from 'lucide-react';
 
 interface ComingSoonModalProps {
   isOpen: boolean;

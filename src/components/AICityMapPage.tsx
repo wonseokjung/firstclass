@@ -177,6 +177,7 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
   // 기존 AI Map 코드는 아래에 주석 처리됨
 
   // AI 멘토 제이의 디지털 빌딩 포트폴리오
+  /*
   const cityOwners: BuildingOwner[] = [
     {
       id: '1',
@@ -247,7 +248,10 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
     return { name: '주니어 빌더', color: '#6b7280' };
   };
 
-   return (
+  */
+
+  // eslint-disable-next-line no-unreachable
+  return (
      <div style={{ 
        minHeight: '100vh', 
        background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%)',
@@ -362,7 +366,7 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
          }}>
            <Building size={32} style={{ color: '#0ea5e9', marginBottom: '12px' }} />
            <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1f2937' }}>
-             {allBuildings.length}
+             {3}
            </div>
            <div style={{ color: '#1f2937', fontSize: '1rem', fontWeight: '500' }}>현재 운영중인 건물</div>
          </div>
@@ -377,7 +381,7 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
          }}>
            <Users size={32} style={{ color: '#ff4757', marginBottom: '12px' }} />
            <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1f2937' }}>
-             {cityOwners.length}
+             {1}
            </div>
            <div style={{ color: '#1f2937', fontSize: '1rem', fontWeight: '500' }}>성공한 건물주</div>
          </div>
@@ -392,7 +396,7 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
          }}>
            <Star size={32} style={{ color: '#ffd700', marginBottom: '12px' }} />
            <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1f2937' }}>
-             {allBuildings.filter(b => b.subscribers > 0).reduce((sum, b) => sum + b.subscribers, 0) > 1000000 ? '1M+' : '330K'}
+             {'330K'}
            </div>
            <div style={{ color: '#1f2937', fontSize: '1rem', fontWeight: '500' }}>글로벌 커뮤니티</div>
          </div>

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Copy, Star, Users, BookOpen, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import React, { useState } from 'react';
+import { Copy, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import NavigationBar from './NavigationBar';
 
 interface ChatGPTPrompts40PageProps {
@@ -8,22 +7,9 @@ interface ChatGPTPrompts40PageProps {
 }
 
 const ChatGPTPrompts40Page: React.FC<ChatGPTPrompts40PageProps> = ({ onBack }) => {
-  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState<string>('');
   const [copiedPrompt, setCopiedPrompt] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
 
-  // 모바일 감지
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   // 카테고리별 프롬프트 데이터
   const categories = [
