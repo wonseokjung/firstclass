@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Clock, Award, Play, Calendar, Zap, Users, Video } from 'lucide-react';
+import { BookOpen, Clock, Award, Play, Calendar, Zap, Gift, Users, TrendingUp, Copy } from 'lucide-react';
 import AzureTableService from '../services/azureTableService';
 import NavigationBar from './NavigationBar';
+import { SkeletonCourseCard, SkeletonUserStats } from './SkeletonLoader';
 
 interface UserDashboardPageProps {
   onBack: () => void;
@@ -16,6 +17,15 @@ interface UserStats {
   enrolledCourses: any[];
 }
 
+interface RewardData {
+  referralCode: string;
+  totalRewards: number;
+  pendingRewards: number;
+  referralCount: number;
+  rewardHistory: any[];
+  stats: any;
+}
+
 const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<any>(null);
@@ -26,13 +36,15 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
     totalLearningTime: 0,
     enrolledCourses: []
   });
+  const [rewardData, setRewardData] = useState<RewardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [copiedReferralCode, setCopiedReferralCode] = useState(false);
 
   useEffect(() => {
     const loadUserData = async () => {
       try {
         // sessionStorage에서 사용자 정보 가져오기
-        const storedUserInfo = sessionStorage.getItem('clathon_user_session');
+        const storedUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
         if (!storedUserInfo) {
           alert('로그인이 필요합니다.');
           navigate('/login');
@@ -56,6 +68,13 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
         };
 
         setUserStats(stats);
+        // 리워드 데이터 로딩
+        const rewards = await AzureTableService.getUserRewardStatus(parsedUserInfo.email);
+        if (rewards) {
+          setRewardData(rewards);
+          console.log('🎁 리워드 데이터 로딩 완료:', rewards);
+        }
+
       } catch (error) {
         console.error('사용자 데이터 로드 실패:', error);
       } finally {
@@ -77,15 +96,66 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
     return Math.round((userStats.completedCourses / userStats.totalCourses) * 100);
   };
 
+  const copyReferralCode = async () => {
+    if (rewardData?.referralCode) {
+      try {
+        await navigator.clipboard.writeText(rewardData.referralCode);
+        setCopiedReferralCode(true);
+        setTimeout(() => setCopiedReferralCode(false), 2000);
+      } catch (err) {
+        console.error('복사 실패:', err);
+        alert('복사에 실패했습니다.');
+      }
+    }
+  };
+
 
 
   if (isLoading) {
     return (
-      <div className="loading-container">
-        <div className="loading-spinner">
-          <div className="spinner"></div>
-          <p className="loading-text">사용자 정보를 불러오는 중...</p>
-        </div>
+      <div className="masterclass-container">
+        {/* 네비게이션바 */}
+        <NavigationBar 
+          onBack={onBack}
+          breadcrumbText="내 학습 현황"
+        />
+
+        {/* 스켈레톤 로딩 UI */}
+        <section style={{ 
+          background: 'linear-gradient(135deg, #ffffff, #f8fafc, #f1f5f9)',
+          padding: '60px 0',
+          borderBottom: '1px solid #e2e8f0'
+        }}>
+          <div style={{
+            maxWidth: '1400px',
+            margin: '0 auto',
+            padding: '0 40px'
+          }}>
+            {/* 스켈레톤 사용자 통계 */}
+            <SkeletonUserStats />
+          </div>
+        </section>
+
+        {/* 스켈레톤 강의 목록 */}
+        <section style={{ padding: '80px 0', background: '#ffffff' }}>
+          <div style={{
+            maxWidth: '1400px',
+            margin: '0 auto',
+            padding: '0 40px'
+          }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+              gap: '30px',
+              maxWidth: '1200px',
+              margin: '0 auto'
+            }}>
+              {[1, 2, 3].map(i => (
+                <SkeletonCourseCard key={i} />
+              ))}
+            </div>
+          </div>
+        </section>
       </div>
     );
   }
@@ -100,9 +170,9 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
       {/* 대시보드 히어로 섹션 */}
       <section style={{ 
-        background: 'linear-gradient(135deg, #000000, #1a1a1a, #2d3748)',
+        background: 'linear-gradient(135deg, #ffffff, #f8fafc, #f1f5f9)',
         padding: '60px 0',
-        borderBottom: '1px solid #333'
+        borderBottom: '1px solid #e2e8f0'
       }}>
         <div style={{
           maxWidth: '1400px',
@@ -117,14 +187,14 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
             <h1 style={{ 
               fontSize: '2.5rem',
               fontWeight: '700',
-              color: 'white',
+              color: '#1f2937',
               marginBottom: '15px'
             }}>
               안녕하세요, {userInfo?.name || '사용자'}님! 👋
             </h1>
             <p style={{ 
               fontSize: '1.1rem',
-              color: '#ccc',
+              color: '#333333',
               marginBottom: '0'
             }}>
               오늘도 새로운 지식을 쌓아가는 멋진 하루 되세요!
@@ -141,8 +211,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
           }}>
             {/* 총 수강 강의 카드 */}
             <div style={{
-              background: 'rgba(26, 26, 26, 0.8)',
-              border: '1px solid #333',
+              background: 'rgba(248, 250, 252, 0.9)',
+              border: '1px solid #e2e8f0',
               borderRadius: '12px',
               padding: '30px',
               textAlign: 'center',
@@ -161,7 +231,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 <BookOpen size={24} color="white" />
               </div>
               <h3 style={{ 
-                color: '#ccc', 
+                color: '#666666', 
                 fontSize: '0.9rem', 
                 marginBottom: '10px',
                 fontWeight: '500'
@@ -169,7 +239,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 총 수강 강의
               </h3>
               <p style={{ 
-                color: 'white',
+                color: '#1f2937',
                 fontSize: '2.5rem',
                 fontWeight: '700',
                 margin: '0 0 5px 0'
@@ -177,7 +247,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 {userStats.totalCourses}
               </p>
               <p style={{ 
-                color: '#999', 
+                color: '#666666', 
                 fontSize: '0.8rem', 
                 margin: 0 
               }}>
@@ -187,8 +257,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
             {/* 수강 중 카드 */}
             <div style={{
-              background: 'rgba(26, 26, 26, 0.8)',
-              border: '1px solid #333',
+              background: 'rgba(248, 250, 252, 0.9)',
+              border: '1px solid #e2e8f0',
               borderRadius: '12px',
               padding: '30px',
               textAlign: 'center',
@@ -207,7 +277,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 <Play size={24} color="white" />
               </div>
               <h3 style={{ 
-                color: '#ccc', 
+                color: '#666666', 
                 fontSize: '0.9rem', 
                 marginBottom: '10px',
                 fontWeight: '500'
@@ -215,7 +285,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 수강 중
               </h3>
               <p style={{ 
-                color: 'white',
+                color: '#1f2937',
                 fontSize: '2.5rem',
                 fontWeight: '700',
                 margin: '0 0 5px 0'
@@ -223,7 +293,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 {userStats.inProgressCourses}
               </p>
               <p style={{ 
-                color: '#999', 
+                color: '#666666', 
                 fontSize: '0.8rem', 
                 margin: 0 
               }}>
@@ -233,8 +303,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
             {/* 완료한 강의 카드 */}
             <div style={{
-              background: 'rgba(26, 26, 26, 0.8)',
-              border: '1px solid #333',
+              background: 'rgba(248, 250, 252, 0.9)',
+              border: '1px solid #e2e8f0',
               borderRadius: '12px',
               padding: '30px',
               textAlign: 'center',
@@ -253,7 +323,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 <Award size={24} color="white" />
               </div>
               <h3 style={{ 
-                color: '#ccc', 
+                color: '#666666', 
                 fontSize: '0.9rem', 
                 marginBottom: '10px',
                 fontWeight: '500'
@@ -261,7 +331,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 완료한 강의
               </h3>
               <p style={{ 
-                color: 'white',
+                color: '#1f2937',
                 fontSize: '2.5rem',
                 fontWeight: '700',
                 margin: '0 0 5px 0'
@@ -269,7 +339,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 {userStats.completedCourses}
               </p>
               <p style={{ 
-                color: '#999', 
+                color: '#666666', 
                 fontSize: '0.8rem', 
                 margin: 0 
               }}>
@@ -279,8 +349,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
             {/* 총 학습 시간 카드 */}
             <div style={{
-              background: 'rgba(26, 26, 26, 0.8)',
-              border: '1px solid #333',
+              background: 'rgba(248, 250, 252, 0.9)',
+              border: '1px solid #e2e8f0',
               borderRadius: '12px',
               padding: '30px',
               textAlign: 'center',
@@ -299,7 +369,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 <Clock size={24} color="white" />
               </div>
               <h3 style={{ 
-                color: '#ccc', 
+                color: '#666666', 
                 fontSize: '0.9rem', 
                 marginBottom: '10px',
                 fontWeight: '500'
@@ -307,7 +377,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 총 학습 시간
               </h3>
               <p style={{ 
-                color: 'white',
+                color: '#1f2937',
                 fontSize: '1.8rem',
                 fontWeight: '700',
                 margin: '0 0 5px 0'
@@ -315,7 +385,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 {formatTime(userStats.totalLearningTime)}
               </p>
               <p style={{ 
-                color: '#999', 
+                color: '#666666', 
                 fontSize: '0.8rem', 
                 margin: 0 
               }}>
@@ -326,249 +396,10 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
         </div>
       </section>
 
-      {/* 멘토링 세션 섹션 제거됨 - 강의 사이트에 집중 */}
-      {false && (
-        <section style={{ 
-          padding: '60px 20px', 
-          background: '#000000',
-          borderTop: '1px solid #222'
-        }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-            <h2 style={{
-              color: 'white',
-              fontSize: '2rem',
-              fontWeight: '700',
-              marginBottom: '30px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px'
-            }}>
-              <Users size={28} color="#cf2b4a" />
-              다가오는 멘토링 세션
-            </h2>
 
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-              gap: '20px'
-            }}>
-              {/* 멘토링 세션 제거됨 */}
-              {[].map((session: any, index: number) => {
-                        const sessionDate = new Date(session.scheduledTime);
-        const isToday = sessionDate.toDateString() === new Date().toDateString();
-
-                return (
-                  <div key={session.sessionId} style={{
-                    background: isToday 
-                      ? 'linear-gradient(135deg, rgba(207, 43, 74, 0.2) 0%, rgba(26, 26, 26, 0.8) 100%)'
-                      : 'rgba(26, 26, 26, 0.8)',
-                    border: isToday ? '2px solid #cf2b4a' : '1px solid #333',
-                    borderRadius: '16px',
-                    padding: '24px',
-                    transition: 'all 0.3s ease',
-                    position: 'relative'
-                  }}>
-                    {isToday && (
-                      <div style={{
-                        position: 'absolute',
-                        top: '12px',
-                        right: '12px',
-                        background: '#cf2b4a',
-                        color: 'white',
-                        padding: '4px 8px',
-                        borderRadius: '8px',
-                        fontSize: '0.7rem',
-                        fontWeight: '600'
-                      }}>
-                        오늘
-                      </div>
-                    )}
-
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      marginBottom: '16px'
-                    }}>
-                      <div style={{
-                        background: '#cf2b4a',
-                        borderRadius: '50%',
-                        width: '48px',
-                        height: '48px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}>
-                        <Video size={20} color="white" />
-                      </div>
-                      <div>
-                        <h3 style={{
-                          color: 'white',
-                          fontSize: '1.2rem',
-                          fontWeight: '600',
-                          margin: '0 0 4px 0'
-                        }}>
-                          멘토링 세션 #{session.sessionNumber}
-                        </h3>
-                        <p style={{
-                          color: '#cf2b4a',
-                          fontSize: '0.9rem',
-                          margin: 0
-                        }}>
-                          정원석 (JAY) 멘토
-                        </p>
-                      </div>
-                    </div>
-
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                      marginBottom: '8px'
-                    }}>
-                      <Calendar size={16} color="#999" />
-                      <span style={{ color: '#ccc', fontSize: '0.9rem' }}>
-                        {sessionDate.toLocaleDateString('ko-KR', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                          weekday: 'long'
-                        })}
-                      </span>
-                    </div>
-
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                      marginBottom: '16px'
-                    }}>
-                      <Clock size={16} color="#999" />
-                      <span style={{ color: '#ccc', fontSize: '0.9rem' }}>
-                        {sessionDate.toLocaleTimeString('ko-KR', {
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}
-                      </span>
-                    </div>
-
-                    <button
-                      onClick={() => {
-                        if (session.meetingLink) {
-                          window.open(session.meetingLink, '_blank');
-                        } else {
-                          alert('세션 링크가 아직 생성되지 않았습니다.');
-                        }
-                      }}
-                      style={{
-                        width: '100%',
-                        background: isToday 
-                          ? 'linear-gradient(135deg, #cf2b4a 0%, #ff4d6d 100%)'
-                          : 'rgba(255, 255, 255, 0.1)',
-                        border: isToday ? 'none' : '1px solid #333',
-                        color: 'white',
-                        borderRadius: '8px',
-                        padding: '12px',
-                        fontSize: '0.9rem',
-                        fontWeight: '600',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '8px'
-                      }}
-                    >
-                      <Video size={16} />
-                      {isToday ? '지금 참여하기' : 'Google Meet 링크'}
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
-
-            {false && (
-              <div style={{ textAlign: 'center', marginTop: '30px' }}>
-                <button
-                  onClick={() => {
-                    // 모든 세션 보기 기능 추후 구현
-                    alert('모든 세션 보기 기능은 곧 추가됩니다.');
-                  }}
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    border: '1px solid #333',
-                    color: '#ccc',
-                    borderRadius: '8px',
-                    padding: '12px 24px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  모든 세션 보기 (0개)
-                </button>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* 멘토링 CTA 제거됨 - 강의 사이트에 집중 */}
-      {false && (
-        <section style={{ 
-          padding: '60px 20px', 
-          background: '#000000',
-          borderTop: '1px solid #222'
-        }}>
-          <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-            <div style={{
-              background: 'rgba(207, 43, 74, 0.1)',
-              border: '1px solid rgba(207, 43, 74, 0.3)',
-              borderRadius: '16px',
-              padding: '40px',
-            }}>
-              <Users size={48} color="#cf2b4a" style={{ marginBottom: '20px' }} />
-              <h3 style={{
-                color: 'white',
-                fontSize: '1.5rem',
-                fontWeight: '600',
-                marginBottom: '12px'
-              }}>
-                1:1 멘토링으로 더 빠르게 성장하세요
-              </h3>
-              <p style={{
-                color: '#ccc',
-                fontSize: '1rem',
-                marginBottom: '24px',
-                lineHeight: '1.6'
-              }}>
-                AI 전문가 정원석과의 개인 맞춤형 멘토링으로<br />
-                실무에서 바로 활용할 수 있는 스킬을 습득하세요.
-              </p>
-              <button
-                onClick={() => navigate('/personal-mentoring')}
-                style={{
-                  background: 'linear-gradient(135deg, #cf2b4a 0%, #ff4d6d 100%)',
-                  border: 'none',
-                  color: 'white',
-                  borderRadius: '12px',
-                  padding: '14px 28px',
-                  fontSize: '1rem',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px'
-                }}
-              >
-                <Users size={20} />
-                1:1 멘토링 신청하기
-              </button>
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* 수강 중인 강의 섹션 */}
-      <section style={{ padding: '80px 0', background: '#000' }}>
+      <section style={{ padding: '80px 0', background: '#ffffff' }}>
         <div style={{
           maxWidth: '1400px',
           margin: '0 auto',
@@ -585,13 +416,194 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
             </h2>
             <p style={{ 
               fontSize: '1rem',
-              color: '#999',
+              color: '#666666',
               maxWidth: '600px',
               margin: '0 auto'
             }}>
               현재 수강 중인 강의들을 확인하고 학습을 이어가세요
             </p>
           </div>
+
+          {/* 리워드 시스템 섹션 */}
+          {rewardData && (
+            <div style={{
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              borderRadius: '16px',
+              padding: '40px',
+              margin: '50px auto',
+              maxWidth: '1200px',
+              color: 'white',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              <div style={{
+                position: 'absolute',
+                top: '-50px',
+                right: '-50px',
+                width: '200px',
+                height: '200px',
+                background: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: '50%',
+                opacity: 0.6
+              }}></div>
+              
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <h2 style={{
+                  fontSize: '2rem',
+                  fontWeight: '700',
+                  marginBottom: '30px',
+                  textAlign: 'center',
+                  color: 'white'
+                }}>
+                  🎁 AI CITY BUILDER 리워드 센터
+                </h2>
+                
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                  gap: '24px',
+                  marginBottom: '40px'
+                }}>
+                  {/* 나의 추천 코드 */}
+                  <div style={{
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '12px',
+                    padding: '24px',
+                    textAlign: 'center',
+                    backdropFilter: 'blur(10px)'
+                  }}>
+                    <Gift size={32} style={{ marginBottom: '12px' }} />
+                    <h3 style={{ fontSize: '1.1rem', marginBottom: '16px', color: 'white' }}>나의 추천 코드</h3>
+                    <div style={{
+                      background: 'rgba(255, 255, 255, 0.3)',
+                      borderRadius: '8px',
+                      padding: '12px',
+                      fontSize: '1.5rem',
+                      fontWeight: '700',
+                      letterSpacing: '2px',
+                      marginBottom: '16px',
+                      color: 'white'
+                    }}>
+                      {rewardData.referralCode}
+                    </div>
+                    <button
+                      onClick={copyReferralCode}
+                      style={{
+                        background: copiedReferralCode ? '#10b981' : 'rgba(255, 255, 255, 0.2)',
+                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                        borderRadius: '8px',
+                        padding: '8px 16px',
+                        color: 'white',
+                        cursor: 'pointer',
+                        fontSize: '0.9rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        margin: '0 auto',
+                        transition: 'all 0.3s ease'
+                      }}
+                    >
+                      <Copy size={16} />
+                      {copiedReferralCode ? '복사됨!' : '코드 복사'}
+                    </button>
+                  </div>
+
+                  {/* 총 리워드 */}
+                  <div style={{
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '12px',
+                    padding: '24px',
+                    textAlign: 'center',
+                    backdropFilter: 'blur(10px)'
+                  }}>
+                    <TrendingUp size={32} style={{ marginBottom: '12px' }} />
+                    <h3 style={{ fontSize: '1.1rem', marginBottom: '16px', color: 'white' }}>총 리워드</h3>
+                    <div style={{
+                      fontSize: '2rem',
+                      fontWeight: '700',
+                      marginBottom: '8px',
+                      color: 'white'
+                    }}>
+                      ₩{rewardData.totalRewards.toLocaleString()}
+                    </div>
+                    <div style={{ fontSize: '0.9rem', opacity: 0.8, color: 'white' }}>
+                      누적 획득 리워드
+                    </div>
+                  </div>
+
+                  {/* 추천한 사용자 수 */}
+                  <div style={{
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '12px',
+                    padding: '24px',
+                    textAlign: 'center',
+                    backdropFilter: 'blur(10px)'
+                  }}>
+                    <Users size={32} style={{ marginBottom: '12px' }} />
+                    <h3 style={{ fontSize: '1.1rem', marginBottom: '16px', color: 'white' }}>추천 실적</h3>
+                    <div style={{
+                      fontSize: '2rem',
+                      fontWeight: '700',
+                      marginBottom: '8px',
+                      color: 'white'
+                    }}>
+                      {rewardData.referralCount}명
+                    </div>
+                    <div style={{ fontSize: '0.9rem', opacity: 0.8, color: 'white' }}>
+                      성공한 추천
+                    </div>
+                  </div>
+
+                  {/* 이번 달 리워드 */}
+                  <div style={{
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '12px',
+                    padding: '24px',
+                    textAlign: 'center',
+                    backdropFilter: 'blur(10px)'
+                  }}>
+                    <Award size={32} style={{ marginBottom: '12px' }} />
+                    <h3 style={{ fontSize: '1.1rem', marginBottom: '16px', color: 'white' }}>이번 달 리워드</h3>
+                    <div style={{
+                      fontSize: '2rem',
+                      fontWeight: '700',
+                      marginBottom: '8px',
+                      color: 'white'
+                    }}>
+                      ₩{rewardData.stats?.thisMonthRewards?.toLocaleString() || '0'}
+                    </div>
+                    <div style={{ fontSize: '0.9rem', opacity: 0.8, color: 'white' }}>
+                      이번 달 획득
+                    </div>
+                  </div>
+                </div>
+
+                {/* 리워드 안내 */}
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  borderRadius: '12px',
+                  padding: '24px',
+                  textAlign: 'center'
+                }}>
+                  <h3 style={{ marginBottom: '16px', color: 'white' }}>💡 리워드 시스템 안내</h3>
+                  <p style={{ 
+                    margin: '0 0 12px 0', 
+                    lineHeight: '1.6',
+                    color: 'rgba(255, 255, 255, 0.9)'
+                  }}>
+                    친구가 내 추천 코드로 가입하고 강의를 구매하면, <strong>구매 금액의 10%</strong>를 리워드로 받으세요!
+                  </p>
+                  <p style={{ 
+                    margin: '0', 
+                    fontSize: '0.9rem',
+                    color: 'rgba(255, 255, 255, 0.8)'
+                  }}>
+                    추천 코드를 공유하고 AI 도시를 함께 만들어가는 동료들을 늘려보세요 🏗️
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
           
           {userStats.enrolledCourses.length > 0 ? (
             <div style={{
@@ -603,8 +615,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
             }}>
               {userStats.enrolledCourses.map((course, index) => (
                 <div key={index} style={{
-                  background: '#1a1a1a',
-                  border: '1px solid #333',
+                  background: '#f8fafc',
+                  border: '1px solid #e2e8f0',
                   borderRadius: '12px',
                   padding: '30px',
                   transition: 'all 0.3s ease',
@@ -624,7 +636,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                       <h3 style={{ 
                         fontSize: '1.2rem',
                         fontWeight: '600',
-                        color: 'white',
+                        color: '#1f2937',
                         margin: 0,
                         flex: 1
                       }}>
@@ -647,7 +659,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   
                   <div style={{ marginBottom: '25px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '0.9rem', color: '#999' }}>진행률</span>
+                      <span style={{ fontSize: '0.9rem', color: '#666666' }}>진행률</span>
                       <span style={{ fontSize: '0.9rem', fontWeight: '600', color: 'white' }}>
                         {course.progress || 0}%
                       </span>
@@ -671,15 +683,15 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   <div style={{ marginBottom: '25px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                        <Calendar size={14} color="#999" />
-                        <span style={{ fontSize: '0.8rem', color: '#999' }}>
+                        <Calendar size={14} color="#666666" />
+                        <span style={{ fontSize: '0.8rem', color: '#666666' }}>
                           {new Date(course.enrolledAt).toLocaleDateString()}
                         </span>
                       </div>
                       {course.learningTimeMinutes && (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                          <Clock size={14} color="#999" />
-                          <span style={{ fontSize: '0.8rem', color: '#999' }}>
+                          <Clock size={14} color="#666666" />
+                          <span style={{ fontSize: '0.8rem', color: '#666666' }}>
                             {formatTime(course.learningTimeMinutes)}
                           </span>
                         </div>
@@ -695,7 +707,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                     background: course.status === 'completed' 
                       ? '#f59e0b'
                       : 'var(--color-primary)',
-                    color: 'white',
+                    color: '#1f2937',
                     fontSize: '0.95rem',
                     fontWeight: '600',
                     cursor: 'pointer',
@@ -733,13 +745,13 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               <h3 style={{ 
                 fontSize: '1.4rem',
                 fontWeight: '600',
-                color: 'white',
+                color: '#1f2937',
                 marginBottom: '15px'
               }}>
                 아직 수강 중인 강의가 없습니다
               </h3>
               <p style={{ 
-                color: '#999',
+                color: '#666666',
                 fontSize: '1rem',
                 marginBottom: '30px',
                 lineHeight: 1.6
@@ -754,7 +766,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   borderRadius: '8px',
                   border: 'none',
                   background: 'var(--color-primary)',
-                  color: 'white',
+                  color: '#1f2937',
                   fontSize: '1rem',
                   fontWeight: '600',
                   cursor: 'pointer',
@@ -775,9 +787,9 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
       {/* 학습 진행률 요약 섹션 */}
       {userStats.enrolledCourses.length > 0 && (
         <section style={{ 
-          background: 'linear-gradient(135deg, #1a1a1a, #2d3748)', 
+          background: 'linear-gradient(135deg, #f8fafc, #e2e8f0)', 
           padding: '60px 0',
-          borderTop: '1px solid #333'
+          borderTop: '1px solid #e2e8f0'
         }}>
           <div style={{
             maxWidth: '1400px',
@@ -788,8 +800,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               maxWidth: '600px',
               margin: '0 auto',
               textAlign: 'center',
-              background: 'rgba(26, 26, 26, 0.8)',
-              border: '1px solid #333',
+              background: 'rgba(248, 250, 252, 0.9)',
+              border: '1px solid #e2e8f0',
               borderRadius: '12px',
               padding: '40px'
             }}>
@@ -797,7 +809,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 fontSize: '1.6rem',
                 fontWeight: '600',
                 marginBottom: '30px',
-                color: 'white'
+                color: '#1f2937'
               }}>
                 🎯 학습 진행률
               </h3>
@@ -816,7 +828,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   width: '120px',
                   height: '120px',
                   borderRadius: '50%',
-                  background: '#1a1a1a',
+                  background: '#f8fafc',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -831,7 +843,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   </span>
                   <span style={{ 
                     fontSize: '0.8rem',
-                    color: '#999',
+                    color: '#666666',
                     marginTop: '5px'
                   }}>
                     완료율
@@ -840,17 +852,17 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               </div>
               <p style={{ 
                 fontSize: '1rem',
-                color: '#ccc',
+                color: '#666666',
                 marginBottom: '10px'
               }}>
-                전체 <strong style={{ color: 'white' }}>{userStats.totalCourses}개</strong> 강의 중 <strong style={{ color: 'white' }}>{userStats.completedCourses}개</strong>를 완료했습니다!
+                전체 <strong style={{ color: '#1f2937' }}>{userStats.totalCourses}개</strong> 강의 중 <strong style={{ color: '#1f2937' }}>{userStats.completedCourses}개</strong>를 완료했습니다!
               </p>
               {userStats.inProgressCourses > 0 && (
                 <p style={{ 
                   fontSize: '0.9rem',
-                  color: '#999'
+                  color: '#666666'
                 }}>
-                  현재 <strong style={{ color: 'white' }}>{userStats.inProgressCourses}개</strong> 강의를 수강 중입니다.
+                  현재 <strong style={{ color: '#1f2937' }}>{userStats.inProgressCourses}개</strong> 강의를 수강 중입니다.
                 </p>
               )}
             </div>
@@ -862,7 +874,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-section">
-            <h3>CLATHON</h3>
+            <h3>AI City Builders</h3>
             <p>정원석의 정석 시리즈로 시작하는 AI 마스터 여정</p>
           </div>
           
@@ -870,7 +882,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
             <h4>빠른 링크</h4>
             <ul>
               <li><a href="/">홈</a></li>
-              <li><a href="/workflow-automation">워크플로우 자동화</a></li>
+              <li><a href="/ai-building-course">AI 건물 짓기</a></li>
               <li><a href="/faq">FAQ</a></li>
             </ul>
           </div>

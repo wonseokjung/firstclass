@@ -170,7 +170,7 @@ const AIEducationDocumentaryPage: React.FC<AIEducationDocumentaryPageProps> = ({
             Starting at ₩10,000/month (billed annually) for all classes and sessions
           </span>
           <button className="subscription-cta" onClick={onBack}>
-                          Get CLATHON
+                          Get AI CITY BUILDER
           </button>
         </div>
       </footer>

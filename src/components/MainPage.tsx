@@ -3,8 +3,32 @@ import { useNavigate } from 'react-router-dom';
 import { Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 import PaymentComponent from './PaymentComponent';
+import ComingSoonModal from './ComingSoonModal';
 import AzureTableService from '../services/azureTableService';
 import NavigationBar from './NavigationBar';
+
+// SEO 메타 태그 업데이트 함수
+const updateMetaTags = () => {
+  // 페이지 제목 업데이트
+  document.title = '🏗️ AI 시티 빌더 - 나만의 수익형 디지털 건물 짓기 | AI City Builders';
+  
+  // 메타 description 업데이트
+  const metaDescription = document.querySelector('meta[name="description"]');
+  if (metaDescription) {
+    metaDescription.setAttribute('content', 'AI City Builders - AI 시티 빌더 시리즈로 나만의 수익형 디지털 건물 짓기! ChatGPT, AI 코딩, Google AI까지 실전 AI 교육 플랫폼');
+  }
+  
+  // Open Graph 태그 업데이트
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) {
+    ogTitle.setAttribute('content', '🏗️ AI 시티 빌더 - 나만의 수익형 디지털 건물 짓기 | AI City Builders');
+  }
+  
+  const ogDescription = document.querySelector('meta[property="og:description"]');
+  if (ogDescription) {
+    ogDescription.setAttribute('content', 'AI로 월세 받는 첫 번째 디지털 건물을 완성하세요! ChatGPT부터 유튜브 수익화까지, AI 멘토 제이와 함께하는 실전 강의');
+  }
+};
 
 // 강의 타입 정의
 interface Course {
@@ -25,8 +49,19 @@ interface Course {
   isComingSoon?: boolean;
 }
 
-// Basic/Free Courses 데이터
+// Basic/Free Courses 데이터 (대중 선호도 순으로 정렬)
 const aiMasterClasses: Course[] = [
+  {
+    id: 1,
+    instructor: 'CHATGPT',
+    title: 'ChatGPT의 정석',
+    subtitle: 'AI 업무 혁신 완전정복',
+    description: 'AI 멘토 JAY와 함께하는 ChatGPT 실전 활용법',
+    image: '/images/ChatGPT.png',
+    isNew: true,
+    category: 'AI & Technology',
+    isDocumentary: false
+  },
   {
     id: 5,
     instructor: 'AI CODING',
@@ -61,14 +96,14 @@ const aiMasterClasses: Course[] = [
     isDocumentary: false
   },
   {
-    id: 1,
-    instructor: 'CHATGPT',
-    title: 'ChatGPT의 정석',
-    subtitle: 'AI 업무 혁신 완전정복',
-    description: 'AI 멘토 JAY와 함께하는 ChatGPT 실전 활용법',
-    image: '/images/ChatGPT.png',
+    id: 6,
+    instructor: 'CHATGPT PROMPTS',
+    title: '40대+ 직장인을 위한 ChatGPT 프롬프트 100선',
+    subtitle: '실전 업무 최적화 프롬프트 모음',
+    description: '경험 많은 직장인을 위한 AI 활용 가이드북',
+    image: '/images/40+prompt.png',
     isNew: true,
-    category: 'AI & Technology',
+    category: 'AI 실무',
     isDocumentary: false
   },
   {
@@ -91,18 +126,50 @@ const aiMasterClasses: Course[] = [
 const premiumClasses: Course[] = [
   {
     id: 999,
-    instructor: 'Google OPAL 전문가',
-    title: 'Google OPAL 업무 자동화',
-    subtitle: '🚀 Coming Soon - 2024.09.01 런칭 예정',
-    description: '🤖 코드 없이 자연어로 만드는 AI 미니앱! Google OPAL로 업무 자동화부터 워크플로우 체이닝까지',
-    image: '/images/ai-automation.jpg',
+    instructor: '정원석 (AI 멘토 제이)',
+    title: '강의 1: AI 건물 짓기',
+    subtitle: '🏗️ 디지털 건축가 과정',
+    description: '🎯 4050 세대를 위한 특별 설계! AI를 활용해 나만의 디지털 상품을 만들고 수익화하는 완전한 가이드. 평생 현역으로 일하고 싶은 당신을 위한 실전 비즈니스 로드맵',
+    image: '/images/aibuilidng.png',
     isNew: true,
     category: 'Premium',
     isDocumentary: false,
     isPremium: true,
-    launchDate: '2024-09-01',
+    launchDate: '2025-02-01',
     price: 299000,
     originalPrice: 499000,
+    isComingSoon: false
+  },
+  {
+    id: 1000,
+    instructor: '정원석 (AI 멘토 제이)',
+    title: '강의 2: AI 마을 만들기',
+    subtitle: '🏘️ The Thriving Village',
+    description: '💼 AI 도구들을 연결해서 번영하는 마을을 만들어보세요. 커뮤니티 구축부터 지속가능한 생태계까지!',
+    image: '/images/coming-soon-placeholder.png',
+    isNew: true,
+    category: 'Premium',
+    isDocumentary: false,
+    isPremium: true,
+    launchDate: 'Coming Soon',
+    price: 199000,
+    originalPrice: 399000,
+    isComingSoon: true
+  },
+  {
+    id: 1001,
+    instructor: '정원석 (AI 멘토 제이)',
+    title: '강의 3: AI 도시 세우기',
+    subtitle: '🏙️ The AI City - AI 도시 경영자(CEO) 과정',
+    description: '🌆 최종 단계! AI를 활용해서 거대한 도시를 경영하는 CEO가 되어보세요. 전략적 사고부터 리더십까지 모든 것을 배웁니다.',
+    image: '/images/coming-soon-placeholder.png',
+    isNew: true,
+    category: 'Premium',
+    isDocumentary: false,
+    isPremium: true,
+    launchDate: 'Coming Soon',
+    price: 199000,
+    originalPrice: 399000,
     isComingSoon: true
   }
 ];
@@ -122,15 +189,24 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<{title: string; price: number} | null>(null);
   
+  // 곧 오픈 예정 모달 state
+  const [showComingSoonModal, setShowComingSoonModal] = useState(false);
+  const [comingSoonCourse, setComingSoonCourse] = useState<string>('');
+  
   // 로그인 상태 관리
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
   const [enrolledCourses, setEnrolledCourses] = useState<Set<string>>(new Set());
 
+  // 페이지 로드 시 SEO 메타 태그 업데이트
+  useEffect(() => {
+    updateMetaTags();
+  }, []);
+
   // 로그인 상태 확인 (sessionStorage에서)
   useEffect(() => {
     const checkLoginStatus = async () => {
-      const storedUserInfo = sessionStorage.getItem('clathon_user_session');
+      const storedUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
       if (storedUserInfo) {
         try {
           const parsedUserInfo = JSON.parse(storedUserInfo);
@@ -148,7 +224,7 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
           console.log('📚 수강 중인 강좌 ID 목록:', Array.from(enrolledCourseIds));
         } catch (error) {
           console.error('사용자 정보 파싱 오류:', error);
-          sessionStorage.removeItem('clathon_user_session');
+          sessionStorage.removeItem('aicitybuilders_user_session');
           setIsLoggedIn(false);
           setUserInfo(null);
           setEnrolledCourses(new Set());
@@ -164,6 +240,13 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
   }, []);
 
   const handleCourseClick = (course: Course) => {
+    // AI 건물 짓기 강의는 Coming Soon 모달 표시
+    if (course.id === 999) {
+      setComingSoonCourse(course.title);
+      setShowComingSoonModal(true);
+      return;
+    }
+    
     // 모든 코스는 onCourseSelect로 처리 (다큐멘터리도 포함)
     onCourseSelect(course.id);
   };
@@ -182,7 +265,7 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
       return;
     }
     
-    // 수강 상태 확인 (workflow-automation 강좌의 경우)
+    // 수강 상태 확인 (ai-building 강좌의 경우)
     if (courseId && enrolledCourses.has(courseId)) {
       alert('이미 수강 중인 강좌입니다! 대시보드에서 학습을 이어가세요.');
       navigate('/dashboard');
@@ -206,13 +289,19 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
       try {
         const courseId = selectedCourse.title.toLowerCase().replace(/\s+/g, '-');
         
-        // Azure Table Storage에 구매 정보 저장
-        await AzureTableService.createPayment({
+        // Azure Table Storage에 구매 정보 저장 (리워드 포함)
+        const result = await AzureTableService.addPurchaseWithReward({
           email: userInfo.email,  // userId → email로 변경
           courseId: courseId,
+          title: selectedCourse.title,
           amount: selectedCourse.price,
           paymentMethod: 'card'
         });
+        
+        // 리워드 처리 결과 로그
+        if (result.rewardProcessed) {
+          console.log('🎁 추천 리워드 지급 완료!');
+        }
         
         console.log('✅ Azure에 구매 정보 저장 완료:', courseId);
         
@@ -319,12 +408,12 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
           </div>
         </section>
 
-        {/* 프리미엄 강의 섹션 - 9월 1일 런칭 */}
-        <section className="masterclass-section premium-section">
+        {/* 프리미엄 강의 섹션 */}
+        <section className="masterclass-section">
           <div className="section-header-mc">
             <h2 className="section-title-mc">
-              <span className="highlight-category premium">🔥 Premium Course</span>
-              <span className="launch-date">2024.09.01 런칭 예정</span>
+              <span className="highlight-category">AI 시티 빌더 (AI CITY BUILDER)</span>
+              <div style={{ fontSize: '0.8em', marginTop: '8px', fontWeight: 'normal' }}>나만의 AI 도시 세우기</div>
             </h2>
             <div className="section-nav">
               <button 
@@ -361,10 +450,27 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
                   <div className="premium-badge">PREMIUM</div>
                   {course.isComingSoon ? (
                     <>
-                      <div className="launch-overlay">
-                        <div className="launch-info">
-                          <span className="launch-text">🚀 Coming Soon</span>
-                          <span className="launch-countdown">2024년 9월 1일</span>
+                      <div className="coming-soon-placeholder" style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#1f2937',
+                        fontSize: '3rem',
+                        fontWeight: 'bold'
+                      }}>
+                        <div style={{ fontSize: '4rem', marginBottom: '10px' }}>?</div>
+                        <div style={{ fontSize: '1rem', textAlign: 'center', padding: '0 20px' }}>
+                          🚀 Coming Soon
+                        </div>
+                        <div style={{ fontSize: '0.8rem', marginTop: '5px', opacity: 0.8 }}>
+                          {course.launchDate}
                         </div>
                       </div>
                       <div className="card-overlay">
@@ -372,16 +478,16 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
                           className="watch-trailer-btn"
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleEnrollClick(e, course.title || course.description, course.price || 299000, 'workflow-automation');
+                            handleEnrollClick(e, course.title || course.description, course.price || 299000, `course-${course.id}`);
                           }}
-                          disabled={enrolledCourses.has('workflow-automation')}
+                          disabled={enrolledCourses.has(`course-${course.id}`)}
                           style={{
-                            opacity: enrolledCourses.has('workflow-automation') ? '0.6' : '1',
-                            cursor: enrolledCourses.has('workflow-automation') ? 'not-allowed' : 'pointer'
+                            opacity: enrolledCourses.has(`course-${course.id}`) ? '0.6' : '1',
+                            cursor: enrolledCourses.has(`course-${course.id}`) ? 'not-allowed' : 'pointer'
                           }}
                         >
                           <Play size={16} />
-                          {enrolledCourses.has('workflow-automation') ? '✅ 수강 중' : '🔥 사전예약'}
+                          {enrolledCourses.has(`course-${course.id}`) ? '✅ 수강 중' : '🔥 사전예약'}
                         </button>
                       </div>
                     </>
@@ -409,42 +515,29 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
 
       </main>
 
-      {/* Footer with Business Information */}
+      {/* Footer */}
       <footer className="footer">
         <div className="footer-content">
-                      <div className="footer-section">
-              <h3>CLATHON</h3>
-              <p>정원석의 정석 시리즈로 시작하는 AI 마스터 여정</p>
-            </div>
-          
-                      <div className="footer-section">
-              <h4>사업자 정보</h4>
-              <div className="business-info">
-                <p><strong>상호명:</strong> 커넥젼에이아이이</p>
-                <p><strong>대표자명:</strong> 정원석</p>
-                <p><strong>사업자등록번호:</strong> 887-55-00386</p>
-                <p><strong>사업장 주소:</strong> 서울특별시 서초구 강남대로61길 17, 1901호(서초동, 밀라텔쉐르빌)</p>
-                <p><strong>고객센터:</strong> 070-2359-3515</p>
-                <p><strong>통신판매업신고:</strong> 2021-서울서초-0782</p>
-                <p><strong>이메일:</strong> jay@connexionai.kr</p>
-              </div>
-            </div>
+          <div className="footer-section">
+            <h3>AI City Builders</h3>
+          </div>
           
           <div className="footer-section">
-            <h4>고객 지원</h4>
-            <ul>
-              <li><a href="/terms">이용약관</a></li>
-              <li><a href="/privacy">개인정보처리방침</a></li>
-              <li><a href="/refund">환불정책</a></li>
-              <li><a href="/contact">고객센터</a></li>
-            </ul>
+            <h4>문의하기</h4>
+            <div className="business-info">
+              <p><strong>이메일:</strong> jay@connexionai.kr</p>
+              <p><strong>운영시간:</strong> 평일 09:00-18:00</p>
+            </div>
+            <div style={{ marginTop: '12px', fontSize: '0.85rem', color: '#aaa' }}>
+              <p>커넥젼에이아이이 | 대표: 정원석 | 사업자번호: 887-55-00386</p>
+            </div>
           </div>
         </div>
         
         <div className="footer-bottom">
           <p>&copy; 2025 커넥젼에이아이이. All rights reserved.</p>
         </div>
-              </footer>
+      </footer>
 
         {/* 결제 모달 */}
         {showPaymentModal && selectedCourse && (
@@ -456,6 +549,13 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
             onSuccess={handlePaymentSuccess}
           />
         )}
+
+        {/* Coming Soon 모달 */}
+        <ComingSoonModal
+          isOpen={showComingSoonModal}
+          onClose={() => setShowComingSoonModal(false)}
+          courseTitle={comingSoonCourse}
+        />
       </div>
     );
   };

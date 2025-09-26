@@ -24,7 +24,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
 
   useEffect(() => {
     // 로그인 상태 확인
-    const storedUserInfo = sessionStorage.getItem('clathon_user_session');
+    const storedUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
     if (storedUserInfo) {
       try {
         const parsedUserInfo = JSON.parse(storedUserInfo);
@@ -32,7 +32,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
         setUserInfo(parsedUserInfo);
       } catch (error) {
         console.error('사용자 정보 파싱 오류:', error);
-        sessionStorage.removeItem('clathon_user_session');
+        sessionStorage.removeItem('aicitybuilders_user_session');
         setIsLoggedIn(false);
         setUserInfo(null);
       }
@@ -48,8 +48,8 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem('clathon_user_session');
-    localStorage.removeItem('clathon_user');
+    sessionStorage.removeItem('aicitybuilders_user_session');
+    localStorage.removeItem('aicitybuilders_user');
     setIsLoggedIn(false);
     setUserInfo(null);
     setIsMobileMenuOpen(false);
@@ -101,13 +101,14 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
         <div className="header-left">
           <div className="logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
             <span className="logo-icon">C</span>
-            <span className="logo-text">CLATHON</span>
+            <span className="logo-text">AI City Builders</span>
           </div>
         </div>
         
         {/* 데스크탑 네비게이션 */}
                     <div className="header-right desktop-nav">
               <button className="nav-link" onClick={() => navigate('/ceo')}>소개</button>
+              <button className="nav-link" onClick={() => navigate('/ai-city-map')}>🏙️ AI CITY</button>
               <button className="nav-link" onClick={onFAQClick || (() => navigate('/faq'))}>FAQ</button>
               {renderAuthButtons()}
             </div>
@@ -131,6 +132,13 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               onClick={() => handleMobileNavClick(() => navigate('/ceo'))}
             >
               소개
+            </button>
+
+            <button 
+              className="mobile-nav-link" 
+              onClick={() => handleMobileNavClick(() => navigate('/ai-city-map'))}
+            >
+              🏙️ AI CITY
             </button>
 
             <button 

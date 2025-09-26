@@ -1,6 +1,6 @@
-# CLATHON - AI Education Platform
+# AI City Builders - AI Education Platform
 
-CLATHON은 MasterClass에서 영감을 받은 AI 교육 플랫폼입니다. "강의(Class)"와 "마라톤(Marathon)"의 합성어로, AI 교육의 완주를 함께하는 것이 목표입니다.
+AI City Builders는 MasterClass에서 영감을 받은 AI 교육 플랫폼입니다. AI로 수익형 디지털 건물을 짓는 것을 목표로 하는 혁신적인 교육 서비스입니다.
 
 ## 🚀 Features
 
@@ -42,10 +42,10 @@ CLATHON은 MasterClass에서 영감을 받은 AI 교육 플랫폼입니다. "강
 
 ```bash
 # Clone the repository
-git clone https://github.com/wonseokjung/clathon.git
+git clone https://github.com/wonseokjung/aicitybuilders-web.git
 
 # Navigate to project directory
-cd clathon
+cd aicitybuilders-web
 
 # Install dependencies
 npm install
@@ -72,7 +72,7 @@ The app will open at [http://localhost:3000](http://localhost:3000)
 
 ## 🎨 Design System
 
-- **Primary Color**: #cf2b4a (CLATHON Red)
+- **Primary Color**: #cf2b4a (AI City Builders Red)
 - **Background**: #000 (Pure Black)
 - **Card Aspect Ratio**: 2:3 (Vertical)
 - **Typography**: Inter Font Family
@@ -95,4 +95,4 @@ Created by Connect AI LAB for democratizing AI education.
 
 ---
 
-**CLATHON** - AI 교육의 완주를 함께 🚀
+**AI City Builders** - AI로 수익형 디지털 건물 짓기 🚀

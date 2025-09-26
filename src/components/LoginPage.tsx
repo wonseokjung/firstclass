@@ -85,8 +85,8 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
         sessionId: sessionId
       };
       
-      sessionStorage.setItem('clathon_user_session', JSON.stringify(userInfo));
-      localStorage.setItem('clathon_user', JSON.stringify(userInfo));
+      sessionStorage.setItem('aicitybuilders_user_session', JSON.stringify(userInfo));
+      localStorage.setItem('aicitybuilders_user', JSON.stringify(userInfo));
       console.log('💾 사용자 세션 정보 저장:', userInfo);
       
       alert(`${user.name}님, 환영합니다!`);
@@ -119,7 +119,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
           <div className="auth-form-wrapper">
             <div className="auth-header">
               <h1 className="auth-title">로그인</h1>
-              <p className="auth-subtitle">CLATHON에서 AI 전문가가 되어보세요</p>
+              <p className="auth-subtitle">AI 디지털 건물주 여정을 시작하세요</p>
             </div>
 
             <form onSubmit={handleSubmit} className="auth-form">
@@ -218,7 +218,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
           </div>
 
           <div className="auth-benefits">
-            <h3>CLATHON에서 얻을 수 있는 것</h3>
+            <h3>AI City Builders에서 얻을 수 있는 것</h3>
             <ul>
               <li>🚀 AI 전문가 수준의 실전 강의</li>
               <li>💎 평생 소장 가능한 프리미엄 콘텐츠</li>

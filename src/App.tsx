@@ -8,7 +8,7 @@ const LoadingSpinner: React.FC = () => (
   <div className="loading-container">
     <div className="loading-spinner">
       <div className="spinner"></div>
-      <p className="loading-text">Loading CLATHON...</p>
+      <p className="loading-text">Loading AI City Builders...</p>
     </div>
   </div>
 );
@@ -23,6 +23,8 @@ const AIEducationDocumentaryPage = React.lazy(() => import('./components/AIEduca
 
 
 const WorkflowAutomationMasterPage = React.lazy(() => import('./components/WorkflowAutomationMasterPage'));
+const AICityMapPage = React.lazy(() => import('./components/AICityMapPage'));
+const ChatGPTPrompts40Page = React.lazy(() => import('./components/ChatGPTPrompts40Page'));
 const FAQPage = React.lazy(() => import('./components/FAQPage'));
 const CEOPage = React.lazy(() => import('./components/CEOPage'));
 const LoginPage = React.lazy(() => import('./components/LoginPage'));
@@ -31,10 +33,6 @@ const UserDashboardPage = React.lazy(() => import('./components/UserDashboardPag
 const PaymentSuccessPage = React.lazy(() => import('./components/PaymentSuccessPage'));
 const PaymentFailPage = React.lazy(() => import('./components/PaymentFailPage'));
 
-// 라이브 학습 페이지들 (현재 사용하지 않음)
-// const GroupLivePage = React.lazy(() => import('./components/live/GroupLivePage'));
-// const PersonalMentoringPage = React.lazy(() => import('./components/live/PersonalMentoringPage'));
-// const CorporateMentoringPage = React.lazy(() => import('./components/CorporateMentoringPage'));
 
 // 각 페이지 컴포넌트를 래핑해서 useNavigate 사용
 const MainPageWrapper = () => {
@@ -51,30 +49,36 @@ const MainPageWrapper = () => {
 
   const handleCourseSelect = (courseId: number) => {
     switch(courseId) {
-      case 1:
+      case 1: // ChatGPT
         navigate('/chatgpt-course');
         break;
-      case 2:
-        navigate('/google-ai-course');
-        break;
-      case 3:
-        navigate('/ai-business-course');
-        break;
-      case 4:
-        navigate('/ai-coding-course');
-        break;
-      case 5:
+      case 2: // AI Education Documentary
         navigate('/ai-education-documentary');
         break;
-      case 6:
-        navigate('/workflow-automation-master');
+      case 3: // Google AI
+        navigate('/google-ai-course');
         break;
-      case 999: // Premium Course - Google OPAL 업무 자동화
-        navigate('/workflow-automation-master');
+      case 4: // AI Business
+        navigate('/ai-business-course');
+        break;
+      case 5: // AI Coding
+        navigate('/ai-coding-course');
+        break;
+      case 6: // ChatGPT Prompts 40+ (Free Course)
+        navigate('/chatgpt-prompts-40plus');
+        break;
+      case 999: // Premium Course 1 - AI 건물 짓기
+        navigate('/ai-building-course');
+        break;
+      case 1000: // Premium Course 2 - AI 마을 만들기 (Coming Soon)
+        alert('🏘️ 강의 2: AI 마을 만들기는 Coming Soon! 곧 만나보실 수 있습니다.');
+        break;
+      case 1001: // Premium Course 3 - AI 도시 세우기 (Coming Soon)
+        alert('🏙️ 강의 3: AI 도시 세우기는 Coming Soon! 곧 만나보실 수 있습니다.');
         break;
       default:
         console.log('Unknown course ID:', courseId);
-        console.log('사용 가능한 강의 ID: 1(ChatGPT), 2(Google AI), 3(AI Business), 4(AI Coding), 5(AI Documentary), 6(Workflow), 999(Premium)');
+        console.log('사용 가능한 강의 ID: 1(ChatGPT), 2(Documentary), 3(Google AI), 4(AI Business), 5(AI Coding), 6(ChatGPT Prompts 40+), 999(Premium-1), 1000(Premium-2), 1001(Premium-3)');
     }
   };
 
@@ -205,36 +209,24 @@ const PaymentFailPageWrapper = () => {
   );
 };
 
-// 멘토링 페이지 래퍼들 (현재 사용하지 않음)
-// const GroupLivePageWrapper = () => {
-//   const navigate = useNavigate();
-//   const handleBack = () => {
-//     navigate('/');
-//   };
-//   return (
-//     <GroupLivePage onBack={handleBack} />
-//   );
-// };
+const AICityMapPageWrapper = () => {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <AICityMapPage />
+    </Suspense>
+  );
+};
 
-// const PersonalMentoringPageWrapper = () => {
-//   const navigate = useNavigate();
-//   const handleBack = () => {
-//     navigate('/');
-//   };
-//   return (
-//     <PersonalMentoringPage onBack={handleBack} />
-//   );
-// };
+const ChatGPTPrompts40PageWrapper = () => {
+  const navigate = useNavigate();
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <ChatGPTPrompts40Page onBack={() => navigate('/')} />
+    </Suspense>
+  );
+};
 
-// const CorporateMentoringPageWrapper = () => {
-//   const navigate = useNavigate();
-//   const handleBack = () => {
-//     navigate('/');
-//   };
-//   return (
-//     <CorporateMentoringPage onBack={handleBack} />
-//   );
-// };
+
 
 function App() {
   useEffect(() => {
@@ -253,9 +245,13 @@ function App() {
             <Route path="/ai-business-course" element={<AIBusinessCoursePageWrapper />} />
             <Route path="/ai-coding-course" element={<AICodingCoursePageWrapper />} />
             <Route path="/ai-education-documentary" element={<AIEducationDocumentaryPageWrapper />} />
+            <Route path="/ai-building-course" element={<WorkflowAutomationMasterPageWrapper />} />
+            {/* 기존 URL 리다이렉트 */}
             <Route path="/workflow-automation-master" element={<WorkflowAutomationMasterPageWrapper />} />
             <Route path="/faq" element={<FAQPageWrapper />} />
             <Route path="/ceo" element={<CEOPageWrapper />} />
+            <Route path="/ai-city-map" element={<AICityMapPageWrapper />} />
+            <Route path="/chatgpt-prompts-40plus" element={<ChatGPTPrompts40PageWrapper />} />
             <Route path="/login" element={<LoginPageWrapper />} />
             <Route path="/signup" element={<SignUpPageWrapper />} />
             <Route path="/dashboard" element={<UserDashboardPageWrapper />} />

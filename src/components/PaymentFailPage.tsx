@@ -121,7 +121,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
           <h1 style={{ 
             fontSize: '48px', 
             fontWeight: 'bold', 
-            color: 'white', 
+            color: '#1f2937', 
             marginBottom: '24px',
             background: 'linear-gradient(to right, white, #ccc)',
             WebkitBackgroundClip: 'text',
@@ -132,7 +132,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
           
           <p style={{ 
             fontSize: '20px', 
-            color: '#ccc', 
+            color: '#666666', 
             marginBottom: '16px', 
             lineHeight: '1.6' 
           }}>
@@ -180,8 +180,8 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
             <button
               onClick={handleRetry}
               style={{
-                background: 'linear-gradient(to right, #cf2b4a, #a01e36)',
-                color: 'white',
+                background: 'linear-gradient(to right, #0ea5e9, #a01e36)',
+                color: '#1f2937',
                 fontWeight: 'bold',
                 padding: '16px 32px',
                 borderRadius: '12px',
@@ -201,7 +201,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
               }}
               onMouseOut={(e) => {
                 e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.background = 'linear-gradient(to right, #cf2b4a, #a01e36)';
+                e.currentTarget.style.background = 'linear-gradient(to right, #0ea5e9, #a01e36)';
               }}
             >
               <RefreshCw style={{ width: '20px', height: '20px' }} />
@@ -211,9 +211,9 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
             <button
               onClick={onBack}
               style={{
-                border: '1px solid #333',
+                border: '1px solid #e2e8f0',
                 background: 'transparent',
-                color: 'white',
+                color: '#1f2937',
                 fontWeight: '500',
                 padding: '16px 32px',
                 borderRadius: '12px',
@@ -227,8 +227,8 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
               }}
               onMouseOver={(e) => {
                 e.currentTarget.style.transform = 'scale(1.05)';
-                e.currentTarget.style.borderColor = '#cf2b4a';
-                e.currentTarget.style.color = '#cf2b4a';
+                e.currentTarget.style.borderColor = '#0ea5e9';
+                e.currentTarget.style.color = '#0ea5e9';
               }}
               onMouseOut={(e) => {
                 e.currentTarget.style.transform = 'scale(1)';
@@ -249,12 +249,12 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
           <h2 style={{ 
             fontSize: '32px', 
             fontWeight: 'bold', 
-            color: 'white', 
+            color: '#1f2937', 
             marginBottom: '16px' 
           }}>
             💡 해결 방법
           </h2>
-          <p style={{ color: '#ccc', fontSize: '18px' }}>
+          <p style={{ color: '#666666', fontSize: '18px' }}>
             다음 사항들을 확인해보세요
           </p>
         </div>
@@ -293,7 +293,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
           ].map((item, index) => (
             <div key={index} style={{ 
               background: '#111', 
-              border: '1px solid #333', 
+              border: '1px solid #e2e8f0', 
               borderRadius: '12px', 
               padding: '24px', 
               height: '100%',
@@ -326,12 +326,12 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
               <h3 style={{ 
                 fontSize: '20px', 
                 fontWeight: 'bold', 
-                color: 'white', 
+                color: '#1f2937', 
                 marginBottom: '8px' 
               }}>
                 {item.title}
               </h3>
-              <p style={{ color: '#ccc', fontSize: '14px', lineHeight: '1.5' }}>
+              <p style={{ color: '#666666', fontSize: '14px', lineHeight: '1.5' }}>
                 {item.description}
               </p>
             </div>
@@ -340,8 +340,8 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
 
         {/* 고객센터 안내 */}
         <div style={{
-          background: 'linear-gradient(to right, #111, #1a1a1a)',
-          border: '1px solid #333',
+          background: 'linear-gradient(to right, #f8fafc, #e2e8f0)',
+          border: '1px solid #e2e8f0',
           borderRadius: '12px',
           padding: '32px',
           textAlign: 'center'
@@ -349,19 +349,19 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
           <div style={{
             width: '48px',
             height: '48px',
-            background: 'linear-gradient(135deg, #cf2b4a, #a01e36)',
+            background: 'linear-gradient(135deg, #0ea5e9, #a01e36)',
             borderRadius: '8px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             margin: '0 auto 16px'
           }}>
-            <span style={{ color: 'white', fontWeight: 'bold', fontSize: '20px' }}>💡</span>
+            <span style={{ color: '#1f2937', fontWeight: 'bold', fontSize: '20px' }}>💡</span>
           </div>
           <h3 style={{ 
             fontSize: '20px', 
             fontWeight: 'bold', 
-            color: 'white', 
+            color: '#1f2937', 
             marginBottom: '16px' 
           }}>
             문제가 계속 발생하면 고객센터로 연락주세요
@@ -372,18 +372,14 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
             gap: '24px', 
             justifyContent: 'center', 
             alignItems: 'center', 
-            color: '#ccc'
+            color: '#666666'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span>📞</span>
-              <span style={{ color: '#cf2b4a', fontWeight: '500' }}>070-2359-3515</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span>📧</span>
-              <span style={{ color: '#cf2b4a', fontWeight: '500' }}>contact@clathon.com</span>
+              <span style={{ color: '#0ea5e9', fontWeight: '500' }}>contact@aicitybuilders.com</span>
             </div>
           </div>
-          <p style={{ color: '#999', fontSize: '14px', marginTop: '16px' }}>
+          <p style={{ color: '#666666', fontSize: '14px', marginTop: '16px' }}>
             평일 09:00-18:00 (주말 및 공휴일 제외)
           </p>
         </div>
@@ -395,7 +391,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
           <div className="footer-section">
             <div className="footer-brand">
               <div className="logo">
-                <span>CLATHON</span>
+                <span>AI City Builders</span>
               </div>
               <p>AI 시대를 위한 실무 교육 플랫폼</p>
             </div>
@@ -403,8 +399,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
           
           <div className="footer-section">
             <h4>연락처</h4>
-            <p>📞 070-2359-3515</p>
-            <p>📧 contact@clathon.com</p>
+            <p>📧 contact@aicitybuilders.com</p>
           </div>
           
           <div className="footer-section">
@@ -415,7 +410,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; 2024 CLATHON. All rights reserved.</p>
+          <p>&copy; 2024 AI City Builders. All rights reserved.</p>
         </div>
       </footer>
     </div>

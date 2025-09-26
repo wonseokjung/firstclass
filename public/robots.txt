@@ -1,3 +1,24 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+
+# AI City Builders - AI 교육 플랫폼
+# https://www.aicitybuilders.com
+
+# 허용할 페이지들
+Allow: /
+Allow: /ai-building-course
+Allow: /ceo
+Allow: /faq
+Allow: /login
+Allow: /signup
+
+# 크롤링 제외할 페이지들
+Disallow: /dashboard
+Disallow: /payment/
+Disallow: /api/
+
+# 사이트맵 위치
+Sitemap: https://www.aicitybuilders.com/sitemap.xml
+
+# 크롤링 딜레이 (초)
+Crawl-delay: 1

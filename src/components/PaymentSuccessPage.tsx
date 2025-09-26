@@ -99,11 +99,11 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         let user = null;
         
         // 사용자 정보 가져오기 (우선순위: sessionStorage > localStorage > location.state)
-        const sessionUserInfo = sessionStorage.getItem('clathon_user_session');
+        const sessionUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
         if (sessionUserInfo) {
           user = JSON.parse(sessionUserInfo);
         } else {
-          const localUserInfo = localStorage.getItem('clathon_user');
+          const localUserInfo = localStorage.getItem('aicitybuilders_user');
           if (localUserInfo) {
             user = JSON.parse(localUserInfo);
           } else if (userInfo) {
@@ -121,13 +121,13 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           };
           
           // 강의별 정보 설정
-          if (courseParam === 'prompt-engineering' || courseParam === 'workflow-automation') {
+          if (courseParam === 'prompt-engineering' || courseParam === 'ai-building') {
             courseData = {
-              id: 'workflow-automation', 
-              title: 'Workflow Automation Master',
+              id: 'ai-building', 
+              title: 'AI 건물 짓기 - 디지털 건축가 과정',
               price: 299000
             };
-            setCourseName('Workflow Automation Master');
+            setCourseName('AI 건물 짓기 - 디지털 건축가 과정');
           }
           
           if (courseData.id && user.email) {
@@ -139,14 +139,20 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 paymentMethod: 'card'
               });
               
-              const result = await AzureTableService.createPayment({
+              const result = await AzureTableService.addPurchaseWithReward({
                 email: user.email,
                 courseId: courseData.id,
+                title: courseData.title,
                 amount: courseData.price,
                 paymentMethod: 'card'
               });
               
               console.log(`✅ ${courseData.title} 구매 완료, 결과:`, result);
+              if (result.rewardProcessed) {
+                console.log('🎁 추천 리워드 지급 완료!');
+              } else {
+                console.log('ℹ️ 추천인이 없어 리워드 처리를 건너뜀');
+              }
             } catch (paymentError: any) {
               console.error('❌ 구매 실패:', paymentError);
               console.error('❌ 구매 실패 상세:', {
@@ -186,8 +192,8 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         <div className="flex items-center justify-center min-h-[calc(100vh-80px)] px-4">
           <div className="text-center">
             <div className="relative mb-8">
-              <div className="w-20 h-20 border-4 border-[#cf2b4a] border-t-transparent rounded-full animate-spin mx-auto"></div>
-              <div className="absolute inset-0 w-20 h-20 border-4 border-transparent border-t-[#cf2b4a]/30 rounded-full animate-spin mx-auto" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
+              <div className="w-20 h-20 border-4 border-[#0ea5e9] border-t-transparent rounded-full animate-spin mx-auto"></div>
+              <div className="absolute inset-0 w-20 h-20 border-4 border-transparent border-t-[#0ea5e9]/30 rounded-full animate-spin mx-auto" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
             </div>
             <h2 className="text-2xl font-bold text-white mb-2">결제 정보를 처리 중입니다</h2>
             <p className="text-[#ccc] animate-pulse">잠시만 기다려주세요...</p>
@@ -248,7 +254,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               <div style={{
                 position: 'absolute',
                 inset: '0',
-                background: 'linear-gradient(135deg, #cf2b4a, #a01e36)',
+                background: 'linear-gradient(135deg, #0ea5e9, #a01e36)',
                 borderRadius: '50%',
                 animation: 'pulse 2s infinite'
               }}></div>
@@ -261,7 +267,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 alignItems: 'center',
                 justifyContent: 'center'
               }}>
-                <CheckCircle style={{ width: '64px', height: '64px', color: '#cf2b4a' }} />
+                <CheckCircle style={{ width: '64px', height: '64px', color: '#0ea5e9' }} />
               </div>
               <div style={{
                 position: 'absolute',
@@ -296,12 +302,12 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             
           <p style={{ 
             fontSize: '20px', 
-            color: '#ccc', 
+            color: '#666666', 
             marginBottom: '16px', 
             lineHeight: '1.6' 
           }}>
             축하합니다! 
-            <span style={{ color: '#cf2b4a', fontWeight: '600', margin: '0 8px' }}>
+            <span style={{ color: '#0ea5e9', fontWeight: '600', margin: '0 8px' }}>
               {courseName || '강의'}
             </span>
             결제가 성공적으로 완료되었습니다
@@ -309,7 +315,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           
           <p style={{ 
             fontSize: '18px', 
-            color: '#999', 
+            color: '#666666', 
             marginBottom: '48px' 
           }}>
             이제 바로 학습을 시작하고 새로운 스킬을 마스터해보세요! 🚀
@@ -326,7 +332,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             <button
               onClick={() => window.location.href = '/dashboard'}
               style={{
-                background: 'linear-gradient(to right, #cf2b4a, #a01e36)',
+                background: 'linear-gradient(to right, #0ea5e9, #a01e36)',
                 color: 'white',
                 fontWeight: 'bold',
                 padding: '16px 32px',
@@ -347,7 +353,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               }}
               onMouseOut={(e) => {
                 e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.background = 'linear-gradient(to right, #cf2b4a, #a01e36)';
+                e.currentTarget.style.background = 'linear-gradient(to right, #0ea5e9, #a01e36)';
               }}
             >
               <Play style={{ width: '24px', height: '24px' }} />
@@ -374,8 +380,8 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               }}
               onMouseOver={(e) => {
                 e.currentTarget.style.transform = 'scale(1.05)';
-                e.currentTarget.style.borderColor = '#cf2b4a';
-                e.currentTarget.style.color = '#cf2b4a';
+                e.currentTarget.style.borderColor = '#0ea5e9';
+                e.currentTarget.style.color = '#0ea5e9';
               }}
               onMouseOut={(e) => {
                 e.currentTarget.style.transform = 'scale(1)';
@@ -428,7 +434,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             }
           ].map((step, index) => (
             <div key={index} className="group">
-              <div className="bg-[#111] border border-[#333] rounded-xl p-6 h-full hover:border-[#cf2b4a]/50 transition-all duration-300 hover:transform hover:scale-105">
+              <div className="bg-[#111] border border-[#333] rounded-xl p-6 h-full hover:border-[#0ea5e9]/50 transition-all duration-300 hover:transform hover:scale-105">
                 <div className={`w-12 h-12 bg-gradient-to-br ${step.color} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                   <step.icon className="w-6 h-6 text-white" />
                 </div>
@@ -442,19 +448,15 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         {/* 고객센터 안내 */}
         <div className="bg-gradient-to-r from-[#111] to-[#1a1a1a] border border-[#333] rounded-xl p-8 text-center">
           <div className="flex items-center justify-center mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#cf2b4a] to-[#a01e36] rounded-lg flex items-center justify-center">
+            <div className="w-12 h-12 bg-gradient-to-br from-[#0ea5e9] to-[#a01e36] rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">💡</span>
                   </div>
                 </div>
           <h3 className="text-xl font-bold text-white mb-4">궁금한 점이 있으시면 언제든 문의해주세요</h3>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center text-[#ccc]">
             <div className="flex items-center space-x-2">
-              <span>📞</span>
-              <span className="text-[#cf2b4a] font-medium">070-2359-3515</span>
-              </div>
-            <div className="flex items-center space-x-2">
               <span>📧</span>
-              <span className="text-[#cf2b4a] font-medium">contact@clathon.com</span>
+              <span className="text-[#0ea5e9] font-medium">contact@aicitybuilders.com</span>
             </div>
           </div>
           <p className="text-[#999] text-sm mt-4">평일 09:00-18:00 (주말 및 공휴일 제외)</p>
@@ -467,7 +469,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           <div className="footer-section">
             <div className="footer-brand">
               <div className="logo">
-                <span>CLATHON</span>
+                <span>AI City Builders</span>
               </div>
               <p>AI 시대를 위한 실무 교육 플랫폼</p>
             </div>
@@ -475,8 +477,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
 
           <div className="footer-section">
             <h4>연락처</h4>
-            <p>📞 070-2359-3515</p>
-            <p>📧 contact@clathon.com</p>
+            <p>📧 contact@aicitybuilders.com</p>
           </div>
           
           <div className="footer-section">
@@ -487,7 +488,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; 2024 CLATHON. All rights reserved.</p>
+          <p>&copy; 2024 AI City Builders. All rights reserved.</p>
       </div>
       </footer>
     </div>

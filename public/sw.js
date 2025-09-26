@@ -1,8 +1,12 @@
-const CACHE_NAME = 'clathon-v1.0.1';
+const CACHE_NAME = 'aicitybuilders-v1.0.0';
 const urlsToCache = [
   '/',
-  '/manifest.json'
-  // 외부 리소스와 존재하지 않는 파일 제거
+  '/manifest.json',
+  '/ai-building-course',
+  '/ceo',
+  '/faq',
+  '/login',
+  '/signup'
 ];
 
 // 설치 이벤트 - 오류 처리 추가

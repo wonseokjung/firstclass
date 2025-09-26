@@ -1508,4 +1508,78 @@ export const vibeCodingCourse: Course = {
   ]
 };
 
-export const allCourses = [chatGPTCourse, aiBusinessCourse, aiCodingCourse, premiumCourse]; 
+// 40대+ 프롬프트 강의 데이터
+export const chatGPTPrompts40Course: Course = {
+  id: 'chatgpt-prompts-40plus',
+  title: '40대+ 직장인을 위한 ChatGPT 프롬프트 100선',
+  description: '경험과 지혜를 갖춘 40대 이상 직장인들이 AI를 활용해 더 효율적이고 스마트하게 일할 수 있도록 설계된 실전 프롬프트 모음',
+  category: 'AI 실무',
+  instructor: 'AI 멘토 JAY',
+  rating: 4.9,
+  studentCount: 234,
+  totalDuration: '무제한 활용',
+  price: 0, // 무료
+  isPaid: false,
+  createdAt: new Date('2024-12-01'),
+  updatedAt: new Date('2024-12-01'),
+  lessons: [
+    {
+      id: 1,
+      title: '리더십 & 매니지먼트 프롬프트 (20개)',
+      duration: '복사-붙여넣기 즉시 활용',
+      completed: false,
+      description: '팀 관리, 의사결정, 갈등 해결을 위한 실전 프롬프트 모음. 20년 경력 관리자의 노하우가 담긴 검증된 템플릿',
+      hasQuiz: false
+    },
+    {
+      id: 2,
+      title: '커리어 전환 & 발전 프롬프트 (15개)',
+      duration: '복사-붙여넣기 즉시 활용',
+      completed: false,
+      description: '40대 이후 커리어 개발과 전환을 위한 전략적 프롬프트. 임원 승진부터 퇴직 후 제2인생까지',
+      hasQuiz: false
+    },
+    {
+      id: 3,
+      title: '업무 효율성 프롬프트 (20개)',
+      duration: '복사-붙여넣기 즉시 활용',
+      completed: false,
+      description: '일상 업무의 생산성과 효율성을 극대화하는 프롬프트. 회의 단축부터 업무 자동화까지',
+      hasQuiz: false
+    },
+    {
+      id: 4,
+      title: '전략 기획 & 의사결정 프롬프트 (15개)',
+      duration: '복사-붙여넣기 즉시 활용',
+      completed: false,
+      description: '비즈니스 전략 수립과 중요한 의사결정을 위한 프롬프트. 경영진 수준의 사고 프레임워크',
+      hasQuiz: false
+    },
+    {
+      id: 5,
+      title: '재무 관리 & 투자 프롬프트 (10개)',
+      duration: '복사-붙여넣기 즉시 활용',
+      completed: false,
+      description: '40대 재무 계획과 투자 전략을 위한 프롬프트. 은퇴 준비부터 자산 포트폴리오까지',
+      hasQuiz: false
+    },
+    {
+      id: 6,
+      title: '평생학습 & 스킬업 프롬프트 (10개)',
+      duration: '복사-붙여넣기 즉시 활용',
+      completed: false,
+      description: '40대의 효과적인 학습과 역량 개발 프롬프트. 디지털 스킬부터 외국어 학습까지',
+      hasQuiz: false
+    },
+    {
+      id: 7,
+      title: '워라밸 & 라이프스타일 프롬프트 (10개)',
+      duration: '복사-붙여넣기 즉시 활용',
+      completed: false,
+      description: '건강한 삶의 균형과 라이프스타일 개선 프롬프트. 스트레스 관리부터 은퇴 후 설계까지',
+      hasQuiz: false
+    }
+  ]
+};
+
+export const allCourses = [chatGPTCourse, aiBusinessCourse, aiCodingCourse, chatGPTPrompts40Course, premiumCourse]; 

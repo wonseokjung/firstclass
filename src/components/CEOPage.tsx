@@ -22,7 +22,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
       {/* 통일된 네비게이션바 */}
       <NavigationBar 
         onBack={onBack}
-        breadcrumbText="CLATHON 소개"
+        breadcrumbText="AI City Builders 소개"
       />
 
       {/* CEO 프로필 메인 섹션 */}
@@ -51,12 +51,14 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
               </div>
               
               <div className="ceo-intro">
-                <h1 className="ceo-name">CLATHON (클라톤)</h1>
-                <p className="ceo-title">차별화된 AI 교육 플랫폼</p>
+                <h1 className="ceo-name">AI City Builders</h1>
+                <p className="ceo-title">디지털 건물주 양성 플랫폼</p>
                 <p className="ceo-description">
-                  단순히 수강만 하는 교육이 아닌, 실제로 AI를 활용할 수 있게 만드는 교육 시스템을 구축했습니다. 
-                  검증된 멘토들과 함께하는 실전 중심 교육으로, 
-                  진짜 AI 역량을 키우고 실무에서 바로 활용할 수 있는 인재를 양성합니다.
+                  AI City Builders는 월 수익이 나오는 새로운 패러다임의 디지털 건물을 
+                  AI로 구축하는 혁신적인 플랫폼입니다. 우리는 인공지능을 가르치면서 
+                  동시에 수익화하는 방법을 알려드립니다. 하나의 수익이 되는 채널을 
+                  '디지털 건물'로 정의하고, 이런 건물들을 만드는 디지털 건물주들을 
+                  모아 네트워크를 구축하여 서로 협력하는 AI 도시 생태계를 만들어갑니다.
                 </p>
                 
                 <div className="ceo-social">
@@ -74,87 +76,13 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           </div>
         </div>
 
-        {/* CLATHON 교육 시스템 섹션 */}
-        <div className="ceo-section">
-          <div className="ceo-container">
-            <h2 className="section-title">
-              <Target size={24} />
-              CLATHON 교육 시스템
-            </h2>
-            
-            <div className="education-grid">
-              <div className="education-card">
-                <div className="degree-level">무료 강의</div>
-                <h3 className="university">AI 기초 입문</h3>
-                <p className="university-english">Foundation Level</p>
-                <p className="major">ChatGPT, Google AI, 코딩 기초</p>
-                <div className="transcript-section">
-                  <h4 className="transcript-title">🎯 학습 목표</h4>
-                  <ul className="feature-list">
-                    <li>AI 도구 기본 사용법 익히기</li>
-                    <li>프롬프트 엔지니어링 기초</li>
-                    <li>실생활 AI 활용 방법</li>
-                  </ul>
-                </div>
-              </div>
 
-              <div className="education-card">
-                <div className="degree-level">유료 강의</div>
-                <h3 className="university">AI 실전 마스터</h3>
-                <p className="university-english">Professional Level</p>
-                <p className="major">심화 프로젝트 & 워크플로우</p>
-                <div className="transcript-section">
-                  <h4 className="transcript-title">🚀 핵심 기능</h4>
-                  <ul className="feature-list">
-                    <li>실무 프로젝트 완성</li>
-                    <li>자동화 시스템 구축</li>
-                    <li>수익화 전략 수립</li>
-                    <li>포트폴리오 제작</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="education-card">
-                <div className="degree-level">그룹 라이브</div>
-                <h3 className="university">소그룹 실시간 클래스</h3>
-                <p className="university-english">Group Live Session</p>
-                <p className="major">5-10명 소그룹 (90분/회)</p>
-                <div className="transcript-section">
-                  <h4 className="transcript-title">👥 특징</h4>
-                  <ul className="feature-list">
-                    <li>실시간 질의응답</li>
-                    <li>동료 학습자와 상호작용</li>
-                    <li>그룹 프로젝트 진행</li>
-                    <li>경제적인 가격</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="education-card">
-                <div className="degree-level">1:1 라이브</div>
-                <h3 className="university">개인 맞춤 멘토링</h3>
-                <p className="university-english">Personal Mentoring</p>
-                <p className="major">완전 개인화 교육 (50분/회)</p>
-                <div className="transcript-section">
-                  <h4 className="transcript-title">⭐ 프리미엄 서비스</h4>
-                  <ul className="feature-list">
-                    <li>개인 목표 맞춤 커리큘럼</li>
-                    <li>실시간 1:1 피드백</li>
-                    <li>상담 기반 가격 책정</li>
-                    <li>멘토 직접 선택 가능</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* 검증된 멘토 시스템 섹션 */}
+        {/* AI City 비전 섹션 */}
         <div className="ceo-section">
           <div className="ceo-container">
             <h2 className="section-title">
               <Users size={24} />
-              검증된 멘토 시스템
+              AI City Builders의 비전
             </h2>
             
             <div className="mentor-verification">
@@ -162,32 +90,32 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                 <div className="verification-icon">
                   <GraduationCap size={32} />
                 </div>
-                <h3>학력 검증</h3>
-                <p>대학원 이상 학위 보유자만 선발하며, 모든 학력 정보를 투명하게 공개합니다.</p>
+                <h3>AI 수익화 교육</h3>
+                <p>AI 도구를 활용해 콘텐츠 생성부터 자동화까지, 실제 월세처럼 지속적인 수익을 만들어내는 시스템을 구축하는 방법을 가르칩니다.</p>
               </div>
               
               <div className="verification-card">
                 <div className="verification-icon">
                   <Briefcase size={32} />
                 </div>
-                <h3>실무 경력 검증</h3>
-                <p>최소 3년 이상의 AI 관련 실무 경험을 보유한 전문가들로 구성됩니다.</p>
+                <h3>디지털 건물 완성</h3>
+                <p>유튜브, 블로그, 쇼핑몰 등 각종 디지털 플랫폼을 하나의 '건물'로 완성하여 매월 안정적인 임대수익과 같은 구조를 만듭니다.</p>
               </div>
               
               <div className="verification-card">
                 <div className="verification-icon">
                   <Trophy size={32} />
                 </div>
-                <h3>포트폴리오 검증</h3>
-                <p>GitHub, 논문, 프로젝트 등 공개 가능한 실제 성과물을 통해 실력을 검증합니다.</p>
+                <h3>건물주 네트워크</h3>
+                <p>성공한 디지털 건물주들이 모여 서로의 건물을 홍보하고 협력하여, 개인의 성공을 넘어 집단 지성으로 더 큰 성과를 만들어냅니다.</p>
               </div>
               
               <div className="verification-card">
                 <div className="verification-icon">
                   <Globe size={32} />
                 </div>
-                <h3>정보 완전 공개</h3>
-                <p>모든 멘토의 학력, 경력, 포트폴리오, 전문 분야를 투명하게 공개합니다.</p>
+                <h3>AI 도시 완성</h3>
+                <p>개별 건물들이 연결되어 하나의 거대한 AI 도시를 형성하고, 도시 전체가 함께 성장하는 지속 가능한 디지털 경제 생태계를 구축합니다.</p>
               </div>
             </div>
           </div>
@@ -210,10 +138,10 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                   <h4 className="transcript-title">📜 Official Transcript</h4>
                   <div className="transcript-image-container">
                     <img 
-                      src="/images/transcript-masters.png" 
+                      src="/images/illinoistch_graduation.png" 
                       alt="일리노이공대 석사 공식 성적증명서"
                       className="transcript-image"
-                      onClick={() => openTranscriptModal("/images/transcript-masters.png")}
+                      onClick={() => openTranscriptModal("/images/illinoistch_graduation.png")}
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
@@ -393,8 +321,8 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
         <div className="ceo-cta-section">
           <div className="ceo-container">
             <div className="cta-content">
-              <h2>AI의 미래를 함께 만들어갑시다</h2>
-              <p>15년간의 실전 경험과 노하우를 바탕으로, 당신도 AI 전문가의 길을 시작할 수 있습니다.</p>
+              <h2>디지털 건물주가 되어 AI 도시를 함께 만들어갑시다</h2>
+              <p>15년간의 실전 경험과 노하우를 바탕으로, 당신도 월 수익을 창출하는 디지털 건물을 만들고 AI 도시의 일원이 될 수 있습니다.</p>
               <button className="cta-button large" onClick={onBack}>
                 강의 보러가기
               </button>

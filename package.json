@@ -1,8 +1,8 @@
 {
-  "name": "clathon-web",
+  "name": "aicitybuilders-web",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://www.clathon.com",
+  "homepage": "https://www.aicitybuilders.com",
   "dependencies": {
     "@azure/data-tables": "^13.2.2",
     "@testing-library/dom": "^10.4.0",

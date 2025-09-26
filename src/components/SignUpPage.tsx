@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Mail, Lock, Eye, EyeOff, AlertCircle, User, Check } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, AlertCircle, User, Check, Gift, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import AzureTableService from '../services/azureTableService';
+import AzureTableService, { RewardUtils } from '../services/azureTableService';
 import NavigationBar from './NavigationBar';
 
 interface SignUpPageProps {
@@ -14,7 +14,9 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    phone: '',
+    referralCode: ''
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -43,6 +45,13 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
       newErrors.email = '올바른 이메일 형식이 아닙니다.';
     }
 
+    // 핸드폰 번호 validation
+    if (!formData.phone.trim()) {
+      newErrors.phone = '핸드폰 번호를 입력해주세요.';
+    } else if (!/^01[0-9]-?[0-9]{4}-?[0-9]{4}$/.test(formData.phone.replace(/\s+/g, ''))) {
+      newErrors.phone = '올바른 핸드폰 번호 형식이 아닙니다. (예: 010-1234-5678)';
+    }
+
     // 패스워드 validation
     if (!formData.password) {
       newErrors.password = '비밀번호를 입력해주세요.';
@@ -57,6 +66,13 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
       newErrors.confirmPassword = '비밀번호 확인을 입력해주세요.';
     } else if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = '비밀번호가 일치하지 않습니다.';
+    }
+
+    // 추천 코드 validation (선택사항)
+    if (formData.referralCode.trim()) {
+      if (!RewardUtils.isValidReferralCode(formData.referralCode.trim().toUpperCase())) {
+        newErrors.referralCode = '추천 코드는 6자리 영숫자 조합이어야 합니다.';
+      }
     }
 
     // 약관 동의 validation
@@ -134,7 +150,9 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
         email: formData.email,
         name: formData.name,
         password: formData.password,
-        marketingAgreed: agreements.marketing
+        phone: formData.phone.replace(/\s+/g, ''), // 공백 제거
+        marketingAgreed: agreements.marketing,
+        referredBy: formData.referralCode.trim().toUpperCase() || undefined
       };
       const newUser = await AzureTableService.createUser(userData);
 
@@ -173,7 +191,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
           <div className="auth-form-wrapper">
             <div className="auth-header">
               <h1 className="auth-title">회원가입</h1>
-              <p className="auth-subtitle">AI 전문가로의 여정을 시작하세요</p>
+              <p className="auth-subtitle">AI 디지털 건물주 여정을 시작하세요</p>
             </div>
 
             <form onSubmit={handleSubmit} className="auth-form">
@@ -226,6 +244,30 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
                   <div className="error-message">
                     <AlertCircle size={16} />
                     <span>{errors.email}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* 핸드폰 번호 입력 필드 */}
+              <div className="form-group">
+                <label htmlFor="phone" className="form-label">
+                  <Phone size={18} />
+                  핸드폰 번호
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  className={`form-input ${errors.phone ? 'error' : ''}`}
+                  placeholder="010-1234-5678"
+                  disabled={isLoading}
+                />
+                {errors.phone && (
+                  <div className="error-message">
+                    <AlertCircle size={16} />
+                    <span>{errors.phone}</span>
                   </div>
                 )}
               </div>
@@ -292,6 +334,32 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
                   <div className="error-message">
                     <AlertCircle size={16} />
                     <span>{errors.confirmPassword}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* 추천 코드 입력 필드 */}
+              <div className="form-group">
+                <label htmlFor="referralCode" className="form-label">
+                  <Gift size={18} />
+                  추천 코드 (선택사항)
+                </label>
+                <input
+                  type="text"
+                  id="referralCode"
+                  name="referralCode"
+                  value={formData.referralCode}
+                  onChange={handleInputChange}
+                  className="form-input"
+                  placeholder="추천 코드를 입력하세요 (예: ABC123)"
+                  maxLength={6}
+                  style={{ textTransform: 'uppercase' }}
+                  disabled={isLoading}
+                />
+                {errors.referralCode && (
+                  <div className="error-message">
+                    <AlertCircle size={16} />
+                    <span>{errors.referralCode}</span>
                   </div>
                 )}
               </div>
@@ -407,6 +475,8 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
               <li>📧 AI 트렌드 및 강의 업데이트 소식</li>
               <li>🏆 학습 진도 관리 및 수료증 발급</li>
               <li>💬 전문가 커뮤니티 참여</li>
+              <li>🎯 나만의 추천 코드로 리워드 획득</li>
+              <li>💎 추천 성공 시 구매금액의 10% 리워드</li>
             </ul>
           </div>
         </div>

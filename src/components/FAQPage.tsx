@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, Phone, Mail, Clock } from 'lucide-react';
+import { ChevronDown, Mail, Clock } from 'lucide-react';
 import NavigationBar from './NavigationBar';
 
 interface FAQPageProps {
@@ -19,65 +19,63 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
 
   const faqData = [
     {
-      category: "CLATHON 교육 시스템",
+      category: "AI CITY BUILDER 교육 시스템",
       items: [
         {
-          question: "CLATHON은 다른 AI 교육과 어떻게 다른가요?",
+          question: "AI CITY BUILDER는 다른 AI 교육과 어떻게 다른가요?",
           answer: `
             <div>
-              <h4>🎯 CLATHON의 차별화된 AI 교육 시스템</h4>
+              <h4>🏙️ AI CITY BUILDER의 혁신적인 디지털 건물주 양성 시스템</h4>
               
-              <h5>🔸 실전 중심 교육</h5>
+              <h5>🔸 수익 중심 교육</h5>
               <ul>
-                <li><strong>단순 수강이 아닌 실제 활용:</strong> 수강생이 직접 AI 도구를 사용해 결과물을 만드는 것이 목표</li>
-                <li><strong>프로젝트 기반 학습:</strong> 이론보다는 실무에서 바로 활용 가능한 스킬 습득</li>
-                <li><strong>개인 맞춤형 학습:</strong> 각자의 목표와 수준에 맞는 커리큘럼 제공</li>
+                <li><strong>디지털 건물 구축:</strong> AI를 활용해 실제 월 수익이 나오는 디지털 자산 건설</li>
+                <li><strong>월세 수익 창출:</strong> 유튜브, 블로그, 온라인 쇼핑몰 등을 통한 지속적인 수익 구조 구축</li>
+                <li><strong>실전 수익화 전략:</strong> 이론이 아닌 실제 돈을 버는 방법론 전수</li>
               </ul>
 
-              <h5>🔸 검증된 멘토 시스템</h5>
+              <h5>🔸 네트워크 기반 성장</h5>
               <ul>
-                <li><strong>학력 검증:</strong> 대학원 이상의 학력 및 관련 전공 확인</li>
-                <li><strong>실무 경력 검증:</strong> 3년 이상의 실제 AI 업무 경험</li>
-                <li><strong>포트폴리오 검증:</strong> GitHub, 논문, 프로젝트 등 공개 자료 확인</li>
-                <li><strong>투명한 정보 공개:</strong> 모든 멘토의 학력, 경력, 포트폴리오 완전 공개</li>
+                <li><strong>디지털 건물주 네트워크:</strong> 개별 건물주들이 모여 시너지 창출</li>
+                <li><strong>협력 생태계:</strong> 서로의 디지털 건물을 연결하여 상호 발전</li>
+                <li><strong>AI 도시 구축:</strong> 개인의 성공을 넘어 함께 성장하는 도시 생태계</li>
               </ul>
 
-              <h5>🔸 다양한 학습 방식</h5>
+              <h5>🔸 지속 가능한 자산 구축</h5>
               <ul>
-                <li><strong>무료 강의:</strong> AI 기초 개념 및 도구 소개</li>
-                <li><strong>유료 강의:</strong> 심화 학습 및 실전 프로젝트</li>
-                <li><strong>그룹 라이브 클래스:</strong> 소그룹 실시간 학습 (5-10명)</li>
-                <li><strong>1:1 라이브 클래스:</strong> 개인 맞춤형 멘토링</li>
+                <li><strong>평생 소유 가능:</strong> 한 번 구축하면 계속 수익을 창출하는 디지털 자산</li>
+                <li><strong>확장 가능한 모델:</strong> 하나의 건물에서 시작해 다수의 건물로 확장</li>
+                <li><strong>AI 자동화:</strong> 인공지능으로 운영을 자동화하여 효율성 극대화</li>
               </ul>
             </div>
           `
         },
         {
-          question: "1:1 라이브 클래스는 어떻게 진행되나요?",
+          question: "디지털 건물이란 무엇인가요?",
           answer: `
             <div>
-              <h4>👨‍🏫 1:1 라이브 클래스 시스템</h4>
+              <h4>🏢 디지털 건물의 개념</h4>
               
-              <h5>🔸 진행 방식</h5>
+              <h5>🔸 디지털 건물의 정의</h5>
               <ul>
-                <li><strong>화상 회의:</strong> Zoom 또는 Google Meet를 통한 실시간 멘토링</li>
-                <li><strong>화면 공유:</strong> 실시간 코드 작성 및 도구 사용 실습</li>
-                <li><strong>맞춤형 커리큘럼:</strong> 개인의 목표와 수준에 맞는 학습 계획</li>
-                <li><strong>과제 및 피드백:</strong> 세션 후 개인 과제 제공 및 다음 세션에서 리뷰</li>
+                <li><strong>수익 창출 채널:</strong> 월세와 같이 지속적인 수익을 만들어내는 하나의 디지털 자산</li>
+                <li><strong>다양한 형태:</strong> 유튜브 채널, 블로그, 온라인 쇼핑몰, 앱, 웹사이트 등</li>
+                <li><strong>AI 기반 운영:</strong> 인공지능을 활용해 콘텐츠 생성부터 운영까지 자동화</li>
               </ul>
 
-              <h5>🔸 패키지 옵션</h5>
+              <h5>🔸 수익화 방법</h5>
               <ul>
-                <li><strong>10회권:</strong> 기초부터 중급까지 (3개월 완성)</li>
-                <li><strong>20회권:</strong> 고급 프로젝트 및 실무 적용 (6개월 완성)</li>
-                <li><strong>세션당 50분:</strong> 충분한 학습 시간 보장</li>
+                <li><strong>광고 수익:</strong> 콘텐츠를 통한 광고 수익 창출</li>
+                <li><strong>제품/서비스 판매:</strong> 디지털 상품이나 서비스를 통한 직접 판매</li>
+                <li><strong>구독 모델:</strong> 멤버십이나 구독 서비스를 통한 정기 수익</li>
+                <li><strong>제휴 마케팅:</strong> 다른 제품/서비스 추천을 통한 커미션 수익</li>
               </ul>
 
-              <h5>🔸 가격 정책</h5>
+              <h5>🔸 확장 가능성</h5>
               <ul>
-                <li><strong>상담 기반 가격 책정:</strong> 개인의 목표, 수준, 멘토 등급에 따라 결정</li>
-                <li><strong>투명한 가격 공개:</strong> 상담 후 명확한 가격 및 커리큘럼 제시</li>
-                <li><strong>무료 체험:</strong> 첫 상담 및 1회 세션 무료 제공</li>
+                <li><strong>멀티 플랫폼:</strong> 하나의 콘텐츠로 여러 플랫폼에서 수익 창출</li>
+                <li><strong>자동화 시스템:</strong> AI가 운영하므로 24시간 지속적인 수익 가능</li>
+                <li><strong>네트워크 효과:</strong> 다른 건물주들과 연결되어 시너지 극대화</li>
               </ul>
             </div>
           `
@@ -136,9 +134,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
 
               <h5>🔸 고객센터 연락</h5>
               <ul>
-                <li><strong>전화:</strong> 070-2359-3515 (평일 10:00~18:00)</li>
-                <li><strong>이메일:</strong> refund@connexionai.kr</li>
-                <li><strong>카카오톡:</strong> @클래튼 (24시간 접수)</li>
+                <li><strong>이메일:</strong> jay@connexionai.kr</li>
               </ul>
 
               <h5>🔸 필요 정보</h5>
@@ -151,57 +147,59 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
           `
         },
         {
-          question: "프리미엄 강의와 무료 강의의 차이점은 무엇인가요?",
+          question: "어떤 디지털 건물부터 시작해야 할까요?",
           answer: `
             <div>
-              <h4>💎 프리미엄 vs 무료 강의</h4>
+              <h4>🏗️ 첫 번째 디지털 건물 선택 가이드</h4>
               
-              <h5>🔸 프리미엄 강의 (유료)</h5>
+              <h5>🔸 초보자 추천 건물</h5>
               <ul>
-                <li>심화된 실전 콘텐츠 제공</li>
-                <li>1:1 질의응답 지원</li>
-                <li>수료증 발급</li>
-                <li>3개월 수강권 제공</li>
-                <li>추가 자료 및 템플릿 제공</li>
-                <li>우선 고객지원</li>
+                <li><strong>유튜브 채널:</strong> 가장 접근하기 쉽고 AI 도구 활용이 용이</li>
+                <li><strong>블로그/웹사이트:</strong> SEO를 통한 장기적 수익 구조 구축</li>
+                <li><strong>인스타그램 계정:</strong> 시각적 콘텐츠로 빠른 팔로워 증가 가능</li>
               </ul>
 
-              <h5>🔸 무료 강의</h5>
+              <h5>🔸 중급자 추천 건물</h5>
               <ul>
-                <li>기본적인 개념 학습</li>
-                <li>커뮤니티 Q&A만 지원</li>
-                <li>수료증 미발급</li>
-                <li>제한적 접근 (30일)</li>
-                <li>기본 자료만 제공</li>
+                <li><strong>온라인 쇼핑몰:</strong> 제품 판매를 통한 직접적인 수익 창출</li>
+                <li><strong>온라인 강의 플랫폼:</strong> 전문 지식을 활용한 교육 사업</li>
+                <li><strong>앱/웹 서비스:</strong> 구독 모델을 통한 정기 수익</li>
+              </ul>
+
+              <h5>🔸 고급자 추천 건물</h5>
+              <ul>
+                <li><strong>멀티 플랫폼 네트워크:</strong> 여러 채널을 연결한 생태계</li>
+                <li><strong>AI 자동화 시스템:</strong> 완전 자동화된 수익 구조</li>
+                <li><strong>B2B 솔루션:</strong> 기업 대상 서비스로 고수익 창출</li>
               </ul>
             </div>
           `
         },
         {
-          question: "할인 혜택이나 쿠폰은 어떻게 사용하나요?",
+          question: "디지털 건물주 네트워크는 어떻게 작동하나요?",
           answer: `
             <div>
-              <h4>🎫 할인 혜택 및 쿠폰</h4>
+              <h4>🌐 디지털 건물주 네트워크 시스템</h4>
               
-              <h5>🔸 얼리버드 할인</h5>
+              <h5>🔸 네트워크 구조</h5>
               <ul>
-                <li>런칭 전 사전예약 시 최대 40% 할인</li>
-                <li>선착순 한정 혜택</li>
-                <li>런칭과 동시에 수강 시작</li>
+                <li><strong>상호 협력:</strong> 각자의 디지털 건물을 서로 홍보하고 추천</li>
+                <li><strong>크로스 마케팅:</strong> 다른 건물주의 고객을 자신의 건물로 유도</li>
+                <li><strong>공동 프로젝트:</strong> 여러 건물주가 협력하여 대형 프로젝트 진행</li>
               </ul>
 
-              <h5>🔸 쿠폰 사용법</h5>
+              <h5>🔸 네트워크 혜택</h5>
               <ul>
-                <li>결제 페이지에서 쿠폰 코드 입력</li>
-                <li>쿠폰별 사용 조건 확인 필요</li>
-                <li>중복 사용 불가</li>
+                <li><strong>트래픽 공유:</strong> 네트워크 내에서 고객 트래픽 상호 교환</li>
+                <li><strong>지식 공유:</strong> 성공 노하우와 실패 경험을 서로 공유</li>
+                <li><strong>리소스 공유:</strong> 콘텐츠, 도구, 기술 등을 함께 활용</li>
               </ul>
 
-              <h5>🔸 그룹 할인</h5>
+              <h5>🔸 도시화 프로세스</h5>
               <ul>
-                <li>5명 이상: 10% 추가 할인</li>
-                <li>10명 이상: 15% 추가 할인</li>
-                <li>기업 교육: 별도 문의</li>
+                <li><strong>개별 건물 구축:</strong> 각자의 전문 분야에서 디지털 건물 완성</li>
+                <li><strong>네트워크 연결:</strong> 비슷한 타겟이나 보완적인 서비스끼리 연결</li>
+                <li><strong>생태계 완성:</strong> 하나의 AI 도시로 발전하여 더 큰 가치 창출</li>
               </ul>
             </div>
           `
@@ -209,73 +207,96 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
       ]
     },
     {
-      category: "강의 수강",
+      category: "디지털 건물 구축 과정",
       items: [
         {
-          question: "강의는 언제까지 들을 수 있나요?",
+          question: "디지털 건물은 어떻게 시작하나요?",
           answer: `
             <div>
-              <h4>📅 수강 기간</h4>
+              <h4>🚀 디지털 건물 시작하기</h4>
               
-              <h5>🔸 프리미엄 강의</h5>
+              <h5>🔸 기본 원리</h5>
               <ul>
-                <li><strong>3개월 수강권:</strong> 구매 후 3개월간 수강 가능</li>
-                <li><strong>업데이트:</strong> 수강 기간 내 추가 콘텐츠 무료 제공</li>
-                <li><strong>다운로드:</strong> 모바일 앱에서 오프라인 시청 가능 (수강 기간 내)</li>
-                <li><strong>연장:</strong> 기간 만료 시 추가 결제를 통해 연장 가능</li>
+                <li><strong>AI 도구 활용:</strong> ChatGPT, Midjourney 등을 이용한 콘텐츠 자동 생성</li>
+                <li><strong>플랫폼 선택:</strong> 본인의 관심사와 강점에 맞는 플랫폼 결정</li>
+                <li><strong>수익 구조 설계:</strong> 광고, 판매, 구독 등 다양한 수익 모델 조합</li>
               </ul>
 
-              <h5>🔸 무료 강의</h5>
+              <h5>🔸 단계별 접근</h5>
               <ul>
-                <li><strong>30일 제한:</strong> 첫 시청일부터 30일간</li>
-                <li><strong>재시청:</strong> 기간 내 무제한</li>
-                <li><strong>연장:</strong> 유료 업그레이드 시 3개월 수강권으로 전환</li>
+                <li><strong>1단계:</strong> AI 도구 숙련도 향상</li>
+                <li><strong>2단계:</strong> 콘텐츠 생성 및 플랫폼 운영</li>
+                <li><strong>3단계:</strong> 수익화 시스템 구축</li>
+                <li><strong>4단계:</strong> 자동화 및 확장</li>
+              </ul>
+
+              <h5>🔸 성공 요소</h5>
+              <ul>
+                <li><strong>일관성:</strong> 꾸준한 콘텐츠 업로드와 관리</li>
+                <li><strong>품질:</strong> AI를 활용한 고품질 콘텐츠 제작</li>
+                <li><strong>네트워킹:</strong> 다른 건물주들과의 협력</li>
               </ul>
             </div>
           `
         },
         {
-          question: "모바일에서도 수강할 수 있나요?",
+          question: "AI 도구 사용 경험이 없어도 가능한가요?",
           answer: `
             <div>
-              <h4>📱 모바일 수강</h4>
+              <h4>🤖 AI 도구 활용 가이드</h4>
               
-              <h5>🔸 지원 플랫폼</h5>
+              <h5>🔸 초보자도 가능</h5>
               <ul>
-                <li>웹 브라우저 (Chrome, Safari, Edge 등)</li>
-                <li>iOS 앱 (App Store 출시 예정)</li>
-                <li>Android 앱 (Play Store 출시 예정)</li>
+                <li><strong>단계별 학습:</strong> 기초 AI 도구부터 고급 기능까지 체계적 교육</li>
+                <li><strong>실습 중심:</strong> 실제 프로젝트를 통해 자연스럽게 도구 습득</li>
+                <li><strong>템플릿 제공:</strong> 바로 사용할 수 있는 프롬프트와 워크플로우</li>
               </ul>
 
-              <h5>🔸 모바일 전용 기능</h5>
+              <h5>🔸 주요 AI 도구</h5>
               <ul>
-                <li>오프라인 다운로드</li>
-                <li>배속 조절 (0.5x ~ 2.0x)</li>
-                <li>북마크 및 메모 기능</li>
-                <li>진도율 동기화</li>
+                <li><strong>콘텐츠 생성:</strong> ChatGPT, Claude, Gemini 활용법</li>
+                <li><strong>이미지/영상:</strong> Midjourney, DALL-E, RunwayML 등</li>
+                <li><strong>자동화:</strong> Zapier, Make.com을 통한 워크플로우 구축</li>
+                <li><strong>분석:</strong> 데이터 분석 및 인사이트 도출 도구</li>
+              </ul>
+
+              <h5>🔸 학습 지원</h5>
+              <ul>
+                <li><strong>실시간 Q&A:</strong> 막히는 부분 즉시 해결</li>
+                <li><strong>커뮤니티:</strong> 동료들과 경험 공유</li>
+                <li><strong>지속 업데이트:</strong> 새로운 AI 도구 정보 지속 제공</li>
               </ul>
             </div>
           `
         },
         {
-          question: "수료증은 어떻게 발급받나요?",
+          question: "성공한 디지털 건물 인증은 어떻게 받나요?",
           answer: `
             <div>
-              <h4>🏆 수료증 발급</h4>
+              <h4>🏅 디지털 건물주 인증 시스템</h4>
               
-              <h5>🔸 발급 조건</h5>
+              <h5>🔸 인증 조건</h5>
               <ul>
-                <li>프리미엄 강의 100% 완주</li>
-                <li>모든 퀴즈 80점 이상</li>
-                <li>최종 프로젝트 제출 (해당 시)</li>
+                <li><strong>수익 실현:</strong> 실제 월 수익 ₩10만원 이상 달성</li>
+                <li><strong>지속성 증명:</strong> 3개월 연속 안정적 수익 유지</li>
+                <li><strong>성장성 입증:</strong> 전월 대비 수익 증가 또는 유지</li>
+                <li><strong>건물 완성도:</strong> AI 자동화 시스템 구축 완료</li>
               </ul>
 
-              <h5>🔸 발급 과정</h5>
+              <h5>🔸 인증 혜택</h5>
               <ul>
-                <li>완주 후 자동으로 마이페이지에 생성</li>
-                <li>PDF 다운로드 가능</li>
-                <li>LinkedIn 연동 지원</li>
-                <li>재발급 무료 (분실 시)</li>
+                <li><strong>디지털 건물주 배지:</strong> 프로필에 표시되는 공식 인증</li>
+                <li><strong>네트워크 우선 참여:</strong> 상위 건물주들과의 협력 기회</li>
+                <li><strong>멘토 자격:</strong> 신규 건물주들을 돕는 멘토 활동 가능</li>
+                <li><strong>수익 공유:</strong> 멘토링을 통한 추가 수익 창출</li>
+              </ul>
+
+              <h5>🔸 인증 레벨</h5>
+              <ul>
+                <li><strong>브론즈:</strong> 월 ₩10-50만원 수익</li>
+                <li><strong>실버:</strong> 월 ₩50-200만원 수익</li>
+                <li><strong>골드:</strong> 월 ₩200만원 이상 수익</li>
+                <li><strong>플래티넘:</strong> 멀티 건물 운영 + 네트워크 리더</li>
               </ul>
             </div>
           `
@@ -307,7 +328,6 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
 
               <h5>🔸 문제 지속 시</h5>
               <ul>
-                <li>고객센터 문의: 070-2359-3515</li>
                 <li>이메일: support@connexionai.kr</li>
                 <li>원격 지원 서비스 제공</li>
               </ul>
@@ -335,11 +355,11 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
                 <li>네트워크 상태 점검</li>
               </ul>
 
-              <h5>🔸 긴급 지원</h5>
+              <h5>🔸 추가 지원</h5>
               <ul>
-                <li>카카오톡: @클래튼 (실시간 상담)</li>
                 <li>이메일로 답안 직접 전송 가능</li>
                 <li>재시험 기회 제공</li>
+                <li>커뮤니티를 통한 동료 도움</li>
               </ul>
             </div>
           `
@@ -441,7 +461,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
             fontSize: '3rem', 
             fontWeight: '700', 
             marginBottom: '20px',
-            background: 'linear-gradient(135deg, #cf2b4a 0%, #ff4757 100%)',
+            background: 'linear-gradient(135deg, #0ea5e9 0%, #ff4757 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text'
@@ -467,13 +487,6 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
             borderRadius: '15px'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Phone size={20} color="#667eea" />
-              <div>
-                <div style={{ fontSize: '0.9rem', opacity: '0.7' }}>고객센터</div>
-                <div style={{ fontWeight: '600' }}>070-2359-3515</div>
-              </div>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <Mail size={20} color="#667eea" />
               <div>
                 <div style={{ fontSize: '0.9rem', opacity: '0.7' }}>이메일</div>
@@ -484,7 +497,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
               <Clock size={20} color="#667eea" />
               <div>
                 <div style={{ fontSize: '0.9rem', opacity: '0.7' }}>운영시간</div>
-                <div style={{ fontWeight: '600' }}>평일 10:00-18:00</div>
+                <div style={{ fontWeight: '600' }}>평일 09:00-18:00</div>
               </div>
             </div>
           </div>
@@ -498,8 +511,8 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
                 fontSize: '1.8rem', 
                 fontWeight: '600', 
                 marginBottom: '30px',
-                color: '#cf2b4a',
-                borderBottom: '2px solid rgba(207, 43, 74, 0.3)',
+                color: '#0ea5e9',
+                borderBottom: '2px solid rgba(14, 165, 233, 0.3)',
                 paddingBottom: '10px'
               }}>
                 {category.category}
@@ -571,8 +584,8 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
 
         {/* 추가 지원 섹션 */}
         <div className="additional-support" style={{
-          background: 'rgba(207, 43, 74, 0.1)',
-          border: '1px solid rgba(207, 43, 74, 0.3)',
+          background: 'rgba(14, 165, 233, 0.1)',
+          border: '1px solid rgba(14, 165, 233, 0.3)',
           padding: '40px',
           borderRadius: '20px',
           textAlign: 'center',
@@ -587,7 +600,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
           <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <button 
               style={{
-                background: 'linear-gradient(135deg, #cf2b4a, #ff4757)',
+                background: 'linear-gradient(135deg, #0ea5e9, #ff4757)',
                 color: 'white',
                 border: 'none',
                 padding: '15px 30px',
@@ -600,25 +613,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
                 gap: '8px',
                 transition: 'all 0.3s ease'
               }}
-            >
-              <Phone size={16} />
-              전화 상담
-            </button>
-            <button 
-              style={{
-                background: 'transparent',
-                color: '#cf2b4a',
-                border: '2px solid #cf2b4a',
-                padding: '15px 30px',
-                borderRadius: '50px',
-                fontSize: '1rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                transition: 'all 0.3s ease'
-              }}
+              onClick={() => window.location.href = 'mailto:jay@connexionai.kr'}
             >
               <Mail size={16} />
               이메일 문의

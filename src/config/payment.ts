@@ -21,7 +21,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 // 도메인 설정
 const DOMAIN = isProduction 
-  ? 'https://www.clathon.com'  // 🎯 실제 배포 도메인으로 수정
+  ? 'https://www.aicitybuilders.com'  // 🎯 실제 배포 도메인으로 수정
   : window.location.origin;
 
 // 토스페이먼츠 키 설정
@@ -99,7 +99,7 @@ export const createPaymentRequest = (orderData: {
     amount: orderData.amount,
     orderId: orderData.orderId,
     orderName: orderData.orderName,
-    customerName: orderData.customerName || 'CLATHON 수강생',
+    customerName: orderData.customerName || 'AI City Builders 수강생',
     successUrl: config.successUrl,
     failUrl: config.failUrl,
     // 추가 설정
@@ -109,7 +109,7 @@ export const createPaymentRequest = (orderData: {
     // 고객 정보 (선택)
     customer: {
       email: undefined, // 실제 구현 시 사용자 이메일 사용
-      name: orderData.customerName || 'CLATHON 수강생'
+      name: orderData.customerName || 'AI City Builders 수강생'
     }
   };
 };
