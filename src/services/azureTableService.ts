@@ -471,7 +471,8 @@ export class AzureTableService {
         console.log(`📋 Table '${tableName}' 준비 완료`);
       });
     } else {
-      console.log('⚠️ Azure 연결 실패, LocalStorage를 계속 사용합니다.');
+      console.error('❌ Azure Table Storage 연결 실패! CORS 설정을 확인하세요.');
+      console.error('💡 해결 방법: Azure Portal에서 Storage Account CORS 설정에 현재 도메인을 추가하세요.');
     }
   }
 

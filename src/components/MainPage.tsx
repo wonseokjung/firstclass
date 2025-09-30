@@ -239,10 +239,6 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
     checkLoginStatus();
   }, []);
 
-  const handleCourseClick = (course: Course) => {
-    // 모든 코스는 onCourseSelect로 처리 (다큐멘터리도 포함)
-    onCourseSelect(course.id);
-  };
 
   // 결제 관련 핸들러 - 로그인 체크 포함
   const handleEnrollClick = (e: React.MouseEvent, courseTitle: string, price: number = 199000, courseId?: string) => {
@@ -312,6 +308,41 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
     alert('결제가 완료되었습니다! 수강을 시작해보세요.');
     setShowPaymentModal(false);
     setSelectedCourse(null);
+  };
+
+  // 강의 클릭 핸들러
+  const handleCourseClick = (course: any) => {
+    // Coming Soon 강의 처리
+    if (course.id === 999) {
+      setComingSoonCourse(course.title);
+      setShowComingSoonModal(true);
+      return;
+    }
+    
+    // 각 강의별 라우팅
+    switch (course.id) {
+      case 1: // ChatGPT 강의
+        navigate('/chatgpt-course');
+        break;
+      case 2: // AI 교육 다큐멘터리
+        navigate('/ai-education-documentary');
+        break;
+      case 3: // Google AI 강의
+        navigate('/google-ai-course');
+        break;
+      case 4: // AI 비즈니스 강의
+        navigate('/ai-business-course');
+        break;
+      case 5: // AI 코딩 강의
+        navigate('/ai-coding-course');
+        break;
+      case 6: // ChatGPT 프롬프트 40+ 강의
+        navigate('/chatgpt-prompts-40plus');
+        break;
+      default:
+        // 기존 onCourseSelect 로직 유지 (다른 강의들)
+        onCourseSelect(course.id);
+    }
   };
 
   // 화살표 버튼으로 그리드 스크롤하기
