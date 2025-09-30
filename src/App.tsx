@@ -281,13 +281,13 @@ const ComingSoonNotice = () => {
             fontWeight: '600',
             marginBottom: '10px'
           }}>
-            📧 런칭 알림을 받고 싶으시다면
+            ⏰ 기다리는 동안
           </p>
           <p style={{
             color: '#6b7280',
             fontSize: '1rem'
           }}>
-            다른 무료 강의들을 먼저 체험해보세요!
+            다른 무료 강의들로 AI 실력을 미리 쌓아보세요!
           </p>
         </div>
         <button
@@ -314,6 +314,15 @@ const ComingSoonNotice = () => {
         </button>
       </div>
     </div>
+  );
+};
+
+const ChatGPTCoursePageWrapper = () => {
+  const navigate = useNavigate();
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <ChatGPTCoursePage onBack={() => navigate('/')} />
+    </Suspense>
   );
 };
 
