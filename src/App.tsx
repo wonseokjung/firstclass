@@ -317,15 +317,6 @@ const ComingSoonNotice = () => {
   );
 };
 
-const ChatGPTCoursePageWrapper = () => {
-  const navigate = useNavigate();
-  return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <ChatGPTCoursePage onBack={() => navigate('/')} />
-    </Suspense>
-  );
-};
-
 const ChatGPTPrompts40PageWrapper = () => {
   const navigate = useNavigate();
   return (
