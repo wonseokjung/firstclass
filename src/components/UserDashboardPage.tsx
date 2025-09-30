@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Clock, Award, Play, Calendar, Zap, Gift, Users, TrendingUp, Copy } from 'lucide-react';
+import { BookOpen, Clock, Award, Play, Calendar, Zap, Gift, Users, TrendingUp, Copy, Link } from 'lucide-react';
 import AzureTableService from '../services/azureTableService';
 import NavigationBar from './NavigationBar';
 import { SkeletonCourseCard, SkeletonUserStats } from './SkeletonLoader';
@@ -39,6 +39,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
   const [rewardData, setRewardData] = useState<RewardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [copiedReferralCode, setCopiedReferralCode] = useState(false);
+  const [copiedReferralLink, setCopiedReferralLink] = useState(false);
 
   useEffect(() => {
     const loadUserData = async () => {
@@ -97,15 +98,44 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
   };
 
   const copyReferralCode = async () => {
+    console.log('🔗 추천 코드 복사 버튼 클릭됨');
+    console.log('📋 rewardData:', rewardData);
+    
     if (rewardData?.referralCode) {
       try {
         await navigator.clipboard.writeText(rewardData.referralCode);
         setCopiedReferralCode(true);
         setTimeout(() => setCopiedReferralCode(false), 2000);
+        console.log('✅ 추천 코드 복사 성공:', rewardData.referralCode);
       } catch (err) {
-        console.error('복사 실패:', err);
+        console.error('❌ 복사 실패:', err);
         alert('복사에 실패했습니다.');
       }
+    } else {
+      console.error('❌ 추천 코드가 없습니다:', rewardData);
+      alert('추천 코드를 찾을 수 없습니다.');
+    }
+  };
+
+  const copyReferralLinkHandler = async () => {
+    console.log('🔗 추천 링크 복사 버튼 클릭됨');
+    console.log('📋 rewardData:', rewardData);
+    
+    if (rewardData?.referralCode) {
+      try {
+        const baseUrl = window.location.origin;
+        const referralLink = `${baseUrl}/?ref=${rewardData.referralCode}`;
+        await navigator.clipboard.writeText(referralLink);
+        setCopiedReferralLink(true);
+        setTimeout(() => setCopiedReferralLink(false), 2000);
+        console.log('✅ 추천 링크 복사 성공:', referralLink);
+      } catch (error) {
+        console.error('❌ 링크 복사 실패:', error);
+        alert('링크 복사에 실패했습니다.');
+      }
+    } else {
+      console.error('❌ 추천 코드가 아직 생성되지 않았습니다:', rewardData);
+      alert('추천 코드가 생성 중입니다. 잠시 후 다시 시도해주세요.');
     }
   };
 
@@ -416,7 +446,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
             </h2>
             <p style={{ 
               fontSize: '1rem',
-              color: '#666666',
+              color: '#1f2937',
               maxWidth: '600px',
               margin: '0 auto'
             }}>
@@ -425,9 +455,9 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
           </div>
 
           {/* 리워드 시스템 섹션 */}
-          {rewardData && (
+          {(
             <div style={{
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
               borderRadius: '16px',
               padding: '40px',
               margin: '50px auto',
@@ -484,31 +514,86 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                       marginBottom: '16px',
                       color: 'white'
                     }}>
-                      {rewardData.referralCode}
+                      {rewardData?.referralCode || '생성 중...'}
                     </div>
-                    <button
-                      onClick={copyReferralCode}
-                      style={{
-                        background: copiedReferralCode ? '#10b981' : 'rgba(255, 255, 255, 0.2)',
-                        border: '1px solid rgba(255, 255, 255, 0.3)',
-                        borderRadius: '8px',
-                        padding: '8px 16px',
-                        color: 'white',
-                        cursor: 'pointer',
-                        fontSize: '0.9rem',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        margin: '0 auto',
-                        transition: 'all 0.3s ease'
-                      }}
-                    >
-                      <Copy size={16} />
-                      {copiedReferralCode ? '복사됨!' : '코드 복사'}
-                    </button>
+                    <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+                      <button
+                        onClick={copyReferralCode}
+                        style={{
+                          background: copiedReferralCode ? '#10b981' : 'rgba(255, 255, 255, 0.3)',
+                          border: '2px solid rgba(255, 255, 255, 0.5)',
+                          borderRadius: '8px',
+                          padding: '10px 16px',
+                          color: 'white',
+                          cursor: 'pointer',
+                          fontSize: '0.9rem',
+                          fontWeight: '600',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          transition: 'all 0.3s ease',
+                          minHeight: '44px',
+                          minWidth: '80px'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!copiedReferralCode) {
+                            const target = e.target as HTMLElement;
+                            target.style.background = 'rgba(255, 255, 255, 0.4)';
+                            target.style.transform = 'translateY(-1px)';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!copiedReferralCode) {
+                            const target = e.target as HTMLElement;
+                            target.style.background = 'rgba(255, 255, 255, 0.3)';
+                            target.style.transform = 'translateY(0)';
+                          }
+                        }}
+                      >
+                        <Copy size={16} />
+                        {copiedReferralCode ? '복사됨!' : '코드'}
+                      </button>
+                      
+                      <button
+                        onClick={copyReferralLinkHandler}
+                        style={{
+                          background: copiedReferralLink ? '#10b981' : 'rgba(14, 165, 233, 0.9)',
+                          border: '2px solid rgba(255, 255, 255, 0.5)',
+                          borderRadius: '8px',
+                          padding: '10px 16px',
+                          color: 'white',
+                          cursor: 'pointer',
+                          fontSize: '0.9rem',
+                          fontWeight: '600',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          transition: 'all 0.3s ease',
+                          minHeight: '44px',
+                          minWidth: '80px'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!copiedReferralLink) {
+                            const target = e.target as HTMLElement;
+                            target.style.background = 'rgba(14, 165, 233, 1)';
+                            target.style.transform = 'translateY(-1px)';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!copiedReferralLink) {
+                            const target = e.target as HTMLElement;
+                            target.style.background = 'rgba(14, 165, 233, 0.9)';
+                            target.style.transform = 'translateY(0)';
+                          }
+                        }}
+                      >
+                        <Link size={16} />
+                        {copiedReferralLink ? '링크 복사됨!' : '링크'}
+                      </button>
+                    </div>
                   </div>
 
-                  {/* 총 리워드 */}
+                  {/* 이번 달 수익 */}
                   <div style={{
                     background: 'rgba(255, 255, 255, 0.2)',
                     borderRadius: '12px',
@@ -517,17 +602,17 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                     backdropFilter: 'blur(10px)'
                   }}>
                     <TrendingUp size={32} style={{ marginBottom: '12px' }} />
-                    <h3 style={{ fontSize: '1.1rem', marginBottom: '16px', color: 'white' }}>총 리워드</h3>
+                    <h3 style={{ fontSize: '1.1rem', marginBottom: '16px', color: 'white' }}>이번 달 수익</h3>
                     <div style={{
                       fontSize: '2rem',
                       fontWeight: '700',
                       marginBottom: '8px',
                       color: 'white'
                     }}>
-                      ₩{rewardData.totalRewards.toLocaleString()}
+                      ₩{(rewardData?.stats?.thisMonthRewards || 0).toLocaleString()}
                     </div>
                     <div style={{ fontSize: '0.9rem', opacity: 0.8, color: 'white' }}>
-                      누적 획득 리워드
+                      이달 추천 수익
                     </div>
                   </div>
 
@@ -540,21 +625,21 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                     backdropFilter: 'blur(10px)'
                   }}>
                     <Users size={32} style={{ marginBottom: '12px' }} />
-                    <h3 style={{ fontSize: '1.1rem', marginBottom: '16px', color: 'white' }}>추천 실적</h3>
+                    <h3 style={{ fontSize: '1.1rem', marginBottom: '16px', color: 'white' }}>추천한 친구 수</h3>
                     <div style={{
                       fontSize: '2rem',
                       fontWeight: '700',
                       marginBottom: '8px',
                       color: 'white'
                     }}>
-                      {rewardData.referralCount}명
+                      {rewardData?.referralCount || 0}명
                     </div>
                     <div style={{ fontSize: '0.9rem', opacity: 0.8, color: 'white' }}>
                       성공한 추천
                     </div>
                   </div>
 
-                  {/* 이번 달 리워드 */}
+                  {/* 총 누적 수익 */}
                   <div style={{
                     background: 'rgba(255, 255, 255, 0.2)',
                     borderRadius: '12px',
@@ -563,17 +648,17 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                     backdropFilter: 'blur(10px)'
                   }}>
                     <Award size={32} style={{ marginBottom: '12px' }} />
-                    <h3 style={{ fontSize: '1.1rem', marginBottom: '16px', color: 'white' }}>이번 달 리워드</h3>
+                    <h3 style={{ fontSize: '1.1rem', marginBottom: '16px', color: 'white' }}>총 누적 수익</h3>
                     <div style={{
                       fontSize: '2rem',
                       fontWeight: '700',
                       marginBottom: '8px',
                       color: 'white'
                     }}>
-                      ₩{rewardData.stats?.thisMonthRewards?.toLocaleString() || '0'}
+                      ₩{(rewardData?.totalRewards || 0).toLocaleString()}
                     </div>
                     <div style={{ fontSize: '0.9rem', opacity: 0.8, color: 'white' }}>
-                      이번 달 획득
+                      전체 기간 누적
                     </div>
                   </div>
                 </div>
@@ -591,14 +676,14 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                     lineHeight: '1.6',
                     color: 'rgba(255, 255, 255, 0.9)'
                   }}>
-                    친구가 내 추천 코드로 가입하고 강의를 구매하면, <strong>구매 금액의 10%</strong>를 리워드로 받으세요!
+                    <strong>🔗 추천 링크</strong>를 친구들에게 공유하세요! 링크를 통해 가입하면 <strong>즉시 5,000원</strong>, 강의 구매 시 <strong>구매 금액의 10%</strong>를 자동으로 받습니다!
                   </p>
                   <p style={{ 
                     margin: '0', 
                     fontSize: '0.9rem',
                     color: 'rgba(255, 255, 255, 0.8)'
                   }}>
-                    추천 코드를 공유하고 AI 도시를 함께 만들어가는 동료들을 늘려보세요 🏗️
+                    💡 <strong>링크 버튼</strong>을 클릭하면 자동으로 복사됩니다. 카카오톡, SNS 어디든 붙여넣기만 하면 OK! 🚀
                   </p>
                 </div>
               </div>

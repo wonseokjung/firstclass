@@ -2,6 +2,7 @@ import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './index.css';
 import AzureTableService from './services/azureTableService';
+import { useReferralTracking } from './hooks/useReferralTracking';
 
 // LoadingSpinner 컴포넌트 인라인 정의
 const LoadingSpinner: React.FC = () => (
@@ -22,7 +23,7 @@ const AICodingCoursePage = React.lazy(() => import('./components/AICodingCourseP
 const AIEducationDocumentaryPage = React.lazy(() => import('./components/AIEducationDocumentaryPage'));
 
 
-const WorkflowAutomationMasterPage = React.lazy(() => import('./components/WorkflowAutomationMasterPage'));
+const AIBuildingCoursePage = React.lazy(() => import('./components/AIBuildingCoursePage'));
 const AICityMapPage = React.lazy(() => import('./components/AICityMapPage'));
 const ChatGPTPrompts40Page = React.lazy(() => import('./components/ChatGPTPrompts40Page'));
 const FAQPage = React.lazy(() => import('./components/FAQPage'));
@@ -37,6 +38,9 @@ const PaymentFailPage = React.lazy(() => import('./components/PaymentFailPage'))
 // 각 페이지 컴포넌트를 래핑해서 useNavigate 사용
 const MainPageWrapper = () => {
   const navigate = useNavigate();
+  
+  // 추천 링크 감지 훅 사용
+  useReferralTracking();
 
   // 404 페이지에서 리다이렉트된 경우 처리
   useEffect(() => {
@@ -137,11 +141,11 @@ const AIEducationDocumentaryPageWrapper = () => {
   );
 };
 
-const WorkflowAutomationMasterPageWrapper = () => {
+const AIBuildingCoursePageWrapper = () => {
   const navigate = useNavigate();
   return (
     <Suspense fallback={<LoadingSpinner />}>
-      <WorkflowAutomationMasterPage onBack={() => navigate('/')} />
+      <AIBuildingCoursePage onBack={() => navigate('/')} />
     </Suspense>
   );
 };
@@ -217,6 +221,102 @@ const AICityMapPageWrapper = () => {
   );
 };
 
+// AI Building Course 11월 1일 오픈 안내 컴포넌트
+const ComingSoonNotice = () => {
+  const navigate = useNavigate();
+  
+  return (
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '20px'
+    }}>
+      <div style={{
+        background: 'white',
+        borderRadius: '20px',
+        padding: '60px 40px',
+        textAlign: 'center',
+        maxWidth: '600px',
+        width: '100%',
+        boxShadow: '0 20px 50px rgba(0, 0, 0, 0.2)'
+      }}>
+        <div style={{ fontSize: '4rem', marginBottom: '20px' }}>🏗️</div>
+        <h1 style={{
+          fontSize: '2.5rem',
+          fontWeight: '700',
+          color: '#1f2937',
+          marginBottom: '20px'
+        }}>
+          AI 건물 짓기 강의
+        </h1>
+        <h2 style={{
+          fontSize: '1.8rem',
+          color: '#0ea5e9',
+          marginBottom: '30px',
+          fontWeight: '600'
+        }}>
+          🗓️ 11월 1일 오픈 예정
+        </h2>
+        <p style={{
+          fontSize: '1.2rem',
+          color: '#4b5563',
+          lineHeight: '1.6',
+          marginBottom: '30px'
+        }}>
+          더 완성도 높은 강의와 혁신적인 교육 경험을 위해<br/>
+          열심히 준비하고 있습니다! 💪
+        </p>
+        <div style={{
+          background: '#f8fafc',
+          padding: '20px',
+          borderRadius: '15px',
+          marginBottom: '30px'
+        }}>
+          <p style={{
+            color: '#0ea5e9',
+            fontSize: '1.1rem',
+            fontWeight: '600',
+            marginBottom: '10px'
+          }}>
+            📧 런칭 알림을 받고 싶으시다면
+          </p>
+          <p style={{
+            color: '#6b7280',
+            fontSize: '1rem'
+          }}>
+            다른 무료 강의들을 먼저 체험해보세요!
+          </p>
+        </div>
+        <button
+          onClick={() => navigate('/')}
+          style={{
+            background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
+            color: 'white',
+            border: 'none',
+            padding: '15px 30px',
+            fontSize: '1.1rem',
+            fontWeight: '600',
+            borderRadius: '10px',
+            cursor: 'pointer',
+            transition: 'transform 0.3s ease'
+          }}
+          onMouseEnter={(e) => {
+            (e.target as HTMLElement).style.transform = 'scale(1.05)';
+          }}
+          onMouseLeave={(e) => {
+            (e.target as HTMLElement).style.transform = 'scale(1)';
+          }}
+        >
+          다른 강의 보러가기 🚀
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const ChatGPTPrompts40PageWrapper = () => {
   const navigate = useNavigate();
   return (
@@ -245,9 +345,9 @@ function App() {
             <Route path="/ai-business-course" element={<AIBusinessCoursePageWrapper />} />
             <Route path="/ai-coding-course" element={<AICodingCoursePageWrapper />} />
             <Route path="/ai-education-documentary" element={<AIEducationDocumentaryPageWrapper />} />
-            <Route path="/ai-building-course" element={<WorkflowAutomationMasterPageWrapper />} />
+            <Route path="/ai-building-course" element={<ComingSoonNotice />} />
             {/* 기존 URL 리다이렉트 */}
-            <Route path="/workflow-automation-master" element={<WorkflowAutomationMasterPageWrapper />} />
+            <Route path="/workflow-automation-master" element={<ComingSoonNotice />} />
             <Route path="/faq" element={<FAQPageWrapper />} />
             <Route path="/ceo" element={<CEOPageWrapper />} />
             <Route path="/ai-city-map" element={<AICityMapPageWrapper />} />

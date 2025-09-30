@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Mail, Lock, Eye, EyeOff, AlertCircle, User, Check, Gift, Phone } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, AlertCircle, User, Check, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import AzureTableService, { RewardUtils } from '../services/azureTableService';
+import AzureTableService from '../services/azureTableService';
 import NavigationBar from './NavigationBar';
+import { useReferralTracking } from '../hooks/useReferralTracking';
 
 interface SignUpPageProps {
   onBack: () => void;
@@ -10,13 +11,14 @@ interface SignUpPageProps {
 
 const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
+  const { getStoredReferralCode, clearReferralCode } = useReferralTracking();
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
-    phone: '',
-    referralCode: ''
+    phone: ''
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -68,12 +70,6 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
       newErrors.confirmPassword = '비밀번호가 일치하지 않습니다.';
     }
 
-    // 추천 코드 validation (선택사항)
-    if (formData.referralCode.trim()) {
-      if (!RewardUtils.isValidReferralCode(formData.referralCode.trim().toUpperCase())) {
-        newErrors.referralCode = '추천 코드는 6자리 영숫자 조합이어야 합니다.';
-      }
-    }
 
     // 약관 동의 validation
     if (!agreements.terms) {
@@ -145,6 +141,9 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
         return;
       }
 
+      // 세션에서 추천 코드 자동 가져오기
+      const storedReferralCode = getStoredReferralCode();
+      
       // Azure Table Storage에 사용자 생성
       const userData = {
         email: formData.email,
@@ -152,12 +151,32 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
         password: formData.password,
         phone: formData.phone.replace(/\s+/g, ''), // 공백 제거
         marketingAgreed: agreements.marketing,
-        referredBy: formData.referralCode.trim().toUpperCase() || undefined
+        referredBy: storedReferralCode || undefined
       };
       const newUser = await AzureTableService.createUser(userData);
 
+      // 추천 코드가 있으면 가입 리워드 처리
+      let signupRewardMessage = '';
+      if (storedReferralCode) {
+        try {
+          const rewardProcessed = await AzureTableService.processSignupReward(
+            formData.email,
+            storedReferralCode
+          );
+          
+          if (rewardProcessed) {
+            signupRewardMessage = '\n🎁 추천인과 함께 각각 5,000원 리워드를 받으셨습니다!';
+          }
+        } catch (error) {
+          console.error('가입 리워드 처리 실패:', error);
+        }
+        
+        // 회원가입 완료 후 세션에서 추천 코드 제거
+        clearReferralCode();
+      }
+
       console.log('회원가입 성공:', newUser);
-      alert(`${newUser.name}님, 회원가입이 완료되었습니다! 로그인해주세요.`);
+      alert(`${newUser.name}님, 회원가입이 완료되었습니다!${signupRewardMessage}\n로그인해주세요.`);
       navigate('/login');
       
     } catch (error) {
@@ -338,31 +357,6 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
                 )}
               </div>
 
-              {/* 추천 코드 입력 필드 */}
-              <div className="form-group">
-                <label htmlFor="referralCode" className="form-label">
-                  <Gift size={18} />
-                  추천 코드 (선택사항)
-                </label>
-                <input
-                  type="text"
-                  id="referralCode"
-                  name="referralCode"
-                  value={formData.referralCode}
-                  onChange={handleInputChange}
-                  className="form-input"
-                  placeholder="추천 코드를 입력하세요 (예: ABC123)"
-                  maxLength={6}
-                  style={{ textTransform: 'uppercase' }}
-                  disabled={isLoading}
-                />
-                {errors.referralCode && (
-                  <div className="error-message">
-                    <AlertCircle size={16} />
-                    <span>{errors.referralCode}</span>
-                  </div>
-                )}
-              </div>
 
               <div className="agreements-section">
                 <div className="agreement-item all-agreement">
@@ -476,7 +470,8 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
               <li>🏆 학습 진도 관리 및 수료증 발급</li>
               <li>💬 전문가 커뮤니티 참여</li>
               <li>🎯 나만의 추천 코드로 리워드 획득</li>
-              <li>💎 추천 성공 시 구매금액의 10% 리워드</li>
+              <li>🎁 추천코드 입력 시 즉시 5,000원 리워드 (양쪽 모두)</li>
+              <li>💎 추천 성공 시 구매금액의 10% 추가 리워드</li>
             </ul>
           </div>
         </div>

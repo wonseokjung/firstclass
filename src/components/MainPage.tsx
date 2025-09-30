@@ -136,8 +136,8 @@ const premiumClasses: Course[] = [
     isDocumentary: false,
     isPremium: true,
     launchDate: '2025-02-01',
-    price: 299000,
-    originalPrice: 499000,
+    price: 149000,
+    originalPrice: 349000,
     isComingSoon: false
   },
   {
@@ -240,13 +240,6 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
   }, []);
 
   const handleCourseClick = (course: Course) => {
-    // AI 건물 짓기 강의는 Coming Soon 모달 표시
-    if (course.id === 999) {
-      setComingSoonCourse(course.title);
-      setShowComingSoonModal(true);
-      return;
-    }
-    
     // 모든 코스는 onCourseSelect로 처리 (다큐멘터리도 포함)
     onCourseSelect(course.id);
   };

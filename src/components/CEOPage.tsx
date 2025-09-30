@@ -31,8 +31,29 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           <div className="ceo-container">
             <div className="ceo-hero-content">
               <div className="ceo-avatar-section">
-                <div className="ceo-avatar">
-                  <span className="ceo-avatar-text">정원석</span>
+                <div className="ceo-avatar" style={{
+                  overflow: 'hidden',
+                  background: 'none'
+                }}>
+                  <img 
+                    src="/images/jaymentor.PNG" 
+                    alt="정원석 (Jay) 멘토"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      borderRadius: '50%'
+                    }}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      // 폴백으로 텍스트 표시
+                      const parent = target.parentElement;
+                      if (parent) {
+                        parent.innerHTML = '<span class="ceo-avatar-text">정원석</span>';
+                      }
+                    }}
+                  />
                 </div>
                 <div className="ceo-badges">
                   <div className="badge-item">
@@ -128,6 +149,44 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
               <Award size={24} />
               대표 멘토 - 정원석 (Jay)
             </h2>
+            
+            {/* 멘토 이미지 섹션 */}
+            <div style={{
+              textAlign: 'center',
+              marginBottom: '50px',
+              padding: '40px 20px'
+            }}>
+              <img 
+                src="/images/jaymentor.PNG" 
+                alt="정원석 (Jay) 멘토 강의 모습"
+                style={{
+                  maxWidth: '600px',
+                  width: '90%',
+                  height: 'auto',
+                  borderRadius: '20px',
+                  boxShadow: '0 20px 50px rgba(0, 0, 0, 0.3)',
+                  marginBottom: '30px',
+                  display: 'block',
+                  marginLeft: 'auto',
+                  marginRight: 'auto'
+                }}
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
+              <p style={{
+                fontSize: '1.2rem',
+                color: '#4b5563',
+                fontStyle: 'italic',
+                fontWeight: '500',
+                maxWidth: '600px',
+                margin: '0 auto',
+                lineHeight: '1.6'
+              }}>
+                AI City Builders 대표 멘토 정원석(Jay)의 강의 모습
+              </p>
+            </div>
             <div className="education-grid">
               <div className="education-card">
                 <div className="degree-level">석사</div>
@@ -168,10 +227,10 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                   <h4 className="transcript-title">📜 Official Transcript</h4>
                   <div className="transcript-image-container">
                     <img 
-                      src="/images/transcript-bachelors.png" 
-                      alt="뉴욕시립대 학사 공식 성적증명서"
+                      src="/images/baruch_graduation.png" 
+                      alt="뉴욕시립대 바루크 칼리지 학위증명서"
                       className="transcript-image"
-                      onClick={() => openTranscriptModal("/images/transcript-bachelors.png")}
+                      onClick={() => openTranscriptModal("/images/baruch_graduation.png")}
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';

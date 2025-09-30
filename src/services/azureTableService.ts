@@ -73,7 +73,7 @@ export interface RewardTransaction {
   toUserId: string; // 리워드 받는 사용자 (추천인)
   amount: number; // 리워드 금액
   sourceAmount: number; // 원본 구매 금액
-  sourceType: 'course_purchase' | 'package_purchase' | 'subscription';
+  sourceType: 'course_purchase' | 'package_purchase' | 'subscription' | 'signup_reward';
   sourceId: string; // 구매한 강의/패키지 ID
   status: 'pending' | 'completed' | 'cancelled';
   createdAt: string;
@@ -521,33 +521,14 @@ export class AzureTableService {
         throw new Error(`Azure 검색 실패: ${response.status}`);
       }
     } catch (error: any) {
-      console.error('❌ Azure 사용자 검색 실패, LocalStorage 폴백 사용:', error.message);
-
-      // LocalStorage에서 검색 (fallback)
-      try {
-        console.log('🔄 Azure 연결 실패로 LocalStorage에서 검색 중...');
-        const users = JSON.parse(localStorage.getItem('aicitybuilders_users') || '[]');
-        const user = users.find((u: User) => u.email === email);
-        
-        if (user) {
-          console.log('⚠️ LocalStorage에서 사용자 찾음 (오프라인 모드):', user.email);
-          
-          // 오프라인 모드 알림 (한 번만 표시)
-          const offlineNotified = sessionStorage.getItem('offline_mode_notified');
-          if (!offlineNotified) {
-            console.warn('🌐 현재 오프라인 모드로 동작 중입니다. 일부 기능이 제한될 수 있습니다.');
-            sessionStorage.setItem('offline_mode_notified', 'true');
-          }
-          
-          return user;
-        }
-        
-        console.log('🔍 LocalStorage에서도 사용자를 찾을 수 없음:', email);
-        return null;
-      } catch (localError) {
-        console.error('❌ LocalStorage 사용자 검색 실패:', localError);
-        throw new Error('⚠️ 사용자 정보를 불러올 수 없습니다.\n네트워크 연결을 확인하고 다시 시도해주세요.');
+      console.error('❌ Azure 사용자 검색 실패:', error.message);
+      
+      // CORS 오류인 경우 더 명확한 메시지
+      if (error.message.includes('CORS') || error.message.includes('<!DOCTYPE')) {
+        throw new Error('🌐 서버 연결 문제가 발생했습니다.\n잠시 후 다시 시도해주세요.');
       }
+      
+      throw new Error('⚠️ 사용자 정보를 불러올 수 없습니다.\n네트워크 연결을 확인하고 다시 시도해주세요.');
     }
   }
 
@@ -1352,6 +1333,104 @@ export class AzureTableService {
     }
   }
 
+  // 가입 시 양쪽 모두에게 5,000원 리워드 지급
+  static async processSignupReward(newUserEmail: string, referralCode: string): Promise<boolean> {
+    try {
+      const SIGNUP_REWARD_AMOUNT = 5000;
+
+      // 추천인 조회
+      const referrer = await this.getUserByReferralCode(referralCode);
+      if (!referrer) {
+        console.warn('⚠️ 추천인을 찾을 수 없습니다:', referralCode);
+        return false;
+      }
+
+      // 신규 가입자 조회
+      const newUser = await this.getUserByEmail(newUserEmail);
+      if (!newUser) {
+        console.warn('⚠️ 신규 가입자를 찾을 수 없습니다:', newUserEmail);
+        return false;
+      }
+
+      // 1. 추천인에게 리워드 지급
+      const referrerRewardTransaction: RewardTransaction = {
+        id: `signup_reward_referrer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        fromUserId: newUser.rowKey,
+        toUserId: referrer.rowKey,
+        amount: SIGNUP_REWARD_AMOUNT,
+        sourceAmount: 0,
+        sourceType: 'signup_reward',
+        sourceId: 'signup_referral',
+        status: 'completed',
+        createdAt: new Date().toISOString(),
+        completedAt: new Date().toISOString(),
+        note: '가입 추천 리워드 (추천인)'
+      };
+
+      // 2. 신규 가입자에게 리워드 지급
+      const newUserRewardTransaction: RewardTransaction = {
+        id: `signup_reward_newuser_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        fromUserId: referrer.rowKey,
+        toUserId: newUser.rowKey,
+        amount: SIGNUP_REWARD_AMOUNT,
+        sourceAmount: 0,
+        sourceType: 'signup_reward',
+        sourceId: 'signup_bonus',
+        status: 'completed',
+        createdAt: new Date().toISOString(),
+        completedAt: new Date().toISOString(),
+        note: '가입 환영 리워드 (신규 회원)'
+      };
+
+      // 추천인 리워드 내역 및 통계 업데이트
+      const referrerHistory = RewardUtils.parseRewardHistory(referrer.rewardHistory || '[]');
+      referrerHistory.push(referrerRewardTransaction);
+      
+      const referrerStats = RewardUtils.parseReferralStats(referrer.referralStats || '{}');
+      referrerStats.totalRewardEarned += SIGNUP_REWARD_AMOUNT;
+      referrerStats.thisMonthRewards += SIGNUP_REWARD_AMOUNT;
+      referrerStats.totalReferrals += 1;
+
+      // 신규 가입자 리워드 내역 업데이트
+      const newUserHistory = RewardUtils.parseRewardHistory(newUser.rewardHistory || '[]');
+      newUserHistory.push(newUserRewardTransaction);
+
+      // 추천인 정보 업데이트
+      const updatedReferrer = {
+        ...referrer,
+        totalRewards: (referrer.totalRewards || 0) + SIGNUP_REWARD_AMOUNT,
+        rewardHistory: RewardUtils.stringifyRewardHistory(referrerHistory),
+        referralStats: RewardUtils.stringifyReferralStats(referrerStats),
+        updatedAt: new Date().toISOString()
+      };
+
+      // 신규 가입자 정보 업데이트
+      const updatedNewUser = {
+        ...newUser,
+        totalRewards: (newUser.totalRewards || 0) + SIGNUP_REWARD_AMOUNT,
+        rewardHistory: RewardUtils.stringifyRewardHistory(newUserHistory),
+        updatedAt: new Date().toISOString()
+      };
+
+      // 두 사용자 모두 업데이트
+      await Promise.all([
+        this.azureRequest('users', 'PUT', updatedReferrer, referrer.rowKey),
+        this.azureRequest('users', 'PUT', updatedNewUser, newUser.rowKey)
+      ]);
+
+      console.log('✅ 가입 리워드 지급 완료:', {
+        referrer: referralCode,
+        newUser: newUserEmail,
+        amount: SIGNUP_REWARD_AMOUNT
+      });
+      
+      return true;
+    } catch (error: any) {
+      console.error('❌ 가입 리워드 지급 실패:', error.message);
+      return false;
+    }
+  }
+
   // 구매 시 리워드 처리 (기존 addPurchaseAndEnrollmentToUser 메서드 확장)
   static async addPurchaseWithReward(userData: {
     email: string;
@@ -1390,6 +1469,61 @@ export class AzureTableService {
     }
   }
 
+  // 기존 사용자에게 추천 코드 생성 및 업데이트
+  static async generateReferralCodeForUser(email: string): Promise<string> {
+    try {
+      const user = await this.getUserByEmail(email);
+      if (!user) throw new Error('사용자를 찾을 수 없습니다.');
+
+      if (user.referralCode) {
+        return user.referralCode; // 이미 있으면 기존 코드 반환
+      }
+
+      // 고유한 추천 코드 생성
+      let referralCode = RewardUtils.generateReferralCode();
+      let isCodeUnique = false;
+      let attempts = 0;
+      
+      while (!isCodeUnique && attempts < 10) {
+        try {
+          const existingUser = await this.getUserByReferralCode(referralCode);
+          if (!existingUser) {
+            isCodeUnique = true;
+          } else {
+            referralCode = RewardUtils.generateReferralCode();
+            attempts++;
+          }
+        } catch (error) {
+          isCodeUnique = true; // 에러가 발생하면 코드가 없다고 판단
+        }
+      }
+
+      if (!isCodeUnique) {
+        throw new Error('고유한 추천 코드 생성에 실패했습니다.');
+      }
+
+      // 사용자 데이터 업데이트
+      const updatedUser = {
+        ...user,
+        referralCode,
+        totalRewards: user.totalRewards || 0,
+        pendingRewards: user.pendingRewards || 0,
+        rewardHistory: user.rewardHistory || '[]',
+        referralCount: user.referralCount || 0,
+        referralStats: user.referralStats || '{}'
+      };
+
+      // Azure Table에 업데이트 (PUT 요청) - 올바른 RowKey 사용
+      await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
+      console.log('✅ 추천 코드 생성 완료:', referralCode);
+      return referralCode;
+
+    } catch (error: any) {
+      console.error('❌ 추천 코드 생성 실패:', error.message);
+      throw error;
+    }
+  }
+
   // 사용자의 리워드 현황 조회
   static async getUserRewardStatus(email: string): Promise<{
     referralCode: string;
@@ -1400,8 +1534,18 @@ export class AzureTableService {
     stats: ReferralStats;
   } | null> {
     try {
-      const user = await this.getUserByEmail(email);
+      let user = await this.getUserByEmail(email);
       if (!user) return null;
+
+      // 추천 코드가 없으면 생성
+      if (!user.referralCode) {
+        console.log('🔄 추천 코드가 없어서 생성 중...');
+        const referralCode = await this.generateReferralCodeForUser(email);
+        user = await this.getUserByEmail(email); // 업데이트된 사용자 정보 다시 가져오기
+        if (!user) {
+          throw new Error('사용자 정보 업데이트 후 조회 실패');
+        }
+      }
 
       return {
         referralCode: user.referralCode || '',
