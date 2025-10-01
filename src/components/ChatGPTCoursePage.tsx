@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, MessageSquare, Award, Timer } from 'lucide-react';
+import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, MessageSquare, Award, Timer, ChevronUp, ChevronDown } from 'lucide-react';
 import { chatGPTCourse, saveProgress, getProgress, calculateProgressPercentage, getCompletedLessonsCount, saveQuizResult, getQuizProgress } from '../data/courseData';
 import NavigationBar from './NavigationBar';
 
@@ -19,6 +19,10 @@ const ChatGPTCoursePage: React.FC<ChatGPTCoursePageProps> = ({ onBack }) => {
   const [quizCompleted, setQuizCompleted] = useState<Record<number, boolean>>({});
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [quizStarted, setQuizStarted] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
+    // 모바일에서는 기본적으로 사이드바를 접어둠
+    return window.innerWidth <= 768;
+  });
   
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -34,7 +38,7 @@ const ChatGPTCoursePage: React.FC<ChatGPTCoursePageProps> = ({ onBack }) => {
     const savedProgress = getProgress('chatgpt-course', userEmail);
     setLessonsProgress(savedProgress);
     
-    // 퀴즈 완료 상태 불러오기 (사용자별)
+    // 퀴즈 완료 상태 불러기 (사용자별)
     const quizProgress = getQuizProgress('chatgpt-course', userEmail);
     const quizCompletedState: Record<number, boolean> = {};
     Object.keys(quizProgress).forEach(key => {
@@ -42,14 +46,30 @@ const ChatGPTCoursePage: React.FC<ChatGPTCoursePageProps> = ({ onBack }) => {
     });
     setQuizCompleted(quizCompletedState);
     
+    // 첫 번째 강의를 기본으로 선택하고 비디오 로드
     if (course.lessons.length > 0) {
-      setCurrentLesson(course.lessons[0].id);
       const firstLesson = course.lessons[0];
+      setCurrentLesson(firstLesson.id);
+      
+      // 비디오 URL이 있으면 즉시 설정
       if (firstLesson.videoUrl) {
         setVideoUrl(firstLesson.videoUrl);
+        console.log('🎥 첫 번째 강의 자동 선택:', firstLesson.title);
+        console.log('🔗 비디오 URL 설정:', firstLesson.videoUrl);
       }
     }
   }, [course]);
+
+  // 화면 크기 변경 감지
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.innerWidth <= 768;
+      setIsSidebarCollapsed(isMobile);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const currentLessonData = course.lessons.find(lesson => lesson.id === currentLesson);
   
@@ -330,12 +350,19 @@ const ChatGPTCoursePage: React.FC<ChatGPTCoursePageProps> = ({ onBack }) => {
 
         {/* 오른쪽 사이드바 */}
         <div className="course-sidebar">
-          <div className="sidebar-header">
-            <h3>강의 커리큘럼</h3>
-            <p>총 {course.lessons.length}강의 체계적인 학습 과정</p>
+          <div className="sidebar-header" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}>
+            <div className="sidebar-header-content">
+              <div>
+                <h3>강의 커리큘럼</h3>
+                <p>총 {course.lessons.length}강의 체계적인 학습 과정</p>
+              </div>
+              <button className="sidebar-toggle-btn">
+                {isSidebarCollapsed ? <ChevronDown size={20} /> : <ChevronUp size={20} />}
+              </button>
+            </div>
           </div>
-          
-          <div className="lesson-list">
+
+          <div className={`lesson-list ${isSidebarCollapsed ? 'collapsed' : ''}`}>
             {course.lessons.map((lesson, index) => (
               <div 
                 key={lesson.id} 

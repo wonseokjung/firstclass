@@ -3,6 +3,7 @@ import { Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AzureTableService from '../services/azureTableService';
 import NavigationBar from './NavigationBar';
+import PasswordResetModal from './PasswordResetModal';
 
 interface LoginPageProps {
   onBack: () => void;
@@ -17,6 +18,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [showPasswordResetModal, setShowPasswordResetModal] = useState(false);
 
   const validateForm = () => {
     const newErrors: {[key: string]: string} = {};
@@ -104,6 +106,20 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
     navigate('/signup');
   };
 
+  const handlePasswordResetRequest = async (email: string): Promise<boolean> => {
+    try {
+      const success = await AzureTableService.requestPasswordReset(email);
+      return success;
+    } catch (error) {
+      console.error('비밀번호 재설정 요청 실패:', error);
+      return false;
+    }
+  };
+
+  const handleForgotPasswordClick = () => {
+    setShowPasswordResetModal(true);
+  };
+
   return (
     <div className="auth-page">
       {/* 통일된 네비게이션바 */}
@@ -188,7 +204,11 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
 
               <div className="form-options">
                 <div className="forgot-password">
-                  <button type="button" className="link-button">
+                  <button 
+                    type="button" 
+                    className="link-button"
+                    onClick={handleForgotPasswordClick}
+                  >
                     비밀번호를 잊으셨나요?
                   </button>
                 </div>
@@ -229,6 +249,13 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
           </div>
         </div>
       </div>
+
+      {/* 비밀번호 재설정 모달 */}
+      <PasswordResetModal
+        isOpen={showPasswordResetModal}
+        onClose={() => setShowPasswordResetModal(false)}
+        onResetRequest={handlePasswordResetRequest}
+      />
     </div>
   );
 };

@@ -359,6 +359,22 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
     }
   }, []);
 
+  // 컴포넌트 마운트 시 모든 그리드를 맨 왼쪽으로 스크롤
+  useEffect(() => {
+    const resetScrollPositions = () => {
+      gridRefs.current.forEach((grid) => {
+        if (grid) {
+          grid.scrollLeft = 0;
+        }
+      });
+    };
+
+    // 컴포넌트 마운트 후 약간의 지연을 두고 실행
+    const timer = setTimeout(resetScrollPositions, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
 
 
   return (
@@ -436,7 +452,7 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
         <section className="masterclass-section">
           <div className="section-header-mc">
             <h2 className="section-title-mc">
-              <span className="highlight-category">AI 시티 빌더 (AI CITY BUILDER)</span>
+              <span className="highlight-category">AI CITY BUILDER</span>
               <div style={{ fontSize: '0.8em', marginTop: '8px', fontWeight: 'normal' }}>나만의 AI 도시 세우기</div>
             </h2>
             <div className="section-nav">

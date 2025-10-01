@@ -114,6 +114,9 @@ export interface User {
   rewardHistory?: string; // 리워드 내역 JSON 문자열
   referralCount?: number; // 추천한 사용자 수
   referralStats?: string; // 추천 통계 JSON 문자열
+  // 비밀번호 재설정 필드 추가
+  passwordResetToken?: string; // 재설정 토큰 (6자리 숫자)
+  passwordResetTokenExpiry?: string; // 토큰 만료 시간
 }
 
 // 기존 분리된 테이블 인터페이스들은 Users 테이블에 통합되어 더 이상 사용하지 않음
@@ -1559,6 +1562,124 @@ export class AzureTableService {
     } catch (error: any) {
       console.error('❌ 리워드 현황 조회 실패:', error.message);
       return null;
+    }
+  }
+
+  // === 비밀번호 재설정 관련 메서드들 ===
+
+  // 비밀번호 재설정 토큰 생성 및 이메일 전송 요청
+  static async requestPasswordReset(email: string): Promise<boolean> {
+    try {
+      console.log('🔐 비밀번호 재설정 요청:', email);
+      
+      // 사용자 존재 확인
+      const user = await this.getUserByEmail(email);
+      if (!user) {
+        console.log('❌ 등록되지 않은 이메일:', email);
+        return false;
+      }
+
+      // 재설정 토큰 생성 (6자리 숫자)
+      const resetToken = Math.floor(100000 + Math.random() * 900000).toString();
+      const resetTokenExpiry = new Date(Date.now() + 30 * 60 * 1000).toISOString(); // 30분 후 만료
+
+      // 사용자 정보에 재설정 토큰 추가
+      const updatedUser = {
+        ...user,
+        passwordResetToken: resetToken,
+        passwordResetTokenExpiry: resetTokenExpiry,
+        updatedAt: new Date().toISOString()
+      };
+
+      // Azure에 업데이트
+      await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
+      
+      // 실제 이메일 전송 (여기서는 시뮬레이션)
+      console.log('📧 비밀번호 재설정 이메일 전송 시뮬레이션');
+      console.log('📧 수신자:', email);
+      console.log('📧 재설정 코드:', resetToken);
+      console.log('📧 만료 시간:', resetTokenExpiry);
+      
+      // 실제 프로덕션에서는 이메일 서비스 (SendGrid, AWS SES 등) 사용
+      // await sendPasswordResetEmail(email, resetToken);
+      
+      console.log('✅ 비밀번호 재설정 요청 완료:', email);
+      return true;
+    } catch (error: any) {
+      console.error('❌ 비밀번호 재설정 요청 실패:', error.message);
+      return false;
+    }
+  }
+
+  // 재설정 토큰 검증
+  static async verifyPasswordResetToken(email: string, token: string): Promise<boolean> {
+    try {
+      console.log('🔍 재설정 토큰 검증:', email, token);
+      
+      const user = await this.getUserByEmail(email);
+      if (!user) {
+        console.log('❌ 사용자를 찾을 수 없음:', email);
+        return false;
+      }
+
+      // 토큰 확인
+      if (!user.passwordResetToken || user.passwordResetToken !== token) {
+        console.log('❌ 잘못된 재설정 토큰:', token);
+        return false;
+      }
+
+      // 토큰 만료 확인
+      if (!user.passwordResetTokenExpiry || new Date() > new Date(user.passwordResetTokenExpiry)) {
+        console.log('❌ 만료된 재설정 토큰:', user.passwordResetTokenExpiry);
+        return false;
+      }
+
+      console.log('✅ 재설정 토큰 검증 성공:', email);
+      return true;
+    } catch (error: any) {
+      console.error('❌ 재설정 토큰 검증 실패:', error.message);
+      return false;
+    }
+  }
+
+  // 새 비밀번호로 업데이트
+  static async resetPassword(email: string, token: string, newPassword: string): Promise<boolean> {
+    try {
+      console.log('🔐 비밀번호 재설정 실행:', email);
+      
+      // 토큰 검증
+      const isValidToken = await this.verifyPasswordResetToken(email, token);
+      if (!isValidToken) {
+        console.log('❌ 토큰 검증 실패');
+        return false;
+      }
+
+      const user = await this.getUserByEmail(email);
+      if (!user) {
+        console.log('❌ 사용자를 찾을 수 없음:', email);
+        return false;
+      }
+
+      // 새 비밀번호 해시화
+      const newPasswordHash = await hashPassword(newPassword);
+
+      // 사용자 정보 업데이트 (토큰 제거 및 비밀번호 변경)
+      const updatedUser = {
+        ...user,
+        passwordHash: newPasswordHash,
+        passwordResetToken: '', // 토큰 제거
+        passwordResetTokenExpiry: '', // 만료 시간 제거
+        updatedAt: new Date().toISOString()
+      };
+
+      // Azure에 업데이트
+      await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
+      
+      console.log('✅ 비밀번호 재설정 완료:', email);
+      return true;
+    } catch (error: any) {
+      console.error('❌ 비밀번호 재설정 실패:', error.message);
+      return false;
     }
   }
 }

@@ -537,12 +537,13 @@ body {
 
 /* 마스터클래스 그리드 */
 .masterclass-grid {
-  display: flex;
+  display: flex !important;
+  flex-direction: row !important;
   gap: 24px;
   outline: none;
   transition: var(--transition);
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch; /* iOS 터치 스크롤 최적화 */
   scrollbar-width: none; /* Firefox */
@@ -550,7 +551,7 @@ body {
   /* 터치 스와이프를 위한 추가 설정 */
   scroll-snap-type: x proximity;
   overscroll-behavior-x: contain;
-  justify-content: center; /* 카드들이 적을 때 가운데 정렬 */
+  justify-content: flex-start !important; /* 첫 번째 카드부터 시작 */
 }
 
 .masterclass-grid::-webkit-scrollbar {
@@ -575,9 +576,9 @@ body {
   transition: var(--transition-slow);
   cursor: pointer;
   position: relative;
-  flex: 0 0 300px; /* flex-grow: 0, flex-shrink: 0, flex-basis: 300px */
-  width: 300px;
-  min-width: 300px;
+  flex: 0 0 300px !important; /* flex-grow: 0, flex-shrink: 0, flex-basis: 300px */
+  width: 300px !important;
+  min-width: 300px !important;
   scroll-snap-align: start; /* 터치 스크롤 시 카드 정렬 */
 }
 
@@ -1207,22 +1208,25 @@ body {
 .course-layout {
   display: flex;
   min-height: calc(100vh - 80px);
-  background: #ffffff;
+  background: #1f2937;
+  color: #ffffff;
 }
 
 .course-main {
   flex: 1;
   padding: 40px;
-  background: #ffffff;
+  background: #1f2937;
+  color: #ffffff;
 }
 
 .course-sidebar {
   width: 400px;
-  background: #ffffff;
-  border-left: 1px solid #e2e8f0;
+  background: #374151;
+  border-left: 1px solid #4b5563;
   padding: 40px 20px;
   overflow-y: auto;
   max-height: calc(100vh - 80px);
+  color: #ffffff;
 }
 
 /* 모바일 강의 페이지 레이아웃 */
@@ -1233,19 +1237,157 @@ body {
   }
   
   .course-main {
-    padding: 20px 16px;
+    padding: 15px 16px;
     order: 1; /* 메인 콘텐츠가 위로 */
   }
   
   .course-sidebar {
     width: 100%;
     border-left: none;
-    border-top: 1px solid #e2e8f0;
-    padding: 20px 0;
+    border-top: 1px solid #4b5563;
+    padding: 20px 16px;
     order: 2; /* 사이드바가 아래로 */
-    background: #ffffff; /* 약간 더 어둡게 */
+    background: #374151;
+    max-height: 400px; /* 모바일에서 높이 제한 */
+    overflow-y: auto;
+    color: #ffffff;
   }
-  
+
+  /* 모바일에서 비디오 컨테이너 최적화 */
+  .video-container {
+    margin-bottom: 20px;
+  }
+
+  .video-player {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 비율 */
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .video-player iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .video-placeholder {
+    position: relative;
+    width: 100%;
+    height: 200px; /* 모바일에서 높이 조정 */
+    background: #f8f9fa;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #e2e8f0;
+  }
+
+  .video-placeholder-content {
+    text-align: center;
+    color: #64748b;
+  }
+
+  .video-placeholder-content h3 {
+    font-size: 1.1rem !important;
+    margin: 10px 0 5px 0 !important;
+  }
+
+  .video-placeholder-content p {
+    font-size: 0.9rem !important;
+    margin: 0 !important;
+  }
+
+  /* 모바일에서 강의 정보 최적화 */
+  .current-lesson-info {
+    padding: 15px 0;
+  }
+
+  .lesson-title {
+    font-size: 1.25rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .lesson-description {
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+    color: #666 !important;
+  }
+
+  /* 모바일에서 강의 목록 최적화 */
+  .lesson-list {
+    max-height: 300px;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+  }
+
+  .lesson-list.collapsed {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .lesson-item {
+    padding: 12px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .lesson-item-content {
+    gap: 12px !important;
+  }
+
+  .lesson-number {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .lesson-info h4 {
+    font-size: 0.9rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .lesson-meta {
+    font-size: 0.8rem !important;
+  }
+
+  /* 사이드바 헤더 스타일 */
+  .sidebar-header {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .sidebar-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .sidebar-toggle-btn {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .sidebar-toggle-btn:hover {
+    background: #f0f0f0;
+    color: #333;
+  }
+
   /* 히어로 섹션 모바일 최적화 */
   .course-hero .hero-title {
     font-size: 24px !important;
@@ -1478,6 +1620,7 @@ body {
   }
 }
 
+/* 강의 페이지 기본 스타일 */
 .course-hero {
   margin-bottom: 40px;
 }
@@ -1764,7 +1907,7 @@ body {
 
 .quiz-btn {
   background: #0ea5e9;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .quiz-btn:hover {
@@ -1772,25 +1915,25 @@ body {
 }
 
 .quiz-btn.completed {
-  background: #333;
-  color: #4b5563;
+  background: #10b981;
+  color: #ffffff;
   cursor: not-allowed;
 }
 
 .completion-btn {
-  background: #333;
-  color: #1f2937;
-  border: 1px solid #555;
+  background: #6b7280;
+  color: #ffffff;
+  border: 1px solid #9ca3af;
 }
 
 .completion-btn:hover {
-  background: #444;
-  border-color: #666;
+  background: #4b5563;
+  border-color: #6b7280;
 }
 
 .completion-btn.completed {
   background: #10b981;
-  color: #1f2937;
+  color: #ffffff;
   border-color: #10b981;
 }
 
@@ -1805,9 +1948,9 @@ body {
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  color: #1f2937;
+  background: #6b7280;
+  border: 1px solid #9ca3af;
+  color: #ffffff;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
@@ -1815,9 +1958,9 @@ body {
 }
 
 .nav-btn:hover:not(:disabled) {
-  background: rgba(14, 165, 233, 0.1);
-  border-color: var(--color-primary);
-  color: var(--color-primary);
+  background: #0ea5e9;
+  border-color: #0ea5e9;
+  color: #ffffff;
 }
 
 .nav-btn:disabled {
@@ -1966,8 +2109,8 @@ body {
   align-items: center;
   gap: 12px;
   padding: 16px;
-  background: #333;
-  border: 1px solid #555;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
   border-radius: 8px;
   color: #1f2937;
   cursor: pointer;
@@ -1977,29 +2120,32 @@ body {
 }
 
 .answer-option:hover {
-  background: #444;
-  border-color: #666;
+  background: #e5e7eb;
+  border-color: #9ca3af;
 }
 
 .answer-option.selected {
   background: #0ea5e9;
   border-color: #0ea5e9;
+  color: #ffffff;
 }
 
 .option-letter {
   width: 24px;
   height: 24px;
-  background: rgba(255, 255, 255, 0.2);
+  background: #6b7280;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 600;
   font-size: 12px;
+  color: #ffffff;
 }
 
 .answer-option.selected .option-letter {
   background: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
 }
 
 .quiz-actions {
@@ -2022,20 +2168,20 @@ body {
 }
 
 .quiz-nav-btn {
-  background: #333;
-  color: #1f2937;
-  border: 1px solid #555;
+  background: #6b7280;
+  color: #ffffff;
+  border: 1px solid #9ca3af;
 }
 
 .quiz-nav-btn:hover {
-  background: #444;
-  border-color: #666;
+  background: #4b5563;
+  border-color: #6b7280;
 }
 
 .quiz-nav-btn.primary {
   background: #0ea5e9;
   border: none;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .quiz-nav-btn.primary:hover {
@@ -2044,7 +2190,7 @@ body {
 
 .quiz-submit-btn {
   background: #10b981;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .quiz-submit-btn:hover {
@@ -2060,13 +2206,20 @@ body {
 /* 반응형 디자인 */
 @media (max-width: 1024px) {
   .masterclass-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
     gap: 20px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
   }
   
   .masterclass-card {
     flex: 0 0 280px;
     width: 280px;
     min-width: 280px;
+    scroll-snap-align: start;
   }
   
   .masterclass-main .masterclass-section {
@@ -2161,6 +2314,31 @@ body {
   .section-nav {
     display: none;
   }
+
+  /* Free Classes 섹션 특별 설정 */
+  .masterclass-section:first-child .masterclass-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    gap: 16px !important;
+    padding: 0 20px !important;
+    margin: 0 -20px !important;
+    scroll-snap-type: x proximity !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .masterclass-section:first-child .masterclass-card {
+    flex: 0 0 250px !important;
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+    scroll-snap-align: start !important;
+  }
+
+  .masterclass-section:first-child .section-nav {
+    display: none !important;
+  }
   
   /* 모바일에서 Watch Course 버튼 숨기기 */
   .watch-trailer-btn {
@@ -2169,10 +2347,15 @@ body {
   
   /* 그리드 모바일 최적화 - 태블릿에서도 가로 스크롤 */
   .masterclass-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
     gap: 16px;
     padding: 0 20px;
     margin: 0 -20px;
     scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch !important;
   }
   
     .masterclass-card {
@@ -2289,10 +2472,7 @@ body {
     transform: none !important;
   }
 
-  /* 텍스트 가독성 개선 */
-  .masterclass-main {
-    padding: 16px 12px !important;
-  }
+  /* 텍스트 가독성 개선 - 패딩은 아래에서 별도 설정 */
 
   h1 {
     font-size: 22px !important;
@@ -2341,7 +2521,7 @@ body {
   
   /* 메인 콘텐츠 모바일 최적화 */
   .masterclass-main {
-    padding: 32px 0 48px 0; /* 상단은 줄이고 하단은 늘림 */
+    padding: 15px 0 20px 0 !important; /* 상하 여백 더 줄임 */
   }
   
   /* 부드러운 스크롤 */
@@ -2350,8 +2530,8 @@ body {
   }
   
   .masterclass-main .masterclass-section {
-    padding: 0 20px 24px 20px !important; /* 좌우 패딩 유지, 하단 패딩 추가 */
-    margin-bottom: 40px; /* 섹션 간격 줄임 */
+    padding: 0 15px 10px 15px !important; /* 좌우 패딩 유지, 하단 패딩 더 줄임 */
+    margin-bottom: 15px !important; /* 섹션 간격 더 줄임 */
     position: relative;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* 섹션 구분선 */
   }
@@ -2377,26 +2557,35 @@ body {
     display: none;
   }
   
-  /* 작은 모바일에서도 Watch Course 버튼 숨기기 */
+  /* 작은 모바일에서도 Watch Course 버튼 크기 조정 */
   .watch-trailer-btn {
-    display: none;
+    font-size: 10px !important;
+    padding: 4px 8px !important;
+    min-height: 28px !important;
+    border-radius: 4px !important;
   }
   
-  /* 모바일에서 가로 스크롤 슬라이더로 변경 */
+  /* 모바일에서 가로 스크롤 슬라이더로 변경 - 카드 크기에 비례한 간격 */
   .masterclass-grid {
-    gap: 16px;
-    padding: 0 20px;
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    gap: 12px;
+    padding: 0 15px;
     scroll-snap-type: x proximity;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch !important;
   }
   
-  /* 카드 모바일 최적화 - 일부 겹침으로 스와이프 힌트 */
+  /* 카드 모바일 최적화 - 더 작은 크기로 여러 개 보이도록 */
   .masterclass-card {
-    flex: 0 0 calc(100vw - 60px);
-    width: calc(100vw - 60px);
-    min-width: calc(100vw - 60px);
-    max-width: calc(100vw - 60px);
+    flex: 0 0 calc(49vw);
+    width: calc(49vw);
+    min-width: calc(49vw);
+    max-width: calc(49vw);
     flex-shrink: 0;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
     /* 작은 모바일에서도 터치 피드백 */
     -webkit-tap-highlight-color: rgba(14, 165, 233, 0.1);
   }
@@ -2417,6 +2606,94 @@ body {
     font-size: 12px !important;
     line-height: 1.4 !important;
     opacity: 0.9 !important;
+  }
+
+  /* Free Classes 섹션 모바일 가로 스크롤 최적화 - 카드 크기에 비례한 간격 */
+  .masterclass-section:first-child .masterclass-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 0 15px !important;
+    margin: 0 -15px !important;
+    gap: 12px !important;
+    scroll-snap-type: x proximity !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .masterclass-section:first-child .masterclass-card {
+    flex: 0 0 calc(49vw) !important;
+    width: calc(49vw) !important;
+    min-width: calc(49vw) !important;
+    max-width: calc(49vw) !important;
+    scroll-snap-align: start !important;
+  }
+
+  /* 스크롤 힌트 - 다음 카드가 살짝 보이도록 - 카드 크기에 비례 */
+  .masterclass-section:first-child .masterclass-grid {
+    padding-right: 30px !important;
+  }
+
+  .masterclass-section:first-child .masterclass-card:last-child {
+    margin-right: 0 !important;
+  }
+
+  /* Free Classes 섹션의 네비게이션 버튼 숨기기 (모바일에서는 터치 스크롤) */
+  .masterclass-section:first-child .section-nav {
+    display: none !important;
+  }
+
+  /* 모든 섹션 여백 조정 - 카드 크기에 비례 */
+  .masterclass-section {
+    margin-bottom: 12px !important;
+    padding: 0 8px !important;
+  }
+
+  /* 모바일에서 섹션 제목 중앙 정렬 및 간격 조정 */
+  .section-header-mc,
+  .section-header {
+    text-align: center !important;
+    margin-bottom: 12px !important;
+    margin-top: 15px !important;
+  }
+
+  .section-title-mc,
+  .section-title {
+    text-align: center !important;
+    margin-bottom: 5px !important;
+    font-size: 20px !important;
+    line-height: 1.2 !important;
+  }
+
+  /* 부제목 간격 조정 */
+  .section-header-mc div,
+  .section-subtitle {
+    margin-top: 5px !important;
+    margin-bottom: 0 !important;
+    font-size: 12px !important;
+    opacity: 0.8 !important;
+  }
+
+  .section-nav {
+    display: none !important;
+  }
+
+  /* 모바일에서 배지 크기 조정 */
+  .free-badge-overlay,
+  .premium-badge {
+    font-size: 8px !important;
+    padding: 3px 6px !important;
+    top: 6px !important;
+    border-radius: 8px !important;
+  }
+
+
+  .free-badge-overlay {
+    right: 6px !important;
+  }
+
+  .premium-badge {
+    left: 6px !important;
   }
   
   /* 카드 이미지 최적화 */
@@ -2448,15 +2725,9 @@ body {
     font-weight: 600 !important;
   }
   
-  /* 네비게이션 화살표 모바일 최적화 */
+  /* 네비게이션 화살표 모바일에서 숨기기 */
   .section-nav {
-    display: flex !important;
-    gap: 8px;
-    position: absolute;
-    top: 50%;
-    right: 16px;
-    transform: translateY(-50%);
-    z-index: 10;
+    display: none !important;
   }
   
   .nav-arrow {
@@ -5035,14 +5306,11 @@ body {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #0ea5e9, #3b82f6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #000000;
 }
 
 .auth-subtitle {
-  color: #64748b !important;
+  color: #000000 !important;
   font-size: 1.125rem;
   line-height: 1.6;
 }
@@ -5283,7 +5551,7 @@ body {
 .checkbox-custom {
   width: 1.25rem;
   height: 1.25rem;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid #000000;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -5317,6 +5585,152 @@ body {
   color: #666666 !important;
   font-weight: 500;
   margin-right: 0.25rem;
+}
+
+/* 비밀번호 재설정 모달 스타일 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.password-reset-modal {
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1.5rem 0 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 1.5rem;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.modal-close-button {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.modal-close-button:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.modal-body {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+.password-reset-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.reset-description {
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.modal-cancel-button {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #374151;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-cancel-button:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.modal-cancel-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.password-reset-success {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.success-icon {
+  color: #10b981;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.password-reset-success h3 {
+  color: #111827;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+}
+
+.password-reset-success p {
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+}
+
+.reset-note {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  margin-top: 1rem !important;
 }
 
 /* 모바일 반응형 */
