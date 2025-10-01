@@ -141,14 +141,6 @@ const AIEducationDocumentaryPageWrapper = () => {
   );
 };
 
-const AIBuildingCoursePageWrapper = () => {
-  const navigate = useNavigate();
-  return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <AIBuildingCoursePage onBack={() => navigate('/')} />
-    </Suspense>
-  );
-};
 
 const FAQPageWrapper = () => {
   const navigate = useNavigate();
@@ -214,9 +206,10 @@ const PaymentFailPageWrapper = () => {
 };
 
 const AICityMapPageWrapper = () => {
+  const navigate = useNavigate();
   return (
     <Suspense fallback={<LoadingSpinner />}>
-      <AICityMapPage />
+      <AICityMapPage onBack={() => navigate('/')} />
     </Suspense>
   );
 };

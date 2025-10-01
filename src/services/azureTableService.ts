@@ -1544,7 +1544,7 @@ export class AzureTableService {
       // 추천 코드가 없으면 생성
       if (!user.referralCode) {
         console.log('🔄 추천 코드가 없어서 생성 중...');
-        const referralCode = await this.generateReferralCodeForUser(email);
+        await this.generateReferralCodeForUser(email);
         user = await this.getUserByEmail(email); // 업데이트된 사용자 정보 다시 가져오기
         if (!user) {
           throw new Error('사용자 정보 업데이트 후 조회 실패');
