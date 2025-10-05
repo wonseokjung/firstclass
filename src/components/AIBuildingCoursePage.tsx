@@ -239,7 +239,18 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
   }, []);
 
   const handleEarlyBirdPayment = async () => {
-    alert('결제 기능은 향후 구현 예정입니다.');
+    console.log('🔍 결제 버튼 클릭 - 로그인 상태 체크:', {
+      isLoggedIn,
+      userInfo: userInfo ? { email: userInfo.email, name: userInfo.name } : null,
+      token: localStorage.getItem('userToken'),
+      email: localStorage.getItem('userEmail')
+    });
+    
+    if (!isLoggedIn || !userInfo) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+    setShowPaymentModal(true);
   };
 
   const handleLoginRequired = () => {
