@@ -210,26 +210,39 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
     const checkAuthStatus = async () => {
       try {
         const token = localStorage.getItem('userToken');
+        const userEmail = localStorage.getItem('userEmail');
+        
+        console.log('🔍 AI 건물 짓기 페이지 - 로그인 상태 체크:', {
+          token: token ? 'exists' : 'null',
+          userEmail: userEmail || 'null'
+        });
+        
         if (token) {
           setIsLoggedIn(true);
           setCheckingEnrollment(true);
 
           // 사용자 정보 가져오기
           try {
-            const userEmail = localStorage.getItem('userEmail');
             if (userEmail) {
+              console.log('🔍 사용자 정보 가져오는 중:', userEmail);
               const userProfile = await AzureTableService.getUserByEmail(userEmail);
+              console.log('✅ 사용자 정보 가져오기 성공:', userProfile ? { email: userProfile.email, name: userProfile.name } : 'null');
               setUserInfo(userProfile);
+            } else {
+              console.warn('⚠️ userEmail이 없습니다');
             }
           } catch (error) {
-            console.error('사용자 정보 가져오기 실패:', error);
+            console.error('❌ 사용자 정보 가져오기 실패:', error);
           }
 
           // 수강 상태 체크 로직은 향후 구현
           setIsAlreadyEnrolled(false);
+        } else {
+          console.log('❌ 토큰이 없습니다');
+          setIsLoggedIn(false);
         }
       } catch (error) {
-        console.error('인증 상태 확인 실패:', error);
+        console.error('❌ 인증 상태 확인 실패:', error);
       } finally {
         setCheckingEnrollment(false);
       }
