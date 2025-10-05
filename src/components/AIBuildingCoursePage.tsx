@@ -209,40 +209,41 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const token = localStorage.getItem('userToken');
-        const userEmail = localStorage.getItem('userEmail');
+        const storedUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
         
         console.log('🔍 AI 건물 짓기 페이지 - 로그인 상태 체크:', {
-          token: token ? 'exists' : 'null',
-          userEmail: userEmail || 'null'
+          sessionStorage: storedUserInfo ? 'exists' : 'null'
         });
         
-        if (token) {
-          setIsLoggedIn(true);
-          setCheckingEnrollment(true);
-
-          // 사용자 정보 가져오기
+        if (storedUserInfo) {
           try {
-            if (userEmail) {
-              console.log('🔍 사용자 정보 가져오는 중:', userEmail);
-              const userProfile = await AzureTableService.getUserByEmail(userEmail);
-              console.log('✅ 사용자 정보 가져오기 성공:', userProfile ? { email: userProfile.email, name: userProfile.name } : 'null');
-              setUserInfo(userProfile);
-            } else {
-              console.warn('⚠️ userEmail이 없습니다');
-            }
-          } catch (error) {
-            console.error('❌ 사용자 정보 가져오기 실패:', error);
-          }
+            const parsedUserInfo = JSON.parse(storedUserInfo);
+            console.log('✅ 세션에서 사용자 정보 파싱 성공:', { 
+              email: parsedUserInfo.email, 
+              name: parsedUserInfo.name 
+            });
+            
+            setIsLoggedIn(true);
+            setUserInfo(parsedUserInfo);
+            setCheckingEnrollment(true);
 
-          // 수강 상태 체크 로직은 향후 구현
-          setIsAlreadyEnrolled(false);
+            // 수강 상태 체크 로직은 향후 구현
+            setIsAlreadyEnrolled(false);
+          } catch (parseError) {
+            console.error('❌ 사용자 정보 파싱 오류:', parseError);
+            sessionStorage.removeItem('aicitybuilders_user_session');
+            setIsLoggedIn(false);
+            setUserInfo(null);
+          }
         } else {
-          console.log('❌ 토큰이 없습니다');
+          console.log('❌ 세션 정보가 없습니다');
           setIsLoggedIn(false);
+          setUserInfo(null);
         }
       } catch (error) {
         console.error('❌ 인증 상태 확인 실패:', error);
+        setIsLoggedIn(false);
+        setUserInfo(null);
       } finally {
         setCheckingEnrollment(false);
       }
@@ -255,8 +256,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
     console.log('🔍 결제 버튼 클릭 - 로그인 상태 체크:', {
       isLoggedIn,
       userInfo: userInfo ? { email: userInfo.email, name: userInfo.name } : null,
-      token: localStorage.getItem('userToken'),
-      email: localStorage.getItem('userEmail')
+      sessionStorage: sessionStorage.getItem('aicitybuilders_user_session') ? 'exists' : 'null'
     });
     
     if (!isLoggedIn || !userInfo) {
