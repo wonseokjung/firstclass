@@ -3,6 +3,7 @@ import { Clock, Play, ChevronDown, ChevronRight, BookOpen, Wrench, Image } from 
 import NavigationBar from './NavigationBar';
 import AzureTableService from '../services/azureTableService';
 import { allCourses } from '../data/courseData';
+import PaymentComponent from './PaymentComponent';
 
 interface AIBuildingCoursePageProps {
   onBack: () => void;
@@ -14,6 +15,8 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
   const [checkingEnrollment, setCheckingEnrollment] = useState(false);
   const [isAlreadyEnrolled, setIsAlreadyEnrolled] = useState(false);
   const [expandedChapters, setExpandedChapters] = useState<Set<number>>(new Set());
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [userInfo, setUserInfo] = useState<any>(null);
 
   const course = allCourses.find((c: any) => c.id === 999) || {
     id: 999,
@@ -210,6 +213,17 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
         if (token) {
           setIsLoggedIn(true);
           setCheckingEnrollment(true);
+
+          // 사용자 정보 가져오기
+          try {
+            const userEmail = localStorage.getItem('userEmail');
+            if (userEmail) {
+              const userProfile = await AzureTableService.getUserByEmail(userEmail);
+              setUserInfo(userProfile);
+            }
+          } catch (error) {
+            console.error('사용자 정보 가져오기 실패:', error);
+          }
 
           // 수강 상태 체크 로직은 향후 구현
           setIsAlreadyEnrolled(false);
