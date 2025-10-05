@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 import PaymentComponent from './PaymentComponent';
-import ComingSoonModal from './ComingSoonModal';
 import AzureTableService from '../services/azureTableService';
 import NavigationBar from './NavigationBar';
 
@@ -189,9 +188,6 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<{title: string; price: number} | null>(null);
   
-  // 곧 오픈 예정 모달 state
-  const [showComingSoonModal, setShowComingSoonModal] = useState(false);
-  const [comingSoonCourse, setComingSoonCourse] = useState<string>('');
   
   // 로그인 상태 관리
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -312,10 +308,9 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
 
   // 강의 클릭 핸들러
   const handleCourseClick = (course: any) => {
-    // Coming Soon 강의 처리
+    // AI 건물 짓기 강의 처리
     if (course.id === 999) {
-      setComingSoonCourse(course.title);
-      setShowComingSoonModal(true);
+      navigate('/ai-building-course');
       return;
     }
     
@@ -590,12 +585,6 @@ const MainPage: React.FC<MainPageProps> = ({ onCourseSelect, onFAQClick, onLogin
           />
         )}
 
-        {/* Coming Soon 모달 */}
-        <ComingSoonModal
-          isOpen={showComingSoonModal}
-          onClose={() => setShowComingSoonModal(false)}
-          courseTitle={comingSoonCourse}
-        />
       </div>
     );
   };
