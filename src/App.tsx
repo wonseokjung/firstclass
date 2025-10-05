@@ -214,6 +214,15 @@ const AICityMapPageWrapper = () => {
   );
 };
 
+const AIBuildingCoursePageWrapper = () => {
+  const navigate = useNavigate();
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <AIBuildingCoursePage onBack={() => navigate('/')} />
+    </Suspense>
+  );
+};
+
 // AI Building Course 11월 1일 오픈 안내 컴포넌트
 const ComingSoonNotice = () => {
   const navigate = useNavigate();
@@ -338,7 +347,7 @@ function App() {
             <Route path="/ai-business-course" element={<AIBusinessCoursePageWrapper />} />
             <Route path="/ai-coding-course" element={<AICodingCoursePageWrapper />} />
             <Route path="/ai-education-documentary" element={<AIEducationDocumentaryPageWrapper />} />
-            <Route path="/ai-building-course" element={<ComingSoonNotice />} />
+            <Route path="/ai-building-course" element={<AIBuildingCoursePageWrapper />} />
             {/* 기존 URL 리다이렉트 */}
             <Route path="/workflow-automation-master" element={<ComingSoonNotice />} />
             <Route path="/faq" element={<FAQPageWrapper />} />
