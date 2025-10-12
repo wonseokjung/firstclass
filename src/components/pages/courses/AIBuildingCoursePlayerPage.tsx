@@ -189,15 +189,15 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
   };
 
   // 챕터 확장/접기 함수
-  const toggleChapter = (chapterId: number) => {
-    const newExpanded = new Set(expandedChapters);
-    if (newExpanded.has(chapterId)) {
-      newExpanded.delete(chapterId);
-    } else {
-      newExpanded.add(chapterId);
-    }
-    setExpandedChapters(newExpanded);
-  };
+  // const toggleChapter = (chapterId: number) => {
+  //   const newExpanded = new Set(expandedChapters);
+  //   if (newExpanded.has(chapterId)) {
+  //     newExpanded.delete(chapterId);
+  //   } else {
+  //     newExpanded.add(chapterId);
+  //   }
+  //   setExpandedChapters(newExpanded);
+  // };
 
   useEffect(() => {
     const checkAuthorization = async () => {
