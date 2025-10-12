@@ -18,14 +18,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
   const [expandedChapters, setExpandedChapters] = useState<Set<number>>(new Set());
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
-  
-  // 카운트다운 상태
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
 
   const course = {
     id: 1002,
@@ -239,33 +231,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     setExpandedChapters(newExpanded);
   };
 
-  // 카운트다운 로직
-  useEffect(() => {
-    const launchDate = new Date('2025-11-15T00:00:00+09:00').getTime();
-    
-    const updateCountdown = () => {
-      const now = new Date().getTime();
-      const distance = launchDate - now;
-      
-      if (distance < 0) {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-        return;
-      }
-      
-      setTimeLeft({
-        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000)
-      });
-    };
-    
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
-    
-    return () => clearInterval(interval);
-  }, []);
-
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
@@ -416,7 +381,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
           margin: '0 auto',
           padding: '40px 20px'
         }}>
-          {/* 상단 메인 CTA - 카운트다운 포함 */}
+          {/* 상단 메인 CTA - 깔끔한 디자인 */}
           <div style={{
             background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
             borderRadius: '20px',
@@ -426,65 +391,22 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             color: 'white',
             boxShadow: '0 10px 30px rgba(14, 165, 233, 0.3)'
           }}>
-            {/* 런칭 예정 배지 */}
-            <div style={{
-              background: 'rgba(255, 255, 255, 0.2)',
-              color: '#ffffff',
-              padding: '10px 20px',
-              borderRadius: '25px',
-              fontSize: '1rem',
-              fontWeight: '700',
-              marginBottom: '20px',
-              display: 'inline-block',
-              border: '2px solid rgba(255, 255, 255, 0.3)',
-              backdropFilter: 'blur(10px)'
-            }}>
-              🚀 2025년 11월 15일 런칭 예정
-            </div>
-
-            {/* 카운트다운 타이머 */}
-            <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '20px',
-              marginBottom: '40px',
-              flexWrap: 'wrap'
-            }}>
-              {[
-                { label: '일', value: timeLeft.days },
-                { label: '시간', value: timeLeft.hours },
-                { label: '분', value: timeLeft.minutes },
-                { label: '초', value: timeLeft.seconds }
-              ].map((item, index) => (
-                <div key={index} style={{
-                  background: 'rgba(255, 255, 255, 0.15)',
-                  borderRadius: '15px',
-                  padding: '20px',
-                  minWidth: '100px',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)'
-                }}>
-                  <div style={{
-                    fontSize: '2.5rem',
-                    fontWeight: '800',
-                    marginBottom: '5px',
-                    color: '#ffffff'
-                  }}>
-                    {String(item.value).padStart(2, '0')}
-                  </div>
-                  <div style={{
-                    fontSize: '0.9rem',
-                    opacity: '0.9',
-                    color: '#ffffff'
-                  }}>
-                    {item.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* 강의 제목 */}
+            {/* 강의 아이콘과 제목 */}
             <div style={{ marginBottom: '40px' }}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '80px',
+                height: '80px',
+                background: 'rgba(255, 255, 255, 0.2)',
+                borderRadius: '50%',
+                marginBottom: '25px',
+                backdropFilter: 'blur(10px)',
+                border: '2px solid rgba(255, 255, 255, 0.3)'
+              }}>
+                <span style={{ fontSize: '2.5rem' }}>🤖</span>
+              </div>
               <h1 style={{
                 fontSize: 'clamp(2rem, 4vw, 2.8rem)',
                 marginBottom: '20px',
@@ -559,22 +481,9 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 padding: '8px 12px',
                 borderRadius: '8px',
                 border: '1px solid rgba(255, 255, 255, 0.2)',
-                display: 'inline-block',
-                marginBottom: '10px'
-              }}>
-                ⏰ 런칭일(2025.11.15)까지 얼리버드 가격 유지
-              </div>
-              <div style={{
-                fontSize: '0.9rem',
-                color: '#ffffff',
-                fontWeight: '500',
-                background: 'rgba(255, 255, 255, 0.1)',
-                padding: '8px 12px',
-                borderRadius: '8px',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
                 display: 'inline-block'
               }}>
-                ⚠️ 런칭 후 9만9천원 이상으로 인상 예정
+                ⚠️ 2025년 3월 1일부터 9만9천원 이상으로 인상 예정
               </div>
             </div>
 
@@ -1764,385 +1673,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             </div>
           </div>
 
-          {/* 왜 이렇게 저렴한가요? */}
-          <div style={{ marginBottom: '60px' }}>
-            <div style={{
-              background: '#ffffff',
-              padding: '50px 40px',
-              borderRadius: '20px',
-              border: '2px solid #e2e8f0',
-              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)'
-            }}>
-              <h2 style={{
-                fontSize: 'clamp(1.8rem, 3vw, 2.2rem)',
-                fontWeight: '800',
-                color: '#1f2937',
-                marginBottom: '30px',
-                textAlign: 'center'
-              }}>
-                💰 왜 이렇게 저렴한가요?
-              </h2>
-
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                gap: '25px',
-                marginBottom: '30px'
-              }}>
-                {/* 이유 1 */}
-                <div style={{
-                  background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
-                  padding: '30px',
-                  borderRadius: '15px',
-                  border: '2px solid #0ea5e9',
-                  textAlign: 'center'
-                }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>🚀</div>
-                  <h3 style={{
-                    color: '#0ea5e9',
-                    fontSize: '1.2rem',
-                    fontWeight: '700',
-                    marginBottom: '15px'
-                  }}>
-                    런칭 기념 특가
-                  </h3>
-                  <p style={{
-                    color: '#64748b',
-                    fontSize: '1rem',
-                    lineHeight: '1.6',
-                    margin: '0'
-                  }}>
-                    2025년 11월 15일 정식 런칭을 앞두고 있습니다. 얼리버드 수강생들에게 특별한 가격으로 제공합니다.
-                  </p>
-                </div>
-
-                {/* 이유 2 */}
-                <div style={{
-                  background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
-                  padding: '30px',
-                  borderRadius: '15px',
-                  border: '2px solid #0ea5e9',
-                  textAlign: 'center'
-                }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>👥</div>
-                  <h3 style={{
-                    color: '#0ea5e9',
-                    fontSize: '1.2rem',
-                    fontWeight: '700',
-                    marginBottom: '15px'
-                  }}>
-                    커뮤니티 구축
-                  </h3>
-                  <p style={{
-                    color: '#64748b',
-                    fontSize: '1rem',
-                    lineHeight: '1.6',
-                    margin: '0'
-                  }}>
-                    초기 수강생들과 함께 AI City Builders 커뮤니티를 만들어가고 싶습니다. 여러분의 피드백이 강의를 완성합니다.
-                  </p>
-                </div>
-
-                {/* 이유 3 */}
-                <div style={{
-                  background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
-                  padding: '30px',
-                  borderRadius: '15px',
-                  border: '2px solid #0ea5e9',
-                  textAlign: 'center'
-                }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>💡</div>
-                  <h3 style={{
-                    color: '#0ea5e9',
-                    fontSize: '1.2rem',
-                    fontWeight: '700',
-                    marginBottom: '15px'
-                  }}>
-                    AI 교육 대중화
-                  </h3>
-                  <p style={{
-                    color: '#64748b',
-                    fontSize: '1rem',
-                    lineHeight: '1.6',
-                    margin: '0'
-                  }}>
-                    더 많은 분들이 AI 기술을 배우고 활용할 수 있도록 진입 장벽을 낮추고자 합니다. 누구나 AI로 수익화할 수 있습니다.
-                  </p>
-                </div>
-              </div>
-
-              <div style={{
-                background: '#fef3c7',
-                padding: '20px',
-                borderRadius: '12px',
-                border: '2px solid #fbbf24',
-                textAlign: 'center'
-              }}>
-                <p style={{
-                  color: '#92400e',
-                  fontSize: '1.1rem',
-                  fontWeight: '600',
-                  margin: '0',
-                  lineHeight: '1.6'
-                }}>
-                  ⚠️ <strong>주의:</strong> 런칭 후에는 정가(99,000원 이상)로 판매됩니다.<br/>
-                  지금이 가장 저렴한 시기입니다!
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* 이 코스를 들으면? */}
-          <div style={{ marginBottom: '60px' }}>
-            <div style={{
-              background: 'linear-gradient(135deg, #1f2937, #111827)',
-              padding: '50px 40px',
-              borderRadius: '20px',
-              color: 'white',
-              boxShadow: '0 20px 50px rgba(0, 0, 0, 0.3)'
-            }}>
-              <h2 style={{
-                fontSize: 'clamp(1.8rem, 3vw, 2.2rem)',
-                fontWeight: '800',
-                marginBottom: '20px',
-                textAlign: 'center',
-                color: '#ffffff'
-              }}>
-                ✨ 이 코스를 들으면?
-              </h2>
-              <p style={{
-                textAlign: 'center',
-                fontSize: '1.1rem',
-                marginBottom: '40px',
-                color: '#bae6fd',
-                fontWeight: '500'
-              }}>
-                18강의로 완성하는 실전 AI 에이전트 개발, 당신이 배울 수 있는 것들
-              </p>
-
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                gap: '25px'
-              }}>
-                {/* 배울 것 1 */}
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  padding: '30px',
-                  borderRadius: '15px',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  backdropFilter: 'blur(10px)'
-                }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>🤖</div>
-                  <h3 style={{
-                    color: '#0ea5e9',
-                    fontSize: '1.3rem',
-                    fontWeight: '700',
-                    marginBottom: '15px'
-                  }}>
-                    AI 에이전트 개발 완전 정복
-                  </h3>
-                  <ul style={{
-                    color: '#e5e7eb',
-                    fontSize: '1rem',
-                    lineHeight: '1.8',
-                    paddingLeft: '20px',
-                    margin: '0'
-                  }}>
-                    <li>ChatGPT Agent Builder로 나만의 AI 비서 만들기</li>
-                    <li>File Search로 문서 분석 자동화</li>
-                    <li>Logic Node로 똑똑한 판단 기능 구현</li>
-                    <li>Human Approval로 안전한 워크플로우 설계</li>
-                  </ul>
-                </div>
-
-                {/* 배울 것 2 */}
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  padding: '30px',
-                  borderRadius: '15px',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  backdropFilter: 'blur(10px)'
-                }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>🌐</div>
-                  <h3 style={{
-                    color: '#10b981',
-                    fontSize: '1.3rem',
-                    fontWeight: '700',
-                    marginBottom: '15px'
-                  }}>
-                    실전 배포 & 수익화
-                  </h3>
-                  <ul style={{
-                    color: '#e5e7eb',
-                    fontSize: '1rem',
-                    lineHeight: '1.8',
-                    paddingLeft: '20px',
-                    margin: '0'
-                  }}>
-                    <li>ChatKit으로 웹사이트에 챗봇 배포하기</li>
-                    <li>블로그/티스토리/Notion에 AI 임베드</li>
-                    <li>브랜드 맞춤형 UI/UX 커스터마이징</li>
-                    <li>실제 서비스로 런칭하는 전 과정</li>
-                  </ul>
-                </div>
-
-                {/* 배울 것 3 */}
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  padding: '30px',
-                  borderRadius: '15px',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  backdropFilter: 'blur(10px)'
-                }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>💰</div>
-                  <h3 style={{
-                    color: '#f59e0b',
-                    fontSize: '1.3rem',
-                    fontWeight: '700',
-                    marginBottom: '15px'
-                  }}>
-                    AI 비용 최적화 노하우
-                  </h3>
-                  <ul style={{
-                    color: '#e5e7eb',
-                    fontSize: '1rem',
-                    lineHeight: '1.8',
-                    paddingLeft: '20px',
-                    margin: '0'
-                  }}>
-                    <li>API 비용을 70% 절감하는 방법</li>
-                    <li>프롬프트 캐싱으로 비용 줄이기</li>
-                    <li>효율적인 워크플로우 설계 전략</li>
-                    <li>스타트업 검증 비용 관리 방법론</li>
-                  </ul>
-                </div>
-
-                {/* 배울 것 4 */}
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  padding: '30px',
-                  borderRadius: '15px',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  backdropFilter: 'blur(10px)'
-                }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>🎨</div>
-                  <h3 style={{
-                    color: '#ec4899',
-                    fontSize: '1.3rem',
-                    fontWeight: '700',
-                    marginBottom: '15px'
-                  }}>
-                    콘텐츠 제작 자동화
-                  </h3>
-                  <ul style={{
-                    color: '#e5e7eb',
-                    fontSize: '1rem',
-                    lineHeight: '1.8',
-                    paddingLeft: '20px',
-                    margin: '0'
-                  }}>
-                    <li>Input Node로 맞춤형 콘텐츠 생성기 만들기</li>
-                    <li>Evals로 AI 결과물 품질 개선</li>
-                    <li>자동화 루프로 대량 콘텐츠 생산</li>
-                    <li>영상 스크립트 자동 작성 시스템</li>
-                  </ul>
-                </div>
-
-                {/* 배울 것 5 */}
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  padding: '30px',
-                  borderRadius: '15px',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  backdropFilter: 'blur(10px)'
-                }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>🎙️</div>
-                  <h3 style={{
-                    color: '#8b5cf6',
-                    fontSize: '1.3rem',
-                    fontWeight: '700',
-                    marginBottom: '15px'
-                  }}>
-                    음성 AI 인터랙션
-                  </h3>
-                  <ul style={{
-                    color: '#e5e7eb',
-                    fontSize: '1rem',
-                    lineHeight: '1.8',
-                    paddingLeft: '20px',
-                    margin: '0'
-                  }}>
-                    <li>GPT-4o Realtime으로 실시간 음성 대화</li>
-                    <li>감정 인식으로 공감형 AI 만들기</li>
-                    <li>음성 명령 기반 자동화 구축</li>
-                    <li>Guardrails로 안전한 AI 시스템 설계</li>
-                  </ul>
-                </div>
-
-                {/* 배울 것 6 */}
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  padding: '30px',
-                  borderRadius: '15px',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  backdropFilter: 'blur(10px)'
-                }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>🚀</div>
-                  <h3 style={{
-                    color: '#ef4444',
-                    fontSize: '1.3rem',
-                    fontWeight: '700',
-                    marginBottom: '15px'
-                  }}>
-                    실전 프로젝트 경험
-                  </h3>
-                  <ul style={{
-                    color: '#e5e7eb',
-                    fontSize: '1rem',
-                    lineHeight: '1.8',
-                    paddingLeft: '20px',
-                    margin: '0'
-                  }}>
-                    <li>일정 관리 AI 비서 프로젝트</li>
-                    <li>회의록 요약 & 이메일 작성 자동화</li>
-                    <li>유튜브 스크립트 생성기 구축</li>
-                    <li>포트폴리오로 활용 가능한 5개 프로젝트</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div style={{
-                marginTop: '40px',
-                padding: '30px',
-                background: 'rgba(14, 165, 233, 0.1)',
-                borderRadius: '15px',
-                border: '2px solid #0ea5e9',
-                textAlign: 'center'
-              }}>
-                <p style={{
-                  fontSize: '1.3rem',
-                  fontWeight: '700',
-                  color: '#ffffff',
-                  margin: '0 0 15px 0'
-                }}>
-                  🎯 이 강의의 목표
-                </p>
-                <p style={{
-                  fontSize: '1.1rem',
-                  color: '#bae6fd',
-                  margin: '0',
-                  lineHeight: '1.8',
-                  fontWeight: '500'
-                }}>
-                  단순히 AI 도구를 사용하는 것이 아니라,<br/>
-                  <strong style={{ color: '#0ea5e9' }}>실제로 수익을 창출하는 AI 서비스</strong>를 만들 수 있도록 안내합니다.<br/>
-                  이론부터 실전 배포, 비용 최적화까지 <strong style={{ color: '#0ea5e9' }}>A to Z 완벽 학습</strong>!
-                </p>
-              </div>
-            </div>
-          </div>
-
           {/* 강의 소개 - 깔끔한 디자인 */}
           <div style={{ marginBottom: '60px' }}>
             <div style={{
@@ -2453,28 +1983,11 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             <p style={{
               color: '#64748b',
               fontSize: '1.1rem',
-              marginBottom: '10px',
+              marginBottom: '40px',
               textAlign: 'center'
             }}>
               총 18강의 · 약 15시간 · 5가지 프로젝트
             </p>
-            <div style={{
-              background: '#fef3c7',
-              padding: '12px 20px',
-              borderRadius: '10px',
-              border: '1px solid #fbbf24',
-              textAlign: 'center',
-              marginBottom: '40px'
-            }}>
-              <p style={{
-                color: '#92400e',
-                fontSize: '0.95rem',
-                fontWeight: '600',
-                margin: '0'
-              }}>
-                ℹ️ 커리큘럼은 런칭 전까지 수강생 피드백을 반영하여 일부 변동될 수 있습니다.
-              </p>
-            </div>
 
             {/* Part 0: 준비 - AI 에이전트 만들기 입문 준비 */}
             <div style={{ marginBottom: '40px' }}>
