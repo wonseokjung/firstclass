@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen, Clock, Award, Play, Calendar, Zap, Gift, Users, TrendingUp, Copy, Link } from 'lucide-react';
-import AzureTableService from '../services/azureTableService';
-import NavigationBar from './NavigationBar';
-import { SkeletonCourseCard, SkeletonUserStats } from './SkeletonLoader';
+import AzureTableService from '../../../services/azureTableService';
+import NavigationBar from '../../common/NavigationBar';
+import { SkeletonCourseCard, SkeletonUserStats } from '../../common/SkeletonLoader';
 
 interface UserDashboardPageProps {
   onBack: () => void;

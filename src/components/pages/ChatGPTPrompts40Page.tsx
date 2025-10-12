@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Copy, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
-import NavigationBar from './NavigationBar';
+import NavigationBar from '../common/NavigationBar';
 
 interface ChatGPTPrompts40PageProps {
   onBack: () => void;

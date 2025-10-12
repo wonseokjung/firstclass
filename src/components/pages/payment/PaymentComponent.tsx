@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { loadTossPayments } from '@tosspayments/payment-sdk';
-import { getPaymentConfig, createPaymentRequest, validateApiKey } from '../config/payment';
+import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
+import { getPaymentConfig, createPaymentRequest, validateApiKey } from '../../../config/payment';
 
 interface PaymentComponentProps {
   courseTitle: string;
@@ -31,9 +31,12 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
           throw new Error('Invalid API Key');
         }
 
+        // npm 패키지 방식으로 토스페이먼츠 초기화
         const tossPaymentsInstance = await loadTossPayments(paymentConfig.clientKey);
         setTossPayments(tossPaymentsInstance);
-        console.log(`✅ 토스페이먼츠 초기화 완료 (${paymentConfig.environment} 환경)`);
+        console.log(`✅ 토스페이먼츠 v2 초기화 완료 (${paymentConfig.environment} 환경)`);
+        console.log('🔍 tossPayments 객체:', tossPaymentsInstance);
+        console.log('🔍 tossPayments.payment 함수:', typeof tossPaymentsInstance.payment);
       } catch (error) {
         console.error('❌ 토스페이먼츠 초기화 실패:', error);
       }
@@ -50,9 +53,13 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
     }
 
     if (!tossPayments) {
+      console.error('❌ tossPayments 객체가 없습니다');
       alert('결제 시스템을 초기화하는 중입니다. 잠시 후 다시 시도해주세요.');
       return;
     }
+
+    console.log('✅ tossPayments 객체 확인:', tossPayments);
+    console.log('🔍 tossPayments.payment 함수 존재 여부:', typeof tossPayments.payment);
 
     setIsLoading(true);
 
@@ -70,11 +77,30 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
 
       console.log('💳 결제 요청:', paymentRequest);
 
-      // 결제 요청
-      const payment = tossPayments.payment(paymentRequest);
+      // 토스페이먼츠 JavaScript SDK 공식 사용법
+      console.log('🔧 결제 객체 생성 시도...');
+      
+      const payment = tossPayments.payment({ 
+        customerKey: userInfo.email || 'anonymous' 
+      });
 
-      // 카드 결제 실행
-      await payment.requestPayment('카드', {
+      console.log('✅ 결제 객체 생성 성공:', payment);
+      console.log('🔍 payment.requestPayment 함수 존재 여부:', typeof payment.requestPayment);
+
+      // 카드 결제 요청 (공식 문서 방식)
+      console.log('💳 카드 결제 요청 시도...');
+      await payment.requestPayment({
+        method: "CARD",
+        amount: {
+          currency: "KRW",
+          value: paymentRequest.amount,
+        },
+        orderId: paymentRequest.orderId,
+        orderName: paymentRequest.orderName,
+        successUrl: paymentRequest.successUrl,
+        failUrl: paymentRequest.failUrl,
+        customerEmail: userInfo.email,
+        customerName: paymentRequest.customerName,
         card: {
           useEscrow: false,
         },
@@ -106,28 +132,67 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
     try {
       const orderId = `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
-      const payment = tossPayments.payment({
+      const paymentData = {
         amount: price,
         orderId: orderId,
         orderName: courseTitle,
-        customerName: '클래튼 수강생',
+        customerName: userInfo?.name || 'AI City Builders 수강생',
         successUrl: `${window.location.origin}/payment/success`,
         failUrl: `${window.location.origin}/payment/fail`,
+      };
+
+      // 결제 객체 생성 (공식 문서 방식)
+      const payment = tossPayments.payment({ 
+        customerKey: userInfo.email || 'anonymous' 
       });
 
       if (method === '계좌이체') {
-        await payment.requestPayment('계좌이체');
+        await payment.requestPayment({
+          method: "TRANSFER",
+          amount: {
+            currency: "KRW",
+            value: paymentData.amount,
+          },
+          orderId: paymentData.orderId,
+          orderName: paymentData.orderName,
+          successUrl: paymentData.successUrl,
+          failUrl: paymentData.failUrl,
+          customerEmail: userInfo.email,
+          customerName: paymentData.customerName,
+        });
       } else if (method === '가상계좌') {
-        await payment.requestPayment('가상계좌', {
+        await payment.requestPayment({
+          method: "VIRTUAL_ACCOUNT",
+          amount: {
+            currency: "KRW",
+            value: paymentData.amount,
+          },
+          orderId: paymentData.orderId,
+          orderName: paymentData.orderName,
+          successUrl: paymentData.successUrl,
+          failUrl: paymentData.failUrl,
+          customerEmail: userInfo.email,
+          customerName: paymentData.customerName,
           virtualAccount: {
             cashReceipt: {
               type: '소득공제',
             },
-            customerMobilePhone: '010-1234-5678',
           },
         });
       } else if (method === '토스페이') {
-        await payment.requestPayment('토스페이');
+        await payment.requestPayment({
+          method: "TOSSPAY",
+          amount: {
+            currency: "KRW",
+            value: paymentData.amount,
+          },
+          orderId: paymentData.orderId,
+          orderName: paymentData.orderName,
+          successUrl: paymentData.successUrl,
+          failUrl: paymentData.failUrl,
+          customerEmail: userInfo.email,
+          customerName: paymentData.customerName,
+        });
       }
 
     } catch (error: any) {
@@ -143,9 +208,42 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
   };
 
   return (
-    <div className="payment-modal">
-      <div className="payment-modal-overlay" onClick={onClose}></div>
-      <div className="payment-modal-content">
+    <div 
+      className="payment-modal" 
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 99999,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px',
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: 'transparent'
+      }}
+    >
+      <div className="payment-modal-overlay" onClick={onClose} style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'rgba(0, 0, 0, 0.7)',
+        backdropFilter: 'blur(4px)'
+      }}></div>
+      <div className="payment-modal-content" style={{
+        position: 'relative',
+        background: 'white',
+        borderRadius: '16px',
+        maxWidth: '500px',
+        width: '100%',
+        maxHeight: '90vh',
+        overflow: 'auto'
+      }}>
         <div className="payment-header">
           <h3>수강신청</h3>
           <button className="close-btn" onClick={onClose}>✕</button>
@@ -213,4 +311,5 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
   );
 };
 
-export default PaymentComponent; 
+export default PaymentComponent;
+

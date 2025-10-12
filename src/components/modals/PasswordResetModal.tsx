@@ -98,7 +98,7 @@ const PasswordResetModal: React.FC<PasswordResetModalProps> = ({
               <p className="reset-note">
                 이메일이 도착하지 않으면 스팸함을 확인해주세요.
                 <br />
-                문제가 지속되면 고객센터(support@aicitybuilders.com)로 문의해주세요.
+                문제가 지속되면 고객센터(jay@connexionai.kr)로 문의해주세요.
               </p>
               <button
                 type="button"

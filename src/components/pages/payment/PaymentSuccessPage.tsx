@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { CheckCircle, Star, Clock, ArrowRight, Sparkles, Award, Play } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
-import AzureTableService from '../services/azureTableService';
-import NavigationBar from './NavigationBar';
+import AzureTableService from '../../../services/azureTableService';
+import NavigationBar from '../../common/NavigationBar';
 
 // 토스페이먼츠 결제 승인 API 호출 함수
 const confirmPayment = async (paymentKey: string, orderId: string, amount: number) => {
   // 🚨 임시 라이브 모드 (실제 결제 테스트)
-  const FORCE_LIVE_MODE = true; // TODO: 테스트 후 false로 변경
+  const FORCE_LIVE_MODE = false; // TODO: 테스트 후 false로 변경
   const isLiveMode = process.env.NODE_ENV === 'production' || FORCE_LIVE_MODE;
   
   const secretKey = isLiveMode
     ? 'live_sk_AQ92ymxN34P4R5EKxBkO3ajRKXvd'  // 라이브 시크릿 키
-    : 'test_sk_zXLkKEypNArWmo50nX3lmeaxYG5R';   // 테스트 시크릿 키
+    : 'test_sk_vZnjEJeQVxG1oQy91vqq3PmOoBN0';   // 상점아이디 clathou1x0의 테스트 시크릿 키
   
   console.log(`💳 결제 승인 API 모드: ${isLiveMode ? '🔴 LIVE' : '🟡 TEST'}`);
   
@@ -77,16 +77,35 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         
         console.log('📋 URL 파라미터:', { courseParam, paymentKey, orderId, amount });
         
-        // 토스페이먼츠 결제 승인 처리
+        // 토스페이먼츠 결제 승인 처리 (중복 방지)
         if (paymentKey && orderId && amount) {
-          console.log('💳 토스페이먼츠 결제 승인 시작...');
-          try {
-            const paymentResult = await confirmPayment(paymentKey, orderId, parseInt(amount));
-            console.log('✅ 결제 승인 성공:', paymentResult);
-          } catch (error) {
-            console.error('❌ 결제 승인 실패:', error);
-            alert('결제 승인 중 오류가 발생했습니다. 고객센터로 문의해주세요.');
-            return;
+          // 중복 승인 방지: sessionStorage로 이미 처리된 결제인지 확인
+          const processedKey = `payment_processed_${paymentKey}`;
+          if (sessionStorage.getItem(processedKey)) {
+            console.log('⚠️ 이미 처리된 결제입니다. 중복 승인 방지.');
+          } else {
+            console.log('💳 토스페이먼츠 결제 승인 시작...');
+            
+            // 처리 중 표시 (중복 방지)
+            sessionStorage.setItem(processedKey, 'processing');
+            
+            try {
+              const paymentResult = await confirmPayment(paymentKey, orderId, parseInt(amount));
+              console.log('✅ 결제 승인 성공:', paymentResult);
+              
+              // 성공 시 완료 표시
+              sessionStorage.setItem(processedKey, 'completed');
+            } catch (error) {
+              console.error('❌ 결제 승인 실패:', error);
+              
+              // 실패 시 처리 기록 삭제 (재시도 가능하도록)
+              sessionStorage.removeItem(processedKey);
+              
+              alert('결제 승인 중 오류가 발생했습니다. 고객센터로 문의해주세요.');
+              // 실패 페이지로 리다이렉트
+              window.location.href = '/payment/fail?error=payment_confirmation_failed';
+              return;
+            }
           }
         } else {
           console.log('⚠️ 결제 승인 파라미터 없음 (테스트 결제 또는 기존 방식)');
@@ -95,20 +114,15 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         // 사용자 정보는 location.state에서 가져오기
         const userInfo = location.state?.user;
         
-        // 여러 저장소에서 사용자 정보 확인 (우선순위: sessionStorage > localStorage > location.state)
+        // 사용자 정보 확인 (우선순위: sessionStorage > location.state)
         let user = null;
         
-        // 사용자 정보 가져오기 (우선순위: sessionStorage > localStorage > location.state)
+        // 사용자 정보 가져오기 (sessionStorage 우선)
         const sessionUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
         if (sessionUserInfo) {
           user = JSON.parse(sessionUserInfo);
-        } else {
-          const localUserInfo = localStorage.getItem('aicitybuilders_user');
-          if (localUserInfo) {
-            user = JSON.parse(localUserInfo);
-          } else if (userInfo) {
-            user = userInfo;
-          }
+        } else if (userInfo) {
+          user = userInfo;
         }
         
         console.log('💳 결제 처리:', user?.email, '→', courseParam);
@@ -216,7 +230,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         paddingTop: '80px', 
         paddingBottom: '120px', 
         overflow: 'hidden',
-        background: 'linear-gradient(135deg, rgba(207, 43, 74, 0.2) 0%, transparent 50%, rgba(207, 43, 74, 0.1) 100%)'
+        background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f8fafc 100%)'
       }}>
         
         {/* 애니메이션 파티클 */}
@@ -231,7 +245,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 animation: `bounce 3s infinite ${i * 0.2}s`
               }}
             >
-              <Sparkles style={{ width: '16px', height: '16px', color: 'rgba(207, 43, 74, 0.4)' }} />
+              <Sparkles style={{ width: '16px', height: '16px', color: 'rgba(14, 165, 233, 0.4)' }} />
             </div>
           ))}
         </div>
@@ -254,7 +268,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               <div style={{
                 position: 'absolute',
                 inset: '0',
-                background: 'linear-gradient(135deg, #0ea5e9, #a01e36)',
+                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                 borderRadius: '50%',
                 animation: 'pulse 2s infinite'
               }}></div>
@@ -291,18 +305,15 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           <h1 style={{ 
             fontSize: '48px', 
             fontWeight: 'bold', 
-            color: 'white', 
-            marginBottom: '24px',
-            background: 'linear-gradient(to right, white, #ccc)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
+            color: '#1f2937', 
+            marginBottom: '24px'
           }}>
             결제 완료!
             </h1>
             
           <p style={{ 
             fontSize: '20px', 
-            color: '#666666', 
+            color: '#374151', 
             marginBottom: '16px', 
             lineHeight: '1.6' 
           }}>
@@ -315,7 +326,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           
           <p style={{ 
             fontSize: '18px', 
-            color: '#666666', 
+            color: '#374151', 
             marginBottom: '48px' 
           }}>
             이제 바로 학습을 시작하고 새로운 스킬을 마스터해보세요! 🚀
@@ -456,7 +467,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center text-[#ccc]">
             <div className="flex items-center space-x-2">
               <span>📧</span>
-              <span className="text-[#0ea5e9] font-medium">contact@aicitybuilders.com</span>
+              <span className="text-[#0ea5e9] font-medium">jay@connexionai.kr</span>
             </div>
           </div>
           <p className="text-[#999] text-sm mt-4">평일 09:00-18:00 (주말 및 공휴일 제외)</p>
@@ -477,7 +488,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
 
           <div className="footer-section">
             <h4>연락처</h4>
-            <p>📧 contact@aicitybuilders.com</p>
+            <p>📧 jay@connexionai.kr</p>
           </div>
           
           <div className="footer-section">

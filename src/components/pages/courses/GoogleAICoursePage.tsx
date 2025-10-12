@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, MessageSquare, Award, Timer } from 'lucide-react';
-import { saveProgress, getProgress, saveQuizResult, getQuizProgress } from '../data/courseData';
-import NavigationBar from './NavigationBar';
+import { saveProgress, getProgress, saveQuizResult, getQuizProgress } from '../../../data/courseData';
+import NavigationBar from '../../common/NavigationBar';
 
 interface GoogleAICoursePageProps {
   onBack: () => void;

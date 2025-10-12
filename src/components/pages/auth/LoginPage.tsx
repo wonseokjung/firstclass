@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import AzureTableService from '../services/azureTableService';
-import NavigationBar from './NavigationBar';
-import PasswordResetModal from './PasswordResetModal';
+import AzureTableService from '../../../services/azureTableService';
+import NavigationBar from '../../common/NavigationBar';
+import PasswordResetModal from '../../modals/PasswordResetModal';
 
 interface LoginPageProps {
   onBack: () => void;

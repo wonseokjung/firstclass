@@ -1,6 +1,7 @@
+
 import React, { useEffect, useState } from 'react';
 import { XCircle, Home, AlertTriangle, RefreshCw } from 'lucide-react';
-import NavigationBar from './NavigationBar';
+import NavigationBar from '../../common/NavigationBar';
 
 interface PaymentFailPageProps {
   onBack: () => void;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Play, Globe, Heart, Target, Award } from 'lucide-react';
-import NavigationBar from './NavigationBar';
+import NavigationBar from '../../common/NavigationBar';
 
 interface AIEducationDocumentaryPageProps {
   onBack: () => void;

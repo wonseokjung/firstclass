@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Award, Building, GraduationCap, Briefcase, Users, Globe, Trophy, Target, Youtube, Instagram, X } from 'lucide-react';
-import NavigationBar from './NavigationBar';
+import NavigationBar from '../common/NavigationBar';
 
 interface CEOPageProps {
   onBack: () => void;

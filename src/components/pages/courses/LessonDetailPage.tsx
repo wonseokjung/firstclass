@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Play, Pause, RotateCcw, ChevronLeft, ChevronRight, BookOpen, Clock, CheckCircle, Image, Video, FileText, Download } from 'lucide-react';
-import NavigationBar from './NavigationBar';
+import NavigationBar from '../../common/NavigationBar';
 
 interface LessonDetailPageProps {
   onBack: () => void;
@@ -618,4 +618,6 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
 };
 
 export default LessonDetailPage;
+
+
 

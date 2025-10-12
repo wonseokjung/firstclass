@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, Mail, Clock } from 'lucide-react';
-import NavigationBar from './NavigationBar';
+import NavigationBar from '../common/NavigationBar';
 
 interface FAQPageProps {
   onBack: () => void;
@@ -328,7 +328,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
 
               <h5>🔸 문제 지속 시</h5>
               <ul>
-                <li>이메일: support@connexionai.kr</li>
+                <li>이메일: jay@connexionai.kr</li>
                 <li>원격 지원 서비스 제공</li>
               </ul>
             </div>

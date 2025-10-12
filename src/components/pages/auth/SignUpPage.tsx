@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff, AlertCircle, User, Check, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import AzureTableService from '../services/azureTableService';
-import NavigationBar from './NavigationBar';
-import { useReferralTracking } from '../hooks/useReferralTracking';
+import AzureTableService from '../../../services/azureTableService';
+import NavigationBar from '../../common/NavigationBar';
+import { useReferralTracking } from '../../../hooks/useReferralTracking';
 
 interface SignUpPageProps {
   onBack: () => void;

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, MessageSquare, Award, Timer } from 'lucide-react';
-import NavigationBar from './NavigationBar';
-import { aiCodingCourse, saveProgress, getProgress, calculateProgressPercentage, getCompletedLessonsCount, saveQuizResult, getQuizProgress } from '../data/courseData';
+import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, TrendingUp, Award, Timer } from 'lucide-react';
+import { aiBusinessCourse, saveProgress, getProgress, calculateProgressPercentage, getCompletedLessonsCount, saveQuizResult, getQuizProgress } from '../../../data/courseData';
+import NavigationBar from '../../common/NavigationBar';
 
-interface AICodingCoursePageProps {
+interface AIBusinessCoursePageProps {
   onBack: () => void;
 }
 
-const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
+const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) => {
   const [currentLesson, setCurrentLesson] = useState<number>(1);
   const [videoUrl, setVideoUrl] = useState<string>('');
   const [lessonsProgress, setLessonsProgress] = useState<Record<number, boolean>>({});
@@ -22,8 +22,8 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
   
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  // AI Coding 강의 데이터
-  const course = aiCodingCourse;
+  // AI 비즈니스 강의 데이터
+  const course = aiBusinessCourse;
 
   useEffect(() => {
     // 사용자 정보 가져오기
@@ -31,11 +31,11 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
     const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
     
     // 저장된 진도 불러오기 (사용자별)
-    const savedProgress = getProgress('ai-coding-course', userEmail);
+    const savedProgress = getProgress('ai-business-course', userEmail);
     setLessonsProgress(savedProgress);
     
     // 퀴즈 완료 상태 불러오기 (사용자별)
-    const quizProgress = getQuizProgress('ai-coding-course', userEmail);
+    const quizProgress = getQuizProgress('ai-business-course', userEmail);
     const quizCompletedState: Record<number, boolean> = {};
     Object.keys(quizProgress).forEach(key => {
       quizCompletedState[parseInt(key)] = quizProgress[parseInt(key)].passed;
@@ -57,8 +57,8 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
   const userInfo = sessionStorage.getItem('clathon_user_session');
   const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
   
-  const progressPercentage = calculateProgressPercentage('ai-coding-course', course.lessons.length, userEmail);
-  const completedLessonsCount = getCompletedLessonsCount('ai-coding-course', userEmail);
+  const progressPercentage = calculateProgressPercentage('ai-business-course', course.lessons.length, userEmail);
+  const completedLessonsCount = getCompletedLessonsCount('ai-business-course', userEmail);
 
   const getEmbedUrl = (url: string) => {
     // YouTube URL 처리
@@ -85,7 +85,7 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
     const userInfo = sessionStorage.getItem('clathon_user_session');
     const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
     
-    await saveProgress('ai-coding-course', lessonId, newProgress[lessonId], userEmail);
+    await saveProgress('ai-business-course', lessonId, newProgress[lessonId], userEmail);
   }, [lessonsProgress]);
 
   const handleLessonClick = (lessonId: number) => {
@@ -162,7 +162,7 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
     const userInfo = sessionStorage.getItem('clathon_user_session');
     const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
     
-    await saveQuizResult('ai-coding-course', currentLesson, score, passed, userEmail);
+    await saveQuizResult('ai-business-course', currentLesson, score, passed, userEmail);
     setQuizCompleted(prev => ({ ...prev, [currentLesson]: passed }));
     
     // 퀴즈 통과 시 강의 완료 처리
@@ -191,7 +191,7 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
       {/* 통일된 네비게이션바 */}
       <NavigationBar 
         onBack={onBack}
-        breadcrumbText="AI 코딩 완전정복"
+        breadcrumbText="AI 비즈니스 전략"
       />
 
       {/* 메인 콘텐츠 영역 - 2열 레이아웃 */}
@@ -205,7 +205,7 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
                 {course.title}
               </h1>
               <p className="hero-subtitle">
-                AI를 활용한 차세대 코딩! GitHub Copilot부터 Claude까지 모든 AI 코딩 도구를 마스터하여 생산성을 10배 올리는 실전 가이드
+                EMMA WATSON과 함께하는 AI 윤리 완전정복! 책임감 있는 AI 활용을 위한 체계적인 학습
               </p>
               
               {/* 강의 메타 정보 */}
@@ -254,7 +254,7 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
               ) : (
                 <div className="video-placeholder">
                   <div className="video-placeholder-content">
-                    <MessageSquare size={64} className="video-placeholder-icon" />
+                    <TrendingUp size={64} className="video-placeholder-icon" />
                     <h3>강의를 선택해주세요</h3>
                     <p>오른쪽 커리큘럼에서 학습하고 싶은 강의를 선택하세요.</p>
                   </div>
@@ -332,7 +332,7 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
         <div className="course-sidebar">
           <div className="sidebar-header">
             <h3>강의 커리큘럼</h3>
-            <p>총 {course.lessons.length}강의 체계적인 학습 과정</p>
+            <p>총 {course.lessons.length}강의 AI 윤리 마스터 과정</p>
           </div>
           
           <div className="lesson-list">
@@ -475,4 +475,4 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
   );
 };
 
-export default AICodingCoursePage; 
+export default AIBusinessCoursePage; 

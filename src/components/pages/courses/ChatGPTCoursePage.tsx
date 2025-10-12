@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, TrendingUp, Award, Timer } from 'lucide-react';
-import { aiBusinessCourse, saveProgress, getProgress, calculateProgressPercentage, getCompletedLessonsCount, saveQuizResult, getQuizProgress } from '../data/courseData';
-import NavigationBar from './NavigationBar';
+import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, MessageSquare, Award, Timer, ChevronUp, ChevronDown } from 'lucide-react';
+import { chatGPTCourse, saveProgress, getProgress, calculateProgressPercentage, getCompletedLessonsCount, saveQuizResult, getQuizProgress } from '../../../data/courseData';
+import NavigationBar from '../../common/NavigationBar';
 
-interface AIBusinessCoursePageProps {
+interface ChatGPTCoursePageProps {
   onBack: () => void;
 }
 
-const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) => {
+const ChatGPTCoursePage: React.FC<ChatGPTCoursePageProps> = ({ onBack }) => {
   const [currentLesson, setCurrentLesson] = useState<number>(1);
   const [videoUrl, setVideoUrl] = useState<string>('');
   const [lessonsProgress, setLessonsProgress] = useState<Record<number, boolean>>({});
@@ -19,11 +19,15 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
   const [quizCompleted, setQuizCompleted] = useState<Record<number, boolean>>({});
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [quizStarted, setQuizStarted] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
+    // 모바일에서는 기본적으로 사이드바를 접어둠
+    return window.innerWidth <= 768;
+  });
   
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  // AI 비즈니스 강의 데이터
-  const course = aiBusinessCourse;
+  // ChatGPT 강의 데이터
+  const course = chatGPTCourse;
 
   useEffect(() => {
     // 사용자 정보 가져오기
@@ -31,25 +35,41 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
     const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
     
     // 저장된 진도 불러오기 (사용자별)
-    const savedProgress = getProgress('ai-business-course', userEmail);
+    const savedProgress = getProgress('chatgpt-course', userEmail);
     setLessonsProgress(savedProgress);
     
-    // 퀴즈 완료 상태 불러오기 (사용자별)
-    const quizProgress = getQuizProgress('ai-business-course', userEmail);
+    // 퀴즈 완료 상태 불러기 (사용자별)
+    const quizProgress = getQuizProgress('chatgpt-course', userEmail);
     const quizCompletedState: Record<number, boolean> = {};
     Object.keys(quizProgress).forEach(key => {
       quizCompletedState[parseInt(key)] = quizProgress[parseInt(key)].passed;
     });
     setQuizCompleted(quizCompletedState);
     
+    // 첫 번째 강의를 기본으로 선택하고 비디오 로드
     if (course.lessons.length > 0) {
-      setCurrentLesson(course.lessons[0].id);
       const firstLesson = course.lessons[0];
+      setCurrentLesson(firstLesson.id);
+      
+      // 비디오 URL이 있으면 즉시 설정
       if (firstLesson.videoUrl) {
         setVideoUrl(firstLesson.videoUrl);
+        console.log('🎥 첫 번째 강의 자동 선택:', firstLesson.title);
+        console.log('🔗 비디오 URL 설정:', firstLesson.videoUrl);
       }
     }
   }, [course]);
+
+  // 화면 크기 변경 감지
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.innerWidth <= 768;
+      setIsSidebarCollapsed(isMobile);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const currentLessonData = course.lessons.find(lesson => lesson.id === currentLesson);
   
@@ -57,8 +77,8 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
   const userInfo = sessionStorage.getItem('clathon_user_session');
   const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
   
-  const progressPercentage = calculateProgressPercentage('ai-business-course', course.lessons.length, userEmail);
-  const completedLessonsCount = getCompletedLessonsCount('ai-business-course', userEmail);
+  const progressPercentage = calculateProgressPercentage('chatgpt-course', course.lessons.length, userEmail);
+  const completedLessonsCount = getCompletedLessonsCount('chatgpt-course', userEmail);
 
   const getEmbedUrl = (url: string) => {
     // YouTube URL 처리
@@ -85,7 +105,7 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
     const userInfo = sessionStorage.getItem('clathon_user_session');
     const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
     
-    await saveProgress('ai-business-course', lessonId, newProgress[lessonId], userEmail);
+    await saveProgress('chatgpt-course', lessonId, newProgress[lessonId], userEmail);
   }, [lessonsProgress]);
 
   const handleLessonClick = (lessonId: number) => {
@@ -162,7 +182,7 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
     const userInfo = sessionStorage.getItem('clathon_user_session');
     const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
     
-    await saveQuizResult('ai-business-course', currentLesson, score, passed, userEmail);
+    await saveQuizResult('chatgpt-course', currentLesson, score, passed, userEmail);
     setQuizCompleted(prev => ({ ...prev, [currentLesson]: passed }));
     
     // 퀴즈 통과 시 강의 완료 처리
@@ -191,7 +211,7 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
       {/* 통일된 네비게이션바 */}
       <NavigationBar 
         onBack={onBack}
-        breadcrumbText="AI 비즈니스 전략"
+        breadcrumbText="ChatGPT 완전정복"
       />
 
       {/* 메인 콘텐츠 영역 - 2열 레이아웃 */}
@@ -205,7 +225,7 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
                 {course.title}
               </h1>
               <p className="hero-subtitle">
-                EMMA WATSON과 함께하는 AI 윤리 완전정복! 책임감 있는 AI 활용을 위한 체계적인 학습
+                AI 멘토 JAY와 함께하는 ChatGPT 완전정복! 왕초보도 쉽게 배우는 체계적인 커리큘럼
               </p>
               
               {/* 강의 메타 정보 */}
@@ -254,7 +274,7 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
               ) : (
                 <div className="video-placeholder">
                   <div className="video-placeholder-content">
-                    <TrendingUp size={64} className="video-placeholder-icon" />
+                    <MessageSquare size={64} className="video-placeholder-icon" />
                     <h3>강의를 선택해주세요</h3>
                     <p>오른쪽 커리큘럼에서 학습하고 싶은 강의를 선택하세요.</p>
                   </div>
@@ -330,12 +350,19 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
 
         {/* 오른쪽 사이드바 */}
         <div className="course-sidebar">
-          <div className="sidebar-header">
-            <h3>강의 커리큘럼</h3>
-            <p>총 {course.lessons.length}강의 AI 윤리 마스터 과정</p>
+          <div className="sidebar-header" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}>
+            <div className="sidebar-header-content">
+              <div>
+                <h3>강의 커리큘럼</h3>
+                <p>총 {course.lessons.length}강의 체계적인 학습 과정</p>
+              </div>
+              <button className="sidebar-toggle-btn">
+                {isSidebarCollapsed ? <ChevronDown size={20} /> : <ChevronUp size={20} />}
+              </button>
+            </div>
           </div>
-          
-          <div className="lesson-list">
+
+          <div className={`lesson-list ${isSidebarCollapsed ? 'collapsed' : ''}`}>
             {course.lessons.map((lesson, index) => (
               <div 
                 key={lesson.id} 
@@ -475,4 +502,4 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
   );
 };
 
-export default AIBusinessCoursePage; 
+export default ChatGPTCoursePage; 

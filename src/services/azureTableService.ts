@@ -1565,6 +1565,56 @@ export class AzureTableService {
     }
   }
 
+  // === 강의 결제 상태 확인 메서드 ===
+
+  // 특정 강의의 결제 상태 확인
+  static async checkCoursePayment(email: string, courseId: string): Promise<{isPaid: boolean, paymentInfo?: any}> {
+    try {
+      console.log('💳 강의 결제 상태 확인:', email, '→', courseId);
+      
+      const user = await this.getUserByEmail(email);
+      if (!user) {
+        console.log('❌ 사용자를 찾을 수 없음:', email);
+        return { isPaid: false };
+      }
+
+      if (!user.enrolledCourses) {
+        console.log('❌ 수강 정보가 없음:', email);
+        return { isPaid: false };
+      }
+
+      // 수강 정보 파싱
+      const userData = JSON.parse(user.enrolledCourses);
+      let enrolledCourses: EnrolledCourse[] = [];
+      let payments: any[] = [];
+
+      if (Array.isArray(userData)) {
+        enrolledCourses = userData;
+      } else if (userData.enrollments && userData.payments) {
+        enrolledCourses = userData.enrollments;
+        payments = userData.payments;
+      }
+
+      // 해당 강의의 수강 상태 확인
+      const enrollment = enrolledCourses.find(course => course.courseId === courseId);
+      const isEnrolled = enrollment && enrollment.status === 'active';
+
+      // 해당 강의의 결제 정보 확인
+      const paymentInfo = payments.find(payment => payment.courseId === courseId);
+
+      const result = {
+        isPaid: isEnrolled || false,
+        paymentInfo: paymentInfo || null
+      };
+
+      console.log('💳 결제 상태 확인 결과:', result);
+      return result;
+    } catch (error: any) {
+      console.error('❌ 결제 상태 확인 실패:', error.message);
+      return { isPaid: false };
+    }
+  }
+
   // === 비밀번호 재설정 관련 메서드들 ===
 
   // 비밀번호 재설정 토큰 생성 및 이메일 전송 요청
