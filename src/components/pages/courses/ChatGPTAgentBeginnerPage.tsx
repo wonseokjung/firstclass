@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Play, ChevronDown, ChevronRight, BookOpen, Wrench, Image } from 'lucide-react';
+import { Clock, ChevronDown, ChevronRight, BookOpen, Wrench } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
 import AzureTableService from '../../../services/azureTableService';
-import { allCourses } from '../../../data/courseData';
 import PaymentComponent from '../payment/PaymentComponent';
 
 interface ChatGPTAgentBeginnerPageProps {
@@ -10,10 +9,10 @@ interface ChatGPTAgentBeginnerPageProps {
 }
 
 const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onBack }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [checkingEnrollment, setCheckingEnrollment] = useState(false);
-  const [isAlreadyEnrolled, setIsAlreadyEnrolled] = useState(false);
+  const [, setCheckingEnrollment] = useState(false);
+  const [, setIsAlreadyEnrolled] = useState(false);
   const [isPaidUser, setIsPaidUser] = useState(false);
   const [expandedChapters, setExpandedChapters] = useState<Set<number>>(new Set());
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -312,9 +311,9 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     setShowPaymentModal(true);
   };
 
-  const handleLoginRequired = () => {
-    alert('로그인이 필요한 서비스입니다.');
-  };
+  // const handleLoginRequired = () => {
+  //   alert('로그인이 필요한 서비스입니다.');
+  // };
 
   const handlePaymentSuccess = () => {
     console.log('🎉 결제 성공!');

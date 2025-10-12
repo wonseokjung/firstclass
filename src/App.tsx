@@ -33,7 +33,7 @@ const AIBuildingCoursePage = React.lazy(() => import('./components/pages/courses
 const AIBuildingCoursePlayerPage = React.lazy(() => import('./components/pages/courses/AIBuildingCoursePlayerPage'));
 const ChatGPTAgentBeginnerPage = React.lazy(() => import('./components/pages/courses/ChatGPTAgentBeginnerPage'));
 const CostOptimizationExamplesPage = React.lazy(() => import('./components/pages/courses/CostOptimizationExamplesPage'));
-const LessonDetailPage = React.lazy(() => import('./components/pages/courses/LessonDetailPage'));
+// const LessonDetailPage = React.lazy(() => import('./components/pages/courses/LessonDetailPage'));
 
 // 인증 페이지
 const LoginPage = React.lazy(() => import('./components/pages/auth/LoginPage'));

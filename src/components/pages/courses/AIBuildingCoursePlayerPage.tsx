@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Play, ChevronDown, ChevronRight, BookOpen, Wrench, Image } from 'lucide-react';
+import { Clock, Play } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
 import AzureTableService from '../../../services/azureTableService';
 import { allCourses } from '../../../data/courseData';
@@ -12,7 +12,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [expandedChapters, setExpandedChapters] = useState<Set<number>>(new Set());
-  const [userInfo, setUserInfo] = useState<any>(null);
+  const [, setUserInfo] = useState<any>(null);
 
   const course = allCourses.find((c: any) => c.id === 999) || {
     id: 999,

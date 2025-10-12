@@ -11,10 +11,10 @@ interface AIBuildingCoursePageProps {
 }
 
 const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [checkingEnrollment, setCheckingEnrollment] = useState(false);
-  const [isAlreadyEnrolled, setIsAlreadyEnrolled] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  const [, setIsLoggedIn] = useState(false);
+  const [, setCheckingEnrollment] = useState(false);
+  const [, setIsAlreadyEnrolled] = useState(false);
   const [isPaidUser, setIsPaidUser] = useState(false);
   const [expandedChapters, setExpandedChapters] = useState<Set<number>>(new Set());
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -284,9 +284,9 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
     alert('🚧 준비중입니다!\n곧 만나볼 수 있습니다. 조금만 기다려주세요!');
   };
 
-  const handleLoginRequired = () => {
-    alert('로그인이 필요한 서비스입니다.');
-  };
+  // const handleLoginRequired = () => {
+  //   alert('로그인이 필요한 서비스입니다.');
+  // };
 
   const handlePaymentSuccess = () => {
     console.log('🎉 결제 성공!');

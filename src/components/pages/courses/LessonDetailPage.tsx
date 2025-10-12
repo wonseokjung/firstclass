@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Play, Pause, RotateCcw, ChevronLeft, ChevronRight, BookOpen, Clock, CheckCircle, Image, Video, FileText, Download } from 'lucide-react';
+import { Play, Pause, RotateCcw, ChevronLeft, ChevronRight, BookOpen, Clock, CheckCircle, Image, Video, Download } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
 
 interface LessonDetailPageProps {
@@ -42,7 +42,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
   };
 
   // 콘텐츠 섹션들 - 사용자가 쉽게 편집할 수 있도록 구조화
-  const [contentSections, setContentSections] = useState<ContentSection[]>([
+  const [contentSections] = useState<ContentSection[]>([
     {
       id: 'intro-video',
       type: 'video',
