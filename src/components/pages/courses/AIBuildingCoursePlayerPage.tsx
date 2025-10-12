@@ -11,7 +11,7 @@ interface AIBuildingCoursePlayerPageProps {
 const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({ onBack }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [expandedChapters, setExpandedChapters] = useState<Set<number>>(new Set());
+  // const [expandedChapters, setExpandedChapters] = useState<Set<number>>(new Set());
   const [, setUserInfo] = useState<any>(null);
 
   const course = allCourses.find((c: any) => c.id === 999) || {
