@@ -935,6 +935,362 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             </div>
           </div>
 
+          {/* AI City Builders 플랫폼 구조 - 수익 배분 */}
+          <div style={{
+            background: '#ffffff',
+            padding: '60px 40px',
+            borderRadius: '24px',
+            marginBottom: '60px',
+            border: '1px solid #e5e7eb',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)'
+          }}>
+            <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+              <h3 style={{
+                fontSize: '2.2rem',
+                fontWeight: '800',
+                marginBottom: '16px',
+                color: '#1f2937'
+              }}>
+                왜 AI City Builders가 더 저렴하면서도 더 나은가?
+              </h3>
+              <p style={{
+                fontSize: '1.1rem',
+                color: '#6b7280',
+                lineHeight: '1.6',
+                margin: '0'
+              }}>
+                기존 교육 플랫폼의 한계를 뛰어넘는 혁신적인 구조
+              </p>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
+              gap: '32px',
+              marginBottom: '50px'
+            }}>
+              {/* 기존 플랫폼 구조 */}
+              <div style={{
+                background: '#ffffff',
+                padding: '32px',
+                borderRadius: '20px',
+                border: '2px solid #fee2e2',
+                position: 'relative',
+                boxShadow: '0 4px 12px rgba(239, 68, 68, 0.08)'
+              }}>
+                <div style={{
+                  position: 'absolute',
+                  top: '-16px',
+                  left: '24px',
+                  background: '#ef4444',
+                  color: 'white',
+                  padding: '8px 20px',
+                  borderRadius: '50px',
+                  fontSize: '0.9rem',
+                  fontWeight: '700',
+                  boxShadow: '0 2px 8px rgba(239, 68, 68, 0.3)'
+                }}>
+                  기존 플랫폼
+                </div>
+
+                <div style={{ marginTop: '24px' }}>
+                  <div style={{
+                    background: '#fef7f7',
+                    padding: '20px',
+                    borderRadius: '16px',
+                    marginBottom: '20px',
+                    border: '1px solid #fecaca'
+                  }}>
+                    <h4 style={{
+                      fontSize: '1.1rem',
+                      fontWeight: '700',
+                      marginBottom: '16px',
+                      color: '#dc2626',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}>
+                      📊 수익 배분
+                    </h4>
+                    <div style={{ gap: '12px' }}>
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '8px 0',
+                        borderBottom: '1px solid #fecaca'
+                      }}>
+                        <span style={{ color: '#7f1d1d', fontSize: '0.95rem' }}>강사</span>
+                        <span style={{ fontWeight: '700', color: '#dc2626', fontSize: '1.1rem' }}>20~30%</span>
+                      </div>
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '8px 0'
+                      }}>
+                        <span style={{ color: '#7f1d1d', fontSize: '0.95rem' }}>플랫폼</span>
+                        <span style={{ fontWeight: '700', color: '#dc2626', fontSize: '1.1rem' }}>70~80%</span>
+                      </div>
+                    </div>
+                    <div style={{
+                      marginTop: '16px',
+                      padding: '12px',
+                      background: 'rgba(239, 68, 68, 0.1)',
+                      borderRadius: '8px',
+                      fontSize: '0.9rem',
+                      color: '#991b1b',
+                      fontWeight: '600'
+                    }}>
+                      → 광고비, 운영비로 인한 높은 수강료
+                    </div>
+                  </div>
+
+                  <div style={{
+                    background: '#fef7f7',
+                    padding: '20px',
+                    borderRadius: '16px',
+                    border: '1px solid #fecaca'
+                  }}>
+                    <h4 style={{
+                      fontSize: '1.1rem',
+                      fontWeight: '700',
+                      marginBottom: '16px',
+                      color: '#dc2626',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}>
+                      👥 학습 방식
+                    </h4>
+                    <ul style={{ margin: '0', paddingLeft: '0', listStyle: 'none' }}>
+                      <li style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        marginBottom: '8px',
+                        color: '#7f1d1d'
+                      }}>
+                        <span style={{ color: '#dc2626', fontWeight: '700' }}>✕</span>
+                        단순 수강자로만 참여
+                      </li>
+                      <li style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        marginBottom: '8px',
+                        color: '#7f1d1d'
+                      }}>
+                        <span style={{ color: '#dc2626', fontWeight: '700' }}>✕</span>
+                        일방향 학습
+                      </li>
+                      <li style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        color: '#7f1d1d'
+                      }}>
+                        <span style={{ color: '#dc2626', fontWeight: '700' }}>✕</span>
+                        강의 완료 후 관계 종료
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* AI City Builders 구조 */}
+              <div style={{
+                background: '#ffffff',
+                padding: '32px',
+                borderRadius: '20px',
+                border: '2px solid #dbeafe',
+                position: 'relative',
+                boxShadow: '0 4px 12px rgba(14, 165, 233, 0.08)'
+              }}>
+                <div style={{
+                  position: 'absolute',
+                  top: '-16px',
+                  left: '24px',
+                  background: '#0ea5e9',
+                  color: 'white',
+                  padding: '8px 20px',
+                  borderRadius: '50px',
+                  fontSize: '0.9rem',
+                  fontWeight: '700',
+                  boxShadow: '0 2px 8px rgba(14, 165, 233, 0.3)'
+                }}>
+                  AI City Builders
+                </div>
+
+                <div style={{ marginTop: '24px' }}>
+                  <div style={{
+                    background: '#f0f9ff',
+                    padding: '20px',
+                    borderRadius: '16px',
+                    marginBottom: '20px',
+                    border: '1px solid #bae6fd'
+                  }}>
+                    <h4 style={{
+                      fontSize: '1.1rem',
+                      fontWeight: '700',
+                      marginBottom: '16px',
+                      color: '#0ea5e9',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}>
+                      🚀 새로운 수익 구조
+                    </h4>
+                    <ul style={{ margin: '0', paddingLeft: '0', listStyle: 'none' }}>
+                      <li style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        marginBottom: '10px',
+                        color: '#0c4a6e'
+                      }}>
+                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
+                        자체 제작으로 중간 수수료 없음
+                      </li>
+                      <li style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        marginBottom: '10px',
+                        color: '#0c4a6e'
+                      }}>
+                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
+                        커뮤니티 홍보 시 10% 리워드 (현금 교환 가능)
+                      </li>
+                      <li style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        marginBottom: '10px',
+                        color: '#0c4a6e'
+                      }}>
+                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
+                        등급 상승으로 수익률 증가
+                      </li>
+                    </ul>
+                    <div style={{
+                      marginTop: '16px',
+                      padding: '16px',
+                      background: '#0ea5e9',
+                      color: 'white',
+                      borderRadius: '12px',
+                      textAlign: 'center',
+                      fontWeight: '700',
+                      fontSize: '1.1rem'
+                    }}>
+                      결과: 76% 저렴한 수강료
+                    </div>
+                  </div>
+
+                  <div style={{
+                    background: '#f0f9ff',
+                    padding: '20px',
+                    borderRadius: '16px',
+                    border: '1px solid #bae6fd'
+                  }}>
+                    <h4 style={{
+                      fontSize: '1.1rem',
+                      fontWeight: '700',
+                      marginBottom: '16px',
+                      color: '#0ea5e9',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}>
+                      🌟 참여자 중심 생태계
+                    </h4>
+                    <ul style={{ margin: '0', paddingLeft: '0', listStyle: 'none' }}>
+                      <li style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        marginBottom: '8px',
+                        color: '#0c4a6e'
+                      }}>
+                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
+                        단순 수강자에서 적극적 참여자로
+                      </li>
+                      <li style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        marginBottom: '8px',
+                        color: '#0c4a6e'
+                      }}>
+                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
+                        함께 성장하는 커뮤니티
+                      </li>
+                      <li style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        color: '#0c4a6e'
+                      }}>
+                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
+                        홍보 참여로 수익 창출 기회
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 핵심 차별점 요약 */}
+            <div style={{
+              background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+              padding: '40px',
+              borderRadius: '20px',
+              textAlign: 'center',
+              border: '1px solid #cbd5e1'
+            }}>
+              <div style={{
+                display: 'inline-block',
+                background: '#0ea5e9',
+                color: 'white',
+                padding: '10px 24px',
+                borderRadius: '50px',
+                fontSize: '0.95rem',
+                fontWeight: '700',
+                marginBottom: '24px',
+                boxShadow: '0 2px 8px rgba(14, 165, 233, 0.3)'
+              }}>
+                제이 멘토의 실제 조사 결과
+              </div>
+              <blockquote style={{
+                fontSize: '1.15rem',
+                lineHeight: '1.8',
+                margin: '0',
+                color: '#374151',
+                fontStyle: 'italic',
+                position: 'relative',
+                padding: '0 20px'
+              }}>
+                <span style={{
+                  fontSize: '3rem',
+                  color: '#0ea5e9',
+                  position: 'absolute',
+                  left: '-10px',
+                  top: '-10px',
+                  fontFamily: 'serif'
+                }}>"</span>
+                모든 주요 교육 플랫폼과 미팅하고 계약서를 분석한 결과, 기존 플랫폼들은 강사에게 20~30%만 주고 70~80%를 가져가 수강료가 비쌀 수밖에 없었습니다. AI City Builders는 이 구조를 완전히 뒤집어 여러분께 더 저렴하고 더 나은 가치를 제공합니다.
+                <span style={{
+                  fontSize: '3rem',
+                  color: '#0ea5e9',
+                  position: 'absolute',
+                  right: '-10px',
+                  bottom: '-30px',
+                  fontFamily: 'serif'
+                }}>"</span>
+              </blockquote>
+            </div>
+          </div>
+
           {/* 멘토 소개 - Jay 멘토 이력 */}
           <div style={{ marginBottom: '60px' }}>
             <div style={{
