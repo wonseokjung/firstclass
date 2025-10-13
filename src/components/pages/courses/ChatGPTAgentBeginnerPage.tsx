@@ -602,7 +602,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
           <div style={{
             background: 'linear-gradient(135deg, #1e3a8a, #1e40af)',
             borderRadius: '20px',
-            padding: '40px 30px',
+            padding: 'clamp(25px, 4vw, 40px) clamp(15px, 3vw, 30px)',
             textAlign: 'center',
             marginBottom: '30px',
             boxShadow: '0 15px 40px rgba(30, 58, 138, 0.4)',
@@ -632,8 +632,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 <div key={index} style={{
                   background: 'rgba(255, 255, 255, 0.95)',
                   borderRadius: '15px',
-                  padding: '20px 25px',
-                  minWidth: '90px',
+                  padding: 'clamp(15px, 3vw, 20px) clamp(15px, 3vw, 25px)',
+                  minWidth: 'clamp(70px, 15vw, 90px)',
                   boxShadow: '0 8px 20px rgba(0,0,0,0.15)',
                   border: '2px solid rgba(255, 255, 255, 1)'
                 }}>
@@ -662,7 +662,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
           <div style={{
             background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
             borderRadius: '20px',
-            padding: '50px 40px',
+            padding: 'clamp(30px, 5vw, 50px) clamp(20px, 4vw, 40px)',
             textAlign: 'center',
             marginBottom: '50px',
             color: 'white',
@@ -833,7 +833,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
           <div style={{
             background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
             borderRadius: '20px',
-            padding: '50px 40px',
+            padding: 'clamp(30px, 5vw, 50px) clamp(20px, 4vw, 40px)',
             marginBottom: '50px',
             boxShadow: '0 10px 30px rgba(14, 165, 233, 0.1)',
             border: '2px solid #bae6fd'
@@ -879,7 +879,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
               gap: '20px',
               marginTop: '40px'
             }}>
@@ -939,7 +939,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
           {/* AI City Builders 플랫폼 구조 - 수익 배분 */}
           <div style={{
             background: '#ffffff',
-            padding: '60px 40px',
+            padding: 'clamp(30px, 5vw, 60px) clamp(20px, 4vw, 40px)',
             borderRadius: '24px',
             marginBottom: '60px',
             border: '1px solid #e5e7eb',
@@ -966,7 +966,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
               gap: '32px',
               marginBottom: '50px'
             }}>
@@ -1296,7 +1296,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
           <div style={{ marginBottom: '60px' }}>
             <div style={{
               background: '#ffffff',
-              padding: '50px 40px',
+              padding: 'clamp(30px, 5vw, 50px) clamp(20px, 4vw, 40px)',
               borderRadius: '20px',
               marginBottom: '40px',
               border: '2px solid #e2e8f0',
@@ -1428,28 +1428,29 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               {/* 학력 인증 섹션 */}
               <div style={{
                 background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
-                padding: '40px',
+                padding: 'clamp(25px, 4vw, 40px)',
                 borderRadius: '20px',
                 border: '2px solid #e2e8f0',
                 marginBottom: '40px'
               }}>
                 <h3 style={{
                   color: '#1f2937',
-                  fontSize: '1.6rem',
+                  fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)',
                   fontWeight: '800',
                   marginBottom: '30px',
                   textAlign: 'center',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '10px'
+                  gap: '10px',
+                  flexWrap: 'wrap'
                 }}>
                   🎓 학력 인증
                 </h3>
                 
                 <div style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
                   gap: '30px'
                 }}>
                   {/* 일리노이공대 석사 */}
