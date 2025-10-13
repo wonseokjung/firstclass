@@ -219,7 +219,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
   const originalPrice = 190000;
   const earlyBirdPrice = 45000;
-  const launchDate = new Date('2025-11-15T00:00:00+09:00'); // 한국시간
 
   // D-Day 카운트다운
   const [timeLeft, setTimeLeft] = useState({
@@ -230,6 +229,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
   });
 
   useEffect(() => {
+    const launchDate = new Date('2025-11-15T00:00:00+09:00'); // 한국시간
+    
     const updateCountdown = () => {
       const now = new Date().getTime();
       const distance = launchDate.getTime() - now;
