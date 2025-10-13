@@ -413,6 +413,66 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
           margin: '0 auto',
           padding: '40px 20px'
         }}>
+          {/* 런칭 D-Day 카운트다운 - 최상단 배치 */}
+          <div style={{
+            background: 'linear-gradient(135deg, #1e3a8a, #1e40af)',
+            borderRadius: '20px',
+            padding: '40px 30px',
+            textAlign: 'center',
+            marginBottom: '30px',
+            boxShadow: '0 15px 40px rgba(30, 58, 138, 0.4)',
+            border: '2px solid rgba(255, 255, 255, 0.1)'
+          }}>
+            <div style={{
+              fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)',
+              fontWeight: '800',
+              marginBottom: '25px',
+              color: '#ffffff',
+              textShadow: '0 2px 10px rgba(0,0,0,0.2)'
+            }}>
+              🚀 2025년 11월 15일 런칭 예정
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '15px',
+              flexWrap: 'wrap'
+            }}>
+              {[
+                { label: '일', value: timeLeft.days },
+                { label: '시간', value: timeLeft.hours },
+                { label: '분', value: timeLeft.minutes },
+                { label: '초', value: timeLeft.seconds }
+              ].map((item, index) => (
+                <div key={index} style={{
+                  background: 'rgba(255, 255, 255, 0.95)',
+                  borderRadius: '15px',
+                  padding: '20px 25px',
+                  minWidth: '90px',
+                  boxShadow: '0 8px 20px rgba(0,0,0,0.15)',
+                  border: '2px solid rgba(255, 255, 255, 1)'
+                }}>
+                  <div style={{
+                    fontSize: 'clamp(2rem, 4vw, 2.8rem)',
+                    fontWeight: '900',
+                    marginBottom: '5px',
+                    color: '#1e3a8a',
+                    lineHeight: '1'
+                  }}>
+                    {String(item.value).padStart(2, '0')}
+                  </div>
+                  <div style={{
+                    fontSize: '0.9rem',
+                    fontWeight: '600',
+                    color: '#64748b'
+                  }}>
+                    {item.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* 상단 메인 CTA - 깔끔한 디자인 */}
           <div style={{
             background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
@@ -423,62 +483,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             color: 'white',
             boxShadow: '0 10px 30px rgba(14, 165, 233, 0.3)'
           }}>
-            {/* 런칭 D-Day 카운트다운 */}
-            <div style={{
-              background: 'rgba(255, 255, 255, 0.15)',
-              borderRadius: '15px',
-              padding: '30px',
-              marginBottom: '40px',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 255, 255, 0.2)'
-            }}>
-              <div style={{
-                fontSize: '1.3rem',
-                fontWeight: '700',
-                marginBottom: '20px',
-                color: '#ffffff'
-              }}>
-                🚀 2025년 11월 15일 런칭 예정
-              </div>
-              <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                gap: '20px',
-                flexWrap: 'wrap'
-              }}>
-                {[
-                  { label: '일', value: timeLeft.days },
-                  { label: '시간', value: timeLeft.hours },
-                  { label: '분', value: timeLeft.minutes },
-                  { label: '초', value: timeLeft.seconds }
-                ].map((item, index) => (
-                  <div key={index} style={{
-                    background: 'rgba(255, 255, 255, 0.2)',
-                    borderRadius: '12px',
-                    padding: '15px 20px',
-                    minWidth: '80px',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255, 255, 255, 0.3)'
-                  }}>
-                    <div style={{
-                      fontSize: '2rem',
-                      fontWeight: '800',
-                      marginBottom: '5px',
-                      color: '#ffffff'
-                    }}>
-                      {String(item.value).padStart(2, '0')}
-                    </div>
-                    <div style={{
-                      fontSize: '0.85rem',
-                      opacity: '0.9',
-                      color: '#ffffff'
-                    }}>
-                      {item.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
 
             {/* 강의 아이콘과 제목 */}
             <div style={{ marginBottom: '40px' }}>
@@ -576,41 +580,55 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               </div>
             </div>
 
-            {/* 메인 수강 신청 버튼 - 깔끔한 디자인 */}
+            {/* 메인 수강 신청 버튼 - 강조된 디자인 */}
             <div style={{
               position: 'relative',
               display: 'inline-block',
               marginBottom: '20px'
             }}>
+              {/* 버튼 뒤 빛나는 효과 */}
+              <div style={{
+                position: 'absolute',
+                inset: '-4px',
+                background: 'linear-gradient(45deg, #fbbf24, #f59e0b, #fbbf24)',
+                borderRadius: '18px',
+                filter: 'blur(8px)',
+                opacity: '0.7',
+                animation: 'pulse 2s ease-in-out infinite',
+                zIndex: '-1'
+              }}></div>
+              
               <button
                 onClick={handleEarlyBirdPayment}
                 style={{
-                  background: '#ffffff',
-                  color: '#0ea5e9',
+                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  color: '#ffffff',
                   border: 'none',
-                  padding: '20px 50px',
-                  fontSize: '1.3rem',
-                  fontWeight: '700',
+                  padding: '25px 60px',
+                  fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+                  fontWeight: '800',
                   borderRadius: '15px',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
-                  boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
+                  boxShadow: '0 10px 30px rgba(251, 191, 36, 0.5)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '10px',
-                  minWidth: '280px'
+                  gap: '12px',
+                  minWidth: '300px',
+                  position: 'relative',
+                  textShadow: '0 2px 4px rgba(0,0,0,0.2)'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 12px 25px rgba(0, 0, 0, 0.3)';
+                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                  e.currentTarget.style.boxShadow = '0 15px 40px rgba(251, 191, 36, 0.6)';
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.2)';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(251, 191, 36, 0.5)';
                 }}
               >
-                <span style={{ fontSize: '1.2rem' }}>🚀</span>
+                <span style={{ fontSize: '1.5rem' }}>🚀</span>
                 얼리버드 특가로 수강하기
               </button>
             </div>
