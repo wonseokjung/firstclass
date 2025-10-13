@@ -481,7 +481,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 background: 'white',
                 borderRadius: '10px',
                 padding: '20px',
-                border: '2px dashed #0ea5e9'
+                border: '2px dashed #0ea5e9',
+                marginBottom: '15px'
               }}>
                 <p style={{
                   fontSize: '1rem',
@@ -493,6 +494,25 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   지금 ₩45,000 얼리버드 가격으로 결제하시면,<br/>
                   2025년 11월 15일부터 강의를 수강하실 수 있습니다.<br/>
                   런칭 후 수강 시 ₩190,000으로 인상됩니다.
+                </p>
+              </div>
+
+              <div style={{
+                background: '#fff7ed',
+                borderRadius: '10px',
+                padding: '20px',
+                border: '2px solid #fed7aa'
+              }}>
+                <p style={{
+                  fontSize: '0.95rem',
+                  color: '#92400e',
+                  lineHeight: '1.6',
+                  margin: '0'
+                }}>
+                  <strong style={{ color: '#c2410c' }}>📧 결제 후 안내:</strong><br/>
+                  • 결제 완료 시 마이페이지에서 수강 신청 내역을 확인하실 수 있습니다.<br/>
+                  • 11월 15일 런칭 후 자동으로 강의가 오픈됩니다.<br/>
+                  • 문의사항: <strong>jay@connexionai.kr</strong>
                 </p>
               </div>
             </div>
