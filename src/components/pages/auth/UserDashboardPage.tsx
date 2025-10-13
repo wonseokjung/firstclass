@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Clock, Award, Play, Calendar, Zap, Gift, Users, TrendingUp, Copy, Link } from 'lucide-react';
+import { BookOpen, Clock, Award, Play, Calendar, Zap } from 'lucide-react';
 import AzureTableService from '../../../services/azureTableService';
 import NavigationBar from '../../common/NavigationBar';
 import { SkeletonCourseCard, SkeletonUserStats } from '../../common/SkeletonLoader';
@@ -36,10 +36,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
     totalLearningTime: 0,
     enrolledCourses: []
   });
-  const [rewardData, setRewardData] = useState<RewardData | null>(null);
+  const [, setRewardData] = useState<RewardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [copiedReferralCode, setCopiedReferralCode] = useState(false);
-  const [copiedReferralLink, setCopiedReferralLink] = useState(false);
 
   useEffect(() => {
     const loadUserData = async () => {
@@ -97,47 +95,47 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
     return Math.round((userStats.completedCourses / userStats.totalCourses) * 100);
   };
 
-  const copyReferralCode = async () => {
-    console.log('🔗 추천 코드 복사 버튼 클릭됨');
-    console.log('📋 rewardData:', rewardData);
-    
-    if (rewardData?.referralCode) {
-      try {
-        await navigator.clipboard.writeText(rewardData.referralCode);
-        setCopiedReferralCode(true);
-        setTimeout(() => setCopiedReferralCode(false), 2000);
-        console.log('✅ 추천 코드 복사 성공:', rewardData.referralCode);
-      } catch (err) {
-        console.error('❌ 복사 실패:', err);
-        alert('복사에 실패했습니다.');
-      }
-    } else {
-      console.error('❌ 추천 코드가 없습니다:', rewardData);
-      alert('추천 코드를 찾을 수 없습니다.');
-    }
-  };
+  // const copyReferralCode = async () => {
+  //   console.log('🔗 추천 코드 복사 버튼 클릭됨');
+  //   console.log('📋 rewardData:', rewardData);
+  //   
+  //   if (rewardData?.referralCode) {
+  //     try {
+  //       await navigator.clipboard.writeText(rewardData.referralCode);
+  //       setCopiedReferralCode(true);
+  //       setTimeout(() => setCopiedReferralCode(false), 2000);
+  //       console.log('✅ 추천 코드 복사 성공:', rewardData.referralCode);
+  //     } catch (err) {
+  //       console.error('❌ 복사 실패:', err);
+  //       alert('복사에 실패했습니다.');
+  //     }
+  //   } else {
+  //     console.error('❌ 추천 코드가 없습니다:', rewardData);
+  //     alert('추천 코드를 찾을 수 없습니다.');
+  //   }
+  // };
 
-  const copyReferralLinkHandler = async () => {
-    console.log('🔗 추천 링크 복사 버튼 클릭됨');
-    console.log('📋 rewardData:', rewardData);
-    
-    if (rewardData?.referralCode) {
-      try {
-        const baseUrl = window.location.origin;
-        const referralLink = `${baseUrl}/?ref=${rewardData.referralCode}`;
-        await navigator.clipboard.writeText(referralLink);
-        setCopiedReferralLink(true);
-        setTimeout(() => setCopiedReferralLink(false), 2000);
-        console.log('✅ 추천 링크 복사 성공:', referralLink);
-      } catch (error) {
-        console.error('❌ 링크 복사 실패:', error);
-        alert('링크 복사에 실패했습니다.');
-      }
-    } else {
-      console.error('❌ 추천 코드가 아직 생성되지 않았습니다:', rewardData);
-      alert('추천 코드가 생성 중입니다. 잠시 후 다시 시도해주세요.');
-    }
-  };
+  // const copyReferralLinkHandler = async () => {
+  //   console.log('🔗 추천 링크 복사 버튼 클릭됨');
+  //   console.log('📋 rewardData:', rewardData);
+  //   
+  //   if (rewardData?.referralCode) {
+  //     try {
+  //       const baseUrl = window.location.origin;
+  //       const referralLink = `${baseUrl}/?ref=${rewardData.referralCode}`;
+  //       await navigator.clipboard.writeText(referralLink);
+  //       setCopiedReferralLink(true);
+  //       setTimeout(() => setCopiedReferralLink(false), 2000);
+  //       console.log('✅ 추천 링크 복사 성공:', referralLink);
+  //     } catch (error) {
+  //       console.error('❌ 링크 복사 실패:', error);
+  //       alert('링크 복사에 실패했습니다.');
+  //     }
+  //   } else {
+  //     console.error('❌ 추천 코드가 아직 생성되지 않았습니다:', rewardData);
+  //     alert('추천 코드가 생성 중입니다. 잠시 후 다시 시도해주세요.');
+  //   }
+  // };
 
 
 
