@@ -296,12 +296,42 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
           </button>
         </div>
 
-        <div className="payment-notice">
-          <p>⚠️ 테스트 환경입니다. 실제 결제되지 않습니다.</p>
-          <p>• 카드번호: 아무 유효한 카드번호 사용 가능</p>
-          <p>• 유효기간: 미래 날짜 입력</p>
-          <p>• CVC: 임의 3자리 숫자</p>
-        </div>
+        {paymentConfig.environment === 'test' && (
+          <div className="payment-notice" style={{
+            background: '#fff3cd',
+            border: '1px solid #ffc107',
+            borderRadius: '8px',
+            padding: '15px',
+            margin: '15px 20px'
+          }}>
+            <p style={{ fontWeight: 'bold', color: '#856404', marginBottom: '10px' }}>
+              ⚠️ 테스트 환경입니다. 실제 결제되지 않습니다.
+            </p>
+            <p style={{ fontSize: '0.9rem', color: '#856404' }}>• 카드번호: 아무 유효한 카드번호 사용 가능</p>
+            <p style={{ fontSize: '0.9rem', color: '#856404' }}>• 유효기간: 미래 날짜 입력</p>
+            <p style={{ fontSize: '0.9rem', color: '#856404' }}>• CVC: 임의 3자리 숫자</p>
+          </div>
+        )}
+
+        {paymentConfig.environment === 'live' && (
+          <div className="payment-notice" style={{
+            background: '#d1ecf1',
+            border: '1px solid #0ea5e9',
+            borderRadius: '8px',
+            padding: '15px',
+            margin: '15px 20px'
+          }}>
+            <p style={{ fontWeight: 'bold', color: '#0c5460', marginBottom: '10px' }}>
+              💳 실제 결제가 진행됩니다
+            </p>
+            <p style={{ fontSize: '0.9rem', color: '#0c5460' }}>
+              • 결제 완료 후 즉시 강의 수강이 가능합니다
+            </p>
+            <p style={{ fontSize: '0.9rem', color: '#0c5460' }}>
+              • 결제 관련 문의: support@aicitybuilders.com
+            </p>
+          </div>
+        )}
 
         <div className="payment-footer">
           <p>안전한 결제를 위해 토스페이먼츠를 사용합니다.</p>
