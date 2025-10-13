@@ -317,6 +317,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
       {/* PaymentComponent 모달 - 페이지 최상단에 위치 */}
       {showPaymentModal && userInfo && (
         <PaymentComponent
+          courseId="999"
           courseTitle="AI 디지털 건물주 되기"
           price={99000}
           userInfo={userInfo}

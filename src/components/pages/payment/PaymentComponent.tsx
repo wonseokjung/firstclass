@@ -3,6 +3,7 @@ import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
 import { getPaymentConfig, createPaymentRequest, validateApiKey } from '../../../config/payment';
 
 interface PaymentComponentProps {
+  courseId: string;
   courseTitle: string;
   price: number;
   userInfo: any;
@@ -11,6 +12,7 @@ interface PaymentComponentProps {
 }
 
 const PaymentComponent: React.FC<PaymentComponentProps> = ({ 
+  courseId,
   courseTitle, 
   price, 
   userInfo,
@@ -101,6 +103,10 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
         failUrl: paymentRequest.failUrl,
         customerEmail: userInfo.email,
         customerName: paymentRequest.customerName,
+        metadata: {
+          courseId: courseId,
+          email: userInfo.email
+        },
         card: {
           useEscrow: false,
         },

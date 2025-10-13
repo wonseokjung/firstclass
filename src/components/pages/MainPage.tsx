@@ -317,6 +317,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
 
       {showPaymentModal && selectedCourse && (
         <PaymentComponent
+          courseId={selectedCourse.id.toString()}
           courseTitle={selectedCourse.title}
           price={selectedCourse.price || 0}
           userInfo={userInfo}

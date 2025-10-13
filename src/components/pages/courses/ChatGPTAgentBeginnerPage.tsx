@@ -581,6 +581,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
       {/* PaymentComponent 모달 - 페이지 최상단에 위치 */}
       {showPaymentModal && userInfo && (
         <PaymentComponent
+          courseId="1002"
           courseTitle="ChatGPT AI AGENT 비기너편"
           price={45000}
           userInfo={userInfo}
