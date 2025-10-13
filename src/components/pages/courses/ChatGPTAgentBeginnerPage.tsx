@@ -216,8 +216,41 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     ]
   };
 
-  const originalPrice = 99000;
+  const originalPrice = 190000;
   const earlyBirdPrice = 45000;
+  const launchDate = new Date('2025-11-15T00:00:00+09:00'); // 한국시간
+
+  // D-Day 카운트다운
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  useEffect(() => {
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const distance = launchDate.getTime() - now;
+      
+      if (distance < 0) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+      
+      setTimeLeft({
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((distance % (1000 * 60)) / 1000)
+      });
+    };
+    
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   // 챕터 확장/접기 함수
   const toggleChapter = (chapterId: number) => {
@@ -390,6 +423,63 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             color: 'white',
             boxShadow: '0 10px 30px rgba(14, 165, 233, 0.3)'
           }}>
+            {/* 런칭 D-Day 카운트다운 */}
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.15)',
+              borderRadius: '15px',
+              padding: '30px',
+              marginBottom: '40px',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(255, 255, 255, 0.2)'
+            }}>
+              <div style={{
+                fontSize: '1.3rem',
+                fontWeight: '700',
+                marginBottom: '20px',
+                color: '#ffffff'
+              }}>
+                🚀 2025년 11월 15일 런칭 예정
+              </div>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '20px',
+                flexWrap: 'wrap'
+              }}>
+                {[
+                  { label: '일', value: timeLeft.days },
+                  { label: '시간', value: timeLeft.hours },
+                  { label: '분', value: timeLeft.minutes },
+                  { label: '초', value: timeLeft.seconds }
+                ].map((item, index) => (
+                  <div key={index} style={{
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '12px',
+                    padding: '15px 20px',
+                    minWidth: '80px',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255, 255, 255, 0.3)'
+                  }}>
+                    <div style={{
+                      fontSize: '2rem',
+                      fontWeight: '800',
+                      marginBottom: '5px',
+                      color: '#ffffff'
+                    }}>
+                      {String(item.value).padStart(2, '0')}
+                    </div>
+                    <div style={{
+                      fontSize: '0.85rem',
+                      opacity: '0.9',
+                      color: '#ffffff'
+                    }}>
+                      {item.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* 강의 아이콘과 제목 */}
             <div style={{ marginBottom: '40px' }}>
               <div style={{
@@ -470,7 +560,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 display: 'inline-block',
                 border: '1px solid rgba(255, 255, 255, 0.3)'
               }}>
-                🔥 55% 할인 (얼리버드 특가)
+                🔥 76% 할인 (얼리버드 특가)
               </div>
               <div style={{
                 fontSize: '0.9rem',
@@ -482,7 +572,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 border: '1px solid rgba(255, 255, 255, 0.2)',
                 display: 'inline-block'
               }}>
-                ⚠️ 2025년 3월 1일부터 9만9천원 이상으로 인상 예정
+                ⏰ 런칭일(2025.11.15)부터 19만원으로 인상 예정
               </div>
             </div>
 
@@ -534,6 +624,113 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             }}>
               💳 안전한 결제 | 12개월 무이자 할부 가능
             </p>
+          </div>
+
+          {/* 우리의 미션 섹션 */}
+          <div style={{
+            background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
+            borderRadius: '20px',
+            padding: '50px 40px',
+            marginBottom: '50px',
+            boxShadow: '0 10px 30px rgba(14, 165, 233, 0.1)',
+            border: '2px solid #bae6fd'
+          }}>
+            <div style={{
+              textAlign: 'center',
+              marginBottom: '40px'
+            }}>
+              <div style={{
+                fontSize: '2.5rem',
+                marginBottom: '20px'
+              }}>💡</div>
+              <h2 style={{
+                fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
+                fontWeight: '800',
+                color: '#0369a1',
+                marginBottom: '20px'
+              }}>
+                우리의 미션
+              </h2>
+              <div style={{
+                fontSize: 'clamp(1.1rem, 2vw, 1.3rem)',
+                color: '#0c4a6e',
+                lineHeight: '1.8',
+                maxWidth: '800px',
+                margin: '0 auto'
+              }}>
+                <p style={{ marginBottom: '20px', fontWeight: '600' }}>
+                  과도하게 비싼 AI 교육 가격을 낮추고 싶습니다.
+                </p>
+                <p style={{ marginBottom: '20px' }}>
+                  AI 교육은 누구나 접근할 수 있어야 합니다. 하지만 현실은 수십만 원에서 수백만 원의 높은 가격 장벽이 존재합니다.
+                </p>
+                <p style={{ marginBottom: '20px', fontWeight: '600', color: '#0ea5e9' }}>
+                  그래서 우리는 직접 플랫폼을 만들었습니다.
+                </p>
+                <p style={{ marginBottom: '0' }}>
+                  Jay 멘토가 직접 강의를 제작하고, 중간 유통 비용 없이 여러분께 전달합니다. 
+                  이것이 바로 <strong style={{ color: '#0369a1' }}>AI City Builders</strong>의 시작입니다.
+                </p>
+              </div>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gap: '20px',
+              marginTop: '40px'
+            }}>
+              <div style={{
+                background: 'white',
+                borderRadius: '15px',
+                padding: '30px',
+                textAlign: 'center',
+                boxShadow: '0 4px 15px rgba(14, 165, 233, 0.1)',
+                border: '1px solid #bae6fd'
+              }}>
+                <div style={{ fontSize: '2rem', marginBottom: '15px' }}>🎯</div>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#0369a1', marginBottom: '10px' }}>
+                  합리적인 가격
+                </h3>
+                <p style={{ fontSize: '0.95rem', color: '#64748b', lineHeight: '1.6', margin: '0' }}>
+                  중간 유통 비용 없이<br/>직접 제작·판매
+                </p>
+              </div>
+
+              <div style={{
+                background: 'white',
+                borderRadius: '15px',
+                padding: '30px',
+                textAlign: 'center',
+                boxShadow: '0 4px 15px rgba(14, 165, 233, 0.1)',
+                border: '1px solid #bae6fd'
+              }}>
+                <div style={{ fontSize: '2rem', marginBottom: '15px' }}>👨‍🏫</div>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#0369a1', marginBottom: '10px' }}>
+                  실전 경험
+                </h3>
+                <p style={{ fontSize: '0.95rem', color: '#64748b', lineHeight: '1.6', margin: '0' }}>
+                  현업 AI 전문가의<br/>생생한 노하우
+                </p>
+              </div>
+
+              <div style={{
+                background: 'white',
+                borderRadius: '15px',
+                padding: '30px',
+                textAlign: 'center',
+                boxShadow: '0 4px 15px rgba(14, 165, 233, 0.1)',
+                border: '1px solid #bae6fd'
+              }}>
+                <div style={{ fontSize: '2rem', marginBottom: '15px' }}>🌱</div>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#0369a1', marginBottom: '10px' }}>
+                  지속 성장
+                </h3>
+                <p style={{ fontSize: '0.95rem', color: '#64748b', lineHeight: '1.6', margin: '0' }}>
+                  평생 소장하며<br/>계속 업데이트
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* 멘토 소개 - Jay 멘토 이력 */}
