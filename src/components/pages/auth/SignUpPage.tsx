@@ -460,20 +460,6 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
               </p>
             </div>
           </div>
-
-          <div className="auth-benefits">
-            <h3>회원가입 혜택</h3>
-            <ul>
-              <li>🎁 회원가입 시 무료 강의 즉시 제공</li>
-              <li>💰 신규 회원 전용 특별 할인</li>
-              <li>📧 AI 트렌드 및 강의 업데이트 소식</li>
-              <li>🏆 학습 진도 관리 및 수료증 발급</li>
-              <li>💬 전문가 커뮤니티 참여</li>
-              <li>🎯 나만의 추천 코드로 리워드 획득</li>
-              <li>🎁 추천코드 입력 시 즉시 5,000원 리워드 (양쪽 모두)</li>
-              <li>💎 추천 성공 시 구매금액의 10% 추가 리워드</li>
-            </ul>
-          </div>
         </div>
       </div>
     </div>

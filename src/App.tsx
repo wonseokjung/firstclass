@@ -22,6 +22,7 @@ const AICityMapPage = React.lazy(() => import('./components/pages/AICityMapPage'
 const ChatGPTPrompts40Page = React.lazy(() => import('./components/pages/ChatGPTPrompts40Page'));
 const FAQPage = React.lazy(() => import('./components/pages/FAQPage'));
 const CEOPage = React.lazy(() => import('./components/pages/CEOPage'));
+const ContactPage = React.lazy(() => import('./components/pages/ContactPage'));
 
 // 강의 페이지
 const ChatGPTCoursePage = React.lazy(() => import('./components/pages/courses/ChatGPTCoursePage'));
@@ -134,6 +135,15 @@ const ChatGPTCoursePageWrapper = () => {
     return (
       <Suspense fallback={<LoadingSpinner />}>
         <CEOPage onBack={() => navigate('/')} />
+      </Suspense>
+    );
+  };
+
+  const ContactPageWrapper = () => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <ContactPage onBack={() => navigate('/')} />
       </Suspense>
     );
   };
@@ -360,6 +370,7 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/workflow-automation-master" element={<ComingSoonNotice />} />
               <Route path="/faq" element={<FAQPageWrapper />} />
               <Route path="/ceo" element={<CEOPageWrapper />} />
+              <Route path="/contact" element={<ContactPageWrapper />} />
               <Route path="/ai-city-map" element={<AICityMapPageWrapper />} />
               <Route path="/chatgpt-prompts-40plus" element={<ChatGPTPrompts40PageWrapper />} />
               <Route path="/login" element={<LoginPageWrapper />} />

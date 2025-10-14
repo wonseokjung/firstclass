@@ -198,32 +198,59 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
       {/* 대시보드 히어로 섹션 */}
       <section style={{ 
-        background: 'linear-gradient(135deg, #ffffff, #f8fafc, #f1f5f9)',
-        padding: '60px 0',
-        borderBottom: '1px solid #e2e8f0'
+        background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
+        padding: 'clamp(40px, 8vw, 80px) 0',
+        position: 'relative',
+        overflow: 'hidden'
       }}>
+        {/* 배경 장식 */}
+        <div style={{
+          position: 'absolute',
+          top: '-50px',
+          right: '-50px',
+          width: '200px',
+          height: '200px',
+          background: 'rgba(255, 255, 255, 0.1)',
+          borderRadius: '50%',
+          opacity: 0.5
+        }}></div>
+        <div style={{
+          position: 'absolute',
+          bottom: '-30px',
+          left: '-30px',
+          width: '150px',
+          height: '150px',
+          background: 'rgba(255, 255, 255, 0.08)',
+          borderRadius: '50%',
+          opacity: 0.6
+        }}></div>
+
         <div style={{
           maxWidth: '1400px',
           margin: '0 auto',
-          padding: '0 40px'
+          padding: '0 clamp(20px, 4vw, 40px)',
+          position: 'relative',
+          zIndex: 2
         }}>
           {/* 웰컴 메시지 */}
           <div style={{ 
             textAlign: 'center',
-            marginBottom: '50px'
+            marginBottom: 'clamp(30px, 5vw, 50px)'
           }}>
             <h1 style={{ 
-              fontSize: '2.5rem',
-              fontWeight: '700',
-              color: '#1f2937',
-              marginBottom: '15px'
+              fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
+              fontWeight: '900',
+              color: 'white',
+              marginBottom: '15px',
+              textShadow: '0 2px 10px rgba(0, 0, 0, 0.2)'
             }}>
               안녕하세요, {userInfo?.name || '사용자'}님! 👋
             </h1>
             <p style={{ 
-              fontSize: '1.1rem',
-              color: '#333333',
-              marginBottom: '0'
+              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+              color: 'rgba(255, 255, 255, 0.95)',
+              marginBottom: '0',
+              textShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
             }}>
               오늘도 새로운 지식을 쌓아가는 멋진 하루 되세요!
             </p>
@@ -232,52 +259,65 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
           {/* 통계 카드 그리드 */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '24px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))',
+            gap: 'clamp(16px, 3vw, 24px)',
             maxWidth: '1200px',
             margin: '0 auto'
           }}>
             {/* 총 수강 강의 카드 */}
             <div style={{
-              background: 'rgba(248, 250, 252, 0.9)',
-              border: '1px solid #e2e8f0',
-              borderRadius: '12px',
-              padding: '30px',
+              background: 'white',
+              border: 'none',
+              borderRadius: '20px',
+              padding: 'clamp(24px, 4vw, 32px)',
               textAlign: 'center',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              boxShadow: '0 10px 30px rgba(14, 165, 233, 0.15)',
+              cursor: 'pointer'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-5px)';
+              e.currentTarget.style.boxShadow = '0 15px 40px rgba(14, 165, 233, 0.25)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 10px 30px rgba(14, 165, 233, 0.15)';
             }}>
               <div style={{ 
-                background: 'var(--color-primary)',
+                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                 borderRadius: '50%',
-                width: '64px',
-                height: '64px',
+                width: 'clamp(56px, 10vw, 72px)',
+                height: 'clamp(56px, 10vw, 72px)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                margin: '0 auto 20px'
+                margin: '0 auto 20px',
+                boxShadow: '0 8px 20px rgba(14, 165, 233, 0.3)'
               }}>
-                <BookOpen size={24} color="white" />
+                <BookOpen size={28} color="white" />
               </div>
               <h3 style={{ 
-                color: '#666666', 
-                fontSize: '0.9rem', 
+                color: '#64748b', 
+                fontSize: 'clamp(0.85rem, 1.5vw, 1rem)', 
                 marginBottom: '10px',
-                fontWeight: '500'
+                fontWeight: '600',
+                letterSpacing: '0.5px'
               }}>
                 총 수강 강의
               </h3>
               <p style={{ 
-                color: '#1f2937',
-                fontSize: '2.5rem',
-                fontWeight: '700',
+                color: '#0ea5e9',
+                fontSize: 'clamp(2rem, 5vw, 2.8rem)',
+                fontWeight: '900',
                 margin: '0 0 5px 0'
               }}>
                 {userStats.totalCourses}
               </p>
               <p style={{ 
-                color: '#666666', 
-                fontSize: '0.8rem', 
-                margin: 0 
+                color: '#94a3b8', 
+                fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)', 
+                margin: 0,
+                fontWeight: '500'
               }}>
                 개 강의
               </p>
@@ -285,45 +325,58 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
             {/* 수강 중 카드 */}
             <div style={{
-              background: 'rgba(248, 250, 252, 0.9)',
-              border: '1px solid #e2e8f0',
-              borderRadius: '12px',
-              padding: '30px',
+              background: 'white',
+              border: 'none',
+              borderRadius: '20px',
+              padding: 'clamp(24px, 4vw, 32px)',
               textAlign: 'center',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              boxShadow: '0 10px 30px rgba(16, 185, 129, 0.15)',
+              cursor: 'pointer'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-5px)';
+              e.currentTarget.style.boxShadow = '0 15px 40px rgba(16, 185, 129, 0.25)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 10px 30px rgba(16, 185, 129, 0.15)';
             }}>
               <div style={{ 
-                background: '#10b981',
+                background: 'linear-gradient(135deg, #10b981, #059669)',
                 borderRadius: '50%',
-                width: '64px',
-                height: '64px',
+                width: 'clamp(56px, 10vw, 72px)',
+                height: 'clamp(56px, 10vw, 72px)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                margin: '0 auto 20px'
+                margin: '0 auto 20px',
+                boxShadow: '0 8px 20px rgba(16, 185, 129, 0.3)'
               }}>
-                <Play size={24} color="white" />
+                <Play size={28} color="white" />
               </div>
               <h3 style={{ 
-                color: '#666666', 
-                fontSize: '0.9rem', 
+                color: '#64748b', 
+                fontSize: 'clamp(0.85rem, 1.5vw, 1rem)', 
                 marginBottom: '10px',
-                fontWeight: '500'
+                fontWeight: '600',
+                letterSpacing: '0.5px'
               }}>
                 수강 중
               </h3>
               <p style={{ 
-                color: '#1f2937',
-                fontSize: '2.5rem',
-                fontWeight: '700',
+                color: '#10b981',
+                fontSize: 'clamp(2rem, 5vw, 2.8rem)',
+                fontWeight: '900',
                 margin: '0 0 5px 0'
               }}>
                 {userStats.inProgressCourses}
               </p>
               <p style={{ 
-                color: '#666666', 
-                fontSize: '0.8rem', 
-                margin: 0 
+                color: '#94a3b8', 
+                fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)', 
+                margin: 0,
+                fontWeight: '500'
               }}>
                 개 진행 중
               </p>
@@ -331,45 +384,58 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
             {/* 완료한 강의 카드 */}
             <div style={{
-              background: 'rgba(248, 250, 252, 0.9)',
-              border: '1px solid #e2e8f0',
-              borderRadius: '12px',
-              padding: '30px',
+              background: 'white',
+              border: 'none',
+              borderRadius: '20px',
+              padding: 'clamp(24px, 4vw, 32px)',
               textAlign: 'center',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              boxShadow: '0 10px 30px rgba(245, 158, 11, 0.15)',
+              cursor: 'pointer'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-5px)';
+              e.currentTarget.style.boxShadow = '0 15px 40px rgba(245, 158, 11, 0.25)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 10px 30px rgba(245, 158, 11, 0.15)';
             }}>
               <div style={{ 
-                background: '#f59e0b',
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
                 borderRadius: '50%',
-                width: '64px',
-                height: '64px',
+                width: 'clamp(56px, 10vw, 72px)',
+                height: 'clamp(56px, 10vw, 72px)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                margin: '0 auto 20px'
+                margin: '0 auto 20px',
+                boxShadow: '0 8px 20px rgba(245, 158, 11, 0.3)'
               }}>
-                <Award size={24} color="white" />
+                <Award size={28} color="white" />
               </div>
               <h3 style={{ 
-                color: '#666666', 
-                fontSize: '0.9rem', 
+                color: '#64748b', 
+                fontSize: 'clamp(0.85rem, 1.5vw, 1rem)', 
                 marginBottom: '10px',
-                fontWeight: '500'
+                fontWeight: '600',
+                letterSpacing: '0.5px'
               }}>
                 완료한 강의
               </h3>
               <p style={{ 
-                color: '#1f2937',
-                fontSize: '2.5rem',
-                fontWeight: '700',
+                color: '#f59e0b',
+                fontSize: 'clamp(2rem, 5vw, 2.8rem)',
+                fontWeight: '900',
                 margin: '0 0 5px 0'
               }}>
                 {userStats.completedCourses}
               </p>
               <p style={{ 
-                color: '#666666', 
-                fontSize: '0.8rem', 
-                margin: 0 
+                color: '#94a3b8', 
+                fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)', 
+                margin: 0,
+                fontWeight: '500'
               }}>
                 개 완료
               </p>
@@ -377,45 +443,58 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
             {/* 총 학습 시간 카드 */}
             <div style={{
-              background: 'rgba(248, 250, 252, 0.9)',
-              border: '1px solid #e2e8f0',
-              borderRadius: '12px',
-              padding: '30px',
+              background: 'white',
+              border: 'none',
+              borderRadius: '20px',
+              padding: 'clamp(24px, 4vw, 32px)',
               textAlign: 'center',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              boxShadow: '0 10px 30px rgba(139, 92, 246, 0.15)',
+              cursor: 'pointer'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-5px)';
+              e.currentTarget.style.boxShadow = '0 15px 40px rgba(139, 92, 246, 0.25)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 10px 30px rgba(139, 92, 246, 0.15)';
             }}>
               <div style={{ 
-                background: '#8b5cf6',
+                background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
                 borderRadius: '50%',
-                width: '64px',
-                height: '64px',
+                width: 'clamp(56px, 10vw, 72px)',
+                height: 'clamp(56px, 10vw, 72px)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                margin: '0 auto 20px'
+                margin: '0 auto 20px',
+                boxShadow: '0 8px 20px rgba(139, 92, 246, 0.3)'
               }}>
-                <Clock size={24} color="white" />
+                <Clock size={28} color="white" />
               </div>
               <h3 style={{ 
-                color: '#666666', 
-                fontSize: '0.9rem', 
+                color: '#64748b', 
+                fontSize: 'clamp(0.85rem, 1.5vw, 1rem)', 
                 marginBottom: '10px',
-                fontWeight: '500'
+                fontWeight: '600',
+                letterSpacing: '0.5px'
               }}>
                 총 학습 시간
               </h3>
               <p style={{ 
-                color: '#1f2937',
-                fontSize: '1.8rem',
-                fontWeight: '700',
+                color: '#8b5cf6',
+                fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+                fontWeight: '900',
                 margin: '0 0 5px 0'
               }}>
                 {formatTime(userStats.totalLearningTime)}
               </p>
               <p style={{ 
-                color: '#666666', 
-                fontSize: '0.8rem', 
-                margin: 0 
+                color: '#94a3b8', 
+                fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)', 
+                margin: 0,
+                fontWeight: '500'
               }}>
                 누적 시간
               </p>
@@ -427,26 +506,47 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
 
       {/* 수강 중인 강의 섹션 */}
-      <section style={{ padding: '80px 0', background: '#ffffff' }}>
+      <section style={{ 
+        padding: 'clamp(60px, 10vw, 100px) 0', 
+        background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)'
+      }}>
         <div style={{
           maxWidth: '1400px',
           margin: '0 auto',
-          padding: '0 40px'
+          padding: '0 clamp(20px, 4vw, 40px)'
         }}>
-          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <div style={{ textAlign: 'center', marginBottom: 'clamp(40px, 6vw, 60px)' }}>
+            <div style={{
+              display: 'inline-block',
+              background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+              padding: '8px 20px',
+              borderRadius: '50px',
+              marginBottom: '20px',
+              boxShadow: '0 4px 15px rgba(14, 165, 233, 0.3)'
+            }}>
+              <span style={{ 
+                fontSize: '0.9rem', 
+                color: 'white',
+                fontWeight: '700',
+                letterSpacing: '0.5px'
+              }}>
+                MY LEARNING
+              </span>
+            </div>
             <h2 style={{ 
-              fontSize: '2.2rem',
-              fontWeight: '700',
+              fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
+              fontWeight: '900',
               marginBottom: '15px',
-              color: 'white'
+              color: '#1f2937'
             }}>
               📚 나의 학습 여정
             </h2>
             <p style={{ 
-              fontSize: '1rem',
-              color: '#1f2937',
+              fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+              color: '#64748b',
               maxWidth: '600px',
-              margin: '0 auto'
+              margin: '0 auto',
+              lineHeight: '1.6'
             }}>
               현재 수강 중인 강의들을 확인하고 학습을 이어가세요
             </p>
@@ -455,27 +555,30 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
           {userStats.enrolledCourses.length > 0 ? (
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-              gap: '30px',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+              gap: 'clamp(20px, 4vw, 30px)',
               maxWidth: '1200px',
               margin: '0 auto'
             }}>
               {userStats.enrolledCourses.map((course, index) => (
                 <div key={index} style={{
-                  background: '#f8fafc',
-                  border: '1px solid #e2e8f0',
-                  borderRadius: '12px',
-                  padding: '30px',
+                  background: 'white',
+                  border: 'none',
+                  borderRadius: '20px',
+                  padding: 'clamp(24px, 4vw, 32px)',
                   transition: 'all 0.3s ease',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  boxShadow: '0 8px 25px rgba(14, 165, 233, 0.12)',
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-5px)';
-                  e.currentTarget.style.borderColor = 'var(--color-primary)';
+                  e.currentTarget.style.transform = 'translateY(-8px)';
+                  e.currentTarget.style.boxShadow = '0 15px 40px rgba(14, 165, 233, 0.2)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.borderColor = '#333';
+                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(14, 165, 233, 0.12)';
                 }}
                 >
                   <div style={{ marginBottom: '20px' }}>
@@ -505,24 +608,34 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   </div>
                   
                   <div style={{ marginBottom: '25px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '0.9rem', color: '#666666' }}>진행률</span>
-                      <span style={{ fontSize: '0.9rem', fontWeight: '600', color: 'white' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                      <span style={{ fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)', color: '#64748b', fontWeight: '600' }}>진행률</span>
+                      <span style={{ 
+                        fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)', 
+                        fontWeight: '700', 
+                        color: '#0ea5e9',
+                        background: 'rgba(14, 165, 233, 0.1)',
+                        padding: '4px 10px',
+                        borderRadius: '8px'
+                      }}>
                         {course.progress || 0}%
                       </span>
                     </div>
                     <div style={{
                       width: '100%',
-                      height: '8px',
-                      background: '#333',
-                      borderRadius: '4px',
-                      overflow: 'hidden'
+                      height: '10px',
+                      background: '#e0f2fe',
+                      borderRadius: '10px',
+                      overflow: 'hidden',
+                      boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.06)'
                     }}>
                       <div style={{
                         width: `${course.progress || 0}%`,
                         height: '100%',
-                        background: 'var(--color-primary)',
-                        transition: 'width 0.3s ease'
+                        background: 'linear-gradient(90deg, #0ea5e9, #0284c7)',
+                        transition: 'width 0.5s ease',
+                        borderRadius: '10px',
+                        boxShadow: '0 2px 4px rgba(14, 165, 233, 0.3)'
                       }} />
                     </div>
                   </div>
@@ -548,23 +661,38 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   
                   <button className="watch-trailer-btn" style={{
                     width: '100%',
-                    padding: '12px',
-                    borderRadius: '8px',
+                    padding: 'clamp(12px, 2vw, 16px)',
+                    borderRadius: '12px',
                     border: 'none',
                     background: course.status === 'completed' 
-                      ? '#f59e0b'
-                      : 'var(--color-primary)',
-                    color: '#1f2937',
-                    fontSize: '0.95rem',
-                    fontWeight: '600',
+                      ? 'linear-gradient(135deg, #f59e0b, #d97706)'
+                      : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                    color: 'white',
+                    fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
+                    fontWeight: '700',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '8px'
+                    gap: '8px',
+                    boxShadow: course.status === 'completed'
+                      ? '0 4px 15px rgba(245, 158, 11, 0.3)'
+                      : '0 4px 15px rgba(14, 165, 233, 0.3)'
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.02)';
+                    e.currentTarget.style.boxShadow = course.status === 'completed'
+                      ? '0 6px 20px rgba(245, 158, 11, 0.4)'
+                      : '0 6px 20px rgba(14, 165, 233, 0.4)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = course.status === 'completed'
+                      ? '0 4px 15px rgba(245, 158, 11, 0.3)'
+                      : '0 4px 15px rgba(14, 165, 233, 0.3)';
                   }}>
-                    <Play size={16} />
+                    <Play size={18} />
                     {course.status === 'completed' ? '다시 보기' : '이어서 학습'}
                   </button>
                 </div>
@@ -739,7 +867,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
             <ul>
               <li><a href="/terms">이용약관</a></li>
               <li><a href="/privacy">개인정보처리방침</a></li>
-              <li><a href="/contact">고객센터</a></li>
+              <li><a href="mailto:jay@connexionai.kr">고객센터</a></li>
             </ul>
           </div>
         </div>
