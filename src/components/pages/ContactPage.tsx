@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, MessageSquare, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
+import { Mail, MessageSquare, MapPin, Send, CheckCircle } from 'lucide-react';
 import NavigationBar from '../common/NavigationBar';
 
 interface ContactPageProps {
