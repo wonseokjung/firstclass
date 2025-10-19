@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Clock, ChevronDown, ChevronRight, BookOpen, Wrench } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
@@ -9,10 +10,7 @@ interface ChatGPTAgentBeginnerPageProps {
 }
 
 const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onBack }) => {
-  // const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [, setCheckingEnrollment] = useState(false);
-  const [, setIsAlreadyEnrolled] = useState(false);
   const [isPaidUser, setIsPaidUser] = useState(false);
   const [expandedChapters, setExpandedChapters] = useState<Set<number>>(new Set());
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -22,7 +20,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
   const course = {
     id: 1002,
     title: "ChatGPT AI AGENT 비기너편 - 15일 완성",
-    subtitle: "하루 1시간, 15일이면 누구나 AI 에이전트 마스터!",
+    subtitle: "코딩 몰라도, 당신의 AI가 스스로 생각하고 일하게 만든다",
     lessons: [
       // Week 1: AI 에이전트 기초 (Day 1-5)
       {
@@ -264,7 +262,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
             setIsLoggedIn(true);
             setUserInfo(parsedUserInfo);
-            setCheckingEnrollment(true);
 
             // Azure 테이블에서 결제 상태 확인
             try {
@@ -285,12 +282,9 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 return;
               } else {
                 console.log('❌ 결제되지 않음 - 강의 구매 페이지 표시');
-                setIsAlreadyEnrolled(false);
               }
             } catch (azureError) {
               console.error('❌ Azure 테이블 조회 실패:', azureError);
-              // Azure 오류 시에도 구매 페이지를 표시
-              setIsAlreadyEnrolled(false);
             }
           } catch (parseError) {
             console.error('❌ 사용자 정보 파싱 오류:', parseError);
@@ -307,8 +301,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
         console.error('❌ 인증 상태 확인 실패:', error);
         setIsLoggedIn(false);
         setUserInfo(null);
-      } finally {
-        setCheckingEnrollment(false);
       }
     };
 
@@ -332,14 +324,9 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     setShowPaymentModal(true);
   };
 
-  // const handleLoginRequired = () => {
-  //   alert('로그인이 필요한 서비스입니다.');
-  // };
-
   const handlePaymentSuccess = () => {
     console.log('🎉 결제 성공!');
     setShowPaymentModal(false);
-    setIsAlreadyEnrolled(true);
     setIsPaidUser(true);
     alert('🎉 결제가 완료되었습니다! 강의 시청 페이지로 이동합니다.');
     
@@ -937,393 +924,24 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             </div>
           </div>
 
-          {/* AI City Builders 플랫폼 구조 - 수익 배분 */}
-          <div style={{
-            background: '#ffffff',
-            padding: 'clamp(30px, 5vw, 60px) clamp(20px, 4vw, 40px)',
-            borderRadius: '24px',
-            marginBottom: '60px',
-            border: '1px solid #e5e7eb',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)'
-          }}>
-            <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-              <h3 style={{
-                fontSize: '2.2rem',
-                fontWeight: '800',
-                marginBottom: '16px',
-                color: '#1f2937'
-              }}>
-                왜 AI City Builders가 더 저렴하면서도 더 나은가?
-              </h3>
-              <p style={{
-                fontSize: '1.1rem',
-                color: '#6b7280',
-                lineHeight: '1.6',
-                margin: '0'
-              }}>
-                기존 교육 플랫폼의 한계를 뛰어넘는 혁신적인 구조
-              </p>
-            </div>
-
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
-              gap: '32px',
-              marginBottom: '50px'
-            }}>
-              {/* 기존 플랫폼 구조 */}
-              <div style={{
-                background: '#ffffff',
-                padding: '32px',
-                borderRadius: '20px',
-                border: '2px solid #fee2e2',
-                position: 'relative',
-                boxShadow: '0 4px 12px rgba(239, 68, 68, 0.08)'
-              }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '-16px',
-                  left: '24px',
-                  background: '#ef4444',
-                  color: 'white',
-                  padding: '8px 20px',
-                  borderRadius: '50px',
-                  fontSize: '0.9rem',
-                  fontWeight: '700',
-                  boxShadow: '0 2px 8px rgba(239, 68, 68, 0.3)'
-                }}>
-                  기존 플랫폼
-                </div>
-
-                <div style={{ marginTop: '24px' }}>
-                  <div style={{
-                    background: '#fef7f7',
-                    padding: '20px',
-                    borderRadius: '16px',
-                    marginBottom: '20px',
-                    border: '1px solid #fecaca'
-                  }}>
-                    <h4 style={{
-                      fontSize: '1.1rem',
-                      fontWeight: '700',
-                      marginBottom: '16px',
-                      color: '#dc2626',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}>
-                      📊 수익 배분
-                    </h4>
-                    <div style={{ gap: '12px' }}>
-                      <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        padding: '8px 0',
-                        borderBottom: '1px solid #fecaca'
-                      }}>
-                        <span style={{ color: '#7f1d1d', fontSize: '0.95rem' }}>강사</span>
-                        <span style={{ fontWeight: '700', color: '#dc2626', fontSize: '1.1rem' }}>20~30%</span>
-                      </div>
-                      <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        padding: '8px 0'
-                      }}>
-                        <span style={{ color: '#7f1d1d', fontSize: '0.95rem' }}>플랫폼</span>
-                        <span style={{ fontWeight: '700', color: '#dc2626', fontSize: '1.1rem' }}>70~80%</span>
-                      </div>
-                    </div>
-                    <div style={{
-                      marginTop: '16px',
-                      padding: '12px',
-                      background: 'rgba(239, 68, 68, 0.1)',
-                      borderRadius: '8px',
-                      fontSize: '0.9rem',
-                      color: '#991b1b',
-                      fontWeight: '600'
-                    }}>
-                      → 광고비, 운영비로 인한 높은 수강료
-                    </div>
-                  </div>
-
-                  <div style={{
-                    background: '#fef7f7',
-                    padding: '20px',
-                    borderRadius: '16px',
-                    border: '1px solid #fecaca'
-                  }}>
-                    <h4 style={{
-                      fontSize: '1.1rem',
-                      fontWeight: '700',
-                      marginBottom: '16px',
-                      color: '#dc2626',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}>
-                      👥 학습 방식
-                    </h4>
-                    <ul style={{ margin: '0', paddingLeft: '0', listStyle: 'none' }}>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: '8px',
-                        color: '#7f1d1d'
-                      }}>
-                        <span style={{ color: '#dc2626', fontWeight: '700' }}>✕</span>
-                        단순 수강자로만 참여
-                      </li>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: '8px',
-                        color: '#7f1d1d'
-                      }}>
-                        <span style={{ color: '#dc2626', fontWeight: '700' }}>✕</span>
-                        일방향 학습
-                      </li>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        color: '#7f1d1d'
-                      }}>
-                        <span style={{ color: '#dc2626', fontWeight: '700' }}>✕</span>
-                        강의 완료 후 관계 종료
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* AI City Builders 구조 */}
-              <div style={{
-                background: '#ffffff',
-                padding: '32px',
-                borderRadius: '20px',
-                border: '2px solid #dbeafe',
-                position: 'relative',
-                boxShadow: '0 4px 12px rgba(14, 165, 233, 0.08)'
-              }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '-16px',
-                  left: '24px',
-                  background: '#0ea5e9',
-                  color: 'white',
-                  padding: '8px 20px',
-                  borderRadius: '50px',
-                  fontSize: '0.9rem',
-                  fontWeight: '700',
-                  boxShadow: '0 2px 8px rgba(14, 165, 233, 0.3)'
-                }}>
-                  AI City Builders
-                </div>
-
-                <div style={{ marginTop: '24px' }}>
-                  <div style={{
-                    background: '#f0f9ff',
-                    padding: '20px',
-                    borderRadius: '16px',
-                    marginBottom: '20px',
-                    border: '1px solid #bae6fd'
-                  }}>
-                    <h4 style={{
-                      fontSize: '1.1rem',
-                      fontWeight: '700',
-                      marginBottom: '16px',
-                      color: '#0ea5e9',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}>
-                      🚀 새로운 수익 구조
-                    </h4>
-                    <ul style={{ margin: '0', paddingLeft: '0', listStyle: 'none' }}>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: '10px',
-                        color: '#0c4a6e'
-                      }}>
-                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
-                        자체 제작으로 중간 수수료 없음
-                      </li>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: '10px',
-                        color: '#0c4a6e'
-                      }}>
-                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
-                        커뮤니티 홍보 시 10% 리워드 (현금 교환 가능)
-                      </li>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: '10px',
-                        color: '#0c4a6e'
-                      }}>
-                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
-                        등급 상승으로 수익률 증가
-                      </li>
-                    </ul>
-                    <div style={{
-                      marginTop: '16px',
-                      padding: '16px',
-                      background: '#0ea5e9',
-                      color: 'white',
-                      borderRadius: '12px',
-                      textAlign: 'center',
-                      fontWeight: '700',
-                      fontSize: '1.1rem'
-                    }}>
-                      결과: 76% 저렴한 수강료
-                    </div>
-                  </div>
-
-                  <div style={{
-                    background: '#f0f9ff',
-                    padding: '20px',
-                    borderRadius: '16px',
-                    border: '1px solid #bae6fd'
-                  }}>
-                    <h4 style={{
-                      fontSize: '1.1rem',
-                      fontWeight: '700',
-                      marginBottom: '16px',
-                      color: '#0ea5e9',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}>
-                      🌟 참여자 중심 생태계
-                    </h4>
-                    <ul style={{ margin: '0', paddingLeft: '0', listStyle: 'none' }}>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: '8px',
-                        color: '#0c4a6e'
-                      }}>
-                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
-                        단순 수강자에서 적극적 참여자로
-                      </li>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: '8px',
-                        color: '#0c4a6e'
-                      }}>
-                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
-                        함께 성장하는 커뮤니티
-                      </li>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        color: '#0c4a6e'
-                      }}>
-                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
-                        홍보 참여로 수익 창출 기회
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 핵심 차별점 요약 */}
-            <div style={{
-              background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
-              padding: '40px',
-              borderRadius: '20px',
-              textAlign: 'center',
-              border: '1px solid #cbd5e1'
-            }}>
-              <div style={{
-                display: 'inline-block',
-                background: '#0ea5e9',
-                color: 'white',
-                padding: '10px 24px',
-                borderRadius: '50px',
-                fontSize: '0.95rem',
-                fontWeight: '700',
-                marginBottom: '24px',
-                boxShadow: '0 2px 8px rgba(14, 165, 233, 0.3)'
-              }}>
-                제이 멘토의 실제 조사 결과
-              </div>
-              <blockquote style={{
-                fontSize: '1.15rem',
-                lineHeight: '1.8',
-                margin: '0',
-                color: '#374151',
-                fontStyle: 'italic',
-                position: 'relative',
-                padding: '0 20px'
-              }}>
-                <span style={{
-                  fontSize: '3rem',
-                  color: '#0ea5e9',
-                  position: 'absolute',
-                  left: '-10px',
-                  top: '-10px',
-                  fontFamily: 'serif'
-                }}>"</span>
-                모든 주요 교육 플랫폼과 미팅하고 계약서를 분석한 결과, 기존 플랫폼들은 강사에게 20~30%만 주고 70~80%를 가져가 수강료가 비쌀 수밖에 없었습니다. AI City Builders는 이 구조를 완전히 뒤집어 여러분께 더 저렴하고 더 나은 가치를 제공합니다.
-                <span style={{
-                  fontSize: '3rem',
-                  color: '#0ea5e9',
-                  position: 'absolute',
-                  right: '-10px',
-                  bottom: '-30px',
-                  fontFamily: 'serif'
-                }}>"</span>
-              </blockquote>
-            </div>
-          </div>
-
           {/* 멘토 소개 - Jay 멘토 이력 */}
           <div style={{ marginBottom: '60px' }}>
-            <div style={{
-              background: '#ffffff',
-              padding: 'clamp(30px, 5vw, 50px) clamp(20px, 4vw, 40px)',
-              borderRadius: '20px',
-              marginBottom: '40px',
-              border: '2px solid #e2e8f0',
-              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)'
-            }}>
               <h2 style={{
-                fontSize: 'clamp(1.8rem, 3vw, 2.2rem)',
+              fontSize: 'clamp(2rem, 4vw, 2.5rem)',
                 fontWeight: '800',
                 color: '#1f2937',
-                marginBottom: '30px',
-                textAlign: 'center',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '10px'
-              }}>
-                <span>👨‍💼</span>
-                멘토 소개: 정원석 (Jay)
+              marginBottom: '40px',
+              textAlign: 'center'
+            }}>
+              👨‍💼 멘토 소개: 정원석 (Jay)
               </h2>
 
               {/* 멘토 프로필 요약 */}
               <div style={{
                 background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
-                padding: '30px',
+              padding: 'clamp(30px, 5vw, 40px)',
                 borderRadius: '15px',
-                marginBottom: '40px',
+              marginBottom: '50px',
                 border: '2px solid #0ea5e9',
                 textAlign: 'center'
               }}>
@@ -1331,16 +949,16 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '20px',
-                  marginBottom: '20px',
+                gap: '15px',
+                marginBottom: '25px',
                   flexWrap: 'wrap'
                 }}>
                   <div style={{
                     background: '#0ea5e9',
                     color: 'white',
-                    padding: '10px 20px',
+                  padding: '12px 24px',
                     borderRadius: '25px',
-                    fontSize: '1rem',
+                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
                     fontWeight: '600'
                   }}>
                     🏢 커넥젼에이아이 대표
@@ -1348,9 +966,9 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   <div style={{
                     background: '#0ea5e9',
                     color: 'white',
-                    padding: '10px 20px',
+                  padding: '12px 24px',
                     borderRadius: '25px',
-                    fontSize: '1rem',
+                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
                     fontWeight: '600'
                   }}>
                     🎓 서울사이버대학교 대우교수
@@ -1358,106 +976,53 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   <div style={{
                     background: '#0ea5e9',
                     color: 'white',
-                    padding: '10px 20px',
+                  padding: '12px 24px',
                     borderRadius: '25px',
-                    fontSize: '1rem',
-                    fontWeight: '600'
-                  }}>
-                    📺 AI 콘텐츠 크리에이터
-                  </div>
-                  <div style={{
-                    background: '#0ea5e9',
-                    color: 'white',
-                    padding: '10px 20px',
-                    borderRadius: '25px',
-                    fontSize: '1rem',
+                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
                     fontWeight: '600'
                   }}>
                     📱 인스타그램 30만 팔로워
                   </div>
                 </div>
                 <p style={{
-                  color: '#64748b',
-                  fontSize: '1.1rem',
-                  lineHeight: '1.6',
+                color: '#0c4a6e',
+                fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)',
+                lineHeight: '1.8',
                   margin: '0',
-                  fontWeight: '500'
+                fontWeight: '600'
                 }}>
                   AI 솔루션 개발과 컨설팅을 통한 디지털 트랜스포메이션을 선도하며,<br />
                   차세대 AI 인재 양성과 AI 지식 대중화에 힘쓰고 있습니다.
                 </p>
               </div>
 
-              {/* 멘토 이미지 섹션 */}
-              <div style={{
-                textAlign: 'center',
-                marginBottom: '50px',
-                padding: '40px 20px'
-              }}>
-                <img 
-                  src="/images/jaymentor.PNG" 
-                  alt="정원석 (Jay) 멘토 강의 모습"
-                  style={{
-                    maxWidth: '600px',
-                    width: '90%',
-                    height: 'auto',
-                    borderRadius: '20px',
-                    boxShadow: '0 20px 50px rgba(0, 0, 0, 0.3)',
-                    marginBottom: '30px',
-                    display: 'block',
-                    marginLeft: 'auto',
-                    marginRight: 'auto'
-                  }}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
-                />
-                <p style={{
-                  fontSize: '1.2rem',
-                  color: '#4b5563',
-                  fontStyle: 'italic',
-                  fontWeight: '500',
-                  maxWidth: '600px',
-                  margin: '0 auto',
-                  lineHeight: '1.6'
-                }}>
-                  ChatGPT AI AGENT 비기너편 멘토 정원석(Jay)의 강의 모습
-                </p>
-              </div>
-
               {/* 학력 인증 섹션 */}
               <div style={{
                 background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
-                padding: 'clamp(25px, 4vw, 40px)',
+              padding: 'clamp(30px, 5vw, 50px)',
                 borderRadius: '20px',
                 border: '2px solid #e2e8f0',
-                marginBottom: '40px'
+              marginBottom: '50px'
               }}>
                 <h3 style={{
                   color: '#1f2937',
-                  fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)',
+                fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                   fontWeight: '800',
-                  marginBottom: '30px',
-                  textAlign: 'center',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px',
-                  flexWrap: 'wrap'
+                marginBottom: '40px',
+                textAlign: 'center'
                 }}>
                   🎓 학력 인증
                 </h3>
                 
                 <div style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
-                  gap: '30px'
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+                gap: '40px'
                 }}>
                   {/* 일리노이공대 석사 */}
                   <div style={{
                     background: '#ffffff',
-                    padding: '25px',
+                  padding: '30px',
                     borderRadius: '15px',
                     border: '2px solid #0ea5e9',
                     textAlign: 'center',
@@ -1466,10 +1031,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     <div style={{
                       background: '#0ea5e9',
                       color: 'white',
-                      padding: '8px 16px',
-                      borderRadius: '20px',
-                      fontSize: '0.9rem',
-                      fontWeight: '600',
+                    padding: '10px 20px',
+                    borderRadius: '25px',
+                    fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                    fontWeight: '700',
                       marginBottom: '20px',
                       display: 'inline-block'
                     }}>
@@ -1477,25 +1042,25 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     </div>
                     <h4 style={{
                       color: '#1f2937',
-                      fontSize: '1.3rem',
-                      fontWeight: '700',
-                      marginBottom: '8px'
+                    fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)',
+                    fontWeight: '800',
+                    marginBottom: '10px'
                     }}>
                       일리노이공대
                     </h4>
                     <p style={{
                       color: '#64748b',
-                      fontSize: '1rem',
+                    fontSize: 'clamp(1rem, 2vw, 1.1rem)',
                       fontWeight: '600',
-                      marginBottom: '5px'
+                    marginBottom: '8px'
                     }}>
                       Illinois Institute of Technology
                     </p>
                     <p style={{
                       color: '#0ea5e9',
-                      fontSize: '1rem',
+                    fontSize: 'clamp(1.1rem, 2vw, 1.2rem)',
                       fontWeight: '700',
-                      marginBottom: '20px'
+                    marginBottom: '25px'
                     }}>
                       Data Science (MS)
                     </p>
@@ -1561,7 +1126,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   {/* 바루크 컬리지 학사 */}
                   <div style={{
                     background: '#ffffff',
-                    padding: '25px',
+                  padding: '30px',
                     borderRadius: '15px',
                     border: '2px solid #0ea5e9',
                     textAlign: 'center',
@@ -1570,10 +1135,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     <div style={{
                       background: '#0ea5e9',
                       color: 'white',
-                      padding: '8px 16px',
-                      borderRadius: '20px',
-                      fontSize: '0.9rem',
-                      fontWeight: '600',
+                    padding: '10px 20px',
+                    borderRadius: '25px',
+                    fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                    fontWeight: '700',
                       marginBottom: '20px',
                       display: 'inline-block'
                     }}>
@@ -1581,25 +1146,25 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     </div>
                     <h4 style={{
                       color: '#1f2937',
-                      fontSize: '1.3rem',
-                      fontWeight: '700',
-                      marginBottom: '8px'
+                    fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)',
+                    fontWeight: '800',
+                    marginBottom: '10px'
                     }}>
                       뉴욕시립대
                     </h4>
                     <p style={{
                       color: '#64748b',
-                      fontSize: '1rem',
+                    fontSize: 'clamp(1rem, 2vw, 1.1rem)',
                       fontWeight: '600',
-                      marginBottom: '5px'
+                    marginBottom: '8px'
                     }}>
                       City University of New York - Baruch College
                     </p>
                     <p style={{
                       color: '#0ea5e9',
-                      fontSize: '1rem',
+                    fontSize: 'clamp(1.1rem, 2vw, 1.2rem)',
                       fontWeight: '700',
-                      marginBottom: '20px'
+                    marginBottom: '25px'
                     }}>
                       Data Science (BS)
                     </p>
@@ -1664,575 +1229,53 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 </div>
               </div>
 
-              {/* 현재 활동 섹션 */}
+            {/* 주요 경력 섹션 - 간결한 텍스트 형식 */}
               <div style={{
                 background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
-                padding: '40px',
-                borderRadius: '20px',
+              padding: 'clamp(30px, 5vw, 50px)',
+              borderRadius: '15px',
                 border: '2px solid #e2e8f0',
-                marginBottom: '40px'
+              marginBottom: '50px'
               }}>
                 <h3 style={{
                   color: '#1f2937',
-                  fontSize: '1.6rem',
+                fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                   fontWeight: '800',
                   marginBottom: '30px',
-                  textAlign: 'center',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px'
-                }}>
-                  💼 현재 활동
+                textAlign: 'center'
+              }}>
+                💼 주요 경력
                 </h3>
                 
                 <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                  gap: '20px'
-                }}>
-                  <div style={{
-                    background: '#ffffff',
-                    padding: '25px',
-                    borderRadius: '15px',
-                    border: '1px solid #e2e8f0',
-                    textAlign: 'center',
-                    boxShadow: '0 5px 15px rgba(0, 0, 0, 0.05)',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-5px)';
-                    e.currentTarget.style.boxShadow = '0 10px 25px rgba(14, 165, 233, 0.15)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.05)';
-                  }}
-                  >
-                    <div style={{
-                      background: '#0ea5e9',
-                      color: 'white',
-                      width: '60px',
-                      height: '60px',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      margin: '0 auto 20px',
-                      fontSize: '1.5rem'
-                    }}>
-                      🏢
-                    </div>
-                    <h4 style={{
-                      color: '#1f2937',
-                      fontSize: '1.2rem',
-                      fontWeight: '700',
-                      marginBottom: '10px'
-                    }}>
-                      커넥젼에이아이 대표
-                    </h4>
-                    <p style={{
-                      color: '#64748b',
-                      fontSize: '0.95rem',
-                      margin: '0',
-                      lineHeight: '1.5'
-                    }}>
-                      AI 솔루션 개발과 컨설팅을 통한 디지털 트랜스포메이션 선도
-                    </p>
-                  </div>
-                  
-                </div>
-              </div>
-
-              {/* 주요 경력 타임라인 */}
-              <div style={{
-                background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
-                padding: '40px',
-                borderRadius: '20px',
-                border: '2px solid #e2e8f0',
-                marginBottom: '30px'
+                maxWidth: '900px',
+                margin: '0 auto',
+                fontSize: 'clamp(1.05rem, 2vw, 1.2rem)',
+                lineHeight: '2.2',
+                color: '#1f2937'
               }}>
-                <h3 style={{
-                  color: '#1f2937',
-                  fontSize: '1.6rem',
-                  fontWeight: '800',
-                  marginBottom: '30px',
-                  textAlign: 'center',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px'
-                }}>
-                  📈 주요 경력 타임라인
-                </h3>
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '20px'
-                }}>
-                  {/* 2024년 */}
-                  <div style={{
-                    background: '#ffffff',
-                    padding: '25px',
-                    borderRadius: '15px',
-                    border: '2px solid #0ea5e9',
-                    boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-5px)';
-                    e.currentTarget.style.boxShadow = '0 10px 25px rgba(14, 165, 233, 0.2)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 5px 15px rgba(14, 165, 233, 0.1)';
-                  }}
-                  >
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      marginBottom: '15px'
-                    }}>
-                      <div style={{
-                        background: '#0ea5e9',
-                        color: 'white',
-                        padding: '8px 16px',
-                        borderRadius: '20px',
-                        fontSize: '0.9rem',
-                        fontWeight: '600',
-                        minWidth: '80px',
-                        textAlign: 'center'
-                      }}>
-                        2024년
-                      </div>
-                      <h4 style={{
-                        color: '#1f2937',
-                        fontSize: '1.3rem',
-                        fontWeight: '700',
-                        margin: '0'
-                      }}>
-                        서울사이버대학교 대우교수
-                      </h4>
-                    </div>
-                    <p style={{
-                      color: '#64748b',
-                      fontSize: '1rem',
-                      margin: '0',
-                      lineHeight: '1.6',
-                      paddingLeft: '95px'
-                    }}>
-                      공과대학 인공지능 전공 교수 임명 · 알파세대를 위한 AI 교육 솔루션 컨설팅/개발
+                <p style={{ marginBottom: '20px', fontWeight: '500' }}>
+                  <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>현재</strong> · 커넥젼에이아이 대표 · 서울사이버대학교 대우교수
+                </p>
+                <p style={{ marginBottom: '20px', fontWeight: '500' }}>
+                  <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>2023</strong> · 뤼튼 해커톤 1위 (AI 해킹 방어 툴 개발) · 블록체인 해커톤 2위
+                </p>
+                <p style={{ marginBottom: '20px', fontWeight: '500' }}>
+                  <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>2022</strong> · 메타 아시아 지역 글로벌 리더 선정 (4인 중 한 명)
+                </p>
+                <p style={{ marginBottom: '20px', fontWeight: '500' }}>
+                  <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>2020</strong> · AI 헬스케어 스타트업 옵트버스 설립 (기업가치 50억원)
+                </p>
+                <p style={{ marginBottom: '20px', fontWeight: '500' }}>
+                  <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>2019</strong> · 모두의연구소 인공지능 선임연구원 · AI COLLEGE 기획/운영 · 200명 이상 AI 연구원 양성
+                </p>
+                <p style={{ marginBottom: '20px', fontWeight: '500' }}>
+                  <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>2018</strong> · PostAI 강화학습 연구 · Best Poster Award 수상
+                </p>
+                <p style={{ marginBottom: '0', fontWeight: '500' }}>
+                  <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>2017</strong> · ConnexionAI 설립 · 200억 규모 AI 스마트팩토리 구축 프로젝트 컨설팅
                     </p>
                   </div>
-
-                  {/* 2023년 */}
-                  <div style={{
-                    background: '#ffffff',
-                    padding: '25px',
-                    borderRadius: '15px',
-                    border: '2px solid #0ea5e9',
-                    boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)',
-                    transition: 'all 0.3s ease',
-                    position: 'relative'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-5px)';
-                    e.currentTarget.style.boxShadow = '0 10px 25px rgba(14, 165, 233, 0.2)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 5px 15px rgba(14, 165, 233, 0.1)';
-                  }}
-                  >
-                    <div style={{
-                      position: 'absolute',
-                      top: '15px',
-                      right: '15px',
-                      background: '#0ea5e9',
-                      color: 'white',
-                      padding: '5px 12px',
-                      borderRadius: '15px',
-                      fontSize: '0.8rem',
-                      fontWeight: '600',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '5px'
-                    }}>
-                      🏆 수상
-                    </div>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      marginBottom: '15px'
-                    }}>
-                      <div style={{
-                        background: '#0ea5e9',
-                        color: 'white',
-                        padding: '8px 16px',
-                        borderRadius: '20px',
-                        fontSize: '0.9rem',
-                        fontWeight: '600',
-                        minWidth: '80px',
-                        textAlign: 'center'
-                      }}>
-                        2023년
-                      </div>
-                      <h4 style={{
-                        color: '#1f2937',
-                        fontSize: '1.3rem',
-                        fontWeight: '700',
-                        margin: '0'
-                      }}>
-                        AI 해커톤 다수 수상
-                      </h4>
-                    </div>
-                    <p style={{
-                      color: '#64748b',
-                      fontSize: '1rem',
-                      margin: '0',
-                      lineHeight: '1.6',
-                      paddingLeft: '95px'
-                    }}>
-                      뤼튼 해커톤 1위 (AI 해킹 방어 툴 개발) · 블록체인 해커톤 2위
-                    </p>
-                  </div>
-
-                  {/* 2022년 */}
-                  <div style={{
-                    background: '#ffffff',
-                    padding: '25px',
-                    borderRadius: '15px',
-                    border: '2px solid #0ea5e9',
-                    boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)',
-                    transition: 'all 0.3s ease',
-                    position: 'relative'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-5px)';
-                    e.currentTarget.style.boxShadow = '0 10px 25px rgba(14, 165, 233, 0.2)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 5px 15px rgba(14, 165, 233, 0.1)';
-                  }}
-                  >
-                    <div style={{
-                      position: 'absolute',
-                      top: '15px',
-                      right: '15px',
-                      background: '#0ea5e9',
-                      color: 'white',
-                      padding: '5px 12px',
-                      borderRadius: '15px',
-                      fontSize: '0.8rem',
-                      fontWeight: '600',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '5px'
-                    }}>
-                      🌍 글로벌
-                    </div>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      marginBottom: '15px'
-                    }}>
-                      <div style={{
-                        background: '#0ea5e9',
-                        color: 'white',
-                        padding: '8px 16px',
-                        borderRadius: '20px',
-                        fontSize: '0.9rem',
-                        fontWeight: '600',
-                        minWidth: '80px',
-                        textAlign: 'center'
-                      }}>
-                        2022년
-                      </div>
-                      <h4 style={{
-                        color: '#1f2937',
-                        fontSize: '1.3rem',
-                        fontWeight: '700',
-                        margin: '0'
-                      }}>
-                        메타 아시아 지역 글로벌 리더 선정
-                      </h4>
-                    </div>
-                    <p style={{
-                      color: '#64748b',
-                      fontSize: '1rem',
-                      margin: '0',
-                      lineHeight: '1.6',
-                      paddingLeft: '95px'
-                    }}>
-                      4인 중 한 명으로 선정 · 아시아 AI 생태계 리더십 인정
-                    </p>
-                  </div>
-
-                  {/* 2020년 */}
-                  <div style={{
-                    background: '#ffffff',
-                    padding: '25px',
-                    borderRadius: '15px',
-                    border: '2px solid #0ea5e9',
-                    boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-5px)';
-                    e.currentTarget.style.boxShadow = '0 10px 25px rgba(14, 165, 233, 0.2)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 5px 15px rgba(14, 165, 233, 0.1)';
-                  }}
-                  >
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      marginBottom: '15px'
-                    }}>
-                      <div style={{
-                        background: '#0ea5e9',
-                        color: 'white',
-                        padding: '8px 16px',
-                        borderRadius: '20px',
-                        fontSize: '0.9rem',
-                        fontWeight: '600',
-                        minWidth: '80px',
-                        textAlign: 'center'
-                      }}>
-                        2020년
-                      </div>
-                      <h4 style={{
-                        color: '#1f2937',
-                        fontSize: '1.3rem',
-                        fontWeight: '700',
-                        margin: '0'
-                      }}>
-                        AI 헬스케어 스타트업 옵트버스 설립
-                      </h4>
-                    </div>
-                    <p style={{
-                      color: '#64748b',
-                      fontSize: '1rem',
-                      margin: '0',
-                      lineHeight: '1.6',
-                      paddingLeft: '95px'
-                    }}>
-                      50억원 기업가치 인정받아 투자 유치 성공
-                    </p>
-                  </div>
-
-                  {/* 2019년 */}
-                  <div style={{
-                    background: '#ffffff',
-                    padding: '25px',
-                    borderRadius: '15px',
-                    border: '2px solid #0ea5e9',
-                    boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)',
-                    transition: 'all 0.3s ease',
-                    position: 'relative'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-5px)';
-                    e.currentTarget.style.boxShadow = '0 10px 25px rgba(14, 165, 233, 0.2)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 5px 15px rgba(14, 165, 233, 0.1)';
-                  }}
-                  >
-                    <div style={{
-                      position: 'absolute',
-                      top: '15px',
-                      right: '15px',
-                      background: '#0ea5e9',
-                      color: 'white',
-                      padding: '5px 12px',
-                      borderRadius: '15px',
-                      fontSize: '0.8rem',
-                      fontWeight: '600',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '5px'
-                    }}>
-                      👥 200+ 양성
-                    </div>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      marginBottom: '15px'
-                    }}>
-                      <div style={{
-                        background: '#0ea5e9',
-                        color: 'white',
-                        padding: '8px 16px',
-                        borderRadius: '20px',
-                        fontSize: '0.9rem',
-                        fontWeight: '600',
-                        minWidth: '80px',
-                        textAlign: 'center'
-                      }}>
-                        2019년
-                      </div>
-                      <h4 style={{
-                        color: '#1f2937',
-                        fontSize: '1.3rem',
-                        fontWeight: '700',
-                        margin: '0'
-                      }}>
-                        모두의연구소 인공지능 선임연구원
-                      </h4>
-                    </div>
-                    <p style={{
-                      color: '#64748b',
-                      fontSize: '1rem',
-                      margin: '0',
-                      lineHeight: '1.6',
-                      paddingLeft: '95px'
-                    }}>
-                      AI COLLEGE 기획/운영 · 200명 이상 AI 연구원 양성 · NeurIPS, CVPR 등 유수 컨퍼런스 논문 게재
-                    </p>
-                  </div>
-
-                  {/* 2018년 */}
-                  <div style={{
-                    background: '#ffffff',
-                    padding: '25px',
-                    borderRadius: '15px',
-                    border: '2px solid #0ea5e9',
-                    boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)',
-                    transition: 'all 0.3s ease',
-                    position: 'relative'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-5px)';
-                    e.currentTarget.style.boxShadow = '0 10px 25px rgba(14, 165, 233, 0.2)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 5px 15px rgba(14, 165, 233, 0.1)';
-                  }}
-                  >
-                    <div style={{
-                      position: 'absolute',
-                      top: '15px',
-                      right: '15px',
-                      background: '#0ea5e9',
-                      color: 'white',
-                      padding: '5px 12px',
-                      borderRadius: '15px',
-                      fontSize: '0.8rem',
-                      fontWeight: '600',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '5px'
-                    }}>
-                      🏆 Best Poster
-                    </div>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      marginBottom: '15px'
-                    }}>
-                      <div style={{
-                        background: '#0ea5e9',
-                        color: 'white',
-                        padding: '8px 16px',
-                        borderRadius: '20px',
-                        fontSize: '0.9rem',
-                        fontWeight: '600',
-                        minWidth: '80px',
-                        textAlign: 'center'
-                      }}>
-                        2018년
-                      </div>
-                      <h4 style={{
-                        color: '#1f2937',
-                        fontSize: '1.3rem',
-                        fontWeight: '700',
-                        margin: '0'
-                      }}>
-                        PostAI 강화학습 연구
-                      </h4>
-                    </div>
-                    <p style={{
-                      color: '#64748b',
-                      fontSize: '1rem',
-                      margin: '0',
-                      lineHeight: '1.6',
-                      paddingLeft: '95px'
-                    }}>
-                      "REWARD SHAPING IS ALL YOU NEED" 논문 발표<br/>
-                      "Exploration method for reducing uncertainty using Q-entropy" 논문으로 Best Poster Award 수상
-                    </p>
-                  </div>
-
-                  {/* 2017년 */}
-                  <div style={{
-                    background: '#ffffff',
-                    padding: '25px',
-                    borderRadius: '15px',
-                    border: '2px solid #0ea5e9',
-                    boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-5px)';
-                    e.currentTarget.style.boxShadow = '0 10px 25px rgba(14, 165, 233, 0.2)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 5px 15px rgba(14, 165, 233, 0.1)';
-                  }}
-                  >
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      marginBottom: '15px'
-                    }}>
-                      <div style={{
-                        background: '#0ea5e9',
-                        color: 'white',
-                        padding: '8px 16px',
-                        borderRadius: '20px',
-                        fontSize: '0.9rem',
-                        fontWeight: '600',
-                        minWidth: '80px',
-                        textAlign: 'center'
-                      }}>
-                        2017년
-                      </div>
-                      <h4 style={{
-                        color: '#1f2937',
-                        fontSize: '1.3rem',
-                        fontWeight: '700',
-                        margin: '0'
-                      }}>
-                        ConnexionAI 설립
-                      </h4>
-                    </div>
-                    <p style={{
-                      color: '#64748b',
-                      fontSize: '1rem',
-                      margin: '0',
-                      lineHeight: '1.6',
-                      paddingLeft: '95px'
-                    }}>
-                      200억 규모 AI 스마트팩토리 구축 프로젝트 컨설팅 · AI 솔루션 개발 사업 시작
-                    </p>
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
 
@@ -2540,1328 +1583,240 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 </div>
               </div>
             </div>
-
-          {/* 커리큘럼 - Day 중심 디자인 */}
-          <div style={{
-            maxWidth: '1000px',
-            margin: '0 auto',
-            background: '#ffffff',
-            borderRadius: '20px',
-            padding: 'clamp(30px, 5vw, 50px)',
-            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-            border: '2px solid #e2e8f0'
-          }}>
-            <h3 style={{
-              color: '#1f2937',
-              fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-              fontWeight: '900',
-              marginBottom: '10px',
-              textAlign: 'center'
-            }}>
-              📚 15일 완성 커리큘럼
-            </h3>
-            <p style={{
-              color: '#64748b',
-              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-              marginBottom: '50px',
-              textAlign: 'center',
-              fontWeight: '500'
-            }}>
-              하루 1시간 × 15일 = AI 에이전트 마스터 🎓
-            </p>
-
-            {/* Week 1: Day 1-5 */}
-            <div style={{ marginBottom: '50px' }}>
-              <div style={{
-                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-                color: 'white',
-                padding: 'clamp(15px, 3vw, 25px)',
-                borderRadius: '15px',
-                marginBottom: '25px',
-                textAlign: 'center',
-                boxShadow: '0 8px 20px rgba(14, 165, 233, 0.3)'
-              }}>
-                <h4 style={{
-                  fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
-                  fontWeight: '800',
-                  margin: '0',
-                  letterSpacing: '0.5px'
-                }}>
-                  📚 WEEK 1: AI 에이전트 기초
-                </h4>
-                <p style={{
-                  margin: '10px 0 0 0',
-                  fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
-                  opacity: '0.95',
-                  fontWeight: '500'
-                }}>
-                  Day 1-5 · ChatGPT Agent 입문부터 첫 프로젝트까지
-                </p>
-              </div>
-
-              {course.lessons.slice(0, 5).map((lesson: any, index: number) => (
-                <div
-                  key={lesson.id}
-                  style={{
-                    background: '#ffffff',
-                    borderRadius: '12px',
-                    marginBottom: '12px',
-                    border: '1px solid #e2e8f0',
-                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
-                    overflow: 'hidden'
-                  }}
-                >
-                  {/* 챕터 헤더 */}
-                  <div
-                    onClick={() => toggleChapter(lesson.id)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      padding: '15px 20px',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s'
-                    }}
-                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                  >
-                    <div style={{
-                      background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-                      color: '#ffffff',
-                      borderRadius: '12px',
-                      padding: '8px 16px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '0.9rem',
-                      fontWeight: '800',
-                      flexShrink: 0,
-                      boxShadow: '0 4px 10px rgba(14, 165, 233, 0.3)',
-                      minWidth: '80px'
-                    }}>
-                      Day {lesson.day || (index + 1)}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <h5 style={{
-                        color: '#1f2937',
-                        marginBottom: '4px',
-                        fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                        fontWeight: '700'
-                      }}>
-                        {lesson.title}
-                      </h5>
-                      <p style={{
-                        color: '#64748b',
-                        fontSize: '0.85rem',
-                        margin: '0',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px'
-                      }}>
-                        <Clock size={12} />
-                        {lesson.duration}
-                      </p>
-                    </div>
-                    <div style={{ flexShrink: 0 }}>
-                      {expandedChapters.has(lesson.id) ?
-                        <ChevronDown size={18} color="#64748b" /> :
-                        <ChevronRight size={18} color="#64748b" />
-                      }
-                    </div>
-                  </div>
-
-                  {/* 이론 & 실습 섹션 */}
-                  {expandedChapters.has(lesson.id) && (
-                    <div style={{
-                boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)',
-                border: '2px solid #e2e8f0',
-                transition: 'all 0.3s ease'
-              }}>
-                <div style={{
-                  fontSize: '2.5rem',
-                  marginBottom: '15px'
-                }}>💼</div>
-                <h4 style={{
-                  color: '#0ea5e9',
-                  fontSize: '1.1rem',
-                  marginBottom: '8px',
-                  fontWeight: '700'
-                }}>Part 2: 업무 자동화</h4>
-                <p style={{
-                  color: '#64748b',
-                  fontSize: '0.9rem',
-                  lineHeight: '1.4',
-                  fontWeight: '500'
-                }}>일상 & 업무 자동화 (3강)</p>
-              </div>
-
-              {/* Part 3: 웹 배포 */}
-              <div style={{
-                background: '#ffffff',
-                padding: '25px 20px',
-                borderRadius: '15px',
-                textAlign: 'center',
-                boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)',
-                border: '2px solid #e2e8f0',
-                transition: 'all 0.3s ease'
-              }}>
-                <div style={{
-                  fontSize: '2.5rem',
-                  marginBottom: '15px'
-                }}>🧑‍💻</div>
-                <h4 style={{
-                  color: '#0ea5e9',
-                  fontSize: '1.1rem',
-                  marginBottom: '8px',
-                  fontWeight: '700'
-                }}>Part 3: 웹 배포</h4>
-                <p style={{
-                  color: '#64748b',
-                  fontSize: '0.9rem',
-                  lineHeight: '1.4',
-                  fontWeight: '500'
-                }}>내 웹사이트에 배포하기 (3강)</p>
-              </div>
-
-              {/* Part 4: 콘텐츠 제작 */}
-              <div style={{
-                background: '#ffffff',
-                padding: '25px 20px',
-                borderRadius: '15px',
-                textAlign: 'center',
-                boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)',
-                border: '2px solid #e2e8f0',
-                transition: 'all 0.3s ease'
-              }}>
-                <div style={{
-                  fontSize: '2.5rem',
-                  marginBottom: '15px'
-                }}>🎨</div>
-                <h4 style={{
-                  color: '#0ea5e9',
-                  fontSize: '1.1rem',
-                  marginBottom: '8px',
-                  fontWeight: '700'
-                }}>Part 4: 콘텐츠</h4>
-                <p style={{
-                  color: '#64748b',
-                  fontSize: '0.9rem',
-                  lineHeight: '1.4',
-                  fontWeight: '500'
-                }}>콘텐츠 제작형 AI (3강)</p>
-              </div>
-
-              {/* Part 5: 음성 인터랙션 */}
-              <div style={{
-                background: '#ffffff',
-                padding: '25px 20px',
-                borderRadius: '15px',
-                textAlign: 'center',
-                boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)',
-                border: '2px solid #e2e8f0',
-                transition: 'all 0.3s ease'
-              }}>
-                <div style={{
-                  fontSize: '2.5rem',
-                  marginBottom: '15px'
-                }}>🔊</div>
-                <h4 style={{
-                  color: '#0ea5e9',
-                  fontSize: '1.1rem',
-                  marginBottom: '8px',
-                  fontWeight: '700'
-                }}>Part 5: 음성</h4>
-                <p style={{
-                  color: '#64748b',
-                  fontSize: '0.9rem',
-                  lineHeight: '1.4',
-                  fontWeight: '500'
-                }}>음성 기반 인터랙션 (3강)</p>
-              </div>
-            </div>
           </div>
 
-          {/* 커리큘럼 - Day 중심 디자인 */}
-          <div style={{
-            maxWidth: '1000px',
-            margin: '0 auto',
-            background: '#ffffff',
-            borderRadius: '20px',
-            padding: 'clamp(30px, 5vw, 50px)',
-            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-            border: '2px solid #e2e8f0'
+            {/* 커리큘럼 - 깔끔한 텍스트 중심 디자인 */}
+            <div style={{
+            maxWidth: '1100px',
+            margin: '0 auto'
           }}>
             <h3 style={{
               color: '#1f2937',
-              fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-              fontWeight: '900',
-              marginBottom: '10px',
+              fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+              fontWeight: '800',
+              marginBottom: '15px',
               textAlign: 'center'
             }}>
               📚 15일 완성 커리큘럼
             </h3>
             <p style={{
               color: '#64748b',
-              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-              marginBottom: '50px',
+              fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+              marginBottom: '60px',
               textAlign: 'center',
-              fontWeight: '500'
+              fontWeight: '600'
             }}>
               하루 1시간 × 15일 = AI 에이전트 마스터 🎓
             </p>
 
             {/* Week 1: Day 1-5 */}
-            <div style={{ marginBottom: '50px' }}>
+            <div style={{ marginBottom: '60px' }}>
               <div style={{
                 background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                 color: 'white',
-                padding: 'clamp(15px, 3vw, 25px)',
-                borderRadius: '15px',
-                marginBottom: '25px',
+                padding: 'clamp(20px, 4vw, 35px)',
+                borderRadius: '20px',
+                marginBottom: '30px',
                 textAlign: 'center',
-                boxShadow: '0 8px 20px rgba(14, 165, 233, 0.3)'
+                boxShadow: '0 10px 30px rgba(14, 165, 233, 0.3)'
               }}>
                 <h4 style={{
-                  fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
+                  fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                   fontWeight: '800',
-                  margin: '0',
+                  margin: '0 0 15px 0',
                   letterSpacing: '0.5px'
                 }}>
-                  📚 WEEK 1: AI 에이전트 기초
+                  Week 1: 기초 다지기
                 </h4>
                 <p style={{
-                  margin: '10px 0 0 0',
-                  fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
+                        margin: '0',
+                  fontSize: 'clamp(1rem, 2vw, 1.2rem)',
                   opacity: '0.95',
-                  fontWeight: '500'
+                            fontWeight: '600',
+                  lineHeight: '1.6'
                 }}>
-                  Day 1-5 · ChatGPT Agent 입문부터 첫 프로젝트까지
-                </p>
-              </div>
+                  Day 1-5 · AI와 Agent 개념 완전 이해 → 내가 직접 만든 첫 AI
+                        </p>
+                      </div>
 
-              {course.lessons.slice(0, 5).map((lesson: any, index: number) => (
+                      <div style={{
+                background: '#ffffff',
+                padding: 'clamp(25px, 4vw, 40px)',
+                borderRadius: '15px',
+                border: '2px solid #e2e8f0'
+              }}>
+                {course.lessons.slice(0, 5).map((lesson: any) => (
                 <div
                   key={lesson.id}
                   style={{
-                    background: '#ffffff',
-                    borderRadius: '12px',
-                    marginBottom: '12px',
-                    border: '1px solid #e2e8f0',
-                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
-                    overflow: 'hidden'
-                  }}
-                >
-                  {/* 챕터 헤더 */}
-                  <div
-                    onClick={() => toggleChapter(lesson.id)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      padding: '15px 20px',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s'
+                      marginBottom: '30px',
+                      paddingBottom: '30px',
+                      borderBottom: lesson.id === 5 ? 'none' : '1px solid #e2e8f0'
                     }}
-                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                   >
-                    <div style={{
-                      background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-                      color: '#ffffff',
-                      borderRadius: '12px',
-                      padding: '8px 16px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '0.9rem',
-                      fontWeight: '800',
-                      flexShrink: 0,
-                      boxShadow: '0 4px 10px rgba(14, 165, 233, 0.3)',
-                      minWidth: '80px'
-                    }}>
-                      Day {lesson.day || (index + 1)}
-                    </div>
-                    <div style={{ flex: 1 }}>
                       <h5 style={{
-                        color: '#1f2937',
-                        marginBottom: '4px',
-                        fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                        fontWeight: '700'
-                      }}>
-                        {lesson.title}
-                      </h5>
-                      <p style={{
-                        color: '#64748b',
-                        fontSize: '0.85rem',
-                        margin: '0',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px'
-                      }}>
-                        <Clock size={12} />
-                        {lesson.duration}
-                      </p>
-                    </div>
-                    <div style={{ flexShrink: 0 }}>
-                      {expandedChapters.has(lesson.id) ?
-                        <ChevronDown size={18} color="#64748b" /> :
-                        <ChevronRight size={18} color="#64748b" />
-                      }
-                    </div>
-                  </div>
-
-                  {/* 이론 & 실습 섹션 */}
-                  {expandedChapters.has(lesson.id) && lesson.sections && (
-                    <div style={{
-                      borderTop: '1px solid #f1f5f9',
-                      padding: '20px',
+                      color: '#0ea5e9',
+                      fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
+                      fontWeight: '800',
+                      marginBottom: '15px'
                     }}>
-                      {/* 이론 섹션 */}
-                      <div style={{
-                        marginBottom: '15px',
-                        padding: '12px 15px',
-                        background: '#f8fafc',
-                        borderRadius: '8px',
-                        border: '1px solid #e2e8f0'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <BookOpen size={16} color="#0ea5e9" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#10b981'
-                          }}>
-                            이론
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.theory}
+                      Day {lesson.day} · {lesson.title.replace(`Day ${lesson.day}: `, '')}
+                      </h5>
+                    <div style={{
+                      fontSize: 'clamp(1rem, 2vw, 1.15rem)',
+                      lineHeight: '1.8',
+                      color: '#1f2937'
+                    }}>
+                      <p style={{ marginBottom: '12px', fontWeight: '500' }}>
+                        <strong style={{ color: '#1f2937' }}>이론:</strong> {lesson.sections.theory}
+                      </p>
+                      <p style={{ marginBottom: '0', fontWeight: '500' }}>
+                        <strong style={{ color: '#1f2937' }}>실습:</strong> {lesson.sections.practice}
                         </p>
                       </div>
-
-                      {/* 실습 섹션 */}
-                      <div style={{
-                        padding: '12px 15px',
-                        background: '#f8fafc',
-                        borderRadius: '8px',
-                        border: '1px solid #e2e8f0'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <Wrench size={16} color="#0ea5e9" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#0ea5e9'
-                          }}>
-                            실습
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.practice}
-                        </p>
-                      </div>
-                    </div>
-                  )}
                 </div>
               ))}
+              </div>
             </div>
 
             {/* Week 2: Day 6-10 */}
-            <div style={{ marginBottom: '50px' }}>
+            <div style={{ marginBottom: '60px' }}>
               <div style={{
-                background: 'linear-gradient(135deg, #10b981, #059669)',
+                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                 color: 'white',
-                padding: 'clamp(15px, 3vw, 25px)',
-                borderRadius: '15px',
-                marginBottom: '25px',
+                padding: 'clamp(20px, 4vw, 35px)',
+                borderRadius: '20px',
+                marginBottom: '30px',
                 textAlign: 'center',
-                boxShadow: '0 8px 20px rgba(16, 185, 129, 0.3)'
+                boxShadow: '0 10px 30px rgba(14, 165, 233, 0.3)'
               }}>
                 <h4 style={{
-                  fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
+                  fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                   fontWeight: '800',
-                  margin: '0',
+                  margin: '0 0 15px 0',
                   letterSpacing: '0.5px'
                 }}>
-                  ⚡ WEEK 2: 업무 자동화
+                  Week 2: 도구 익히기
                 </h4>
                 <p style={{
-                  margin: '10px 0 0 0',
-                  fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
+                        margin: '0',
+                  fontSize: 'clamp(1rem, 2vw, 1.2rem)',
                   opacity: '0.95',
-                  fontWeight: '500'
+                            fontWeight: '600',
+                  lineHeight: '1.6'
                 }}>
-                  Day 6-10 · 워크플로우 구축부터 자동화 시스템 완성까지
-                </p>
-              </div>
+                  Day 6-10 · 도구와 제어 구조 익히기 → 안전하고 똑똑한 AI 비서
+                        </p>
+                      </div>
 
-              {course.lessons.slice(5, 10).map((lesson: any, index: number) => (
+                      <div style={{
+                background: '#ffffff',
+                padding: 'clamp(25px, 4vw, 40px)',
+                borderRadius: '15px',
+                border: '2px solid #e2e8f0'
+              }}>
+                {course.lessons.slice(5, 10).map((lesson: any) => (
                 <div
                   key={lesson.id}
                   style={{
-                    background: '#ffffff',
-                    borderRadius: '12px',
-                    marginBottom: '12px',
-                    border: '1px solid #e2e8f0',
-                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
-                    overflow: 'hidden'
-                  }}
-                >
-                  {/* 챕터 헤더 */}
-                  <div
-                    onClick={() => toggleChapter(lesson.id)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      padding: '15px 20px',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s'
+                      marginBottom: '30px',
+                      paddingBottom: '30px',
+                      borderBottom: lesson.id === 10 ? 'none' : '1px solid #e2e8f0'
                     }}
-                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                   >
-                    <div style={{
-                      backgroundColor: '#0ea5e9',
-                      color: '#ffffff',
-                      borderRadius: '50%',
-                      width: '32px',
-                      height: '32px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      flexShrink: 0
-                    }}>
-                      {index + 5}
-                    </div>
-                    <div style={{ flex: 1 }}>
                       <h5 style={{
-                        color: '#1f2937',
-                        marginBottom: '4px',
-                        fontSize: '1rem',
-                        fontWeight: '600'
-                      }}>
-                        {lesson.title}
-                      </h5>
-                      <p style={{
-                        color: '#64748b',
-                        fontSize: '0.85rem',
-                        margin: '0',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px'
-                      }}>
-                        <Clock size={12} />
-                        {lesson.duration}
-                      </p>
-                    </div>
-                    <div style={{ flexShrink: 0 }}>
-                      {expandedChapters.has(lesson.id) ?
-                        <ChevronDown size={18} color="#64748b" /> :
-                        <ChevronRight size={18} color="#64748b" />
-                      }
-                    </div>
-                  </div>
-
-                  {/* 이론 & 실습 섹션 */}
-                  {expandedChapters.has(lesson.id) && lesson.sections && (
-                    <div style={{
-                      borderTop: '1px solid #f1f5f9',
-                      padding: '20px',
+                      color: '#0ea5e9',
+                      fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
+                      fontWeight: '800',
+                      marginBottom: '15px'
                     }}>
-                      {/* 이론 섹션 */}
-                      <div style={{
-                        marginBottom: '15px',
-                        padding: '12px 15px',
-                        background: '#f8fafc',
-                        borderRadius: '8px',
-                        border: '1px solid #e2e8f0'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <BookOpen size={16} color="#0ea5e9" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#10b981'
-                          }}>
-                            이론
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.theory}
+                      Day {lesson.day} · {lesson.title.replace(`Day ${lesson.day}: `, '')}
+                      </h5>
+                    <div style={{
+                      fontSize: 'clamp(1rem, 2vw, 1.15rem)',
+                      lineHeight: '1.8',
+                      color: '#1f2937'
+                    }}>
+                      <p style={{ marginBottom: '12px', fontWeight: '500' }}>
+                        <strong style={{ color: '#1f2937' }}>이론:</strong> {lesson.sections.theory}
+                      </p>
+                      <p style={{ marginBottom: '0', fontWeight: '500' }}>
+                        <strong style={{ color: '#1f2937' }}>실습:</strong> {lesson.sections.practice}
                         </p>
                       </div>
-
-                      {/* 실습 섹션 */}
-                      <div style={{
-                        padding: '12px 15px',
-                        background: '#f8fafc',
-                        borderRadius: '8px',
-                        border: '1px solid #e2e8f0'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <Wrench size={16} color="#0ea5e9" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#0ea5e9'
-                          }}>
-                            실습
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.practice}
-                        </p>
-                      </div>
-                    </div>
-                  )}
                 </div>
               ))}
+              </div>
             </div>
 
             {/* Week 3: Day 11-15 */}
-            <div style={{ marginBottom: '20px' }}>
+            <div style={{ marginBottom: '60px' }}>
               <div style={{
-                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                 color: 'white',
-                padding: 'clamp(15px, 3vw, 25px)',
-                borderRadius: '15px',
-                marginBottom: '25px',
+                padding: 'clamp(20px, 4vw, 35px)',
+                borderRadius: '20px',
+                marginBottom: '30px',
                 textAlign: 'center',
-                boxShadow: '0 8px 20px rgba(245, 158, 11, 0.3)'
+                boxShadow: '0 10px 30px rgba(14, 165, 233, 0.3)'
               }}>
                 <h4 style={{
-                  fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
+                  fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                   fontWeight: '800',
-                  margin: '0',
+                  margin: '0 0 15px 0',
                   letterSpacing: '0.5px'
                 }}>
-                  🚀 WEEK 3: 웹 배포 & 실전
+                  Week 3: 실전 완성
                 </h4>
                 <p style={{
-                  margin: '10px 0 0 0',
-                  fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
+                        margin: '0',
+                  fontSize: 'clamp(1rem, 2vw, 1.2rem)',
                   opacity: '0.95',
-                  fontWeight: '500'
+                            fontWeight: '600',
+                  lineHeight: '1.6'
                 }}>
-                  Day 11-15 · 웹 배포부터 최종 프로젝트까지
-                </p>
-              </div>
-
-              {course.lessons.slice(10, 15).map((lesson: any, index: number) => (
-                <div
-                  key={lesson.id}
-                  style={{
-                    background: '#ffffff',
-                    borderRadius: '12px',
-                    marginBottom: '12px',
-                    border: '1px solid #e2e8f0',
-                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
-                    overflow: 'hidden'
-                  }}
-                >
-                  {/* 챕터 헤더 */}
-                  <div
-                    onClick={() => toggleChapter(lesson.id)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      padding: '15px 20px',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s'
-                    }}
-                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                  >
-                    <div style={{
-                      backgroundColor: '#0ea5e9',
-                      color: '#ffffff',
-                      borderRadius: '50%',
-                      width: '32px',
-                      height: '32px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      flexShrink: 0
-                    }}>
-                      {index + 10}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <h5 style={{
-                        color: '#1f2937',
-                        marginBottom: '4px',
-                        fontSize: '1rem',
-                        fontWeight: '600'
-                      }}>
-                        {lesson.title}
-                      </h5>
-                      <p style={{
-                        color: '#64748b',
-                        fontSize: '0.85rem',
-                        margin: '0',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px'
-                      }}>
-                        <Clock size={12} />
-                        {lesson.duration}
-                      </p>
-                    </div>
-                    <div style={{ flexShrink: 0 }}>
-                      {expandedChapters.has(lesson.id) ?
-                        <ChevronDown size={18} color="#64748b" /> :
-                        <ChevronRight size={18} color="#64748b" />
-                      }
-                    </div>
-                  </div>
-
-                  {/* 이론 & 실습 섹션 */}
-                  {expandedChapters.has(lesson.id) && lesson.sections && (
-                    <div style={{
-                      borderTop: '1px solid #f1f5f9',
-                      padding: '20px',
-                    }}>
-                      {/* 이론 섹션 */}
-                      <div style={{
-                        marginBottom: '15px',
-                        padding: '12px 15px',
-                        background: '#f8fafc',
-                        borderRadius: '8px',
-                        border: '1px solid #e2e8f0'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <BookOpen size={16} color="#0ea5e9" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#10b981'
-                          }}>
-                            이론
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.theory}
+                  Day 11-15 · 실전 프로젝트 완성 → 나만의 AI 비서 시스템 완성
                         </p>
                       </div>
 
-                      {/* 실습 섹션 */}
                       <div style={{
-                        padding: '12px 15px',
-                        background: '#f8fafc',
-                        borderRadius: '8px',
-                        border: '1px solid #e2e8f0'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <Wrench size={16} color="#0ea5e9" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#0ea5e9'
-                          }}>
-                            실습
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.practice}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Part 3: 내 웹사이트에 배포하기 */}
-            <div style={{ marginBottom: '40px' }}>
-              <div style={{
-                background: '#0ea5e9',
-                color: 'white',
-                padding: '20px',
+                background: '#ffffff',
+                padding: 'clamp(25px, 4vw, 40px)',
                 borderRadius: '15px',
-                marginBottom: '20px',
-                textAlign: 'center'
+                border: '2px solid #e2e8f0'
               }}>
-                <h4 style={{
-                  fontSize: '1.3rem',
-                  fontWeight: '700',
-                  margin: '0',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px'
-                }}>
-                  🧑‍💻 Part 3: 내 웹사이트에 배포하기
-                </h4>
-                <p style={{
-                  margin: '8px 0 0 0',
-                  fontSize: '1rem',
-                  opacity: '0.9'
-                }}>
-                  ChatKit 퍼블리시부터 실제 배포까지
-                </p>
-              </div>
-
-              {course.lessons.slice(9, 12).map((lesson: any, index: number) => (
+                {course.lessons.slice(10, 15).map((lesson: any) => (
                 <div
                   key={lesson.id}
                   style={{
-                    background: '#ffffff',
-                    borderRadius: '12px',
-                    marginBottom: '12px',
-                    border: '1px solid #e2e8f0',
-                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
-                    overflow: 'hidden'
-                  }}
-                >
-                  {/* 챕터 헤더 */}
-                  <div
-                    onClick={() => toggleChapter(lesson.id)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      padding: '15px 20px',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s'
+                      marginBottom: '30px',
+                      paddingBottom: '30px',
+                      borderBottom: lesson.id === 15 ? 'none' : '1px solid #e2e8f0'
                     }}
-                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                   >
-                    <div style={{
-                      backgroundColor: '#0ea5e9',
-                      color: '#ffffff',
-                      borderRadius: '50%',
-                      width: '32px',
-                      height: '32px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      flexShrink: 0
-                    }}>
-                      {index + 10}
-                    </div>
-                    <div style={{ flex: 1 }}>
                       <h5 style={{
-                        color: '#1f2937',
-                        marginBottom: '4px',
-                        fontSize: '1rem',
-                        fontWeight: '600'
-                      }}>
-                        {lesson.title}
-                      </h5>
-                      <p style={{
-                        color: '#64748b',
-                        fontSize: '0.85rem',
-                        margin: '0',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px'
-                      }}>
-                        <Clock size={12} />
-                        {lesson.duration}
-                      </p>
-                    </div>
-                    <div style={{ flexShrink: 0 }}>
-                      {expandedChapters.has(lesson.id) ?
-                        <ChevronDown size={18} color="#64748b" /> :
-                        <ChevronRight size={18} color="#64748b" />
-                      }
-                    </div>
-                  </div>
-
-                  {/* 이론 & 실습 섹션 */}
-                  {expandedChapters.has(lesson.id) && lesson.sections && (
-                    <div style={{
-                      borderTop: '1px solid #f1f5f9',
-                      padding: '20px',
+                      color: '#0ea5e9',
+                      fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
+                      fontWeight: '800',
+                      marginBottom: '15px'
                     }}>
-                      {/* 이론 섹션 */}
-                      <div style={{
-                        marginBottom: '15px',
-                        padding: '12px 15px',
-                        background: '#f8fafc',
-                        borderRadius: '8px',
-                        border: '1px solid #e2e8f0'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <BookOpen size={16} color="#0ea5e9" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#0ea5e9'
-                          }}>
-                            이론
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.theory}
+                      Day {lesson.day} · {lesson.title.replace(`Day ${lesson.day}: `, '')}
+                      </h5>
+                    <div style={{
+                      fontSize: 'clamp(1rem, 2vw, 1.15rem)',
+                      lineHeight: '1.8',
+                      color: '#1f2937'
+                    }}>
+                      <p style={{ marginBottom: '12px', fontWeight: '500' }}>
+                        <strong style={{ color: '#1f2937' }}>이론:</strong> {lesson.sections.theory}
+                      </p>
+                      <p style={{ marginBottom: '0', fontWeight: '500' }}>
+                        <strong style={{ color: '#1f2937' }}>실습:</strong> {lesson.sections.practice}
                         </p>
                       </div>
-
-                      {/* 실습 섹션 */}
-                      <div style={{
-                        padding: '12px 15px',
-                        background: '#f8fafc',
-                        borderRadius: '8px',
-                        border: '1px solid #e2e8f0'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <Wrench size={16} color="#0ea5e9" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#0ea5e9'
-                          }}>
-                            실습
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.practice}
-                        </p>
-                      </div>
-                    </div>
-                  )}
                 </div>
               ))}
-            </div>
-
-            {/* Part 4: 콘텐츠 제작형 AI */}
-            <div style={{ marginBottom: '40px' }}>
-              <div style={{
-                background: '#0ea5e9',
-                color: 'white',
-                padding: '20px',
-                borderRadius: '15px',
-                marginBottom: '20px',
-                textAlign: 'center'
-              }}>
-                <h4 style={{
-                  fontSize: '1.3rem',
-                  fontWeight: '700',
-                  margin: '0',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px'
-                }}>
-                  🎨 Part 4: 콘텐츠 제작형 AI
-                </h4>
-                <p style={{
-                  margin: '8px 0 0 0',
-                  fontSize: '1rem',
-                  opacity: '0.9'
-                }}>
-                  구조화된 입력부터 자동화 루프까지
-                </p>
               </div>
-
-              {course.lessons.slice(12, 15).map((lesson: any, index: number) => (
-                <div
-                  key={lesson.id}
-                  style={{
-                    background: '#ffffff',
-                    borderRadius: '12px',
-                    marginBottom: '12px',
-                    border: '1px solid #e2e8f0',
-                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
-                    overflow: 'hidden'
-                  }}
-                >
-                  {/* 챕터 헤더 */}
-                  <div
-                    onClick={() => toggleChapter(lesson.id)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      padding: '15px 20px',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s'
-                    }}
-                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                  >
-                    <div style={{
-                      backgroundColor: '#0ea5e9',
-                      color: '#ffffff',
-                      borderRadius: '50%',
-                      width: '32px',
-                      height: '32px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      flexShrink: 0
-                    }}>
-                      {index + 13}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <h5 style={{
-                        color: '#1f2937',
-                        marginBottom: '4px',
-                        fontSize: '1rem',
-                        fontWeight: '600'
-                      }}>
-                        {lesson.title}
-                      </h5>
-                      <p style={{
-                        color: '#64748b',
-                        fontSize: '0.85rem',
-                        margin: '0',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px'
-                      }}>
-                        <Clock size={12} />
-                        {lesson.duration}
-                      </p>
-                    </div>
-                    <div style={{ flexShrink: 0 }}>
-                      {expandedChapters.has(lesson.id) ?
-                        <ChevronDown size={18} color="#64748b" /> :
-                        <ChevronRight size={18} color="#64748b" />
-                      }
-                    </div>
-                  </div>
-
-                  {/* 이론 & 실습 섹션 */}
-                  {expandedChapters.has(lesson.id) && lesson.sections && (
-                    <div style={{
-                      borderTop: '1px solid #f1f5f9',
-                      padding: '20px',
-                    }}>
-                      {/* 이론 섹션 */}
-                      <div style={{
-                        marginBottom: '15px',
-                        padding: '12px 15px',
-                        background: '#f8fafc',
-                        borderRadius: '8px',
-                        border: '1px solid #e2e8f0'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <BookOpen size={16} color="#0ea5e9" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#0ea5e9'
-                          }}>
-                            이론
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.theory}
-                        </p>
-                      </div>
-
-                      {/* 실습 섹션 */}
-                      <div style={{
-                        padding: '12px 15px',
-                        background: '#f8fafc',
-                        borderRadius: '8px',
-                        border: '1px solid #e2e8f0'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <Wrench size={16} color="#0ea5e9" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#0ea5e9'
-                          }}>
-                            실습
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.practice}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Part 5: 음성 기반 인터랙션 */}
-            <div style={{ marginBottom: '20px' }}>
-              <div style={{
-                background: '#0ea5e9',
-                color: 'white',
-                padding: '20px',
-                borderRadius: '15px',
-                marginBottom: '20px',
-                textAlign: 'center'
-              }}>
-                <h4 style={{
-                  fontSize: '1.3rem',
-                  fontWeight: '700',
-                  margin: '0',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px'
-                }}>
-                  🔊 Part 5: 음성 기반 인터랙션
-                </h4>
-                <p style={{
-                  margin: '8px 0 0 0',
-                  fontSize: '1rem',
-                  opacity: '0.9'
-                }}>
-                  GPT-4o Realtime부터 보안 설정까지
-                </p>
-              </div>
-
-              {course.lessons.slice(15).map((lesson: any, index: number) => (
-                <div
-                  key={lesson.id}
-                  style={{
-                    background: '#ffffff',
-                    borderRadius: '12px',
-                    marginBottom: '12px',
-                    border: '1px solid #e2e8f0',
-                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
-                    overflow: 'hidden'
-                  }}
-                >
-                  {/* 챕터 헤더 */}
-                  <div
-                    onClick={() => toggleChapter(lesson.id)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      padding: '15px 20px',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s'
-                    }}
-                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                  >
-                    <div style={{
-                      backgroundColor: '#0ea5e9',
-                      color: '#ffffff',
-                      borderRadius: '50%',
-                      width: '32px',
-                      height: '32px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      flexShrink: 0
-                    }}>
-                      {index + 16}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <h5 style={{
-                        color: '#1f2937',
-                        marginBottom: '4px',
-                        fontSize: '1rem',
-                        fontWeight: '600'
-                      }}>
-                        {lesson.title}
-                      </h5>
-                      <p style={{
-                        color: '#64748b',
-                        fontSize: '0.85rem',
-                        margin: '0',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px'
-                      }}>
-                        <Clock size={12} />
-                        {lesson.duration}
-                      </p>
-                    </div>
-                    <div style={{ flexShrink: 0 }}>
-                      {expandedChapters.has(lesson.id) ?
-                        <ChevronDown size={18} color="#64748b" /> :
-                        <ChevronRight size={18} color="#64748b" />
-                      }
-                    </div>
-                  </div>
-
-                  {/* 이론 & 실습 섹션 */}
-                  {expandedChapters.has(lesson.id) && lesson.sections && (
-                    <div style={{
-                      borderTop: '1px solid #f1f5f9',
-                      padding: '20px',
-                    }}>
-                      {/* 이론 섹션 */}
-                      <div style={{
-                        marginBottom: '15px',
-                        padding: '12px 15px',
-                        background: '#f8fafc',
-                        borderRadius: '8px',
-                        border: '1px solid #e2e8f0'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <BookOpen size={16} color="#0ea5e9" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#0ea5e9'
-                          }}>
-                            이론
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.theory}
-                        </p>
-                      </div>
-
-                      {/* 실습 섹션 */}
-                      <div style={{
-                        padding: '12px 15px',
-                        background: '#f8fafc',
-                        borderRadius: '8px',
-                        border: '1px solid #e2e8f0'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <Wrench size={16} color="#0ea5e9" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#0ea5e9'
-                          }}>
-                            실습
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.practice}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
             </div>
           </div>
         </div>
