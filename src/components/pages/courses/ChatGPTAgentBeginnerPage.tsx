@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-import { Clock, ChevronDown, ChevronRight, BookOpen, Wrench } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
 import AzureTableService from '../../../services/azureTableService';
 import PaymentComponent from '../payment/PaymentComponent';
@@ -12,7 +11,6 @@ interface ChatGPTAgentBeginnerPageProps {
 const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onBack }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isPaidUser, setIsPaidUser] = useState(false);
-  const [expandedChapters, setExpandedChapters] = useState<Set<number>>(new Set());
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showEarlyBirdInfoModal, setShowEarlyBirdInfoModal] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
@@ -231,17 +229,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     
     return () => clearInterval(interval);
   }, []);
-
-  // 챕터 확장/접기 함수
-  const toggleChapter = (chapterId: number) => {
-    const newExpanded = new Set(expandedChapters);
-    if (newExpanded.has(chapterId)) {
-      newExpanded.delete(chapterId);
-    } else {
-      newExpanded.add(chapterId);
-    }
-    setExpandedChapters(newExpanded);
-  };
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -1583,10 +1570,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 </div>
               </div>
             </div>
-          </div>
+              </div>
 
             {/* 커리큘럼 - 깔끔한 텍스트 중심 디자인 */}
-            <div style={{
+              <div style={{
             maxWidth: '1100px',
             margin: '0 auto'
           }}>
