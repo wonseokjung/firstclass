@@ -2541,75 +2541,138 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               </div>
             </div>
 
-            {/* 5가지 핵심 프로젝트 - 깔끔한 디자인 */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-              gap: '20px',
-              marginBottom: '40px'
+          {/* 커리큘럼 - Day 중심 디자인 */}
+          <div style={{
+            maxWidth: '1000px',
+            margin: '0 auto',
+            background: '#ffffff',
+            borderRadius: '20px',
+            padding: 'clamp(30px, 5vw, 50px)',
+            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+            border: '2px solid #e2e8f0'
+          }}>
+            <h3 style={{
+              color: '#1f2937',
+              fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+              fontWeight: '900',
+              marginBottom: '10px',
+              textAlign: 'center'
             }}>
-              {/* Part 0: 준비 */}
+              📚 15일 완성 커리큘럼
+            </h3>
+            <p style={{
+              color: '#64748b',
+              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+              marginBottom: '50px',
+              textAlign: 'center',
+              fontWeight: '500'
+            }}>
+              하루 1시간 × 15일 = AI 에이전트 마스터 🎓
+            </p>
+
+            {/* Week 1: Day 1-5 */}
+            <div style={{ marginBottom: '50px' }}>
               <div style={{
-                background: '#ffffff',
-                padding: '25px 20px',
+                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                color: 'white',
+                padding: 'clamp(15px, 3vw, 25px)',
                 borderRadius: '15px',
+                marginBottom: '25px',
                 textAlign: 'center',
-                boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)',
-                border: '2px solid #e2e8f0',
-                transition: 'all 0.3s ease'
+                boxShadow: '0 8px 20px rgba(14, 165, 233, 0.3)'
               }}>
-                <div style={{
-                  fontSize: '2.5rem',
-                  marginBottom: '15px'
-                }}>🔰</div>
                 <h4 style={{
-                  color: '#0ea5e9',
-                  fontSize: '1.1rem',
-                  marginBottom: '8px',
-                  fontWeight: '700'
-                }}>Part 0: 준비</h4>
+                  fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
+                  fontWeight: '800',
+                  margin: '0',
+                  letterSpacing: '0.5px'
+                }}>
+                  📚 WEEK 1: AI 에이전트 기초
+                </h4>
                 <p style={{
-                  color: '#64748b',
-                  fontSize: '0.9rem',
-                  lineHeight: '1.4',
+                  margin: '10px 0 0 0',
+                  fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
+                  opacity: '0.95',
                   fontWeight: '500'
-                }}>AI 에이전트 만들기 입문 준비 (3강)</p>
+                }}>
+                  Day 1-5 · ChatGPT Agent 입문부터 첫 프로젝트까지
+                </p>
               </div>
 
-              {/* Part 1: AI 에이전트 */}
-              <div style={{
-                background: '#ffffff',
-                padding: '25px 20px',
-                borderRadius: '15px',
-                textAlign: 'center',
-                boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)',
-                border: '2px solid #e2e8f0',
-                transition: 'all 0.3s ease'
-              }}>
-                <div style={{
-                  fontSize: '2.5rem',
-                  marginBottom: '15px'
-                }}>🧠</div>
-                <h4 style={{
-                  color: '#0ea5e9',
-                  fontSize: '1.1rem',
-                  marginBottom: '8px',
-                  fontWeight: '700'
-                }}>Part 1: AI 에이전트</h4>
-                <p style={{
-                  color: '#64748b',
-                  fontSize: '0.9rem',
-                  lineHeight: '1.4',
-                  fontWeight: '500'
-                }}>나만의 AI 에이전트 만들기 (3강)</p>
-              </div>
+              {course.lessons.slice(0, 5).map((lesson: any, index: number) => (
+                <div
+                  key={lesson.id}
+                  style={{
+                    background: '#ffffff',
+                    borderRadius: '12px',
+                    marginBottom: '12px',
+                    border: '1px solid #e2e8f0',
+                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
+                    overflow: 'hidden'
+                  }}
+                >
+                  {/* 챕터 헤더 */}
+                  <div
+                    onClick={() => toggleChapter(lesson.id)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '15px',
+                      padding: '15px 20px',
+                      cursor: 'pointer',
+                      transition: 'background-color 0.2s'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
+                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                  >
+                    <div style={{
+                      background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                      color: '#ffffff',
+                      borderRadius: '12px',
+                      padding: '8px 16px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '0.9rem',
+                      fontWeight: '800',
+                      flexShrink: 0,
+                      boxShadow: '0 4px 10px rgba(14, 165, 233, 0.3)',
+                      minWidth: '80px'
+                    }}>
+                      Day {lesson.day || (index + 1)}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <h5 style={{
+                        color: '#1f2937',
+                        marginBottom: '4px',
+                        fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                        fontWeight: '700'
+                      }}>
+                        {lesson.title}
+                      </h5>
+                      <p style={{
+                        color: '#64748b',
+                        fontSize: '0.85rem',
+                        margin: '0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '5px'
+                      }}>
+                        <Clock size={12} />
+                        {lesson.duration}
+                      </p>
+                    </div>
+                    <div style={{ flexShrink: 0 }}>
+                      {expandedChapters.has(lesson.id) ?
+                        <ChevronDown size={18} color="#64748b" /> :
+                        <ChevronRight size={18} color="#64748b" />
+                      }
+                    </div>
+                  </div>
 
-              {/* Part 2: 업무 자동화 */}
-              <div style={{
-                background: '#ffffff',
-                padding: '25px 20px',
-                borderRadius: '15px',
-                textAlign: 'center',
+                  {/* 이론 & 실습 섹션 */}
+                  {expandedChapters.has(lesson.id) && (
+                    <div style={{
                 boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)',
                 border: '2px solid #e2e8f0',
                 transition: 'all 0.3s ease'
