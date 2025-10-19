@@ -21,197 +21,177 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
   const course = {
     id: 1002,
-    title: "ChatGPT AI AGENT 비기너편",
+    title: "ChatGPT AI AGENT 비기너편 - 15일 완성",
+    subtitle: "하루 1시간, 15일이면 누구나 AI 에이전트 마스터!",
     lessons: [
-      // Part 0: 준비 - AI 에이전트 만들기 입문 준비 (3강)
+      // Week 1: AI 에이전트 기초 (Day 1-5)
       {
         id: 1,
-        title: "AgentKit이란? ChatGPT와의 차이",
-        duration: "30분",
-        hasQuiz: false,
+        day: 1,
+        title: "Day 1: AI 에이전트의 세계에 오신 것을 환영합니다",
+        duration: "60분",
+        hasQuiz: true,
         sections: {
-          theory: "AgentKit 소개, ChatGPT와의 차이점 이해",
-          practice: "Builder 소개, UI 살펴보기 → Agent 구조 시각 이해"
+          theory: "• AI 에이전트란 무엇인가? (ChatGPT와의 차이)\n• AgentKit 소개 및 기본 개념\n• AI 에이전트로 할 수 있는 것들",
+          practice: "• OpenAI 계정 만들기\n• AgentKit Builder 둘러보기\n• 첫 AI 에이전트 만들어보기 (Hello World Agent)"
         }
       },
       {
         id: 2,
-        title: "AI 에이전트란 무엇인가?",
-        duration: "25분",
+        day: 2,
+        title: "Day 2: 나만의 첫 번째 챗봇 만들기",
+        duration: "60분",
         hasQuiz: false,
         sections: {
-          theory: "에이전트란 무엇인가? 초등학생도 이해할 수 있는 가장 쉬운 개념 설명",
-          practice: "AI 에이전트의 기본 개념 이해하기"
+          theory: "• Agent Builder 기본 구조 이해\n• Start, Agent, End 노드 개념\n• 워크플로우의 기본 원리",
+          practice: "• 간단한 Q&A 챗봇 만들기\n• 노드 연결 실습\n• 첫 번째 에이전트 테스트 및 배포"
         }
       },
       {
         id: 3,
-        title: "OpenAI 계정 만들기 & 첫 AI 에이전트 체험",
-        duration: "35분",
-        hasQuiz: false,
+        day: 3,
+        title: "Day 3: 프롬프트 엔지니어링 기초",
+        duration: "60분",
+        hasQuiz: true,
         sections: {
-          theory: "OpenAI API 계정 생성 및 크레딧 관리",
-          practice: "계정 생성 + 키 발급 → 첫 번째 AI 에이전트 체험"
+          theory: "• 좋은 프롬프트 vs 나쁜 프롬프트\n• AI에게 명확한 지시를 내리는 방법\n• 역할(Role), 맥락(Context), 예시(Examples) 활용법",
+          practice: "• '친절한 고객센터 직원' 에이전트 만들기\n• 다양한 프롬프트 테스트\n• 최적의 응답을 이끌어내는 실습"
         }
       },
-
-      // Part 1: 나만의 AI 에이전트 만들기 - 기초 구조 구축 (3강)
       {
         id: 4,
-        title: "Agent Builder 기본 구조",
-        duration: "45분",
+        day: 4,
+        title: "Day 4: File Search - 문서를 읽는 AI",
+        duration: "60분",
         hasQuiz: false,
         sections: {
-          theory: "ChatGPT Agent Builder 홈 화면 완전정복",
-          practice: "3단계로 나만의 AI 만들기 (Start - Agent - End)"
+          theory: "• File Search 기능 이해하기\n• PDF, TXT, DOCX 파일 처리\n• 문서 검색과 정보 추출 원리",
+          practice: "• PDF 문서 업로드하기\n• '문서 요약 봇' 만들기\n• 내 이력서/보고서를 분석하는 AI 완성"
         }
       },
       {
         id: 5,
-        title: "AI의 성격 만들기",
-        duration: "40분",
-        hasQuiz: false,
+        day: 5,
+        title: "Day 5: 첫 번째 프로젝트 - 나만의 비서 AI",
+        duration: "60분",
+        hasQuiz: true,
         sections: {
-          theory: "AI에게 역할과 명령을 주는 방법 (Agent 노드 설정)",
-          practice: "'너는 일정 관리 도우미야' 설정 → 톤이 있는 에이전트 완성"
-        }
-      },
-      {
-        id: 6,
-        title: "File Search로 내 일정 문서 읽기",
-        duration: "50분",
-        hasQuiz: false,
-        sections: {
-          theory: "실제 예시: 유튜브 스크립트를 작성하는 나만의 AI 만들기",
-          practice: "PDF 업로드 → 요약 → '일정 요약' 가능한 AI 에이전트"
+          theory: "• Week 1 복습 및 정리\n• 실전 프로젝트 기획 방법\n• Agent 성능 평가 기준",
+          practice: "• '일정 관리 비서' 완성하기\n• 여러 기능 통합 실습\n• 포트폴리오 프로젝트 #1 완성"
         }
       },
 
-      // Part 2: 일상 & 업무 자동화 (3강)
+      // Week 2: 업무 자동화 (Day 6-10)
       {
-        id: 7,
-        title: "File Search + Transform 노드",
-        duration: "55분",
+        id: 6,
+        day: 6,
+        title: "Day 6: Agent Builder 워크플로우 이해하기",
+        duration: "60분",
         hasQuiz: false,
         sections: {
-          theory: "파일 분석과 데이터 변환 워크플로",
-          practice: "'회의록 요약' → '이메일 초안 생성' → 자동화 워크플로"
+          theory: "• Start → Agent → End 구조\n• 노드(Node) 개념과 연결\n• 워크플로우 디자인 패턴",
+          practice: "• 3단계 워크플로우 만들기\n• 노드 연결 실습\n• '질문 → 분석 → 답변' 플로우 구축"
+        }
+      },
+      {
+        id: 7,
+        day: 7,
+        title: "Day 7: Transform - 데이터 가공의 마법",
+        duration: "60분",
+        hasQuiz: false,
+        sections: {
+          theory: "• Transform 노드의 역할\n• 데이터 변환과 포맷팅\n• JSON, CSV 데이터 다루기",
+          practice: "• '회의록 → 이메일 초안' 변환기\n• 데이터 구조 바꾸기 실습\n• 자동화 워크플로우 완성"
         }
       },
       {
         id: 8,
-        title: "Human Approval",
-        duration: "45분",
+        day: 8,
+        title: "Day 8: Human Approval - 안전장치 추가하기",
+        duration: "60분",
         hasQuiz: false,
         sections: {
-          theory: "사람의 승인을 통한 안전한 자동화",
-          practice: "'보내기 전 나에게 승인받기' → 안전한 자동화 프로세스"
+          theory: "• Human-in-the-loop 개념\n• 승인 프로세스 설계\n• 위험 관리와 품질 관리",
+          practice: "• '보내기 전 확인' 기능 추가\n• 승인 워크플로우 구축\n• 안전한 자동화 시스템 완성"
         }
       },
       {
         id: 9,
-        title: "Logic Node 활용",
+        day: 9,
+        title: "Day 9: Logic Node - AI가 스스로 판단하게 하기",
         duration: "60분",
-        hasQuiz: false,
+        hasQuiz: true,
         sections: {
-          theory: "조건부 로직과 분기 처리",
-          practice: "요청에 따라 '요약' vs '메일작성' 분기 → 다기능 업무형 에이전트"
+          theory: "• 조건문(If-Else) 개념\n• 분기 처리와 의사결정\n• 복잡한 워크플로우 설계",
+          practice: "• '요청 유형별 자동 분류' 시스템\n• 조건에 따른 다른 응답 만들기\n• 스마트 업무 자동화 봇 완성"
+        }
+      },
+      {
+        id: 10,
+        day: 10,
+        title: "Day 10: 두 번째 프로젝트 - 업무 자동화 시스템",
+        duration: "60분",
+        hasQuiz: true,
+        sections: {
+          theory: "• Week 2 총정리\n• 실무 자동화 시나리오 분석\n• 워크플로우 최적화 방법",
+          practice: "• '이메일 자동 응답 시스템' 완성\n• 복잡한 워크플로우 통합\n• 포트폴리오 프로젝트 #2 완성"
         }
       },
 
-      // Part 3: 내 웹사이트에 배포하기 (3강)
-      {
-        id: 10,
-        title: "ChatKit으로 챗봇 퍼블리시",
-        duration: "50분",
-        hasQuiz: false,
-        sections: {
-          theory: "웹 배포를 위한 ChatKit 설정",
-          practice: "Workflow ID 복사 → HTML에 삽입 → 웹에 AI 챗봇 노출"
-        }
-      },
+      // Week 3: 웹 배포 & 고급 기능 (Day 11-15)
       {
         id: 11,
-        title: "디자인 커스터마이징",
-        duration: "45분",
+        day: 11,
+        title: "Day 11: ChatKit으로 웹에 배포하기",
+        duration: "60분",
         hasQuiz: false,
         sections: {
-          theory: "UI/UX 커스터마이징과 브랜딩",
-          practice: "색상 / 버튼 / 캐릭터 설정 → 나만의 브랜드형 챗봇"
+          theory: "• ChatKit 소개 및 설정\n• 웹 임베딩의 원리\n• HTML/JavaScript 기본",
+          practice: "• Workflow ID 복사하기\n• HTML 코드에 삽입하기\n• 내 웹사이트에 챗봇 띄우기"
         }
       },
       {
         id: 12,
-        title: "블로그·티스토리·Notion에 붙이기",
-        duration: "55분",
+        day: 12,
+        title: "Day 12: 챗봇 디자인 커스터마이징",
+        duration: "60분",
         hasQuiz: false,
         sections: {
-          theory: "다양한 플랫폼에 챗봇 임베드하기",
-          practice: "실제 배포 실습 → 작동하는 웹 챗봇 완성"
+          theory: "• UI/UX 디자인 기초\n• 브랜딩과 색상 이론\n• 사용자 경험 최적화",
+          practice: "• 챗봇 색상/로고 변경\n• 환영 메시지 설정\n• 블로그/Notion/티스토리에 배포 실습"
         }
       },
-
-      // Part 4: 콘텐츠 제작형 AI (3강)
       {
         id: 13,
-        title: "Input Node로 구조화된 입력받기",
-        duration: "50분",
+        day: 13,
+        title: "Day 13: Input Node로 맞춤형 입력 받기",
+        duration: "60분",
         hasQuiz: false,
         sections: {
-          theory: "구조화된 입력 처리와 데이터 포맷팅",
-          practice: "'주제, 톤, 길이' 입력창 만들기 → 사용자 맞춤 스크립트 생성기"
+          theory: "• 구조화된 입력의 중요성\n• 폼(Form) 디자인\n• 사용자 데이터 수집 전략",
+          practice: "• '주제, 톤, 길이' 입력 폼 만들기\n• 맞춤형 콘텐츠 생성기 구축\n• 유튜브 스크립트 작가 AI 완성"
         }
       },
       {
         id: 14,
-        title: "Evals & Prompt Optimizer 실습",
+        day: 14,
+        title: "Day 14: Evals & AI 성능 최적화",
         duration: "60분",
         hasQuiz: false,
         sections: {
-          theory: "AI 성능 평가와 프롬프트 최적화",
-          practice: "결과물 평가 + 개선 → 스스로 배우는 AI 작가"
+          theory: "• AI 성능 평가 방법론\n• Prompt Optimizer 사용법\n• A/B 테스팅 개념",
+          practice: "• 결과물 품질 평가하기\n• 프롬프트 자동 최적화\n• 스스로 학습하는 AI 만들기"
         }
       },
       {
         id: 15,
-        title: "자동화 루프 만들기",
-        duration: "65분",
-        hasQuiz: false,
+        day: 15,
+        title: "Day 15: 최종 프로젝트 - 나만의 AI 서비스 런칭",
+        duration: "90분",
+        hasQuiz: true,
         sections: {
-          theory: "반복 작업과 루프 처리",
-          practice: "주제 입력 → 영상 3분 스크립트 완성 → 영상 크리에이터용 AI 완성"
-        }
-      },
-
-      // Part 5: 음성 기반 인터랙션 (3강)
-      {
-        id: 16,
-        title: "GPT-4o Realtime 연결",
-        duration: "55분",
-        hasQuiz: false,
-        sections: {
-          theory: "실시간 음성 처리와 GPT-4o 연동",
-          practice: "내 마이크로 AI와 대화 → 음성 대화형 비서"
-        }
-      },
-      {
-        id: 17,
-        title: "감정 인식 테스트",
-        duration: "45분",
-        hasQuiz: false,
-        sections: {
-          theory: "음성 감정 분석과 응답 조정",
-          practice: "기쁨/피로한 톤 감지 시연 → 공감형 AI"
-        }
-      },
-      {
-        id: 18,
-        title: "보안 설정 & 프롬프트 인젝션 방어",
-        duration: "50분",
-        hasQuiz: false,
-        sections: {
-          theory: "AI 보안과 프롬프트 인젝션 방어",
-          practice: "Guardrails 노드 실습 → 안전한 대화형 AI 완성"
+          theory: "• 전체 과정 복습\n• 실전 프로젝트 기획\n• AI 서비스 수익화 전략\n• 다음 단계 로드맵",
+          practice: "• 최종 프로젝트: 선택 과제\n  1) GPT-4o Realtime 음성 AI 비서\n  2) 콘텐츠 자동 생성 시스템\n  3) 고객 응대 챗봇\n• 포트폴리오 완성 및 발표\n• 수료증 발급 🎓"
         }
       }
     ]
@@ -2738,65 +2718,65 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             </div>
           </div>
 
-          {/* 커리큘럼 - 깔끔한 디자인 */}
+          {/* 커리큘럼 - Day 중심 디자인 */}
           <div style={{
-            maxWidth: '900px',
+            maxWidth: '1000px',
             margin: '0 auto',
             background: '#ffffff',
             borderRadius: '20px',
-            padding: '40px',
+            padding: 'clamp(30px, 5vw, 50px)',
             boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
             border: '2px solid #e2e8f0'
           }}>
             <h3 style={{
               color: '#1f2937',
-              fontSize: '1.8rem',
-              fontWeight: '800',
+              fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+              fontWeight: '900',
               marginBottom: '10px',
               textAlign: 'center'
             }}>
-              📚 커리큘럼
+              📚 15일 완성 커리큘럼
             </h3>
             <p style={{
               color: '#64748b',
-              fontSize: '1.1rem',
-              marginBottom: '40px',
-              textAlign: 'center'
+              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+              marginBottom: '50px',
+              textAlign: 'center',
+              fontWeight: '500'
             }}>
-              총 18강의 · 약 15시간 · 5가지 프로젝트
+              하루 1시간 × 15일 = AI 에이전트 마스터 🎓
             </p>
 
-            {/* Part 0: 준비 - AI 에이전트 만들기 입문 준비 */}
-            <div style={{ marginBottom: '40px' }}>
+            {/* Week 1: Day 1-5 */}
+            <div style={{ marginBottom: '50px' }}>
               <div style={{
-                background: '#0ea5e9',
+                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                 color: 'white',
-                padding: '20px',
+                padding: 'clamp(15px, 3vw, 25px)',
                 borderRadius: '15px',
-                marginBottom: '20px',
-                textAlign: 'center'
+                marginBottom: '25px',
+                textAlign: 'center',
+                boxShadow: '0 8px 20px rgba(14, 165, 233, 0.3)'
               }}>
                 <h4 style={{
-                  fontSize: '1.3rem',
-                  fontWeight: '700',
+                  fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
+                  fontWeight: '800',
                   margin: '0',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px'
+                  letterSpacing: '0.5px'
                 }}>
-                  🔰 Part 0: 준비 - AI 에이전트 만들기 입문 준비
+                  📚 WEEK 1: AI 에이전트 기초
                 </h4>
                 <p style={{
-                  margin: '8px 0 0 0',
-                  fontSize: '1rem',
-                  opacity: '0.9'
+                  margin: '10px 0 0 0',
+                  fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
+                  opacity: '0.95',
+                  fontWeight: '500'
                 }}>
-                  AgentKit 소개부터 첫 번째 AI 응답 경험까지
+                  Day 1-5 · ChatGPT Agent 입문부터 첫 프로젝트까지
                 </p>
               </div>
 
-              {course.lessons.slice(0, 3).map((lesson: any, index: number) => (
+              {course.lessons.slice(0, 5).map((lesson: any, index: number) => (
                 <div
                   key={lesson.id}
                   style={{
@@ -2823,26 +2803,27 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                   >
                     <div style={{
-                      backgroundColor: '#0ea5e9',
+                      background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                       color: '#ffffff',
-                      borderRadius: '50%',
-                      width: '32px',
-                      height: '32px',
+                      borderRadius: '12px',
+                      padding: '8px 16px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      flexShrink: 0
+                      fontSize: '0.9rem',
+                      fontWeight: '800',
+                      flexShrink: 0,
+                      boxShadow: '0 4px 10px rgba(14, 165, 233, 0.3)',
+                      minWidth: '80px'
                     }}>
-                      {index + 1}
+                      Day {lesson.day || (index + 1)}
                     </div>
                     <div style={{ flex: 1 }}>
                       <h5 style={{
                         color: '#1f2937',
                         marginBottom: '4px',
-                        fontSize: '1rem',
-                        fontWeight: '600'
+                        fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                        fontWeight: '700'
                       }}>
                         {lesson.title}
                       </h5>
@@ -2942,37 +2923,36 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               ))}
             </div>
 
-            {/* Part 1: 나만의 AI 에이전트 만들기 - 기초 구조 구축 */}
-            <div style={{ marginBottom: '40px' }}>
+            {/* Week 2: Day 6-10 */}
+            <div style={{ marginBottom: '50px' }}>
               <div style={{
-                background: '#0ea5e9',
+                background: 'linear-gradient(135deg, #10b981, #059669)',
                 color: 'white',
-                padding: '20px',
+                padding: 'clamp(15px, 3vw, 25px)',
                 borderRadius: '15px',
-                marginBottom: '20px',
-                textAlign: 'center'
+                marginBottom: '25px',
+                textAlign: 'center',
+                boxShadow: '0 8px 20px rgba(16, 185, 129, 0.3)'
               }}>
                 <h4 style={{
-                  fontSize: '1.3rem',
-                  fontWeight: '700',
+                  fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
+                  fontWeight: '800',
                   margin: '0',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px'
+                  letterSpacing: '0.5px'
                 }}>
-                  🧠 Part 1: 나만의 AI 에이전트 만들기 - 기초 구조 구축
+                  ⚡ WEEK 2: 업무 자동화
                 </h4>
                 <p style={{
-                  margin: '8px 0 0 0',
-                  fontSize: '1rem',
-                  opacity: '0.9'
+                  margin: '10px 0 0 0',
+                  fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
+                  opacity: '0.95',
+                  fontWeight: '500'
                 }}>
-                  Agent Builder 기본 구조부터 파일 검색까지
+                  Day 6-10 · 워크플로우 구축부터 자동화 시스템 완성까지
                 </p>
               </div>
 
-              {course.lessons.slice(3, 6).map((lesson: any, index: number) => (
+              {course.lessons.slice(5, 10).map((lesson: any, index: number) => (
                 <div
                   key={lesson.id}
                   style={{
@@ -3118,37 +3098,36 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               ))}
             </div>
 
-            {/* Part 2: 일상 & 업무 자동화 */}
-            <div style={{ marginBottom: '40px' }}>
+            {/* Week 3: Day 11-15 */}
+            <div style={{ marginBottom: '20px' }}>
               <div style={{
-                background: '#0ea5e9',
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
                 color: 'white',
-                padding: '20px',
+                padding: 'clamp(15px, 3vw, 25px)',
                 borderRadius: '15px',
-                marginBottom: '20px',
-                textAlign: 'center'
+                marginBottom: '25px',
+                textAlign: 'center',
+                boxShadow: '0 8px 20px rgba(245, 158, 11, 0.3)'
               }}>
                 <h4 style={{
-                  fontSize: '1.3rem',
-                  fontWeight: '700',
+                  fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
+                  fontWeight: '800',
                   margin: '0',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px'
+                  letterSpacing: '0.5px'
                 }}>
-                  💼 Part 2: 일상 & 업무 자동화
+                  🚀 WEEK 3: 웹 배포 & 실전
                 </h4>
                 <p style={{
-                  margin: '8px 0 0 0',
-                  fontSize: '1rem',
-                  opacity: '0.9'
+                  margin: '10px 0 0 0',
+                  fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
+                  opacity: '0.95',
+                  fontWeight: '500'
                 }}>
-                  파일 분석부터 안전한 자동화 프로세스까지
+                  Day 11-15 · 웹 배포부터 최종 프로젝트까지
                 </p>
               </div>
 
-              {course.lessons.slice(6, 9).map((lesson: any, index: number) => (
+              {course.lessons.slice(10, 15).map((lesson: any, index: number) => (
                 <div
                   key={lesson.id}
                   style={{
