@@ -17,177 +17,176 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
   const course = {
     id: 1002,
-    title: "ChatGPT AI AGENT 비기너편 - 15일 완성",
-    subtitle: "코딩 몰라도, 당신의 AI가 스스로 생각하고 일하게 만든다",
+    title: "🧠 AI Agent Maker",
+    subtitle: "15일 완성, 나만의 인공지능 에이전트 만들기",
     lessons: [
-      // Week 1: AI 에이전트 기초 (Day 1-5)
+      // CORE (Day 1-3) - AI의 사고 구조 이해하기
       {
         id: 1,
         day: 1,
-        title: "Day 1: AI 에이전트의 세계에 오신 것을 환영합니다",
+        title: "Day 1: 내 첫 AI 친구: ChatGPT와 Agent의 차이",
         duration: "60분",
         hasQuiz: true,
         sections: {
-          theory: "• AI 에이전트란 무엇인가? (ChatGPT와의 차이)\n• AgentKit 소개 및 기본 개념\n• AI 에이전트로 할 수 있는 것들",
-          practice: "• OpenAI 계정 만들기\n• AgentKit Builder 둘러보기\n• 첫 AI 에이전트 만들어보기 (Hello World Agent)"
+          theory: "• ChatGPT vs AI Agent의 핵심 차이점\n• AI Agent의 자율성과 도구 사용 능력\n• 실제 활용 사례와 가능성",
+          practice: "• OpenAI 계정 생성 및 API 키 발급\n• 나만의 첫 AI 에이전트 생성\n• API 연동 및 테스트"
         }
       },
       {
         id: 2,
         day: 2,
-        title: "Day 2: 나만의 첫 번째 챗봇 만들기",
+        title: "Day 2: AI 한 명 vs AI 팀: 협업형 에이전트 구조",
         duration: "60분",
         hasQuiz: false,
         sections: {
-          theory: "• Agent Builder 기본 구조 이해\n• Start, Agent, End 노드 개념\n• 워크플로우의 기본 원리",
-          practice: "• 간단한 Q&A 챗봇 만들기\n• 노드 연결 실습\n• 첫 번째 에이전트 테스트 및 배포"
+          theory: "• 싱글 에이전트와 멀티 에이전트의 차이\n• 협업형 AI 구조 설계 원리\n• 역할 분담과 작업 흐름 관리",
+          practice: "• 싱글 에이전트 구성 실습\n• 멀티 에이전트 팀 구축\n• 에이전트 간 협업 플로우 테스트"
         }
       },
       {
         id: 3,
         day: 3,
-        title: "Day 3: 프롬프트 엔지니어링 기초",
+        title: "Day 3: AI의 두뇌 이해하기: LLM의 세계",
         duration: "60분",
         hasQuiz: true,
         sections: {
-          theory: "• 좋은 프롬프트 vs 나쁜 프롬프트\n• AI에게 명확한 지시를 내리는 방법\n• 역할(Role), 맥락(Context), 예시(Examples) 활용법",
-          practice: "• '친절한 고객센터 직원' 에이전트 만들기\n• 다양한 프롬프트 테스트\n• 최적의 응답을 이끌어내는 실습"
+          theory: "• GPT-4o, GPT-4o-mini, o1 등 모델 비교\n• 목적별 최적 모델 선택 전략\n• 토큰 개념과 비용 최적화",
+          practice: "• 다양한 LLM 모델 테스트\n• 성능 vs 비용 분석\n• 프로젝트별 모델 매칭 실습"
         }
       },
+      // TOOLS (Day 4-9) - 에이전트 성장시키기
       {
         id: 4,
         day: 4,
-        title: "Day 4: File Search - 문서를 읽는 AI",
+        title: "Day 4: 기억 심기 (File Search)",
         duration: "60분",
         hasQuiz: false,
         sections: {
-          theory: "• File Search 기능 이해하기\n• PDF, TXT, DOCX 파일 처리\n• 문서 검색과 정보 추출 원리",
-          practice: "• PDF 문서 업로드하기\n• '문서 요약 봇' 만들기\n• 내 이력서/보고서를 분석하는 AI 완성"
+          theory: "• File Search 기능의 원리와 활용\n• PDF, 노션 데이터 처리 방법\n• 지식 기반 AI 구축 전략",
+          practice: "• PDF 파일 업로드 및 인덱싱\n• 문서 기반 Q&A 봇 만들기\n• 내 PDF·노션 데이터를 읽고 답하는 지식형 AI 완성"
         }
       },
       {
         id: 5,
         day: 5,
-        title: "Day 5: 첫 번째 프로젝트 - 나만의 비서 AI",
+        title: "Day 5: 안전장치 달기 (Guardrails)",
         duration: "60분",
         hasQuiz: true,
         sections: {
-          theory: "• Week 1 복습 및 정리\n• 실전 프로젝트 기획 방법\n• Agent 성능 평가 기준",
-          practice: "• '일정 관리 비서' 완성하기\n• 여러 기능 통합 실습\n• 포트폴리오 프로젝트 #1 완성"
+          theory: "• AI 보안의 중요성\n• Prompt Injection 및 Jailbreak 공격\n• Guardrails 설계 원칙",
+          practice: "• 입력 필터링 규칙 설정\n• 출력 검증 시스템 구축\n• 잘못된 답변과 해킹을 차단하는 안전한 AI 완성"
         }
       },
-
-      // Week 2: 업무 자동화 (Day 6-10)
       {
         id: 6,
         day: 6,
-        title: "Day 6: Agent Builder 워크플로우 이해하기",
+        title: "Day 6: 도구 연결하기 (MCP)",
         duration: "60분",
         hasQuiz: false,
         sections: {
-          theory: "• Start → Agent → End 구조\n• 노드(Node) 개념과 연결\n• 워크플로우 디자인 패턴",
-          practice: "• 3단계 워크플로우 만들기\n• 노드 연결 실습\n• '질문 → 분석 → 답변' 플로우 구축"
+          theory: "• Model Context Protocol (MCP) 이해\n• 외부 서비스 연동 구조\n• API 통신과 인증 방법",
+          practice: "• Gmail, Google Drive 연동\n• 커스텀 API 연결\n• 외부 서비스와 통신하는 AI 완성"
         }
       },
       {
         id: 7,
         day: 7,
-        title: "Day 7: Transform - 데이터 가공의 마법",
+        title: "Day 7: 판단 훈련 (if/else)",
         duration: "60분",
         hasQuiz: false,
         sections: {
-          theory: "• Transform 노드의 역할\n• 데이터 변환과 포맷팅\n• JSON, CSV 데이터 다루기",
-          practice: "• '회의록 → 이메일 초안' 변환기\n• 데이터 구조 바꾸기 실습\n• 자동화 워크플로우 완성"
+          theory: "• 조건부 로직 설계\n• 의사결정 트리 구조\n• 복잡한 분기 처리 패턴",
+          practice: "• 조건문 기반 플로우 작성\n• 다중 분기 처리 시스템 구축\n• 조건별 분기 처리 가능한 AI 로직 완성"
         }
       },
       {
         id: 8,
         day: 8,
-        title: "Day 8: Human Approval - 안전장치 추가하기",
+        title: "Day 8: 승인 절차 배우기 (User Approval)",
         duration: "60분",
         hasQuiz: false,
         sections: {
-          theory: "• Human-in-the-loop 개념\n• 승인 프로세스 설계\n• 위험 관리와 품질 관리",
-          practice: "• '보내기 전 확인' 기능 추가\n• 승인 워크플로우 구축\n• 안전한 자동화 시스템 완성"
+          theory: "• Human-in-the-loop 시스템\n• 승인 워크플로우 설계\n• 책임 소재와 품질 관리",
+          practice: "• 사용자 승인 노드 추가\n• 승인 대기 및 처리 플로우 구축\n• 사용자 승인 후 실행하는 협업형 플로우 완성"
         }
       },
       {
         id: 9,
         day: 9,
-        title: "Day 9: Logic Node - AI가 스스로 판단하게 하기",
+        title: "Day 9: 기억력 훈련 (Set State)",
         duration: "60분",
         hasQuiz: true,
         sections: {
-          theory: "• 조건문(If-Else) 개념\n• 분기 처리와 의사결정\n• 복잡한 워크플로우 설계",
-          practice: "• '요청 유형별 자동 분류' 시스템\n• 조건에 따른 다른 응답 만들기\n• 스마트 업무 자동화 봇 완성"
-        }
-      },
-      {
-        id: 10,
-        day: 10,
-        title: "Day 10: 두 번째 프로젝트 - 업무 자동화 시스템",
-        duration: "60분",
-        hasQuiz: true,
-        sections: {
-          theory: "• Week 2 총정리\n• 실무 자동화 시나리오 분석\n• 워크플로우 최적화 방법",
-          practice: "• '이메일 자동 응답 시스템' 완성\n• 복잡한 워크플로우 통합\n• 포트폴리오 프로젝트 #2 완성"
+          theory: "• 상태 관리(State Management) 개념\n• 대화 맥락 유지 전략\n• 세션과 메모리 구조",
+          practice: "• State 변수 설정 및 활용\n• 대화 히스토리 저장\n• 이전 대화 맥락을 기억하고 이어가는 AI 완성"
         }
       },
 
-      // Week 3: 웹 배포 & 고급 기능 (Day 11-15)
+      // PROJECT (Day 10-15) - 실전형 AI 에이전트 6종 완성
+      {
+        id: 10,
+        day: 10,
+        title: "Day 10: 데이터 통합 에이전트",
+        duration: "90분",
+        hasQuiz: false,
+        sections: {
+          theory: "• 다중 데이터 소스 통합 전략\n• 데이터 정규화 및 병합 기법\n• 통합 분석 리포트 구조",
+          practice: "• 여러 파일 형식 통합 처리\n• 자동 데이터 정리 및 분석\n• 자료를 한 번에 정리하는 종합 분석 AI 완성"
+        }
+      },
       {
         id: 11,
         day: 11,
-        title: "Day 11: ChatKit으로 웹에 배포하기",
-        duration: "60분",
+        title: "Day 11: 일정 설계 에이전트",
+        duration: "90분",
         hasQuiz: false,
         sections: {
-          theory: "• ChatKit 소개 및 설정\n• 웹 임베딩의 원리\n• HTML/JavaScript 기본",
-          practice: "• Workflow ID 복사하기\n• HTML 코드에 삽입하기\n• 내 웹사이트에 챗봇 띄우기"
+          theory: "• 목표 기반 계획 수립 방법론\n• 시간 관리 및 우선순위 설정\n• 주간 일정 최적화 알고리즘",
+          practice: "• 목표 입력 및 분석 시스템\n• 자동 일정 생성 로직 구현\n• 목표 기반 주간 일정과 계획을 자동 생성하는 AI 코치 완성"
         }
       },
       {
         id: 12,
         day: 12,
-        title: "Day 12: 챗봇 디자인 커스터마이징",
-        duration: "60분",
+        title: "Day 12: 고객 응대 에이전트",
+        duration: "90분",
         hasQuiz: false,
         sections: {
-          theory: "• UI/UX 디자인 기초\n• 브랜딩과 색상 이론\n• 사용자 경험 최적화",
-          practice: "• 챗봇 색상/로고 변경\n• 환영 메시지 설정\n• 블로그/Notion/티스토리에 배포 실습"
+          theory: "• FAQ 기반 학습 시스템\n• 24시간 자동 응대 구조\n• 고객 만족도 최적화 전략",
+          practice: "• FAQ 데이터베이스 구축\n• 자동 답변 시스템 개발\n• FAQ 학습형 24시간 고객상담 챗봇 완성"
         }
       },
       {
         id: 13,
         day: 13,
-        title: "Day 13: Input Node로 맞춤형 입력 받기",
-        duration: "60분",
+        title: "Day 13: 데이터 질의응답 에이전트",
+        duration: "90분",
         hasQuiz: false,
         sections: {
-          theory: "• 구조화된 입력의 중요성\n• 폼(Form) 디자인\n• 사용자 데이터 수집 전략",
-          practice: "• '주제, 톤, 길이' 입력 폼 만들기\n• 맞춤형 콘텐츠 생성기 구축\n• 유튜브 스크립트 작가 AI 완성"
+          theory: "• 자연어 to SQL 변환 원리\n• 데이터베이스 쿼리 최적화\n• 결과 시각화 및 표 생성",
+          practice: "• 자연어 질의 파싱 시스템\n• DB 쿼리 실행 및 결과 포맷팅\n• DB에 자연어로 질의해 표로 결과 반환하는 분석가형 AI 완성"
         }
       },
       {
         id: 14,
         day: 14,
-        title: "Day 14: Evals & AI 성능 최적화",
-        duration: "60분",
+        title: "Day 14: 문서 비교 에이전트",
+        duration: "90분",
         hasQuiz: false,
         sections: {
-          theory: "• AI 성능 평가 방법론\n• Prompt Optimizer 사용법\n• A/B 테스팅 개념",
-          practice: "• 결과물 품질 평가하기\n• 프롬프트 자동 최적화\n• 스스로 학습하는 AI 만들기"
+          theory: "• 문서 diff 알고리즘\n• 변경사항 추적 및 하이라이팅\n• 버전 관리 시스템 통합",
+          practice: "• 문서 업로드 및 파싱\n• 차이점 분석 및 시각화\n• 두 문서의 수정·차이점을 자동 분석 및 표시하는 AI 완성"
         }
       },
       {
         id: 15,
         day: 15,
-        title: "Day 15: 최종 프로젝트 - 나만의 AI 서비스 런칭",
+        title: "Day 15: 사내 지식 에이전트",
         duration: "90분",
         hasQuiz: true,
         sections: {
-          theory: "• 전체 과정 복습\n• 실전 프로젝트 기획\n• AI 서비스 수익화 전략\n• 다음 단계 로드맵",
-          practice: "• 최종 프로젝트: 선택 과제\n  1) GPT-4o Realtime 음성 AI 비서\n  2) 콘텐츠 자동 생성 시스템\n  3) 고객 응대 챗봇\n• 포트폴리오 완성 및 발표\n• 수료증 발급 🎓"
+          theory: "• 내부 문서 인덱싱 전략\n• 지식 베이스 구축 방법론\n• 팀 협업 최적화",
+          practice: "• 사내 매뉴얼 업로드 및 학습\n• 자동 Q&A 시스템 구축\n• 내부 매뉴얼을 학습해 팀의 Q&A를 자동 처리하는 AI 완성"
         }
       }
     ]
@@ -633,15 +632,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             </div>
           </div>
 
-          {/* 상단 메인 CTA - 깔끔한 디자인 */}
+          {/* 상단 메인 CTA */}
           <div style={{
-            background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-            borderRadius: '20px',
-            padding: 'clamp(30px, 5vw, 50px) clamp(20px, 4vw, 40px)',
             textAlign: 'center',
-            marginBottom: '50px',
-            color: 'white',
-            boxShadow: '0 10px 30px rgba(14, 165, 233, 0.3)'
+            marginBottom: '50px'
           }}>
 
             {/* 강의 아이콘과 제목 */}
@@ -652,11 +646,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 justifyContent: 'center',
                 width: '80px',
                 height: '80px',
-                background: 'rgba(255, 255, 255, 0.2)',
+                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                 borderRadius: '50%',
                 marginBottom: '25px',
-                backdropFilter: 'blur(10px)',
-                border: '2px solid rgba(255, 255, 255, 0.3)'
+                boxShadow: '0 4px 15px rgba(14, 165, 233, 0.3)'
               }}>
                 <span style={{ fontSize: '2.5rem' }}>🤖</span>
               </div>
@@ -664,79 +657,91 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 fontSize: 'clamp(2rem, 4vw, 2.8rem)',
                 marginBottom: '20px',
                 fontWeight: '800',
-                color: '#ffffff'
+                color: '#1f2937'
               }}>
-                ChatGPT AI AGENT 비기너편
+                🧠 AI Agent Maker
               </h1>
               <h2 style={{
                 fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-                marginBottom: '30px',
-                color: '#ffffff',
-                fontWeight: '600'
+                marginBottom: '15px',
+                color: '#1f2937',
+                fontWeight: '700'
               }}>
-                하루 1시간씩, 10일 만에 나만의 AI 에이전트 완성
+                15일 완성, 나만의 인공지능 에이전트 만들기
               </h2>
+              <p style={{
+                fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+                marginBottom: '30px',
+                color: '#64748b',
+                lineHeight: '1.6'
+              }}>
+                코딩 몰라도, 클릭 몇 번으로 "AI가 스스로 판단하고 일하는 에이전트"를 만든다
+              </p>
             </div>
 
-            {/* 가격 정보 - 깔끔한 디자인 */}
+            {/* 가격 정보 - 강조된 박스 */}
             <div style={{
-              background: 'rgba(255, 255, 255, 0.15)',
-              borderRadius: '15px',
-              padding: '30px',
-              marginBottom: '40px',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 255, 255, 0.2)'
+              background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
+              borderRadius: '20px',
+              padding: 'clamp(30px, 5vw, 40px)',
+              marginBottom: '30px',
+              border: '2px solid #0ea5e9',
+              boxShadow: '0 10px 30px rgba(14, 165, 233, 0.15)'
             }}>
               <div style={{
-                fontSize: '1.2rem',
+                fontSize: '1.1rem',
                 textDecoration: 'line-through',
                 marginBottom: '10px',
-                color: '#ffffff',
-                opacity: '0.8'
+                color: '#94a3b8',
+                fontWeight: '600'
               }}>
                 ₩{originalPrice.toLocaleString()}
               </div>
               <div style={{
-                fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
+                fontSize: 'clamp(3rem, 6vw, 4rem)',
                 fontWeight: '900',
-                marginBottom: '15px',
-                color: '#ffffff'
+                marginBottom: '12px',
+                color: '#0ea5e9',
+                textShadow: '0 2px 4px rgba(14, 165, 233, 0.2)'
               }}>
                 ₩{earlyBirdPrice.toLocaleString()}
               </div>
               <div style={{
-                fontSize: '1rem',
-                color: '#ffffff',
-                marginBottom: '15px',
-                fontWeight: '500',
-                opacity: '0.9'
+                fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+                color: '#1f2937',
+                marginBottom: '25px',
+                fontWeight: '600'
               }}>
                 월 {Math.floor(earlyBirdPrice / 12).toLocaleString()}원 (12개월 무이자)
               </div>
               <div style={{
-                fontSize: '1rem',
-                color: '#ffffff',
-                fontWeight: '700',
-                marginBottom: '15px',
-                background: 'rgba(255, 255, 255, 0.2)',
-                padding: '8px 16px',
-                borderRadius: '20px',
-                display: 'inline-block',
-                border: '1px solid rgba(255, 255, 255, 0.3)'
+                display: 'flex',
+                gap: '10px',
+                justifyContent: 'center',
+                flexWrap: 'wrap'
               }}>
-                🔥 76% 할인 (얼리버드 특가)
-              </div>
-              <div style={{
-                fontSize: '0.9rem',
-                color: '#ffffff',
-                fontWeight: '500',
-                background: 'rgba(255, 255, 255, 0.1)',
-                padding: '8px 12px',
-                borderRadius: '8px',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                display: 'inline-block'
-              }}>
-                ⏰ 런칭일(2025.11.15)부터 19만원으로 인상 예정
+                <div style={{
+                  fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                  color: '#ffffff',
+                  fontWeight: '700',
+                  background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                  padding: '10px 20px',
+                  borderRadius: '25px',
+                  boxShadow: '0 4px 12px rgba(239, 68, 68, 0.4)'
+                }}>
+                  🔥 76% 할인 (얼리버드 특가)
+                </div>
+                <div style={{
+                  fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
+                  color: '#ffffff',
+                  fontWeight: '600',
+                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                  padding: '10px 18px',
+                  borderRadius: '25px',
+                  boxShadow: '0 4px 12px rgba(245, 158, 11, 0.4)'
+                }}>
+                  ⏰ 런칭일(2025.11.15)부터 19만원으로 인상 예정
+                </div>
               </div>
             </div>
 
@@ -750,7 +755,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               <div style={{
                 position: 'absolute',
                 inset: '-4px',
-                background: 'linear-gradient(45deg, #fbbf24, #f59e0b, #fbbf24)',
+                background: 'linear-gradient(45deg, #0ea5e9, #0284c7, #0ea5e9)',
                 borderRadius: '18px',
                 filter: 'blur(8px)',
                 opacity: '0.7',
@@ -761,7 +766,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               <button
                 onClick={handleEarlyBirdPayment}
                 style={{
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                   color: '#ffffff',
                   border: 'none',
                   padding: '25px 60px',
@@ -770,7 +775,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   borderRadius: '15px',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
-                  boxShadow: '0 10px 30px rgba(251, 191, 36, 0.5)',
+                  boxShadow: '0 10px 30px rgba(14, 165, 233, 0.5)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -781,11 +786,11 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 }}
                 onMouseOver={(e) => {
                   e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 15px 40px rgba(251, 191, 36, 0.6)';
+                  e.currentTarget.style.boxShadow = '0 15px 40px rgba(14, 165, 233, 0.6)';
                 }}
                 onMouseOut={(e) => {
                   e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(251, 191, 36, 0.5)';
+                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(14, 165, 233, 0.5)';
                 }}
               >
                 <span style={{ fontSize: '1.5rem' }}>🚀</span>
@@ -795,10 +800,9 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
             <p style={{
               fontSize: '1rem',
-              color: '#ffffff',
+              color: '#64748b',
               margin: '0',
-              fontWeight: '500',
-              opacity: '0.9'
+              fontWeight: '500'
             }}>
               💳 안전한 결제 | 12개월 무이자 할부 가능
             </p>
@@ -983,12 +987,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 </p>
               </div>
 
-              {/* 학력 인증 섹션 */}
+              {/* 학력 섹션 */}
               <div style={{
-                background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
-              padding: 'clamp(30px, 5vw, 50px)',
-                borderRadius: '20px',
-                border: '2px solid #e2e8f0',
               marginBottom: '50px'
               }}>
                 <h3 style={{
@@ -998,13 +998,15 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 marginBottom: '40px',
                 textAlign: 'center'
                 }}>
-                  🎓 학력 인증
+                  🎓 학력
                 </h3>
                 
                 <div style={{
-                  display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
-                gap: '40px'
+                  display: 'flex',
+                  flexDirection: 'column',
+                gap: '40px',
+                  maxWidth: '800px',
+                  margin: '0 auto'
                 }}>
                   {/* 일리노이공대 석사 */}
                   <div style={{
@@ -1596,7 +1598,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               하루 1시간 × 15일 = AI 에이전트 마스터 🎓
             </p>
 
-            {/* Week 1: Day 1-5 */}
+            {/* CORE: Day 1-3 */}
             <div style={{ marginBottom: '60px' }}>
               <div style={{
                 background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
@@ -1613,7 +1615,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   margin: '0 0 15px 0',
                   letterSpacing: '0.5px'
                 }}>
-                  Week 1: 기초 다지기
+                  📘 CORE (Day 1-3)
                 </h4>
                 <p style={{
                         margin: '0',
@@ -1622,7 +1624,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                             fontWeight: '600',
                   lineHeight: '1.6'
                 }}>
-                  Day 1-5 · AI와 Agent 개념 완전 이해 → 내가 직접 만든 첫 AI
+                  AI의 사고 구조 이해하기
                         </p>
                       </div>
 
@@ -1632,13 +1634,13 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 borderRadius: '15px',
                 border: '2px solid #e2e8f0'
               }}>
-                {course.lessons.slice(0, 5).map((lesson: any) => (
+                {course.lessons.slice(0, 3).map((lesson: any) => (
                 <div
                   key={lesson.id}
                   style={{
                       marginBottom: '30px',
                       paddingBottom: '30px',
-                      borderBottom: lesson.id === 5 ? 'none' : '1px solid #e2e8f0'
+                      borderBottom: lesson.id === 3 ? 'none' : '1px solid #e2e8f0'
                     }}
                   >
                       <h5 style={{
@@ -1666,7 +1668,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               </div>
             </div>
 
-            {/* Week 2: Day 6-10 */}
+            {/* TOOLS: Day 4-9 */}
             <div style={{ marginBottom: '60px' }}>
               <div style={{
                 background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
@@ -1683,7 +1685,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   margin: '0 0 15px 0',
                   letterSpacing: '0.5px'
                 }}>
-                  Week 2: 도구 익히기
+                  ⚙️ TOOLS (Day 4-9)
                 </h4>
                 <p style={{
                         margin: '0',
@@ -1692,7 +1694,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                             fontWeight: '600',
                   lineHeight: '1.6'
                 }}>
-                  Day 6-10 · 도구와 제어 구조 익히기 → 안전하고 똑똑한 AI 비서
+                  에이전트 성장시키기
                         </p>
                       </div>
 
@@ -1702,13 +1704,13 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 borderRadius: '15px',
                 border: '2px solid #e2e8f0'
               }}>
-                {course.lessons.slice(5, 10).map((lesson: any) => (
+                {course.lessons.slice(3, 9).map((lesson: any) => (
                 <div
                   key={lesson.id}
                   style={{
                       marginBottom: '30px',
                       paddingBottom: '30px',
-                      borderBottom: lesson.id === 10 ? 'none' : '1px solid #e2e8f0'
+                      borderBottom: lesson.id === 9 ? 'none' : '1px solid #e2e8f0'
                     }}
                   >
                       <h5 style={{
@@ -1736,7 +1738,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               </div>
             </div>
 
-            {/* Week 3: Day 11-15 */}
+            {/* PROJECT: Day 10-15 */}
             <div style={{ marginBottom: '60px' }}>
               <div style={{
                 background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
@@ -1753,7 +1755,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   margin: '0 0 15px 0',
                   letterSpacing: '0.5px'
                 }}>
-                  Week 3: 실전 완성
+                  🧩 PROJECT (Day 10-15)
                 </h4>
                 <p style={{
                         margin: '0',
@@ -1762,7 +1764,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                             fontWeight: '600',
                   lineHeight: '1.6'
                 }}>
-                  Day 11-15 · 실전 프로젝트 완성 → 나만의 AI 비서 시스템 완성
+                  실전형 AI 에이전트 6종 완성
                         </p>
                       </div>
 
@@ -1772,7 +1774,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 borderRadius: '15px',
                 border: '2px solid #e2e8f0'
               }}>
-                {course.lessons.slice(10, 15).map((lesson: any) => (
+                {course.lessons.slice(9, 15).map((lesson: any) => (
                 <div
                   key={lesson.id}
                   style={{
