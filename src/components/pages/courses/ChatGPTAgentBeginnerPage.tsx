@@ -249,6 +249,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             setIsLoggedIn(true);
             setUserInfo(parsedUserInfo);
 
+            // 테스트 계정 확인 (개발/테스트용)
+            const testAccounts = ['test10@gmail.com'];
+            const isTestAccount = testAccounts.includes(parsedUserInfo.email);
+
             // Azure 테이블에서 결제 상태 확인
             try {
               const paymentStatus = await AzureTableService.checkCoursePayment(
@@ -258,7 +262,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
               console.log('💳 Azure 테이블 결제 상태 확인 결과:', paymentStatus);
 
-              if (paymentStatus && paymentStatus.isPaid) {
+              if ((paymentStatus && paymentStatus.isPaid) || isTestAccount) {
                 setIsPaidUser(true);
                 console.log('✅ 결제 확인됨 - 강의 시청 페이지로 리다이렉트');
                 // 결제된 사용자는 새로운 강의 시청 페이지로 리다이렉트
@@ -632,6 +636,49 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             </div>
           </div>
 
+          {/* 강의 소개 영상 */}
+          <div style={{
+            marginBottom: '60px',
+            maxWidth: '900px',
+            margin: '0 auto 60px auto'
+          }}>
+            <h2 style={{
+              fontSize: 'clamp(1.5rem, 3vw, 1.8rem)',
+              fontWeight: '700',
+              color: '#1f2937',
+              marginBottom: '20px'
+            }}>
+              🎬 강의 소개
+            </h2>
+            <div style={{
+              position: 'relative',
+              paddingBottom: '56.25%',
+              height: 0,
+              overflow: 'hidden',
+              borderRadius: '12px',
+              background: '#000'
+            }}>
+              <video
+                controls
+                preload="metadata"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '12px'
+                }}
+              >
+                <source
+                  src="https://clathonstorage.blob.core.windows.net/video/%231%E1%84%89%E1%85%A9%E1%84%80%E1%85%A2_%E1%84%87%E1%85%B5%E1%84%80%E1%85%B5%E1%84%85%E1%85%A5%E1%84%85%E1%85%B3%E1%84%8B%E1%85%B1%E1%84%92%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%80%E1%85%A9%E1%86%BC%E1%84%8C%E1%85%B5%E1%84%82%E1%85%B3%E1%86%BC%E1%84%8B%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%90%E1%85%B3%E1%84%86%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8F%E1%85%A5%E1%84%8E%E1%85%A2%E1%86%BA%E1%84%8C%E1%85%B5%E1%84%91%E1%85%B5.mp4?sp=r&st=2025-10-22T05:23:32Z&se=2027-09-22T13:38:32Z&sv=2024-11-04&sr=b&sig=E9M93utlARF6v40KVvNWWTZXqVB27aci42zywMftgho%3D#t=0.1"
+                  type="video/mp4"
+                />
+                브라우저가 비디오를 지원하지 않습니다.
+              </video>
+            </div>
+          </div>
+
           {/* 상단 메인 CTA */}
           <div style={{
             textAlign: 'center',
@@ -722,25 +769,25 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               }}>
                 <div style={{
                   fontSize: 'clamp(0.9rem, 2vw, 1rem)',
-                  color: '#ffffff',
-                  fontWeight: '700',
+                color: '#ffffff',
+                fontWeight: '700',
                   background: 'linear-gradient(135deg, #ef4444, #dc2626)',
                   padding: '10px 20px',
                   borderRadius: '25px',
                   boxShadow: '0 4px 12px rgba(239, 68, 68, 0.4)'
-                }}>
-                  🔥 76% 할인 (얼리버드 특가)
-                </div>
-                <div style={{
+              }}>
+                🔥 76% 할인 (얼리버드 특가)
+              </div>
+              <div style={{
                   fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
-                  color: '#ffffff',
+                color: '#ffffff',
                   fontWeight: '600',
                   background: 'linear-gradient(135deg, #f59e0b, #d97706)',
                   padding: '10px 18px',
                   borderRadius: '25px',
                   boxShadow: '0 4px 12px rgba(245, 158, 11, 0.4)'
-                }}>
-                  ⏰ 런칭일(2025.11.15)부터 19만원으로 인상 예정
+              }}>
+                ⏰ 런칭일(2025.11.15)부터 19만원으로 인상 예정
                 </div>
               </div>
             </div>
@@ -1090,8 +1137,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                           alt="일리노이공대 석사 공식 성적증명서"
                           style={{
                             width: '100%',
-                            height: '200px',
-                            objectFit: 'cover',
+                            height: 'auto',
+                            objectFit: 'contain',
                             transition: 'all 0.3s ease'
                           }}
                         />
@@ -1194,8 +1241,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                           alt="뉴욕시립대 바루크 칼리지 학위증명서"
                           style={{
                             width: '100%',
-                            height: '200px',
-                            objectFit: 'cover',
+                            height: 'auto',
+                            objectFit: 'contain',
                             transition: 'all 0.3s ease'
                           }}
                         />
@@ -1522,60 +1569,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 }}>
                   AgentKit을 활용해 나만의 <strong style={{ color: '#0ea5e9' }}>AI 에이전트</strong>를 만들고<br />
                   실제 웹사이트에 배포하는 방법을 배워보세요.<br />
-                  <strong style={{ color: '#0ea5e9' }}>18강의</strong>로 완성하는 실전 AI 에이전트 개발 과정입니다.
+                  <strong style={{ color: '#0ea5e9' }}>15일 완성</strong> 실전 AI 에이전트 개발 과정입니다.
                 </p>
-                
-                {/* 맛보기 영상 */}
-                <div style={{
-                  marginTop: '30px',
-                  textAlign: 'center'
-                }}>
-                  <h3 style={{
-                    color: '#0ea5e9',
-                    fontSize: '1.3rem',
-                    fontWeight: '700',
-                    marginBottom: '20px'
-                  }}>
-                    🎬 맛보기 영상: AI 에이전트의 모든 것
-                  </h3>
-                  <div style={{
-                    position: 'relative',
-                    width: '100%',
-                    maxWidth: '600px',
-                    margin: '0 auto',
-                    borderRadius: '15px',
-                    overflow: 'hidden',
-                    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)'
-                  }}>
-                    <iframe
-                      width="100%"
-                      height="340"
-                      src="https://www.youtube.com/embed/UeQdxZx09to"
-                      title="ChatGPT AI AGENT 맛보기 영상"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                      style={{
-                        borderRadius: '15px'
-                      }}
-                    ></iframe>
-                  </div>
-                  <p style={{
-                    color: '#64748b',
-                    fontSize: '0.9rem',
-                    marginTop: '15px',
-                    fontWeight: '500'
-                  }}>
-                    영화 속 AI 어시스턴트가 현실이 되다? ChatGPT Agent 소개부터<br />
-                    실제 AI 에이전트 만들기까지 모든 것을 확인해보세요!
-                  </p>
                 </div>
               </div>
             </div>
-              </div>
 
             {/* 커리큘럼 - 깔끔한 텍스트 중심 디자인 */}
-              <div style={{
+            <div style={{
             maxWidth: '1100px',
             margin: '0 auto'
           }}>

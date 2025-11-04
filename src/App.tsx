@@ -34,6 +34,7 @@ const AIBuildingCoursePage = React.lazy(() => import('./components/pages/courses
 const AIBuildingCoursePlayerPage = React.lazy(() => import('./components/pages/courses/AIBuildingCoursePlayerPage'));
 const ChatGPTAgentBeginnerPage = React.lazy(() => import('./components/pages/courses/ChatGPTAgentBeginnerPage'));
 const ChatGPTAgentBeginnerPlayerPage = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/ChatGPTAgentBeginnerPlayerPage'));
+const Day1Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day1Page'));
 const CostOptimizationExamplesPage = React.lazy(() => import('./components/pages/courses/CostOptimizationExamplesPage'));
 // const LessonDetailPage = React.lazy(() => import('./components/pages/courses/LessonDetailPage'));
 
@@ -247,6 +248,15 @@ const ChatGPTCoursePageWrapper = () => {
       </Suspense>
     );
   };
+
+  const Day1PageWrapper = () => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <Day1Page onBack={() => navigate('/chatgpt-agent-beginner')} />
+      </Suspense>
+    );
+  };
   
   // AI Building Course 11월 1일 오픈 안내 컴포넌트
   const ComingSoonNotice = () => {
@@ -376,6 +386,7 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/ai-building-course-player" element={<AIBuildingCoursePlayerPageWrapper />} />
               <Route path="/chatgpt-agent-beginner" element={<ChatGPTAgentBeginnerPageWrapper />} />
               <Route path="/chatgpt-agent-beginner-player" element={<ChatGPTAgentBeginnerPlayerPageWrapper />} />
+              <Route path="/chatgpt-agent-beginner/day1" element={<Day1PageWrapper />} />
               <Route path="/cost-optimization-examples" element={<CostOptimizationExamplesPageWrapper />} />
               {/* 기존 URL 리다이렉트 */}
               <Route path="/workflow-automation-master" element={<ComingSoonNotice />} />

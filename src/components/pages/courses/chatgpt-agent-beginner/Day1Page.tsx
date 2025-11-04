@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, PlayCircle, FileText, Award } from 'lucide-react';
+import { ArrowLeft, CheckCircle, PlayCircle, FileText, Award, Lock } from 'lucide-react';
 
 interface Day1PageProps {
   onBack: () => void;
@@ -8,172 +8,60 @@ interface Day1PageProps {
 const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
   const [completedSections, setCompletedSections] = useState<Set<string>>(new Set());
   const [currentVideo, setCurrentVideo] = useState<string>('');
+  const [isUnlocked, setIsUnlocked] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>('');
+  const [passwordError, setPasswordError] = useState<string>('');
+  const [loadingVideos, setLoadingVideos] = useState<Set<string>>(new Set());
+  const [quizAnswers, setQuizAnswers] = useState<{[key: number]: number}>({});
+  const [quizSubmitted, setQuizSubmitted] = useState<boolean>(false);
+
+  const ADMIN_PASSWORD = 'clathon2025admin'; // 운영자 전용 비밀번호
 
   const lessonData = {
     day: 1,
-    title: "AI 에이전트의 세계에 오신 것을 환영합니다",
-    duration: "60분",
-    description: "AI 에이전트의 기본 개념을 이해하고, AgentKit을 소개받아 첫 AI 에이전트를 만들어봅니다.",
+    title: "내 첫 AI 친구: ChatGPT와 Agent의 차이",
+    duration: "약 6분",
+    description: "ChatGPT와 에이전트 빌더의 차이점을 이해하고, 워크플로우 자동화의 개념을 배워봅니다.",
     objectives: [
-      "AI 에이전트와 ChatGPT의 차이점 이해하기",
-      "AgentKit의 기본 개념과 구조 파악하기",
-      "실제로 동작하는 첫 AI 에이전트 만들기"
+      "ChatGPT와 에이전트 빌더의 차이점 이해하기",
+      "워크플로우 자동화 개념 배우기",
+      "실습으로 에이전트 빌더 사용해보기"
     ],
     sections: [
       {
         id: 'theory-1',
         type: 'theory',
-        title: '이론 1: AI 에이전트란 무엇인가?',
-        duration: '15분',
-        videoUrl: 'https://www.youtube.com/embed/VIDEO_ID_1', // 실제 비디오 URL로 교체
+        title: '이론 강의: ChatGPT와 Agent의 차이',
+        duration: '6분',
+        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/Day1/1.%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B51%E1%84%8B%E1%85%B5%E1%84%85%E1%85%A9%E1%86%AB.mp4?sp=r&st=2025-11-02T11:22:30Z&se=2030-11-02T19:37:30Z&sv=2024-11-04&sr=b&sig=AOdVEdq2cIYrh1h%2FNG7PLxD9dlpaG1nX0fZIrxKNUKo%3D',
         content: `
-          <h3>AI 에이전트 vs ChatGPT</h3>
-          <p>ChatGPT는 대화형 AI지만, AI 에이전트는 자율적으로 작업을 수행할 수 있는 지능형 시스템입니다.</p>
-          <ul>
-            <li><strong>ChatGPT:</strong> 질문에 답변, 대화 생성</li>
-            <li><strong>AI Agent:</strong> 목표 설정 → 계획 수립 → 실행 → 결과 확인</li>
-          </ul>
+          <h3>💬 ChatGPT vs 🤖 에이전트 빌더</h3>
           
-          <h3>AI 에이전트의 핵심 특징</h3>
-          <ul>
-            <li>🎯 <strong>자율성:</strong> 스스로 판단하고 행동</li>
-            <li>🔄 <strong>반응성:</strong> 환경 변화에 대응</li>
-            <li>🎬 <strong>선제성:</strong> 목표 달성을 위해 먼저 행동</li>
-            <li>🤝 <strong>사회성:</strong> 다른 에이전트나 사용자와 협력</li>
-          </ul>
-        `
-      },
-      {
-        id: 'theory-2',
-        type: 'theory',
-        title: '이론 2: AgentKit 소개 및 기본 개념',
-        duration: '15분',
-        videoUrl: 'https://www.youtube.com/embed/VIDEO_ID_2',
-        content: `
-          <h3>AgentKit이란?</h3>
-          <p>OpenAI에서 제공하는 노코드 AI 에이전트 개발 플랫폼입니다.</p>
+          <div style="background: #f0f9ff; padding: 20px; border-radius: 10px; margin: 15px 0;">
+            <p style="margin: 0 0 10px 0; font-size: 1.05rem;">
+              <strong>ChatGPT:</strong> 사람과 대화하는 AI
+            </p>
+            <p style="margin: 0; font-size: 1.05rem;">
+              <strong>에이전트 빌더:</strong> 일을 자동화하는 워크플로우 기반 AI
+            </p>
+          </div>
           
-          <h3>AgentKit의 장점</h3>
-          <ul>
-            <li>💻 코딩 없이 AI 에이전트 개발 가능</li>
-            <li>🎨 직관적인 비주얼 인터페이스</li>
-            <li>🚀 빠른 프로토타이핑과 배포</li>
-            <li>🔧 다양한 도구와 통합 지원</li>
-          </ul>
+          <h3>⚡ 핵심 차이</h3>
+          <p><strong>워크플로우(일의 흐름)</strong>를 한 번 설정하면 여러 단계 작업이 자동 실행됩니다.</p>
           
-          <h3>AgentKit으로 할 수 있는 것들</h3>
-          <ul>
-            <li>고객 응대 챗봇</li>
-            <li>콘텐츠 생성 자동화</li>
-            <li>데이터 분석 및 리포트 생성</li>
-            <li>업무 프로세스 자동화</li>
-          </ul>
+          <p><strong>예시:</strong> "유튜브 콘텐츠 만들어줘" → 조사, 스크립트, 제목, 설명 자동 생성!</p>
         `
       },
       {
         id: 'practice-1',
         type: 'practice',
-        title: '실습 1: OpenAI 계정 만들기',
-        duration: '10분',
-        videoUrl: 'https://www.youtube.com/embed/VIDEO_ID_3',
+        title: '실습: 에이전트 빌더 시작하기',
+        duration: '실습 시간',
+        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/Day1/%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B51%E1%84%89%E1%85%B5%E1%86%AF%E1%84%89%E1%85%B3%E1%86%B8.mp4?sp=r&st=2025-11-02T03:04:39Z&se=2029-11-02T11:19:39Z&sv=2024-11-04&sr=b&sig=0OfwK%2BVnFUeeeAt2sKtWJZBr1b0KWxRoNiNPi9g2h4M%3D',
         content: `
-          <h3>Step 1: OpenAI 회원가입</h3>
-          <ol>
-            <li>OpenAI 웹사이트 접속: <a href="https://platform.openai.com" target="_blank">platform.openai.com</a></li>
-            <li>"Sign up" 버튼 클릭</li>
-            <li>이메일 또는 Google 계정으로 가입</li>
-            <li>이메일 인증 완료</li>
-          </ol>
-          
-          <h3>Step 2: API 키 발급</h3>
-          <ol>
-            <li>대시보드에서 "API Keys" 메뉴 선택</li>
-            <li>"Create new secret key" 클릭</li>
-            <li>키 이름 입력 (예: "AgentKit-Practice")</li>
-            <li>생성된 키를 안전하게 복사하여 저장</li>
-          </ol>
-          
-          <div class="warning-box">
-            <strong>⚠️ 주의:</strong> API 키는 한 번만 표시됩니다. 반드시 안전한 곳에 저장하세요!
-          </div>
-        `
-      },
-      {
-        id: 'practice-2',
-        type: 'practice',
-        title: '실습 2: AgentKit Builder 둘러보기',
-        duration: '10분',
-        videoUrl: 'https://www.youtube.com/embed/VIDEO_ID_4',
-        content: `
-          <h3>AgentKit Builder 인터페이스</h3>
-          <p>AgentKit Builder는 드래그 앤 드롭 방식의 비주얼 에디터입니다.</p>
-          
-          <h3>주요 구성 요소</h3>
-          <ul>
-            <li><strong>노드 패널:</strong> 사용 가능한 노드들의 목록</li>
-            <li><strong>캔버스:</strong> 워크플로우를 구성하는 작업 공간</li>
-            <li><strong>속성 패널:</strong> 선택한 노드의 설정</li>
-            <li><strong>테스트 패널:</strong> 에이전트를 실시간으로 테스트</li>
-          </ul>
-          
-          <h3>기본 노드 종류</h3>
-          <ul>
-            <li>🟢 <strong>Start:</strong> 에이전트의 시작점</li>
-            <li>🤖 <strong>Agent:</strong> AI 처리 노드</li>
-            <li>🔴 <strong>End:</strong> 에이전트의 종료점</li>
-          </ul>
-        `
-      },
-      {
-        id: 'practice-3',
-        type: 'practice',
-        title: '실습 3: 첫 AI 에이전트 만들기 (Hello World Agent)',
-        duration: '10분',
-        videoUrl: 'https://www.youtube.com/embed/VIDEO_ID_5',
-        content: `
-          <h3>Hello World Agent 만들기</h3>
-          <p>가장 간단한 AI 에이전트를 만들어봅시다.</p>
-          
-          <h3>Step 1: 새 프로젝트 생성</h3>
-          <ol>
-            <li>AgentKit Builder에서 "New Project" 클릭</li>
-            <li>프로젝트 이름: "Hello World Agent"</li>
-            <li>빈 캔버스가 나타남</li>
-          </ol>
-          
-          <h3>Step 2: 노드 배치</h3>
-          <ol>
-            <li><strong>Start 노드:</strong> 자동으로 생성됨</li>
-            <li><strong>Agent 노드:</strong> 드래그하여 캔버스에 추가</li>
-            <li><strong>End 노드:</strong> 드래그하여 캔버스에 추가</li>
-          </ol>
-          
-          <h3>Step 3: 노드 연결</h3>
-          <ol>
-            <li>Start 노드의 출력 포인트를 Agent 노드의 입력으로 연결</li>
-            <li>Agent 노드의 출력을 End 노드의 입력으로 연결</li>
-          </ol>
-          
-          <h3>Step 4: Agent 노드 설정</h3>
-          <pre><code>
-System Prompt:
-"당신은 친근한 AI 어시스턴트입니다. 
-사용자에게 인사하고 어떤 도움이 필요한지 물어보세요."
-
-User Message:
-"안녕하세요!"
-          </code></pre>
-          
-          <h3>Step 5: 테스트 및 배포</h3>
-          <ol>
-            <li>"Test" 버튼 클릭하여 실행</li>
-            <li>결과 확인</li>
-            <li>"Deploy" 버튼으로 배포</li>
-          </ol>
-          
-          <div class="success-box">
-            <strong>🎉 축하합니다!</strong> 첫 AI 에이전트를 성공적으로 만들었습니다!
-          </div>
+          <p style="font-size: 1.05rem; line-height: 1.8; color: #374151;">
+            위의 실습 비디오를 보면서 에이전트 빌더로 첫 워크플로우를 만들어보세요!
+          </p>
         `
       }
     ],
@@ -181,54 +69,44 @@ User Message:
       questions: [
         {
           id: 1,
-          question: 'AI 에이전트와 ChatGPT의 가장 큰 차이점은 무엇인가요?',
+          question: 'ChatGPT와 에이전트 빌더의 핵심적인 차이점은 무엇인가요?',
           options: [
-            'AI 에이전트는 더 빠르다',
-            'AI 에이전트는 자율적으로 작업을 수행할 수 있다',
-            'ChatGPT는 유료이고 AI 에이전트는 무료이다',
-            'AI 에이전트는 코딩이 필요없다'
+            'ChatGPT는 대화형 AI이고, 에이전트 빌더는 워크플로우를 자동화하는 도구이다',
+            'ChatGPT는 느리고, 에이전트 빌더는 빠르다',
+            'ChatGPT는 한국어를 지원하지 않는다',
+            'ChatGPT는 OpenAI 제품이 아니다'
           ],
-          correctAnswer: 1
+          correctAnswer: 0
         },
         {
           id: 2,
-          question: 'AgentKit Builder의 기본 노드 3가지는?',
+          question: '워크플로우(Work Flow)란 무엇을 의미하나요?',
           options: [
-            'Input, Process, Output',
-            'Begin, Middle, End',
-            'Start, Agent, End',
-            'Open, Run, Close'
+            '작업 속도',
+            '작업 비용',
+            '일의 흐름',
+            '작업 완료 시간'
           ],
           correctAnswer: 2
         },
         {
           id: 3,
-          question: 'OpenAI API 키를 발급받을 때 주의할 점은?',
+          question: '에이전트 빌더의 장점으로 올바른 것은?',
           options: [
-            'API 키는 언제든지 다시 확인할 수 있다',
-            'API 키는 한 번만 표시되므로 안전하게 저장해야 한다',
-            'API 키는 자동으로 저장된다',
-            'API 키는 공유해도 된다'
+            '항상 무료로 사용할 수 있다',
+            '코딩 지식이 필수이다',
+            '한 번의 요청으로 여러 단계의 작업을 자동으로 실행할 수 있다',
+            'ChatGPT보다 대화를 더 잘한다'
           ],
-          correctAnswer: 1
+          correctAnswer: 2
         }
       ]
     },
     resources: [
       {
-        title: 'OpenAI Platform 문서',
-        url: 'https://platform.openai.com/docs',
-        type: 'documentation'
-      },
-      {
-        title: 'AgentKit 시작 가이드',
-        url: '#',
+        title: '비용 최적화 가이드',
+        url: 'https://www.aicitybuilders.com/cost-optimization-examples',
         type: 'guide'
-      },
-      {
-        title: 'Day 1 실습 자료',
-        url: '#',
-        type: 'download'
       }
     ]
   };
@@ -244,6 +122,193 @@ User Message:
   };
 
   const progressPercentage = (completedSections.size / lessonData.sections.length) * 100;
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === ADMIN_PASSWORD) {
+      setIsUnlocked(true);
+      setPasswordError('');
+    } else {
+      setPasswordError('비밀번호가 올바르지 않습니다.');
+    }
+  };
+
+  // 비밀번호 오버레이
+  if (!isUnlocked) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '20px'
+      }}>
+        <div style={{
+          background: 'white',
+          borderRadius: '20px',
+          padding: '50px',
+          maxWidth: '500px',
+          width: '100%',
+          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+          textAlign: 'center'
+        }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '80px',
+            height: '80px',
+            background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+            borderRadius: '50%',
+            marginBottom: '30px',
+            boxShadow: '0 4px 15px rgba(14, 165, 233, 0.3)'
+          }}>
+            <Lock size={40} color="white" />
+          </div>
+
+          <h2 style={{
+            fontSize: '2rem',
+            fontWeight: '800',
+            color: '#1f2937',
+            marginBottom: '15px'
+          }}>
+            🚀 강의 준비 중
+          </h2>
+
+          <p style={{
+            color: '#64748b',
+            fontSize: '1.1rem',
+            marginBottom: '10px',
+            lineHeight: '1.6'
+          }}>
+            이 강의는 <strong style={{ color: '#0ea5e9' }}>2025년 11월 15일</strong>에 런칭될 예정입니다.
+          </p>
+          
+          <p style={{
+            color: '#64748b',
+            fontSize: '1rem',
+            marginBottom: '30px',
+            lineHeight: '1.6'
+          }}>
+            운영자 전용 미리보기 접근<br/>
+            비밀번호를 입력해주세요.
+          </p>
+
+          <form onSubmit={handlePasswordSubmit}>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="비밀번호 입력"
+              style={{
+                width: '100%',
+                padding: '15px',
+                fontSize: '1.1rem',
+                borderRadius: '10px',
+                border: passwordError ? '2px solid #ef4444' : '2px solid #e2e8f0',
+                marginBottom: '15px',
+                outline: 'none',
+                transition: 'all 0.3s ease'
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = '#0ea5e9';
+              }}
+              onBlur={(e) => {
+                if (!passwordError) {
+                  e.currentTarget.style.borderColor = '#e2e8f0';
+                }
+              }}
+            />
+
+            {passwordError && (
+              <p style={{
+                color: '#ef4444',
+                fontSize: '0.95rem',
+                marginBottom: '15px',
+                fontWeight: '600'
+              }}>
+                {passwordError}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              style={{
+                width: '100%',
+                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                color: 'white',
+                border: 'none',
+                padding: '15px 30px',
+                fontSize: '1.1rem',
+                fontWeight: '700',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 15px rgba(14, 165, 233, 0.3)',
+                marginBottom: '20px'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(14, 165, 233, 0.4)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(14, 165, 233, 0.3)';
+              }}
+            >
+              확인
+            </button>
+
+            <button
+              type="button"
+              onClick={onBack}
+              style={{
+                width: '100%',
+                background: 'white',
+                color: '#64748b',
+                border: '2px solid #e2e8f0',
+                padding: '12px 30px',
+                fontSize: '1rem',
+                fontWeight: '600',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = '#f8fafc';
+                e.currentTarget.style.borderColor = '#cbd5e1';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = 'white';
+                e.currentTarget.style.borderColor = '#e2e8f0';
+              }}
+            >
+              뒤로 가기
+            </button>
+          </form>
+
+          <div style={{
+            marginTop: '30px',
+            padding: '15px',
+            background: '#fff7ed',
+            borderRadius: '10px',
+            border: '1px solid #fed7aa'
+          }}>
+            <p style={{
+              color: '#92400e',
+              fontSize: '0.9rem',
+              margin: '0',
+              lineHeight: '1.5'
+            }}>
+              🔒 이 페이지는 운영자 전용입니다.<br/>
+              강의 런칭 후 수강생들은 결제 후 접근 가능합니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{
@@ -352,17 +417,21 @@ User Message:
             </div>
             <div style={{
               width: '100%',
-              height: '8px',
+              height: '10px',
               background: 'rgba(255, 255, 255, 0.3)',
               borderRadius: '10px',
-              overflow: 'hidden'
+              overflow: 'hidden',
+              position: 'relative' as const
             }}>
               <div style={{
                 width: `${progressPercentage}%`,
                 height: '100%',
-                background: 'white',
+                background: 'linear-gradient(90deg, #ffffff, #f0f9ff, #ffffff)',
+                backgroundSize: '200% 100%',
+                animation: 'shimmer 2s infinite',
                 borderRadius: '10px',
-                transition: 'width 0.5s ease'
+                transition: 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: '0 0 10px rgba(255, 255, 255, 0.5)'
               }}></div>
             </div>
           </div>
@@ -403,15 +472,37 @@ User Message:
           }}>
             {lessonData.objectives.map((objective, index) => (
               <li key={index} style={{
-                padding: '12px 0',
+                padding: '15px 20px',
                 borderBottom: index < lessonData.objectives.length - 1 ? '1px solid #f1f5f9' : 'none',
                 display: 'flex',
                 alignItems: 'flex-start',
-                gap: '12px',
+                gap: '15px',
                 fontSize: '1.05rem',
-                color: '#1f2937'
+                color: '#1f2937',
+                transition: 'all 0.3s ease',
+                borderRadius: '8px'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = '#f0f9ff';
+                e.currentTarget.style.transform = 'translateX(5px)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = 'transparent';
+                e.currentTarget.style.transform = 'translateX(0)';
               }}>
-                <span style={{ color: '#0ea5e9', fontWeight: '700' }}>✓</span>
+                <span style={{ 
+                  color: 'white',
+                  fontWeight: '700',
+                  background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                  borderRadius: '50%',
+                  width: '28px',
+                  height: '28px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                  fontSize: '0.9rem'
+                }}>{index + 1}</span>
                 {objective}
               </li>
             ))}
@@ -473,32 +564,46 @@ User Message:
               <button
                 onClick={() => toggleSection(section.id)}
                 style={{
-                  background: completedSections.has(section.id) ? '#10b981' : '#e2e8f0',
+                  background: completedSections.has(section.id) 
+                    ? 'linear-gradient(135deg, #10b981, #059669)' 
+                    : '#e2e8f0',
                   color: completedSections.has(section.id) ? 'white' : '#64748b',
                   border: 'none',
-                  padding: '10px 20px',
+                  padding: '12px 24px',
                   borderRadius: '10px',
                   cursor: 'pointer',
-                  fontSize: '0.9rem',
+                  fontSize: '0.95rem',
                   fontWeight: '600',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
-                  transition: 'all 0.3s ease'
+                  transition: 'all 0.3s ease',
+                  boxShadow: completedSections.has(section.id) 
+                    ? '0 4px 12px rgba(16, 185, 129, 0.3)' 
+                    : '0 2px 6px rgba(0, 0, 0, 0.1)'
                 }}
                 onMouseOver={(e) => {
                   if (!completedSections.has(section.id)) {
                     e.currentTarget.style.background = '#cbd5e1';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                  } else {
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(16, 185, 129, 0.4)';
                   }
                 }}
                 onMouseOut={(e) => {
                   if (!completedSections.has(section.id)) {
                     e.currentTarget.style.background = '#e2e8f0';
                   }
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = completedSections.has(section.id)
+                    ? '0 4px 12px rgba(16, 185, 129, 0.3)'
+                    : '0 2px 6px rgba(0, 0, 0, 0.1)';
                 }}
               >
                 <CheckCircle size={18} />
-                {completedSections.has(section.id) ? '완료됨' : '완료 표시'}
+                {completedSections.has(section.id) ? '✓ 완료됨' : '완료 표시'}
               </button>
             </div>
 
@@ -508,19 +613,121 @@ User Message:
               borderRadius: '12px',
               overflow: 'hidden',
               background: '#000',
-              aspectRatio: '16/9'
+              aspectRatio: '16/9',
+              position: 'relative' as const
             }}>
-              <iframe
-                width="100%"
-                height="100%"
-                src={section.videoUrl}
-                title={section.title}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                style={{ border: 'none' }}
-              ></iframe>
+              {(() => {
+                const isYouTube = section.videoUrl.includes('youtube.com') || section.videoUrl.includes('youtu.be');
+                
+                if (isYouTube) {
+                  // 유튜브 링크 처리
+                  return (
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={section.videoUrl}
+                      title={section.title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      style={{
+                        border: 'none',
+                        display: 'block',
+                        width: '100%',
+                        height: '100%',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0
+                      }}
+                    />
+                  );
+                } else {
+                  // 일반 비디오 파일 처리
+                  return (
+                    <>
+                      {loadingVideos.has(section.id) && (
+                        <div style={{
+                          position: 'absolute' as const,
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          zIndex: 10,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          gap: '15px'
+                        }}>
+                          <div style={{
+                            width: '50px',
+                            height: '50px',
+                            border: '4px solid rgba(255, 255, 255, 0.3)',
+                            borderTop: '4px solid #0ea5e9',
+                            borderRadius: '50%',
+                            animation: 'spin 1s linear infinite'
+                          }}></div>
+                          <span style={{
+                            color: 'white',
+                            fontSize: '0.9rem',
+                            fontWeight: '600'
+                          }}>
+                            비디오 로딩 중...
+                          </span>
+                        </div>
+                      )}
+                      <video
+                        width="100%"
+                        height="100%"
+                        controls
+                        controlsList="nodownload"
+                        preload="auto"
+                        playsInline
+                        onLoadStart={() => {
+                          const newLoading = new Set(loadingVideos);
+                          newLoading.add(section.id);
+                          setLoadingVideos(newLoading);
+                        }}
+                        onCanPlay={() => {
+                          const newLoading = new Set(loadingVideos);
+                          newLoading.delete(section.id);
+                          setLoadingVideos(newLoading);
+                        }}
+                        onError={(e) => {
+                          const newLoading = new Set(loadingVideos);
+                          newLoading.delete(section.id);
+                          setLoadingVideos(newLoading);
+                          console.error('Video error:', e);
+                        }}
+                        style={{ 
+                          border: 'none',
+                          display: 'block',
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'contain',
+                          backgroundColor: '#000'
+                        }}
+                      >
+                        {section.videoUrl.endsWith('.mov') ? (
+                          <>
+                            <source src={section.videoUrl} type="video/quicktime; codecs=hvc1" />
+                            <source src={section.videoUrl} type="video/mp4" />
+                          </>
+                        ) : (
+                          <>
+                            <source src={section.videoUrl} type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
+                            <source src={section.videoUrl} type="video/mp4" />
+                          </>
+                        )}
+                        <p style={{ color: 'white', padding: '20px', textAlign: 'center' }}>
+                          브라우저가 비디오를 지원하지 않습니다.<br/>
+                          <a href={section.videoUrl} style={{ color: '#0ea5e9' }}>직접 다운로드하기</a>
+                        </p>
+                      </video>
+                    </>
+                  );
+                }
+              })()}
             </div>
+
 
             {/* 강의 내용 */}
             <div 
@@ -536,78 +743,172 @@ User Message:
 
         {/* 퀴즈 섹션 */}
         <div style={{
-          background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-          borderRadius: '15px',
-          padding: '30px',
-          marginBottom: '30px',
-          border: '2px solid #fbbf24'
+          marginBottom: '40px'
         }}>
           <h2 style={{
-            fontSize: '1.5rem',
+            fontSize: '1.8rem',
             fontWeight: '700',
-            color: '#92400e',
-            marginBottom: '20px',
+            color: '#1f2937',
+            marginBottom: '30px',
             display: 'flex',
             alignItems: 'center',
             gap: '10px'
           }}>
-            <FileText size={24} />
-            이해도 체크 퀴즈
+            <FileText size={28} />
+            퀴즈
           </h2>
-          <p style={{
-            color: '#78350f',
-            marginBottom: '20px',
-            fontSize: '1.05rem'
-          }}>
-            오늘 배운 내용을 복습해봅시다!
-          </p>
-          {lessonData.quiz.questions.map((q, index) => (
-            <div key={q.id} style={{
-              background: 'white',
-              padding: '20px',
-              borderRadius: '10px',
-              marginBottom: '15px'
-            }}>
-              <p style={{
-                fontWeight: '700',
-                marginBottom: '15px',
-                color: '#1f2937',
-                fontSize: '1.05rem'
+          {lessonData.quiz.questions.map((q, index) => {
+            const isAnswered = quizAnswers[q.id] !== undefined;
+            const isCorrect = quizAnswers[q.id] === q.correctAnswer;
+            
+            return (
+              <div key={q.id} style={{
+                marginBottom: '30px',
+                paddingBottom: '30px',
+                borderBottom: index < lessonData.quiz.questions.length - 1 ? '1px solid #e5e7eb' : 'none'
               }}>
-                Q{index + 1}. {q.question}
-              </p>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '10px'
-              }}>
-                {q.options.map((option, optIndex) => (
-                  <label key={optIndex} style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    padding: '12px',
-                    background: '#f8fafc',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    border: '2px solid transparent'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.background = '#e0f2fe';
-                    e.currentTarget.style.borderColor = '#0ea5e9';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.background = '#f8fafc';
-                    e.currentTarget.style.borderColor = 'transparent';
-                  }}>
-                    <input type="radio" name={`question-${q.id}`} value={optIndex} />
-                    <span style={{ fontSize: '1rem' }}>{option}</span>
-                  </label>
-                ))}
+                <p style={{
+                  fontWeight: '700',
+                  marginBottom: '15px',
+                  color: '#1f2937',
+                  fontSize: '1.05rem'
+                }}>
+                  Q{index + 1}. {q.question}
+                </p>
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '12px'
+                }}>
+                  {q.options.map((option, optIndex) => {
+                    const isSelected = quizAnswers[q.id] === optIndex;
+                    const isCorrectOption = optIndex === q.correctAnswer;
+                    
+                    let backgroundColor = 'white';
+                    let borderColor = '#e5e7eb';
+                    
+                    if (quizSubmitted && isSelected) {
+                      backgroundColor = isCorrect ? '#ecfdf5' : '#fef2f2';
+                      borderColor = isCorrect ? '#10b981' : '#ef4444';
+                    } else if (quizSubmitted && isCorrectOption) {
+                      backgroundColor = '#ecfdf5';
+                      borderColor = '#10b981';
+                    }
+                    
+                    return (
+                      <label key={optIndex} style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        padding: '14px 16px',
+                        background: backgroundColor,
+                        borderRadius: '8px',
+                        cursor: quizSubmitted ? 'default' : 'pointer',
+                        transition: 'all 0.2s ease',
+                        border: `1px solid ${borderColor}`,
+                        position: 'relative' as const,
+                        opacity: quizSubmitted && !isSelected && !isCorrectOption ? 0.5 : 1
+                      }}
+                      onMouseOver={(e) => {
+                        if (!quizSubmitted) {
+                          e.currentTarget.style.background = '#f9fafb';
+                        }
+                      }}
+                      onMouseOut={(e) => {
+                        if (!quizSubmitted) {
+                          e.currentTarget.style.background = 'white';
+                        }
+                      }}>
+                        <input 
+                          type="radio" 
+                          name={`question-${q.id}`} 
+                          value={optIndex}
+                          checked={isSelected}
+                          disabled={quizSubmitted}
+                          onChange={() => {
+                            setQuizAnswers({
+                              ...quizAnswers,
+                              [q.id]: optIndex
+                            });
+                          }}
+                          style={{
+                            width: '20px',
+                            height: '20px',
+                            cursor: quizSubmitted ? 'default' : 'pointer',
+                            accentColor: '#0ea5e9'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '1rem',
+                          color: '#1f2937',
+                          flex: 1,
+                          fontWeight: quizSubmitted && isCorrectOption ? '600' : 'normal'
+                        }}>{option}</span>
+                        {quizSubmitted && isCorrectOption && (
+                          <span style={{ color: '#10b981', fontWeight: '700' }}>✓</span>
+                        )}
+                        {quizSubmitted && isSelected && !isCorrect && (
+                          <span style={{ color: '#ef4444', fontWeight: '700' }}>✗</span>
+                        )}
+                      </label>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
+          
+          {/* 퀴즈 제출 버튼 */}
+          <div style={{ marginTop: '30px' }}>
+            <button
+              onClick={() => setQuizSubmitted(true)}
+              disabled={quizSubmitted || Object.keys(quizAnswers).length < lessonData.quiz.questions.length}
+              style={{
+                padding: '14px 32px',
+                background: quizSubmitted 
+                  ? '#9ca3af' 
+                  : Object.keys(quizAnswers).length < lessonData.quiz.questions.length
+                    ? '#d1d5db'
+                    : '#0ea5e9',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '1rem',
+                fontWeight: '600',
+                cursor: quizSubmitted || Object.keys(quizAnswers).length < lessonData.quiz.questions.length 
+                  ? 'not-allowed' 
+                  : 'pointer',
+                transition: 'all 0.2s ease',
+                marginRight: '10px'
+              }}
+            >
+              {quizSubmitted 
+                ? `${Object.values(quizAnswers).filter((ans, idx) => ans === lessonData.quiz.questions[idx].correctAnswer).length}/${lessonData.quiz.questions.length} 정답` 
+                : '제출하기'}
+            </button>
+            
+            {quizSubmitted && (
+              <button
+                onClick={() => {
+                  setQuizAnswers({});
+                  setQuizSubmitted(false);
+                }}
+                style={{
+                  padding: '14px 32px',
+                  background: 'white',
+                  color: '#6b7280',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                다시 풀기
+              </button>
+            )}
+          </div>
         </div>
 
         {/* 추가 자료 */}
@@ -641,25 +942,39 @@ User Message:
                   display: 'flex',
                   alignItems: 'center',
                   gap: '12px',
-                  padding: '15px',
-                  background: '#f8fafc',
-                  borderRadius: '10px',
+                  padding: '18px',
+                  background: 'linear-gradient(135deg, #f8fafc, #f0f9ff)',
+                  borderRadius: '12px',
                   textDecoration: 'none',
                   color: '#1f2937',
                   transition: 'all 0.3s ease',
-                  border: '1px solid #e2e8f0'
+                  border: '2px solid #e2e8f0',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.background = '#e0f2fe';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #e0f2fe, #dbeafe)';
                   e.currentTarget.style.borderColor = '#0ea5e9';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(14, 165, 233, 0.2)';
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.background = '#f8fafc';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #f8fafc, #f0f9ff)';
                   e.currentTarget.style.borderColor = '#e2e8f0';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.05)';
                 }}
               >
-                <FileText size={20} style={{ color: '#0ea5e9' }} />
-                <span style={{ fontWeight: '600', fontSize: '0.95rem' }}>{resource.title}</span>
+                <div style={{
+                  background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                  borderRadius: '8px',
+                  padding: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <FileText size={20} style={{ color: 'white' }} />
+                </div>
+                <span style={{ fontWeight: '600', fontSize: '0.95rem', flex: 1 }}>{resource.title}</span>
               </a>
             ))}
           </div>
@@ -668,6 +983,24 @@ User Message:
 
       {/* CSS for content styling */}
       <style>{`
+        @keyframes shimmer {
+          0% {
+            background-position: 200% 0;
+          }
+          100% {
+            background-position: -200% 0;
+          }
+        }
+        
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+        
         .warning-box {
           background: #fef2f2;
           border-left: 4px solid #ef4444;
