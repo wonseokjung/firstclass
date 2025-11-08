@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PlayCircle, Lock, CheckCircle, Award } from 'lucide-react';
+import { PlayCircle, Lock, CheckCircle } from 'lucide-react';
 import NavigationBar from '../../../common/NavigationBar';
 import AzureTableService from '../../../../services/azureTableService';
 
@@ -11,7 +11,6 @@ interface ChatGPTAgentBeginnerPlayerPageProps {
 const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
   const [isPaidUser, setIsPaidUser] = useState(false);
-  const [userInfo, setUserInfo] = useState<any>(null);
   const [completedDays, setCompletedDays] = useState<Set<number>>(new Set());
 
   useEffect(() => {
@@ -21,7 +20,6 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
 
         if (storedUserInfo) {
           const parsedUserInfo = JSON.parse(storedUserInfo);
-          setUserInfo(parsedUserInfo);
 
           // 테스트 계정 확인 (개발/테스트용)
           const testAccounts = ['test10@gmail.com'];

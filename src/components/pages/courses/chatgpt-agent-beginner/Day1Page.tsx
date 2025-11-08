@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, PlayCircle, FileText, Award, Lock } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowLeft, CheckCircle, FileText, Award, Lock } from 'lucide-react';
 
 interface Day1PageProps {
   onBack: () => void;
@@ -7,7 +7,6 @@ interface Day1PageProps {
 
 const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
   const [completedSections, setCompletedSections] = useState<Set<string>>(new Set());
-  const [currentVideo, setCurrentVideo] = useState<string>('');
   const [isUnlocked, setIsUnlocked] = useState<boolean>(false);
   const [password, setPassword] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
@@ -758,7 +757,6 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
             퀴즈
           </h2>
           {lessonData.quiz.questions.map((q, index) => {
-            const isAnswered = quizAnswers[q.id] !== undefined;
             const isCorrect = quizAnswers[q.id] === q.correctAnswer;
             
             return (
