@@ -718,11 +718,39 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               </h2>
               <p style={{
                 fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-                marginBottom: '30px',
+                marginBottom: '20px',
                 color: '#64748b',
                 lineHeight: '1.6'
               }}>
                 코딩 몰라도, 클릭 몇 번으로 "AI가 스스로 판단하고 일하는 에이전트"를 만든다
+              </p>
+              
+              {/* 코스 설명 */}
+              <div style={{
+                background: '#f8fafc',
+                borderRadius: '12px',
+                padding: '20px 25px',
+                marginBottom: '25px',
+                border: '1px solid #e2e8f0'
+              }}>
+                <p style={{
+                  fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
+                  color: '#475569',
+                  lineHeight: '1.7',
+                  margin: 0
+                }}>
+                  AI 에이전트 완전 비기너를 위한 코스. 에이전트가 무엇인지부터 다양한 에이전트 도구들을 사용해보며 나만의 인공지능 에이전트 비서를 만들기 위한 기초를 닦는다. 핵심만 모아놓은 실습위주.
+                </p>
+              </div>
+              
+              {/* 커리큘럼 변경 안내 */}
+              <p style={{
+                fontSize: '0.9rem',
+                color: '#94a3b8',
+                fontStyle: 'italic',
+                marginBottom: '30px'
+              }}>
+                💡 커리큘럼은 변경될 수 있습니다.
               </p>
             </div>
 
@@ -1312,200 +1340,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>2017</strong> · ConnexionAI 설립 · 200억 규모 AI 스마트팩토리 구축 프로젝트 컨설팅
                     </p>
                   </div>
-            </div>
-          </div>
-
-          {/* AI Agent 사용의 중요성 - 박스 밖으로 */}
-          <div style={{ marginBottom: '60px' }}>
-            <div style={{
-              textAlign: 'center',
-              marginBottom: '40px'
-            }}>
-              <h2 style={{
-                fontSize: 'clamp(1.8rem, 3vw, 2.2rem)',
-                fontWeight: '800',
-                color: '#dc2626',
-                marginBottom: '20px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '10px'
-              }}>
-                ⚠️ AI Agent는 그냥 사용해서는 안됩니다!
-              </h2>
-              
-              <p style={{
-                color: '#374151',
-                fontSize: '1.2rem',
-                lineHeight: '1.7',
-                marginBottom: '30px',
-                fontWeight: '600'
-              }}>
-                Jay 멘토가 스스로 AI 연구개발하고 AI 스타트업을 창업하면서 알게된 것들:
-              </p>
-
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                gap: '20px',
-                marginBottom: '30px'
-              }}>
-                <div style={{
-                  background: '#ffffff',
-                  padding: '25px',
-                  borderRadius: '15px',
-                  border: '2px solid #0ea5e9',
-                  boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)',
-                  textAlign: 'left'
-                }}>
-                  <h4 style={{
-                    color: '#0ea5e9',
-                    fontSize: '1.1rem',
-                    fontWeight: '700',
-                    marginBottom: '10px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}>
-                    💰 Resource Optimization이 필요해요!
-                  </h4>
-                  <p style={{
-                    color: '#64748b',
-                    fontSize: '0.95rem',
-                    margin: '0',
-                    lineHeight: '1.5'
-                  }}>
-                    API 비용을 최소화하는 방법
-                  </p>
-                </div>
-
-                <div style={{
-                  background: '#ffffff',
-                  padding: '25px',
-                  borderRadius: '15px',
-                  border: '2px solid #0ea5e9',
-                  boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)',
-                  textAlign: 'left'
-                }}>
-                  <h4 style={{
-                    color: '#0ea5e9',
-                    fontSize: '1.1rem',
-                    fontWeight: '700',
-                    marginBottom: '10px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}>
-                    ⚡ 효율적인 워크플로우 설계
-                  </h4>
-                  <p style={{
-                    color: '#64748b',
-                    fontSize: '0.95rem',
-                    margin: '0',
-                    lineHeight: '1.5'
-                  }}>
-                    불필요한 API 호출 방지
-                  </p>
-                </div>
-
-                <div style={{
-                  background: '#ffffff',
-                  padding: '25px',
-                  borderRadius: '15px',
-                  border: '2px solid #0ea5e9',
-                  boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)',
-                  textAlign: 'left'
-                }}>
-                  <h4 style={{
-                    color: '#0ea5e9',
-                    fontSize: '1.1rem',
-                    fontWeight: '700',
-                    marginBottom: '10px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}>
-                    🚀 실제 서비스 운영 노하우
-                  </h4>
-                  <p style={{
-                    color: '#64748b',
-                    fontSize: '0.95rem',
-                    margin: '0',
-                    lineHeight: '1.5'
-                  }}>
-                    스타트업에서 검증된 방법론
-                  </p>
-                </div>
-
-                <div style={{
-                  background: '#ffffff',
-                  padding: '25px',
-                  borderRadius: '15px',
-                  border: '2px solid #0ea5e9',
-                  boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)',
-                  textAlign: 'left'
-                }}>
-                  <h4 style={{
-                    color: '#0ea5e9',
-                    fontSize: '1.1rem',
-                    fontWeight: '700',
-                    marginBottom: '10px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}>
-                    📈 비용 대비 효과 극대화
-                  </h4>
-                  <p style={{
-                    color: '#64748b',
-                    fontSize: '0.95rem',
-                    margin: '0',
-                    lineHeight: '1.5'
-                  }}>
-                    최소 비용으로 최대 성과 달성
-                  </p>
-                </div>
-              </div>
-
-              <p style={{
-                color: '#64748b',
-                fontSize: '1.1rem',
-                lineHeight: '1.7',
-                fontStyle: 'italic',
-                marginBottom: '30px',
-                fontWeight: '500'
-              }}>
-                "단순히 AI 도구를 사용하는 것이 아니라, <strong style={{ color: '#0ea5e9' }}>효율적이고 경제적인 AI 솔루션</strong>을 만드는 방법을 배우세요."
-              </p>
-
-              <button 
-                onClick={() => window.location.href = '/cost-optimization-examples'}
-                style={{
-                  background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-                  color: 'white',
-                  border: 'none',
-                  padding: '15px 30px',
-                  borderRadius: '25px',
-                  fontSize: '1.1rem',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  boxShadow: '0 8px 20px rgba(14, 165, 233, 0.3)',
-                  transition: 'all 0.3s ease',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '10px'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 12px 25px rgba(14, 165, 233, 0.4)';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(14, 165, 233, 0.3)';
-                }}
-              >
-                💡 비용 최적화 예제 보기
-              </button>
             </div>
           </div>
 
