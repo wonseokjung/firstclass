@@ -1,0 +1,494 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Users, BookOpen, DollarSign, TrendingUp, Search, Download, RefreshCw } from 'lucide-react';
+import NavigationBar from '../../common/NavigationBar';
+import AzureTableService from '../../../services/azureTableService';
+
+interface UserData {
+  email: string;
+  name: string;
+  createdAt: string;
+  enrolledCourses: any[];
+  purchases: any[];
+  totalSpent: number;
+  completedDays: number;
+  lastAccessedAt?: string;
+}
+
+const AdminDashboardPage: React.FC = () => {
+  const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [allUsers, setAllUsers] = useState<UserData[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<UserData[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCourse, setSelectedCourse] = useState<string>('all');
+  const [stats, setStats] = useState({
+    totalUsers: 0,
+    paidUsers: 0,
+    totalRevenue: 0,
+    avgProgress: 0
+  });
+
+  // 관리자 권한 확인
+  useEffect(() => {
+    const checkAdmin = async () => {
+      const userSession = sessionStorage.getItem('aicitybuilders_user_session');
+      if (!userSession) {
+        alert('로그인이 필요합니다.');
+        navigate('/login');
+        return;
+      }
+
+      try {
+        const user = JSON.parse(userSession);
+        if (user.email !== 'test10@gmail.com') {
+          alert('관리자 권한이 없습니다.');
+          navigate('/');
+          return;
+        }
+        setIsAdmin(true);
+        await loadAllUsers();
+      } catch (error) {
+        console.error('관리자 확인 실패:', error);
+        navigate('/');
+      }
+    };
+
+    checkAdmin();
+  }, [navigate]);
+
+  // 모든 유저 데이터 로드
+  const loadAllUsers = async () => {
+    setIsLoading(true);
+    try {
+      const users = await AzureTableService.getAllUsers();
+      
+      const userData: UserData[] = users.map(user => {
+        let enrolledCourses: any[] = [];
+        let purchases: any[] = [];
+        let totalSpent = 0;
+
+        if (user.enrolledCourses) {
+          try {
+            const parsed = JSON.parse(user.enrolledCourses);
+            enrolledCourses = Array.isArray(parsed) ? parsed : (parsed.enrollments || []);
+            purchases = parsed.payments || [];
+            totalSpent = purchases.reduce((sum: number, p: any) => sum + (p.amount || 0), 0);
+          } catch (e) {
+            console.error('파싱 오류:', e);
+          }
+        }
+
+        // localStorage에서 진행률 가져오기 (실제로는 Azure에서 가져와야 함)
+        const completedDays = 0; // TODO: Azure에서 진행률 데이터 가져오기
+
+        return {
+          email: user.email || '',
+          name: user.name || '-',
+          createdAt: user.createdAt || '',
+          enrolledCourses,
+          purchases,
+          totalSpent,
+          completedDays,
+          lastAccessedAt: user.lastLoginAt || user.updatedAt
+        };
+      });
+
+      setAllUsers(userData);
+      setFilteredUsers(userData);
+
+      // 통계 계산
+      const paidUsers = userData.filter(u => u.purchases.length > 0).length;
+      const totalRevenue = userData.reduce((sum, u) => sum + u.totalSpent, 0);
+      const avgProgress = userData.reduce((sum, u) => sum + u.completedDays, 0) / userData.length || 0;
+
+      setStats({
+        totalUsers: userData.length,
+        paidUsers,
+        totalRevenue,
+        avgProgress: Math.round(avgProgress)
+      });
+
+      setIsLoading(false);
+    } catch (error) {
+      console.error('유저 로드 실패:', error);
+      alert('유저 데이터를 불러올 수 없습니다.');
+      setIsLoading(false);
+    }
+  };
+
+  // 검색 및 필터링
+  useEffect(() => {
+    let filtered = allUsers;
+
+    // 검색어 필터
+    if (searchQuery) {
+      filtered = filtered.filter(user => 
+        user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    // 강의 필터
+    if (selectedCourse !== 'all') {
+      filtered = filtered.filter(user => 
+        user.enrolledCourses.some(course => 
+          course.courseId === selectedCourse || 
+          course.courseId === 'chatgpt-agent-beginner' && selectedCourse === '1002'
+        )
+      );
+    }
+
+    setFilteredUsers(filtered);
+  }, [searchQuery, selectedCourse, allUsers]);
+
+  // CSV 다운로드
+  const downloadCSV = () => {
+    const headers = ['이메일', '이름', '가입일', '구매 강의', '총 결제액', '진행률', '마지막 접속'];
+    const rows = filteredUsers.map(user => [
+      user.email,
+      user.name,
+      new Date(user.createdAt).toLocaleDateString('ko-KR'),
+      user.enrolledCourses.map(c => c.title).join('; '),
+      `₩${user.totalSpent.toLocaleString()}`,
+      `${user.completedDays}/15`,
+      user.lastAccessedAt ? new Date(user.lastAccessedAt).toLocaleDateString('ko-KR') : '-'
+    ]);
+
+    const csv = [headers, ...rows].map(row => row.join(',')).join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `users_${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+  };
+
+  if (!isAdmin || isLoading) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        flexDirection: 'column',
+        gap: '20px'
+      }}>
+        <div style={{
+          width: '40px',
+          height: '40px',
+          border: '4px solid #e2e8f0',
+          borderTop: '4px solid #ef4444',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite'
+        }}></div>
+        <p style={{ color: '#64748b', fontSize: '16px' }}>
+          {isLoading ? '데이터 로딩 중...' : '관리자 권한 확인 중...'}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
+      <NavigationBar />
+
+      {/* 헤더 */}
+      <div style={{
+        background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+        padding: '40px 20px',
+        boxShadow: '0 4px 20px rgba(239, 68, 68, 0.3)'
+      }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+          <h1 style={{
+            fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+            fontWeight: '800',
+            color: 'white',
+            marginBottom: '10px'
+          }}>
+            🔧 관리자 대시보드
+          </h1>
+          <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '1.1rem' }}>
+            전체 사용자 및 학습 현황 관리
+          </p>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '40px 20px' }}>
+        {/* 통계 카드 */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gap: '20px',
+          marginBottom: '40px'
+        }}>
+          <div style={{
+            background: 'white',
+            borderRadius: '15px',
+            padding: '25px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+            border: '2px solid #e0e7ff'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+              <Users size={32} color="#6366f1" />
+              <div>
+                <div style={{ fontSize: '0.9rem', color: '#64748b' }}>전체 사용자</div>
+                <div style={{ fontSize: '2rem', fontWeight: '800', color: '#1f2937' }}>
+                  {stats.totalUsers}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style={{
+            background: 'white',
+            borderRadius: '15px',
+            padding: '25px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+            border: '2px solid #dcfce7'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+              <BookOpen size={32} color="#10b981" />
+              <div>
+                <div style={{ fontSize: '0.9rem', color: '#64748b' }}>결제 사용자</div>
+                <div style={{ fontSize: '2rem', fontWeight: '800', color: '#1f2937' }}>
+                  {stats.paidUsers}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style={{
+            background: 'white',
+            borderRadius: '15px',
+            padding: '25px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+            border: '2px solid #fef3c7'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+              <DollarSign size={32} color="#f59e0b" />
+              <div>
+                <div style={{ fontSize: '0.9rem', color: '#64748b' }}>총 매출</div>
+                <div style={{ fontSize: '2rem', fontWeight: '800', color: '#1f2937' }}>
+                  ₩{(stats.totalRevenue / 10000).toFixed(0)}만
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style={{
+            background: 'white',
+            borderRadius: '15px',
+            padding: '25px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+            border: '2px solid #dbeafe'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+              <TrendingUp size={32} color="#0ea5e9" />
+              <div>
+                <div style={{ fontSize: '0.9rem', color: '#64748b' }}>평균 진행률</div>
+                <div style={{ fontSize: '2rem', fontWeight: '800', color: '#1f2937' }}>
+                  {stats.avgProgress}%
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 필터 & 검색 */}
+        <div style={{
+          background: 'white',
+          borderRadius: '15px',
+          padding: '25px',
+          marginBottom: '30px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+        }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '15px'
+          }}>
+            <div style={{ position: 'relative' }}>
+              <Search size={20} style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+              <input
+                type="text"
+                placeholder="이메일 또는 이름 검색..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '12px 12px 12px 45px',
+                  borderRadius: '10px',
+                  border: '2px solid #e2e8f0',
+                  fontSize: '1rem',
+                  outline: 'none'
+                }}
+              />
+            </div>
+
+            <select
+              value={selectedCourse}
+              onChange={(e) => setSelectedCourse(e.target.value)}
+              style={{
+                padding: '12px',
+                borderRadius: '10px',
+                border: '2px solid #e2e8f0',
+                fontSize: '1rem',
+                outline: 'none',
+                cursor: 'pointer'
+              }}
+            >
+              <option value="all">모든 강의</option>
+              <option value="1002">ChatGPT AI AGENT 비기너편</option>
+              <option value="ai-building">AI 건물 짓기</option>
+            </select>
+
+            <button
+              onClick={loadAllUsers}
+              style={{
+                padding: '12px 20px',
+                borderRadius: '10px',
+                border: 'none',
+                background: '#0ea5e9',
+                color: 'white',
+                fontSize: '1rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
+              }}
+            >
+              <RefreshCw size={18} />
+              새로고침
+            </button>
+
+            <button
+              onClick={downloadCSV}
+              style={{
+                padding: '12px 20px',
+                borderRadius: '10px',
+                border: 'none',
+                background: '#10b981',
+                color: 'white',
+                fontSize: '1rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
+              }}
+            >
+              <Download size={18} />
+              CSV 다운로드
+            </button>
+          </div>
+        </div>
+
+        {/* 유저 테이블 */}
+        <div style={{
+          background: 'white',
+          borderRadius: '15px',
+          padding: '25px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+          overflowX: 'auto'
+        }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '20px' }}>
+            👥 사용자 목록 ({filteredUsers.length}명)
+          </h2>
+          
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
+                <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>이메일</th>
+                <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>이름</th>
+                <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>가입일</th>
+                <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>수강 강의</th>
+                <th style={{ padding: '12px', textAlign: 'right', color: '#64748b', fontWeight: '600' }}>총 결제액</th>
+                <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>진행률</th>
+                <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>마지막 접속</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredUsers.map((user, index) => (
+                <tr key={index} style={{
+                  borderBottom: '1px solid #f1f5f9',
+                  cursor: 'pointer',
+                  transition: 'background 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.background = '#f8fafc'}
+                onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+                >
+                  <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.9rem' }}>
+                    {user.email}
+                  </td>
+                  <td style={{ padding: '12px' }}>{user.name}</td>
+                  <td style={{ padding: '12px', fontSize: '0.9rem', color: '#64748b' }}>
+                    {new Date(user.createdAt).toLocaleDateString('ko-KR')}
+                  </td>
+                  <td style={{ padding: '12px' }}>
+                    {user.enrolledCourses.length > 0 ? (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        {user.enrolledCourses.map((course, idx) => (
+                          <span key={idx} style={{
+                            background: '#e0f2fe',
+                            color: '#0369a1',
+                            padding: '4px 8px',
+                            borderRadius: '6px',
+                            fontSize: '0.85rem',
+                            fontWeight: '600'
+                          }}>
+                            {course.title || course.courseId}
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <span style={{ color: '#94a3b8' }}>-</span>
+                    )}
+                  </td>
+                  <td style={{ padding: '12px', textAlign: 'right', fontWeight: '600' }}>
+                    {user.totalSpent > 0 ? `₩${user.totalSpent.toLocaleString()}` : '-'}
+                  </td>
+                  <td style={{ padding: '12px', textAlign: 'center' }}>
+                    <div style={{
+                      background: user.completedDays > 0 ? '#dcfce7' : '#f1f5f9',
+                      color: user.completedDays > 0 ? '#166534' : '#64748b',
+                      padding: '4px 12px',
+                      borderRadius: '20px',
+                      fontSize: '0.85rem',
+                      fontWeight: '600',
+                      display: 'inline-block'
+                    }}>
+                      {user.completedDays}/15
+                    </div>
+                  </td>
+                  <td style={{ padding: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#64748b' }}>
+                    {user.lastAccessedAt ? new Date(user.lastAccessedAt).toLocaleDateString('ko-KR') : '-'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {filteredUsers.length === 0 && (
+            <div style={{
+              textAlign: 'center',
+              padding: '60px 20px',
+              color: '#94a3b8'
+            }}>
+              <Users size={48} style={{ marginBottom: '20px', opacity: 0.5 }} />
+              <p style={{ fontSize: '1.1rem', fontWeight: '600' }}>
+                검색 결과가 없습니다
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AdminDashboardPage;
+
