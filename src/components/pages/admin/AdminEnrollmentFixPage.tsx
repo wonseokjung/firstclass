@@ -129,6 +129,127 @@ const AdminEnrollmentFixPage: React.FC = () => {
     }
   };
 
+  // 마스킹된 이메일과 실제 이메일 매칭
+  const matchMaskedEmail = (maskedEmail: string, realEmail: string): boolean => {
+    const [maskedLocal, domain] = maskedEmail.split('@');
+    const [realLocal, realDomain] = realEmail.split('@');
+    
+    // 도메인이 다르면 false
+    if (domain !== realDomain) return false;
+    
+    // 길이가 다르면 false
+    if (maskedLocal.length !== realLocal.length) return false;
+    
+    // 각 문자 비교
+    for (let i = 0; i < maskedLocal.length; i++) {
+      if (maskedLocal[i] !== '*' && maskedLocal[i] !== realLocal[i]) {
+        return false;
+      }
+    }
+    
+    return true;
+  };
+
+  // 자동 매칭 및 일괄 추가
+  const handleAutoMatch = async () => {
+    if (!window.confirm(`결제 내역과 사용자를 자동 매칭하여 강의를 추가하시겠습니까?\n\n예상 매칭 수: 약 60건`)) {
+      return;
+    }
+
+    setProcessing(true);
+    let successCount = 0;
+    let skipCount = 0;
+    let failCount = 0;
+    const matchLog: string[] = [];
+
+    try {
+      // 사용자 목록이 없으면 로드
+      let users = allUsers;
+      if (users.length === 0) {
+        users = await AzureTableService.getAllUsers();
+        setAllUsers(users);
+      }
+
+      // 각 결제 내역에 대해
+      for (const payment of payments) {
+        try {
+          console.log(`\n🔍 처리 중: ${payment.name} (${payment.maskedEmail})`);
+          
+          // 매칭되는 사용자 찾기
+          const matchedUser = users.find(user => 
+            user.email && matchMaskedEmail(payment.maskedEmail, user.email)
+          );
+
+          if (!matchedUser) {
+            console.log(`❌ 매칭 실패: ${payment.maskedEmail}`);
+            failCount++;
+            matchLog.push(`❌ ${payment.name} (${payment.maskedEmail}) - 매칭 실패`);
+            continue;
+          }
+
+          console.log(`✅ 매칭 성공: ${payment.maskedEmail} → ${matchedUser.email}`);
+          matchLog.push(`✅ ${payment.name}: ${payment.maskedEmail} → ${matchedUser.email}`);
+
+          // 이미 강의가 있는지 확인
+          if (matchedUser.enrolledCourses) {
+            const enrolledData = JSON.parse(matchedUser.enrolledCourses);
+            const enrollments = Array.isArray(enrolledData) ? enrolledData : (enrolledData.enrollments || []);
+            const hasCourse = enrollments.some((e: any) => e.courseId === '1002');
+            
+            if (hasCourse) {
+              console.log(`ℹ️ 이미 등록됨: ${matchedUser.email}`);
+              skipCount++;
+              matchLog.push(`  ℹ️ 건너뜀 (이미 등록됨)`);
+              continue;
+            }
+          }
+
+          // 강의 추가
+          await AzureTableService.addPurchaseAndEnrollmentToUser({
+            email: matchedUser.email,
+            courseId: '1002',
+            title: 'ChatGPT AI AGENT 비기너편',
+            amount: payment.amount,
+            paymentMethod: 'card',
+            orderId: payment.orderId,
+            orderName: 'ChatGPT AI AGENT 비기너편'
+          });
+
+          console.log(`✅ 강의 추가 완료: ${matchedUser.email}`);
+          matchLog.push(`  ✅ 강의 추가 완료`);
+          successCount++;
+
+          // API 제한 방지
+          await new Promise(resolve => setTimeout(resolve, 500));
+
+        } catch (error: any) {
+          console.error(`❌ 오류: ${payment.name} - ${error.message}`);
+          failCount++;
+          matchLog.push(`❌ ${payment.name} - 오류: ${error.message}`);
+        }
+      }
+
+      // 결과 출력
+      console.log('\n\n📊 자동 매칭 결과:');
+      console.log(`✅ 성공: ${successCount}건`);
+      console.log(`ℹ️ 건너뜀: ${skipCount}건`);
+      console.log(`❌ 실패: ${failCount}건`);
+      console.log('\n📋 상세 로그:');
+      matchLog.forEach(log => console.log(log));
+
+      alert(`자동 매칭 완료!\n\n✅ 성공: ${successCount}건\nℹ️ 건너뜀: ${skipCount}건\n❌ 실패: ${failCount}건\n\n자세한 내용은 콘솔(F12)을 확인하세요.`);
+
+      // 사용자 목록 새로고침
+      await loadAllUsers();
+
+    } catch (error: any) {
+      console.error('자동 매칭 중 오류:', error);
+      alert(`오류 발생: ${error.message}`);
+    } finally {
+      setProcessing(false);
+    }
+  };
+
   const handleEmailChange = (index: number, email: string) => {
     const newPayments = [...payments];
     newPayments[index].realEmail = email;
@@ -260,18 +381,19 @@ const AdminEnrollmentFixPage: React.FC = () => {
           <p style={{ fontSize: '1.1rem', opacity: 0.9 }}>
             결제는 완료되었지만 enrolledCourses가 없는 사용자들에게 강의를 추가합니다
           </p>
-          <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
+          <div style={{ marginTop: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             <button
               onClick={loadAllUsers}
+              disabled={processing}
               style={{
                 padding: '12px 24px',
                 borderRadius: '10px',
                 border: 'none',
-                background: 'white',
+                background: processing ? '#94a3b8' : 'white',
                 color: '#ef4444',
                 fontSize: '1rem',
                 fontWeight: '700',
-                cursor: 'pointer',
+                cursor: processing ? 'not-allowed' : 'pointer',
                 boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
               }}
             >
@@ -280,6 +402,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
             {showUserTable && (
               <button
                 onClick={() => setShowUserTable(false)}
+                disabled={processing}
                 style={{
                   padding: '12px 24px',
                   borderRadius: '10px',
@@ -288,12 +411,33 @@ const AdminEnrollmentFixPage: React.FC = () => {
                   color: 'white',
                   fontSize: '1rem',
                   fontWeight: '700',
-                  cursor: 'pointer'
+                  cursor: processing ? 'not-allowed' : 'pointer'
                 }}
               >
                 📊 결제 내역 보기
               </button>
             )}
+            <button
+              onClick={handleAutoMatch}
+              disabled={processing}
+              style={{
+                padding: '12px 24px',
+                borderRadius: '10px',
+                border: 'none',
+                background: processing ? '#94a3b8' : 'linear-gradient(135deg, #10b981, #059669)',
+                color: 'white',
+                fontSize: '1rem',
+                fontWeight: '700',
+                cursor: processing ? 'not-allowed' : 'pointer',
+                boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
+              {processing && <Loader size={16} className="animate-spin" />}
+              {processing ? '처리 중...' : '🤖 자동 매칭 & 일괄 추가'}
+            </button>
           </div>
         </div>
 
