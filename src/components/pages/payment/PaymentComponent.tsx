@@ -89,10 +89,6 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
       console.log('✅ 결제 객체 생성 성공:', payment);
       console.log('🔍 payment.requestPayment 함수 존재 여부:', typeof payment.requestPayment);
 
-      // 모바일 환경 감지
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      console.log('📱 모바일 환경:', isMobile);
-
       // 카드 결제 요청 (공식 문서 방식)
       console.log('💳 카드 결제 요청 시도...');
       await payment.requestPayment({
@@ -107,21 +103,17 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
         failUrl: paymentRequest.failUrl,
         customerEmail: userInfo.email,
         customerName: paymentRequest.customerName,
-        customerMobilePhone: userInfo.phone || undefined, // 모바일 번호 추가 (선택사항)
+        customerMobilePhone: userInfo.phone || undefined,
         metadata: {
           courseId: courseId,
           email: userInfo.email
         },
         card: {
           useEscrow: false,
-          // 모바일 환경에서 앱카드 사용 활성화
           useAppCardOnly: false,
           useCardPoint: true,
           useInternationalCardOnly: false,
         },
-        // 모바일 최적화 옵션
-        flowMode: isMobile ? "DIRECT" : "DEFAULT",
-        easyPay: isMobile ? "토스페이" : undefined,
       });
 
     } catch (error: any) {
