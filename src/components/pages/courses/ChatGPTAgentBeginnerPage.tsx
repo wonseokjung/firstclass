@@ -204,7 +204,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
   });
 
   useEffect(() => {
-    const launchDate = new Date('2025-11-15T00:00:00+09:00'); // 한국시간
+    const launchDate = new Date('2025-11-15T15:00:00+09:00'); // 한국시간 오후 3시
     
     const updateCountdown = () => {
       const now = new Date().getTime();
