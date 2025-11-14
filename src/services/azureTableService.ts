@@ -1594,13 +1594,31 @@ export class AzureTableService {
       // 수강 정보 파싱
       const userData = JSON.parse(user.enrolledCourses);
       let payments: any[] = [];
+      let enrollments: any[] = [];
 
       if (userData.payments && Array.isArray(userData.payments)) {
         payments = userData.payments;
       }
+      
+      if (userData.enrollments && Array.isArray(userData.enrollments)) {
+        enrollments = userData.enrollments;
+      }
 
-      console.log('🛒 구매 강의 목록:', payments);
-      return payments;
+      // payments와 enrollments를 매칭하여 강의명 추가
+      const enrichedPayments = payments.map(payment => {
+        // 같은 courseId를 가진 enrollment 찾기
+        const enrollment = enrollments.find(e => e.courseId === payment.courseId);
+        
+        return {
+          ...payment,
+          courseName: enrollment?.title || payment.courseName,
+          courseTitle: enrollment?.title || payment.courseTitle,
+          enrolledAt: enrollment?.enrolledAt
+        };
+      });
+
+      console.log('🛒 구매 강의 목록 (enriched):', enrichedPayments);
+      return enrichedPayments;
     } catch (error: any) {
       console.error('❌ 구매 강의 목록 조회 실패:', error.message);
       return [];
