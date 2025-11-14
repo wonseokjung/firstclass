@@ -67,8 +67,9 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
         
         // 각 구매 항목의 필드를 상세히 출력
         purchases.forEach((purchase, idx) => {
-          console.log(`📦 구매 항목 ${idx + 1}:`, {
-            모든필드: Object.keys(purchase),
+          console.log(`📦 구매 항목 ${idx + 1} - 모든 필드:`, Object.keys(purchase));
+          console.log(`📦 구매 항목 ${idx + 1} - 전체 데이터:`, purchase);
+          console.table({
             courseId: purchase.courseId,
             courseName: purchase.courseName,
             courseTitle: purchase.courseTitle,
@@ -82,7 +83,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
             createdAt: purchase.createdAt,
             completedAt: purchase.completedAt,
             paymentMethod: purchase.paymentMethod,
-            전체데이터: purchase
+            status: purchase.status
           });
         });
         
@@ -850,7 +851,9 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   'chatgpt-agent-beginner': 'ChatGPT AI AGENT 비기너편',
                   '999': 'AI 건물 짓기 - 디지털 건축가 과정',
                   'ai-building': 'AI 건물 짓기 - 디지털 건축가 과정',
-                  'ai-building-course': 'AI 건물 짓기 - 디지털 건축가 과정'
+                  'ai-building-course': 'AI 건물 짓기 - 디지털 건축가 과정',
+                  'workflow-automation': 'AI 건물 짓기 - 디지털 건축가 과정',
+                  'prompt-engineering': 'AI 건물 짓기 - 디지털 건축가 과정'
                 };
 
                 // 강의명 결정
