@@ -121,20 +121,8 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
   const handleEnrollClick = (e: React.MouseEvent, course: Course) => {
     e.stopPropagation();
 
-    if (!isLoggedIn || !userInfo) {
-      const confirmLogin = window.confirm('결제하려면 먼저 로그인해주세요!\n로그인 페이지로 이동하시겠습니까?');
-      if (confirmLogin) navigate('/login');
-      return;
-    }
-
-    if (enrolledCourses.has(course.id)) {
-      alert('이미 수강 중인 강좌입니다! 학습을 이어가세요.');
-      navigate(course.path);
-      return;
-    }
-
-    setSelectedCourse(course);
-    setShowPaymentModal(true);
+    // 결제되지 않은 사용자는 강의 상세 페이지로 이동
+    navigate(course.path);
   };
 
   const handlePaymentClose = () => {
@@ -222,7 +210,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
         disabled={isLoadingEnrollments}
       >
         <Play size={16} />
-        {course.id === 999 ? '🚧 준비중' : isLoadingEnrollments ? '확인 중...' : isEnrolled ? '✅ 학습 이어하기' : '🚀 바로 수강하기'}
+        {course.id === 999 ? '🚧 준비중' : isLoadingEnrollments ? '확인 중...' : isEnrolled ? '✅ 학습 이어하기' : '📚 강의 자세히 보기'}
       </button>
     );
 
