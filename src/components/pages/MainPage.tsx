@@ -78,7 +78,6 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [showComingSoonModal, setShowComingSoonModal] = useState(false);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
   const [enrolledCourses, setEnrolledCourses] = useState<Set<number>>(new Set());
   const [isLoadingEnrollments, setIsLoadingEnrollments] = useState(true);
@@ -94,7 +93,6 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
       if (storedUserInfo) {
         try {
           const parsedUserInfo = JSON.parse(storedUserInfo);
-          setIsLoggedIn(true);
           setUserInfo(parsedUserInfo);
 
           const userEnrollments = await AzureTableService.getUserEnrollmentsByEmail(parsedUserInfo.email);
@@ -103,12 +101,10 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
         } catch (error) {
           console.error('사용자 정보 처리 오류:', error);
           sessionStorage.removeItem('aicitybuilders_user_session');
-          setIsLoggedIn(false);
           setUserInfo(null);
           setEnrolledCourses(new Set());
         }
       } else {
-        setIsLoggedIn(false);
         setUserInfo(null);
         setEnrolledCourses(new Set());
       }
