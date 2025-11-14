@@ -931,7 +931,9 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                           결제 수단
                         </div>
                         <div style={{ fontSize: '0.95rem', fontWeight: '600', color: '#1f2937' }}>
-                          {purchase.paymentMethod === 'CARD' ? '💳 카드 결제' : purchase.paymentMethod}
+                          {purchase.paymentMethod === 'CARD' || purchase.paymentMethod === 'card' 
+                            ? '💳 카드 결제' 
+                            : purchase.paymentMethod}
                         </div>
                       </div>
                     )}

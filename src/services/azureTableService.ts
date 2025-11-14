@@ -792,6 +792,8 @@ export class AzureTableService {
     amount: number;
     paymentMethod: string;
     externalPaymentId?: string;
+    orderId?: string;
+    orderName?: string;
   }): Promise<{payment: any, enrollment: EnrolledCourse}> {
     try {
       console.log('🛒 구매 처리 중:', userData.email);
@@ -801,10 +803,16 @@ export class AzureTableService {
       const payment = {
         paymentId,
         courseId: userData.courseId,
+        courseName: userData.title, // 강의명 추가
+        courseTitle: userData.title, // 강의명 추가 (호환성)
         amount: userData.amount,
         paymentMethod: userData.paymentMethod,
         externalPaymentId: userData.externalPaymentId || 'local_payment',
+        orderId: userData.orderId || paymentId, // 주문번호 추가
+        orderName: userData.orderName || userData.title, // 주문명 추가
         status: 'completed',
+        purchasedAt: new Date().toISOString(), // 구매일 추가
+        timestamp: new Date().toISOString(), // 타임스탬프 추가
         createdAt: new Date().toISOString(),
         completedAt: new Date().toISOString()
       };
@@ -956,7 +964,10 @@ export class AzureTableService {
         'google-ai-완전정복': 'Google AI 완전정복',
         'ai-교육-다큐멘터리': 'AI 교육 다큐멘터리',
         'ai-building': 'AI 건물 짓기 - 디지털 건축가 과정',
-        'ai-building-course': 'AI 건물 짓기 - 디지털 건축가 과정'
+        'ai-building-course': 'AI 건물 짓기 - 디지털 건축가 과정',
+        '1002': 'ChatGPT AI AGENT 비기너편',
+        'chatgpt-agent-beginner': 'ChatGPT AI AGENT 비기너편',
+        '999': 'AI 건물 짓기 - 디지털 건축가 과정'
       };
       
       const courseTitle = courseTitleMap[purchaseData.courseId] || purchaseData.courseId;
@@ -1443,6 +1454,8 @@ export class AzureTableService {
     amount: number;
     paymentMethod: string;
     externalPaymentId?: string;
+    orderId?: string;
+    orderName?: string;
   }): Promise<{payment: any, enrollment: any, rewardProcessed: boolean}> {
     try {
       // 기존 구매 처리

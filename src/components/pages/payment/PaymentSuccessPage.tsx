@@ -142,6 +142,13 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               price: 299000
             };
             setCourseName('AI 건물 짓기 - 디지털 건축가 과정');
+          } else if (courseParam === '1002' || courseParam === 'chatgpt-agent-beginner') {
+            courseData = {
+              id: '1002',
+              title: 'ChatGPT AI AGENT 비기너편',
+              price: 45000
+            };
+            setCourseName('ChatGPT AI AGENT 비기너편');
           }
           
           if (courseData.id && user.email) {
@@ -158,7 +165,9 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 courseId: courseData.id,
                 title: courseData.title,
                 amount: courseData.price,
-                paymentMethod: 'card'
+                paymentMethod: 'card',
+                orderId: orderId || undefined,
+                orderName: courseData.title
               });
               
               console.log(`✅ ${courseData.title} 구매 완료, 결과:`, result);
