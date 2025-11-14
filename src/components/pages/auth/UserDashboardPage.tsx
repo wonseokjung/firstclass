@@ -65,6 +65,27 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
         const purchases = await AzureTableService.getUserPurchasedCourses(parsedUserInfo.email);
         console.log('💳 대시보드에서 가져온 구매 내역:', purchases);
         
+        // 각 구매 항목의 필드를 상세히 출력
+        purchases.forEach((purchase, idx) => {
+          console.log(`📦 구매 항목 ${idx + 1}:`, {
+            모든필드: Object.keys(purchase),
+            courseId: purchase.courseId,
+            courseName: purchase.courseName,
+            courseTitle: purchase.courseTitle,
+            orderName: purchase.orderName,
+            amount: purchase.amount,
+            orderId: purchase.orderId,
+            paymentId: purchase.paymentId,
+            externalPaymentId: purchase.externalPaymentId,
+            purchasedAt: purchase.purchasedAt,
+            timestamp: purchase.timestamp,
+            createdAt: purchase.createdAt,
+            completedAt: purchase.completedAt,
+            paymentMethod: purchase.paymentMethod,
+            전체데이터: purchase
+          });
+        });
+        
         const stats: UserStats = {
           totalCourses: enrollments.length,
           completedCourses: enrollments.filter((course: any) => course.status === 'completed').length,
@@ -822,7 +843,48 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               maxWidth: '1200px',
               margin: '0 auto'
             }}>
-              {userStats.purchasedCourses.map((purchase, index) => (
+              {userStats.purchasedCourses.map((purchase, index) => {
+                // 강의 정보 매핑
+                const courseInfoMap: { [key: string]: string } = {
+                  '1002': 'ChatGPT AI AGENT 비기너편',
+                  'chatgpt-agent-beginner': 'ChatGPT AI AGENT 비기너편',
+                  '999': 'AI 건물 짓기 - 디지털 건축가 과정',
+                  'ai-building': 'AI 건물 짓기 - 디지털 건축가 과정',
+                  'ai-building-course': 'AI 건물 짓기 - 디지털 건축가 과정'
+                };
+
+                // 강의명 결정
+                const displayCourseName = purchase.courseName 
+                  || purchase.courseTitle 
+                  || purchase.orderName
+                  || courseInfoMap[purchase.courseId]
+                  || '강의';
+
+                // 구매일 결정 및 포맷
+                let displayDate = 'N/A';
+                try {
+                  const dateValue = purchase.purchasedAt 
+                    || purchase.timestamp 
+                    || purchase.createdAt 
+                    || purchase.completedAt;
+                  
+                  if (dateValue) {
+                    const date = new Date(dateValue);
+                    if (!isNaN(date.getTime())) {
+                      displayDate = date.toLocaleDateString('ko-KR');
+                    }
+                  }
+                } catch (e) {
+                  console.error('날짜 파싱 오류:', e);
+                }
+
+                // 주문번호 결정
+                const displayOrderId = purchase.orderId 
+                  || purchase.externalPaymentId 
+                  || purchase.paymentId 
+                  || 'N/A';
+
+                return (
                 <div key={index} style={{
                   background: 'white',
                   border: '2px solid #e2e8f0',
@@ -867,7 +929,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                       color: '#1f2937',
                       marginBottom: '12px'
                     }}>
-                      {purchase.courseName || purchase.courseTitle || '강의명'}
+                      {displayCourseName}
                     </h3>
                     <div style={{
                       display: 'flex',
@@ -877,7 +939,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                     }}>
                       <Calendar size={16} color="#64748b" />
                       <span style={{ fontSize: '0.9rem', color: '#64748b' }}>
-                        구매일: {new Date(purchase.purchasedAt || purchase.timestamp).toLocaleDateString('ko-KR')}
+                        구매일: {displayDate}
                       </span>
                     </div>
                   </div>
@@ -915,7 +977,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                           color: '#475569',
                           fontFamily: 'monospace'
                         }}>
-                          {purchase.orderId?.slice(0, 12) || 'N/A'}...
+                          {displayOrderId !== 'N/A' ? `${displayOrderId.slice(0, 12)}...` : 'N/A'}
                         </div>
                       </div>
                     </div>
@@ -979,7 +1041,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                     </button>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
