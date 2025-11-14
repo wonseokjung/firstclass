@@ -194,7 +194,11 @@ const AdminEnrollmentFixPage: React.FC = () => {
           if (matchedUser.enrolledCourses) {
             const enrolledData = JSON.parse(matchedUser.enrolledCourses);
             const enrollments = Array.isArray(enrolledData) ? enrolledData : (enrolledData.enrollments || []);
-            const hasCourse = enrollments.some((e: any) => e.courseId === '1002');
+            const hasCourse = enrollments.some((e: any) => 
+              e.courseId === '1002' || 
+              e.courseId === 'chatgpt-agent-beginner' || 
+              e.courseId === 'workflow-automation'
+            );
             
             if (hasCourse) {
               console.log(`ℹ️ 이미 등록됨: ${matchedUser.email}`);
@@ -283,7 +287,11 @@ const AdminEnrollmentFixPage: React.FC = () => {
       if (user.enrolledCourses) {
         const userData = JSON.parse(user.enrolledCourses);
         const enrollments = Array.isArray(userData) ? userData : (userData.enrollments || []);
-        const alreadyEnrolled = enrollments.some((e: any) => e.courseId === '1002');
+        const alreadyEnrolled = enrollments.some((e: any) => 
+          e.courseId === '1002' || 
+          e.courseId === 'chatgpt-agent-beginner' || 
+          e.courseId === 'workflow-automation'
+        );
         
         if (alreadyEnrolled) {
           newPayments[index].status = 'skip';
@@ -524,7 +532,11 @@ const AdminEnrollmentFixPage: React.FC = () => {
                     .map((user, index) => {
                     const enrolledData = user.enrolledCourses ? JSON.parse(user.enrolledCourses) : null;
                     const enrollments = Array.isArray(enrolledData) ? enrolledData : (enrolledData?.enrollments || []);
-                    const hasCourse = enrollments.some((e: any) => e.courseId === '1002');
+                    const hasCourse = enrollments.some((e: any) => 
+                      e.courseId === '1002' || 
+                      e.courseId === 'chatgpt-agent-beginner' || 
+                      e.courseId === 'workflow-automation'
+                    );
                     
                     return (
                       <tr key={index} style={{ borderBottom: '1px solid #f1f5f9' }}>
