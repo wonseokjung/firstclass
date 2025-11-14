@@ -115,32 +115,32 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
         days: [
           { 
             day: 6, 
-            title: '제품 판매를 하는 컨텐츠 만드는 에이전트', 
-            subtitle: '실습: Google OPAL로 판매 최적화 영상 자동 생성',
+            title: '판매 수익화 에이전트 - 제품 판매 영상 자동 생성', 
+            subtitle: '실습: Google OPAL로 리뷰/소개/광고 영상 자동 제작',
             hasQuiz: false 
           },
           { 
             day: 7, 
-            title: '조회수를 올리는 컨텐츠 만드는 에이전트', 
-            subtitle: '실습: Google OPAL로 바이럴 컨텐츠 자동 생성',
+            title: '바이럴 마케팅 에이전트 - 조회수 폭발 컨텐츠 생성', 
+            subtitle: '실습: Google OPAL로 트렌드 분석 + 바이럴 영상 자동 제작',
             hasQuiz: false 
           },
           { 
             day: 8, 
-            title: '읽어주는 컨텐츠 만드는 에이전트 (ASMR/지식 나눔)', 
-            subtitle: '실습: Google OPAL로 음성 기반 컨텐츠 자동 생성',
+            title: '음성 컨텐츠 에이전트 - ASMR & 지식 나눔 영상 생성', 
+            subtitle: '실습: Google OPAL로 오디오북, 명상, 교육 컨텐츠 자동 제작',
             hasQuiz: false 
           },
           { 
             day: 9, 
-            title: '15개 영상을 한 번에 생성하는 에이전트', 
-            subtitle: '실습: 대량 컨텐츠 자동 생성 시스템 구축',
+            title: '대량 생산 에이전트 - 한 번에 15개 영상 자동 생성', 
+            subtitle: '실습: 배치 처리 시스템으로 대량 컨텐츠 자동화',
             hasQuiz: false 
           },
           { 
             day: 10, 
-            title: '최종 프로젝트: 분석부터 유튜브 업로드까지 완전 자동화', 
-            subtitle: '실전: 배운 모든 것을 활용한 수익화 자동화 시스템 완성',
+            title: '완전 자동화 수익 시스템 - 분석부터 업로드까지', 
+            subtitle: '최종 프로젝트: 트렌드 분석 → 생성 → 편집 → 유튜브 업로드 완전 자동화',
             hasQuiz: true 
           }
         ]
