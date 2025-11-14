@@ -25,6 +25,9 @@ const AdminEnrollmentFixPage: React.FC = () => {
     // 최신 카드 결제 (2025-11-15)
     { orderId: 'order_1763146620326_eksp2awco', name: '김*식', maskedEmail: 'id******@naver.com', amount: 45000, date: '2025-11-15 03:57:26' },
     { orderId: 'order_1763142702036_8jh73lg8k', name: '이*훈', maskedEmail: 'so********@gmail.com', amount: 45000, date: '2025-11-15 02:52:50' },
+    { orderId: 'order_1763140582868_wv4x2uw7j', name: '박*도', maskedEmail: 'sh*******@gmail.com', amount: 45000, date: '2025-11-15 02:21:44' },
+    { orderId: 'order_1763137745397_paiqf71q9', name: '김*영', maskedEmail: 'gi*******@naver.com', amount: 45000, date: '2025-11-15 01:32:27' },
+    { orderId: 'order_1763137302508_xdwv13rva', name: '이*미', maskedEmail: 'bo*****@naver.com', amount: 45000, date: '2025-11-15 01:25:24' },
     { orderId: 'order_1763142219298_jkablhyl2', name: '조*우', maskedEmail: 'rp*****@naver.com', amount: 45000, date: '2025-11-15 02:44:19', realEmail: 'rpflarh@naver.com' },
     { orderId: 'order_1763141726397_rq7qgvils', name: '고*웅', maskedEmail: 'da*****@naver.com', amount: 45000, date: '2025-11-15 02:39:22' },
     { orderId: 'order_1763141007765_kgxvqtib2', name: '유*', maskedEmail: 'rt*******@naver.com', amount: 45000, date: '2025-11-15 02:23:57' },
@@ -87,7 +90,10 @@ const AdminEnrollmentFixPage: React.FC = () => {
     { orderId: 'order_1760528102242_vejmj66ux', name: '차*정', maskedEmail: 'mi****@naver.com', amount: 45000, date: '2025-10-15 20:35:32' },
     { orderId: 'order_1760364259046_dp9frb7rf', name: '박*동', maskedEmail: 'in**@udmso.co.kr', amount: 45000, date: '2025-10-13 23:04:58' },
     { orderId: 'order_1760360347773_l3nr8es8x', name: '이*', maskedEmail: 'no**********@naver.com', amount: 45000, date: '2025-10-13 22:00:15' },
-    { orderId: 'order_1760346338615_tawstmccv', name: 'te*****al', maskedEmail: 'te****@gmail.com', amount: 45000, date: '2025-10-13 18:07:22' }
+    { orderId: 'order_1760346338615_tawstmccv', name: 'te*****al', maskedEmail: 'te****@gmail.com', amount: 45000, date: '2025-10-13 18:07:22' },
+    { orderId: 'order_1760287221737_cb3ay000m', name: '임*석', maskedEmail: 'ls*****@nate.com', amount: 45000, date: '2025-10-13 01:44:23' },
+    { orderId: 'order_1763116242609_7jthp54jh', name: '최*규', maskedEmail: 'c.*******@gmail.com', amount: 45000, date: '2025-11-14 19:34:50' },
+    { orderId: 'order_1762014535823_wngjbk4mx', name: '김*이', maskedEmail: 'bl*******@naver.com', amount: 45000, date: '2025-11-02 01:31:50' }
   ]);
 
   const [searchEmail, setSearchEmail] = useState('');
