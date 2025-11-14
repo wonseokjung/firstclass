@@ -862,14 +862,24 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   || purchase.orderName
                   || courseInfoMap[purchase.courseId]
                   || '강의';
+                
+                // 디버깅: 강의명이 어떻게 결정되었는지 로그
+                console.log(`🎯 강의 ${index + 1} 이름 결정:`, {
+                  courseId: purchase.courseId,
+                  courseName: purchase.courseName,
+                  courseTitle: purchase.courseTitle,
+                  orderName: purchase.orderName,
+                  '매핑된이름': courseInfoMap[purchase.courseId],
+                  '최종표시명': displayCourseName
+                });
 
-                // 구매일 결정 및 포맷
+                // 구매일 결정 및 포맷 (실제 데이터에서 createdAt이 항상 있음)
                 let displayDate = 'N/A';
                 try {
-                  const dateValue = purchase.purchasedAt 
-                    || purchase.timestamp 
-                    || purchase.createdAt 
-                    || purchase.completedAt;
+                  const dateValue = purchase.createdAt     // 1순위: createdAt (항상 있음)
+                    || purchase.completedAt                // 2순위: completedAt
+                    || purchase.purchasedAt                // 3순위: purchasedAt
+                    || purchase.timestamp;                 // 4순위: timestamp
                   
                   if (dateValue) {
                     const date = new Date(dateValue);
@@ -881,10 +891,10 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   console.error('날짜 파싱 오류:', e);
                 }
 
-                // 주문번호 결정
-                const displayOrderId = purchase.orderId 
-                  || purchase.externalPaymentId 
-                  || purchase.paymentId 
+                // 주문번호 결정 (실제 데이터에서 paymentId가 있음)
+                const displayOrderId = purchase.paymentId   // 1순위: paymentId (항상 있음)
+                  || purchase.orderId                       // 2순위: orderId
+                  || purchase.externalPaymentId             // 3순위: externalPaymentId
                   || 'N/A';
 
                 return (
