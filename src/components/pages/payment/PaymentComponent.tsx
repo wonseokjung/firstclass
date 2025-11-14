@@ -47,6 +47,18 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
     initializeTossPayments();
   }, [paymentConfig]);
 
+  // customerKey를 안전하게 생성하는 함수
+  const generateSafeCustomerKey = (email: string): string => {
+    // 이메일을 Base64로 인코딩 후 영문자와 숫자, 허용된 특수문자만 남김
+    const base64 = btoa(email)
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=/g, '.');
+    
+    // 최대 50자로 제한
+    return base64.substring(0, 50);
+  };
+
   const handlePayment = async () => {
     // 로그인 체크
     if (!userInfo) {
@@ -83,8 +95,12 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
       // 토스페이먼츠 JavaScript SDK 공식 사용법
       console.log('🔧 결제 객체 생성 시도...');
       
+      // customerKey를 안전하게 생성
+      const safeCustomerKey = generateSafeCustomerKey(userInfo.email || 'anonymous@example.com');
+      console.log('🔑 생성된 customerKey:', safeCustomerKey);
+      
       const payment = tossPayments.payment({ 
-        customerKey: userInfo.email || 'anonymous' 
+        customerKey: safeCustomerKey
       });
 
       console.log('✅ 결제 객체 생성 성공:', payment);
@@ -142,9 +158,13 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
         failUrl: `${window.location.origin}/payment/fail`,
       };
 
+      // customerKey를 안전하게 생성
+      const safeCustomerKey = generateSafeCustomerKey(userInfo.email || 'anonymous@example.com');
+      console.log('🔑 생성된 customerKey:', safeCustomerKey);
+
       // 결제 객체 생성 (공식 문서 방식)
       const payment = tossPayments.payment({ 
-        customerKey: userInfo.email || 'anonymous' 
+        customerKey: safeCustomerKey
       });
 
       if (method === '계좌이체') {
