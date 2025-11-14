@@ -1018,7 +1018,12 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                         // 강의 페이지로 이동
                         const courseRoutes: { [key: string]: string } = {
                           '1002': '/chatgpt-agent-beginner',
+                          'chatgpt-agent-beginner': '/chatgpt-agent-beginner',
                           '999': '/ai-building-course',
+                          'ai-building': '/ai-building-course',
+                          'ai-building-course': '/ai-building-course',
+                          'workflow-automation': '/ai-building-course',
+                          'prompt-engineering': '/ai-building-course'
                         };
                         const route = courseRoutes[purchase.courseId] || '/';
                         navigate(route);
