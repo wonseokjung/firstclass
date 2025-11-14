@@ -91,30 +91,26 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
 
       // 카드 결제 요청 (공식 문서 방식)
       console.log('💳 카드 결제 요청 시도...');
-      await payment.requestPayment({
+      
+      // 기본 결제 요청 파라미터
+      const paymentParams: any = {
         method: "CARD",
-        amount: {
-          currency: "KRW",
-          value: paymentRequest.amount,
-        },
+        amount: paymentRequest.amount,
+        currency: "KRW",
         orderId: paymentRequest.orderId,
         orderName: paymentRequest.orderName,
         successUrl: paymentRequest.successUrl,
         failUrl: paymentRequest.failUrl,
         customerEmail: userInfo.email,
         customerName: paymentRequest.customerName,
-        customerMobilePhone: userInfo.phone || undefined,
-        metadata: {
-          courseId: courseId,
-          email: userInfo.email
-        },
-        card: {
-          useEscrow: false,
-          useAppCardOnly: false,
-          useCardPoint: true,
-          useInternationalCardOnly: false,
-        },
-      });
+      };
+
+      // 선택적 파라미터 추가
+      if (userInfo.phone) {
+        paymentParams.customerMobilePhone = userInfo.phone;
+      }
+
+      await payment.requestPayment(paymentParams);
 
     } catch (error: any) {
       console.error('결제 실패:', error);
