@@ -111,36 +111,36 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
       },
       {
         title: 'Part 2 (Day 6-10)',
-        subtitle: '실전 수익화 에이전트 5종 완성',
+        subtitle: '실전 수익화 컨텐츠 자동 생성 에이전트',
         days: [
           { 
             day: 6, 
-            title: '블로그 자동화 에이전트', 
-            subtitle: 'SEO 최적화 콘텐츠 자동 생성',
+            title: '제품 판매를 하는 컨텐츠 만드는 에이전트', 
+            subtitle: '실습: Google OPAL로 판매 최적화 영상 자동 생성',
             hasQuiz: false 
           },
           { 
             day: 7, 
-            title: 'SNS 마케팅 에이전트', 
-            subtitle: '인스타그램, 페이스북 자동 포스팅',
+            title: '조회수를 올리는 컨텐츠 만드는 에이전트', 
+            subtitle: '실습: Google OPAL로 바이럴 컨텐츠 자동 생성',
             hasQuiz: false 
           },
           { 
             day: 8, 
-            title: '고객 응대 챗봇 에이전트', 
-            subtitle: '24시간 자동 고객 상담 시스템',
+            title: '읽어주는 컨텐츠 만드는 에이전트 (ASMR/지식 나눔)', 
+            subtitle: '실습: Google OPAL로 음성 기반 컨텐츠 자동 생성',
             hasQuiz: false 
           },
           { 
             day: 9, 
-            title: '데이터 분석 에이전트', 
-            subtitle: '엑셀/CSV 데이터 자동 분석 및 리포트 생성',
+            title: '15개 영상을 한 번에 생성하는 에이전트', 
+            subtitle: '실습: 대량 컨텐츠 자동 생성 시스템 구축',
             hasQuiz: false 
           },
           { 
             day: 10, 
-            title: '나만의 수익화 에이전트 완성하기', 
-            subtitle: '최종 프로젝트: 실전 배포 및 수익화 전략',
+            title: '최종 프로젝트: 분석부터 유튜브 업로드까지 완전 자동화', 
+            subtitle: '실전: 배운 모든 것을 활용한 수익화 자동화 시스템 완성',
             hasQuiz: true 
           }
         ]
