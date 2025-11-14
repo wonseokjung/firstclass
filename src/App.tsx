@@ -47,6 +47,9 @@ const UserDashboardPage = React.lazy(() => import('./components/pages/auth/UserD
 const PaymentSuccessPage = React.lazy(() => import('./components/pages/payment/PaymentSuccessPage'));
 const PaymentFailPage = React.lazy(() => import('./components/pages/payment/PaymentFailPage'));
 
+// 관리자 페이지
+const AdminEnrollmentFixPage = React.lazy(() => import('./components/pages/admin/AdminEnrollmentFixPage'));
+
 // 각 페이지 컴포넌트를 래핑해서 useNavigate 사용
 const MainPageWrapper = () => {
   const navigate = useNavigate();
@@ -400,6 +403,7 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/dashboard" element={<UserDashboardPageWrapper />} />
               <Route path="/payment/success" element={<PaymentSuccessPageWrapper />} />
               <Route path="/payment/fail" element={<PaymentFailPageWrapper />} />
+              <Route path="/admin/fix-enrollments" element={<AdminEnrollmentFixPage />} />
               {/* 멘토링 라우트들 제거됨 - 강의 사이트에 집중 */}
             </Routes>
           </Suspense>

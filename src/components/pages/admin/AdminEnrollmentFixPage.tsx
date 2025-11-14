@@ -1,0 +1,454 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import AzureTableService from '../../../services/azureTableService';
+import NavigationBar from '../../common/NavigationBar';
+
+interface Payment {
+  orderId: string;
+  name: string;
+  maskedEmail: string;
+  amount: number;
+  date: string;
+  realEmail?: string;
+  status?: 'pending' | 'processing' | 'success' | 'error' | 'skip';
+  message?: string;
+}
+
+const AdminEnrollmentFixPage: React.FC = () => {
+  const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [payments, setPayments] = useState<Payment[]>([
+    // 카드 결제 (완료)
+    { orderId: 'order_1763142702036_8jh73lg8k', name: '이*훈', maskedEmail: 'so********@gmail.com', amount: 45000, date: '2025-11-15 02:52:50' },
+    { orderId: 'order_1763142219298_jkablhyl2', name: '조*우', maskedEmail: 'rp*****@naver.com', amount: 45000, date: '2025-11-15 02:44:19', realEmail: 'rpflarh@naver.com' },
+    { orderId: 'order_1763141726397_rq7qgvils', name: '고*웅', maskedEmail: 'da*****@naver.com', amount: 45000, date: '2025-11-15 02:39:22' },
+    { orderId: 'order_1763141007765_kgxvqtib2', name: '유*', maskedEmail: 'rt*******@naver.com', amount: 45000, date: '2025-11-15 02:23:57' },
+    { orderId: 'order_1763140041405_jd0zvw0f1', name: '구*원', maskedEmail: 'ja********@naver.com', amount: 45000, date: '2025-11-15 02:08:32' },
+    { orderId: 'order_1763138358813_q9q2cld4o', name: '박*우', maskedEmail: 'da******@naver.com', amount: 45000, date: '2025-11-15 01:40:17' },
+    { orderId: 'order_1763138004936_nsk04uuaa', name: '김*영', maskedEmail: 'gi*******@naver.com', amount: 45000, date: '2025-11-15 01:34:01' },
+    { orderId: 'order_1763138027577_tckb9idii', name: '송*령', maskedEmail: 'sr******@gmail.com', amount: 45000, date: '2025-11-15 01:34:44' },
+    { orderId: 'order_1763137615363_vdep7so59', name: '유*아', maskedEmail: 'eo***@naver.com', amount: 45000, date: '2025-11-15 01:27:34' },
+    { orderId: 'order_1763135906666_2mb772b0d', name: '쥰*', maskedEmail: 'ap*******@gmail.com', amount: 45000, date: '2025-11-15 00:59:11' },
+    { orderId: 'order_1763134963184_awygk7xrd', name: '박*성', maskedEmail: 'bu*****@naver.com', amount: 45000, date: '2025-11-15 00:44:57' },
+    { orderId: 'order_1763134934252_o8mrw39um', name: '김*희', maskedEmail: 'ma******@naver.com', amount: 45000, date: '2025-11-15 00:42:44' },
+    { orderId: 'order_1763134635174_rm3gbxyvd', name: '김*석', maskedEmail: 'ha******@gmail.com', amount: 45000, date: '2025-11-15 00:38:08' },
+    { orderId: 'order_1763134582395_lzlvrfjrz', name: '김*주', maskedEmail: 'pe*******@gmail.com', amount: 45000, date: '2025-11-15 00:36:42' },
+    { orderId: 'order_1763133581189_l8pabrkys', name: '배*승', maskedEmail: 'js*******@gmail.com', amount: 45000, date: '2025-11-15 00:20:45' },
+    { orderId: 'order_1763133567233_6whgeil3v', name: '권*승', maskedEmail: 'fr**********@gmail.com', amount: 45000, date: '2025-11-15 00:20:27' },
+    { orderId: 'order_1763132772876_2hr6ho7qa', name: '러*', maskedEmail: 'qp**********@naver.com', amount: 45000, date: '2025-11-15 00:13:09' },
+    { orderId: 'order_1763133001219_myt8xdh90', name: '윤*미', maskedEmail: 'my*******@naver.com', amount: 45000, date: '2025-11-15 00:10:27' },
+    { orderId: 'order_1763132816315_x71m7mpxa', name: '최*리', maskedEmail: 'yo*******@gmail.com', amount: 45000, date: '2025-11-15 00:08:02' },
+    { orderId: 'order_1763132525010_t306zfbw8', name: '김*남', maskedEmail: 'rm*****@naver.com', amount: 45000, date: '2025-11-15 00:02:33' },
+    { orderId: 'order_1763132392339_zf3lc492c', name: '이*규', maskedEmail: 'ai*********@gmail.com', amount: 45000, date: '2025-11-15 00:00:28' },
+    { orderId: 'order_1763132202993_ez64fevoy', name: '안*혜', maskedEmail: 'an*********@gmail.com', amount: 45000, date: '2025-11-14 23:58:01' },
+    { orderId: 'order_1763132121894_xqoar4cxz', name: '상*규', maskedEmail: 'pi******@gma.com', amount: 45000, date: '2025-11-14 23:57:28' },
+    { orderId: 'order_1763131780228_k279wqdwf', name: '이*혁', maskedEmail: 'we*@dumy.co.kr', amount: 45000, date: '2025-11-14 23:50:18' },
+    { orderId: 'order_1763131629560_komm430dm', name: '배*곤', maskedEmail: 'bu*****@gmail.com', amount: 45000, date: '2025-11-14 23:49:16' },
+    { orderId: 'order_1763130851088_2xfupm5ku', name: '박*건', maskedEmail: 'al*****@naver.com', amount: 45000, date: '2025-11-14 23:45:15' },
+    { orderId: 'order_1763131104524_qsxd85kl1', name: '이*숙', maskedEmail: 'si********@naver.com', amount: 45000, date: '2025-11-14 23:42:06' },
+    { orderId: 'order_1763131263404_ze5tvqybj', name: '황*우', maskedEmail: 'ad****@naver.com', amount: 45000, date: '2025-11-14 23:41:49' },
+    { orderId: 'order_1763131053083_23r35ty10', name: '김*정', maskedEmail: 'a3*******@gmail.com', amount: 45000, date: '2025-11-14 23:38:11' },
+    { orderId: 'order_1763130959748_z16yqz9kn', name: '차*현', maskedEmail: 're*********@gmail.com', amount: 45000, date: '2025-11-14 23:36:51' },
+    { orderId: 'order_1763130817297_tnep2j3h0', name: '조*영', maskedEmail: 'pa********@gmail.com', amount: 45000, date: '2025-11-14 23:34:28' },
+    { orderId: 'order_1763129658781_jn6i6sgzu', name: '부*종', maskedEmail: 'go********@naver.com', amount: 45000, date: '2025-11-14 23:16:54' },
+    { orderId: 'order_1763129554784_1j4zr27zc', name: '추*란', maskedEmail: 'sm*************@gmail.com', amount: 45000, date: '2025-11-14 23:13:34' },
+    { orderId: 'order_1763129483293_bp5audbj2', name: '류*수', maskedEmail: 'bi******@gmail.com', amount: 45000, date: '2025-11-14 23:12:35' },
+    { orderId: 'order_1763129200206_fmex8mdcj', name: '안*영', maskedEmail: 'jy********@naver.com', amount: 45000, date: '2025-11-14 23:07:20' },
+    { orderId: 'order_1763128855375_33hi52bd0', name: '히********사', maskedEmail: 'hi*********@naver.com', amount: 45000, date: '2025-11-14 23:01:53' },
+    { orderId: 'order_1763128495255_rbsyp1esy', name: '윤*순', maskedEmail: 'a0**********@gmail.com', amount: 45000, date: '2025-11-14 22:55:21' },
+    { orderId: 'order_1763127873060_pg35yvjcn', name: '손*배', maskedEmail: 'mo******@hanmail.net', amount: 45000, date: '2025-11-14 22:45:46' },
+    { orderId: 'order_1763127759802_tzqj72io5', name: '김*옥', maskedEmail: 'ba*******@naver.com', amount: 45000, date: '2025-11-14 22:43:57' },
+    { orderId: 'order_1763127542333_1my99slrf', name: '유*식', maskedEmail: 'ko******@naver.com', amount: 45000, date: '2025-11-14 22:39:30' },
+    { orderId: 'order_1763127413358_00pfmqubk', name: '김*태', maskedEmail: 'me**********@gmail.com', amount: 45000, date: '2025-11-14 22:37:28' },
+    { orderId: 'order_1763127374575_k8su74bxy', name: '조*현', maskedEmail: 'li******@hanmail.net', amount: 45000, date: '2025-11-14 22:36:57' },
+    { orderId: 'order_1763126907221_jyvexsq9s', name: '강*욱', maskedEmail: 'ye*****@gmail.com', amount: 45000, date: '2025-11-14 22:29:07' },
+    { orderId: 'order_1763124658648_eeotk8rf3', name: '정*욱', maskedEmail: 'jj*****@naver.com', amount: 45000, date: '2025-11-14 21:52:06' },
+    { orderId: 'order_1763123333008_9nz2njdkd', name: 'KI******NG', maskedEmail: 'to*********@gmail.com', amount: 45000, date: '2025-11-14 21:29:51' },
+    { orderId: 'order_1763123019857_n5s0n0s7n', name: '이*훈', maskedEmail: '36*******@gmail.com', amount: 45000, date: '2025-11-14 21:27:31' },
+    { orderId: 'order_1763123066442_x42r2jwl9', name: '윤*라', maskedEmail: 'pa********@gmail.com', amount: 45000, date: '2025-11-14 21:25:05' },
+    { orderId: 'order_1763119397131_0dg1e91cv', name: '김*석', maskedEmail: 'hi******@gmail.com', amount: 45000, date: '2025-11-14 20:24:11' },
+    { orderId: 'order_1763119170051_j61dr32l1', name: '이*철', maskedEmail: 'to*******@gmail.com', amount: 45000, date: '2025-11-14 20:19:51' },
+    { orderId: 'order_1763047661084_rtbk4wihb', name: '최*숙', maskedEmail: 'ya********@gmail.com', amount: 45000, date: '2025-11-14 00:32:15' },
+    { orderId: 'order_1762939345276_oxuhria0o', name: '유*균', maskedEmail: 'qs******@naver.com', amount: 45000, date: '2025-11-12 18:23:14' },
+    { orderId: 'order_1762690778300_4bk0g6vd6', name: '김*훈', maskedEmail: 'a-*******@hanmail.net', amount: 45000, date: '2025-11-09 21:20:37' },
+    { orderId: 'order_1762658395612_ryh95sg9c', name: '편*영', maskedEmail: 'ha*********@gmail.com', amount: 45000, date: '2025-11-09 12:21:13' },
+    { orderId: 'order_1762629706579_6d2ixoa7d', name: '이*수', maskedEmail: 'do********@gmail.com', amount: 45000, date: '2025-11-09 04:28:26' },
+    { orderId: 'order_1762562428186_umasl29e5', name: '장*건', maskedEmail: '57*****@gmail.com', amount: 45000, date: '2025-11-08 09:41:10' },
+    { orderId: 'order_1762386790593_3kv1dru6s', name: '김*은', maskedEmail: 'je******@gmail.com', amount: 45000, date: '2025-11-06 08:54:57' },
+    { orderId: 'order_1761542676217_a9nbyc297', name: '최*진', maskedEmail: 'yu*******@gmail.com', amount: 45000, date: '2025-10-27 14:25:39' },
+    { orderId: 'order_1760971870005_c84c6pkhf', name: 'Ki********ng', maskedEmail: 'on******@naver.com', amount: 45000, date: '2025-10-20 23:52:24' },
+    { orderId: 'order_1760667306688_lgjmk2s8t', name: '정*석', maskedEmail: 'js******@naver.com', amount: 45000, date: '2025-10-17 11:16:24' },
+    { orderId: 'order_1760661392961_y8hwk51uj', name: '김*호', maskedEmail: 'ky****@gmail.com', amount: 45000, date: '2025-10-17 09:38:16' },
+    { orderId: 'order_1760528102242_vejmj66ux', name: '차*정', maskedEmail: 'mi****@naver.com', amount: 45000, date: '2025-10-15 20:35:32' },
+    { orderId: 'order_1760364259046_dp9frb7rf', name: '박*동', maskedEmail: 'in**@udmso.co.kr', amount: 45000, date: '2025-10-13 23:04:58' },
+    { orderId: 'order_1760360347773_l3nr8es8x', name: '이*', maskedEmail: 'no**********@naver.com', amount: 45000, date: '2025-10-13 22:00:15' },
+    { orderId: 'order_1760346338615_tawstmccv', name: 'te*****al', maskedEmail: 'te****@gmail.com', amount: 45000, date: '2025-10-13 18:07:22' }
+  ]);
+
+  const [searchEmail, setSearchEmail] = useState('');
+  const [processing, setProcessing] = useState(false);
+
+  useEffect(() => {
+    const checkAdmin = async () => {
+      const userSession = sessionStorage.getItem('aicitybuilders_user_session');
+      if (!userSession) {
+        alert('로그인이 필요합니다.');
+        navigate('/login');
+        return;
+      }
+
+      const user = JSON.parse(userSession);
+      if (user.email !== 'test10@gmail.com') {
+        alert('관리자 권한이 필요합니다.');
+        navigate('/');
+        return;
+      }
+
+      setIsAdmin(true);
+      setIsLoading(false);
+    };
+
+    checkAdmin();
+  }, [navigate]);
+
+  const handleEmailChange = (index: number, email: string) => {
+    const newPayments = [...payments];
+    newPayments[index].realEmail = email;
+    setPayments(newPayments);
+  };
+
+  const handleAddEnrollment = async (index: number) => {
+    const payment = payments[index];
+    
+    if (!payment.realEmail) {
+      alert('이메일을 입력해주세요.');
+      return;
+    }
+
+    const newPayments = [...payments];
+    newPayments[index].status = 'processing';
+    setPayments(newPayments);
+
+    try {
+      // 사용자 확인
+      const user = await AzureTableService.getUserByEmail(payment.realEmail);
+      
+      if (!user) {
+        newPayments[index].status = 'error';
+        newPayments[index].message = '사용자를 찾을 수 없습니다';
+        setPayments(newPayments);
+        return;
+      }
+
+      // 이미 등록되어 있는지 확인
+      if (user.enrolledCourses) {
+        const userData = JSON.parse(user.enrolledCourses);
+        const enrollments = Array.isArray(userData) ? userData : (userData.enrollments || []);
+        const alreadyEnrolled = enrollments.some((e: any) => e.courseId === '1002');
+        
+        if (alreadyEnrolled) {
+          newPayments[index].status = 'skip';
+          newPayments[index].message = '이미 등록되어 있습니다';
+          setPayments(newPayments);
+          return;
+        }
+      }
+
+      // 강의 추가
+      await AzureTableService.addPurchaseAndEnrollmentToUser({
+        email: payment.realEmail,
+        courseId: '1002',
+        title: 'ChatGPT AI AGENT 비기너편',
+        amount: payment.amount,
+        paymentMethod: 'card',
+        orderId: payment.orderId,
+        orderName: 'ChatGPT AI AGENT 비기너편'
+      });
+
+      newPayments[index].status = 'success';
+      newPayments[index].message = '✅ 등록 완료!';
+      setPayments(newPayments);
+
+    } catch (error: any) {
+      newPayments[index].status = 'error';
+      newPayments[index].message = error.message || '오류 발생';
+      setPayments(newPayments);
+    }
+  };
+
+  const handleBatchProcess = async () => {
+    if (!window.confirm(`${payments.filter(p => p.realEmail && !p.status).length}개 항목을 일괄 처리하시겠습니까?`)) {
+      return;
+    }
+
+    setProcessing(true);
+
+    for (let i = 0; i < payments.length; i++) {
+      const payment = payments[i];
+      
+      // 이메일이 있고 아직 처리되지 않은 항목만
+      if (payment.realEmail && !payment.status) {
+        await handleAddEnrollment(i);
+        // API 제한 방지
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+    }
+
+    setProcessing(false);
+    alert('일괄 처리가 완료되었습니다!');
+  };
+
+  if (isLoading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        minHeight: '100vh' 
+      }}>
+        <Loader size={48} className="animate-spin" />
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return null;
+  }
+
+  const stats = {
+    total: payments.length,
+    completed: payments.filter(p => p.status === 'success').length,
+    skipped: payments.filter(p => p.status === 'skip').length,
+    errors: payments.filter(p => p.status === 'error').length,
+    pending: payments.filter(p => p.realEmail && !p.status).length
+  };
+
+  return (
+    <div className="masterclass-container" style={{ minHeight: '100vh', background: '#f8fafc' }}>
+      <NavigationBar onBack={() => navigate('/')} breadcrumbText="관리자 - 수강 정보 수정" />
+
+      <div style={{ maxWidth: '1600px', margin: '0 auto', padding: '40px 20px' }}>
+        {/* 헤더 */}
+        <div style={{ 
+          background: 'linear-gradient(135deg, #ef4444, #dc2626)', 
+          borderRadius: '20px', 
+          padding: '40px', 
+          marginBottom: '40px',
+          color: 'white'
+        }}>
+          <h1 style={{ fontSize: '2rem', fontWeight: '900', marginBottom: '10px' }}>
+            🔧 수강 정보 일괄 수정
+          </h1>
+          <p style={{ fontSize: '1.1rem', opacity: 0.9 }}>
+            결제는 완료되었지만 enrolledCourses가 없는 사용자들에게 강의를 추가합니다
+          </p>
+        </div>
+
+        {/* 통계 */}
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+          gap: '20px', 
+          marginBottom: '30px' 
+        }}>
+          <div style={{ 
+            background: 'white', 
+            padding: '20px', 
+            borderRadius: '12px', 
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
+          }}>
+            <div style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '5px' }}>전체</div>
+            <div style={{ fontSize: '2rem', fontWeight: '700', color: '#1f2937' }}>{stats.total}</div>
+          </div>
+          <div style={{ 
+            background: 'white', 
+            padding: '20px', 
+            borderRadius: '12px', 
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
+          }}>
+            <div style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '5px' }}>완료</div>
+            <div style={{ fontSize: '2rem', fontWeight: '700', color: '#10b981' }}>{stats.completed}</div>
+          </div>
+          <div style={{ 
+            background: 'white', 
+            padding: '20px', 
+            borderRadius: '12px', 
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
+          }}>
+            <div style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '5px' }}>건너뜀</div>
+            <div style={{ fontSize: '2rem', fontWeight: '700', color: '#f59e0b' }}>{stats.skipped}</div>
+          </div>
+          <div style={{ 
+            background: 'white', 
+            padding: '20px', 
+            borderRadius: '12px', 
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
+          }}>
+            <div style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '5px' }}>오류</div>
+            <div style={{ fontSize: '2rem', fontWeight: '700', color: '#ef4444' }}>{stats.errors}</div>
+          </div>
+          <div style={{ 
+            background: 'white', 
+            padding: '20px', 
+            borderRadius: '12px', 
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
+          }}>
+            <div style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '5px' }}>대기중</div>
+            <div style={{ fontSize: '2rem', fontWeight: '700', color: '#0ea5e9' }}>{stats.pending}</div>
+          </div>
+        </div>
+
+        {/* 일괄 처리 버튼 */}
+        {stats.pending > 0 && (
+          <div style={{ marginBottom: '30px', textAlign: 'center' }}>
+            <button
+              onClick={handleBatchProcess}
+              disabled={processing}
+              style={{
+                padding: '15px 40px',
+                borderRadius: '12px',
+                border: 'none',
+                background: processing ? '#94a3b8' : 'linear-gradient(135deg, #10b981, #059669)',
+                color: 'white',
+                fontSize: '1.1rem',
+                fontWeight: '700',
+                cursor: processing ? 'not-allowed' : 'pointer',
+                boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                margin: '0 auto'
+              }}
+            >
+              {processing && <Loader size={20} className="animate-spin" />}
+              {processing ? '처리 중...' : `🚀 일괄 처리 (${stats.pending}건)`}
+            </button>
+          </div>
+        )}
+
+        {/* 결제 목록 */}
+        <div style={{ 
+          background: 'white', 
+          borderRadius: '20px', 
+          padding: '30px', 
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
+        }}>
+          <div style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
+            <input
+              type="text"
+              placeholder="이메일로 검색..."
+              value={searchEmail}
+              onChange={(e) => setSearchEmail(e.target.value)}
+              style={{
+                flex: 1,
+                padding: '12px',
+                borderRadius: '8px',
+                border: '1px solid #e2e8f0',
+                fontSize: '1rem'
+              }}
+            />
+          </div>
+
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
+                  <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>이름</th>
+                  <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>마스킹 이메일</th>
+                  <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>실제 이메일</th>
+                  <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>날짜</th>
+                  <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>상태</th>
+                  <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>작업</th>
+                </tr>
+              </thead>
+              <tbody>
+                {payments
+                  .filter(p => !searchEmail || p.realEmail?.includes(searchEmail) || p.maskedEmail.includes(searchEmail) || p.name.includes(searchEmail))
+                  .map((payment, index) => (
+                  <tr key={payment.orderId} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                    <td style={{ padding: '12px' }}>{payment.name}</td>
+                    <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.9rem' }}>{payment.maskedEmail}</td>
+                    <td style={{ padding: '12px' }}>
+                      <input
+                        type="email"
+                        value={payment.realEmail || ''}
+                        onChange={(e) => handleEmailChange(index, e.target.value)}
+                        placeholder="실제 이메일 입력"
+                        disabled={!!payment.status}
+                        style={{
+                          padding: '8px 12px',
+                          borderRadius: '6px',
+                          border: '1px solid #e2e8f0',
+                          fontSize: '0.9rem',
+                          width: '100%',
+                          maxWidth: '300px',
+                          background: payment.status ? '#f8fafc' : 'white'
+                        }}
+                      />
+                    </td>
+                    <td style={{ padding: '12px', fontSize: '0.85rem', color: '#64748b' }}>
+                      {payment.date.split(' ')[0]}
+                    </td>
+                    <td style={{ padding: '12px' }}>
+                      {payment.status === 'success' && (
+                        <span style={{ color: '#10b981', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                          <CheckCircle size={16} /> 완료
+                        </span>
+                      )}
+                      {payment.status === 'error' && (
+                        <span style={{ color: '#ef4444', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                          <AlertCircle size={16} /> 오류
+                        </span>
+                      )}
+                      {payment.status === 'skip' && (
+                        <span style={{ color: '#f59e0b' }}>건너뜀</span>
+                      )}
+                      {payment.status === 'processing' && (
+                        <span style={{ color: '#0ea5e9', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                          <Loader size={16} className="animate-spin" /> 처리중
+                        </span>
+                      )}
+                      {!payment.status && payment.realEmail && (
+                        <span style={{ color: '#0ea5e9' }}>대기중</span>
+                      )}
+                    </td>
+                    <td style={{ padding: '12px' }}>
+                      {!payment.status && (
+                        <button
+                          onClick={() => handleAddEnrollment(index)}
+                          disabled={!payment.realEmail}
+                          style={{
+                            padding: '8px 16px',
+                            borderRadius: '6px',
+                            border: 'none',
+                            background: payment.realEmail ? 'linear-gradient(135deg, #0ea5e9, #0284c7)' : '#e2e8f0',
+                            color: payment.realEmail ? 'white' : '#94a3b8',
+                            fontSize: '0.9rem',
+                            fontWeight: '600',
+                            cursor: payment.realEmail ? 'pointer' : 'not-allowed'
+                          }}
+                        >
+                          추가
+                        </button>
+                      )}
+                      {payment.message && (
+                        <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '5px' }}>
+                          {payment.message}
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AdminEnrollmentFixPage;
+
