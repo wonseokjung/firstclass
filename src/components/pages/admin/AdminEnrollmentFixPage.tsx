@@ -19,6 +19,8 @@ const AdminEnrollmentFixPage: React.FC = () => {
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [allUsers, setAllUsers] = useState<any[]>([]);
+  const [showUserTable, setShowUserTable] = useState(false);
   const [payments, setPayments] = useState<Payment[]>([
     // 카드 결제 (완료)
     { orderId: 'order_1763142702036_8jh73lg8k', name: '이*훈', maskedEmail: 'so********@gmail.com', amount: 45000, date: '2025-11-15 02:52:50' },
@@ -112,6 +114,20 @@ const AdminEnrollmentFixPage: React.FC = () => {
 
     checkAdmin();
   }, [navigate]);
+
+  const loadAllUsers = async () => {
+    try {
+      setIsLoading(true);
+      const users = await AzureTableService.getAllUsers();
+      setAllUsers(users);
+      setShowUserTable(true);
+      setIsLoading(false);
+    } catch (error) {
+      console.error('사용자 로드 실패:', error);
+      alert('사용자 목록을 불러올 수 없습니다.');
+      setIsLoading(false);
+    }
+  };
 
   const handleEmailChange = (index: number, email: string) => {
     const newPayments = [...payments];
@@ -244,6 +260,41 @@ const AdminEnrollmentFixPage: React.FC = () => {
           <p style={{ fontSize: '1.1rem', opacity: 0.9 }}>
             결제는 완료되었지만 enrolledCourses가 없는 사용자들에게 강의를 추가합니다
           </p>
+          <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
+            <button
+              onClick={loadAllUsers}
+              style={{
+                padding: '12px 24px',
+                borderRadius: '10px',
+                border: 'none',
+                background: 'white',
+                color: '#ef4444',
+                fontSize: '1rem',
+                fontWeight: '700',
+                cursor: 'pointer',
+                boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
+              }}
+            >
+              📋 모든 사용자 보기 ({allUsers.length})
+            </button>
+            {showUserTable && (
+              <button
+                onClick={() => setShowUserTable(false)}
+                style={{
+                  padding: '12px 24px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: 'rgba(255,255,255,0.2)',
+                  color: 'white',
+                  fontSize: '1rem',
+                  fontWeight: '700',
+                  cursor: 'pointer'
+                }}
+              >
+                📊 결제 내역 보기
+              </button>
+            )}
+          </div>
         </div>
 
         {/* 통계 */}
@@ -300,8 +351,110 @@ const AdminEnrollmentFixPage: React.FC = () => {
           </div>
         </div>
 
+        {/* 사용자 테이블 */}
+        {showUserTable && (
+          <div style={{ 
+            background: 'white', 
+            borderRadius: '20px', 
+            padding: '30px', 
+            marginBottom: '30px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
+          }}>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '20px' }}>
+              👥 전체 사용자 ({allUsers.length}명)
+            </h2>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>이름</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>이메일</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>가입일</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>수강 강의</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>작업</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {allUsers
+                    .filter(u => !searchEmail || u.email?.includes(searchEmail) || u.name?.includes(searchEmail))
+                    .map((user, index) => {
+                    const enrolledData = user.enrolledCourses ? JSON.parse(user.enrolledCourses) : null;
+                    const enrollments = Array.isArray(enrolledData) ? enrolledData : (enrolledData?.enrollments || []);
+                    const hasCourse = enrollments.some((e: any) => e.courseId === '1002');
+                    
+                    return (
+                      <tr key={index} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                        <td style={{ padding: '12px' }}>{user.name || '-'}</td>
+                        <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.9rem' }}>
+                          {user.email}
+                        </td>
+                        <td style={{ padding: '12px', fontSize: '0.85rem', color: '#64748b' }}>
+                          {user.createdAt ? new Date(user.createdAt).toLocaleDateString('ko-KR') : '-'}
+                        </td>
+                        <td style={{ padding: '12px' }}>
+                          {hasCourse ? (
+                            <span style={{ 
+                              color: '#10b981', 
+                              background: '#f0fdf4', 
+                              padding: '4px 12px', 
+                              borderRadius: '12px', 
+                              fontSize: '0.85rem',
+                              fontWeight: '600'
+                            }}>
+                              ✓ AI Agent 비기너
+                            </span>
+                          ) : (
+                            <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>없음</span>
+                          )}
+                        </td>
+                        <td style={{ padding: '12px' }}>
+                          {!hasCourse && (
+                            <button
+                              onClick={async () => {
+                                if (!window.confirm(`${user.name || user.email}에게 강의를 추가하시겠습니까?`)) return;
+                                
+                                try {
+                                  await AzureTableService.addPurchaseAndEnrollmentToUser({
+                                    email: user.email,
+                                    courseId: '1002',
+                                    title: 'ChatGPT AI AGENT 비기너편',
+                                    amount: 45000,
+                                    paymentMethod: 'card',
+                                    orderId: `manual_${Date.now()}`,
+                                    orderName: 'ChatGPT AI AGENT 비기너편'
+                                  });
+                                  alert('강의가 추가되었습니다!');
+                                  loadAllUsers(); // 새로고침
+                                } catch (error: any) {
+                                  alert(`오류: ${error.message}`);
+                                }
+                              }}
+                              style={{
+                                padding: '6px 14px',
+                                borderRadius: '6px',
+                                border: 'none',
+                                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                                color: 'white',
+                                fontSize: '0.85rem',
+                                fontWeight: '600',
+                                cursor: 'pointer'
+                              }}
+                            >
+                              강의 추가
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
         {/* 일괄 처리 버튼 */}
-        {stats.pending > 0 && (
+        {!showUserTable && stats.pending > 0 && (
           <div style={{ marginBottom: '30px', textAlign: 'center' }}>
             <button
               onClick={handleBatchProcess}
@@ -329,6 +482,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
         )}
 
         {/* 결제 목록 */}
+        {!showUserTable && (
         <div style={{ 
           background: 'white', 
           borderRadius: '20px', 
@@ -445,6 +599,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
             </table>
           </div>
         </div>
+        )}
       </div>
     </div>
   );

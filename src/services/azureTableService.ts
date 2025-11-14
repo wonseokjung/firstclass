@@ -481,6 +481,37 @@ export class AzureTableService {
 
   // 사용자 관련 메서드 (Azure 우선, LocalStorage fallback)
 
+  // 모든 사용자 가져오기 (관리자용)
+  static async getAllUsers(): Promise<User[]> {
+    try {
+      console.log('🔍 Azure Users 테이블에서 모든 사용자 조회 중...');
+      
+      const baseUrl = AZURE_SAS_URLS.users;
+      const url = `${baseUrl}`;
+      
+      const response = await this.retryRequest(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json;odata=nometadata',
+          'x-ms-version': '2019-02-02'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch users: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const users = data.value || [];
+      
+      console.log(`✅ 총 ${users.length}명의 사용자 조회 완료`);
+      return users;
+    } catch (error: any) {
+      console.error('❌ 모든 사용자 조회 실패:', error.message);
+      return [];
+    }
+  }
+
   static async getUserByEmail(email: string): Promise<User | null> {
     try {
       // 🚀 Azure에서 사용자 검색 시도!
