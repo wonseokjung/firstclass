@@ -93,15 +93,21 @@ export const createPaymentRequest = (orderData: {
   orderId: string;
   orderName: string;
   customerName?: string;
+  courseId?: string;
 }) => {
   const config = getPaymentConfig();
+  
+  // courseId가 있으면 successUrl에 추가
+  const successUrl = orderData.courseId 
+    ? `${config.successUrl}?course=${orderData.courseId}`
+    : config.successUrl;
   
   return {
     amount: orderData.amount,
     orderId: orderData.orderId,
     orderName: orderData.orderName,
     customerName: orderData.customerName || 'AI City Builders 수강생',
-    successUrl: config.successUrl,
+    successUrl: successUrl,
     failUrl: config.failUrl,
     // 추가 설정
     card: {

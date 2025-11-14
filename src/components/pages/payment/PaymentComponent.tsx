@@ -74,7 +74,8 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
         amount: price,
         orderId: orderId,
         orderName: courseTitle,
-        customerName: userInfo?.name || 'AI City Builders 수강생'
+        customerName: userInfo?.name || 'AI City Builders 수강생',
+        courseId: courseId
       });
 
       console.log('💳 결제 요청:', paymentRequest);
