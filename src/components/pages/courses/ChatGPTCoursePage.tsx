@@ -81,10 +81,35 @@ const ChatGPTCoursePage: React.FC<ChatGPTCoursePageProps> = ({ onBack }) => {
   const completedLessonsCount = getCompletedLessonsCount('chatgpt-course', userEmail);
 
   const getEmbedUrl = (url: string) => {
-    // YouTube URL 처리
-    const youtubeMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
-    if (youtubeMatch) {
-      return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
+    // YouTube URL 처리 (모든 형식 지원)
+    let videoId = null;
+    
+    // youtu.be 형식
+    const youtubeShort = url.match(/youtu\.be\/([^?&\n]+)/);
+    if (youtubeShort) {
+      videoId = youtubeShort[1];
+    }
+    
+    // youtube.com/watch?v= 형식
+    const youtubeLong = url.match(/youtube\.com\/watch\?v=([^&\n]+)/);
+    if (youtubeLong) {
+      videoId = youtubeLong[1];
+    }
+    
+    // youtube.com/embed/ 형식
+    const youtubeEmbed = url.match(/youtube\.com\/embed\/([^?&\n]+)/);
+    if (youtubeEmbed) {
+      videoId = youtubeEmbed[1];
+    }
+
+    // youtube.com/live/ 형식
+    const youtubeLive = url.match(/youtube\.com\/live\/([^?&\n]+)/);
+    if (youtubeLive) {
+      videoId = youtubeLive[1];
+    }
+    
+    if (videoId) {
+      return `https://www.youtube.com/embed/${videoId}`;
     }
     
     // Vimeo URL 처리
@@ -264,11 +289,11 @@ const ChatGPTCoursePage: React.FC<ChatGPTCoursePageProps> = ({ onBack }) => {
                 <div className="video-player">
                   <iframe
                     ref={iframeRef}
-                    src={`${getEmbedUrl(videoUrl)}?enablejsapi=1&controls=1`}
+                    src={`${getEmbedUrl(videoUrl)}?enablejsapi=1&controls=1&playsinline=1&modestbranding=1&rel=0`}
                     title={currentLessonData?.title}
                     frameBorder="0"
                     allowFullScreen
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   ></iframe>
                 </div>
               ) : (
