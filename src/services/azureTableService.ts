@@ -1567,6 +1567,33 @@ export class AzureTableService {
 
   // === 강의 결제 상태 확인 메서드 ===
 
+  // 사용자의 구매한 강의 목록 가져오기
+  static async getUserPurchasedCourses(email: string): Promise<any[]> {
+    try {
+      console.log('🛒 구매 강의 목록 조회:', email);
+      
+      const user = await this.getUserByEmail(email);
+      if (!user || !user.enrolledCourses) {
+        console.log('❌ 구매 정보가 없음:', email);
+        return [];
+      }
+
+      // 수강 정보 파싱
+      const userData = JSON.parse(user.enrolledCourses);
+      let payments: any[] = [];
+
+      if (userData.payments && Array.isArray(userData.payments)) {
+        payments = userData.payments;
+      }
+
+      console.log('🛒 구매 강의 목록:', payments);
+      return payments;
+    } catch (error: any) {
+      console.error('❌ 구매 강의 목록 조회 실패:', error.message);
+      return [];
+    }
+  }
+
   // 특정 강의의 결제 상태 확인
   static async checkCoursePayment(email: string, courseId: string): Promise<{isPaid: boolean, paymentInfo?: any}> {
     try {

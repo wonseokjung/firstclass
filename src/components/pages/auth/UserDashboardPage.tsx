@@ -15,6 +15,7 @@ interface UserStats {
   inProgressCourses: number;
   totalLearningTime: number;
   enrolledCourses: any[];
+  purchasedCourses: any[];
 }
 
 interface RewardData {
@@ -34,7 +35,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
     completedCourses: 0,
     inProgressCourses: 0,
     totalLearningTime: 0,
-    enrolledCourses: []
+    enrolledCourses: [],
+    purchasedCourses: []
   });
   const [, setRewardData] = useState<RewardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -58,12 +60,18 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
         const enrollments = await AzureTableService.getUserEnrollmentsByEmail(parsedUserInfo.email);
         console.log('📋 대시보드에서 가져온 수강 정보:', enrollments);
         
+        // 구매한 강의 정보 가져오기
+        console.log('🛒 대시보드에서 구매 내역 조회 시작:', parsedUserInfo.email);
+        const purchases = await AzureTableService.getUserPurchasedCourses(parsedUserInfo.email);
+        console.log('💳 대시보드에서 가져온 구매 내역:', purchases);
+        
         const stats: UserStats = {
           totalCourses: enrollments.length,
           completedCourses: enrollments.filter((course: any) => course.status === 'completed').length,
           inProgressCourses: enrollments.filter((course: any) => course.status === 'active').length,
           totalLearningTime: enrollments.reduce((total: number, course: any) => total + (course.learningTimeMinutes || 0), 0),
-          enrolledCourses: enrollments
+          enrolledCourses: enrollments,
+          purchasedCourses: purchases
         };
 
         setUserStats(stats);
@@ -758,6 +766,222 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
           )}
         </div>
       </section>
+
+      {/* 구매한 강의 섹션 */}
+      {userStats.purchasedCourses.length > 0 && (
+        <section style={{ 
+          padding: 'clamp(60px, 10vw, 100px) 0', 
+          background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)'
+        }}>
+          <div style={{
+            maxWidth: '1400px',
+            margin: '0 auto',
+            padding: '0 clamp(20px, 4vw, 40px)'
+          }}>
+            <div style={{ textAlign: 'center', marginBottom: 'clamp(40px, 6vw, 60px)' }}>
+              <div style={{
+                display: 'inline-block',
+                background: 'linear-gradient(135deg, #10b981, #059669)',
+                padding: '8px 20px',
+                borderRadius: '50px',
+                marginBottom: '20px',
+                boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
+              }}>
+                <span style={{ 
+                  fontSize: '0.9rem', 
+                  color: 'white',
+                  fontWeight: '700',
+                  letterSpacing: '0.5px'
+                }}>
+                  MY PURCHASES
+                </span>
+              </div>
+              <h2 style={{ 
+                fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
+                fontWeight: '900',
+                marginBottom: '15px',
+                color: '#1f2937'
+              }}>
+                💳 구매한 강의
+              </h2>
+              <p style={{ 
+                fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                color: '#64748b',
+                maxWidth: '600px',
+                margin: '0 auto',
+                lineHeight: '1.6'
+              }}>
+                결제 완료된 모든 강의 내역을 확인하세요
+              </p>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+              gap: 'clamp(20px, 4vw, 30px)',
+              maxWidth: '1200px',
+              margin: '0 auto'
+            }}>
+              {userStats.purchasedCourses.map((purchase, index) => (
+                <div key={index} style={{
+                  background: 'white',
+                  border: '2px solid #e2e8f0',
+                  borderRadius: '20px',
+                  padding: 'clamp(24px, 4vw, 32px)',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 8px 25px rgba(16, 185, 129, 0.12)',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-8px)';
+                  e.currentTarget.style.boxShadow = '0 15px 40px rgba(16, 185, 129, 0.2)';
+                  e.currentTarget.style.borderColor = '#10b981';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(16, 185, 129, 0.12)';
+                  e.currentTarget.style.borderColor = '#e2e8f0';
+                }}
+                >
+                  {/* 상단 배지 */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '20px',
+                    right: '20px',
+                    background: 'linear-gradient(135deg, #10b981, #059669)',
+                    color: 'white',
+                    padding: '6px 14px',
+                    borderRadius: '20px',
+                    fontSize: '0.75rem',
+                    fontWeight: '700',
+                    boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
+                  }}>
+                    ✓ 결제완료
+                  </div>
+
+                  <div style={{ marginBottom: '20px', paddingRight: '80px' }}>
+                    <h3 style={{ 
+                      fontSize: '1.2rem',
+                      fontWeight: '700',
+                      color: '#1f2937',
+                      marginBottom: '12px'
+                    }}>
+                      {purchase.courseName || purchase.courseTitle || '강의명'}
+                    </h3>
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      marginBottom: '8px'
+                    }}>
+                      <Calendar size={16} color="#64748b" />
+                      <span style={{ fontSize: '0.9rem', color: '#64748b' }}>
+                        구매일: {new Date(purchase.purchasedAt || purchase.timestamp).toLocaleDateString('ko-KR')}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div style={{
+                    borderTop: '1px solid #f1f5f9',
+                    paddingTop: '20px',
+                    marginTop: '20px'
+                  }}>
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '15px'
+                    }}>
+                      <div>
+                        <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '4px' }}>
+                          결제 금액
+                        </div>
+                        <div style={{ 
+                          fontSize: '1.3rem', 
+                          fontWeight: '800', 
+                          color: '#10b981'
+                        }}>
+                          ₩{(purchase.amount || 0).toLocaleString()}
+                        </div>
+                      </div>
+                      <div style={{ textAlign: 'right' }}>
+                        <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '4px' }}>
+                          주문번호
+                        </div>
+                        <div style={{ 
+                          fontSize: '0.85rem', 
+                          fontWeight: '600', 
+                          color: '#475569',
+                          fontFamily: 'monospace'
+                        }}>
+                          {purchase.orderId?.slice(0, 12) || 'N/A'}...
+                        </div>
+                      </div>
+                    </div>
+
+                    {purchase.paymentMethod && (
+                      <div style={{
+                        background: '#f8fafc',
+                        padding: '12px',
+                        borderRadius: '10px',
+                        marginBottom: '15px'
+                      }}>
+                        <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '4px' }}>
+                          결제 수단
+                        </div>
+                        <div style={{ fontSize: '0.95rem', fontWeight: '600', color: '#1f2937' }}>
+                          {purchase.paymentMethod === 'CARD' ? '💳 카드 결제' : purchase.paymentMethod}
+                        </div>
+                      </div>
+                    )}
+
+                    <button
+                      onClick={() => {
+                        // 강의 페이지로 이동
+                        const courseRoutes: { [key: string]: string } = {
+                          '1002': '/chatgpt-agent-beginner',
+                          '999': '/ai-building-course',
+                        };
+                        const route = courseRoutes[purchase.courseId] || '/';
+                        navigate(route);
+                      }}
+                      style={{
+                        width: '100%',
+                        padding: '14px',
+                        borderRadius: '12px',
+                        border: 'none',
+                        background: 'linear-gradient(135deg, #10b981, #059669)',
+                        color: 'white',
+                        fontSize: '1rem',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
+                      }}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(16, 185, 129, 0.4)';
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.3)';
+                      }}
+                    >
+                      <Play size={18} />
+                      강의 시작하기
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* 학습 진행률 요약 섹션 */}
       {userStats.enrolledCourses.length > 0 && (
