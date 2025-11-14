@@ -192,7 +192,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     ]
   };
 
-  const originalPrice = 190000;
+  const originalPrice = 95000;
   const earlyBirdPrice = 45000;
 
   // D-Day 카운트다운
@@ -430,7 +430,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   💰 <strong>얼리버드 가격:</strong> ₩45,000 (지금 결제)
                 </p>
                 <p style={{ marginBottom: '15px' }}>
-                  💸 <strong>정가:</strong> ₩190,000 (11월 15일 이후)
+                  💸 <strong>정가:</strong> ₩95,000 (11월 15일 이후)
                 </p>
                 <p style={{ marginBottom: '0', fontWeight: '600', color: '#0ea5e9' }}>
                   🎓 <strong>수강 가능일:</strong> 2025년 11월 15일부터
@@ -453,7 +453,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   <strong style={{ color: '#0369a1' }}>💡 안내:</strong><br/>
                   지금 ₩45,000 얼리버드 가격으로 결제하시면,<br/>
                   2025년 11월 15일부터 강의를 수강하실 수 있습니다.<br/>
-                  런칭 후 수강 시 ₩190,000으로 인상됩니다.
+                  런칭 후 수강 시 ₩95,000으로 인상됩니다.
                 </p>
               </div>
 
@@ -807,7 +807,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   borderRadius: '25px',
                   boxShadow: '0 4px 12px rgba(239, 68, 68, 0.4)'
               }}>
-                🔥 76% 할인 (얼리버드 특가)
+                🔥 53% 할인 (얼리버드 특가)
               </div>
               <div style={{
                   fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
@@ -818,7 +818,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   borderRadius: '25px',
                   boxShadow: '0 4px 12px rgba(245, 158, 11, 0.4)'
               }}>
-                ⏰ 런칭일(2025.11.15)부터 19만원으로 인상 예정
+                ⏰ 런칭일(2025.11.15)부터 9만 5천원으로 인상 예정
                 </div>
               </div>
             </div>
