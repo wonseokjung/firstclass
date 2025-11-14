@@ -89,28 +89,22 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
       console.log('✅ 결제 객체 생성 성공:', payment);
       console.log('🔍 payment.requestPayment 함수 존재 여부:', typeof payment.requestPayment);
 
-      // 카드 결제 요청 (공식 문서 방식)
+      // 카드 결제 요청 (토스페이먼츠 SDK 공식 방식)
       console.log('💳 카드 결제 요청 시도...');
       
-      // 기본 결제 요청 파라미터
-      const paymentParams: any = {
+      await payment.requestPayment({
         method: "CARD",
-        amount: paymentRequest.amount,
-        currency: "KRW",
+        amount: {
+          currency: "KRW",
+          value: paymentRequest.amount,
+        },
         orderId: paymentRequest.orderId,
         orderName: paymentRequest.orderName,
         successUrl: paymentRequest.successUrl,
         failUrl: paymentRequest.failUrl,
         customerEmail: userInfo.email,
         customerName: paymentRequest.customerName,
-      };
-
-      // 선택적 파라미터 추가
-      if (userInfo.phone) {
-        paymentParams.customerMobilePhone = userInfo.phone;
-      }
-
-      await payment.requestPayment(paymentParams);
+      });
 
     } catch (error: any) {
       console.error('결제 실패:', error);
