@@ -377,7 +377,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span>📧</span>
-              <span style={{ color: '#0ea5e9', fontWeight: '500' }}>contact@aicitybuilders.com</span>
+              <span style={{ color: '#0ea5e9', fontWeight: '500' }}>jay@connexionai.kr</span>
             </div>
           </div>
           <p style={{ color: '#666666', fontSize: '14px', marginTop: '16px' }}>
@@ -400,7 +400,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
           
           <div className="footer-section">
             <h4>연락처</h4>
-            <p>📧 contact@aicitybuilders.com</p>
+            <p>📧 jay@connexionai.kr</p>
           </div>
           
           <div className="footer-section">

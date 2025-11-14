@@ -349,7 +349,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
               • 결제 완료 후 즉시 강의 수강이 가능합니다
             </p>
             <p style={{ fontSize: '0.9rem', color: '#0c5460' }}>
-              • 결제 관련 문의: support@aicitybuilders.com
+              • 결제 관련 문의: jay@connexionai.kr
             </p>
           </div>
         )}
