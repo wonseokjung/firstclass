@@ -81,35 +81,30 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             day: 1, 
             title: '나의 목표에 맞는 에이전트 찾기 - ChatGPT vs ChatGPT Agent', 
             subtitle: '이론: ChatGPT vs Agent, AI의 전체 구조 이해 | 실습: ChatGPT 회원가입 → 에이전트 API 등록',
-            duration: '60분', 
             hasQuiz: true 
           },
           { 
             day: 2, 
             title: 'Work Flow Design 기초 - 나의 일을 AI가 이해할 수 있게 쪼개기', 
             subtitle: '이론: 논리적 사고 구조 | 실습: 유튜브 컨텐츠 기획하는 에이전트 만들기',
-            duration: '60분', 
             hasQuiz: false 
           },
           { 
             day: 3, 
             title: 'GPT-5부터 o3까지 - Agent Builder에서 선택할 수 있는 AI 모델 총정리', 
             subtitle: '이론: LLM이란? GPT 모델의 차이, 가격 최적화 전략 | 실습: 모델별 응답 비교 실험',
-            duration: '60분', 
             hasQuiz: true 
           },
           { 
             day: 4, 
-            title: 'OpenAI AgentBuilder VS Google OPAL - 나에게 맞는 것은?', 
-            subtitle: '텍스트에 강한 에이전트 빌더 vs 멀티모달 OPAL',
-            duration: '60분', 
+            title: '인스타그램 포스팅 에이전트 만들기 - OpenAI vs Google OPAL 비교', 
+            subtitle: '실습: 두 플랫폼으로 같은 에이전트 만들어보며 차이점 체감하기',
             hasQuiz: false 
           },
           { 
             day: 5, 
             title: '유튜브 컨텐츠 수익화하는 인공지능 에이전트 만들기', 
             subtitle: '실습: Google OPAL로 실전 프로젝트',
-            duration: '90분', 
             hasQuiz: true 
           }
         ]
@@ -122,35 +117,30 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             day: 6, 
             title: '블로그 자동화 에이전트', 
             subtitle: 'SEO 최적화 콘텐츠 자동 생성',
-            duration: '90분', 
             hasQuiz: false 
           },
           { 
             day: 7, 
             title: 'SNS 마케팅 에이전트', 
             subtitle: '인스타그램, 페이스북 자동 포스팅',
-            duration: '90분', 
             hasQuiz: false 
           },
           { 
             day: 8, 
             title: '고객 응대 챗봇 에이전트', 
             subtitle: '24시간 자동 고객 상담 시스템',
-            duration: '90분', 
             hasQuiz: false 
           },
           { 
             day: 9, 
             title: '데이터 분석 에이전트', 
             subtitle: '엑셀/CSV 데이터 자동 분석 및 리포트 생성',
-            duration: '90분', 
             hasQuiz: false 
           },
           { 
             day: 10, 
             title: '나만의 수익화 에이전트 완성하기', 
             subtitle: '최종 프로젝트: 실전 배포 및 수익화 전략',
-            duration: '120분', 
             hasQuiz: true 
           }
         ]
@@ -421,8 +411,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                           alignItems: 'center',
                           gap: '8px'
                         }}>
-                          ⏱️ {lesson.duration}
-                          {lesson.hasQuiz && <span>📝 퀴즈</span>}
+                          {lesson.hasQuiz && <span>📝 퀴즈 포함</span>}
                         </div>
                       </div>
                     </div>
