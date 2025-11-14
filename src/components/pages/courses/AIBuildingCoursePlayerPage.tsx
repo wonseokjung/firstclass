@@ -252,8 +252,12 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
           }
         } else {
           console.log('❌ 세션 정보가 없습니다');
-          alert('로그인이 필요한 서비스입니다.');
-          window.location.href = '/';
+          const confirmLogin = window.confirm('로그인이 필요한 서비스입니다. 먼저 로그인해주세요.\n\n로그인 페이지로 이동하시겠습니까?');
+          if (confirmLogin) {
+            window.location.href = '/login';
+          } else {
+            window.location.href = '/';
+          }
           return;
         }
       } catch (error) {

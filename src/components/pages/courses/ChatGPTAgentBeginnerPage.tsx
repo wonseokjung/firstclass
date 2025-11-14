@@ -301,7 +301,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     console.log('🔍 수강 신청 버튼 클릭 - 얼리버드 안내 모달 열기');
     
     if (!isLoggedIn) {
-      alert('로그인이 필요한 서비스입니다. 먼저 로그인해주세요.');
+      const confirmLogin = window.confirm('로그인이 필요한 서비스입니다. 먼저 로그인해주세요.\n\n로그인 페이지로 이동하시겠습니까?');
+      if (confirmLogin) {
+        window.location.href = '/login';
+      }
       return;
     }
     
