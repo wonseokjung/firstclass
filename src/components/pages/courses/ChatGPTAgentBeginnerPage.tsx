@@ -650,7 +650,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 color: '#1f2937',
                 fontWeight: '700'
               }}>
-                15일 완성, 나만의 인공지능 에이전트 만들기
+                10일 완성, 수익화하는 인공지능 에이전트 만들기
               </h2>
               <p style={{
                 fontSize: 'clamp(1rem, 2vw, 1.2rem)',
@@ -1310,7 +1310,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 color: '#1f2937',
                 marginBottom: '20px'
               }}>
-                각 강의가 곧 하나의 '실습 프로젝트'
+                10일 완성, 수익화하는 AI 에이전트
               </h2>
 
               <p style={{
@@ -1319,7 +1319,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 fontWeight: '600',
                 marginBottom: '30px'
               }}>
-                일상/업무/콘텐츠 중심 설계
+                유튜브 컨텐츠 자동 생성 중심 설계
               </p>
 
               <div style={{
@@ -1337,9 +1337,9 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   margin: '0 0 30px 0',
                   fontWeight: '500'
                 }}>
-                  AgentKit을 활용해 나만의 <strong style={{ color: '#0ea5e9' }}>AI 에이전트</strong>를 만들고<br />
-                  실제 웹사이트에 배포하는 방법을 배워보세요.<br />
-                  <strong style={{ color: '#0ea5e9' }}>15일 완성</strong> 실전 AI 에이전트 개발 과정입니다.
+                  Google OPAL을 활용해 나만의 <strong style={{ color: '#0ea5e9' }}>수익화 에이전트</strong>를 만들고<br />
+                  실제 유튜브 컨텐츠 자동 생성 시스템을 구축하세요.<br />
+                  <strong style={{ color: '#0ea5e9' }}>10일 완성</strong> 실전 수익화 에이전트 개발 과정입니다.
                 </p>
                 </div>
               </div>
@@ -1357,7 +1357,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               marginBottom: '15px',
               textAlign: 'center'
             }}>
-              📚 15일 완성 커리큘럼
+              📚 10일 완성 커리큘럼
             </h3>
             <p style={{
               color: '#64748b',
@@ -1366,7 +1366,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               textAlign: 'center',
               fontWeight: '600'
             }}>
-              하루 1시간 × 15일 = AI 에이전트 마스터 🎓
+              하루 1시간 × 10일 = 수익화 에이전트 마스터 🎓
             </p>
 
             {/* CORE: Day 1-3 */}
