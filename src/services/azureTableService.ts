@@ -2083,6 +2083,42 @@ export class AzureTableService {
       return null;
     }
   }
+
+  /**
+   * 관리자가 사용자 비밀번호 변경
+   * @param email 사용자 이메일
+   * @param newPassword 새 비밀번호
+   */
+  static async adminChangePassword(email: string, newPassword: string): Promise<boolean> {
+    try {
+      console.log('🔐 관리자 비밀번호 변경 시작:', email);
+      
+      const user = await this.getUserByEmail(email);
+      if (!user) {
+        console.log('❌ 사용자를 찾을 수 없음:', email);
+        return false;
+      }
+
+      // 새 비밀번호 해시화
+      const newPasswordHash = await hashPassword(newPassword);
+
+      // 사용자 업데이트
+      const updatedUser = {
+        ...user,
+        passwordHash: newPasswordHash,
+        updatedAt: new Date().toISOString()
+      };
+
+      // Azure에 업데이트
+      await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
+      
+      console.log('✅ 비밀번호 변경 완료:', email);
+      return true;
+    } catch (error: any) {
+      console.error('❌ 비밀번호 변경 실패:', error.message);
+      return false;
+    }
+  }
 }
 
 export default AzureTableService;

@@ -29,6 +29,9 @@ const AdminDashboardPage: React.FC = () => {
     totalRevenue: 0,
     avgProgress: 0
   });
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [selectedUserEmail, setSelectedUserEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
 
   // 관리자 권한 확인
   useEffect(() => {
@@ -142,6 +145,41 @@ const AdminDashboardPage: React.FC = () => {
 
     setFilteredUsers(filtered);
   }, [searchQuery, selectedCourse, allUsers]);
+
+  // 비밀번호 변경 함수
+  const handleChangePassword = async () => {
+    if (!selectedUserEmail || !newPassword) {
+      alert('이메일과 새 비밀번호를 입력해주세요.');
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      alert('비밀번호는 최소 6자 이상이어야 합니다.');
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `${selectedUserEmail}의 비밀번호를 변경하시겠습니까?\n\n새 비밀번호: ${newPassword}`
+    );
+
+    if (!confirmed) return;
+
+    try {
+      const success = await AzureTableService.adminChangePassword(selectedUserEmail, newPassword);
+      
+      if (success) {
+        alert('✅ 비밀번호가 성공적으로 변경되었습니다!');
+        setShowPasswordModal(false);
+        setSelectedUserEmail('');
+        setNewPassword('');
+      } else {
+        alert('❌ 비밀번호 변경에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('비밀번호 변경 오류:', error);
+      alert('❌ 비밀번호 변경 중 오류가 발생했습니다.');
+    }
+  };
 
   // CSV 다운로드
   const downloadCSV = () => {
@@ -409,6 +447,7 @@ const AdminDashboardPage: React.FC = () => {
                 <th style={{ padding: '12px', textAlign: 'right', color: '#64748b', fontWeight: '600' }}>총 결제액</th>
                 <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>진행률</th>
                 <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>마지막 접속</th>
+                <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>비밀번호</th>
               </tr>
             </thead>
             <tbody>
@@ -467,6 +506,36 @@ const AdminDashboardPage: React.FC = () => {
                   <td style={{ padding: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#64748b' }}>
                     {user.lastAccessedAt ? new Date(user.lastAccessedAt).toLocaleDateString('ko-KR') : '-'}
                   </td>
+                  <td style={{ padding: '12px', textAlign: 'center' }}>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedUserEmail(user.email);
+                        setShowPasswordModal(true);
+                      }}
+                      style={{
+                        padding: '6px 12px',
+                        borderRadius: '8px',
+                        border: 'none',
+                        background: '#f59e0b',
+                        color: 'white',
+                        fontSize: '0.85rem',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s'
+                      }}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.background = '#d97706';
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.background = '#f59e0b';
+                        e.currentTarget.style.transform = 'scale(1)';
+                      }}
+                    >
+                      🔐 변경
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -486,6 +555,150 @@ const AdminDashboardPage: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* 비밀번호 변경 모달 */}
+      {showPasswordModal && (
+        <div
+          onClick={() => setShowPasswordModal(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 10000
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: 'white',
+              borderRadius: '20px',
+              padding: '40px',
+              maxWidth: '500px',
+              width: '90%',
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
+            }}
+          >
+            <h2 style={{
+              fontSize: '1.5rem',
+              fontWeight: '700',
+              marginBottom: '20px',
+              color: '#1f2937'
+            }}>
+              🔐 비밀번호 변경
+            </h2>
+
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '0.9rem',
+                fontWeight: '600',
+                color: '#64748b',
+                marginBottom: '8px'
+              }}>
+                사용자 이메일
+              </label>
+              <input
+                type="text"
+                value={selectedUserEmail}
+                disabled
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  border: '1px solid #e2e8f0',
+                  fontSize: '1rem',
+                  background: '#f8fafc',
+                  color: '#64748b'
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: '30px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '0.9rem',
+                fontWeight: '600',
+                color: '#64748b',
+                marginBottom: '8px'
+              }}>
+                새 비밀번호 (최소 6자)
+              </label>
+              <input
+                type="text"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="새 비밀번호 입력"
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  border: '1px solid #e2e8f0',
+                  fontSize: '1rem'
+                }}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    handleChangePassword();
+                  }
+                }}
+              />
+            </div>
+
+            <div style={{
+              display: 'flex',
+              gap: '10px'
+            }}>
+              <button
+                onClick={handleChangePassword}
+                style={{
+                  flex: 1,
+                  padding: '12px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: '#f59e0b',
+                  color: 'white',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.background = '#d97706'}
+                onMouseOut={(e) => e.currentTarget.style.background = '#f59e0b'}
+              >
+                변경하기
+              </button>
+              <button
+                onClick={() => {
+                  setShowPasswordModal(false);
+                  setSelectedUserEmail('');
+                  setNewPassword('');
+                }}
+                style={{
+                  flex: 1,
+                  padding: '12px',
+                  borderRadius: '10px',
+                  border: '2px solid #e2e8f0',
+                  background: 'white',
+                  color: '#64748b',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.background = '#f8fafc'}
+                onMouseOut={(e) => e.currentTarget.style.background = 'white'}
+              >
+                취소
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
