@@ -104,7 +104,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
         type: 'theory',
         title: '이론 강의: ChatGPT와 Agent의 차이',
         duration: '6분',
-        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/Day1/1.%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B51%E1%84%8B%E1%85%B5%E1%84%85%E1%85%A9%E1%86%AB.mp4?sp=r&st=2025-11-02T11:22:30Z&se=2030-11-02T19:37:30Z&sv=2024-11-04&sr=b&sig=AOdVEdq2cIYrh1h%2FNG7PLxD9dlpaG1nX0fZIrxKNUKo%3D',
+        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/Day1/day1lecture.mp4?sp=r&st=2025-11-15T03:31:21Z&se=2030-11-15T11:46:21Z&sv=2024-11-04&sr=b&sig=FcsWteTaW%2BIERHCX3e78QXJrznlCh7NnWIueSMcim34%3D',
         content: `
           <h3>💬 ChatGPT vs 🤖 에이전트 빌더</h3>
           
@@ -452,14 +452,14 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                 if (isYouTube) {
                   // 유튜브 링크 처리
                   return (
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      src={section.videoUrl}
-                      title={section.title}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
+              <iframe
+                width="100%"
+                height="100%"
+                src={section.videoUrl}
+                title={section.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
                       style={{
                         border: 'none',
                         display: 'block',
@@ -591,22 +591,22 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
             const isCorrect = quizAnswers[q.id] === q.correctAnswer;
             
             return (
-              <div key={q.id} style={{
+            <div key={q.id} style={{
                 marginBottom: '30px',
                 paddingBottom: '30px',
                 borderBottom: index < lessonData.quiz.questions.length - 1 ? '1px solid #e5e7eb' : 'none'
+            }}>
+              <p style={{
+                fontWeight: '700',
+                marginBottom: '15px',
+                color: '#1f2937',
+                fontSize: '1.05rem'
               }}>
-                <p style={{
-                  fontWeight: '700',
-                  marginBottom: '15px',
-                  color: '#1f2937',
-                  fontSize: '1.05rem'
-                }}>
-                  Q{index + 1}. {q.question}
-                </p>
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
+                Q{index + 1}. {q.question}
+              </p>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
                   gap: '12px'
                 }}>
                   {q.options.map((option, optIndex) => {
@@ -625,25 +625,25 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                     }
                     
                     return (
-                      <label key={optIndex} style={{
-                        display: 'flex',
-                        alignItems: 'center',
+                  <label key={optIndex} style={{
+                    display: 'flex',
+                    alignItems: 'center',
                         gap: '12px',
                         padding: '14px 16px',
                         background: backgroundColor,
-                        borderRadius: '8px',
+                    borderRadius: '8px',
                         cursor: quizSubmitted ? 'default' : 'pointer',
-                        transition: 'all 0.2s ease',
+                    transition: 'all 0.2s ease',
                         border: `1px solid ${borderColor}`,
                         position: 'relative' as const,
                         opacity: quizSubmitted && !isSelected && !isCorrectOption ? 0.5 : 1
-                      }}
-                      onMouseOver={(e) => {
+                  }}
+                  onMouseOver={(e) => {
                         if (!quizSubmitted) {
                           e.currentTarget.style.background = '#f9fafb';
                         }
-                      }}
-                      onMouseOut={(e) => {
+                  }}
+                  onMouseOut={(e) => {
                         if (!quizSubmitted) {
                           e.currentTarget.style.background = 'white';
                         }
@@ -679,11 +679,11 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                         {quizSubmitted && isSelected && !isCorrect && (
                           <span style={{ color: '#ef4444', fontWeight: '700' }}>✗</span>
                         )}
-                      </label>
+                  </label>
                     );
                   })}
-                </div>
               </div>
+            </div>
             );
           })}
           
