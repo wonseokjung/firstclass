@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import NavigationBar from '../../common/NavigationBar';
 import AzureTableService from '../../../services/azureTableService';
-import PaymentComponent from '../payment/PaymentComponent';
 
 interface ChatGPTAgentBeginnerPageProps {
   onBack: () => void;
@@ -11,8 +10,6 @@ interface ChatGPTAgentBeginnerPageProps {
 const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onBack }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isPaidUser, setIsPaidUser] = useState(false);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [showEarlyBirdInfoModal, setShowEarlyBirdInfoModal] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
 
   const course = {
@@ -231,7 +228,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
   }, []);
 
   const handleEarlyBirdPayment = async () => {
-    console.log('🔍 수강 신청 버튼 클릭 - 얼리버드 안내 모달 열기');
+    console.log('🔍 수강 신청 버튼 클릭 - 결제 페이지로 이동');
     
     if (!isLoggedIn) {
       const confirmLogin = window.confirm('로그인이 필요한 서비스입니다. 먼저 로그인해주세요.\n\n로그인 페이지로 이동하시겠습니까?');
@@ -241,31 +238,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
       return;
     }
     
-    // 얼리버드 안내 모달 표시
-    setShowEarlyBirdInfoModal(true);
+    // 결제 페이지로 이동
+    window.location.href = '/chatgpt-agent-beginner/payment';
   };
 
-  const handleConfirmEarlyBird = () => {
-    setShowEarlyBirdInfoModal(false);
-    setShowPaymentModal(true);
-  };
-
-  const handlePaymentSuccess = () => {
-    console.log('🎉 결제 성공!');
-    setShowPaymentModal(false);
-    setIsPaidUser(true);
-    alert('🎉 결제가 완료되었습니다! 강의 시청 페이지로 이동합니다.');
-    
-    // 결제 성공 후 새로운 강의 시청 페이지로 리다이렉트
-    setTimeout(() => {
-      window.location.href = '/chatgpt-agent-beginner-player';
-    }, 1500);
-  };
-
-  const handlePaymentClose = () => {
-    console.log('❌ 결제 모달 닫기');
-    setShowPaymentModal(false);
-  };
 
   return (
     <div className="masterclass-container">
@@ -274,215 +250,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
         breadcrumbText="ChatGPT AI AGENT 비기너편"
       />
 
-      {/* 얼리버드 안내 모달 */}
-      {showEarlyBirdInfoModal && (
-        <div 
-          onClick={() => setShowEarlyBirdInfoModal(false)}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-            zIndex: 10000,
-            padding: '20px',
-            overflowY: 'auto',
-            paddingTop: '100px'
-          }}>
-          <div 
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              background: 'white',
-              borderRadius: '20px',
-              padding: '40px',
-              maxWidth: '600px',
-              width: '100%',
-              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
-              position: 'relative',
-              margin: '0 auto'
-            }}>
-            {/* 닫기 버튼 */}
-            <button
-              onClick={() => setShowEarlyBirdInfoModal(false)}
-              style={{
-                position: 'absolute',
-                top: '20px',
-                right: '20px',
-                background: 'transparent',
-                border: 'none',
-                fontSize: '1.5rem',
-                cursor: 'pointer',
-                color: '#64748b',
-                padding: '5px 10px'
-              }}
-            >
-              ✕
-            </button>
-
-            {/* 아이콘 */}
-            <div style={{
-              textAlign: 'center',
-              marginBottom: '30px'
-            }}>
-              <div style={{
-                fontSize: '4rem',
-                marginBottom: '20px'
-              }}>🎯</div>
-              <h2 style={{
-                fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-                fontWeight: '800',
-                color: '#0369a1',
-                marginBottom: '15px'
-              }}>
-                얼리버드 특가 안내
-              </h2>
-            </div>
-
-            {/* 안내 내용 */}
-            <div style={{
-              background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
-              borderRadius: '15px',
-              padding: '30px',
-              marginBottom: '30px',
-              border: '2px solid #bae6fd'
-            }}>
-              <div style={{
-                fontSize: '1.1rem',
-                color: '#0c4a6e',
-                lineHeight: '1.8',
-                marginBottom: '20px'
-              }}>
-                <p style={{ marginBottom: '15px', fontWeight: '600' }}>
-                  📅 <strong>강의 런칭일:</strong> 2025년 11월 15일
-                </p>
-                <p style={{ marginBottom: '15px' }}>
-                  💰 <strong>얼리버드 가격:</strong> ₩45,000 (지금 결제)
-                </p>
-                <p style={{ marginBottom: '15px' }}>
-                  💸 <strong>정가:</strong> ₩95,000 (11월 15일 이후)
-                </p>
-                <p style={{ marginBottom: '0', fontWeight: '600', color: '#0ea5e9' }}>
-                  🎓 <strong>수강 가능일:</strong> 2025년 11월 15일부터
-                </p>
-              </div>
-
-              <div style={{
-                background: 'white',
-                borderRadius: '10px',
-                padding: '20px',
-                border: '2px dashed #0ea5e9',
-                marginBottom: '15px'
-              }}>
-                <p style={{
-                  fontSize: '1rem',
-                  color: '#64748b',
-                  lineHeight: '1.6',
-                  margin: '0'
-                }}>
-                  <strong style={{ color: '#0369a1' }}>💡 안내:</strong><br/>
-                  지금 ₩45,000 얼리버드 가격으로 결제하시면,<br/>
-                  2025년 11월 15일부터 강의를 수강하실 수 있습니다.<br/>
-                  런칭 후 수강 시 ₩95,000으로 인상됩니다.
-                </p>
-              </div>
-
-              <div style={{
-                background: '#fff7ed',
-                borderRadius: '10px',
-                padding: '20px',
-                border: '2px solid #fed7aa'
-              }}>
-                <p style={{
-                  fontSize: '0.95rem',
-                  color: '#92400e',
-                  lineHeight: '1.6',
-                  margin: '0'
-                }}>
-                  <strong style={{ color: '#c2410c' }}>📧 결제 후 안내:</strong><br/>
-                  • 결제 완료 시 마이페이지에서 수강 신청 내역을 확인하실 수 있습니다.<br/>
-                  • 11월 15일 런칭 후 자동으로 강의가 오픈됩니다.<br/>
-                  • 문의사항: <strong>jay@connexionai.kr</strong><br/>
-                  • 💬 실시간 문의: <a href="https://open.kakao.com/o/s2NzW41h" target="_blank" rel="noopener noreferrer" style={{ color: '#FFE812', fontWeight: '700', textDecoration: 'none' }}>카카오톡 오픈채팅</a>
-                </p>
-              </div>
-            </div>
-
-            {/* 버튼 */}
-            <div style={{
-              display: 'flex',
-              gap: '15px',
-              flexDirection: 'column'
-            }}>
-              <button
-                onClick={handleConfirmEarlyBird}
-                style={{
-                  background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-                  color: 'white',
-                  border: 'none',
-                  padding: '18px 30px',
-                  fontSize: '1.1rem',
-                  fontWeight: '700',
-                  borderRadius: '12px',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  boxShadow: '0 4px 15px rgba(14, 165, 233, 0.3)'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(14, 165, 233, 0.4)';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(14, 165, 233, 0.3)';
-                }}
-              >
-                확인했습니다. ₩45,000 얼리버드 가격으로 결제하기
-              </button>
-
-              <button
-                onClick={() => setShowEarlyBirdInfoModal(false)}
-                style={{
-                  background: 'white',
-                  color: '#64748b',
-                  border: '2px solid #e2e8f0',
-                  padding: '15px 30px',
-                  fontSize: '1rem',
-                  fontWeight: '600',
-                  borderRadius: '12px',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.background = '#f8fafc';
-                  e.currentTarget.style.borderColor = '#cbd5e1';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.background = 'white';
-                  e.currentTarget.style.borderColor = '#e2e8f0';
-                }}
-              >
-                다시 생각해볼게요
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* PaymentComponent 모달 - 페이지 최상단에 위치 */}
-      {showPaymentModal && userInfo && (
-        <PaymentComponent
-          courseId="1002"
-          courseTitle="ChatGPT AI AGENT 비기너편"
-          price={45000}
-          userInfo={userInfo}
-          onSuccess={handlePaymentSuccess}
-          onClose={handlePaymentClose}
-        />
-      )}
 
       {isPaidUser ? (
         // 결제 후: 새로운 강의 시청 페이지로 리다이렉트

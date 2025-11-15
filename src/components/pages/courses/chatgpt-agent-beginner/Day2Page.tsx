@@ -16,8 +16,8 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
   const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>('');
 
-  // 런칭 날짜 체크 (2025년 11월 15일 오후 8시)
-  const launchDate = new Date('2025-11-15T20:00:00+09:00');
+  // 런칭 날짜 체크 (2025년 11월 15일 오후 6시)
+  const launchDate = new Date('2025-11-15T18:00:00+09:00');
   const isLaunched = new Date() >= launchDate;
 
   // 사용자 정보 및 Day 완료 상태 로드

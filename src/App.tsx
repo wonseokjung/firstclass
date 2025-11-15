@@ -36,6 +36,7 @@ const ChatGPTAgentBeginnerPage = React.lazy(() => import('./components/pages/cou
 const ChatGPTAgentBeginnerPlayerPage = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/ChatGPTAgentBeginnerPlayerPage'));
 const Day1Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day1Page'));
 const Day2Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day2Page'));
+const ChatGPTAgentBeginnerPaymentPage = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/PaymentPage'));
 const CostOptimizationExamplesPage = React.lazy(() => import('./components/pages/courses/CostOptimizationExamplesPage'));
 // const LessonDetailPage = React.lazy(() => import('./components/pages/courses/LessonDetailPage'));
 
@@ -278,6 +279,17 @@ const ChatGPTCoursePageWrapper = () => {
     );
   };
 
+  const ChatGPTAgentBeginnerPaymentPageWrapper = () => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <ChatGPTAgentBeginnerPaymentPage 
+          onBack={() => navigate('/chatgpt-agent-beginner')}
+        />
+      </Suspense>
+    );
+  };
+
   // 기존 URL 리다이렉트 컴포넌트
   const RedirectToNewPlayerUrl = () => {
     const navigate = useNavigate();
@@ -422,6 +434,7 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/ai-building-course" element={<AIBuildingCoursePageWrapper />} />
               <Route path="/ai-building-course/player" element={<AIBuildingCoursePlayerPageWrapper />} />
               <Route path="/chatgpt-agent-beginner" element={<ChatGPTAgentBeginnerPageWrapper />} />
+              <Route path="/chatgpt-agent-beginner/payment" element={<ChatGPTAgentBeginnerPaymentPageWrapper />} />
               <Route path="/chatgpt-agent-beginner/player" element={<ChatGPTAgentBeginnerPlayerPageWrapper />} />
               <Route path="/chatgpt-agent-beginner/day1" element={<Day1PageWrapper />} />
               <Route path="/chatgpt-agent-beginner/day2" element={<Day2PageWrapper />} />
