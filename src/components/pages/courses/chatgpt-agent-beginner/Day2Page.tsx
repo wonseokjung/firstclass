@@ -224,7 +224,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
     },
     resources: [
       {
-        title: '비용 최적화 가이드',
+        title: 'API 가격 모델 비교',
         url: 'https://www.aicitybuilders.com/cost-optimization-examples',
         type: 'guide'
       }
