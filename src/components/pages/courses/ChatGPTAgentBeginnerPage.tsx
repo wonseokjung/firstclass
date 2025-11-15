@@ -40,11 +40,11 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
       {
         id: 3,
         day: 3,
-        title: "Day 3: GPT-5부터 o3까지 - Agent Builder에서 선택할 수 있는 AI 모델 총정리",
+        title: "Day 3: AI 모델 총정리 및 가격 최적화",
         hasQuiz: true,
         sections: {
-          theory: "• LLM이란? GPT 모델의 차이\n• 가격 최적화 전략\n• 목적별 최적 모델 선택 가이드",
-          practice: "• 모델별 응답 비교 실험\n• 비용 대비 성능 분석\n• 프로젝트별 모델 매칭"
+          theory: "• LLM(Large Language Model)의 기본 개념\n• GPT-5, GPT-4, o3 등 주요 모델의 차이점\n• 비용 최적화 전략: 작업 특성에 맞는 모델 선택",
+          practice: "• GPT-5, Mini, o3 모델 비교 실험\n• 번역, 블로그 작성, 복잡한 추론 작업 테스트\n• 성능 vs 비용 분석"
         }
       },
       {
