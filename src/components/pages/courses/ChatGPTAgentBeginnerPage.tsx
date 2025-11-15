@@ -595,7 +595,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               background: '#000'
             }}>
               <iframe
-                src="https://www.youtube.com/embed/BZynp51fBRU?autoplay=1&mute=1&loop=1&playlist=BZynp51fBRU&controls=1&modestbranding=1&rel=0&playsinline=1"
+                src="https://www.youtube.com/embed/BZynp51fBRU?controls=1&modestbranding=1&rel=0&playsinline=1"
                 title="AI Agent Beginner 강의 소개"
                 style={{
                   position: 'absolute',
