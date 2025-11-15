@@ -4,9 +4,10 @@ import AzureTableService from '../../../../services/azureTableService';
 
 interface Day1PageProps {
   onBack: () => void;
+  onNext?: () => void;
 }
 
-const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
+const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
   const [completedSections, setCompletedSections] = useState<Set<string>>(new Set());
   const [loadingVideos, setLoadingVideos] = useState<Set<string>>(new Set());
   const [quizAnswers, setQuizAnswers] = useState<{[key: number]: number}>({});
@@ -815,7 +816,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
             </button>
           ) : (
             <button
-              onClick={onBack}
+              onClick={onNext || onBack}
               style={{
                 background: 'linear-gradient(135deg, #10b981, #059669)',
                 color: 'white',
@@ -837,7 +838,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)';
               }}
             >
-              ✓ 완료! 다음 강의로 →
+              ✓ 완료! Day 2로 →
             </button>
           )}
         </div>
