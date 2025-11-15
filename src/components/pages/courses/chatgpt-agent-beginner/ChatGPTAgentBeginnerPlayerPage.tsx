@@ -154,6 +154,10 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
   const handleDayClick = (day: number) => {
     if (day === 1) {
       navigate('/chatgpt-agent-beginner/day1');
+    } else if (day === 2) {
+      navigate('/chatgpt-agent-beginner/day2');
+    } else if (day === 3) {
+      navigate('/chatgpt-agent-beginner/day3');
     } else {
       alert(`Day ${day} 강의는 준비 중입니다. 곧 공개될 예정입니다! 🚀`);
     }

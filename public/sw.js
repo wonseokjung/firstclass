@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aicitybuilders-v1.0.4'; // 버전 업데이트로 강제 캐시 무효화
+const CACHE_NAME = 'aicitybuilders-v1.0.5'; // 버전 업데이트로 강제 캐시 무효화
 const urlsToCache = [
   '/',
   '/manifest.json',
