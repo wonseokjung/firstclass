@@ -403,9 +403,9 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/ai-coding-course" element={<AICodingCoursePageWrapper />} />
               <Route path="/ai-education-documentary" element={<AIEducationDocumentaryPageWrapper />} />
               <Route path="/ai-building-course" element={<AIBuildingCoursePageWrapper />} />
-              <Route path="/ai-building-course-player" element={<AIBuildingCoursePlayerPageWrapper />} />
+              <Route path="/ai-building-course/player" element={<AIBuildingCoursePlayerPageWrapper />} />
               <Route path="/chatgpt-agent-beginner" element={<ChatGPTAgentBeginnerPageWrapper />} />
-              <Route path="/chatgpt-agent-beginner-player" element={<ChatGPTAgentBeginnerPlayerPageWrapper />} />
+              <Route path="/chatgpt-agent-beginner/player" element={<ChatGPTAgentBeginnerPlayerPageWrapper />} />
               <Route path="/chatgpt-agent-beginner/day1" element={<Day1PageWrapper />} />
               <Route path="/chatgpt-agent-beginner/day2" element={<Day2PageWrapper />} />
               <Route path="/cost-optimization-examples" element={<CostOptimizationExamplesPageWrapper />} />

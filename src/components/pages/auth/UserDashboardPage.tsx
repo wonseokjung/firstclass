@@ -689,39 +689,56 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                     </div>
                   </div>
                   
-                  <button className="watch-trailer-btn" style={{
-                    width: '100%',
-                    padding: 'clamp(12px, 2vw, 16px)',
-                    borderRadius: '12px',
-                    border: 'none',
-                    background: course.status === 'completed' 
-                      ? 'linear-gradient(135deg, #f59e0b, #d97706)'
-                      : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-                    color: 'white',
-                    fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
-                    fontWeight: '700',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    boxShadow: course.status === 'completed'
-                      ? '0 4px 15px rgba(245, 158, 11, 0.3)'
-                      : '0 4px 15px rgba(14, 165, 233, 0.3)'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.02)';
-                    e.currentTarget.style.boxShadow = course.status === 'completed'
-                      ? '0 6px 20px rgba(245, 158, 11, 0.4)'
-                      : '0 6px 20px rgba(14, 165, 233, 0.4)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                    e.currentTarget.style.boxShadow = course.status === 'completed'
-                      ? '0 4px 15px rgba(245, 158, 11, 0.3)'
-                      : '0 4px 15px rgba(14, 165, 233, 0.3)';
-                  }}>
+                  <button 
+                    onClick={() => {
+                      // 강의 플레이어 페이지로 이동
+                      const courseRoutes: { [key: string]: string } = {
+                        '1002': '/chatgpt-agent-beginner/player',
+                        'chatgpt-agent-beginner': '/chatgpt-agent-beginner/player',
+                        '999': '/ai-building-course/player',
+                        'ai-building': '/ai-building-course/player',
+                        'ai-building-course': '/ai-building-course/player',
+                        'workflow-automation': '/ai-building-course/player',
+                        'prompt-engineering': '/ai-building-course/player',
+                        'test12345': '/chatgpt-agent-beginner/player'
+                      };
+                      const route = courseRoutes[course.courseId] || '/chatgpt-agent-beginner/player';
+                      navigate(route);
+                    }}
+                    className="watch-trailer-btn" 
+                    style={{
+                      width: '100%',
+                      padding: 'clamp(12px, 2vw, 16px)',
+                      borderRadius: '12px',
+                      border: 'none',
+                      background: course.status === 'completed' 
+                        ? 'linear-gradient(135deg, #f59e0b, #d97706)'
+                        : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                      color: 'white',
+                      fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
+                      fontWeight: '700',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                      boxShadow: course.status === 'completed'
+                        ? '0 4px 15px rgba(245, 158, 11, 0.3)'
+                        : '0 4px 15px rgba(14, 165, 233, 0.3)'
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.02)';
+                      e.currentTarget.style.boxShadow = course.status === 'completed'
+                        ? '0 6px 20px rgba(245, 158, 11, 0.4)'
+                        : '0 6px 20px rgba(14, 165, 233, 0.4)';
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.boxShadow = course.status === 'completed'
+                        ? '0 4px 15px rgba(245, 158, 11, 0.3)'
+                        : '0 4px 15px rgba(14, 165, 233, 0.3)';
+                    }}>
                     <Play size={18} />
                     {course.status === 'completed' ? '다시 보기' : '이어서 학습'}
                   </button>
@@ -1015,17 +1032,17 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
                     <button
                       onClick={() => {
-                        // 강의 페이지로 이동
+                        // 강의 플레이어 페이지로 이동
                         const courseRoutes: { [key: string]: string } = {
-                          '1002': '/chatgpt-agent-beginner',
-                          'chatgpt-agent-beginner': '/chatgpt-agent-beginner',
-                          '999': '/ai-building-course',
-                          'ai-building': '/ai-building-course',
-                          'ai-building-course': '/ai-building-course',
-                          'workflow-automation': '/ai-building-course',
-                          'prompt-engineering': '/ai-building-course'
+                          '1002': '/chatgpt-agent-beginner/player',
+                          'chatgpt-agent-beginner': '/chatgpt-agent-beginner/player',
+                          '999': '/ai-building-course/player',
+                          'ai-building': '/ai-building-course/player',
+                          'ai-building-course': '/ai-building-course/player',
+                          'workflow-automation': '/ai-building-course/player',
+                          'prompt-engineering': '/ai-building-course/player'
                         };
-                        const route = courseRoutes[purchase.courseId] || '/';
+                        const route = courseRoutes[purchase.courseId] || '/chatgpt-agent-beginner/player';
                         navigate(route);
                       }}
                       style={{
