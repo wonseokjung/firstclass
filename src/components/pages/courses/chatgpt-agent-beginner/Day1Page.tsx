@@ -59,17 +59,8 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
       return;
     }
 
-    // 모든 섹션 완료 확인
-    if (completedSections.size < lessonData.sections.length) {
-      alert(`모든 섹션을 완료해주세요! (${completedSections.size}/${lessonData.sections.length} 완료)`);
-      return;
-    }
-
-    // 퀴즈 완료 확인
-    if (!quizSubmitted) {
-      alert('퀴즈를 완료해주세요!');
-      return;
-    }
+    // 모든 영상 시청 여부는 사용자 판단에 맡김
+    // 퀴즈도 선택사항으로 변경
 
     try {
       setIsCompletingDay(true);
@@ -608,7 +599,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
               flexWrap: 'wrap',
               gap: '15px'
             }}>
-              <div style={{ flex: 1 }}>
+              <div>
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -642,50 +633,6 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
                   {section.title}
                 </h3>
               </div>
-              <button
-                onClick={() => toggleSection(section.id)}
-                style={{
-                  background: completedSections.has(section.id) 
-                    ? 'linear-gradient(135deg, #10b981, #059669)' 
-                    : '#e2e8f0',
-                  color: completedSections.has(section.id) ? 'white' : '#64748b',
-                  border: 'none',
-                  padding: '12px 24px',
-                  borderRadius: '10px',
-                  cursor: 'pointer',
-                  fontSize: '0.95rem',
-                  fontWeight: '600',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  transition: 'all 0.3s ease',
-                  boxShadow: completedSections.has(section.id) 
-                    ? '0 4px 12px rgba(16, 185, 129, 0.3)' 
-                    : '0 2px 6px rgba(0, 0, 0, 0.1)'
-                }}
-                onMouseOver={(e) => {
-                  if (!completedSections.has(section.id)) {
-                    e.currentTarget.style.background = '#cbd5e1';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
-                  } else {
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(16, 185, 129, 0.4)';
-                  }
-                }}
-                onMouseOut={(e) => {
-                  if (!completedSections.has(section.id)) {
-                    e.currentTarget.style.background = '#e2e8f0';
-                  }
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = completedSections.has(section.id)
-                    ? '0 4px 12px rgba(16, 185, 129, 0.3)'
-                    : '0 2px 6px rgba(0, 0, 0, 0.1)';
-                }}
-              >
-                <CheckCircle size={18} />
-                {completedSections.has(section.id) ? '✓ 완료됨' : '완료 표시'}
-              </button>
             </div>
 
             {/* 비디오 플레이어 */}
@@ -938,33 +885,35 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
             );
           })}
           
-          {/* 퀴즈 제출 버튼 */}
+          {/* 정답 보기 버튼 */}
           <div style={{ marginTop: '30px' }}>
             <button
               onClick={() => setQuizSubmitted(true)}
-              disabled={quizSubmitted || Object.keys(quizAnswers).length < lessonData.quiz.questions.length}
+              disabled={quizSubmitted}
               style={{
                 padding: '14px 32px',
                 background: quizSubmitted 
-                  ? '#9ca3af' 
-                  : Object.keys(quizAnswers).length < lessonData.quiz.questions.length
-                    ? '#d1d5db'
-                    : '#0ea5e9',
+                  ? 'linear-gradient(135deg, #10b981, #059669)' 
+                  : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                 color: 'white',
                 border: 'none',
                 borderRadius: '8px',
                 fontSize: '1rem',
                 fontWeight: '600',
-                cursor: quizSubmitted || Object.keys(quizAnswers).length < lessonData.quiz.questions.length 
+                cursor: quizSubmitted 
                   ? 'not-allowed' 
                   : 'pointer',
                 transition: 'all 0.2s ease',
-                marginRight: '10px'
+                marginRight: '10px',
+                boxShadow: quizSubmitted 
+                  ? '0 2px 8px rgba(16, 185, 129, 0.3)'
+                  : '0 2px 8px rgba(14, 165, 233, 0.3)',
+                opacity: quizSubmitted ? 0.7 : 1
               }}
             >
               {quizSubmitted 
-                ? `${Object.values(quizAnswers).filter((ans, idx) => ans === lessonData.quiz.questions[idx].correctAnswer).length}/${lessonData.quiz.questions.length} 정답` 
-                : '제출하기'}
+                ? `✓ ${Object.values(quizAnswers).filter((ans, idx) => ans === lessonData.quiz.questions[idx].correctAnswer).length}/${lessonData.quiz.questions.length} 정답` 
+                : '정답 보기'}
             </button>
             
             {quizSubmitted && (
