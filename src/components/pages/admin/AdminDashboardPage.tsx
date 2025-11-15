@@ -135,7 +135,7 @@ const AdminDashboardPage: React.FC = () => {
       filtered = filtered.filter(user => 
         user.enrolledCourses.some(course => 
           course.courseId === selectedCourse || 
-          course.courseId === 'chatgpt-agent-beginner' && selectedCourse === '1002'
+          (course.courseId === 'chatgpt-agent-beginner' && selectedCourse === '1002')
         )
       );
     }
