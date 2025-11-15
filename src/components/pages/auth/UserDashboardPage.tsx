@@ -690,7 +690,17 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   </div>
                   
                   <button 
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      
+                      console.log('🔘 이어서 학습 버튼 클릭됨!');
+                      console.log('📚 강의 정보:', {
+                        courseId: course.courseId,
+                        title: course.title,
+                        status: course.status
+                      });
+                      
                       // 강의 플레이어 페이지로 이동
                       const courseRoutes: { [key: string]: string } = {
                         '1002': '/chatgpt-agent-beginner/player',
@@ -703,7 +713,16 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                         'test12345': '/chatgpt-agent-beginner/player'
                       };
                       const route = courseRoutes[course.courseId] || '/chatgpt-agent-beginner/player';
-                      navigate(route);
+                      
+                      console.log('🚀 이동할 경로:', route);
+                      
+                      try {
+                        navigate(route);
+                        console.log('✅ navigate 호출 성공');
+                      } catch (error) {
+                        console.error('❌ navigate 오류:', error);
+                        alert('페이지 이동 중 오류가 발생했습니다. 새로고침 후 다시 시도해주세요.');
+                      }
                     }}
                     className="watch-trailer-btn" 
                     style={{
@@ -1031,7 +1050,17 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                     )}
 
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        console.log('🔘 강의 시작하기 버튼 클릭됨!');
+                        console.log('💳 구매 정보:', {
+                          courseId: purchase.courseId,
+                          courseName: displayCourseName,
+                          amount: purchase.amount
+                        });
+                        
                         // 강의 플레이어 페이지로 이동
                         const courseRoutes: { [key: string]: string } = {
                           '1002': '/chatgpt-agent-beginner/player',
@@ -1043,7 +1072,16 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                           'prompt-engineering': '/ai-building-course/player'
                         };
                         const route = courseRoutes[purchase.courseId] || '/chatgpt-agent-beginner/player';
-                        navigate(route);
+                        
+                        console.log('🚀 이동할 경로:', route);
+                        
+                        try {
+                          navigate(route);
+                          console.log('✅ navigate 호출 성공');
+                        } catch (error) {
+                          console.error('❌ navigate 오류:', error);
+                          alert('페이지 이동 중 오류가 발생했습니다. 새로고침 후 다시 시도해주세요.');
+                        }
                       }}
                       style={{
                         width: '100%',
