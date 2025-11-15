@@ -18,175 +18,108 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
   const course = {
     id: 1002,
     title: "🧠 AI Agent Maker",
-    subtitle: "15일 완성, 나만의 인공지능 에이전트 만들기",
+    subtitle: "10일 완성, 수익화하는 인공지능 컨텐츠 에이전트 만들기",
     lessons: [
-      // CORE (Day 1-3) - AI의 사고 구조 이해하기
+      // Part 1 (Day 1-5) - 수익화하는 인공지능 에이전트 첫걸음
       {
         id: 1,
         day: 1,
-        title: "Day 1: 내 첫 AI 친구: ChatGPT와 Agent의 차이",
-        duration: "60분",
+        title: "Day 1: 나의 목표에 맞는 에이전트 찾기 - ChatGPT vs ChatGPT Agent",
         hasQuiz: true,
         sections: {
-          theory: "• ChatGPT vs AI Agent의 핵심 차이점\n• AI Agent의 자율성과 도구 사용 능력\n• 실제 활용 사례와 가능성",
-          practice: "• OpenAI 계정 생성 및 API 키 발급\n• 나만의 첫 AI 에이전트 생성\n• API 연동 및 테스트"
+          theory: "• ChatGPT vs Agent의 핵심 차이점\n• AI의 전체 구조 이해\n• 수익화 가능한 에이전트 활용 사례",
+          practice: "• ChatGPT 회원가입\n• 에이전트 API 등록\n• 첫 에이전트 생성 및 테스트"
         }
       },
       {
         id: 2,
         day: 2,
-        title: "Day 2: AI 한 명 vs AI 팀: 협업형 에이전트 구조",
-        duration: "60분",
+        title: "Day 2: Work Flow Design 기초 - 나의 일을 AI가 이해할 수 있게 쪼개기",
         hasQuiz: false,
         sections: {
-          theory: "• 싱글 에이전트와 멀티 에이전트의 차이\n• 협업형 AI 구조 설계 원리\n• 역할 분담과 작업 흐름 관리",
-          practice: "• 싱글 에이전트 구성 실습\n• 멀티 에이전트 팀 구축\n• 에이전트 간 협업 플로우 테스트"
+          theory: "• 논리적 사고 구조 설계\n• 업무를 단계별로 분해하는 방법\n• 효율적인 워크플로우 구성",
+          practice: "• 유튜브 컨텐츠 기획하는 에이전트 만들기\n• 워크플로우 설계 실습\n• 자동화 프로세스 구축"
         }
       },
       {
         id: 3,
         day: 3,
-        title: "Day 3: AI의 두뇌 이해하기: LLM의 세계",
-        duration: "60분",
+        title: "Day 3: GPT-5부터 o3까지 - Agent Builder에서 선택할 수 있는 AI 모델 총정리",
         hasQuiz: true,
         sections: {
-          theory: "• GPT-4o, GPT-4o-mini, o1 등 모델 비교\n• 목적별 최적 모델 선택 전략\n• 토큰 개념과 비용 최적화",
-          practice: "• 다양한 LLM 모델 테스트\n• 성능 vs 비용 분석\n• 프로젝트별 모델 매칭 실습"
+          theory: "• LLM이란? GPT 모델의 차이\n• 가격 최적화 전략\n• 목적별 최적 모델 선택 가이드",
+          practice: "• 모델별 응답 비교 실험\n• 비용 대비 성능 분석\n• 프로젝트별 모델 매칭"
         }
       },
-      // TOOLS (Day 4-9) - 에이전트 성장시키기
       {
         id: 4,
         day: 4,
-        title: "Day 4: 기억 심기 (File Search)",
-        duration: "60분",
+        title: "Day 4: 인스타그램 포스팅 에이전트 만들기 - OpenAI vs Google OPAL 비교",
         hasQuiz: false,
         sections: {
-          theory: "• File Search 기능의 원리와 활용\n• PDF, 노션 데이터 처리 방법\n• 지식 기반 AI 구축 전략",
-          practice: "• PDF 파일 업로드 및 인덱싱\n• 문서 기반 Q&A 봇 만들기\n• 내 PDF·노션 데이터를 읽고 답하는 지식형 AI 완성"
+          theory: "• OpenAI와 Google OPAL의 차이점\n• 각 플랫폼의 장단점 비교\n• SNS 컨텐츠 자동화 전략",
+          practice: "• OpenAI로 인스타그램 에이전트 생성\n• Google OPAL로 동일 에이전트 생성\n• 두 플랫폼 차이점 체감하기"
         }
       },
       {
         id: 5,
         day: 5,
-        title: "Day 5: 안전장치 달기 (Guardrails)",
-        duration: "60분",
+        title: "Day 5: 유튜브 컨텐츠 수익화하는 인공지능 에이전트 만들기",
         hasQuiz: true,
         sections: {
-          theory: "• AI 보안의 중요성\n• Prompt Injection 및 Jailbreak 공격\n• Guardrails 설계 원칙",
-          practice: "• 입력 필터링 규칙 설정\n• 출력 검증 시스템 구축\n• 잘못된 답변과 해킹을 차단하는 안전한 AI 완성"
+          theory: "• 유튜브 수익화 구조 이해\n• 컨텐츠 자동화 전략\n• 조회수 최적화 방법",
+          practice: "• Google OPAL로 유튜브 에이전트 구축\n• 실전 컨텐츠 생성 프로젝트\n• 수익화 시스템 완성"
         }
       },
+      // Part 2 (Day 6-10) - 실전 수익화 컨텐츠 자동 생성 에이전트
       {
         id: 6,
         day: 6,
-        title: "Day 6: 도구 연결하기 (MCP)",
-        duration: "60분",
+        title: "Day 6: 판매 수익화 에이전트 - 제품 판매 영상 자동 생성",
         hasQuiz: false,
         sections: {
-          theory: "• Model Context Protocol (MCP) 이해\n• 외부 서비스 연동 구조\n• API 통신과 인증 방법",
-          practice: "• Gmail, Google Drive 연동\n• 커스텀 API 연결\n• 외부 서비스와 통신하는 AI 완성"
+          theory: "• 제품 판매 컨텐츠 구조 분석\n• 효과적인 리뷰/광고 영상 전략\n• 컨버전 최적화 방법",
+          practice: "• Google OPAL로 리뷰 영상 자동 생성\n• 제품 소개 컨텐츠 제작\n• 광고 영상 자동화 시스템 구축"
         }
       },
       {
         id: 7,
         day: 7,
-        title: "Day 7: 판단 훈련 (if/else)",
-        duration: "60분",
+        title: "Day 7: 바이럴 마케팅 에이전트 - 조회수 폭발 컨텐츠 생성",
         hasQuiz: false,
         sections: {
-          theory: "• 조건부 로직 설계\n• 의사결정 트리 구조\n• 복잡한 분기 처리 패턴",
-          practice: "• 조건문 기반 플로우 작성\n• 다중 분기 처리 시스템 구축\n• 조건별 분기 처리 가능한 AI 로직 완성"
+          theory: "• 바이럴 컨텐츠의 핵심 요소\n• 트렌드 분석 및 활용 방법\n• 조회수 최적화 전략",
+          practice: "• Google OPAL로 트렌드 분석 에이전트 구축\n• 바이럴 영상 자동 제작\n• 썸네일/제목 최적화 자동화"
         }
       },
       {
         id: 8,
         day: 8,
-        title: "Day 8: 승인 절차 배우기 (User Approval)",
-        duration: "60분",
+        title: "Day 8: 음성 컨텐츠 에이전트 - ASMR & 지식 나눔 영상 생성",
         hasQuiz: false,
         sections: {
-          theory: "• Human-in-the-loop 시스템\n• 승인 워크플로우 설계\n• 책임 소재와 품질 관리",
-          practice: "• 사용자 승인 노드 추가\n• 승인 대기 및 처리 플로우 구축\n• 사용자 승인 후 실행하는 협업형 플로우 완성"
+          theory: "• 음성 기반 컨텐츠의 장점과 시장\n• ASMR, 오디오북, 명상 컨텐츠 분석\n• 음성 품질 최적화 전략",
+          practice: "• Google OPAL로 ASMR 컨텐츠 자동 생성\n• 오디오북 음성 제작 자동화\n• 명상/교육 컨텐츠 자동화 시스템 구축"
         }
       },
       {
         id: 9,
         day: 9,
-        title: "Day 9: 기억력 훈련 (Set State)",
-        duration: "60분",
-        hasQuiz: true,
+        title: "Day 9: 대량 생산 에이전트 - 한 번에 15개 영상 자동 생성",
+        hasQuiz: false,
         sections: {
-          theory: "• 상태 관리(State Management) 개념\n• 대화 맥락 유지 전략\n• 세션과 메모리 구조",
-          practice: "• State 변수 설정 및 활용\n• 대화 히스토리 저장\n• 이전 대화 맥락을 기억하고 이어가는 AI 완성"
+          theory: "• 배치 처리 시스템의 원리\n• 대량 생산 최적화 전략\n• 품질 관리와 일관성 유지",
+          practice: "• 배치 처리 에이전트 구축\n• 15개 영상 동시 생성 시스템 개발\n• 대량 컨텐츠 자동화 완성"
         }
       },
-
-      // PROJECT (Day 10-15) - 실전형 AI 에이전트 6종 완성
       {
         id: 10,
         day: 10,
-        title: "Day 10: 데이터 통합 에이전트",
-        duration: "90분",
-        hasQuiz: false,
-        sections: {
-          theory: "• 다중 데이터 소스 통합 전략\n• 데이터 정규화 및 병합 기법\n• 통합 분석 리포트 구조",
-          practice: "• 여러 파일 형식 통합 처리\n• 자동 데이터 정리 및 분석\n• 자료를 한 번에 정리하는 종합 분석 AI 완성"
-        }
-      },
-      {
-        id: 11,
-        day: 11,
-        title: "Day 11: 일정 설계 에이전트",
-        duration: "90분",
-        hasQuiz: false,
-        sections: {
-          theory: "• 목표 기반 계획 수립 방법론\n• 시간 관리 및 우선순위 설정\n• 주간 일정 최적화 알고리즘",
-          practice: "• 목표 입력 및 분석 시스템\n• 자동 일정 생성 로직 구현\n• 목표 기반 주간 일정과 계획을 자동 생성하는 AI 코치 완성"
-        }
-      },
-      {
-        id: 12,
-        day: 12,
-        title: "Day 12: 고객 응대 에이전트",
-        duration: "90분",
-        hasQuiz: false,
-        sections: {
-          theory: "• FAQ 기반 학습 시스템\n• 24시간 자동 응대 구조\n• 고객 만족도 최적화 전략",
-          practice: "• FAQ 데이터베이스 구축\n• 자동 답변 시스템 개발\n• FAQ 학습형 24시간 고객상담 챗봇 완성"
-        }
-      },
-      {
-        id: 13,
-        day: 13,
-        title: "Day 13: 데이터 질의응답 에이전트",
-        duration: "90분",
-        hasQuiz: false,
-        sections: {
-          theory: "• 자연어 to SQL 변환 원리\n• 데이터베이스 쿼리 최적화\n• 결과 시각화 및 표 생성",
-          practice: "• 자연어 질의 파싱 시스템\n• DB 쿼리 실행 및 결과 포맷팅\n• DB에 자연어로 질의해 표로 결과 반환하는 분석가형 AI 완성"
-        }
-      },
-      {
-        id: 14,
-        day: 14,
-        title: "Day 14: 문서 비교 에이전트",
-        duration: "90분",
-        hasQuiz: false,
-        sections: {
-          theory: "• 문서 diff 알고리즘\n• 변경사항 추적 및 하이라이팅\n• 버전 관리 시스템 통합",
-          practice: "• 문서 업로드 및 파싱\n• 차이점 분석 및 시각화\n• 두 문서의 수정·차이점을 자동 분석 및 표시하는 AI 완성"
-        }
-      },
-      {
-        id: 15,
-        day: 15,
-        title: "Day 15: 사내 지식 에이전트",
-        duration: "90분",
+        title: "Day 10: 완전 자동화 수익 시스템 - 분석부터 업로드까지",
         hasQuiz: true,
         sections: {
-          theory: "• 내부 문서 인덱싱 전략\n• 지식 베이스 구축 방법론\n• 팀 협업 최적화",
-          practice: "• 사내 매뉴얼 업로드 및 학습\n• 자동 Q&A 시스템 구축\n• 내부 매뉴얼을 학습해 팀의 Q&A를 자동 처리하는 AI 완성"
+          theory: "• 트렌드 분석부터 배포까지 전체 워크플로우\n• 완전 자동화 시스템 설계\n• 지속 가능한 수익화 전략",
+          practice: "• 트렌드 분석 자동화\n• 컨텐츠 생성 → 편집 → 업로드 자동화\n• 완전 자동 유튜브 수익 시스템 완성"
         }
       }
     ]
@@ -1453,7 +1386,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   margin: '0 0 15px 0',
                   letterSpacing: '0.5px'
                 }}>
-                  📘 CORE (Day 1-3)
+                  🎯 Part 1 (Day 1-5)
                 </h4>
                 <p style={{
                         margin: '0',
@@ -1462,7 +1395,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                             fontWeight: '600',
                   lineHeight: '1.6'
                 }}>
-                  AI의 사고 구조 이해하기
+                  수익화하는 인공지능 에이전트 첫걸음
                         </p>
                       </div>
 
@@ -1472,13 +1405,13 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 borderRadius: '15px',
                 border: '2px solid #e2e8f0'
               }}>
-                {course.lessons.slice(0, 3).map((lesson: any) => (
+                {course.lessons.slice(0, 5).map((lesson: any) => (
                 <div
                   key={lesson.id}
                   style={{
                       marginBottom: '30px',
                       paddingBottom: '30px',
-                      borderBottom: lesson.id === 3 ? 'none' : '1px solid #e2e8f0'
+                      borderBottom: lesson.id === 5 ? 'none' : '1px solid #e2e8f0'
                     }}
                   >
                       <h5 style={{
@@ -1506,16 +1439,16 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               </div>
             </div>
 
-            {/* TOOLS: Day 4-9 */}
+            {/* Part 2: Day 6-10 */}
             <div style={{ marginBottom: '60px' }}>
               <div style={{
-                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                background: 'linear-gradient(135deg, #10b981, #059669)',
                 color: 'white',
                 padding: 'clamp(20px, 4vw, 35px)',
                 borderRadius: '20px',
                 marginBottom: '30px',
                 textAlign: 'center',
-                boxShadow: '0 10px 30px rgba(14, 165, 233, 0.3)'
+                boxShadow: '0 10px 30px rgba(16, 185, 129, 0.3)'
               }}>
                 <h4 style={{
                   fontSize: 'clamp(1.5rem, 3vw, 2rem)',
@@ -1523,7 +1456,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   margin: '0 0 15px 0',
                   letterSpacing: '0.5px'
                 }}>
-                  ⚙️ TOOLS (Day 4-9)
+                  🚀 Part 2 (Day 6-10)
                 </h4>
                 <p style={{
                         margin: '0',
@@ -1532,7 +1465,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                             fontWeight: '600',
                   lineHeight: '1.6'
                 }}>
-                  에이전트 성장시키기
+                  실전 수익화 컨텐츠 자동 생성 에이전트
                         </p>
                       </div>
 
@@ -1542,87 +1475,17 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 borderRadius: '15px',
                 border: '2px solid #e2e8f0'
               }}>
-                {course.lessons.slice(3, 9).map((lesson: any) => (
+                {course.lessons.slice(5, 10).map((lesson: any) => (
                 <div
                   key={lesson.id}
                   style={{
                       marginBottom: '30px',
                       paddingBottom: '30px',
-                      borderBottom: lesson.id === 9 ? 'none' : '1px solid #e2e8f0'
+                      borderBottom: lesson.id === 10 ? 'none' : '1px solid #e2e8f0'
                     }}
                   >
                       <h5 style={{
-                      color: '#0ea5e9',
-                      fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
-                      fontWeight: '800',
-                      marginBottom: '15px'
-                    }}>
-                      Day {lesson.day} · {lesson.title.replace(`Day ${lesson.day}: `, '')}
-                      </h5>
-                    <div style={{
-                      fontSize: 'clamp(1rem, 2vw, 1.15rem)',
-                      lineHeight: '1.8',
-                      color: '#1f2937'
-                    }}>
-                      <p style={{ marginBottom: '12px', fontWeight: '500' }}>
-                        <strong style={{ color: '#1f2937' }}>이론:</strong> {lesson.sections.theory}
-                      </p>
-                      <p style={{ marginBottom: '0', fontWeight: '500' }}>
-                        <strong style={{ color: '#1f2937' }}>실습:</strong> {lesson.sections.practice}
-                        </p>
-                      </div>
-                </div>
-              ))}
-              </div>
-            </div>
-
-            {/* PROJECT: Day 10-15 */}
-            <div style={{ marginBottom: '60px' }}>
-              <div style={{
-                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-                color: 'white',
-                padding: 'clamp(20px, 4vw, 35px)',
-                borderRadius: '20px',
-                marginBottom: '30px',
-                textAlign: 'center',
-                boxShadow: '0 10px 30px rgba(14, 165, 233, 0.3)'
-              }}>
-                <h4 style={{
-                  fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-                  fontWeight: '800',
-                  margin: '0 0 15px 0',
-                  letterSpacing: '0.5px'
-                }}>
-                  🧩 PROJECT (Day 10-15)
-                </h4>
-                <p style={{
-                        margin: '0',
-                  fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-                  opacity: '0.95',
-                            fontWeight: '600',
-                  lineHeight: '1.6'
-                }}>
-                  실전형 AI 에이전트 6종 완성
-                        </p>
-                      </div>
-
-                      <div style={{
-                background: '#ffffff',
-                padding: 'clamp(25px, 4vw, 40px)',
-                borderRadius: '15px',
-                border: '2px solid #e2e8f0'
-              }}>
-                {course.lessons.slice(9, 15).map((lesson: any) => (
-                <div
-                  key={lesson.id}
-                  style={{
-                      marginBottom: '30px',
-                      paddingBottom: '30px',
-                      borderBottom: lesson.id === 15 ? 'none' : '1px solid #e2e8f0'
-                    }}
-                  >
-                      <h5 style={{
-                      color: '#0ea5e9',
+                      color: '#10b981',
                       fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
                       fontWeight: '800',
                       marginBottom: '15px'
