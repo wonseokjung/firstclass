@@ -277,6 +277,23 @@ const ChatGPTCoursePageWrapper = () => {
       </Suspense>
     );
   };
+
+  // 기존 URL 리다이렉트 컴포넌트
+  const RedirectToNewPlayerUrl = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+      navigate('/chatgpt-agent-beginner/player', { replace: true });
+    }, [navigate]);
+    return <LoadingSpinner />;
+  };
+
+  const RedirectToNewAIBuildingPlayerUrl = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+      navigate('/ai-building-course/player', { replace: true });
+    }, [navigate]);
+    return <LoadingSpinner />;
+  };
   
   // AI Building Course 11월 1일 오픈 안내 컴포넌트
   const ComingSoonNotice = () => {
@@ -410,6 +427,8 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/chatgpt-agent-beginner/day2" element={<Day2PageWrapper />} />
               <Route path="/cost-optimization-examples" element={<CostOptimizationExamplesPageWrapper />} />
               {/* 기존 URL 리다이렉트 */}
+              <Route path="/chatgpt-agent-beginner-player" element={<RedirectToNewPlayerUrl />} />
+              <Route path="/ai-building-course-player" element={<RedirectToNewAIBuildingPlayerUrl />} />
               <Route path="/workflow-automation-master" element={<ComingSoonNotice />} />
               <Route path="/faq" element={<FAQPageWrapper />} />
               <Route path="/ceo" element={<CEOPageWrapper />} />
