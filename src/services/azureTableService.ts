@@ -64,6 +64,9 @@ export interface EnrolledCourse {
   completedAt?: string;
   paymentId?: string;
   learningTimeMinutes?: number;
+  // Day별 완료 상황 추적 (AI Agent 10일 과정용)
+  completedDays?: number[]; // 완료한 Day 번호 배열 (예: [1, 2, 3])
+  dayProgress?: { [key: number]: { completedAt: string; learningTimeMinutes?: number } }; // Day별 상세 정보
 }
 
 // 리워드 관련 인터페이스
@@ -1819,6 +1822,165 @@ export class AzureTableService {
     } catch (error: any) {
       console.error('❌ 비밀번호 재설정 실패:', error.message);
       return false;
+    }
+  }
+
+  // === Day별 진행 상황 관리 (AI Agent 10일 과정용) ===
+
+  /**
+   * Day 완료 처리
+   * @param email 사용자 이메일
+   * @param courseId 강의 ID (예: 'chatgpt-agent-beginner')
+   * @param dayNumber 완료한 Day 번호 (1-10)
+   * @param learningTimeMinutes 해당 Day 학습 시간 (분)
+   */
+  static async completeCourseDay(
+    email: string, 
+    courseId: string, 
+    dayNumber: number, 
+    learningTimeMinutes: number = 0
+  ): Promise<boolean> {
+    try {
+      console.log(`📚 Day ${dayNumber} 완료 처리 중:`, email, courseId);
+      
+      // 사용자 정보 조회
+      const user = await this.getUserByEmail(email);
+      if (!user) {
+        console.log('❌ 사용자를 찾을 수 없음:', email);
+        return false;
+      }
+
+      // 수강 정보 파싱
+      const enrolledCourses: EnrolledCourse[] = user.enrolledCourses 
+        ? JSON.parse(user.enrolledCourses) 
+        : [];
+      
+      // 해당 강의 찾기
+      const courseIndex = enrolledCourses.findIndex(c => c.courseId === courseId);
+      if (courseIndex === -1) {
+        console.log('❌ 수강 중인 강의가 아님:', courseId);
+        return false;
+      }
+
+      const course = enrolledCourses[courseIndex];
+
+      // completedDays 초기화 (없으면 빈 배열)
+      if (!course.completedDays) {
+        course.completedDays = [];
+      }
+
+      // dayProgress 초기화 (없으면 빈 객체)
+      if (!course.dayProgress) {
+        course.dayProgress = {};
+      }
+
+      // 이미 완료된 Day인지 확인
+      if (course.completedDays.includes(dayNumber)) {
+        console.log(`ℹ️ Day ${dayNumber}은 이미 완료됨`);
+        // 기존 학습 시간에 추가
+        if (course.dayProgress[dayNumber]) {
+          course.dayProgress[dayNumber].learningTimeMinutes = 
+            (course.dayProgress[dayNumber].learningTimeMinutes || 0) + learningTimeMinutes;
+        }
+      } else {
+        // 새로 완료 처리
+        course.completedDays.push(dayNumber);
+        course.completedDays.sort((a, b) => a - b); // 정렬
+        
+        course.dayProgress[dayNumber] = {
+          completedAt: new Date().toISOString(),
+          learningTimeMinutes: learningTimeMinutes
+        };
+      }
+
+      // 전체 진도율 업데이트 (10일 기준)
+      const totalDays = 10;
+      course.progress = Math.round((course.completedDays.length / totalDays) * 100);
+
+      // 전체 학습 시간 업데이트
+      const totalLearningTime = Object.values(course.dayProgress).reduce(
+        (sum, day) => sum + (day.learningTimeMinutes || 0), 
+        0
+      );
+      course.learningTimeMinutes = totalLearningTime;
+
+      // 10일 모두 완료 시 상태 변경
+      if (course.completedDays.length === totalDays) {
+        course.status = 'completed';
+        course.completedAt = new Date().toISOString();
+        console.log('🎉 강의 전체 완료!');
+      }
+
+      // lastAccessedAt 업데이트
+      course.lastAccessedAt = new Date().toISOString();
+
+      // 수강 정보 업데이트
+      enrolledCourses[courseIndex] = course;
+
+      // 사용자 정보 업데이트
+      const updatedUser = {
+        ...user,
+        enrolledCourses: JSON.stringify(enrolledCourses),
+        totalLearningTimeMinutes: (user.totalLearningTimeMinutes || 0) + learningTimeMinutes,
+        completedCourses: enrolledCourses.filter(c => c.status === 'completed').length,
+        updatedAt: new Date().toISOString()
+      };
+
+      // Azure에 업데이트
+      await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
+      
+      console.log(`✅ Day ${dayNumber} 완료 처리 완료:`, {
+        completedDays: course.completedDays,
+        progress: course.progress,
+        status: course.status
+      });
+      
+      return true;
+    } catch (error: any) {
+      console.error(`❌ Day ${dayNumber} 완료 처리 실패:`, error.message);
+      return false;
+    }
+  }
+
+  /**
+   * 강의 Day별 진행 상황 조회
+   * @param email 사용자 이메일
+   * @param courseId 강의 ID
+   */
+  static async getCourseDayProgress(email: string, courseId: string): Promise<{
+    completedDays: number[];
+    dayProgress: { [key: number]: { completedAt: string; learningTimeMinutes?: number } };
+    progress: number;
+    totalLearningTime: number;
+  } | null> {
+    try {
+      console.log('📊 강의 진행 상황 조회:', email, courseId);
+      
+      const user = await this.getUserByEmail(email);
+      if (!user) {
+        console.log('❌ 사용자를 찾을 수 없음:', email);
+        return null;
+      }
+
+      const enrolledCourses: EnrolledCourse[] = user.enrolledCourses 
+        ? JSON.parse(user.enrolledCourses) 
+        : [];
+      
+      const course = enrolledCourses.find(c => c.courseId === courseId);
+      if (!course) {
+        console.log('❌ 수강 중인 강의가 아님:', courseId);
+        return null;
+      }
+
+      return {
+        completedDays: course.completedDays || [],
+        dayProgress: course.dayProgress || {},
+        progress: course.progress || 0,
+        totalLearningTime: course.learningTimeMinutes || 0
+      };
+    } catch (error: any) {
+      console.error('❌ 강의 진행 상황 조회 실패:', error.message);
+      return null;
     }
   }
 }
