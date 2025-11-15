@@ -22,7 +22,17 @@ const AdminEnrollmentFixPage: React.FC = () => {
   const [allUsers, setAllUsers] = useState<any[]>([]);
   const [showUserTable, setShowUserTable] = useState(false);
   const [payments, setPayments] = useState<Payment[]>([
-    // 최신 카드 결제 (2025-11-15)
+    // 최신 계좌 입금 결제 (2025-11-15 추가)
+    { orderId: 'order_1763176008537_i61vnvyj2', name: '조*회', maskedEmail: 'ch*********@daum.net', amount: 45000, date: '2025-11-15 12:09:30' },
+    { orderId: 'order_1763176068866_1wy3ukbmm', name: '진*호', maskedEmail: 'ji*******@gmail.com', amount: 45000, date: '2025-11-15 12:08:28' },
+    { orderId: 'order_1763173038375_yga6j1u85', name: '이*호', maskedEmail: 'lk*****@naver.com', amount: 45000, date: '2025-11-15 11:18:28' },
+    { orderId: 'order_1763172810432_ky1178cv3', name: '김*용', maskedEmail: 'kn*********@gmail.com', amount: 45000, date: '2025-11-15 11:15:53' },
+    { orderId: 'order_1763165471379_phgrfd2db', name: '권*경', maskedEmail: 'bi*******@naver.com', amount: 45000, date: '2025-11-15 09:12:44' },
+    { orderId: 'order_1763160549999_5h0kdi2ih', name: '김*화', maskedEmail: 'sh**********@naver.com', amount: 45000, date: '2025-11-15 07:51:27' },
+    { orderId: 'order_1763155799967_oin9rfjds', name: '김*태', maskedEmail: 'on******@gmail.com', amount: 45000, date: '2025-11-15 06:35:02' },
+    { orderId: 'order_1763131176354_3ljcbtg85', name: '함*수', maskedEmail: 'ye********@naver.com', amount: 45000, date: '2025-11-15 11:56:18' },
+    
+    // 카드 결제 (2025-11-15)
     { orderId: 'order_1763146620326_eksp2awco', name: '김*식', maskedEmail: 'id******@naver.com', amount: 45000, date: '2025-11-15 03:57:26' },
     { orderId: 'order_1763142702036_8jh73lg8k', name: '이*훈', maskedEmail: 'so********@gmail.com', amount: 45000, date: '2025-11-15 02:52:50' },
     { orderId: 'order_1763140582868_wv4x2uw7j', name: '박*도', maskedEmail: 'sh*******@gmail.com', amount: 45000, date: '2025-11-15 02:21:44' },
