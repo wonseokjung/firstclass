@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, FileText, Award, Lock } from 'lucide-react';
+import { ArrowLeft, FileText, Award } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
 
 interface Day1PageProps {
@@ -180,16 +180,6 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
         type: 'guide'
       }
     ]
-  };
-
-  const toggleSection = (sectionId: string) => {
-    const newCompleted = new Set(completedSections);
-    if (newCompleted.has(sectionId)) {
-      newCompleted.delete(sectionId);
-    } else {
-      newCompleted.add(sectionId);
-    }
-    setCompletedSections(newCompleted);
   };
 
   const progressPercentage = (completedSections.size / lessonData.sections.length) * 100;
