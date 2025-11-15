@@ -592,68 +592,23 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               height: 0,
               overflow: 'hidden',
               borderRadius: '12px',
-              background: 'linear-gradient(135deg, #0f172a, #1e293b)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
+              background: '#000'
             }}>
-              <div style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                textAlign: 'center',
-                width: '100%',
-                padding: '20px'
-              }}>
-                <div style={{
-                  fontSize: '4rem',
-                  marginBottom: '20px'
-                }}>🎥</div>
-                <h3 style={{
-                  fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
-                  fontWeight: '700',
-                  color: 'white',
-                  marginBottom: '15px'
-                }}>강의 소개 영상</h3>
-                <p style={{
-                  fontSize: '0.95rem',
-                  color: '#94a3b8',
-                  marginBottom: '25px'
-                }}>
-                  10일 완성, 수익화하는 AI 에이전트 만들기
-                </p>
-                <a
-                  href="https://www.youtube.com/watch?v=BZynp51fBRU"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    background: '#ff0000',
-                    color: 'white',
-                    padding: '15px 30px',
-                    borderRadius: '12px',
-                    fontSize: '1.1rem',
-                    fontWeight: '700',
-                    textDecoration: 'none',
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 15px rgba(255, 0, 0, 0.3)'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(255, 0, 0, 0.4)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 0, 0, 0.3)';
-                  }}
-                >
-                  <span>▶</span>
-                  YouTube에서 보기
-                </a>
-              </div>
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/BZynp51fBRU"
+                title="AI Agent Beginner 강의 소개"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '12px',
+                  border: 'none'
+                }}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
             </div>
           </div>
 
