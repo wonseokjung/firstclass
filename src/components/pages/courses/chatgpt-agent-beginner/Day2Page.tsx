@@ -774,45 +774,66 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack }) => {
               ? 'Day 2를 완료했습니다! 다음 강의로 이동하세요.' 
               : '강의를 수강한 후 버튼을 눌러주세요.'}
           </p>
-          <button
-            onClick={handleCompleteDay}
-            disabled={isDayCompleted || isCompletingDay}
-            style={{
-              background: isDayCompleted 
-                ? '#9ca3af' 
-                : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-              color: 'white',
-              border: 'none',
-              padding: '15px 40px',
-              borderRadius: '12px',
-              fontSize: '1.1rem',
-              fontWeight: '700',
-              cursor: isDayCompleted || isCompletingDay ? 'not-allowed' : 'pointer',
-              transition: 'all 0.3s ease',
-              boxShadow: isDayCompleted 
-                ? 'none' 
-                : '0 4px 12px rgba(14, 165, 233, 0.3)',
-              opacity: isDayCompleted || isCompletingDay ? 0.6 : 1
-            }}
-            onMouseOver={(e) => {
-              if (!isDayCompleted && !isCompletingDay) {
+          
+          {!isDayCompleted ? (
+            <button
+              onClick={handleCompleteDay}
+              disabled={isCompletingDay}
+              style={{
+                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                color: 'white',
+                border: 'none',
+                padding: '15px 40px',
+                borderRadius: '12px',
+                fontSize: '1.1rem',
+                fontWeight: '700',
+                cursor: isCompletingDay ? 'not-allowed' : 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(14, 165, 233, 0.3)',
+                opacity: isCompletingDay ? 0.6 : 1
+              }}
+              onMouseOver={(e) => {
+                if (!isCompletingDay) {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(14, 165, 233, 0.4)';
+                }
+              }}
+              onMouseOut={(e) => {
+                if (!isCompletingDay) {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(14, 165, 233, 0.3)';
+                }
+              }}
+            >
+              {isCompletingDay ? '처리 중...' : 'Day 2 완료하기 →'}
+            </button>
+          ) : (
+            <button
+              onClick={onBack}
+              style={{
+                background: 'linear-gradient(135deg, #10b981, #059669)',
+                color: 'white',
+                border: 'none',
+                padding: '15px 40px',
+                borderRadius: '12px',
+                fontSize: '1.1rem',
+                fontWeight: '700',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
+              }}
+              onMouseOver={(e) => {
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 6px 16px rgba(14, 165, 233, 0.4)';
-              }
-            }}
-            onMouseOut={(e) => {
-              if (!isDayCompleted && !isCompletingDay) {
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(16, 185, 129, 0.4)';
+              }}
+              onMouseOut={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(14, 165, 233, 0.3)';
-              }
-            }}
-          >
-            {isCompletingDay 
-              ? '처리 중...' 
-              : isDayCompleted 
-                ? '✓ 완료됨' 
-                : 'Day 2 완료하기 →'}
-          </button>
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)';
+              }}
+            >
+              ✓ 완료! 다음 강의로 →
+            </button>
+          )}
         </div>
 
         {/* 추가 자료 */}
