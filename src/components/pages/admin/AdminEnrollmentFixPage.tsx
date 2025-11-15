@@ -22,41 +22,45 @@ const AdminEnrollmentFixPage: React.FC = () => {
   const [allUsers, setAllUsers] = useState<any[]>([]);
   const [showUserTable, setShowUserTable] = useState(false);
   const [payments, setPayments] = useState<Payment[]>([
-    // 최신 결제 (2025-11-15 밤 늦게 추가)
+    // 최신 가상계좌 결제 (2025-11-15 추가 - 63건 완료)
+    { orderId: 'order_1763209616354_m6rd8xr80', name: '오*현', maskedEmail: 'os******@naver.com', amount: 45000, date: '2025-11-15 21:29:30' },
+    { orderId: 'order_1763204300893_o78gzc57r', name: '권*훈', maskedEmail: 'sa******@naver.com', amount: 45000, date: '2025-11-15 20:02:11' },
+    { orderId: 'order_1763200037845_d3tcv7hwt', name: '나**엘', maskedEmail: 'dy********@gmail.com', amount: 45000, date: '2025-11-15 18:51:57' },
+    { orderId: 'order_1763186369109_cxphzz9cr', name: '배*경', maskedEmail: 'la****@naver.com', amount: 45000, date: '2025-11-15 18:35:37' },
+    { orderId: 'order_1763190894180_rwupcn3v2', name: '김*용', maskedEmail: 'kj*****@hanmail.net', amount: 45000, date: '2025-11-15 16:18:05' },
+    { orderId: 'order_1763187749726_paa5ezm9y', name: '이*희', maskedEmail: 'so******@naver.com', amount: 45000, date: '2025-11-15 15:26:04' },
+    { orderId: 'order_1763182544875_8wc9ijrhj', name: '김*윤', maskedEmail: 'sk*****@naver.com', amount: 45000, date: '2025-11-15 13:57:17' },
+    { orderId: 'order_1763179685516_1ibqjtwsz', name: '박*혁', maskedEmail: 'kb********@gmail.com', amount: 45000, date: '2025-11-15 13:14:29' },
+    { orderId: 'order_1763176008537_i61vnvyj2', name: '조*회', maskedEmail: 'ch*********@daum.net', amount: 45000, date: '2025-11-15 12:09:30' },
+    { orderId: 'order_1763131176354_3ljcbtg85', name: '함*수', maskedEmail: 'ye********@naver.com', amount: 45000, date: '2025-11-15 11:56:18' },
+    { orderId: 'order_1763173038375_yga6j1u85', name: '이*호', maskedEmail: 'lk*****@naver.com', amount: 45000, date: '2025-11-15 11:18:28' },
+    { orderId: 'order_1763172810432_ky1178cv3', name: '김*용', maskedEmail: 'kn*********@gmail.com', amount: 45000, date: '2025-11-15 11:15:53' },
+    { orderId: 'order_1763165471379_phgrfd2db', name: '권*경', maskedEmail: 'bi*******@naver.com', amount: 45000, date: '2025-11-15 09:12:44' },
+    { orderId: 'order_1763160549999_5h0kdi2ih', name: '김*화', maskedEmail: 'sh**********@naver.com', amount: 45000, date: '2025-11-15 07:51:27' },
+    { orderId: 'order_1763141007765_kgxvqtib2', name: '유*', maskedEmail: 'rt*******@naver.com', amount: 45000, date: '2025-11-15 02:26:05' },
+    { orderId: 'order_1763140041405_jd0zvw0f1', name: '구*원', maskedEmail: 'ja********@naver.com', amount: 45000, date: '2025-11-15 02:12:53' },
+    { orderId: 'order_1763138004936_nsk04uuaa', name: '김*영', maskedEmail: 'gi*******@naver.com', amount: 45000, date: '2025-11-15 01:44:14' },
+    { orderId: 'order_1763138358813_q9q2cld4o', name: '박*우', maskedEmail: 'da******@naver.com', amount: 45000, date: '2025-11-15 01:41:52' },
+    { orderId: 'order_1763138027577_tckb9idii', name: '송*령', maskedEmail: 'sr******@gmail.com', amount: 45000, date: '2025-11-15 01:36:27' },
+    { orderId: 'order_1763137615363_vdep7so59', name: '유*아', maskedEmail: 'eo***@naver.com', amount: 45000, date: '2025-11-15 01:28:15' },
+    { orderId: 'order_1763136893900_tm4i4znvr', name: '표*규', maskedEmail: 'pn****@naver.com', amount: 45000, date: '2025-11-15 01:21:00' },
+    { orderId: 'order_1763130376129_qcnfme87r', name: '윤*록', maskedEmail: 'yo**********@kakao.com', amount: 45000, date: '2025-11-14 23:27:21' },
+    { orderId: 'order_1763028887929_xwikmij7q', name: '최*영', maskedEmail: 'th**********@gmail.com', amount: 45000, date: '2025-11-13 21:58:55' },
+    { orderId: 'order_1762947956026_hjbr0zfra', name: '이*주', maskedEmail: 'za*******@naver.com', amount: 45000, date: '2025-11-12 22:31:25' },
+    { orderId: 'order_1762694258374_zpyr2skqo', name: '아***딸', maskedEmail: 'kh*********@gmail.com', amount: 45000, date: '2025-11-09 22:28:33' },
+    { orderId: 'order_1760460974354_dflgnw48v', name: '서*란', maskedEmail: 'ok*******@gmail.com', amount: 45000, date: '2025-10-15 02:02:33' },
+    
+    // 최신 카드 결제 (2025-11-15 밤 늦게 추가)
     { orderId: 'order_1763213606265_s21pctq2y', name: '김*열', maskedEmail: 'no-email', amount: 45000, date: '2025-11-15 22:40:17' },
     { orderId: 'order_1763213509053_kf0pkerx0', name: '구*철', maskedEmail: 'gu****@gmail.com', amount: 45000, date: '2025-11-15 22:36:11' },
-    { orderId: 'order_1763209616354_m6rd8xr80', name: '오*현', maskedEmail: 'os******@naver.com', amount: 45000, date: '2025-11-15 21:27:36' },
     { orderId: 'order_1763205974492_13hjyumjn', name: '김*원', maskedEmail: 'ed*******@gmail.com', amount: 45000, date: '2025-11-15 20:29:08' },
-    
-    // 최신 계좌 입금 결제 (2025-11-15 밤 추가)
-    { orderId: 'order_1763204300893_o78gzc57r', name: '권*훈', maskedEmail: 'sa******@naver.com', amount: 45000, date: '2025-11-15 19:58:51' },
-    
-    // 최신 계좌 입금 결제 (2025-11-15 저녁 추가)
-    { orderId: 'order_1763200037845_d3tcv7hwt', name: '나**엘', maskedEmail: 'dy********@gmail.com', amount: 45000, date: '2025-11-15 18:47:35' },
-    { orderId: 'order_1763190894180_rwupcn3v2', name: '김*용', maskedEmail: 'kj*****@hanmail.net', amount: 45000, date: '2025-11-15 16:15:31' },
-    
-    // 최신 계좌 입금 결제 (2025-11-15 오후 추가)
-    { orderId: 'order_1763187749726_paa5ezm9y', name: '이*희', maskedEmail: 'so******@naver.com', amount: 45000, date: '2025-11-15 15:22:53' },
-    { orderId: 'order_1763186369109_cxphzz9cr', name: '배*경', maskedEmail: 'la****@naver.com', amount: 45000, date: '2025-11-15 15:00:32' },
-    { orderId: 'order_1763182544875_8wc9ijrhj', name: '김*윤', maskedEmail: 'sk*****@naver.com', amount: 45000, date: '2025-11-15 13:56:06' },
-    { orderId: 'order_1763179685516_1ibqjtwsz', name: '박*혁', maskedEmail: 'kb********@gmail.com', amount: 45000, date: '2025-11-15 13:10:27' },
     
     // 카드 결제 (2025-11-15 오후 추가)
     { orderId: 'order_1763187060971_l7psrfhgm', name: '양*석', maskedEmail: 'jj**********@gmail.com', amount: 45000, date: '2025-11-15 15:13:31' },
     { orderId: 'order_1763184550490_6h1q7wdui', name: '김*량', maskedEmail: 'ry*********@gmail.com', amount: 45000, date: '2025-11-15 14:32:00' },
     { orderId: 'order_1763184039257_hx4qgtr2q', name: '최*경', maskedEmail: 'ch*******@hanmail.net', amount: 45000, date: '2025-11-15 14:29:05' },
     
-    // 이전 계좌 입금 결제 (2025-11-15 오전)
-    { orderId: 'order_1763176008537_i61vnvyj2', name: '조*회', maskedEmail: 'ch*********@daum.net', amount: 45000, date: '2025-11-15 12:09:30' },
-    { orderId: 'order_1763176068866_1wy3ukbmm', name: '진*호', maskedEmail: 'ji*******@gmail.com', amount: 45000, date: '2025-11-15 12:08:28' },
-    { orderId: 'order_1763173038375_yga6j1u85', name: '이*호', maskedEmail: 'lk*****@naver.com', amount: 45000, date: '2025-11-15 11:18:28' },
-    { orderId: 'order_1763172810432_ky1178cv3', name: '김*용', maskedEmail: 'kn*********@gmail.com', amount: 45000, date: '2025-11-15 11:15:53' },
-    { orderId: 'order_1763165471379_phgrfd2db', name: '권*경', maskedEmail: 'bi*******@naver.com', amount: 45000, date: '2025-11-15 09:12:44' },
-    { orderId: 'order_1763160549999_5h0kdi2ih', name: '김*화', maskedEmail: 'sh**********@naver.com', amount: 45000, date: '2025-11-15 07:51:27' },
-    { orderId: 'order_1763155799967_oin9rfjds', name: '김*태', maskedEmail: 'on******@gmail.com', amount: 45000, date: '2025-11-15 06:35:02' },
-    { orderId: 'order_1763131176354_3ljcbtg85', name: '함*수', maskedEmail: 'ye********@naver.com', amount: 45000, date: '2025-11-15 11:56:18' },
-    
-    // 카드 결제 (2025-11-15)
+    // 카드 결제 (2025-11-15 오전)
     { orderId: 'order_1763146620326_eksp2awco', name: '김*식', maskedEmail: 'id******@naver.com', amount: 45000, date: '2025-11-15 03:57:26' },
     { orderId: 'order_1763142702036_8jh73lg8k', name: '이*훈', maskedEmail: 'so********@gmail.com', amount: 45000, date: '2025-11-15 02:52:50' },
     { orderId: 'order_1763140582868_wv4x2uw7j', name: '박*도', maskedEmail: 'sh*******@gmail.com', amount: 45000, date: '2025-11-15 02:21:44' },
@@ -132,6 +136,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
 
   const [searchEmail, setSearchEmail] = useState('');
   const [processing, setProcessing] = useState(false);
+  const [editingEmail, setEditingEmail] = useState<{ oldEmail: string; newEmail: string } | null>(null);
 
   useEffect(() => {
     const checkAdmin = async () => {
@@ -167,6 +172,72 @@ const AdminEnrollmentFixPage: React.FC = () => {
       console.error('사용자 로드 실패:', error);
       alert('사용자 목록을 불러올 수 없습니다.');
       setIsLoading(false);
+    }
+  };
+
+  // 이메일 수정 함수
+  const handleUpdateEmail = async (oldEmail: string, newEmail: string) => {
+    if (!window.confirm(`정말로 이메일을 변경하시겠습니까?\n\n기존: ${oldEmail}\n새 이메일: ${newEmail}\n\n⚠️ 주의: 이 작업은 되돌릴 수 없습니다!`)) {
+      return;
+    }
+
+    try {
+      setProcessing(true);
+      
+      // 1. 기존 사용자 데이터 가져오기
+      const oldUser = await AzureTableService.getUserByEmail(oldEmail);
+      if (!oldUser) {
+        alert('기존 사용자를 찾을 수 없습니다.');
+        setProcessing(false);
+        return;
+      }
+
+      // 2. 새 이메일로 이미 가입된 계정이 있는지 확인
+      const existingUser = await AzureTableService.getUserByEmail(newEmail);
+      if (existingUser) {
+        alert('새 이메일 주소는 이미 사용 중입니다.');
+        setProcessing(false);
+        return;
+      }
+
+      // 3. 새 이메일로 사용자 생성 (직접 저장)
+      const newUserData: any = {
+        PartitionKey: 'users',
+        RowKey: newEmail,
+        email: newEmail,
+        name: oldUser.name,
+        phone: oldUser.phone || '',
+        passwordHash: oldUser.passwordHash,
+        emailVerified: oldUser.emailVerified || false,
+        marketingAgreed: oldUser.marketingAgreed || false,
+        createdAt: oldUser.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        enrolledCourses: oldUser.enrolledCourses || '',
+        referralCode: oldUser.referralCode || '',
+        referredBy: oldUser.referredBy || '',
+        totalEnrolledCourses: oldUser.totalEnrolledCourses || 0,
+        completedCourses: oldUser.completedCourses || 0,
+        totalLearningTimeMinutes: oldUser.totalLearningTimeMinutes || 0,
+        totalRewards: oldUser.totalRewards || 0,
+        pendingRewards: oldUser.pendingRewards || 0,
+        rewardHistory: oldUser.rewardHistory || '[]',
+        referralCount: oldUser.referralCount || 0,
+        referralStats: oldUser.referralStats || '{"totalReferrals":0,"activePurchasers":0,"totalRewardEarned":0,"thisMonthRewards":0,"topReferralMonth":""}'
+      };
+
+      await AzureTableService.createUserDirect(newUserData);
+
+      alert(`✅ 이메일이 성공적으로 변경되었습니다!\n\n${oldEmail} → ${newEmail}\n\n사용자에게 새 이메일(${newEmail})로 로그인하라고 안내해주세요.\n\n⚠️ 중요: 기존 이메일(${oldEmail})로는 더 이상 로그인할 수 없습니다.`);
+      
+      // 4. 사용자 목록 새로고침
+      await loadAllUsers();
+      
+    } catch (error) {
+      console.error('이메일 변경 실패:', error);
+      alert('이메일 변경에 실패했습니다. 다시 시도해주세요.\n\n에러: ' + (error as Error).message);
+    } finally {
+      setProcessing(false);
+      setEditingEmail(null);
     }
   };
 
@@ -604,10 +675,76 @@ const AdminEnrollmentFixPage: React.FC = () => {
                             <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>없음</span>
                           )}
                         </td>
-                        <td style={{ padding: '12px' }}>
-                          {!hasCourse && (
-                            <button
-                              onClick={async () => {
+                        <td style={{ padding: '12px', display: 'flex', gap: '8px', alignItems: 'center' }}>
+                          {editingEmail?.oldEmail === user.email && editingEmail ? (
+                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                              <input
+                                type="email"
+                                value={editingEmail.newEmail}
+                                onChange={(e) => setEditingEmail({ oldEmail: editingEmail.oldEmail, newEmail: e.target.value })}
+                                placeholder="새 이메일"
+                                style={{
+                                  padding: '6px 10px',
+                                  borderRadius: '6px',
+                                  border: '1px solid #0ea5e9',
+                                  fontSize: '0.85rem',
+                                  width: '200px'
+                                }}
+                              />
+                              <button
+                                onClick={() => handleUpdateEmail(editingEmail.oldEmail, editingEmail.newEmail)}
+                                disabled={!editingEmail.newEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(editingEmail.newEmail)}
+                                style={{
+                                  padding: '6px 12px',
+                                  borderRadius: '6px',
+                                  border: 'none',
+                                  background: 'linear-gradient(135deg, #10b981, #059669)',
+                                  color: 'white',
+                                  fontSize: '0.85rem',
+                                  fontWeight: '600',
+                                  cursor: 'pointer',
+                                  whiteSpace: 'nowrap'
+                                }}
+                              >
+                                ✓ 저장
+                              </button>
+                              <button
+                                onClick={() => setEditingEmail(null)}
+                                style={{
+                                  padding: '6px 12px',
+                                  borderRadius: '6px',
+                                  border: '1px solid #e2e8f0',
+                                  background: 'white',
+                                  color: '#64748b',
+                                  fontSize: '0.85rem',
+                                  cursor: 'pointer'
+                                }}
+                              >
+                                취소
+                              </button>
+                            </div>
+                          ) : (
+                            <>
+                              <button
+                                onClick={() => setEditingEmail({ oldEmail: user.email, newEmail: '' })}
+                                disabled={processing}
+                                style={{
+                                  padding: '6px 12px',
+                                  borderRadius: '6px',
+                                  border: '1px solid #0ea5e9',
+                                  background: 'white',
+                                  color: '#0ea5e9',
+                                  fontSize: '0.85rem',
+                                  fontWeight: '600',
+                                  cursor: 'pointer',
+                                  whiteSpace: 'nowrap'
+                                }}
+                              >
+                                ✏️ 이메일 수정
+                              </button>
+                              {!hasCourse && (
+                                <button
+                                  onClick={async () => {
                                 if (!window.confirm(`${user.name || user.email}에게 강의를 추가하시겠습니까?`)) return;
                                 
                                 try {
@@ -639,6 +776,8 @@ const AdminEnrollmentFixPage: React.FC = () => {
                             >
                               강의 추가
                             </button>
+                              )}
+                            </>
                           )}
                         </td>
                       </tr>

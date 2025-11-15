@@ -97,7 +97,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
           },
           { 
             day: 4, 
-            title: '인스타그램 포스팅 에이전트 만들기 - OpenAI vs Google OPAL 비교', 
+            title: '협찬/광고 수익을 만드는 \'콘텐츠 자동 생성 에이전트\' 제작법', 
             subtitle: '실습: 두 플랫폼으로 같은 에이전트 만들어보며 차이점 체감하기',
             hasQuiz: false 
           },
@@ -158,6 +158,8 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
       navigate('/chatgpt-agent-beginner/day2');
     } else if (day === 3) {
       navigate('/chatgpt-agent-beginner/day3');
+    } else if (day === 4) {
+      navigate('/chatgpt-agent-beginner/day4');
     } else {
       alert(`Day ${day} 강의는 준비 중입니다. 곧 공개될 예정입니다! 🚀`);
     }
@@ -325,7 +327,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             }}>
               {week.days.map((lesson) => {
                 const isCompleted = completedDays.has(lesson.day);
-                const isAvailable = lesson.day <= 3; // Day 1, 2, 3 사용 가능
+                const isAvailable = lesson.day <= 4; // Day 1, 2, 3, 4 사용 가능
 
                 return (
                   <div

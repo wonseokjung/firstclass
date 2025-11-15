@@ -50,7 +50,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
       {
         id: 4,
         day: 4,
-        title: "Day 4: 인스타그램 포스팅 에이전트 만들기 - OpenAI vs Google OPAL 비교",
+        title: "Day 4: 협찬/광고 수익을 만드는 '콘텐츠 자동 생성 에이전트' 제작법",
         hasQuiz: false,
         sections: {
           theory: "• OpenAI와 Google OPAL의 차이점\n• 각 플랫폼의 장단점 비교\n• SNS 컨텐츠 자동화 전략",
