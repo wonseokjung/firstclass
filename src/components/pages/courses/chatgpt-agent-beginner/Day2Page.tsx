@@ -16,6 +16,10 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
   const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>('');
 
+  // 런칭 날짜 체크 (2025년 11월 15일 오후 8시)
+  const launchDate = new Date('2025-11-15T20:00:00+09:00');
+  const isLaunched = new Date() >= launchDate;
+
   // 사용자 정보 및 Day 완료 상태 로드
   useEffect(() => {
     const loadUserProgress = async () => {
@@ -187,6 +191,89 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
   };
 
   const progressPercentage = (completedSections.size / lessonData.sections.length) * 100;
+
+  // 런칭 전이면 오버레이 표시
+  if (!isLaunched) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '20px'
+      }}>
+        <div style={{
+          background: 'white',
+          borderRadius: '20px',
+          padding: '50px',
+          maxWidth: '500px',
+          width: '100%',
+          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+          textAlign: 'center'
+        }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '80px',
+            height: '80px',
+            background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+            borderRadius: '50%',
+            marginBottom: '30px',
+            boxShadow: '0 4px 15px rgba(14, 165, 233, 0.3)'
+          }}>
+            <Lock size={40} color="white" />
+          </div>
+
+          <h2 style={{
+            fontSize: '2rem',
+            fontWeight: '800',
+            color: '#1f2937',
+            marginBottom: '15px'
+          }}>
+            🚀 Day 2 준비 중
+          </h2>
+
+          <p style={{
+            color: '#64748b',
+            fontSize: '1.1rem',
+            marginBottom: '30px',
+            lineHeight: '1.6'
+          }}>
+            이 강의는 <strong style={{ color: '#0ea5e9' }}>2025년 11월 15일 오후 8시</strong>에 오픈될 예정입니다.
+          </p>
+
+          <button
+            onClick={onBack}
+            style={{
+              width: '100%',
+              background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+              color: 'white',
+              border: 'none',
+              padding: '15px 30px',
+              fontSize: '1.1rem',
+              fontWeight: '700',
+              borderRadius: '10px',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 15px rgba(14, 165, 233, 0.3)'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 6px 20px rgba(14, 165, 233, 0.4)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 15px rgba(14, 165, 233, 0.3)';
+            }}
+          >
+            강의 목록으로 돌아가기
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{
