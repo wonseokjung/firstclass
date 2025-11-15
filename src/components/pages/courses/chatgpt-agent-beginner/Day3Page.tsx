@@ -88,104 +88,132 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
 
   const lessonData = {
     day: 3,
-    title: "GPT-5부터 o3까지 - Agent Builder에서 선택할 수 있는 AI 모델 총정리",
+    title: "Google Opal로 영상 자동 생성 에이전트 만들기",
     duration: "약 50분",
-    description: "LLM의 개념과 GPT 모델들의 차이점을 이해하고, 목적에 맞는 최적의 모델을 선택하여 가격 대비 성능을 최적화하는 전략을 배웁니다.",
+    description: "ChatGPT vs Google Opal을 비교하고, 트렌드 분석부터 영상 생성까지 자동화하는 멀티모달 AI 에이전트를 구축합니다.",
     objectives: [
-      "LLM(Large Language Model)의 기본 개념 이해하기",
-      "GPT-5, GPT-4, o3 등 주요 모델의 차이점과 특징 파악하기",
-      "비용 최적화 전략: 작업 특성에 맞는 모델 선택 방법 익히기"
+      "ChatGPT 에이전트 빌더 vs Google Opal의 차이점 이해하기",
+      "Google Opal의 핵심 AI 모델 (Veo, Gemini 2.5 Flash, Imagen) 활용법 익히기",
+      "트렌드 검색 + 영상 생성 자동화 에이전트 직접 만들어보기"
     ],
     sections: [
       {
         id: 'theory-1',
         type: 'theory',
-        title: '이론 강의: AI 모델 총정리 및 가격 최적화',
+        title: '이론 강의: ChatGPT vs Google Opal 비교 및 멀티모달 AI 이해',
         duration: '약 25분',
         videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/day3/day3lecture.mp4',
         content: `
-          <h3>🤖 LLM(Large Language Model)이란?</h3>
+          <h3>🎯 강의 목표: AI 콘텐츠 수익화 및 자동화</h3>
           
           <div style="background: #f0f9ff; padding: 20px; border-radius: 10px; margin: 15px 0;">
             <p style="margin: 0; font-size: 1.05rem; line-height: 1.6;">
-              대규모 텍스트 데이터로 학습된 인공지능 모델로, 인간의 언어를 이해하고 생성할 수 있습니다.
+              텍스트 중심의 ChatGPT를 넘어, <strong>영상/이미지/음악</strong>까지 생성하는 멀티모달 AI 에이전트를 만들어 콘텐츠 제작을 완전 자동화합니다.
             </p>
           </div>
           
-          <h3>📊 주요 GPT 모델 비교</h3>
+          <h3>⚖️ ChatGPT 에이전트 빌더 vs Google Opal</h3>
           
           <div style="background: #fef3c7; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #f59e0b;">
             <p style="margin: 0 0 10px 0; font-size: 1.05rem;">
-              <strong>GPT-5 / GPT-4</strong>
+              <strong>🤖 ChatGPT 에이전트 빌더 (OpenAI)</strong>
             </p>
             <p style="margin: 0; font-size: 1rem; line-height: 1.6; color: #78350f;">
-              • 고성능 모델: 복잡한 추론, 창의적 작업에 최적<br/>
-              • 비용: 높음 (정확도와 품질 중요 시 사용)<br/>
-              • 예시: 기획, 대본 작성, 정책 검토
+              • <strong>주력:</strong> 텍스트 생성, 논리적 추론, 대본 작성<br/>
+              • <strong>강점:</strong> 기획, 스크립트, 데이터 분석<br/>
+              • <strong>한계:</strong> 영상/오디오 등 멀티모달 콘텐츠 생성 불가<br/>
+              • <strong>연동:</strong> 외부 툴(N8N) 필요
             </p>
           </div>
           
           <div style="background: #ecfdf5; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #10b981;">
             <p style="margin: 0 0 10px 0; font-size: 1.05rem;">
-              <strong>GPT-5 Mini / Nano</strong>
+              <strong>🎬 Google Opal</strong>
             </p>
             <p style="margin: 0; font-size: 1rem; line-height: 1.6; color: #065f46;">
-              • 경량 모델: 단순 작업에 최적화<br/>
-              • 비용: 낮음 (속도와 비용 중요 시 사용)<br/>
-              • 예시: 웹 검색, 데이터 추출, 간단한 분류
+              • <strong>주력:</strong> 영상, 이미지, 음악 생성<br/>
+              • <strong>강점:</strong> 콘텐츠 자체 제작, Google 앱(Docs, Drive) 직접 연동<br/>
+              • <strong>AI 모델:</strong> Veo(영상), Imagen(이미지), Lyria(음악), AudioLM(음성)<br/>
+              • <strong>비용:</strong> 개인 사용 목적 무료 가능
             </p>
           </div>
           
-          <div style="background: #fef2f2; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #ef4444;">
-            <p style="margin: 0 0 10px 0; font-size: 1.05rem;">
-              <strong>o3 (오픈AI 최신 모델)</strong>
-            </p>
-            <p style="margin: 0; font-size: 1rem; line-height: 1.6; color: #991b1b;">
-              • 최고 성능: 매우 복잡한 추론과 전문적 작업<br/>
-              • 비용: 매우 높음 (필수적인 경우에만 사용)<br/>
-              • 예시: 전문 분석, 고급 컨설팅 작업
+          <h3>🧠 Google Opal 핵심 AI 모델</h3>
+          
+          <div style="background: #f8fafc; padding: 15px; border-radius: 10px; margin: 15px 0; border: 2px solid #e2e8f0;">
+            <p style="margin: 0; font-size: 1rem; line-height: 1.8;">
+              ✅ <strong>Veo:</strong> 영상 생성 (핵심 기능)<br/>
+              ✅ <strong>Imagen:</strong> 이미지 생성<br/>
+              ✅ <strong>Lyria:</strong> 음악 생성<br/>
+              ✅ <strong>AudioLM:</strong> 텍스트 → 소리 변환<br/>
+              ✅ <strong>Gemini 2.5 Flash:</strong> 빠른 텍스트 처리 및 웹 검색
             </p>
           </div>
           
-          <h3>💰 가격 최적화 전략</h3>
+          <h3>💡 도구 이원화 전략</h3>
           <p style="font-size: 1.05rem; line-height: 1.8;">
-            <strong>1. 작업 특성 분석:</strong> 단순 작업 vs 복잡한 작업 구분<br/>
-            <strong>2. 적절한 모델 선택:</strong> Mini/Nano로 충분한 경우 굳이 GPT-5 사용 금지<br/>
-            <strong>3. 하이브리드 전략:</strong> 단순 작업은 Mini, 핵심 작업은 GPT-5 사용
+            <strong>1. 기획/대본:</strong> ChatGPT 사용 (논리적 추론, 스크립트 작성)<br/>
+            <strong>2. 영상/이미지 생성:</strong> Google Opal 사용 (콘텐츠 제작)<br/>
+            <strong>3. Google 생태계 활용:</strong> Docs, Drive 연동으로 자동 저장 및 관리
           </p>
         `
       },
       {
         id: 'practice-1',
         type: 'practice',
-        title: '실습: 모델별 응답 비교 실험',
+        title: '실습: 트렌드 검색 + 영상 자동 생성 에이전트 만들기',
         duration: '약 25분',
         videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/day3/day3practice.mp4',
         content: `
-          <h3>🔬 실전 실험: 같은 작업, 다른 모델</h3>
+          <h3>🎬 실전: 영상 생성 자동화 에이전트 구축</h3>
           
           <p style="font-size: 1.05rem; line-height: 1.8; color: #374151; margin-bottom: 20px;">
-            동일한 작업을 GPT-5, Mini, o3로 각각 실행하여 성능과 비용을 비교하고, 최적의 모델 선택 전략을 익힙니다.
+            웹에서 트렌드를 검색하고, 그 결과를 바탕으로 자동으로 홍보 영상을 생성하는 완전 자동화 에이전트를 만듭니다.
           </p>
           
+          <h3>🏗️ Step 1: 기본 구조 설정 (머리-가슴-배)</h3>
           <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin: 20px 0; border: 2px solid #e2e8f0;">
-            <h4 style="color: #1f2937; margin-bottom: 15px;">🧪 실험 시나리오</h4>
             <ol style="margin: 0; padding-left: 20px; line-height: 2;">
-              <li><strong>단순 작업:</strong> 웹 검색 결과 요약 (Mini vs GPT-5)</li>
-              <li><strong>창의적 작업:</strong> 마케팅 카피 작성 (GPT-5 vs o3)</li>
-              <li><strong>복잡한 추론:</strong> 데이터 분석 및 인사이트 도출 (GPT-5 vs o3)</li>
+              <li><strong>User Input (입력):</strong> 사용자의 명령 받기</li>
+              <li><strong>Generate (생성):</strong> AI 모델 선택 (Veo 선택)</li>
+              <li><strong>Output (출력):</strong> 결과물 표시 (화면 출력 or Google Docs 저장)</li>
             </ol>
           </div>
           
-          <div style="background: #fef3c7; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #f59e0b;">
-            <p style="margin: 0; font-size: 1rem; color: #78350f;">
-              <strong>💰 비용 vs 성능:</strong> 결과의 품질 차이가 크지 않다면 저렴한 모델을 사용하세요. 비용 절감의 핵심입니다!
+          <h3>🎥 Step 2: 단순 영상 생성 실습</h3>
+          <div style="background: #ecfdf5; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #10b981;">
+            <p style="margin: 0; font-size: 1rem; line-height: 1.8; color: #065f46;">
+              • <strong>Generate 노드:</strong> Veo(영상 모델) 선택<br/>
+              • <strong>프롬프트:</strong> "강아지가 뛰노는 영상"<br/>
+              • <strong>결과:</strong> 강아지 영상 자동 생성 ✅
             </p>
           </div>
           
-          <div style="background: #ecfdf5; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #10b981;">
-            <p style="margin: 0; font-size: 1rem; color: #065f46;">
-              <strong>✅ 실습 목표:</strong> 각 작업에 맞는 최적의 모델을 선택하는 "감"을 익히는 것이 핵심입니다!
+          <h3>🚀 Step 3: 트렌드 반영 자동화 (심화)</h3>
+          <div style="background: #fef3c7; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #f59e0b;">
+            <h4 style="color: #78350f; margin-bottom: 10px;">1️⃣ 웹 검색 도구 추가</h4>
+            <p style="margin: 0 0 15px 0; font-size: 1rem; line-height: 1.6; color: #78350f;">
+              • <strong>Tools → Search Web</strong> (Gemini 2.5 Flash 사용)<br/>
+              • <strong>프롬프트:</strong> "인터넷 트렌드를 검색해서 현재 가장 인기 있는 제품(예: 스킨케어) 키워드를 찾아라"
+            </p>
+            
+            <h4 style="color: #78350f; margin-bottom: 10px;">2️⃣ 검색 결과를 영상 생성으로 연결</h4>
+            <p style="margin: 0; font-size: 1rem; line-height: 1.6; color: #78350f;">
+              • 검색된 <strong>'트렌드 키워드'</strong>를 영상 생성 모델(Veo)로 전달<br/>
+              • <strong>프롬프트:</strong> "전달받은 키워드를 바탕으로 홍보용 영상을 생성해라"
+            </p>
+          </div>
+          
+          <h3>✅ Step 4: 최종 결과</h3>
+          <div style="background: #dbeafe; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #3b82f6;">
+            <p style="margin: 0; font-size: 1rem; color: #1e40af;">
+              <strong>🎉 완성!</strong> AI가 자동으로 웹에서 '스킨케어' 트렌드를 감지하고, 이에 맞는 제품 홍보 영상을 자동으로 생성합니다!
+            </p>
+          </div>
+          
+          <div style="background: #f0fdf4; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #22c55e;">
+            <p style="margin: 0; font-size: 1rem; color: #15803d;">
+              <strong>📝 오늘의 과제:</strong> Google Opal에 접속하여 Search Web(트렌드 검색)과 Veo(영상 생성)를 연결한 나만의 자동화 에이전트를 직접 만들어 보세요!
             </p>
           </div>
         `
@@ -195,34 +223,34 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
       questions: [
         {
           id: 1,
-          question: 'LLM(Large Language Model)이란 무엇인가요?',
+          question: 'ChatGPT 에이전트 빌더의 주요 강점은 무엇인가요?',
           options: [
-            '대규모 텍스트 데이터로 학습된 인공지능 언어 모델',
-            '작은 규모의 머신러닝 모델',
-            '음성 인식 전용 모델',
-            '이미지 생성 전용 모델'
+            '영상과 음악 생성',
+            '텍스트 생성, 논리적 추론, 대본 작성',
+            'Google Docs와의 자동 연동',
+            '무료 사용'
           ],
-          correctAnswer: 0
+          correctAnswer: 1
         },
         {
           id: 2,
-          question: '단순한 웹 검색이나 데이터 추출 작업에 가장 적합한 모델은?',
+          question: 'Google Opal에서 영상 생성을 담당하는 AI 모델은?',
           options: [
-            'GPT-5 (가장 강력하므로)',
-            'o3 (최신 모델이므로)',
-            'GPT-5 Mini/Nano (비용 효율적이므로)',
-            '모든 모델이 동일함'
+            'Imagen',
+            'Lyria',
+            'Veo',
+            'AudioLM'
           ],
           correctAnswer: 2
         },
         {
           id: 3,
-          question: 'AI 모델 선택 시 가격 최적화 전략으로 올바른 것은?',
+          question: '트렌드 검색 + 영상 자동 생성 에이전트에서 웹 검색에 사용하는 모델은?',
           options: [
-            '항상 가장 강력한 모델(o3)을 사용한다',
-            '항상 가장 저렴한 모델(Mini)만 사용한다',
-            '작업 특성에 따라 적절한 모델을 선택하는 하이브리드 전략을 사용한다',
-            '모델 선택은 중요하지 않다'
+            'GPT-4',
+            'Veo',
+            'Gemini 2.5 Flash',
+            'Imagen'
           ],
           correctAnswer: 2
         }
