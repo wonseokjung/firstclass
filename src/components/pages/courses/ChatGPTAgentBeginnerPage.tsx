@@ -17,8 +17,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
   const course = {
     id: 1002,
-    title: "🧠 AI Agent Maker",
-    subtitle: "10일 완성, 수익화하는 인공지능 컨텐츠 에이전트 만들기",
+    title: "🤖 AI Agent, 10일 완성",
+    subtitle: "수익화하는 인공지능 에이전트 만들기",
     lessons: [
       // Part 1 (Day 1-5) - 수익화하는 인공지능 에이전트 첫걸음
       {
