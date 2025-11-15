@@ -1687,16 +1687,26 @@ export class AzureTableService {
         payments = userData.payments;
       }
 
-      // 해당 강의의 수강 상태 확인
-      const enrollment = enrolledCourses.find(course => course.courseId === courseId);
+      // courseId 매칭 (1002 <-> chatgpt-agent-beginner 호환)
+      const courseIdMap: { [key: string]: string[] } = {
+        'chatgpt-agent-beginner': ['chatgpt-agent-beginner', '1002'],
+        '1002': ['chatgpt-agent-beginner', '1002']
+      };
+      
+      const matchIds = courseIdMap[courseId] || [courseId];
+      console.log('🔍 결제 확인 - 매칭 시도할 ID:', matchIds);
+
+      // 해당 강의의 수강 상태 확인 (여러 courseId 허용)
+      const enrollment = enrolledCourses.find(course => matchIds.includes(course.courseId));
       const isEnrolled = enrollment && enrollment.status === 'active';
 
-      // 해당 강의의 결제 정보 확인
-      const paymentInfo = payments.find(payment => payment.courseId === courseId);
+      // 해당 강의의 결제 정보 확인 (여러 courseId 허용)
+      const paymentInfo = payments.find(payment => matchIds.includes(payment.courseId));
 
       const result = {
         isPaid: isEnrolled || false,
-        paymentInfo: paymentInfo || null
+        paymentInfo: paymentInfo || null,
+        enrollment: enrollment || null
       };
 
       console.log('💳 결제 상태 확인 결과:', result);
