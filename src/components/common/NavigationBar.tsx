@@ -123,6 +123,26 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               <button className="nav-link" onClick={() => navigate('/ceo')}>소개</button>
               <button className="nav-link" onClick={() => navigate('/ai-city-map')}>🏙️ AI CITY</button>
               <button className="nav-link" onClick={onFAQClick || (() => navigate('/faq'))}>FAQ</button>
+              <a 
+                href="https://open.kakao.com/o/s2NzW41h" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="nav-link"
+                style={{ 
+                  background: '#FFE812',
+                  color: '#381E1E',
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  fontWeight: '700',
+                  textDecoration: 'none',
+                  display: 'inline-block',
+                  transition: 'all 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.background = '#FDD700'}
+                onMouseOut={(e) => e.currentTarget.style.background = '#FFE812'}
+              >
+                💬 실시간 문의
+              </a>
               {renderAuthButtons()}
             </div>
 
@@ -160,6 +180,24 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
             >
               FAQ
             </button>
+
+            <a 
+              href="https://open.kakao.com/o/s2NzW41h" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="mobile-nav-link"
+              style={{ 
+                background: '#FFE812',
+                color: '#381E1E',
+                fontWeight: '700',
+                textDecoration: 'none',
+                display: 'block',
+                textAlign: 'left'
+              }}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              💬 실시간 문의
+            </a>
             
             {isLoggedIn ? (
               <>

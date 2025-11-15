@@ -290,6 +290,24 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
             <h4>문의하기</h4>
             <div className="business-info">
               <p><strong>이메일:</strong> jay@connexionai.kr</p>
+              <p>
+                <strong>💬 실시간 문의:</strong>{' '}
+                <a 
+                  href="https://open.kakao.com/o/s2NzW41h" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  style={{ 
+                    color: '#FFE812', 
+                    textDecoration: 'none',
+                    fontWeight: '600',
+                    transition: 'opacity 0.2s'
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.opacity = '0.8'}
+                  onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+                >
+                  카카오톡 오픈채팅
+                </a>
+              </p>
               <p><strong>운영시간:</strong> 평일 09:00-18:00</p>
             </div>
             <div style={{ marginTop: '12px', fontSize: '0.85rem', color: '#aaa' }}>

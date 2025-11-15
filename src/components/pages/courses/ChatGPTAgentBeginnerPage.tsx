@@ -405,7 +405,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   <strong style={{ color: '#c2410c' }}>📧 결제 후 안내:</strong><br/>
                   • 결제 완료 시 마이페이지에서 수강 신청 내역을 확인하실 수 있습니다.<br/>
                   • 11월 15일 런칭 후 자동으로 강의가 오픈됩니다.<br/>
-                  • 문의사항: <strong>jay@connexionai.kr</strong>
+                  • 문의사항: <strong>jay@connexionai.kr</strong><br/>
+                  • 💬 실시간 문의: <a href="https://open.kakao.com/o/s2NzW41h" target="_blank" rel="noopener noreferrer" style={{ color: '#FFE812', fontWeight: '700', textDecoration: 'none' }}>카카오톡 오픈채팅</a>
                 </p>
               </div>
             </div>
