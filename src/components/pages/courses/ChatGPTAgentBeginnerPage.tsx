@@ -595,8 +595,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               background: '#000'
             }}>
               <iframe
-                src="https://www.youtube-nocookie.com/embed/BZynp51fBRU"
-                title="AI Agent Beginner 강의 소개"
+                src="https://www.youtube.com/embed/BZynp51fBRU?si=VrlJkUGqbOrR-NLA"
+                title="YouTube video player"
                 style={{
                   position: 'absolute',
                   top: 0,
@@ -606,7 +606,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   borderRadius: '12px',
                   border: 'none'
                 }}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
               />
             </div>
