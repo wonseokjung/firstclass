@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aicitybuilders-v1.0.0';
+const CACHE_NAME = 'aicitybuilders-v1.0.1'; // 버전 업데이트로 강제 캐시 무효화
 const urlsToCache = [
   '/',
   '/manifest.json',
@@ -9,24 +9,29 @@ const urlsToCache = [
   '/signup'
 ];
 
-// 설치 이벤트 - 오류 처리 추가
+// 설치 이벤트 - 즉시 활성화
 self.addEventListener('install', function(event) {
+  console.log('🚀 Service Worker 설치 중... 버전:', CACHE_NAME);
+  
+  // skipWaiting()으로 즉시 활성화 (기존 SW 대체)
+  self.skipWaiting();
+  
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        console.log('Opened cache');
+        console.log('✅ 캐시 오픈:', CACHE_NAME);
         // 각 URL을 개별적으로 캐시 (오류 방지)
         return Promise.allSettled(
           urlsToCache.map(url => 
             cache.add(url).catch(error => {
-              console.warn('Failed to cache:', url, error);
+              console.warn('⚠️ 캐시 실패:', url, error);
               return null;
             })
           )
         );
       })
       .catch(error => {
-        console.error('Cache installation failed:', error);
+        console.error('❌ 캐시 설치 실패:', error);
       })
   );
 });
@@ -84,8 +89,10 @@ self.addEventListener('fetch', function(event) {
     );
 });
 
-// 활성화 이벤트 - 오래된 캐시 정리
+// 활성화 이벤트 - 오래된 캐시 정리 및 즉시 제어
 self.addEventListener('activate', function(event) {
+  console.log('🔄 Service Worker 활성화 중... 버전:', CACHE_NAME);
+  
   var cacheWhitelist = [CACHE_NAME];
 
   event.waitUntil(
@@ -93,10 +100,23 @@ self.addEventListener('activate', function(event) {
       return Promise.all(
         cacheNames.map(function(cacheName) {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
+            console.log('🗑️ 오래된 캐시 삭제:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
+    }).then(function() {
+      // 즉시 모든 클라이언트 제어
+      console.log('✅ Service Worker 활성화 완료. 즉시 제어 시작');
+      return self.clients.claim();
     })
   );
+});
+
+// 새 버전 감지 시 자동 새로고침 메시지 전송
+self.addEventListener('message', function(event) {
+  if (event.data.action === 'skipWaiting') {
+    console.log('⏭️ skipWaiting 호출됨. 즉시 활성화...');
+    self.skipWaiting();
+  }
 }); 

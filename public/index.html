@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
     <meta name="theme-color" content="#000000" />
     
+    <!-- 캐시 방지 메타태그 (HTML 문서 자체) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    
     <!-- SEO 메타태그 -->
     <meta name="description" content="AI City Builders - AI 시티 빌더 시리즈로 나만의 수익형 디지털 건물 짓기! ChatGPT, AI 코딩, Google AI까지 실전 AI 교육 플랫폼" />
     <meta name="keywords" content="AI 시티 빌더, AI 건물 짓기, 수익형 디지털 건물, ChatGPT 강의, AI 코딩, Google AI, 유튜브 수익화, 애드센스, AI 교육, 정원석, AI City Builders" />
@@ -118,16 +123,50 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     
-    <!-- 서비스 워커 등록 -->
+    <!-- 서비스 워커 등록 + 자동 업데이트 -->
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
           navigator.serviceWorker.register('/sw.js')
             .then(function(registration) {
-              console.log('SW registered: ', registration);
-            }, function(registrationError) {
-              console.log('SW registration failed: ', registrationError);
+              console.log('✅ Service Worker 등록 성공:', registration);
+              
+              // 업데이트 감지
+              registration.addEventListener('updatefound', function() {
+                const newWorker = registration.installing;
+                console.log('🆕 새 버전 감지됨!');
+                
+                newWorker.addEventListener('statechange', function() {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    console.log('🔄 새 버전이 설치되었습니다. 3초 후 자동 새로고침...');
+                    
+                    // 사용자에게 알림 (선택사항)
+                    // alert('새로운 버전이 있습니다. 페이지를 새로고침합니다.');
+                    
+                    // 3초 후 자동 새로고침
+                    setTimeout(function() {
+                      newWorker.postMessage({ action: 'skipWaiting' });
+                      window.location.reload();
+                    }, 3000);
+                  }
+                });
+              });
+              
+              // 주기적으로 업데이트 체크 (1시간마다)
+              setInterval(function() {
+                registration.update();
+              }, 60 * 60 * 1000);
+            })
+            .catch(function(registrationError) {
+              console.log('❌ Service Worker 등록 실패:', registrationError);
             });
+          
+          // Service Worker가 제어권을 가져갔을 때
+          navigator.serviceWorker.addEventListener('controllerchange', function() {
+            console.log('🎉 새 Service Worker가 활성화되었습니다!');
+            // 페이지 새로고침 (이미 위에서 reload 호출했으므로 중복 방지)
+            // window.location.reload();
+          });
         });
       }
     </script>
