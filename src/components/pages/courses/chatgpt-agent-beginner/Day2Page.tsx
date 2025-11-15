@@ -90,47 +90,99 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
     day: 2,
     title: "Work Flow Design 기초 - 나의 일을 AI가 이해할 수 있게 쪼개기",
     duration: "약 50분",
-    description: "논리적 사고 구조를 배우고, 유튜브 컨텐츠 기획하는 에이전트를 만들어봅니다.",
+    description: "워크플로 디자인의 핵심 원리(분해와 순서화)를 배우고, 4개의 에이전트를 연결하여 유튜브 콘텐츠를 자동 생성하는 멀티 에이전트 시스템을 구축합니다.",
     objectives: [
-      "Work Flow Design 기본 원리 이해하기",
-      "논리적 사고 구조로 일 쪼개기",
-      "유튜브 컨텐츠 기획 에이전트 만들기"
+      "워크플로 디자인의 핵심 원리 이해하기: 디컴포지션(분해)과 시퀀싱(순서화)",
+      "복잡한 업무를 작은 태스크 유닛으로 쪼개는 방법 익히기",
+      "4개의 전문 에이전트를 연결하여 유튜브 콘텐츠 자동 생성 시스템 만들기"
     ],
     sections: [
       {
         id: 'theory-1',
         type: 'theory',
-        title: '이론 강의: ChatGPT와 Agent의 차이',
-        duration: '6분',
-        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/Day1/1.%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B51%E1%84%8B%E1%85%B5%E1%84%85%E1%85%A9%E1%86%AB.mp4?sp=r&st=2025-11-02T11:22:30Z&se=2030-11-02T19:37:30Z&sv=2024-11-04&sr=b&sig=AOdVEdq2cIYrh1h%2FNG7PLxD9dlpaG1nX0fZIrxKNUKo%3D',
+        title: '이론 강의: Work Flow Design 기초',
+        duration: '약 20분',
+        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/day2/day2lecture.mp4?sp=r&st=2025-11-15T08:50:44Z&se=2030-11-15T17:05:44Z&sv=2024-11-04&sr=b&sig=cNo1GfbTNGusgojd3M39X%2FT%2F5bm%2BTztL2%2B%2BWzDyyBQc%3D',
         content: `
-          <h3>💬 ChatGPT vs 🤖 에이전트 빌더</h3>
+          <h3>🎯 AI 에이전트 제작의 핵심: 워크플로 디자인</h3>
           
           <div style="background: #f0f9ff; padding: 20px; border-radius: 10px; margin: 15px 0;">
             <p style="margin: 0 0 10px 0; font-size: 1.05rem;">
-              <strong>ChatGPT:</strong> 사람과 대화하는 AI
+              <strong>💡 워크플로란?</strong>
             </p>
-            <p style="margin: 0; font-size: 1.05rem;">
-              <strong>에이전트 빌더:</strong> 일을 자동화하는 워크플로우 기반 AI
+            <p style="margin: 0; font-size: 1.05rem; line-height: 1.6;">
+              "사람이 직관과 감으로 하는 행동들을, AI가 이해할 수 있는 논리적인 구조로 바꾸는 과정"
             </p>
           </div>
           
-          <h3>⚡ 핵심 차이</h3>
-          <p><strong>워크플로우(일의 흐름)</strong>를 한 번 설정하면 여러 단계 작업이 자동 실행됩니다.</p>
+          <h3>📊 워크플로 설계의 2가지 핵심 원리</h3>
           
-          <p><strong>예시:</strong> "유튜브 콘텐츠 만들어줘" → 조사, 스크립트, 제목, 설명 자동 생성!</p>
+          <div style="background: #ecfdf5; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #10b981;">
+            <p style="margin: 0 0 10px 0; font-size: 1.05rem;">
+              <strong>① 디컴포지션 (Decomposition, 분해)</strong>
+            </p>
+            <p style="margin: 0 0 10px 0; font-size: 1rem; line-height: 1.6;">
+              목표 달성 과정을 아주 작은 '태스크 유닛(Task Unit)'으로 쪼개는 것
+            </p>
+            <p style="margin: 0; font-size: 0.95rem; color: #059669;">
+              <strong>예시:</strong> "유튜브 올린다" ➔ 웹 검색 + 대본 작성 + 제목 선정 + 설명글 작성 + 태그 분석
+            </p>
+          </div>
+          
+          <div style="background: #fef3c7; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #f59e0b;">
+            <p style="margin: 0 0 10px 0; font-size: 1.05rem;">
+              <strong>② 시퀀싱 (Sequencing, 순서화)</strong>
+            </p>
+            <p style="margin: 0 0 10px 0; font-size: 1rem; line-height: 1.6;">
+              잘게 쪼갠 태스크 유닛들을 논리적인 순서에 맞춰 배치하는 것
+            </p>
+            <p style="margin: 0; font-size: 0.95rem; color: #d97706;">
+              <strong>⚠️ 중요:</strong> 순서가 뒤바뀌면 전혀 다른 엉뚱한 결과가 나올 수 있음
+            </p>
+          </div>
+          
+          <h3>🎯 AI 에이전트 개발의 목적</h3>
+          <p style="font-size: 1.05rem; line-height: 1.8;">
+            <strong>목표:</strong> 실질적인 비즈니스 모델(수익 창출) 만들기<br/>
+            <strong>수익화:</strong> 콘텐츠 제작(유튜브 등)을 통한 광고 수익, 제품 판매 수수료 등<br/>
+            <strong>역할:</strong> AI 에이전트가 업무를 절차화하여 시간 단축 및 효율 극대화
+          </p>
         `
       },
       {
         id: 'practice-1',
         type: 'practice',
-        title: '실습: 에이전트 빌더 시작하기',
-        duration: '실습 시간',
-        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/Day1/%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B51%E1%84%89%E1%85%B5%E1%86%AF%E1%84%89%E1%85%B3%E1%86%B8.mp4?sp=r&st=2025-11-02T03:04:39Z&se=2029-11-02T11:19:39Z&sv=2024-11-04&sr=b&sig=0OfwK%2BVnFUeeeAt2sKtWJZBr1b0KWxRoNiNPi9g2h4M%3D',
+        title: '실습: 유튜브 컨텐츠 기획 에이전트 만들기',
+        duration: '약 30분',
+        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/day2/day2practice.mp4?sp=r&st=2025-11-15T08:51:49Z&se=2030-11-15T17:06:49Z&sv=2024-11-04&sr=b&sig=10kNW98qwQafXDzq7AccgPRhqRJVo0XxQWm%2BG61cyQI%3D',
         content: `
-          <p style="font-size: 1.05rem; line-height: 1.8; color: #374151;">
-            위의 실습 비디오를 보면서 에이전트 빌더로 첫 워크플로우를 만들어보세요!
+          <h3>🚀 유튜브 콘텐츠 자동 생성 멀티 에이전트 시스템 구축</h3>
+          
+          <p style="font-size: 1.05rem; line-height: 1.8; color: #374151; margin-bottom: 20px;">
+            4개의 전문 에이전트를 연결하여 트렌드 분석부터 대본 작성, 정책 체크까지 한 번에 수행하는 자동화 시스템을 만들어봅니다.
           </p>
+          
+          <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin: 20px 0; border: 2px solid #e2e8f0;">
+            <h4 style="color: #1f2937; margin-bottom: 15px;">📋 4단계 워크플로</h4>
+            <ol style="margin: 0; padding-left: 20px; line-height: 2;">
+              <li><strong>트렌드 탐색기:</strong> 웹 검색으로 인기 트렌드 키워드 3개 추출 (GPT-5 Mini/Nano)</li>
+              <li><strong>기획 전문가:</strong> 키워드 기반 클릭 유도 제목, 설명, 태그 작성 (GPT-5)</li>
+              <li><strong>대본 작가:</strong> 타임라인 포함 촬영 대본 작성 (GPT-5)</li>
+              <li><strong>보안관:</strong> 유튜브/구글 정책 위반 여부 검수 (GPT-5)</li>
+            </ol>
+          </div>
+          
+          <div style="background: #fef3c7; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #f59e0b;">
+            <p style="margin: 0; font-size: 1rem; color: #78350f;">
+              <strong>💡 비용 절감 팁:</strong> Instruction은 영어로 작성하고 Output은 한글로 요청하세요. 영어 토큰 비용이 한글보다 훨씬 저렴합니다!
+            </p>
+          </div>
+          
+          <div style="background: #ecfdf5; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #10b981;">
+            <p style="margin: 0; font-size: 1rem; color: #065f46;">
+              <strong>🔗 연결의 핵심:</strong> Add Context를 사용하여 이전 에이전트의 Output을 다음 에이전트의 Input으로 연결하세요. (함수 f(x)처럼!)
+            </p>
+          </div>
         `
       }
     ],
@@ -138,34 +190,45 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
       questions: [
         {
           id: 1,
-          question: 'ChatGPT와 에이전트 빌더의 핵심적인 차이점은 무엇인가요?',
+          question: '워크플로 디자인에서 "디컴포지션(Decomposition)"이란 무엇을 의미하나요?',
           options: [
-            'ChatGPT는 대화형 AI이고, 에이전트 빌더는 워크플로우를 자동화하는 도구이다',
-            'ChatGPT는 느리고, 에이전트 빌더는 빠르다',
-            'ChatGPT는 한국어를 지원하지 않는다',
-            'ChatGPT는 OpenAI 제품이 아니다'
+            '목표 달성 과정을 작은 태스크 유닛으로 쪼개는 것',
+            '태스크를 논리적인 순서대로 배치하는 것',
+            'AI 모델을 선택하는 과정',
+            '에이전트를 삭제하는 것'
           ],
           correctAnswer: 0
         },
         {
           id: 2,
-          question: '워크플로우(Work Flow)란 무엇을 의미하나요?',
+          question: '유튜브 콘텐츠 자동 생성 시스템에서 4개의 에이전트가 수행하는 역할이 아닌 것은?',
           options: [
-            '작업 속도',
-            '작업 비용',
-            '일의 흐름',
-            '작업 완료 시간'
+            '트렌드 탐색 (웹 검색으로 키워드 추출)',
+            '기획 전문가 (제목, 설명, 태그 작성)',
+            '대본 작가 (타임라인 포함 촬영 대본 작성)',
+            '영상 편집자 (자동 영상 편집 및 업로드)'
           ],
-          correctAnswer: 2
+          correctAnswer: 3
         },
         {
           id: 3,
-          question: '에이전트 빌더의 장점으로 올바른 것은?',
+          question: 'AI 에이전트 비용을 절감하기 위한 팁으로 올바른 것은?',
           options: [
-            '항상 무료로 사용할 수 있다',
-            '코딩 지식이 필수이다',
-            '한 번의 요청으로 여러 단계의 작업을 자동으로 실행할 수 있다',
-            'ChatGPT보다 대화를 더 잘한다'
+            'Output을 영어로 요청한다',
+            'Instruction을 영어로 작성하고 Output은 한글로 요청한다',
+            '항상 GPT-5를 사용한다',
+            '웹 검색 기능을 사용하지 않는다'
+          ],
+          correctAnswer: 1
+        },
+        {
+          id: 4,
+          question: '멀티 에이전트 시스템에서 에이전트끼리 소통하게 만드는 핵심 기능은?',
+          options: [
+            'Web Search',
+            'Reasoning effort',
+            'Add Context (이전 에이전트의 Output을 다음 Input으로 연결)',
+            'Preview'
           ],
           correctAnswer: 2
         }
@@ -795,7 +858,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
               }}
             >
               {quizSubmitted 
-                ? `✓ ${Object.values(quizAnswers).filter((ans, idx) => ans === lessonData.quiz.questions[idx].correctAnswer).length}/${lessonData.quiz.questions.length} 정답` 
+                ? `✓ ${lessonData.quiz.questions.filter((q, idx) => quizAnswers[q.id] === q.correctAnswer).length}/${lessonData.quiz.questions.length} 정답` 
                 : '정답 보기'}
             </button>
             

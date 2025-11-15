@@ -86,8 +86,8 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
           { 
             day: 2, 
             title: 'Work Flow Design 기초 - 나의 일을 AI가 이해할 수 있게 쪼개기', 
-            subtitle: '이론: 논리적 사고 구조 | 실습: 유튜브 컨텐츠 기획하는 에이전트 만들기',
-            hasQuiz: false 
+            subtitle: '이론: 디컴포지션(분해)과 시퀀싱(순서화) | 실습: 4개 에이전트 연결한 유튜브 콘텐츠 자동 생성 시스템 구축',
+            hasQuiz: true 
           },
           { 
             day: 3, 

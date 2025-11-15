@@ -32,10 +32,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
         id: 2,
         day: 2,
         title: "Day 2: Work Flow Design 기초 - 나의 일을 AI가 이해할 수 있게 쪼개기",
-        hasQuiz: false,
+        hasQuiz: true,
         sections: {
-          theory: "• 논리적 사고 구조 설계\n• 업무를 단계별로 분해하는 방법\n• 효율적인 워크플로우 구성",
-          practice: "• 유튜브 컨텐츠 기획하는 에이전트 만들기\n• 워크플로우 설계 실습\n• 자동화 프로세스 구축"
+          theory: "• 워크플로 디자인의 2가지 핵심 원리\n• 디컴포지션(분해): 업무를 작은 태스크 유닛으로 쪼개기\n• 시퀀싱(순서화): 태스크를 논리적 순서로 배치하기",
+          practice: "• 4개의 전문 에이전트 연결하기\n• 트렌드 탐색 → 기획 → 대본 작성 → 정책 체크 자동화\n• 멀티 에이전트 시스템으로 유튜브 콘텐츠 자동 생성"
         }
       },
       {
