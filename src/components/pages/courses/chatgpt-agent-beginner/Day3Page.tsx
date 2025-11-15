@@ -102,7 +102,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
         type: 'theory',
         title: '이론 강의: ChatGPT vs Google Opal 비교 및 멀티모달 AI 이해',
         duration: '약 25분',
-        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/day3/day3lecture.mp4',
+        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/day3/day3lecture.mp4?sp=r&st=2025-11-15T14:18:40Z&se=2030-11-15T22:33:40Z&sv=2024-11-04&sr=b&sig=hOHOPyTOgeiV%2FTW9Iq7ET9BYiHvlwCT5HqmvwDEAWPU%3D',
         content: `
           <h3>🎯 강의 목표: AI 콘텐츠 수익화 및 자동화</h3>
           
@@ -163,7 +163,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
         type: 'practice',
         title: '실습: 트렌드 검색 + 영상 자동 생성 에이전트 만들기',
         duration: '약 25분',
-        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/day3/day3practice.mp4',
+        videoUrl: '',
         content: `
           <h3>🎬 실전: 영상 생성 자동화 에이전트 구축</h3>
           
@@ -674,9 +674,11 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
                         width="100%"
                         height="100%"
                         controls
-                        controlsList="nodownload"
+                        controlsList="nodownload noremoteplayback"
+                        disablePictureInPicture
                         preload="auto"
                         playsInline
+                        onContextMenu={(e) => e.preventDefault()}
                         onLoadStart={() => {
                           const newLoading = new Set(loadingVideos);
                           newLoading.add(section.id);

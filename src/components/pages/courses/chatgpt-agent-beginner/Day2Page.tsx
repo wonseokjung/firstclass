@@ -640,9 +640,11 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
                         width="100%"
                         height="100%"
                         controls
-                        controlsList="nodownload"
+                        controlsList="nodownload noremoteplayback"
+                        disablePictureInPicture
                         preload="auto"
                         playsInline
+                        onContextMenu={(e) => e.preventDefault()}
                         onLoadStart={() => {
                           const newLoading = new Set(loadingVideos);
                           newLoading.add(section.id);
