@@ -10,7 +10,6 @@ interface ChatGPTAgentBeginnerPageProps {
 const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onBack }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isPaidUser, setIsPaidUser] = useState(false);
-  const [userInfo, setUserInfo] = useState<any>(null);
 
   const course = {
     id: 1002,
@@ -177,7 +176,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             });
 
             setIsLoggedIn(true);
-            setUserInfo(parsedUserInfo);
 
             // 테스트 계정 확인 (개발/테스트용)
             const testAccounts = ['test10@gmail.com'];
@@ -210,17 +208,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             console.error('❌ 사용자 정보 파싱 오류:', parseError);
             sessionStorage.removeItem('aicitybuilders_user_session');
             setIsLoggedIn(false);
-            setUserInfo(null);
           }
         } else {
           console.log('❌ 세션 정보가 없습니다');
           setIsLoggedIn(false);
-          setUserInfo(null);
         }
       } catch (error) {
         console.error('❌ 인증 상태 확인 실패:', error);
         setIsLoggedIn(false);
-        setUserInfo(null);
       }
     };
 

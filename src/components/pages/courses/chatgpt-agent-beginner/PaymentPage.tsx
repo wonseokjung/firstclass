@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, CreditCard, Building2, CheckCircle } from 'lucide-react';
+import { ArrowLeft, CreditCard, CheckCircle } from 'lucide-react';
 import NavigationBar from '../../../common/NavigationBar';
 import PaymentComponent from '../../payment/PaymentComponent';
 
