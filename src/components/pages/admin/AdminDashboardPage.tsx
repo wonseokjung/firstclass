@@ -32,6 +32,10 @@ const AdminDashboardPage: React.FC = () => {
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [selectedUserEmail, setSelectedUserEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
+  const [emailSubject, setEmailSubject] = useState('');
+  const [emailContent, setEmailContent] = useState('');
 
   // 관리자 권한 확인
   useEffect(() => {
@@ -145,6 +149,59 @@ const AdminDashboardPage: React.FC = () => {
 
     setFilteredUsers(filtered);
   }, [searchQuery, selectedCourse, allUsers]);
+
+  // 사용자 선택/해제
+  const toggleUserSelection = (email: string) => {
+    const newSelected = new Set(selectedUsers);
+    if (newSelected.has(email)) {
+      newSelected.delete(email);
+    } else {
+      newSelected.add(email);
+    }
+    setSelectedUsers(newSelected);
+  };
+
+  // 전체 선택/해제
+  const toggleSelectAll = () => {
+    if (selectedUsers.size === filteredUsers.length) {
+      setSelectedUsers(new Set());
+    } else {
+      setSelectedUsers(new Set(filteredUsers.map(u => u.email)));
+    }
+  };
+
+  // 이메일 발송 (mailto 방식)
+  const handleSendEmail = () => {
+    if (selectedUsers.size === 0) {
+      alert('이메일을 보낼 사용자를 선택해주세요.');
+      return;
+    }
+
+    if (!emailSubject || !emailContent) {
+      alert('제목과 내용을 입력해주세요.');
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `${selectedUsers.size}명의 사용자에게 이메일을 발송하시겠습니까?\n\n제목: ${emailSubject}`
+    );
+
+    if (!confirmed) return;
+
+    // mailto 링크 생성 (BCC로 발송)
+    const bccEmails = Array.from(selectedUsers).join(',');
+    const mailtoLink = `mailto:?bcc=${encodeURIComponent(bccEmails)}&subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailContent)}`;
+    
+    // 이메일 클라이언트 열기
+    window.location.href = mailtoLink;
+    
+    alert(`✅ 이메일 클라이언트가 열립니다.\n\n${selectedUsers.size}명의 사용자가 BCC로 추가되었습니다.`);
+    
+    // 모달 닫기
+    setShowEmailModal(false);
+    setEmailSubject('');
+    setEmailContent('');
+  };
 
   // 비밀번호 변경 함수
   const handleChangePassword = async () => {
@@ -422,6 +479,38 @@ const AdminDashboardPage: React.FC = () => {
               <Download size={18} />
               CSV 다운로드
             </button>
+
+            <button
+              onClick={() => setShowEmailModal(true)}
+              disabled={selectedUsers.size === 0}
+              style={{
+                padding: '12px 20px',
+                borderRadius: '10px',
+                border: 'none',
+                background: selectedUsers.size > 0 ? '#8b5cf6' : '#94a3b8',
+                color: 'white',
+                fontSize: '1rem',
+                fontWeight: '600',
+                cursor: selectedUsers.size > 0 ? 'pointer' : 'not-allowed',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                transition: 'all 0.2s'
+              }}
+              onMouseOver={(e) => {
+                if (selectedUsers.size > 0) {
+                  e.currentTarget.style.background = '#7c3aed';
+                }
+              }}
+              onMouseOut={(e) => {
+                if (selectedUsers.size > 0) {
+                  e.currentTarget.style.background = '#8b5cf6';
+                }
+              }}
+            >
+              📧 이메일 발송 ({selectedUsers.size})
+            </button>
           </div>
         </div>
 
@@ -440,6 +529,18 @@ const AdminDashboardPage: React.FC = () => {
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
+                <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>
+                  <input
+                    type="checkbox"
+                    checked={selectedUsers.size === filteredUsers.length && filteredUsers.length > 0}
+                    onChange={toggleSelectAll}
+                    style={{
+                      width: '18px',
+                      height: '18px',
+                      cursor: 'pointer'
+                    }}
+                  />
+                </th>
                 <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>이메일</th>
                 <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>이름</th>
                 <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>가입일</th>
@@ -455,11 +556,33 @@ const AdminDashboardPage: React.FC = () => {
                 <tr key={index} style={{
                   borderBottom: '1px solid #f1f5f9',
                   cursor: 'pointer',
-                  transition: 'background 0.2s'
+                  transition: 'background 0.2s',
+                  background: selectedUsers.has(user.email) ? '#f0f9ff' : 'transparent'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.background = '#f8fafc'}
-                onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+                onMouseOver={(e) => {
+                  if (!selectedUsers.has(user.email)) {
+                    e.currentTarget.style.background = '#f8fafc';
+                  }
+                }}
+                onMouseOut={(e) => {
+                  if (!selectedUsers.has(user.email)) {
+                    e.currentTarget.style.background = 'transparent';
+                  }
+                }}
                 >
+                  <td style={{ padding: '12px', textAlign: 'center' }}>
+                    <input
+                      type="checkbox"
+                      checked={selectedUsers.has(user.email)}
+                      onChange={() => toggleUserSelection(user.email)}
+                      onClick={(e) => e.stopPropagation()}
+                      style={{
+                        width: '18px',
+                        height: '18px',
+                        cursor: 'pointer'
+                      }}
+                    />
+                  </td>
                   <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.9rem' }}>
                     {user.email}
                   </td>
@@ -681,6 +804,177 @@ const AdminDashboardPage: React.FC = () => {
                 style={{
                   flex: 1,
                   padding: '12px',
+                  borderRadius: '10px',
+                  border: '2px solid #e2e8f0',
+                  background: 'white',
+                  color: '#64748b',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.background = '#f8fafc'}
+                onMouseOut={(e) => e.currentTarget.style.background = 'white'}
+              >
+                취소
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 이메일 발송 모달 */}
+      {showEmailModal && (
+        <div
+          onClick={() => setShowEmailModal(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 10000,
+            overflowY: 'auto',
+            padding: '20px'
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: 'white',
+              borderRadius: '20px',
+              padding: '40px',
+              maxWidth: '700px',
+              width: '100%',
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+              maxHeight: '90vh',
+              overflowY: 'auto'
+            }}
+          >
+            <h2 style={{
+              fontSize: '1.8rem',
+              fontWeight: '700',
+              marginBottom: '10px',
+              color: '#1f2937'
+            }}>
+              📧 일괄 이메일 발송
+            </h2>
+
+            <p style={{
+              fontSize: '0.95rem',
+              color: '#64748b',
+              marginBottom: '30px'
+            }}>
+              선택된 <strong style={{ color: '#8b5cf6' }}>{selectedUsers.size}명</strong>의 사용자에게 이메일을 발송합니다
+            </p>
+
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '0.95rem',
+                fontWeight: '600',
+                color: '#64748b',
+                marginBottom: '8px'
+              }}>
+                제목
+              </label>
+              <input
+                type="text"
+                value={emailSubject}
+                onChange={(e) => setEmailSubject(e.target.value)}
+                placeholder="이메일 제목을 입력하세요"
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  border: '1px solid #e2e8f0',
+                  fontSize: '1rem'
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: '30px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '0.95rem',
+                fontWeight: '600',
+                color: '#64748b',
+                marginBottom: '8px'
+              }}>
+                내용
+              </label>
+              <textarea
+                value={emailContent}
+                onChange={(e) => setEmailContent(e.target.value)}
+                placeholder="이메일 내용을 입력하세요"
+                rows={10}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  border: '1px solid #e2e8f0',
+                  fontSize: '1rem',
+                  fontFamily: 'inherit',
+                  resize: 'vertical'
+                }}
+              />
+            </div>
+
+            <div style={{
+              background: '#fef3c7',
+              border: '1px solid #fbbf24',
+              borderRadius: '10px',
+              padding: '15px',
+              marginBottom: '20px'
+            }}>
+              <p style={{
+                fontSize: '0.9rem',
+                color: '#92400e',
+                margin: 0,
+                lineHeight: '1.6'
+              }}>
+                <strong>💡 안내:</strong><br />
+                이메일 클라이언트(Outlook, Gmail 등)가 열립니다.<br />
+                선택된 사용자들이 BCC로 자동 추가되며, 발송 버튼을 누르시면 됩니다.
+              </p>
+            </div>
+
+            <div style={{
+              display: 'flex',
+              gap: '10px'
+            }}>
+              <button
+                onClick={handleSendEmail}
+                style={{
+                  flex: 1,
+                  padding: '14px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: '#8b5cf6',
+                  color: 'white',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.background = '#7c3aed'}
+                onMouseOut={(e) => e.currentTarget.style.background = '#8b5cf6'}
+              >
+                📧 이메일 클라이언트 열기
+              </button>
+              <button
+                onClick={() => {
+                  setShowEmailModal(false);
+                  setEmailSubject('');
+                  setEmailContent('');
+                }}
+                style={{
+                  flex: 1,
+                  padding: '14px',
                   borderRadius: '10px',
                   border: '2px solid #e2e8f0',
                   background: 'white',
