@@ -40,11 +40,11 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
       {
         id: 3,
         day: 3,
-        title: "Day 3: AI 모델 총정리 및 가격 최적화",
+        title: "Day 3: Google Opal로 영상 자동 생성 에이전트 만들기",
         hasQuiz: true,
         sections: {
-          theory: "• LLM(Large Language Model)의 기본 개념\n• GPT-5, GPT-4, o3 등 주요 모델의 차이점\n• 비용 최적화 전략: 작업 특성에 맞는 모델 선택",
-          practice: "• GPT-5, Mini, o3 모델 비교 실험\n• 번역, 블로그 작성, 복잡한 추론 작업 테스트\n• 성능 vs 비용 분석"
+          theory: "• ChatGPT vs Google Opal 비교\n• 멀티모달 AI 이해 (Veo, Imagen, Lyria, AudioLM)\n• Gemini 2.5 Flash 활용법",
+          practice: "• 단순 영상 생성 실습 (Veo)\n• 트렌드 검색 + 영상 생성 자동화\n• 나만의 Google Opal 에이전트 만들기"
         }
       },
       {

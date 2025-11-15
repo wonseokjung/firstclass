@@ -91,8 +91,8 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
           },
           { 
             day: 3, 
-            title: 'GPT-5부터 o3까지 - Agent Builder에서 선택할 수 있는 AI 모델 총정리', 
-            subtitle: '이론: LLM이란? GPT 모델의 차이, 가격 최적화 전략 | 실습: 모델별 응답 비교 실험',
+            title: 'Google Opal로 영상 자동 생성 에이전트 만들기', 
+            subtitle: '이론: ChatGPT vs Google Opal 비교, 멀티모달 AI 이해 | 실습: 트렌드 검색 + 영상 생성 자동화 (Gemini 2.5 Flash + Veo)',
             hasQuiz: true 
           },
           { 
