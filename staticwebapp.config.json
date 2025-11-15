@@ -23,9 +23,25 @@
     ".webm": "video/webm"
   },
   "globalHeaders": {
-    "cache-control": "must-revalidate, max-age=3600"
+    "cache-control": "no-cache, no-store, must-revalidate"
   },
   "routes": [
+    {
+      "route": "/index.html",
+      "headers": {
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "expires": "0"
+      }
+    },
+    {
+      "route": "/sw.js",
+      "headers": {
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "expires": "0"
+      }
+    },
     {
       "route": "/static/*",
       "headers": {
