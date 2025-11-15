@@ -138,16 +138,16 @@
                 
                 newWorker.addEventListener('statechange', function() {
                   if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                    console.log('🔄 새 버전이 설치되었습니다. 3초 후 자동 새로고침...');
+                    console.log('🔄 새 버전이 설치되었습니다. 즉시 새로고침...');
                     
-                    // 사용자에게 알림 (선택사항)
-                    // alert('새로운 버전이 있습니다. 페이지를 새로고침합니다.');
+                    // 즉시 skipWaiting 호출하고 새로고침
+                    newWorker.postMessage({ action: 'skipWaiting' });
                     
-                    // 3초 후 자동 새로고침
+                    // 1초 후 자동 새로고침 (skipWaiting 처리 대기)
                     setTimeout(function() {
-                      newWorker.postMessage({ action: 'skipWaiting' });
-                      window.location.reload();
-                    }, 3000);
+                      // 하드 리로드 (캐시 무시)
+                      window.location.reload(true);
+                    }, 1000);
                   }
                 });
               });

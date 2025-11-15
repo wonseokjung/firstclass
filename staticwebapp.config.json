@@ -1,7 +1,13 @@
 {
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/static/*", "/*.{css,js,jpg,png,gif,ico,svg,woff,woff2,ttf,eot,json,map}"]
+    "exclude": [
+      "/static/*",
+      "/static/js/*",
+      "/static/css/*",
+      "/static/media/*",
+      "/*.{css,js,mjs,cjs,jpg,png,gif,ico,svg,woff,woff2,ttf,eot,json,map}"
+    ]
   },
   "mimeTypes": {
     ".json": "application/json",
@@ -89,6 +95,9 @@
       "rewrite": "/index.html",
       "statusCode": 200
     }
+  },
+  "globalHeaders": {
+    "cache-control": "no-cache"
   },
   "platform": {
     "apiRuntime": "node:18"
