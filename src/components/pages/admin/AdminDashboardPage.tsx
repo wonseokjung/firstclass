@@ -190,7 +190,7 @@ const AdminDashboardPage: React.FC = () => {
 
     // mailto 링크 생성 (BCC로 발송)
     const bccEmails = Array.from(selectedUsers).join(',');
-    const mailtoLink = `mailto:?bcc=${encodeURIComponent(bccEmails)}&subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailContent)}`;
+    const mailtoLink = `mailto:jay@connexionai.kr?bcc=${encodeURIComponent(bccEmails)}&subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailContent)}`;
     
     // 이메일 클라이언트 열기
     window.location.href = mailtoLink;
