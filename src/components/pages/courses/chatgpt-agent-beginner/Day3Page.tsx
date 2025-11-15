@@ -90,7 +90,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
     day: 3,
     title: "Google Opal로 영상 자동 생성 에이전트 만들기",
     duration: "약 50분",
-    description: "ChatGPT vs Google Opal을 비교하고, 트렌드 분석부터 영상 생성까지 자동화하는 멀티모달 AI 에이전트를 구축합니다.",
+    description: "ChatGPT vs Google Opal을 비교하고, 트렌드 분석부터 영상 생성까지 자동화하는 멀티모달 AI 에이전트를 구축합니다. 이론과 실습이 통합된 강의입니다.",
     objectives: [
       "ChatGPT 에이전트 빌더 vs Google Opal의 차이점 이해하기",
       "Google Opal의 핵심 AI 모델 (Veo, Gemini 2.5 Flash, Imagen) 활용법 익히기",
@@ -100,122 +100,101 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
       {
         id: 'theory-1',
         type: 'theory',
-        title: '이론 강의: ChatGPT vs Google Opal 비교 및 멀티모달 AI 이해',
-        duration: '약 25분',
+        title: '통합 강의: Google Opal로 영상 자동 생성 에이전트 만들기 (이론 + 실습)',
+        duration: '약 50분',
         videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/day3/day3lecture.mp4?sp=r&st=2025-11-15T14:18:40Z&se=2030-11-15T22:33:40Z&sv=2024-11-04&sr=b&sig=hOHOPyTOgeiV%2FTW9Iq7ET9BYiHvlwCT5HqmvwDEAWPU%3D',
         content: `
-          <h3>🎯 강의 목표: AI 콘텐츠 수익화 및 자동화</h3>
-          
-          <div style="background: #f0f9ff; padding: 20px; border-radius: 10px; margin: 15px 0;">
-            <p style="margin: 0; font-size: 1.05rem; line-height: 1.6;">
-              텍스트 중심의 ChatGPT를 넘어, <strong>영상/이미지/음악</strong>까지 생성하는 멀티모달 AI 에이전트를 만들어 콘텐츠 제작을 완전 자동화합니다.
-            </p>
-          </div>
-          
-          <h3>⚖️ ChatGPT 에이전트 빌더 vs Google Opal</h3>
-          
-          <div style="background: #fef3c7; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #f59e0b;">
-            <p style="margin: 0 0 10px 0; font-size: 1.05rem;">
-              <strong>🤖 ChatGPT 에이전트 빌더 (OpenAI)</strong>
-            </p>
-            <p style="margin: 0; font-size: 1rem; line-height: 1.6; color: #78350f;">
-              • <strong>주력:</strong> 텍스트 생성, 논리적 추론, 대본 작성<br/>
-              • <strong>강점:</strong> 기획, 스크립트, 데이터 분석<br/>
-              • <strong>한계:</strong> 영상/오디오 등 멀티모달 콘텐츠 생성 불가<br/>
-              • <strong>연동:</strong> 외부 툴(N8N) 필요
-            </p>
-          </div>
-          
-          <div style="background: #ecfdf5; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #10b981;">
-            <p style="margin: 0 0 10px 0; font-size: 1.05rem;">
-              <strong>🎬 Google Opal</strong>
-            </p>
-            <p style="margin: 0; font-size: 1rem; line-height: 1.6; color: #065f46;">
-              • <strong>주력:</strong> 영상, 이미지, 음악 생성<br/>
-              • <strong>강점:</strong> 콘텐츠 자체 제작, Google 앱(Docs, Drive) 직접 연동<br/>
-              • <strong>AI 모델:</strong> Veo(영상), Imagen(이미지), Lyria(음악), AudioLM(음성)<br/>
-              • <strong>비용:</strong> 개인 사용 목적 무료 가능
-            </p>
-          </div>
-          
-          <h3>🧠 Google Opal 핵심 AI 모델</h3>
-          
-          <div style="background: #f8fafc; padding: 15px; border-radius: 10px; margin: 15px 0; border: 2px solid #e2e8f0;">
-            <p style="margin: 0; font-size: 1rem; line-height: 1.8;">
-              ✅ <strong>Veo:</strong> 영상 생성 (핵심 기능)<br/>
-              ✅ <strong>Imagen:</strong> 이미지 생성<br/>
-              ✅ <strong>Lyria:</strong> 음악 생성<br/>
-              ✅ <strong>AudioLM:</strong> 텍스트 → 소리 변환<br/>
-              ✅ <strong>Gemini 2.5 Flash:</strong> 빠른 텍스트 처리 및 웹 검색
-            </p>
-          </div>
-          
-          <h3>💡 도구 이원화 전략</h3>
-          <p style="font-size: 1.05rem; line-height: 1.8;">
-            <strong>1. 기획/대본:</strong> ChatGPT 사용 (논리적 추론, 스크립트 작성)<br/>
-            <strong>2. 영상/이미지 생성:</strong> Google Opal 사용 (콘텐츠 제작)<br/>
-            <strong>3. Google 생태계 활용:</strong> Docs, Drive 연동으로 자동 저장 및 관리
+          <h3>강의 목표</h3>
+          <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
+            텍스트 중심의 ChatGPT를 넘어, 영상/이미지/음악까지 생성하는 멀티모달 AI 에이전트를 만들어 콘텐츠 제작을 완전 자동화합니다.
           </p>
-        `
-      },
-      {
-        id: 'practice-1',
-        type: 'practice',
-        title: '실습: 트렌드 검색 + 영상 자동 생성 에이전트 만들기',
-        duration: '약 25분',
-        videoUrl: '',
-        content: `
-          <h3>🎬 실전: 영상 생성 자동화 에이전트 구축</h3>
           
-          <p style="font-size: 1.05rem; line-height: 1.8; color: #374151; margin-bottom: 20px;">
+          <h3>ChatGPT vs Google Opal 비교</h3>
+          
+          <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+            <tr style="background: #f8fafc;">
+              <th style="padding: 12px; text-align: left; border: 1px solid #e2e8f0;">구분</th>
+              <th style="padding: 12px; text-align: left; border: 1px solid #e2e8f0;">ChatGPT 에이전트 빌더</th>
+              <th style="padding: 12px; text-align: left; border: 1px solid #e2e8f0;">Google Opal</th>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>주력 분야</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">텍스트 생성, 논리적 추론</td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">영상, 이미지, 음악 생성</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>강점</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">기획, 스크립트, 데이터 분석</td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">콘텐츠 제작, Google 앱 연동</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>한계</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">멀티모달 콘텐츠 생성 불가</td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">복잡한 논리 추론 상대적 약세</td>
+            </tr>
+          </table>
+          
+          <h3>Google Opal 핵심 AI 모델</h3>
+          <ul style="line-height: 1.8; font-size: 1.05rem;">
+            <li><strong>Veo:</strong> 영상 생성</li>
+            <li><strong>Imagen:</strong> 이미지 생성</li>
+            <li><strong>Lyria:</strong> 음악 생성</li>
+            <li><strong>AudioLM:</strong> 텍스트를 음성으로 변환</li>
+            <li><strong>Gemini 2.5 Flash:</strong> 빠른 텍스트 처리 및 웹 검색</li>
+          </ul>
+          
+          <h3>도구 이원화 전략</h3>
+          <ol style="line-height: 1.8; font-size: 1.05rem;">
+            <li><strong>기획/대본:</strong> ChatGPT 사용</li>
+            <li><strong>영상/이미지 생성:</strong> Google Opal 사용</li>
+            <li><strong>Google 생태계 활용:</strong> Docs, Drive 연동으로 자동 저장</li>
+          </ol>
+          
+          <hr style="margin: 40px 0; border: none; border-top: 1px solid #e2e8f0;" />
+          
+          <h2>실습: 영상 생성 자동화 에이전트 구축</h2>
+          
+          <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
             웹에서 트렌드를 검색하고, 그 결과를 바탕으로 자동으로 홍보 영상을 생성하는 완전 자동화 에이전트를 만듭니다.
           </p>
           
-          <h3>🏗️ Step 1: 기본 구조 설정 (머리-가슴-배)</h3>
-          <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin: 20px 0; border: 2px solid #e2e8f0;">
-            <ol style="margin: 0; padding-left: 20px; line-height: 2;">
-              <li><strong>User Input (입력):</strong> 사용자의 명령 받기</li>
-              <li><strong>Generate (생성):</strong> AI 모델 선택 (Veo 선택)</li>
-              <li><strong>Output (출력):</strong> 결과물 표시 (화면 출력 or Google Docs 저장)</li>
-            </ol>
-          </div>
+          <h3>Step 1: 기본 구조 설정</h3>
+          <ol style="line-height: 1.8; font-size: 1.05rem;">
+            <li><strong>User Input:</strong> 사용자의 명령 받기</li>
+            <li><strong>Generate:</strong> AI 모델 선택 (Veo 선택)</li>
+            <li><strong>Output:</strong> 결과물 표시 (화면 출력 or Google Docs 저장)</li>
+          </ol>
           
-          <h3>🎥 Step 2: 단순 영상 생성 실습</h3>
-          <div style="background: #ecfdf5; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #10b981;">
-            <p style="margin: 0; font-size: 1rem; line-height: 1.8; color: #065f46;">
-              • <strong>Generate 노드:</strong> Veo(영상 모델) 선택<br/>
-              • <strong>프롬프트:</strong> "강아지가 뛰노는 영상"<br/>
-              • <strong>결과:</strong> 강아지 영상 자동 생성 ✅
-            </p>
-          </div>
+          <h3>Step 2: 단순 영상 생성 실습</h3>
+          <ul style="line-height: 1.8; font-size: 1.05rem;">
+            <li><strong>Generate 노드:</strong> Veo(영상 모델) 선택</li>
+            <li><strong>프롬프트:</strong> "강아지가 뛰노는 영상"</li>
+            <li><strong>결과:</strong> 강아지 영상 자동 생성</li>
+          </ul>
           
-          <h3>🚀 Step 3: 트렌드 반영 자동화 (심화)</h3>
-          <div style="background: #fef3c7; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #f59e0b;">
-            <h4 style="color: #78350f; margin-bottom: 10px;">1️⃣ 웹 검색 도구 추가</h4>
-            <p style="margin: 0 0 15px 0; font-size: 1rem; line-height: 1.6; color: #78350f;">
-              • <strong>Tools → Search Web</strong> (Gemini 2.5 Flash 사용)<br/>
-              • <strong>프롬프트:</strong> "인터넷 트렌드를 검색해서 현재 가장 인기 있는 제품(예: 스킨케어) 키워드를 찾아라"
-            </p>
-            
-            <h4 style="color: #78350f; margin-bottom: 10px;">2️⃣ 검색 결과를 영상 생성으로 연결</h4>
-            <p style="margin: 0; font-size: 1rem; line-height: 1.6; color: #78350f;">
-              • 검색된 <strong>'트렌드 키워드'</strong>를 영상 생성 모델(Veo)로 전달<br/>
-              • <strong>프롬프트:</strong> "전달받은 키워드를 바탕으로 홍보용 영상을 생성해라"
-            </p>
-          </div>
+          <h3>Step 3: 트렌드 반영 자동화 (심화)</h3>
           
-          <h3>✅ Step 4: 최종 결과</h3>
-          <div style="background: #dbeafe; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #3b82f6;">
-            <p style="margin: 0; font-size: 1rem; color: #1e40af;">
-              <strong>🎉 완성!</strong> AI가 자동으로 웹에서 '스킨케어' 트렌드를 감지하고, 이에 맞는 제품 홍보 영상을 자동으로 생성합니다!
-            </p>
-          </div>
+          <h4>1. 웹 검색 도구 추가</h4>
+          <ul style="line-height: 1.8; font-size: 1.05rem;">
+            <li><strong>Tools → Search Web</strong> (Gemini 2.5 Flash 사용)</li>
+            <li><strong>프롬프트:</strong> "인터넷 트렌드를 검색해서 현재 가장 인기 있는 제품 키워드를 찾아라"</li>
+          </ul>
           
-          <div style="background: #f0fdf4; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #22c55e;">
-            <p style="margin: 0; font-size: 1rem; color: #15803d;">
-              <strong>📝 오늘의 과제:</strong> Google Opal에 접속하여 Search Web(트렌드 검색)과 Veo(영상 생성)를 연결한 나만의 자동화 에이전트를 직접 만들어 보세요!
-            </p>
-          </div>
+          <h4>2. 검색 결과를 영상 생성으로 연결</h4>
+          <ul style="line-height: 1.8; font-size: 1.05rem;">
+            <li>검색된 트렌드 키워드를 영상 생성 모델(Veo)로 전달</li>
+            <li><strong>프롬프트:</strong> "전달받은 키워드를 바탕으로 홍보용 영상을 생성해라"</li>
+          </ul>
+          
+          <h3>Step 4: 최종 결과</h3>
+          <p style="font-size: 1.05rem; line-height: 1.8;">
+            AI가 자동으로 웹에서 스킨케어 트렌드를 감지하고, 이에 맞는 제품 홍보 영상을 자동으로 생성합니다.
+          </p>
+          
+          <h3>과제</h3>
+          <p style="font-size: 1.05rem; line-height: 1.8;">
+            Google Opal에 접속하여 Search Web(트렌드 검색)과 Veo(영상 생성)를 연결한 나만의 자동화 에이전트를 직접 만들어 보세요.
+          </p>
         `
       }
     ],
