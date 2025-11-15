@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeft, CheckCircle, FileText, Award, Lock } from 'lucide-react';
+import AzureTableService from '../../../../services/azureTableService';
 
 interface Day1PageProps {
   onBack: () => void;
@@ -13,8 +14,89 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
   const [loadingVideos, setLoadingVideos] = useState<Set<string>>(new Set());
   const [quizAnswers, setQuizAnswers] = useState<{[key: number]: number}>({});
   const [quizSubmitted, setQuizSubmitted] = useState<boolean>(false);
+  const [isDayCompleted, setIsDayCompleted] = useState<boolean>(false);
+  const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
+  const [userEmail, setUserEmail] = useState<string>('');
 
   const ADMIN_PASSWORD = 'clathon2025admin'; // 운영자 전용 비밀번호
+
+  // 사용자 정보 및 Day 완료 상태 로드
+  useEffect(() => {
+    const loadUserProgress = async () => {
+      try {
+        const userInfo = sessionStorage.getItem('aicitybuilders_user_session');
+        if (userInfo) {
+          const parsed = JSON.parse(userInfo);
+          setUserEmail(parsed.email);
+
+          // Day 완료 상태 확인
+          const progress = await AzureTableService.getCourseDayProgress(
+            parsed.email,
+            'chatgpt-agent-beginner'
+          );
+
+          if (progress && progress.completedDays.includes(1)) {
+            setIsDayCompleted(true);
+          }
+        }
+      } catch (error) {
+        console.error('❌ 진행 상황 로드 실패:', error);
+      }
+    };
+
+    loadUserProgress();
+  }, []);
+
+  // Day 1 완료 처리
+  const handleCompleteDay = async () => {
+    if (!userEmail) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+
+    if (isDayCompleted) {
+      alert('이미 완료한 강의입니다!');
+      return;
+    }
+
+    // 모든 섹션 완료 확인
+    if (completedSections.size < lessonData.sections.length) {
+      alert(`모든 섹션을 완료해주세요! (${completedSections.size}/${lessonData.sections.length} 완료)`);
+      return;
+    }
+
+    // 퀴즈 완료 확인
+    if (!quizSubmitted) {
+      alert('퀴즈를 완료해주세요!');
+      return;
+    }
+
+    try {
+      setIsCompletingDay(true);
+      
+      // 학습 시간 계산 (예: 60분)
+      const learningTimeMinutes = 60;
+      
+      const success = await AzureTableService.completeCourseDay(
+        userEmail,
+        'chatgpt-agent-beginner',
+        1,
+        learningTimeMinutes
+      );
+
+      if (success) {
+        setIsDayCompleted(true);
+        alert('🎉 Day 1 완료! 다음 강의로 이동하세요!');
+      } else {
+        alert('❌ Day 완료 처리에 실패했습니다. 다시 시도해주세요.');
+      }
+    } catch (error) {
+      console.error('❌ Day 완료 처리 오류:', error);
+      alert('오류가 발생했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsCompletingDay(false);
+    }
+  };
 
   const lessonData = {
     day: 1,
@@ -907,6 +989,76 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
               </button>
             )}
           </div>
+        </div>
+
+        {/* Day 1 완료 버튼 */}
+        <div style={{
+          background: isDayCompleted 
+            ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)' 
+            : 'linear-gradient(135deg, #eff6ff, #dbeafe)',
+          padding: '30px',
+          borderRadius: '15px',
+          marginBottom: '30px',
+          border: isDayCompleted ? '2px solid #10b981' : '2px solid #0ea5e9',
+          textAlign: 'center',
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)'
+        }}>
+          <h3 style={{
+            fontSize: '1.3rem',
+            fontWeight: '700',
+            color: isDayCompleted ? '#059669' : '#0284c7',
+            marginBottom: '15px'
+          }}>
+            {isDayCompleted ? '✅ Day 1 완료됨!' : '📚 Day 1 완료하기'}
+          </h3>
+          <p style={{
+            color: '#64748b',
+            marginBottom: '20px',
+            fontSize: '0.95rem'
+          }}>
+            {isDayCompleted 
+              ? 'Day 1을 완료했습니다! 다음 강의로 이동하세요.' 
+              : '모든 섹션과 퀴즈를 완료한 후 버튼을 눌러주세요.'}
+          </p>
+          <button
+            onClick={handleCompleteDay}
+            disabled={isDayCompleted || isCompletingDay}
+            style={{
+              background: isDayCompleted 
+                ? '#9ca3af' 
+                : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+              color: 'white',
+              border: 'none',
+              padding: '15px 40px',
+              borderRadius: '12px',
+              fontSize: '1.1rem',
+              fontWeight: '700',
+              cursor: isDayCompleted || isCompletingDay ? 'not-allowed' : 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: isDayCompleted 
+                ? 'none' 
+                : '0 4px 12px rgba(14, 165, 233, 0.3)',
+              opacity: isDayCompleted || isCompletingDay ? 0.6 : 1
+            }}
+            onMouseOver={(e) => {
+              if (!isDayCompleted && !isCompletingDay) {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(14, 165, 233, 0.4)';
+              }
+            }}
+            onMouseOut={(e) => {
+              if (!isDayCompleted && !isCompletingDay) {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(14, 165, 233, 0.3)';
+              }
+            }}
+          >
+            {isCompletingDay 
+              ? '처리 중...' 
+              : isDayCompleted 
+                ? '✓ 완료됨' 
+                : 'Day 1 완료하기 →'}
+          </button>
         </div>
 
         {/* 추가 자료 */}
