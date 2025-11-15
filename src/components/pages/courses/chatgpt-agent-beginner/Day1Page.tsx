@@ -8,7 +8,7 @@ interface Day1PageProps {
 }
 
 const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
-  const [completedSections, setCompletedSections] = useState<Set<string>>(new Set());
+  const [completedSections] = useState<Set<string>>(new Set());
   const [loadingVideos, setLoadingVideos] = useState<Set<string>>(new Set());
   const [quizAnswers, setQuizAnswers] = useState<{[key: number]: number}>({});
   const [quizSubmitted, setQuizSubmitted] = useState<boolean>(false);
