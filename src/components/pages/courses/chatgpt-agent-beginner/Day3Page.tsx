@@ -89,7 +89,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
   const lessonData = {
     day: 3,
     title: "Google Opal로 영상 자동 생성 에이전트 만들기",
-    duration: "약 50분",
+    duration: "",
     description: "ChatGPT vs Google Opal을 비교하고, 트렌드 분석부터 영상 생성까지 자동화하는 멀티모달 AI 에이전트를 구축합니다. 이론과 실습이 통합된 강의입니다.",
     objectives: [
       "ChatGPT 에이전트 빌더 vs Google Opal의 차이점 이해하기",
@@ -101,7 +101,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
         id: 'theory-1',
         type: 'theory',
         title: '통합 강의: Google Opal로 영상 자동 생성 에이전트 만들기 (이론 + 실습)',
-        duration: '약 50분',
+        duration: '',
         videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/day3/day3lecture.mp4?sp=r&st=2025-11-15T14:18:40Z&se=2030-11-15T22:33:40Z&sv=2024-11-04&sr=b&sig=hOHOPyTOgeiV%2FTW9Iq7ET9BYiHvlwCT5HqmvwDEAWPU%3D',
         content: `
           <h3>강의 목표</h3>
