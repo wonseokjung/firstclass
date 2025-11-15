@@ -1846,21 +1846,67 @@ export class AzureTableService {
       // 사용자 정보 조회
       const user = await this.getUserByEmail(email);
       if (!user) {
-        console.log('❌ 사용자를 찾을 수 없음:', email);
+        console.error('❌ 사용자를 찾을 수 없음:', email);
         return false;
       }
 
-      // 수강 정보 파싱
-      const enrolledCourses: EnrolledCourse[] = user.enrolledCourses 
-        ? JSON.parse(user.enrolledCourses) 
-        : [];
+      console.log('✅ 사용자 정보 찾음:', user.email);
+
+      // 수강 정보 파싱 (새로운 형식: {enrollments: [...], payments: [...]})
+      let enrolledCourses: EnrolledCourse[] = [];
+      
+      if (user.enrolledCourses) {
+        if (typeof user.enrolledCourses === 'string') {
+          try {
+            const parsed = JSON.parse(user.enrolledCourses);
+            // 새 형식: {enrollments: [...], payments: [...]}
+            if (parsed.enrollments && Array.isArray(parsed.enrollments)) {
+              enrolledCourses = parsed.enrollments;
+              console.log('✅ 새 형식 (enrollments) 파싱 성공');
+            } 
+            // 기존 형식: [{...}, {...}]
+            else if (Array.isArray(parsed)) {
+              enrolledCourses = parsed;
+              console.log('✅ 기존 형식 (배열) 파싱 성공');
+            }
+          } catch (e) {
+            console.error('❌ JSON 파싱 실패:', e);
+          }
+        } else if (Array.isArray(user.enrolledCourses)) {
+          enrolledCourses = user.enrolledCourses;
+          console.log('✅ 이미 배열 형태');
+        } else if (typeof user.enrolledCourses === 'object') {
+          const coursesObj = user.enrolledCourses as any;
+          if (coursesObj.enrollments && Array.isArray(coursesObj.enrollments)) {
+            enrolledCourses = coursesObj.enrollments;
+            console.log('✅ 이미 객체 형태 (enrollments)');
+          }
+        }
+      }
+      
+      console.log('📚 수강 중인 강의 수:', enrolledCourses.length);
+      if (enrolledCourses.length > 0) {
+        console.log('📚 수강 중인 강의 목록:', enrolledCourses.map(c => `${c.courseId} (${c.title})`));
+      }
+      
+      // courseId 매칭 (1002 <-> chatgpt-agent-beginner 호환)
+      const courseIdMap: { [key: string]: string[] } = {
+        'chatgpt-agent-beginner': ['chatgpt-agent-beginner', '1002'],
+        '1002': ['chatgpt-agent-beginner', '1002']
+      };
+      
+      const matchIds = courseIdMap[courseId] || [courseId];
+      console.log('🔍 매칭 시도할 ID:', matchIds);
       
       // 해당 강의 찾기
-      const courseIndex = enrolledCourses.findIndex(c => c.courseId === courseId);
+      const courseIndex = enrolledCourses.findIndex(c => matchIds.includes(c.courseId));
       if (courseIndex === -1) {
-        console.log('❌ 수강 중인 강의가 아님:', courseId);
+        console.error('❌ 수강 중인 강의가 아님:', courseId);
+        console.error('💡 등록된 강의:', enrolledCourses.map(c => c.courseId).join(', '));
         return false;
       }
+
+      console.log('✅ 강의 찾음:', enrolledCourses[courseIndex].courseId, '-', enrolledCourses[courseIndex].title);
 
       const course = enrolledCourses[courseIndex];
 
@@ -1917,10 +1963,29 @@ export class AzureTableService {
       // 수강 정보 업데이트
       enrolledCourses[courseIndex] = course;
 
+      // 기존 enrolledCourses 구조 유지 (enrollments + payments)
+      let updatedEnrolledCoursesString: string;
+      
+      if (typeof user.enrolledCourses === 'string') {
+        const parsed = JSON.parse(user.enrolledCourses);
+        if (parsed.enrollments && parsed.payments) {
+          // 새 형식: {enrollments: [...], payments: [...]} 유지
+          parsed.enrollments = enrolledCourses;
+          updatedEnrolledCoursesString = JSON.stringify(parsed);
+          console.log('✅ 새 형식 유지 (enrollments + payments)');
+        } else {
+          // 기존 형식: [{...}] 그대로
+          updatedEnrolledCoursesString = JSON.stringify(enrolledCourses);
+          console.log('✅ 기존 형식 유지 (배열)');
+        }
+      } else {
+        updatedEnrolledCoursesString = JSON.stringify(enrolledCourses);
+      }
+
       // 사용자 정보 업데이트
       const updatedUser = {
         ...user,
-        enrolledCourses: JSON.stringify(enrolledCourses),
+        enrolledCourses: updatedEnrolledCoursesString,
         totalLearningTimeMinutes: (user.totalLearningTimeMinutes || 0) + learningTimeMinutes,
         completedCourses: enrolledCourses.filter(c => c.status === 'completed').length,
         updatedAt: new Date().toISOString()
@@ -1962,11 +2027,36 @@ export class AzureTableService {
         return null;
       }
 
-      const enrolledCourses: EnrolledCourse[] = user.enrolledCourses 
-        ? JSON.parse(user.enrolledCourses) 
-        : [];
+      // 수강 정보 파싱 (새로운 형식: {enrollments: [...], payments: [...]})
+      let enrolledCourses: EnrolledCourse[] = [];
       
-      const course = enrolledCourses.find(c => c.courseId === courseId);
+      if (user.enrolledCourses) {
+        if (typeof user.enrolledCourses === 'string') {
+          const parsed = JSON.parse(user.enrolledCourses);
+          if (parsed.enrollments && Array.isArray(parsed.enrollments)) {
+            enrolledCourses = parsed.enrollments;
+          } else if (Array.isArray(parsed)) {
+            enrolledCourses = parsed;
+          }
+        } else if (Array.isArray(user.enrolledCourses)) {
+          enrolledCourses = user.enrolledCourses;
+        } else if (typeof user.enrolledCourses === 'object') {
+          const coursesObj = user.enrolledCourses as any;
+          if (coursesObj.enrollments && Array.isArray(coursesObj.enrollments)) {
+            enrolledCourses = coursesObj.enrollments;
+          }
+        }
+      }
+      
+      // courseId 매칭 (1002 <-> chatgpt-agent-beginner 호환)
+      const courseIdMap: { [key: string]: string[] } = {
+        'chatgpt-agent-beginner': ['chatgpt-agent-beginner', '1002'],
+        '1002': ['chatgpt-agent-beginner', '1002']
+      };
+      
+      const matchIds = courseIdMap[courseId] || [courseId];
+      const course = enrolledCourses.find(c => matchIds.includes(c.courseId));
+      
       if (!course) {
         console.log('❌ 수강 중인 강의가 아님:', courseId);
         return null;

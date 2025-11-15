@@ -67,8 +67,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   };
 
   const renderAuthButtons = () => {
-    const isAdmin = userInfo?.email === 'test10@gmail.com';
-    
     if (isLoggedIn) {
       return (
         <>
@@ -78,21 +76,19 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
           >
             마이페이지
           </button>
-          {isAdmin && (
-            <button 
-              className="nav-link" 
-              onClick={() => navigate('/admin/fix-enrollments')}
-              style={{ 
-                background: 'linear-gradient(135deg, #ef4444, #dc2626)',
-                color: 'white',
-                padding: '8px 16px',
-                borderRadius: '8px',
-                fontWeight: '700'
-              }}
-            >
-              🔧 관리자
-            </button>
-          )}
+          <button 
+            className="nav-link" 
+            onClick={() => navigate('/admin/fix-enrollments')}
+            style={{ 
+              background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+              color: 'white',
+              padding: '8px 16px',
+              borderRadius: '8px',
+              fontWeight: '700'
+            }}
+          >
+            🔧 관리자
+          </button>
           <span className="user-welcome">안녕하세요, {userInfo?.name || userInfo?.email}님!</span>
           <button 
             className="nav-link" 
@@ -173,19 +169,17 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                 >
                   마이페이지
                 </button>
-                {userInfo?.email === 'test10@gmail.com' && (
-                  <button 
-                    className="mobile-nav-link" 
-                    onClick={() => handleMobileNavClick(() => navigate('/admin/fix-enrollments'))}
-                    style={{
-                      background: 'linear-gradient(135deg, #ef4444, #dc2626)',
-                      color: 'white',
-                      fontWeight: '700'
-                    }}
-                  >
-                    🔧 관리자
-                  </button>
-                )}
+                <button 
+                  className="mobile-nav-link" 
+                  onClick={() => handleMobileNavClick(() => navigate('/admin/fix-enrollments'))}
+                  style={{ 
+                    background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                    color: 'white',
+                    fontWeight: '700'
+                  }}
+                >
+                  🔧 관리자
+                </button>
                 <div className="mobile-user-info">
                   안녕하세요, {userInfo?.name || userInfo?.email}님!
                 </div>

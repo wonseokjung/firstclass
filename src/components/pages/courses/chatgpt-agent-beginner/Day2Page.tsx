@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { ArrowLeft, CheckCircle, FileText, Award, Lock } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
 
-interface Day1PageProps {
+interface Day2PageProps {
   onBack: () => void;
 }
 
-const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
+const Day2Page: React.FC<Day2PageProps> = ({ onBack }) => {
   const [completedSections, setCompletedSections] = useState<Set<string>>(new Set());
   const [loadingVideos, setLoadingVideos] = useState<Set<string>>(new Set());
   const [quizAnswers, setQuizAnswers] = useState<{[key: number]: number}>({});
@@ -30,7 +30,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
             'chatgpt-agent-beginner'
           );
 
-          if (progress && progress.completedDays.includes(1)) {
+          if (progress && progress.completedDays.includes(2)) {
             setIsDayCompleted(true);
           }
         }
@@ -42,7 +42,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
     loadUserProgress();
   }, []);
 
-  // Day 1 완료 처리
+  // Day 2 완료 처리
   const handleCompleteDay = async () => {
     if (!userEmail) {
       alert('로그인이 필요합니다.');
@@ -54,9 +54,6 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
       return;
     }
 
-    // 모든 영상 시청 여부는 사용자 판단에 맡김
-    // 퀴즈도 선택사항으로 변경
-
     try {
       setIsCompletingDay(true);
       
@@ -66,36 +63,33 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
       const success = await AzureTableService.completeCourseDay(
         userEmail,
         'chatgpt-agent-beginner',
-        1,
+        2,
         learningTimeMinutes
       );
 
       if (success) {
         setIsDayCompleted(true);
-        alert('🎉 Day 1 완료! 다음 강의로 이동하세요!');
+        alert('🎉 Day 2 완료! 다음 강의로 이동하세요!');
       } else {
-        console.error('❌ Day 완료 실패 - success: false');
-        console.log('📧 현재 이메일:', userEmail);
-        console.log('📚 강의 ID:', 'chatgpt-agent-beginner');
-        alert('❌ Day 완료 처리에 실패했습니다.\n\n가능한 원인:\n1. 강의를 구매하지 않았거나\n2. Azure 연결 문제\n\n콘솔(F12)에서 자세한 로그를 확인해주세요.');
+        alert('❌ Day 완료 처리에 실패했습니다.');
       }
     } catch (error) {
       console.error('❌ Day 완료 처리 오류:', error);
-      alert(`오류가 발생했습니다.\n\n${error}\n\n콘솔(F12)에서 자세한 로그를 확인해주세요.`);
+      alert('오류가 발생했습니다. 다시 시도해주세요.');
     } finally {
       setIsCompletingDay(false);
     }
   };
 
   const lessonData = {
-    day: 1,
-    title: "내 첫 AI 친구: ChatGPT와 Agent의 차이",
-    duration: "약 6분",
-    description: "ChatGPT와 에이전트 빌더의 차이점을 이해하고, 워크플로우 자동화의 개념을 배워봅니다.",
+    day: 2,
+    title: "Work Flow Design 기초 - 나의 일을 AI가 이해할 수 있게 쪼개기",
+    duration: "약 50분",
+    description: "논리적 사고 구조를 배우고, 유튜브 컨텐츠 기획하는 에이전트를 만들어봅니다.",
     objectives: [
-      "ChatGPT와 에이전트 빌더의 차이점 이해하기",
-      "워크플로우 자동화 개념 배우기",
-      "실습으로 에이전트 빌더 사용해보기"
+      "Work Flow Design 기본 원리 이해하기",
+      "논리적 사고 구조로 일 쪼개기",
+      "유튜브 컨텐츠 기획 에이전트 만들기"
     ],
     sections: [
       {
@@ -751,7 +745,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
           </div>
         </div>
 
-        {/* Day 1 완료 버튼 */}
+        {/* Day 2 완료 버튼 */}
         <div style={{
           background: isDayCompleted 
             ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)' 
@@ -769,7 +763,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
             color: isDayCompleted ? '#059669' : '#0284c7',
             marginBottom: '15px'
           }}>
-            {isDayCompleted ? '✅ Day 1 완료됨!' : '📚 Day 1 완료하기'}
+            {isDayCompleted ? '✅ Day 2 완료됨!' : '📚 Day 2 완료하기'}
           </h3>
           <p style={{
             color: '#64748b',
@@ -777,8 +771,8 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
             fontSize: '0.95rem'
           }}>
             {isDayCompleted 
-              ? 'Day 1을 완료했습니다! 다음 강의로 이동하세요.' 
-              : '모든 섹션과 퀴즈를 완료한 후 버튼을 눌러주세요.'}
+              ? 'Day 2를 완료했습니다! 다음 강의로 이동하세요.' 
+              : '강의를 수강한 후 버튼을 눌러주세요.'}
           </p>
           <button
             onClick={handleCompleteDay}
@@ -817,7 +811,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
               ? '처리 중...' 
               : isDayCompleted 
                 ? '✓ 완료됨' 
-                : 'Day 1 완료하기 →'}
+                : 'Day 2 완료하기 →'}
           </button>
         </div>
 
@@ -972,5 +966,5 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack }) => {
   );
 };
 
-export default Day1Page;
+export default Day2Page;
 
