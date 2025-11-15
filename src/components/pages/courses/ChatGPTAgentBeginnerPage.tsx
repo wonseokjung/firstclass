@@ -594,24 +594,21 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               borderRadius: '12px',
               background: '#000'
             }}>
-              <video
-                controls
-                preload="metadata"
+              <iframe
+                src="https://www.youtube.com/embed/BZynp51fBRU?autoplay=1&mute=1&loop=1&playlist=BZynp51fBRU&controls=1&modestbranding=1&rel=0"
+                title="AI Agent Beginner 강의 소개"
                 style={{
                   position: 'absolute',
                   top: 0,
                   left: 0,
                   width: '100%',
                   height: '100%',
-                  borderRadius: '12px'
+                  borderRadius: '12px',
+                  border: 'none'
                 }}
-              >
-                <source
-                  src="https://clathonstorage.blob.core.windows.net/video/%231%E1%84%89%E1%85%A9%E1%84%80%E1%85%A2_%E1%84%87%E1%85%B5%E1%84%80%E1%85%B5%E1%84%85%E1%85%A5%E1%84%85%E1%85%B3%E1%84%8B%E1%85%B1%E1%84%92%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%80%E1%85%A9%E1%86%BC%E1%84%8C%E1%85%B5%E1%84%82%E1%85%B3%E1%86%BC%E1%84%8B%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%90%E1%85%B3%E1%84%86%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8F%E1%85%A5%E1%84%8E%E1%85%A2%E1%86%BA%E1%84%8C%E1%85%B5%E1%84%91%E1%85%B5.mp4?sp=r&st=2025-10-22T05:23:32Z&se=2027-09-22T13:38:32Z&sv=2024-11-04&sr=b&sig=E9M93utlARF6v40KVvNWWTZXqVB27aci42zywMftgho%3D#t=0.1"
-                  type="video/mp4"
-                />
-                브라우저가 비디오를 지원하지 않습니다.
-              </video>
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
             </div>
           </div>
 
