@@ -201,14 +201,14 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
         },
         {
           id: 2,
-          question: '유튜브 콘텐츠 자동 생성 시스템에서 4개의 에이전트가 수행하는 역할이 아닌 것은?',
+          question: '워크플로 디자인에서 "시퀀싱(Sequencing)"이란 무엇을 의미하나요?',
           options: [
-            '트렌드 탐색 (웹 검색으로 키워드 추출)',
-            '기획 전문가 (제목, 설명, 태그 작성)',
-            '대본 작가 (타임라인 포함 촬영 대본 작성)',
-            '영상 편집자 (자동 영상 편집 및 업로드)'
+            '목표 달성 과정을 작은 태스크로 쪼개는 것',
+            '태스크를 논리적인 순서대로 배치하는 것',
+            'AI 모델의 성능을 측정하는 것',
+            '비용을 절감하는 방법'
           ],
-          correctAnswer: 3
+          correctAnswer: 1
         },
         {
           id: 3,
@@ -220,17 +220,6 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
             '웹 검색 기능을 사용하지 않는다'
           ],
           correctAnswer: 1
-        },
-        {
-          id: 4,
-          question: '멀티 에이전트 시스템에서 에이전트끼리 소통하게 만드는 핵심 기능은?',
-          options: [
-            'Web Search',
-            'Reasoning effort',
-            'Add Context (이전 에이전트의 Output을 다음 Input으로 연결)',
-            'Preview'
-          ],
-          correctAnswer: 2
         }
       ]
     },
