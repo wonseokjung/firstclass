@@ -16,8 +16,8 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
   const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>('');
 
-  // 런칭 날짜 체크 (2025년 11월 16일 오후 5시)
-  const launchDate = new Date('2025-11-16T17:00:00+09:00');
+  // 런칭 날짜 체크 (2025년 11월 16일 밤 10시)
+  const launchDate = new Date('2025-11-16T22:00:00+09:00');
   const isLaunched = new Date() >= launchDate;
 
   // 사용자 정보 및 Day 완료 상태 로드
@@ -286,14 +286,31 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
             🚀 Day 5 준비 중
           </h2>
 
-          <p style={{
-            color: '#64748b',
-            fontSize: '1.1rem',
-            marginBottom: '30px',
-            lineHeight: '1.6'
+          <div style={{
+            background: '#fef3c7',
+            border: '2px solid #fbbf24',
+            borderRadius: '12px',
+            padding: '20px',
+            marginBottom: '25px'
           }}>
-            이 강의는 <strong style={{ color: '#0ea5e9' }}>2025년 11월 16일 오후 5시</strong>에 오픈될 예정입니다.
-          </p>
+            <p style={{
+              color: '#92400e',
+              fontSize: '1.05rem',
+              marginBottom: '12px',
+              fontWeight: '600',
+              lineHeight: '1.6'
+            }}>
+              ⚠️ <strong>접속자 폭증으로 인해 현재 서버를 업그레이드하고 있습니다.</strong>
+            </p>
+            <p style={{
+              color: '#78350f',
+              fontSize: '0.95rem',
+              margin: 0,
+              lineHeight: '1.6'
+            }}>
+              더 나은 시청 경험을 위해 작업 중이며, <strong style={{ color: '#d97706' }}>2025년 11월 16일 밤 10시</strong>에 오픈될 예정입니다. 잠시만 기다려주세요! 🚀
+            </p>
+          </div>
 
           <button
             onClick={onBack}
