@@ -181,11 +181,25 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
       
     } catch (error) {
       console.error('회원가입 에러:', error);
-      if (error instanceof Error && error.message.includes('already exists')) {
-        setErrors({ email: '이미 등록된 이메일입니다.' });
+      
+      // 에러 메시지를 더 구체적으로 표시
+      if (error instanceof Error) {
+        if (error.message.includes('already exists')) {
+          setErrors({ email: '이미 등록된 이메일입니다.' });
+        } else if (error.message.includes('네트워크') || error.message.includes('network')) {
+          setErrors({ general: '네트워크 연결이 불안정합니다. 잠시 후 다시 시도해주세요.' });
+        } else if (error.message.includes('저장소') || error.message.includes('connection')) {
+          setErrors({ general: '서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.' });
+        } else {
+          // 구체적인 에러 메시지 표시
+          setErrors({ general: `회원가입에 실패했습니다: ${error.message}\n잠시 후 다시 시도해주세요.` });
+        }
       } else {
-        setErrors({ general: '회원가입에 실패했습니다. 다시 시도해주세요.' });
+        setErrors({ general: '회원가입에 실패했습니다. 새로고침 후 다시 시도해주세요.' });
       }
+      
+      // 사용자에게도 알림
+      alert(errors.general || '회원가입에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setIsLoading(false);
     }
