@@ -102,7 +102,8 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
         type: 'theory',
         title: '이론 강의: Work Flow Design 기초',
         duration: '약 20분',
-        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/day2/day2lecture.mp4',
+        videoUrl: 'https://player.vimeo.com/video/1137357426?badge=0&autopause=0&player_id=0&app_id=58479',
+        isVimeo: true,
         content: `
           <h3>🎯 AI 에이전트 제작의 핵심: 워크플로 디자인</h3>
           
@@ -154,7 +155,8 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
         type: 'practice',
         title: '실습: 유튜브 컨텐츠 기획 에이전트 만들기',
         duration: '약 30분',
-        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/day2/day2practice.mp4',
+        videoUrl: 'https://player.vimeo.com/video/1137357883?badge=0&autopause=0&player_id=0&app_id=58479',
+        isVimeo: true,
         content: `
           <h3>🚀 유튜브 콘텐츠 자동 생성 멀티 에이전트 시스템 구축</h3>
           
@@ -593,18 +595,53 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
             </div>
 
             {/* 비디오 플레이어 */}
-            <div style={{
-              marginBottom: '25px',
-              borderRadius: '12px',
-              overflow: 'hidden',
-              background: '#000',
-              aspectRatio: '16/9',
-              position: 'relative' as const
-            }}>
-              {(() => {
-                const isYouTube = section.videoUrl.includes('youtube.com') || section.videoUrl.includes('youtu.be');
-                
-                if (isYouTube) {
+            {(() => {
+              const isVimeo = (section as any).isVimeo || section.videoUrl.includes('vimeo.com');
+              const isYouTube = section.videoUrl.includes('youtube.com') || section.videoUrl.includes('youtu.be');
+              
+              if (isVimeo) {
+                // Vimeo 링크 처리
+                return (
+                  <div style={{
+                    marginBottom: '25px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    position: 'relative',
+                    paddingBottom: '56.25%',
+                    height: 0
+                  }}>
+                    <iframe
+                      src={section.videoUrl}
+                      frameBorder="0"
+                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        border: 'none',
+                        borderRadius: '12px'
+                      }}
+                      title={section.title}
+                    />
+                  </div>
+                );
+              }
+              
+              // YouTube와 일반 비디오는 기존 컨테이너 사용
+              return (
+                <div style={{
+                  marginBottom: '25px',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  background: '#000',
+                  aspectRatio: '16/9',
+                  position: 'relative' as const
+                }}>
+                  {(() => {
+                    if (isYouTube) {
                   // 유튜브 링크 처리
                   return (
                     <iframe
@@ -712,9 +749,10 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
                     </>
                   );
                 }
-              })()}
-            </div>
-
+                  })()}
+                </div>
+              );
+            })()}
 
             {/* 강의 내용 */}
             <div 

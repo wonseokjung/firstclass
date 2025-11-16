@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowLeft, FileText, Award } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowLeft, FileText, Award, SkipBack, SkipForward } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
 
 interface Day1PageProps {
@@ -15,6 +15,8 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
   const [isDayCompleted, setIsDayCompleted] = useState<boolean>(false);
   const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>('');
+  const [playbackRates, setPlaybackRates] = useState<{[key: string]: number}>({});
+  const videoRefs = useRef<{[key: string]: HTMLVideoElement | null}>({});
 
   // 사용자 정보 및 Day 완료 상태 로드
   useEffect(() => {
@@ -88,6 +90,38 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
     }
   };
 
+  // 비디오 컨트롤 함수들
+  const handlePlaybackRateChange = (sectionId: string, rate: number) => {
+    const video = videoRefs.current[sectionId];
+    console.log('배속 변경:', sectionId, rate, 'video:', video);
+    if (video) {
+      video.playbackRate = rate;
+      setPlaybackRates(prev => ({ ...prev, [sectionId]: rate }));
+    } else {
+      console.error('비디오 요소를 찾을 수 없습니다:', sectionId);
+    }
+  };
+
+  const handleSkipBackward = (sectionId: string) => {
+    const video = videoRefs.current[sectionId];
+    console.log('10초 뒤로:', sectionId, 'video:', video);
+    if (video) {
+      video.currentTime = Math.max(0, video.currentTime - 10);
+    } else {
+      console.error('비디오 요소를 찾을 수 없습니다:', sectionId);
+    }
+  };
+
+  const handleSkipForward = (sectionId: string) => {
+    const video = videoRefs.current[sectionId];
+    console.log('10초 앞으로:', sectionId, 'video:', video);
+    if (video) {
+      video.currentTime = Math.min(video.duration, video.currentTime + 10);
+    } else {
+      console.error('비디오 요소를 찾을 수 없습니다:', sectionId);
+    }
+  };
+
   const lessonData = {
     day: 1,
     title: "내 첫 AI 친구: ChatGPT와 Agent의 차이",
@@ -104,7 +138,8 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
         type: 'theory',
         title: '이론 강의: ChatGPT와 Agent의 차이',
         duration: '6분',
-        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/Day1/day1lecture.mp4',
+        videoUrl: 'https://player.vimeo.com/video/1137353252?badge=0&autopause=0&player_id=0&app_id=58479',
+        isVimeo: true,
         content: `
           <h3>💬 ChatGPT vs 🤖 에이전트 빌더</h3>
           
@@ -128,7 +163,8 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
         type: 'practice',
         title: '실습: 에이전트 빌더 시작하기',
         duration: '실습 시간',
-        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/Day1/%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B51%E1%84%89%E1%85%B5%E1%86%AF%E1%84%89%E1%85%B3%E1%86%B8.mp4',
+        videoUrl: 'https://player.vimeo.com/video/1137355668?badge=0&autopause=0&player_id=0&app_id=58479',
+        isVimeo: true,
         content: `
           <p style="font-size: 1.05rem; line-height: 1.8; color: #374151;">
             위의 실습 비디오를 보면서 에이전트 빌더로 첫 워크플로우를 만들어보세요!
@@ -438,18 +474,53 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
             </div>
 
             {/* 비디오 플레이어 */}
-            <div style={{
-              marginBottom: '25px',
-              borderRadius: '12px',
-              overflow: 'hidden',
-              background: '#000',
-              aspectRatio: '16/9',
-              position: 'relative' as const
-            }}>
-              {(() => {
-                const isYouTube = section.videoUrl.includes('youtube.com') || section.videoUrl.includes('youtu.be');
-                
-                if (isYouTube) {
+            {(() => {
+              const isVimeo = (section as any).isVimeo || section.videoUrl.includes('vimeo.com');
+              const isYouTube = section.videoUrl.includes('youtube.com') || section.videoUrl.includes('youtu.be');
+              
+              if (isVimeo) {
+                // Vimeo 링크 처리
+                return (
+                  <div style={{
+                    marginBottom: '25px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    position: 'relative',
+                    paddingBottom: '56.25%',
+                    height: 0
+                  }}>
+                    <iframe
+                      src={section.videoUrl}
+                      frameBorder="0"
+                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        border: 'none',
+                        borderRadius: '12px'
+                      }}
+                      title={section.title}
+                    />
+                  </div>
+                );
+              }
+              
+              // YouTube와 일반 비디오는 기존 컨테이너 사용
+              return (
+                <div style={{
+                  marginBottom: '25px',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  background: '#000',
+                  aspectRatio: '16/9',
+                  position: 'relative' as const
+                }}>
+                  {(() => {
+                    if (isYouTube) {
                   // 유튜브 링크 처리
                   return (
               <iframe
@@ -505,12 +576,13 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                         </div>
                       )}
                       <video
+                        ref={(el) => { videoRefs.current[section.id] = el; }}
                         width="100%"
                         height="100%"
                         controls
                         controlsList="nodownload noremoteplayback"
                         disablePictureInPicture
-                        preload="auto"
+                        preload="metadata"
                         playsInline
                         onContextMenu={(e) => e.preventDefault()}
                         onLoadStart={() => {
@@ -557,9 +629,133 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                     </>
                   );
                 }
-              })()}
-            </div>
+                  })()}
+                </div>
+              );
+            })()}
 
+            {/* 커스텀 비디오 컨트롤 (Vimeo/YouTube가 아닌 경우만) */}
+            {!((section as any).isVimeo || section.videoUrl.includes('vimeo.com') || section.videoUrl.includes('youtube.com') || section.videoUrl.includes('youtu.be')) && (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '15px',
+              padding: '15px 20px',
+              background: '#f8fafc',
+              borderRadius: '0 0 12px 12px',
+              borderTop: '2px solid #e2e8f0',
+              marginTop: '-4px'
+            }}>
+              {/* 10초 뒤로 */}
+              <button
+                onClick={() => handleSkipBackward(section.id)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '8px 16px',
+                  background: 'white',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  color: '#475569',
+                  transition: 'all 0.2s'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = '#f1f5f9';
+                  e.currentTarget.style.borderColor = '#cbd5e1';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = 'white';
+                  e.currentTarget.style.borderColor = '#e2e8f0';
+                }}
+              >
+                <SkipBack size={16} />
+                10초
+              </button>
+
+              {/* 10초 앞으로 */}
+              <button
+                onClick={() => handleSkipForward(section.id)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '8px 16px',
+                  background: 'white',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  color: '#475569',
+                  transition: 'all 0.2s'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = '#f1f5f9';
+                  e.currentTarget.style.borderColor = '#cbd5e1';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = 'white';
+                  e.currentTarget.style.borderColor = '#e2e8f0';
+                }}
+              >
+                <SkipForward size={16} />
+                10초
+              </button>
+
+              <div style={{
+                width: '1px',
+                height: '24px',
+                background: '#e2e8f0',
+                margin: '0 5px'
+              }} />
+
+              {/* 배속 조절 */}
+              <span style={{
+                fontSize: '0.9rem',
+                fontWeight: '600',
+                color: '#64748b'
+              }}>배속:</span>
+              
+              {[0.5, 0.75, 1, 1.25, 1.5, 2].map(rate => (
+                <button
+                  key={rate}
+                  onClick={() => handlePlaybackRateChange(section.id, rate)}
+                  style={{
+                    padding: '6px 12px',
+                    background: (playbackRates[section.id] || 1) === rate 
+                      ? 'linear-gradient(135deg, #0ea5e9, #0284c7)' 
+                      : 'white',
+                    color: (playbackRates[section.id] || 1) === rate ? 'white' : '#475569',
+                    border: '1px solid',
+                    borderColor: (playbackRates[section.id] || 1) === rate ? '#0ea5e9' : '#e2e8f0',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    fontSize: '0.85rem',
+                    fontWeight: '600',
+                    transition: 'all 0.2s'
+                  }}
+                  onMouseOver={(e) => {
+                    if ((playbackRates[section.id] || 1) !== rate) {
+                      e.currentTarget.style.background = '#f1f5f9';
+                      e.currentTarget.style.borderColor = '#cbd5e1';
+                    }
+                  }}
+                  onMouseOut={(e) => {
+                    if ((playbackRates[section.id] || 1) !== rate) {
+                      e.currentTarget.style.background = 'white';
+                      e.currentTarget.style.borderColor = '#e2e8f0';
+                    }
+                  }}
+                >
+                  {rate}x
+                </button>
+              ))}
+            </div>
+            )}
 
             {/* 강의 내용 */}
             <div 
