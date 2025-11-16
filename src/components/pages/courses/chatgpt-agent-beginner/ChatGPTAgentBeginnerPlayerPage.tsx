@@ -103,8 +103,8 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
           },
           { 
             day: 5, 
-            title: '유튜브 컨텐츠 수익화하는 인공지능 에이전트 만들기', 
-            subtitle: '실습: Google OPAL로 실전 프로젝트',
+            title: '수익화 인공지능 에이전트 구축하기', 
+            subtitle: '실습: 한 번의 클릭으로 완성하는 자동화 워크플로우',
             hasQuiz: true 
           }
         ]

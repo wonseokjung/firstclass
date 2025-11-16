@@ -88,111 +88,161 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
 
   const lessonData = {
     day: 5,
-    title: "유튜브 컨텐츠 수익화하는 인공지능 에이전트 만들기",
+    title: "수익화 인공지능 에이전트 구축하기",
     duration: "",
-    description: "Google OPAL을 활용하여 유튜브 수익화 시스템을 구축합니다. 트렌드 분석부터 콘텐츠 생성, 조회수 최적화까지 실전 프로젝트를 통해 학습합니다.",
+    description: "AI 에이전트로 사람을 고용하지 않고 콘텐츠 수익화를 자동화합니다. 트렌드 분석부터 영상/썸네일 생성, 메타데이터 최적화까지 한 번의 클릭으로 완성하는 워크플로우를 구축합니다.",
     objectives: [
-      "유튜브 수익화 구조 이해하고 수익 모델 설계하기",
-      "Google OPAL로 유튜브 에이전트 구축하고 자동화하기",
-      "실전 컨텐츠 생성 프로젝트로 조회수 최적화 방법 익히기"
+      "수익화의 정의와 AI 에이전트의 목적 이해하기",
+      "Google OPAL로 완전 자동화된 콘텐츠 생성 워크플로우 구축하기",
+      "트렌드 분석 → 영상/썸네일 생성 → 메타데이터 최적화까지 실전 프로젝트 완성하기"
     ],
     sections: [
       {
         id: 'theory-1',
         type: 'theory',
-        title: '통합 강의: 유튜브 컨텐츠 수익화하는 AI 에이전트 만들기 (이론 + 실습)',
+        title: '수익화 인공지능 에이전트 구축하기 (이론 + 실습)',
         duration: '',
         videoUrl: 'https://player.vimeo.com/video/1137483341?badge=0&autopause=0&player_id=0&app_id=58479',
         isVimeo: true,
         content: `
-          <h3>강의 목표</h3>
+          <h3>1. 강의 목표 및 핵심 철학</h3>
+          
+          <h4>수익화(Monetization)의 정의</h4>
           <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
-            Google OPAL을 활용하여 실전 유튜브 콘텐츠를 자동 생성하고, 수익화 시스템을 구축하는 능력을 배양합니다.
+            사람이 일을 해서 돈을 버는 행위를 의미합니다.
           </p>
           
-          <h3>유튜브 수익화 구조</h3>
+          <h4>AI 에이전트의 목적</h4>
+          <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
+            사람을 추가로 고용하지 않고, AI가 업무를 대신하여 <strong>퍼포먼스를 높이고</strong> <strong>비용/시간/리소스를 최적화</strong>하는 것이 목적입니다.
+          </p>
           
-          <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+          <h4>콘텐츠 수익화</h4>
+          <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
+            광고 수익, 제품 판매(쇼핑 태그 등), 강연 등 다양한 경로로 수익을 창출할 수 있습니다.
+          </p>
+          
+          <div style="background: #fff7ed; border-left: 4px solid #ea580c; padding: 20px; margin: 25px 0; border-radius: 8px;">
+            <h4 style="color: #9a3412; margin-top: 0;">기존 방식의 한계</h4>
+            <p style="font-size: 1.05rem; line-height: 1.8; color: #78350f; margin: 0;">
+              매일 트렌드 분석, 스크립트 작성, 촬영, 편집 등을 반복하는 것은 매우 힘든 일입니다. 
+              이를 <strong>한 번의 클릭으로 해결하는 자동화 워크플로우</strong>를 만드는 것이 이번 강의의 목표입니다.
+            </p>
+          </div>
+          
+          <hr style="margin: 40px 0; border: none; border-top: 1px solid #e2e8f0;" />
+          
+          <h3>2. 완성된 AI 에이전트의 구조 (워크플로우)</h3>
+          <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
+            강사가 시연한 완성형 에이전트는 다음과 같은 흐름으로 작동합니다.
+          </p>
+          
+          <table style="width: 100%; border-collapse: collapse; margin: 25px 0;">
             <tr style="background: #f8fafc;">
-              <th style="padding: 12px; text-align: left; border: 1px solid #e2e8f0;">수익 모델</th>
+              <th style="padding: 12px; text-align: left; border: 1px solid #e2e8f0; width: 30%;">단계</th>
               <th style="padding: 12px; text-align: left; border: 1px solid #e2e8f0;">설명</th>
             </tr>
             <tr>
-              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>광고 수익</strong></td>
-              <td style="padding: 12px; border: 1px solid #e2e8f0;">조회수 기반 애드센스 수익 (1,000회당 약 1-5달러)</td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>입력 (Input)</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">주제(예: 사모예드 먹방), 목적(제품 판매), 레퍼런스 영상(선택 사항)</td>
             </tr>
             <tr>
-              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>멤버십</strong></td>
-              <td style="padding: 12px; border: 1px solid #e2e8f0;">구독자 월정액 결제 시스템</td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>연구 에이전트</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">구글 검색, 유튜브 트렌드 등을 분석하여 사람들이 관심 있어 할 요소를 찾음</td>
             </tr>
             <tr>
-              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>슈퍼챗</strong></td>
-              <td style="padding: 12px; border: 1px solid #e2e8f0;">라이브 방송 시 후원금</td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>썸네일 에이전트</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">분석 내용을 바탕으로 프롬프트 생성 → Imagen 모델로 이미지 생성</td>
             </tr>
             <tr>
-              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>협찬</strong></td>
-              <td style="padding: 12px; border: 1px solid #e2e8f0;">브랜드 제품 리뷰 및 홍보</td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>영상 생성 에이전트</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">VEO 모델로 8초짜리 영상 3개(총 24초 쇼츠) 생성. Scene 1, 2, 3이 맥락을 이어받아 연결</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>메타데이터 에이전트</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">클릭률을 높이는 제목, 설명, 태그 작성</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>출력 (Output)</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">썸네일, 메타데이터, 영상 3개를 한 화면에 보여줌</td>
             </tr>
           </table>
           
           <hr style="margin: 40px 0; border: none; border-top: 1px solid #e2e8f0;" />
           
-          <h2>실습: Google OPAL로 유튜브 에이전트 구축하기</h2>
+          <h3>3. 실습: 테스트 에이전트 만들기 (Step-by-Step)</h3>
+          <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
+            강의에서는 복잡한 구조를 이해하기 위해 핵심 기능만 담은 '테스트 에이전트'를 직접 만드는 과정을 보여줍니다.
+          </p>
           
-          <h3>1. 트렌드 분석 에이전트</h3>
-          <ul style="line-height: 1.8; font-size: 1.05rem;">
-            <li>Search Web 도구로 현재 인기 있는 키워드 검색</li>
-            <li>트렌드 데이터 분석 후 콘텐츠 주제 제안</li>
-            <li>경쟁 채널 분석 및 차별화 포인트 도출</li>
+          <h4>1) 프로젝트 생성 및 입력 설정</h4>
+          <ul style="line-height: 1.8; font-size: 1.05rem; margin-bottom: 25px;">
+            <li>Google AI Studio에서 Create New → Start</li>
+            <li><strong>User Input (2개 생성)</strong>:
+              <ul style="margin-top: 10px;">
+                <li>콘텐츠 주제: (예: 사모예드 김치찌개 먹방, AI 공부 영상 등)</li>
+                <li>콘텐츠 목표: (예: 제품 판매, 엔터테인먼트, 지식 전파)</li>
+                <li>(옵션) 레퍼런스 영상 추가 가능</li>
+              </ul>
+            </li>
           </ul>
           
-          <h3>2. 콘텐츠 생성 에이전트</h3>
-          <ul style="line-height: 1.8; font-size: 1.05rem;">
-            <li>Veo 모델로 트렌드에 맞는 영상 자동 생성</li>
-            <li>Lyria 모델로 배경 음악 제작</li>
-            <li>Imagen 모델로 썸네일 이미지 생성</li>
+          <h4>2) 연구(Research) 에이전트 설정</h4>
+          <ul style="line-height: 1.8; font-size: 1.05rem; margin-bottom: 25px;">
+            <li><strong>모델</strong>: Gemini 1.5 Flash (Plan and Execute 모드 권장 - 절차적 수행에 유리)</li>
+            <li><strong>도구(Tools)</strong>: Search Web, Search Map, Get Website 등 추가</li>
+            <li><strong>프롬프트</strong>: "입력된 정보와 트렌드 데이터를 분석하여 조회수가 높을 만한 콘텐츠 방향을 연구하라"고 지시</li>
+            <li><strong>연결</strong>: User Input 노드를 연구 에이전트에 연결</li>
           </ul>
           
-          <h3>3. 최적화 에이전트</h3>
-          <ul style="line-height: 1.8; font-size: 1.05rem;">
-            <li>SEO 최적화된 제목과 설명 자동 생성</li>
-            <li>해시태그 전략 수립</li>
-            <li>최적 업로드 시간 분석 및 제안</li>
+          <h4>3) 콘텐츠 생성 에이전트 구축</h4>
+          <ul style="line-height: 1.8; font-size: 1.05rem; margin-bottom: 25px;">
+            <li><strong>썸네일 생성</strong>: 연구 결과를 바탕으로 Imagen을 사용하여 16:9 비율 이미지 생성</li>
+            <li><strong>영상 생성 (총 2개 장면 실습)</strong>:
+              <ul style="margin-top: 10px;">
+                <li>장면 1: VEO 모델 사용. 연구 내용을 바탕으로 첫 번째 영상 프롬프트 작성 및 생성 (VEO 2 사용 시 더 빠름)</li>
+                <li>장면 2: 장면 1의 프롬프트/결과를 입력받아, 내용이 이어지도록 프롬프트 작성 후 영상 생성</li>
+              </ul>
+            </li>
+            <li><strong>메타데이터 생성</strong>: 연구 결과 및 생성된 영상 내용을 바탕으로 제목, 설명, 태그를 깔끔하게 작성</li>
           </ul>
           
-          <h3>조회수 최적화 전략</h3>
-          
-          <h4>1. 썸네일 최적화</h4>
-          <p style="font-size: 1.05rem; line-height: 1.8;">
-            • 고대비 색상 사용으로 시선 집중<br/>
-            • 감정을 자극하는 얼굴 표정 활용<br/>
-            • 큰 텍스트로 핵심 메시지 전달
+          <h4>4) 출력(Show) 설정</h4>
+          <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 25px;">
+            <strong>Output 노드</strong>: 생성된 썸네일, 메타데이터(제목/설명), 영상 1, 영상 2를 연결하여 한눈에 볼 수 있도록 배치합니다.
           </p>
           
-          <h4>2. 제목 최적화</h4>
-          <p style="font-size: 1.05rem; line-height: 1.8;">
-            • 호기심을 자극하는 질문형 제목<br/>
-            • 숫자를 활용한 구체성 (예: "3가지 방법")<br/>
-            • 키워드 앞쪽 배치로 검색 노출 향상
+          <hr style="margin: 40px 0; border: none; border-top: 1px solid #e2e8f0;" />
+          
+          <h3>4. 실행 및 결과 확인</h3>
+          <ul style="line-height: 1.8; font-size: 1.05rem; margin-bottom: 25px;">
+            <li><strong>실행(Run)</strong>: "사모예드 먹방", "제품 판매" 등을 입력하고 실행</li>
+            <li><strong>콘솔(Console) 확인</strong>: 연구 에이전트가 실제로 구글 검색을 하고("Dog safe food ideas" 등), 계획을 세워 실행하는 과정을 실시간으로 확인 가능</li>
+            <li><strong>결과</strong>: 약 10분 내외의 작업 후, 자동으로 썸네일, 제목, 본문, 영상들이 생성됨</li>
+          </ul>
+          
+          <hr style="margin: 40px 0; border: none; border-top: 1px solid #e2e8f0;" />
+          
+          <h3>5. 결론 및 당부 사항</h3>
+          
+          <div style="background: #dcfce7; border-left: 4px solid #16a34a; padding: 20px; margin: 25px 0; border-radius: 8px;">
+            <h4 style="color: #166534; margin-top: 0;">실천 강조</h4>
+            <p style="font-size: 1.05rem; line-height: 1.8; color: #15803d; margin: 0;">
+              눈으로만 보지 말고 <strong>반드시 직접 따라 만들어 봐야</strong> 합니다.
+            </p>
+          </div>
+          
+          <h4>비전</h4>
+          <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
+            AI 에이전트를 통해 반복적인 업무를 줄이고 <strong>콘텐츠 수익화라는 예측 가능한 사업 모델</strong>을 구축할 수 있습니다.
           </p>
           
-          <h4>3. 업로드 타이밍</h4>
-          <p style="font-size: 1.05rem; line-height: 1.8;">
-            • 타겟 시청자가 활발한 시간대 분석<br/>
-            • 일관된 업로드 스케줄 유지<br/>
-            • 트렌드에 맞춘 신속한 콘텐츠 배포
-          </p>
-          
-          <h3>실전 프로젝트</h3>
-          <p style="font-size: 1.05rem; line-height: 1.8;">
-            강의에서 배운 내용을 바탕으로 직접 유튜브 수익화 에이전트를 만들어보세요:
-          </p>
-          <ol style="line-height: 1.8; font-size: 1.05rem;">
-            <li>관심 있는 주제의 트렌드 키워드 찾기</li>
-            <li>Google OPAL로 영상, 음악, 썸네일 생성</li>
-            <li>SEO 최적화된 제목과 설명 작성</li>
-            <li>최적 업로드 시간대 설정</li>
-          </ol>
+          <div style="background: #fef2f2; border-left: 4px solid #dc2626; padding: 20px; margin: 25px 0; border-radius: 8px;">
+            <h4 style="color: #991b1b; margin-top: 0;">⚠️ 공유 금지</h4>
+            <p style="font-size: 1.05rem; line-height: 1.8; color: #7f1d1d; margin: 0;">
+              제공된 링크와 워크플로우는 <strong>수강생들만의 자산</strong>이므로 외부 공유를 자제해 주시기 바랍니다.
+            </p>
+          </div>
         `
       }
     ],
@@ -200,40 +250,68 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
       questions: [
         {
           id: 1,
-          question: '유튜브 수익화 모델이 아닌 것은?',
+          question: '수익화(Monetization)의 정의로 가장 적절한 것은?',
           options: [
-            '광고 수익 (애드센스)',
-            '멤버십',
-            '슈퍼챗',
-            '블로그 광고'
-          ],
-          correctAnswer: 3
-        },
-        {
-          id: 2,
-          question: 'Google OPAL에서 영상 생성에 사용되는 모델은?',
-          options: [
-            'Veo',
-            'Imagen',
-            'Lyria',
-            'AudioLM'
+            '사람이 일을 해서 돈을 버는 행위',
+            'AI가 자동으로 돈을 버는 행위',
+            '광고를 클릭해서 수익을 내는 행위',
+            '유튜브 구독자를 늘리는 행위'
           ],
           correctAnswer: 0
         },
         {
-          id: 3,
-          question: '유튜브 조회수 최적화 전략이 아닌 것은?',
+          id: 2,
+          question: 'AI 에이전트의 주요 목적이 아닌 것은?',
           options: [
-            '고대비 색상의 썸네일 사용',
-            '호기심을 자극하는 제목',
-            '영상 길이를 최대한 길게 만들기',
-            'SEO 최적화된 설명 작성'
+            '퍼포먼스 향상',
+            '비용/시간/리소스 최적화',
+            '사람을 추가 고용',
+            '반복 업무 자동화'
           ],
           correctAnswer: 2
+        },
+        {
+          id: 3,
+          question: '완성된 AI 에이전트 워크플로우의 순서로 올바른 것은?',
+          options: [
+            '입력 → 썸네일 생성 → 연구 → 영상 생성 → 메타데이터',
+            '입력 → 연구 → 썸네일 생성 → 영상 생성 → 메타데이터',
+            '연구 → 입력 → 영상 생성 → 썸네일 생성 → 메타데이터',
+            '입력 → 영상 생성 → 연구 → 메타데이터 → 썸네일 생성'
+          ],
+          correctAnswer: 1
+        },
+        {
+          id: 4,
+          question: '영상 생성 에이전트에서 사용하는 모델은?',
+          options: [
+            'Imagen',
+            'VEO',
+            'Lyria',
+            'Gemini'
+          ],
+          correctAnswer: 1
+        },
+        {
+          id: 5,
+          question: '강의에서 강조한 가장 중요한 학습 방법은?',
+          options: [
+            '눈으로만 보고 이해하기',
+            '반드시 직접 따라 만들어 보기',
+            '다른 사람에게 설명하기',
+            '이론만 완벽하게 공부하기'
+          ],
+          correctAnswer: 1
         }
       ]
     },
     resources: [
+      {
+        title: '🎬 AI 에이전트 숏츠 만드는 워크플로우 (ConnexionAI 제공)',
+        url: 'https://drive.google.com/file/d/17JvxIVkjx6tDzzTPPfwrNtURuEsSMTpM/view?usp=sharing',
+        type: 'workflow',
+        description: '이번 강의에서 다룬 실전 워크플로우입니다. ConnexionAI가 지속적으로 연구하며 업데이트하므로 영상과 조금 다를 수 있습니다.'
+      },
       {
         title: '비용 최적화 가이드',
         url: 'https://www.aicitybuilders.com/cost-optimization-examples',
@@ -1043,9 +1121,9 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
             📚 추가 학습 자료
           </h2>
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-            gap: '15px'
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px'
           }}>
             {lessonData.resources.map((resource, index) => (
               <a
@@ -1054,42 +1132,103 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  padding: '18px',
-                  background: 'linear-gradient(135deg, #f8fafc, #f0f9ff)',
-                  borderRadius: '12px',
+                  display: 'block',
+                  padding: resource.type === 'workflow' ? '30px' : '20px',
+                  background: resource.type === 'workflow' 
+                    ? 'linear-gradient(135deg, #fef3c7, #fde68a)' 
+                    : 'linear-gradient(135deg, #f8fafc, #f0f9ff)',
+                  borderRadius: '15px',
                   textDecoration: 'none',
                   color: '#1f2937',
                   transition: 'all 0.3s ease',
-                  border: '2px solid #e2e8f0',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
+                  border: resource.type === 'workflow' ? '3px solid #f59e0b' : '2px solid #e2e8f0',
+                  boxShadow: resource.type === 'workflow' 
+                    ? '0 8px 24px rgba(245, 158, 11, 0.3)' 
+                    : '0 2px 8px rgba(0, 0, 0, 0.05)'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #e0f2fe, #dbeafe)';
-                  e.currentTarget.style.borderColor = '#0ea5e9';
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(14, 165, 233, 0.2)';
+                  if (resource.type === 'workflow') {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #fde68a, #fcd34d)';
+                    e.currentTarget.style.borderColor = '#d97706';
+                    e.currentTarget.style.transform = 'translateY(-5px) scale(1.02)';
+                    e.currentTarget.style.boxShadow = '0 12px 32px rgba(245, 158, 11, 0.4)';
+                  } else {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #e0f2fe, #dbeafe)';
+                    e.currentTarget.style.borderColor = '#0ea5e9';
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(14, 165, 233, 0.2)';
+                  }
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #f8fafc, #f0f9ff)';
-                  e.currentTarget.style.borderColor = '#e2e8f0';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.05)';
+                  if (resource.type === 'workflow') {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #fef3c7, #fde68a)';
+                    e.currentTarget.style.borderColor = '#f59e0b';
+                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(245, 158, 11, 0.3)';
+                  } else {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #f8fafc, #f0f9ff)';
+                    e.currentTarget.style.borderColor = '#e2e8f0';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.05)';
+                  }
                 }}
               >
                 <div style={{
-                  background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-                  borderRadius: '8px',
-                  padding: '8px',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  gap: '15px',
+                  marginBottom: (resource as any).description ? '12px' : '0'
                 }}>
-                  <FileText size={20} style={{ color: 'white' }} />
+                  <div style={{
+                    background: resource.type === 'workflow' 
+                      ? 'linear-gradient(135deg, #f59e0b, #d97706)' 
+                      : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                    borderRadius: '12px',
+                    padding: resource.type === 'workflow' ? '12px' : '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minWidth: resource.type === 'workflow' ? '50px' : '40px',
+                    minHeight: resource.type === 'workflow' ? '50px' : '40px'
+                  }}>
+                    <FileText size={resource.type === 'workflow' ? 28 : 22} style={{ color: 'white' }} />
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ 
+                      fontWeight: '700', 
+                      fontSize: resource.type === 'workflow' ? '1.25rem' : '1rem',
+                      marginBottom: resource.type === 'workflow' ? '5px' : '0',
+                      color: resource.type === 'workflow' ? '#92400e' : '#1f2937'
+                    }}>
+                      {resource.title}
+                    </div>
+                    {resource.type === 'workflow' && (
+                      <div style={{
+                        display: 'inline-block',
+                        background: '#dc2626',
+                        color: 'white',
+                        padding: '4px 12px',
+                        borderRadius: '6px',
+                        fontSize: '0.85rem',
+                        fontWeight: '600',
+                        marginTop: '5px'
+                      }}>
+                        지속 업데이트 중
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <span style={{ fontWeight: '600', fontSize: '0.95rem', flex: 1 }}>{resource.title}</span>
+                {(resource as any).description && (
+                  <p style={{
+                    margin: 0,
+                    paddingLeft: resource.type === 'workflow' ? '65px' : '55px',
+                    fontSize: '0.95rem',
+                    lineHeight: '1.6',
+                    color: resource.type === 'workflow' ? '#78350f' : '#64748b'
+                  }}>
+                    {(resource as any).description}
+                  </p>
+                )}
               </a>
             ))}
           </div>
