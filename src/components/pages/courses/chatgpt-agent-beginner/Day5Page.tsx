@@ -102,7 +102,8 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
         type: 'theory',
         title: '통합 강의: 유튜브 컨텐츠 수익화하는 AI 에이전트 만들기 (이론 + 실습)',
         duration: '',
-        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/day5/day5.mp4',
+        videoUrl: 'https://player.vimeo.com/video/1137483341?badge=0&autopause=0&player_id=0&app_id=58479',
+        isVimeo: true,
         content: `
           <h3>강의 목표</h3>
           <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
@@ -606,7 +607,38 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
               position: 'relative' as const
             }}>
               {(() => {
+                const isVimeo = (section as any).isVimeo || section.videoUrl.includes('vimeo.com');
                 const isYouTube = section.videoUrl.includes('youtube.com') || section.videoUrl.includes('youtu.be');
+                
+                if (isVimeo) {
+                  return (
+                    <div style={{
+                      marginBottom: '25px',
+                      borderRadius: '12px',
+                      overflow: 'hidden',
+                      position: 'relative',
+                      paddingBottom: '56.25%',
+                      height: 0
+                    }}>
+                      <iframe
+                        src={section.videoUrl}
+                        frameBorder="0"
+                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        style={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '100%',
+                          height: '100%',
+                          border: 'none',
+                          borderRadius: '12px'
+                        }}
+                        title={section.title}
+                      />
+                    </div>
+                  );
+                }
                 
                 if (isYouTube) {
                   // 유튜브 링크 처리
