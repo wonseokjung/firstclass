@@ -210,61 +210,6 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
         breadcrumbText="ChatGPT AI AGENT 비기너편"
       />
 
-      {/* 🚨 긴급 안내 배너 */}
-      <div style={{
-        background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-        color: 'white',
-        padding: '20px',
-        textAlign: 'center',
-        boxShadow: '0 4px 15px rgba(245, 158, 11, 0.3)',
-        borderBottom: '3px solid #b45309'
-      }}>
-        <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '15px',
-          flexWrap: 'wrap'
-        }}>
-          <div style={{
-            fontSize: '2rem',
-            animation: 'pulse 2s ease-in-out infinite'
-          }}>
-            ⚠️
-          </div>
-          <div style={{
-            flex: 1,
-            minWidth: '280px'
-          }}>
-            <p style={{
-              fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-              fontWeight: '800',
-              margin: '0 0 8px 0',
-              lineHeight: '1.4'
-            }}>
-              현재 너무나도 많은 사용자가 접속하여 동영상이 끊기고 있습니다
-            </p>
-            <p style={{
-              fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-              fontWeight: '600',
-              margin: 0,
-              opacity: 0.95,
-              lineHeight: '1.5'
-            }}>
-              빠르게 개선 중이며, 곧 더 높은 용량의 영상 서버로 모두 이전될 예정입니다. 잠시만 기다려주세요! 🚀
-            </p>
-          </div>
-          <div style={{
-            fontSize: '2rem',
-            animation: 'pulse 2s ease-in-out infinite'
-          }}>
-            ⚠️
-          </div>
-        </div>
-      </div>
-
       {/* 헤더 & 진행률 */}
       <div style={{
         background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
