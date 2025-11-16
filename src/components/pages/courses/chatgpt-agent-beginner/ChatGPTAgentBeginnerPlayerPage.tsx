@@ -490,22 +490,41 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                           alignItems: 'center',
                           justifyContent: 'center',
                           color: '#94a3b8',
-                          fontSize: '0.9rem',
+                          fontSize: '0.85rem',
                           fontWeight: '600',
-                          marginBottom: '8px'
+                          marginBottom: '10px'
                         }}>
                           🔒 곧 공개 예정
                         </div>
                         {(lesson as any).launchDate && (
                           <div style={{
                             display: 'flex',
+                            flexDirection: 'column',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            color: '#f59e0b',
-                            fontSize: '0.85rem',
-                            fontWeight: '600'
+                            gap: '4px'
                           }}>
-                            📅 {(lesson as any).launchDate}
+                            <div style={{
+                              background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                              color: '#92400e',
+                              padding: '8px 16px',
+                              borderRadius: '8px',
+                              fontSize: '0.9rem',
+                              fontWeight: '700',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              border: '1px solid #fbbf24'
+                            }}>
+                              📅 {(lesson as any).launchDate}
+                            </div>
+                            <div style={{
+                              fontSize: '0.75rem',
+                              color: '#94a3b8',
+                              fontWeight: '500'
+                            }}>
+                              공개 예정
+                            </div>
                           </div>
                         )}
                       </div>
