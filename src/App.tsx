@@ -38,6 +38,7 @@ const Day1Page = React.lazy(() => import('./components/pages/courses/chatgpt-age
 const Day2Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day2Page'));
 const Day3Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day3Page'));
 const Day4Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day4Page'));
+const Day5Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day5Page'));
 const ChatGPTAgentBeginnerPaymentPage = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/PaymentPage'));
 const CostOptimizationExamplesPage = React.lazy(() => import('./components/pages/courses/CostOptimizationExamplesPage'));
 // const LessonDetailPage = React.lazy(() => import('./components/pages/courses/LessonDetailPage'));
@@ -305,6 +306,18 @@ const ChatGPTCoursePageWrapper = () => {
     );
   };
 
+  const Day5PageWrapper = () => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <Day5Page 
+          onBack={() => navigate('/chatgpt-agent-beginner')} 
+          onNext={() => navigate('/chatgpt-agent-beginner/day6')}
+        />
+      </Suspense>
+    );
+  };
+
   const ChatGPTAgentBeginnerPaymentPageWrapper = () => {
     const navigate = useNavigate();
     return (
@@ -466,6 +479,7 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/chatgpt-agent-beginner/day2" element={<Day2PageWrapper />} />
               <Route path="/chatgpt-agent-beginner/day3" element={<Day3PageWrapper />} />
               <Route path="/chatgpt-agent-beginner/day4" element={<Day4PageWrapper />} />
+              <Route path="/chatgpt-agent-beginner/day5" element={<Day5PageWrapper />} />
               <Route path="/cost-optimization-examples" element={<CostOptimizationExamplesPageWrapper />} />
               {/* 기존 URL 리다이렉트 */}
               <Route path="/chatgpt-agent-beginner-player" element={<RedirectToNewPlayerUrl />} />

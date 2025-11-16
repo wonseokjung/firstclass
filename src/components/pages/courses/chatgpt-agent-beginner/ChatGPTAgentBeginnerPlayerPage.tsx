@@ -160,6 +160,8 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
       navigate('/chatgpt-agent-beginner/day3');
     } else if (day === 4) {
       navigate('/chatgpt-agent-beginner/day4');
+    } else if (day === 5) {
+      navigate('/chatgpt-agent-beginner/day5');
     } else {
       alert(`Day ${day} 강의는 준비 중입니다. 곧 공개될 예정입니다! 🚀`);
     }
@@ -327,7 +329,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             }}>
               {week.days.map((lesson) => {
                 const isCompleted = completedDays.has(lesson.day);
-                const isAvailable = lesson.day <= 4; // Day 1, 2, 3, 4 사용 가능
+                const isAvailable = lesson.day <= 5; // Day 1, 2, 3, 4, 5 사용 가능
 
                 return (
                   <div
