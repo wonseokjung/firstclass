@@ -461,15 +461,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               boxShadow: '0 10px 30px rgba(14, 165, 233, 0.15)'
             }}>
               <div style={{
-                fontSize: '1.1rem',
-                textDecoration: 'line-through',
-                marginBottom: '10px',
-                color: '#94a3b8',
-                fontWeight: '600'
-              }}>
-                ₩{originalPrice.toLocaleString()}
-              </div>
-              <div style={{
                 fontSize: 'clamp(3rem, 6vw, 4rem)',
                 fontWeight: '900',
                 marginBottom: '12px',
@@ -494,25 +485,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               }}>
                 <div style={{
                   fontSize: 'clamp(0.9rem, 2vw, 1rem)',
-                color: '#ffffff',
-                fontWeight: '700',
-                  background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                  color: '#ffffff',
+                  fontWeight: '700',
+                  background: 'linear-gradient(135deg, #10b981, #059669)',
                   padding: '10px 20px',
                   borderRadius: '25px',
-                  boxShadow: '0 4px 12px rgba(239, 68, 68, 0.4)'
-              }}>
-                🔥 53% 할인 (얼리버드 특가)
-              </div>
-              <div style={{
-                  fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
-                color: '#ffffff',
-                  fontWeight: '600',
-                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                  padding: '10px 18px',
-                  borderRadius: '25px',
-                  boxShadow: '0 4px 12px rgba(245, 158, 11, 0.4)'
-              }}>
-                ⏰ 런칭일(2025.11.15)부터 9만 5천원으로 인상 예정
+                  boxShadow: '0 4px 12px rgba(16, 185, 129, 0.4)'
+                }}>
+                  ✨ 2025년 11월 15일 정식 오픈!
                 </div>
               </div>
             </div>
@@ -566,7 +546,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 }}
               >
                 <span style={{ fontSize: '1.5rem' }}>🚀</span>
-                얼리버드 특가로 수강하기
+                지금 바로 수강하기
               </button>
             </div>
 
