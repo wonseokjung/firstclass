@@ -153,7 +153,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
         type: 'practice',
         title: '실습: 유튜브 컨텐츠 기획 에이전트 만들기',
         duration: '약 30분',
-        videoUrl: 'https://cdn-aicitybuilders-g5fwhucfh8gyaed4.z01.azurefd.net/video/agentbeginner_lecture/day2/day2practice.mp4',
+        videoUrl: 'https://cdn-aicitybuilders-g5fwhucfh8gyaed4.z01.azurefd.net/agentbeginner_lecture/day2/day2practice.mp4',
         content: `
           <h3>🚀 유튜브 콘텐츠 자동 생성 멀티 에이전트 시스템 구축</h3>
           

@@ -102,7 +102,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
         type: 'theory',
         title: '통합 강의: Google Opal로 영상 자동 생성 에이전트 만들기 (이론 + 실습)',
         duration: '',
-        videoUrl: 'https://cdn-aicitybuilders-g5fwhucfh8gyaed4.z01.azurefd.net/video/agentbeginner_lecture/day3/day3lecture.mp4',
+        videoUrl: 'https://cdn-aicitybuilders-g5fwhucfh8gyaed4.z01.azurefd.net/agentbeginner_lecture/day3/day3lecture.mp4',
         content: `
           <h3>강의 목표</h3>
           <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
