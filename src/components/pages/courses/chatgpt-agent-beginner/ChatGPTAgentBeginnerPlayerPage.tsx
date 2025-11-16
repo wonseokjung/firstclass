@@ -117,31 +117,36 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             day: 6, 
             title: '판매 수익화 에이전트 - 제품 판매 영상 자동 생성', 
             subtitle: '실습: Google OPAL로 리뷰/소개/광고 영상 자동 제작',
-            hasQuiz: false 
+            hasQuiz: false,
+            launchDate: '2025-11-18 19:00'
           },
           { 
             day: 7, 
             title: '바이럴 마케팅 에이전트 - 조회수 폭발 컨텐츠 생성', 
             subtitle: '실습: Google OPAL로 트렌드 분석 + 바이럴 영상 자동 제작',
-            hasQuiz: false 
+            hasQuiz: false,
+            launchDate: '2025-11-19 19:00'
           },
           { 
             day: 8, 
             title: '음성 컨텐츠 에이전트 - ASMR & 지식 나눔 영상 생성', 
             subtitle: '실습: Google OPAL로 오디오북, 명상, 교육 컨텐츠 자동 제작',
-            hasQuiz: false 
+            hasQuiz: false,
+            launchDate: '2025-11-20 19:00'
           },
           { 
             day: 9, 
             title: '대량 생산 에이전트 - 한 번에 15개 영상 자동 생성', 
             subtitle: '실습: 배치 처리 시스템으로 대량 컨텐츠 자동화',
-            hasQuiz: false 
+            hasQuiz: false,
+            launchDate: '2025-11-21 19:00'
           },
           { 
             day: 10, 
             title: '완전 자동화 수익 시스템 - 분석부터 업로드까지', 
             subtitle: '최종 프로젝트: 트렌드 분석 → 생성 → 편집 → 유튜브 업로드 완전 자동화',
-            hasQuiz: true 
+            hasQuiz: true,
+            launchDate: '2025-11-22 19:00'
           }
         ]
       }
@@ -477,16 +482,32 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                       </div>
                     ) : (
                       <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
                         paddingTop: '15px',
-                        borderTop: '1px solid #e2e8f0',
-                        color: '#94a3b8',
-                        fontSize: '0.9rem',
-                        fontWeight: '600'
+                        borderTop: '1px solid #e2e8f0'
                       }}>
-                        🔒 곧 공개 예정
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: '#94a3b8',
+                          fontSize: '0.9rem',
+                          fontWeight: '600',
+                          marginBottom: '8px'
+                        }}>
+                          🔒 곧 공개 예정
+                        </div>
+                        {(lesson as any).launchDate && (
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: '#f59e0b',
+                            fontSize: '0.85rem',
+                            fontWeight: '600'
+                          }}>
+                            📅 {(lesson as any).launchDate}
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
