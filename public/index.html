@@ -147,6 +147,16 @@
                     // 즉시 skipWaiting 호출하고 새로고침
                     newWorker.postMessage({ action: 'skipWaiting' });
                     
+                    // 캐시 완전 삭제
+                    if ('caches' in window) {
+                      caches.keys().then(function(names) {
+                        for (let name of names) {
+                          caches.delete(name);
+                          console.log('🗑️ 캐시 삭제:', name);
+                        }
+                      });
+                    }
+                    
                     // 1초 후 자동 새로고침 (skipWaiting 처리 대기)
                     setTimeout(function() {
                       // 하드 리로드 (캐시 무시)
