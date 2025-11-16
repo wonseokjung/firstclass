@@ -121,42 +121,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     ]
   };
 
-  const originalPrice = 95000;
-  const earlyBirdPrice = 95000;
-
-  // D-Day 카운트다운
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
-
-  useEffect(() => {
-    const launchDate = new Date('2025-11-15T15:00:00+09:00'); // 한국시간 오후 3시
-    
-    const updateCountdown = () => {
-      const now = new Date().getTime();
-      const distance = launchDate.getTime() - now;
-      
-      if (distance < 0) {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-        return;
-      }
-      
-      setTimeLeft({
-        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000)
-      });
-    };
-    
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
-    
-    return () => clearInterval(interval);
-  }, []);
+  const coursePrice = 95000;
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -406,7 +371,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 marginBottom: '12px',
                 color: '#1f2937'
               }}>
-                ₩{earlyBirdPrice.toLocaleString()}
+                ₩{coursePrice.toLocaleString()}
               </div>
             </div>
 
