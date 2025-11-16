@@ -102,7 +102,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
         type: 'theory',
         title: '통합 강의: 유튜브 컨텐츠 수익화하는 AI 에이전트 만들기 (이론 + 실습)',
         duration: '',
-        videoUrl: 'https://cdn-aicitybuilders-g5fwhucfh8gyaed4.z01.azurefd.net/agentbeginner_lecture/day5/day5.mp4',
+        videoUrl: 'https://cdn-aicitybuilders-g5fwhucfh8gyaed4.z01.azurefd.net/video/agentbeginner_lecture/day5/day5.mp4',
         content: `
           <h3>강의 목표</h3>
           <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">

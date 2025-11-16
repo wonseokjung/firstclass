@@ -90,6 +90,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
     title: "Work Flow Design 기초 - 나의 일을 AI가 이해할 수 있게 쪼개기",
     duration: "약 50분",
     description: "워크플로 디자인의 핵심 원리(분해와 순서화)를 배우고, 4개의 에이전트를 연결하여 유튜브 콘텐츠를 자동 생성하는 멀티 에이전트 시스템을 구축합니다.",
+    updateNotice: "📢 최신 업데이트: 프리뷰 기능이 화면 상단 재생 버튼으로 변경되었습니다. GPT 5.1(11월 14일 출시) 사용을 권장하며, ChatGPT UI는 지속적으로 업데이트되어 강의 화면과 약간의 차이가 있을 수 있습니다.",
     objectives: [
       "워크플로 디자인의 핵심 원리 이해하기: 디컴포지션(분해)과 시퀀싱(순서화)",
       "복잡한 업무를 작은 태스크 유닛으로 쪼개는 방법 익히기",
@@ -153,7 +154,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
         type: 'practice',
         title: '실습: 유튜브 컨텐츠 기획 에이전트 만들기',
         duration: '약 30분',
-        videoUrl: 'https://cdn-aicitybuilders-g5fwhucfh8gyaed4.z01.azurefd.net/agentbeginner_lecture/day2/day2practice.mp4',
+        videoUrl: 'https://cdn-aicitybuilders-g5fwhucfh8gyaed4.z01.azurefd.net/video/agentbeginner_lecture/day2/day2practice.mp4',
         content: `
           <h3>🚀 유튜브 콘텐츠 자동 생성 멀티 에이전트 시스템 구축</h3>
           
@@ -450,6 +451,28 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
         margin: '40px auto',
         padding: '0 20px'
       }}>
+        {/* 업데이트 공지 */}
+        {lessonData.updateNotice && (
+          <div style={{
+            background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+            borderRadius: '12px',
+            padding: '20px 25px',
+            marginBottom: '25px',
+            border: '2px solid #f59e0b',
+            boxShadow: '0 4px 12px rgba(245, 158, 11, 0.15)'
+          }}>
+            <p style={{
+              margin: 0,
+              fontSize: '0.95rem',
+              lineHeight: '1.7',
+              color: '#92400e',
+              fontWeight: '500'
+            }}>
+              {lessonData.updateNotice}
+            </p>
+          </div>
+        )}
+
         {/* 학습 목표 */}
         <div style={{
           background: 'white',
