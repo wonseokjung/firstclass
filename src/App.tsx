@@ -39,6 +39,11 @@ const Day2Page = React.lazy(() => import('./components/pages/courses/chatgpt-age
 const Day3Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day3Page'));
 const Day4Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day4Page'));
 const Day5Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day5Page'));
+const Day6Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day6Page'));
+const Day7Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day7Page'));
+const Day8Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day8Page'));
+const Day9Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day9Page'));
+const Day10Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day10Page'));
 const ChatGPTAgentBeginnerPaymentPage = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/PaymentPage'));
 const CostOptimizationExamplesPage = React.lazy(() => import('./components/pages/courses/CostOptimizationExamplesPage'));
 // const LessonDetailPage = React.lazy(() => import('./components/pages/courses/LessonDetailPage'));
@@ -318,6 +323,66 @@ const ChatGPTCoursePageWrapper = () => {
     );
   };
 
+  const Day6PageWrapper = () => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <Day6Page 
+          onBack={() => navigate('/chatgpt-agent-beginner')} 
+          onNext={() => navigate('/chatgpt-agent-beginner/day7')}
+        />
+      </Suspense>
+    );
+  };
+
+  const Day7PageWrapper = () => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <Day7Page 
+          onBack={() => navigate('/chatgpt-agent-beginner')} 
+          onNext={() => navigate('/chatgpt-agent-beginner/day8')}
+        />
+      </Suspense>
+    );
+  };
+
+  const Day8PageWrapper = () => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <Day8Page 
+          onBack={() => navigate('/chatgpt-agent-beginner')} 
+          onNext={() => navigate('/chatgpt-agent-beginner/day9')}
+        />
+      </Suspense>
+    );
+  };
+
+  const Day9PageWrapper = () => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <Day9Page 
+          onBack={() => navigate('/chatgpt-agent-beginner')} 
+          onNext={() => navigate('/chatgpt-agent-beginner/day10')}
+        />
+      </Suspense>
+    );
+  };
+
+  const Day10PageWrapper = () => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <Day10Page 
+          onBack={() => navigate('/chatgpt-agent-beginner')} 
+          onNext={() => navigate('/chatgpt-agent-beginner/day11')}
+        />
+      </Suspense>
+    );
+  };
+
   const ChatGPTAgentBeginnerPaymentPageWrapper = () => {
     const navigate = useNavigate();
     return (
@@ -480,6 +545,11 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/chatgpt-agent-beginner/day3" element={<Day3PageWrapper />} />
               <Route path="/chatgpt-agent-beginner/day4" element={<Day4PageWrapper />} />
               <Route path="/chatgpt-agent-beginner/day5" element={<Day5PageWrapper />} />
+              <Route path="/chatgpt-agent-beginner/day6" element={<Day6PageWrapper />} />
+              <Route path="/chatgpt-agent-beginner/day7" element={<Day7PageWrapper />} />
+              <Route path="/chatgpt-agent-beginner/day8" element={<Day8PageWrapper />} />
+              <Route path="/chatgpt-agent-beginner/day9" element={<Day9PageWrapper />} />
+              <Route path="/chatgpt-agent-beginner/day10" element={<Day10PageWrapper />} />
               <Route path="/cost-optimization-examples" element={<CostOptimizationExamplesPageWrapper />} />
               {/* 기존 URL 리다이렉트 */}
               <Route path="/chatgpt-agent-beginner-player" element={<RedirectToNewPlayerUrl />} />

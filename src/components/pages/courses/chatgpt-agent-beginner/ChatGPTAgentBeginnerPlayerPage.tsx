@@ -162,6 +162,16 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
       navigate('/chatgpt-agent-beginner/day4');
     } else if (day === 5) {
       navigate('/chatgpt-agent-beginner/day5');
+    } else if (day === 6) {
+      navigate('/chatgpt-agent-beginner/day6');
+    } else if (day === 7) {
+      navigate('/chatgpt-agent-beginner/day7');
+    } else if (day === 8) {
+      navigate('/chatgpt-agent-beginner/day8');
+    } else if (day === 9) {
+      navigate('/chatgpt-agent-beginner/day9');
+    } else if (day === 10) {
+      navigate('/chatgpt-agent-beginner/day10');
     } else {
       alert(`Day ${day} 강의는 준비 중입니다. 곧 공개될 예정입니다! 🚀`);
     }
