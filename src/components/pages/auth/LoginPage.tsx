@@ -107,21 +107,34 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
     } catch (error) {
       console.error('💥 로그인 에러:', error);
       
-      let debugInfo = '\n\n디버그 정보:\n';
-      debugInfo += '- 이메일: ' + formData.email + '\n';
-      debugInfo += '- 시간: ' + new Date().toLocaleString('ko-KR') + '\n';
-      debugInfo += '- 브라우저: ' + navigator.userAgent.split(' ').slice(-1)[0] + '\n';
+      let debugInfo = '\n\n🔍 디버그 정보:\n';
+      debugInfo += '━━━━━━━━━━━━━━━━\n';
+      debugInfo += '📧 이메일: ' + formData.email + '\n';
+      debugInfo += '🕐 시간: ' + new Date().toLocaleString('ko-KR') + '\n';
+      debugInfo += '🌐 브라우저: ' + navigator.userAgent.split(' ').slice(-1)[0] + '\n';
       
       if (error instanceof Error) {
-        debugInfo += '- 에러 타입: ' + error.name + '\n';
-        debugInfo += '- 에러 메시지: ' + error.message + '\n';
+        debugInfo += '⚠️ 에러 타입: ' + error.name + '\n';
+        debugInfo += '💬 에러 메시지: ' + error.message + '\n';
         
-        setErrors({ 
-          general: '로그인에 실패했습니다.' + debugInfo + '\n관리자에게 위 정보를 공유해주세요.'
-        });
+        // 네트워크 오류 특별 처리
+        if (error.message.includes('네트워크') || error.message.includes('불러올 수 없습니다')) {
+          setErrors({ 
+            general: '🌐 서버 연결 문제가 발생했습니다.\n\n다음을 확인해주세요:\n' +
+                    '1️⃣ 인터넷 연결 상태\n' +
+                    '2️⃣ 회원가입이 완료되었는지 확인\n' +
+                    '3️⃣ 이메일 주소가 정확한지 확인\n' +
+                    '\n잠시 후 다시 시도해주세요.\n' +
+                    '문제가 계속되면 아래 정보를 관리자에게 공유해주세요.' + debugInfo
+          });
+        } else {
+          setErrors({ 
+            general: '로그인에 실패했습니다.' + debugInfo + '\n━━━━━━━━━━━━━━━━\n관리자에게 위 정보를 공유해주세요.'
+          });
+        }
       } else {
         setErrors({ 
-          general: '알 수 없는 오류가 발생했습니다.' + debugInfo + '\n관리자에게 위 정보를 공유해주세요.'
+          general: '알 수 없는 오류가 발생했습니다.' + debugInfo + '\n━━━━━━━━━━━━━━━━\n관리자에게 위 정보를 공유해주세요.'
         });
       }
     } finally {
