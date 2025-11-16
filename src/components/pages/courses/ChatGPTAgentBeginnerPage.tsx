@@ -275,65 +275,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
           margin: '0 auto',
           padding: '40px 20px'
         }}>
-          {/* 런칭 D-Day 카운트다운 - 최상단 배치 */}
-          <div style={{
-            background: 'linear-gradient(135deg, #1e3a8a, #1e40af)',
-            borderRadius: '20px',
-            padding: 'clamp(25px, 4vw, 40px) clamp(15px, 3vw, 30px)',
-            textAlign: 'center',
-            marginBottom: '30px',
-            boxShadow: '0 15px 40px rgba(30, 58, 138, 0.4)',
-            border: '2px solid rgba(255, 255, 255, 0.1)'
-          }}>
-            <div style={{
-              fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)',
-              fontWeight: '800',
-              marginBottom: '25px',
-              color: '#ffffff',
-              textShadow: '0 2px 10px rgba(0,0,0,0.2)'
-            }}>
-              🚀 2025년 11월 15일 런칭 예정
-            </div>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '15px',
-              flexWrap: 'wrap'
-            }}>
-              {[
-                { label: '일', value: timeLeft.days },
-                { label: '시간', value: timeLeft.hours },
-                { label: '분', value: timeLeft.minutes },
-                { label: '초', value: timeLeft.seconds }
-              ].map((item, index) => (
-                <div key={index} style={{
-                  background: 'rgba(255, 255, 255, 0.95)',
-                  borderRadius: '15px',
-                  padding: 'clamp(15px, 3vw, 20px) clamp(15px, 3vw, 25px)',
-                  minWidth: 'clamp(70px, 15vw, 90px)',
-                  boxShadow: '0 8px 20px rgba(0,0,0,0.15)',
-                  border: '2px solid rgba(255, 255, 255, 1)'
-                }}>
-                  <div style={{
-                    fontSize: 'clamp(2rem, 4vw, 2.8rem)',
-                    fontWeight: '900',
-                    marginBottom: '5px',
-                    color: '#1e3a8a',
-                    lineHeight: '1'
-                  }}>
-                    {String(item.value).padStart(2, '0')}
-                  </div>
-                  <div style={{
-                    fontSize: '0.9rem',
-                    fontWeight: '600',
-                    color: '#64748b'
-                  }}>
-                    {item.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
 
           {/* 강의 소개 영상 */}
           <div style={{
@@ -453,96 +394,55 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
             {/* 가격 정보 - 강조된 박스 */}
             <div style={{
-              background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
+              background: '#f8fafc',
               borderRadius: '20px',
               padding: 'clamp(30px, 5vw, 40px)',
               marginBottom: '30px',
-              border: '2px solid #0ea5e9',
-              boxShadow: '0 10px 30px rgba(14, 165, 233, 0.15)'
+              border: '2px solid #e2e8f0'
             }}>
               <div style={{
                 fontSize: 'clamp(3rem, 6vw, 4rem)',
                 fontWeight: '900',
                 marginBottom: '12px',
-                color: '#0ea5e9',
-                textShadow: '0 2px 4px rgba(14, 165, 233, 0.2)'
+                color: '#1f2937'
               }}>
                 ₩{earlyBirdPrice.toLocaleString()}
               </div>
-              <div style={{
-                fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-                color: '#1f2937',
-                marginBottom: '25px',
-                fontWeight: '600'
-              }}>
-                월 {Math.floor(earlyBirdPrice / 12).toLocaleString()}원 (12개월 무이자)
-              </div>
-              <div style={{
-                display: 'flex',
-                gap: '10px',
-                justifyContent: 'center',
-                flexWrap: 'wrap'
-              }}>
-                <div style={{
-                  fontSize: 'clamp(0.9rem, 2vw, 1rem)',
-                  color: '#ffffff',
-                  fontWeight: '700',
-                  background: 'linear-gradient(135deg, #10b981, #059669)',
-                  padding: '10px 20px',
-                  borderRadius: '25px',
-                  boxShadow: '0 4px 12px rgba(16, 185, 129, 0.4)'
-                }}>
-                  ✨ 2025년 11월 15일 정식 오픈!
-                </div>
-              </div>
             </div>
 
-            {/* 메인 수강 신청 버튼 - 강조된 디자인 */}
+            {/* 메인 수강 신청 버튼 - 깔끔한 디자인 */}
             <div style={{
-              position: 'relative',
               display: 'inline-block',
               marginBottom: '20px'
             }}>
-              {/* 버튼 뒤 빛나는 효과 */}
-              <div style={{
-                position: 'absolute',
-                inset: '-4px',
-                background: 'linear-gradient(45deg, #0ea5e9, #0284c7, #0ea5e9)',
-                borderRadius: '18px',
-                filter: 'blur(8px)',
-                opacity: '0.7',
-                animation: 'pulse 2s ease-in-out infinite',
-                zIndex: '-1'
-              }}></div>
-              
               <button
                 onClick={handleEarlyBirdPayment}
                 style={{
-                  background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                  background: '#2563eb',
                   color: '#ffffff',
                   border: 'none',
                   padding: '25px 60px',
                   fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
                   fontWeight: '800',
-                  borderRadius: '15px',
+                  borderRadius: '12px',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
-                  boxShadow: '0 10px 30px rgba(14, 165, 233, 0.5)',
+                  boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '12px',
-                  minWidth: '300px',
-                  position: 'relative',
-                  textShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                  minWidth: '300px'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 15px 40px rgba(14, 165, 233, 0.6)';
+                  e.currentTarget.style.background = '#1d4ed8';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(37, 99, 235, 0.4)';
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(14, 165, 233, 0.5)';
+                  e.currentTarget.style.background = '#2563eb';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(37, 99, 235, 0.3)';
                 }}
               >
                 <span style={{ fontSize: '1.5rem' }}>🚀</span>
@@ -556,7 +456,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               margin: '0',
               fontWeight: '500'
             }}>
-              💳 안전한 결제 | 12개월 무이자 할부 가능
+              💳 안전한 결제
             </p>
           </div>
 
