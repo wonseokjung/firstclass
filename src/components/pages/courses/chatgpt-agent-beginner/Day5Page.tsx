@@ -1150,7 +1150,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
               fontWeight: '500'
             }}>
               이번 강의에서 다룬 <strong>수익화 AI 에이전트</strong>의 완성된 워크플로우입니다.<br/>
-              아래 링크의 에이전트를 가지고 있으면 <strong style="color: #dc2626;">ConnexionAI의 최신 연구개발 내용이 자동으로 반영</strong>됩니다.
+              아래 링크의 에이전트를 가지고 있으면 <strong style={{ color: '#dc2626' }}>ConnexionAI의 최신 연구개발 내용이 자동으로 반영</strong>됩니다.
             </p>
           </div>
 
