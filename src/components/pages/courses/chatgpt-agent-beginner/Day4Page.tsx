@@ -17,7 +17,6 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
   const [userEmail, setUserEmail] = useState<string>('');
 
   // 런칭 날짜 체크 (즉시 오픈)
-  const launchDate = new Date('2025-11-15T00:00:00+09:00');
   const isLaunched = true; // 즉시 오픈
 
   // 사용자 정보 및 Day 완료 상태 로드
