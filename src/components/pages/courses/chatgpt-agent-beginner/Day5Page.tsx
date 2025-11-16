@@ -842,6 +842,185 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
           </div>
         ))}
 
+        {/* 워크플로우 다이어그램 */}
+        <div style={{
+          background: 'white',
+          borderRadius: '20px',
+          padding: '40px',
+          marginBottom: '40px',
+          boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
+          border: '1px solid #e5e7eb'
+        }}>
+          {/* 헤더 */}
+          <div style={{
+            marginBottom: '30px'
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '15px',
+              flexWrap: 'wrap',
+              gap: '10px'
+            }}>
+              <h2 style={{
+                fontSize: '1.75rem',
+                fontWeight: '700',
+                color: '#1f2937',
+                margin: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                🎬 실전 워크플로우 다이어그램
+              </h2>
+              <div style={{
+                display: 'inline-block',
+                background: '#dc2626',
+                color: 'white',
+                padding: '5px 14px',
+                borderRadius: '6px',
+                fontSize: '0.8rem',
+                fontWeight: '600'
+              }}>
+                🔥 지속 업데이트
+              </div>
+            </div>
+            <p style={{
+              fontSize: '0.95rem',
+              lineHeight: '1.6',
+              color: '#6b7280',
+              margin: 0
+            }}>
+              수익화 AI 에이전트 완성본 — ConnexionAI의 최신 업데이트가 자동 반영됩니다
+            </p>
+          </div>
+
+          {/* 워크플로우 이미지 */}
+          <div style={{
+            background: '#f9fafb',
+            borderRadius: '12px',
+            padding: '15px',
+            border: '1px solid #e5e7eb'
+          }}>
+            <img 
+              src="/images/day5/workflow-diagram.png" 
+              alt="AI 에이전트 워크플로우 다이어그램"
+              style={{
+                width: '100%',
+                height: 'auto',
+                borderRadius: '8px',
+                display: 'block'
+              }}
+            />
+          </div>
+        </div>
+
+        {/* AI 에이전트 숏츠 만드는 워크플로우 */}
+        <div style={{
+          background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+          borderRadius: '20px',
+          padding: '40px',
+          marginBottom: '40px',
+          boxShadow: '0 4px 20px rgba(14, 165, 233, 0.3)',
+          position: 'relative' as const,
+          overflow: 'hidden'
+        }}>
+          {/* 배경 패턴 */}
+          <div style={{
+            position: 'absolute' as const,
+            top: 0,
+            right: 0,
+            width: '250px',
+            height: '250px',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%)',
+            borderRadius: '50%',
+            transform: 'translate(50%, -50%)'
+          }} />
+
+          <div style={{
+            position: 'relative' as const,
+            zIndex: 1
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '18px',
+              flexWrap: 'wrap',
+              gap: '12px'
+            }}>
+              <h2 style={{
+                fontSize: '1.8rem',
+                fontWeight: '700',
+                color: 'white',
+                margin: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                🎬 AI 에이전트 숏츠 워크플로우
+              </h2>
+              <div style={{
+                background: '#fbbf24',
+                color: '#92400e',
+                padding: '6px 16px',
+                borderRadius: '8px',
+                fontSize: '0.8rem',
+                fontWeight: '700',
+                boxShadow: '0 2px 10px rgba(251, 191, 36, 0.3)'
+              }}>
+                🔥 실시간 업데이트
+              </div>
+            </div>
+
+            <p style={{
+              color: 'rgba(255, 255, 255, 0.95)',
+              fontSize: '1rem',
+              lineHeight: '1.7',
+              marginBottom: '25px'
+            }}>
+              ConnexionAI가 지속 연구하며 업데이트하는 실전 워크플로우입니다. <br/>
+              영상과 다를 수 있습니다 — 더 나은 성능을 위해 계속 개선 중
+            </p>
+
+            <a
+              href="https://opal.google/?flow=drive:/17JvxIVkjx6tDzzTPPfwrNtURuEsSMTpM&shared&mode=app"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '12px',
+                background: '#fbbf24',
+                color: '#92400e',
+                padding: '16px 35px',
+                borderRadius: '12px',
+                fontSize: '1.15rem',
+                fontWeight: '700',
+                textDecoration: 'none',
+                boxShadow: '0 6px 20px rgba(251, 191, 36, 0.5)',
+                transition: 'all 0.3s ease',
+                border: 'none'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
+                e.currentTarget.style.boxShadow = '0 10px 30px rgba(251, 191, 36, 0.6)';
+                e.currentTarget.style.background = '#fcd34d';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(251, 191, 36, 0.5)';
+                e.currentTarget.style.background = '#fbbf24';
+              }}
+            >
+              <span style={{ fontSize: '1.3rem' }}>🚀</span>
+              워크플로우 바로 가기
+              <span style={{ fontSize: '1.3rem', fontWeight: '800' }}>→</span>
+            </a>
+          </div>
+        </div>
+
         {/* 퀴즈 섹션 */}
         <div style={{
           marginBottom: '40px'
@@ -1104,162 +1283,6 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
           )}
         </div>
 
-        {/* 워크플로우 다이어그램 */}
-        <div style={{
-          background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-          borderRadius: '20px',
-          padding: '40px',
-          marginBottom: '30px',
-          boxShadow: '0 8px 24px rgba(245, 158, 11, 0.3)',
-          border: '3px solid #f59e0b'
-        }}>
-          <div style={{
-            textAlign: 'center',
-            marginBottom: '25px'
-          }}>
-            <h2 style={{
-              fontSize: '1.8rem',
-              fontWeight: '800',
-              color: '#92400e',
-              marginBottom: '15px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '10px'
-            }}>
-              🎬 실전 워크플로우 다이어그램
-            </h2>
-            <div style={{
-              display: 'inline-block',
-              background: '#dc2626',
-              color: 'white',
-              padding: '8px 20px',
-              borderRadius: '25px',
-              fontSize: '0.95rem',
-              fontWeight: '700',
-              marginBottom: '15px',
-              boxShadow: '0 4px 12px rgba(220, 38, 38, 0.3)'
-            }}>
-              🔥 지속 업데이트 중 - ConnexionAI 연구개발
-            </div>
-            <p style={{
-              fontSize: '1.1rem',
-              lineHeight: '1.8',
-              color: '#78350f',
-              marginBottom: '25px',
-              fontWeight: '500'
-            }}>
-              이번 강의에서 다룬 <strong>수익화 AI 에이전트</strong>의 완성된 워크플로우입니다.<br/>
-              아래 링크의 에이전트를 가지고 있으면 <strong style={{ color: '#dc2626' }}>ConnexionAI의 최신 연구개발 내용이 자동으로 반영</strong>됩니다.
-            </p>
-          </div>
-
-          {/* 워크플로우 이미지 */}
-          <div style={{
-            background: 'white',
-            borderRadius: '15px',
-            padding: '20px',
-            marginBottom: '25px',
-            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
-            border: '2px solid #fbbf24'
-          }}>
-            <img 
-              src="/images/day5/workflow-diagram.png" 
-              alt="AI 에이전트 워크플로우 다이어그램"
-              style={{
-                width: '100%',
-                height: 'auto',
-                borderRadius: '10px',
-                display: 'block'
-              }}
-            />
-          </div>
-
-          {/* 핵심 안내 */}
-          <div style={{
-            background: 'rgba(255, 255, 255, 0.9)',
-            borderRadius: '15px',
-            padding: '25px',
-            marginBottom: '20px',
-            border: '2px solid #fbbf24'
-          }}>
-            <h3 style={{
-              fontSize: '1.3rem',
-              fontWeight: '700',
-              color: '#92400e',
-              marginBottom: '15px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}>
-              💡 왜 이 워크플로우가 특별한가?
-            </h3>
-            <ul style={{
-              listStyle: 'none',
-              padding: 0,
-              margin: 0
-            }}>
-              <li style={{
-                padding: '12px 0',
-                borderBottom: '1px solid #fde68a',
-                fontSize: '1.05rem',
-                lineHeight: '1.8',
-                color: '#78350f'
-              }}>
-                ✅ <strong>자동 업데이트</strong>: ConnexionAI 연구팀이 지속적으로 개선하는 최신 버전이 자동 반영됩니다
-              </li>
-              <li style={{
-                padding: '12px 0',
-                borderBottom: '1px solid #fde68a',
-                fontSize: '1.05rem',
-                lineHeight: '1.8',
-                color: '#78350f'
-              }}>
-                ✅ <strong>지속적인 성장</strong>: 한 번 링크를 저장하면 계속 발전하는 에이전트를 사용할 수 있습니다
-              </li>
-              <li style={{
-                padding: '12px 0',
-                borderBottom: '1px solid #fde68a',
-                fontSize: '1.05rem',
-                lineHeight: '1.8',
-                color: '#78350f'
-              }}>
-                ✅ <strong>최신 기술 적용</strong>: 새로운 AI 모델, 최적화 기법이 추가될 때마다 자동으로 업그레이드됩니다
-              </li>
-              <li style={{
-                padding: '12px 0',
-                fontSize: '1.05rem',
-                lineHeight: '1.8',
-                color: '#78350f'
-              }}>
-                ✅ <strong>영상과 다를 수 있음</strong>: 더 나은 성능을 위해 지속적으로 개선되므로 영상 내용과 조금 다를 수 있습니다
-              </li>
-            </ul>
-          </div>
-
-          {/* 강조 메시지 */}
-          <div style={{
-            background: 'linear-gradient(135deg, #dc2626, #b91c1c)',
-            borderRadius: '15px',
-            padding: '25px',
-            color: 'white',
-            textAlign: 'center',
-            boxShadow: '0 6px 20px rgba(220, 38, 38, 0.3)'
-          }}>
-            <p style={{
-              fontSize: '1.2rem',
-              fontWeight: '700',
-              margin: 0,
-              lineHeight: '1.8'
-            }}>
-              🚀 이 링크 하나로 평생 업데이트되는 AI 에이전트를 소유하세요!<br/>
-              <span style={{ fontSize: '1rem', fontWeight: '500' }}>
-                ConnexionAI가 연구하고 발전시키는 모든 개선사항이 자동으로 적용됩니다
-              </span>
-            </p>
-          </div>
-        </div>
-
         {/* 추가 자료 */}
         <div style={{
           background: 'white',
@@ -1281,7 +1304,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
             flexDirection: 'column',
             gap: '20px'
           }}>
-            {lessonData.resources.map((resource, index) => (
+            {lessonData.resources.filter(r => r.type !== 'workflow').map((resource, index) => (
               <a
                 key={index}
                 href={resource.url}
@@ -1289,102 +1312,55 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
                 rel="noopener noreferrer"
                 style={{
                   display: 'block',
-                  padding: resource.type === 'workflow' ? '30px' : '20px',
-                  background: resource.type === 'workflow' 
-                    ? 'linear-gradient(135deg, #fef3c7, #fde68a)' 
-                    : 'linear-gradient(135deg, #f8fafc, #f0f9ff)',
+                  padding: '20px',
+                  background: 'linear-gradient(135deg, #f8fafc, #f0f9ff)',
                   borderRadius: '15px',
                   textDecoration: 'none',
                   color: '#1f2937',
                   transition: 'all 0.3s ease',
-                  border: resource.type === 'workflow' ? '3px solid #f59e0b' : '2px solid #e2e8f0',
-                  boxShadow: resource.type === 'workflow' 
-                    ? '0 8px 24px rgba(245, 158, 11, 0.3)' 
-                    : '0 2px 8px rgba(0, 0, 0, 0.05)'
+                  border: '2px solid #e2e8f0',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
                 }}
                 onMouseOver={(e) => {
-                  if (resource.type === 'workflow') {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #fde68a, #fcd34d)';
-                    e.currentTarget.style.borderColor = '#d97706';
-                    e.currentTarget.style.transform = 'translateY(-5px) scale(1.02)';
-                    e.currentTarget.style.boxShadow = '0 12px 32px rgba(245, 158, 11, 0.4)';
-                  } else {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #e0f2fe, #dbeafe)';
-                    e.currentTarget.style.borderColor = '#0ea5e9';
-                    e.currentTarget.style.transform = 'translateY(-3px)';
-                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(14, 165, 233, 0.2)';
-                  }
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #e0f2fe, #dbeafe)';
+                  e.currentTarget.style.borderColor = '#0ea5e9';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(14, 165, 233, 0.2)';
                 }}
                 onMouseOut={(e) => {
-                  if (resource.type === 'workflow') {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #fef3c7, #fde68a)';
-                    e.currentTarget.style.borderColor = '#f59e0b';
-                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(245, 158, 11, 0.3)';
-                  } else {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #f8fafc, #f0f9ff)';
-                    e.currentTarget.style.borderColor = '#e2e8f0';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.05)';
-                  }
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #f8fafc, #f0f9ff)';
+                  e.currentTarget.style.borderColor = '#e2e8f0';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.05)';
                 }}
               >
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '15px',
-                  marginBottom: (resource as any).description ? '12px' : '0'
+                  gap: '15px'
                 }}>
                   <div style={{
-                    background: resource.type === 'workflow' 
-                      ? 'linear-gradient(135deg, #f59e0b, #d97706)' 
-                      : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                    background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                     borderRadius: '12px',
-                    padding: resource.type === 'workflow' ? '12px' : '10px',
+                    padding: '10px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    minWidth: resource.type === 'workflow' ? '50px' : '40px',
-                    minHeight: resource.type === 'workflow' ? '50px' : '40px'
+                    minWidth: '40px',
+                    minHeight: '40px'
                   }}>
-                    <FileText size={resource.type === 'workflow' ? 28 : 22} style={{ color: 'white' }} />
+                    <FileText size={22} style={{ color: 'white' }} />
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ 
                       fontWeight: '700', 
-                      fontSize: resource.type === 'workflow' ? '1.25rem' : '1rem',
-                      marginBottom: resource.type === 'workflow' ? '5px' : '0',
-                      color: resource.type === 'workflow' ? '#92400e' : '#1f2937'
+                      fontSize: '1rem',
+                      color: '#1f2937'
                     }}>
                       {resource.title}
                     </div>
-                    {resource.type === 'workflow' && (
-                      <div style={{
-                        display: 'inline-block',
-                        background: '#dc2626',
-                        color: 'white',
-                        padding: '4px 12px',
-                        borderRadius: '6px',
-                        fontSize: '0.85rem',
-                        fontWeight: '600',
-                        marginTop: '5px'
-                      }}>
-                        지속 업데이트 중
-                      </div>
-                    )}
                   </div>
                 </div>
-                {(resource as any).description && (
-                  <p style={{
-                    margin: 0,
-                    paddingLeft: resource.type === 'workflow' ? '65px' : '55px',
-                    fontSize: '0.95rem',
-                    lineHeight: '1.6',
-                    color: resource.type === 'workflow' ? '#78350f' : '#64748b'
-                  }}>
-                    {(resource as any).description}
-                  </p>
-                )}
               </a>
             ))}
           </div>
