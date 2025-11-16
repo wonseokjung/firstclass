@@ -104,7 +104,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
         type: 'theory',
         title: '이론 강의: ChatGPT와 Agent의 차이',
         duration: '6분',
-        videoUrl: 'https://cdn-aicitybuilders-g5fwhucfh8gyaed4.z01.azurefd.net/video/agentbeginner_lecture/Day1/day1lecture.mp4',
+        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/Day1/day1lecture.mp4',
         content: `
           <h3>💬 ChatGPT vs 🤖 에이전트 빌더</h3>
           
@@ -128,7 +128,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
         type: 'practice',
         title: '실습: 에이전트 빌더 시작하기',
         duration: '실습 시간',
-        videoUrl: 'https://cdn-aicitybuilders-g5fwhucfh8gyaed4.z01.azurefd.net/video/agentbeginner_lecture/Day1/%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B51%E1%84%89%E1%85%B5%E1%86%AF%E1%84%89%E1%85%B3%E1%86%B8.mp4',
+        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/Day1/%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B51%E1%84%89%E1%85%B5%E1%86%AF%E1%84%89%E1%85%B3%E1%86%B8.mp4',
         content: `
           <p style="font-size: 1.05rem; line-height: 1.8; color: #374151;">
             위의 실습 비디오를 보면서 에이전트 빌더로 첫 워크플로우를 만들어보세요!
