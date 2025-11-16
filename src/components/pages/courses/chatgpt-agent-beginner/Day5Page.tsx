@@ -308,7 +308,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
     resources: [
       {
         title: '🎬 AI 에이전트 숏츠 만드는 워크플로우 (ConnexionAI 제공)',
-        url: 'https://drive.google.com/file/d/17JvxIVkjx6tDzzTPPfwrNtURuEsSMTpM/view?usp=sharing',
+        url: 'https://opal.google/?flow=drive:/17JvxIVkjx6tDzzTPPfwrNtURuEsSMTpM&shared&mode=app',
         type: 'workflow',
         description: '이번 강의에서 다룬 실전 워크플로우입니다. ConnexionAI가 지속적으로 연구하며 업데이트하므로 영상과 조금 다를 수 있습니다.'
       },
@@ -1102,6 +1102,162 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
               ✓ 완료! Day 6로 →
             </button>
           )}
+        </div>
+
+        {/* 워크플로우 다이어그램 */}
+        <div style={{
+          background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+          borderRadius: '20px',
+          padding: '40px',
+          marginBottom: '30px',
+          boxShadow: '0 8px 24px rgba(245, 158, 11, 0.3)',
+          border: '3px solid #f59e0b'
+        }}>
+          <div style={{
+            textAlign: 'center',
+            marginBottom: '25px'
+          }}>
+            <h2 style={{
+              fontSize: '1.8rem',
+              fontWeight: '800',
+              color: '#92400e',
+              marginBottom: '15px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '10px'
+            }}>
+              🎬 실전 워크플로우 다이어그램
+            </h2>
+            <div style={{
+              display: 'inline-block',
+              background: '#dc2626',
+              color: 'white',
+              padding: '8px 20px',
+              borderRadius: '25px',
+              fontSize: '0.95rem',
+              fontWeight: '700',
+              marginBottom: '15px',
+              boxShadow: '0 4px 12px rgba(220, 38, 38, 0.3)'
+            }}>
+              🔥 지속 업데이트 중 - ConnexionAI 연구개발
+            </div>
+            <p style={{
+              fontSize: '1.1rem',
+              lineHeight: '1.8',
+              color: '#78350f',
+              marginBottom: '25px',
+              fontWeight: '500'
+            }}>
+              이번 강의에서 다룬 <strong>수익화 AI 에이전트</strong>의 완성된 워크플로우입니다.<br/>
+              아래 링크의 에이전트를 가지고 있으면 <strong style="color: #dc2626;">ConnexionAI의 최신 연구개발 내용이 자동으로 반영</strong>됩니다.
+            </p>
+          </div>
+
+          {/* 워크플로우 이미지 */}
+          <div style={{
+            background: 'white',
+            borderRadius: '15px',
+            padding: '20px',
+            marginBottom: '25px',
+            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
+            border: '2px solid #fbbf24'
+          }}>
+            <img 
+              src="/images/day5/workflow-diagram.png" 
+              alt="AI 에이전트 워크플로우 다이어그램"
+              style={{
+                width: '100%',
+                height: 'auto',
+                borderRadius: '10px',
+                display: 'block'
+              }}
+            />
+          </div>
+
+          {/* 핵심 안내 */}
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.9)',
+            borderRadius: '15px',
+            padding: '25px',
+            marginBottom: '20px',
+            border: '2px solid #fbbf24'
+          }}>
+            <h3 style={{
+              fontSize: '1.3rem',
+              fontWeight: '700',
+              color: '#92400e',
+              marginBottom: '15px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}>
+              💡 왜 이 워크플로우가 특별한가?
+            </h3>
+            <ul style={{
+              listStyle: 'none',
+              padding: 0,
+              margin: 0
+            }}>
+              <li style={{
+                padding: '12px 0',
+                borderBottom: '1px solid #fde68a',
+                fontSize: '1.05rem',
+                lineHeight: '1.8',
+                color: '#78350f'
+              }}>
+                ✅ <strong>자동 업데이트</strong>: ConnexionAI 연구팀이 지속적으로 개선하는 최신 버전이 자동 반영됩니다
+              </li>
+              <li style={{
+                padding: '12px 0',
+                borderBottom: '1px solid #fde68a',
+                fontSize: '1.05rem',
+                lineHeight: '1.8',
+                color: '#78350f'
+              }}>
+                ✅ <strong>지속적인 성장</strong>: 한 번 링크를 저장하면 계속 발전하는 에이전트를 사용할 수 있습니다
+              </li>
+              <li style={{
+                padding: '12px 0',
+                borderBottom: '1px solid #fde68a',
+                fontSize: '1.05rem',
+                lineHeight: '1.8',
+                color: '#78350f'
+              }}>
+                ✅ <strong>최신 기술 적용</strong>: 새로운 AI 모델, 최적화 기법이 추가될 때마다 자동으로 업그레이드됩니다
+              </li>
+              <li style={{
+                padding: '12px 0',
+                fontSize: '1.05rem',
+                lineHeight: '1.8',
+                color: '#78350f'
+              }}>
+                ✅ <strong>영상과 다를 수 있음</strong>: 더 나은 성능을 위해 지속적으로 개선되므로 영상 내용과 조금 다를 수 있습니다
+              </li>
+            </ul>
+          </div>
+
+          {/* 강조 메시지 */}
+          <div style={{
+            background: 'linear-gradient(135deg, #dc2626, #b91c1c)',
+            borderRadius: '15px',
+            padding: '25px',
+            color: 'white',
+            textAlign: 'center',
+            boxShadow: '0 6px 20px rgba(220, 38, 38, 0.3)'
+          }}>
+            <p style={{
+              fontSize: '1.2rem',
+              fontWeight: '700',
+              margin: 0,
+              lineHeight: '1.8'
+            }}>
+              🚀 이 링크 하나로 평생 업데이트되는 AI 에이전트를 소유하세요!<br/>
+              <span style={{ fontSize: '1rem', fontWeight: '500' }}>
+                ConnexionAI가 연구하고 발전시키는 모든 개선사항이 자동으로 적용됩니다
+              </span>
+            </p>
+          </div>
         </div>
 
         {/* 추가 자료 */}
