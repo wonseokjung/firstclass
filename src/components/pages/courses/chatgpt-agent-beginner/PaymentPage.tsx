@@ -19,8 +19,8 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
     title: 'ChatGPT AI AGENT 비기너편',
     subtitle: '10일 완성, 수익화하는 인공지능 에이전트 만들기',
     originalPrice: 95000,
-    earlyBirdPrice: 45000,
-    discount: 53
+    earlyBirdPrice: 95000,
+    discount: 0
   };
 
   useEffect(() => {

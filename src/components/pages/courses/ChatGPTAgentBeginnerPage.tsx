@@ -122,7 +122,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
   };
 
   const originalPrice = 95000;
-  const earlyBirdPrice = 45000;
+  const earlyBirdPrice = 95000;
 
   // D-Day 카운트다운
   const [timeLeft, setTimeLeft] = useState({
