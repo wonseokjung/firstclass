@@ -133,13 +133,21 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
     setIsLoading(true);
     
     try {
+      console.log('📝 회원가입 시도:', formData.email);
+      console.log('- 이름:', formData.name);
+      console.log('- 전화번호:', formData.phone);
+      console.log('- 비밀번호 길이:', formData.password.length);
+      
       // 이메일 중복 확인
       const existingUser = await AzureTableService.getUserByEmail(formData.email);
       if (existingUser) {
+        console.warn('⚠️ 이메일 중복:', formData.email);
         setErrors({ email: '이미 등록된 이메일입니다.' });
         setIsLoading(false);
         return;
       }
+      
+      console.log('✅ 이메일 중복 확인 통과');
 
       // 세션에서 추천 코드 자동 가져오기
       const storedReferralCode = getStoredReferralCode();
@@ -175,7 +183,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
         clearReferralCode();
       }
 
-      console.log('회원가입 성공:', newUser);
+      console.log('✅ 회원가입 성공:', newUser);
       alert(`${newUser.name}님, 회원가입이 완료되었습니다!${signupRewardMessage}\n로그인해주세요.`);
       navigate('/login');
       
@@ -183,23 +191,32 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
       console.error('회원가입 에러:', error);
       
       // 에러 메시지를 더 구체적으로 표시
+      console.error('💥 회원가입 에러 상세:', error);
+      
+      let debugInfo = '\n\n디버그 정보:\n';
+      debugInfo += '- 이메일: ' + formData.email + '\n';
+      debugInfo += '- 이름: ' + formData.name + '\n';
+      debugInfo += '- 전화번호: ' + formData.phone + '\n';
+      debugInfo += '- 비밀번호 길이: ' + formData.password.length + '자\n';
+      debugInfo += '- 시간: ' + new Date().toLocaleString('ko-KR') + '\n';
+      debugInfo += '- 브라우저: ' + navigator.userAgent.split(' ').slice(-1)[0] + '\n';
+      
       if (error instanceof Error) {
+        debugInfo += '- 에러 타입: ' + error.name + '\n';
+        debugInfo += '- 에러 메시지: ' + error.message + '\n';
+        
         if (error.message.includes('already exists')) {
           setErrors({ email: '이미 등록된 이메일입니다.' });
         } else if (error.message.includes('네트워크') || error.message.includes('network')) {
-          setErrors({ general: '네트워크 연결이 불안정합니다. 잠시 후 다시 시도해주세요.' });
+          setErrors({ general: '네트워크 연결이 불안정합니다.' + debugInfo });
         } else if (error.message.includes('저장소') || error.message.includes('connection')) {
-          setErrors({ general: '서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.' });
+          setErrors({ general: '서버 연결에 실패했습니다.' + debugInfo });
         } else {
-          // 구체적인 에러 메시지 표시
-          setErrors({ general: `회원가입에 실패했습니다: ${error.message}\n잠시 후 다시 시도해주세요.` });
+          setErrors({ general: '회원가입에 실패했습니다.' + debugInfo + '\n관리자에게 위 정보를 공유해주세요.' });
         }
       } else {
-        setErrors({ general: '회원가입에 실패했습니다. 새로고침 후 다시 시도해주세요.' });
+        setErrors({ general: '알 수 없는 오류가 발생했습니다.' + debugInfo + '\n관리자에게 위 정보를 공유해주세요.' });
       }
-      
-      // 사용자에게도 알림
-      alert(errors.general || '회원가입에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setIsLoading(false);
     }

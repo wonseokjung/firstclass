@@ -67,14 +67,24 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
     setIsLoading(true);
     
     try {
+      console.log('🔐 로그인 시도:', formData.email);
+      
       // Azure Table Storage로 사용자 인증
       const user = await AzureTableService.validateUser(formData.email, formData.password);
       
       if (!user) {
-        setErrors({ general: '이메일 또는 비밀번호가 올바르지 않습니다.' });
+        console.error('❌ 로그인 실패: 사용자를 찾을 수 없거나 비밀번호가 일치하지 않습니다.');
+        console.error('입력 이메일:', formData.email);
+        console.error('입력 비밀번호 길이:', formData.password.length);
+        
+        setErrors({ 
+          general: '이메일 또는 비밀번호가 올바르지 않습니다.\n\n디버그 정보:\n- 이메일: ' + formData.email + '\n- 비밀번호 길이: ' + formData.password.length + '자\n- 브라우저: ' + navigator.userAgent.split(' ').slice(-1)[0] + '\n\n문제가 계속되면 관리자에게 위 정보를 공유해주세요.'
+        });
         setIsLoading(false);
         return;
       }
+      
+      console.log('✅ 사용자 인증 성공:', user.email);
 
       // 세션 생성
       const sessionId = await AzureTableService.createSession(user.rowKey);
@@ -95,8 +105,25 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
       navigate('/');
       
     } catch (error) {
-      console.error('로그인 에러:', error);
-      setErrors({ general: '로그인에 실패했습니다. 다시 시도해주세요.' });
+      console.error('💥 로그인 에러:', error);
+      
+      let debugInfo = '\n\n디버그 정보:\n';
+      debugInfo += '- 이메일: ' + formData.email + '\n';
+      debugInfo += '- 시간: ' + new Date().toLocaleString('ko-KR') + '\n';
+      debugInfo += '- 브라우저: ' + navigator.userAgent.split(' ').slice(-1)[0] + '\n';
+      
+      if (error instanceof Error) {
+        debugInfo += '- 에러 타입: ' + error.name + '\n';
+        debugInfo += '- 에러 메시지: ' + error.message + '\n';
+        
+        setErrors({ 
+          general: '로그인에 실패했습니다.' + debugInfo + '\n관리자에게 위 정보를 공유해주세요.'
+        });
+      } else {
+        setErrors({ 
+          general: '알 수 없는 오류가 발생했습니다.' + debugInfo + '\n관리자에게 위 정보를 공유해주세요.'
+        });
+      }
     } finally {
       setIsLoading(false);
     }
