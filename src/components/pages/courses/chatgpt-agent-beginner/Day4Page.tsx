@@ -101,7 +101,7 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
         type: 'theory',
         title: '통합 강의: 협찬/광고 수익을 만드는 콘텐츠 자동 생성 에이전트 (이론 + 실습)',
         duration: '',
-        videoUrl: 'https://clathonstorage.blob.core.windows.net/video/agentbeginner_lecture/day4/daay4.mp4?sp=r&st=2025-11-15T23:02:04Z&se=2030-11-16T07:17:04Z&sv=2024-11-04&sr=b&sig=BJ2GaVUGepDRMKUKZMWcVoI3Cowt72WhpuPGLMx3pnQ%3D',
+        videoUrl: 'https://cdn-aicitybuilders-g5fwhucfh8gyaed4.z01.azurefd.net/video/agentbeginner_lecture/day4/daay4.mp4',
         content: `
           <h3>강의 목표</h3>
           <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
