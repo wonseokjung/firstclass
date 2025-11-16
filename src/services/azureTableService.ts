@@ -198,30 +198,49 @@ export class AzureTableService {
   private static async retryRequest(
     url: string, 
     options: RequestInit,
-    maxRetries: number = 3,
+    maxRetries: number = 5, // 3번 → 5번으로 증가
     delay: number = 1000
   ): Promise<Response> {
     // let lastError: Error;
     
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
-        const response = await fetch(url, options);
+        // ⏱️ 타임아웃 설정 (15초)
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000);
+        
+        const response = await fetch(url, {
+          ...options,
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
         
         // 성공하거나 재시도할 필요 없는 오류인 경우 바로 반환
         if (response.ok || response.status < 500) {
+          if (attempt > 1) {
+            console.log(`✅ ${attempt}번째 시도에서 성공!`);
+          }
           return response;
         }
         
         // 서버 오류 (5xx)인 경우 재시도
         throw new Error(`Server error: ${response.status}`);
         
-      } catch (error) {
+      } catch (error: any) {
         // lastError = error as Error;
-        console.warn(`🔄 요청 실패 (시도 ${attempt}/${maxRetries}):`, error);
+        console.warn(`🔄 요청 실패 (시도 ${attempt}/${maxRetries}):`, error?.message || error);
+        
+        // 타임아웃 에러인 경우 명확히 표시
+        if (error?.name === 'AbortError') {
+          console.warn('⏱️ 요청 타임아웃 (15초 초과)');
+        }
         
         // 마지막 시도가 아니면 대기 후 재시도
         if (attempt < maxRetries) {
-          await new Promise(resolve => setTimeout(resolve, delay * attempt));
+          const waitTime = delay * attempt;
+          console.log(`⏳ ${waitTime}ms 후 재시도...`);
+          await new Promise(resolve => setTimeout(resolve, waitTime));
         }
       }
     }
