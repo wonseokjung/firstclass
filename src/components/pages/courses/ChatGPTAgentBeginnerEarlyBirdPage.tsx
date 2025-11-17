@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react';
 import NavigationBar from '../../common/NavigationBar';
 import AzureTableService from '../../../services/azureTableService';
 
-interface ChatGPTAgentBeginnerPageProps {
+interface ChatGPTAgentBeginnerEarlyBirdPageProps {
   onBack: () => void;
 }
 
-const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onBack }) => {
+const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdPageProps> = ({ onBack }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isPaidUser, setIsPaidUser] = useState(false);
 
@@ -126,7 +126,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     ]
   };
 
-  const coursePrice = 95000;
+  const coursePrice = 45000;
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -212,7 +212,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     <div className="masterclass-container">
       <NavigationBar
         onBack={onBack}
-        breadcrumbText="ChatGPT AI AGENT 비기너편"
+        breadcrumbText="ChatGPT AI AGENT 비기너편 (얼리버드)"
       />
 
 
@@ -620,7 +620,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 filter: 'blur(80px)'
               }}></div>
 
-              {/* 할인 뱃지 */}
+              {/* 얼리버드 뱃지 */}
               <div style={{
                 textAlign: 'center',
                 marginBottom: '25px',
@@ -638,7 +638,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   border: '2px solid #fbbf24',
                   boxShadow: '0 4px 15px rgba(251, 191, 36, 0.4)'
                 }}>
-                  🎉 특별 할인가
+                  🐦 얼리버드 특가
                 </div>
               </div>
 
@@ -657,7 +657,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   fontWeight: '600',
                   opacity: 0.8
                 }}>
-                  정가 ₩150,000
+                  정상가 ₩95,000
                 </div>
                 <div style={{
                   fontSize: 'clamp(3.5rem, 8vw, 5rem)',
@@ -679,7 +679,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   fontWeight: '700',
                   border: '1px solid rgba(254, 240, 138, 0.3)'
                 }}>
-                  💰 55,000원 할인
+                  🐦 얼리버드 50,000원 할인
                 </div>
               </div>
 
@@ -1549,7 +1549,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   fontWeight: '600',
                   opacity: 0.8
                 }}>
-                  정가 ₩150,000
+                  정상가 ₩95,000
                 </div>
                 <div style={{
                   fontSize: 'clamp(3.5rem, 8vw, 5rem)',
@@ -1571,7 +1571,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   fontWeight: '700',
                   border: '1px solid rgba(254, 240, 138, 0.3)'
                 }}>
-                  💰 55,000원 할인
+                  🐦 얼리버드 50,000원 할인
                 </div>
               </div>
 
@@ -1630,4 +1630,4 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
   );
 };
 
-export default ChatGPTAgentBeginnerPage;
+export default ChatGPTAgentBeginnerEarlyBirdPage;
