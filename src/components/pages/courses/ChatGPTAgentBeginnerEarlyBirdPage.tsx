@@ -203,8 +203,8 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
       return;
     }
     
-    // 결제 페이지로 이동
-    window.location.href = '/chatgpt-agent-beginner/payment';
+    // 얼리버드 가격으로 결제 페이지로 이동
+    window.location.href = '/chatgpt-agent-beginner/payment?earlybird=true';
   };
 
 

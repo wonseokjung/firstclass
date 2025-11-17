@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, CreditCard, CheckCircle } from 'lucide-react';
 import NavigationBar from '../../../common/NavigationBar';
 import PaymentComponent from '../../payment/PaymentComponent';
@@ -10,17 +10,22 @@ interface PaymentPageProps {
 
 const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [userInfo, setUserInfo] = useState<any>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+
+  // URL 파라미터에서 얼리버드 여부 확인
+  const searchParams = new URLSearchParams(location.search);
+  const isEarlyBird = searchParams.get('earlybird') === 'true';
 
   const courseInfo = {
     id: '1002',
     title: 'ChatGPT AI AGENT 비기너편',
     subtitle: '10일 완성, 수익화하는 인공지능 에이전트 만들기',
-    originalPrice: 95000,
-    earlyBirdPrice: 95000,
-    discount: 0
+    originalPrice: isEarlyBird ? 95000 : 150000,
+    earlyBirdPrice: isEarlyBird ? 45000 : 95000,
+    discount: isEarlyBird ? 50000 : 55000
   };
 
   useEffect(() => {
