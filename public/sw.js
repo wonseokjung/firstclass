@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aicitybuilders-v1.0.8'; // 버전 업데이트로 강제 캐시 무효화 (Azure 요청 제외)
+const CACHE_NAME = 'aicitybuilders-v1.0.9'; // 자동 새로고침 기능 추가
 const urlsToCache = [
   '/',
   '/manifest.json',
@@ -123,8 +123,28 @@ self.addEventListener('activate', function(event) {
       // 즉시 모든 클라이언트 제어
       console.log('✅ Service Worker 활성화 완료. 즉시 제어 시작');
       return self.clients.claim();
+    }).then(function() {
+      // 모든 클라이언트(열려있는 탭)에 새로고침 요청
+      return self.clients.matchAll();
+    }).then(function(clients) {
+      clients.forEach(function(client) {
+        console.log('📢 클라이언트에게 업데이트 알림:', client.url);
+        client.postMessage({
+          type: 'SW_UPDATED',
+          version: CACHE_NAME,
+          message: '새 버전이 설치되었습니다. 페이지를 새로고침합니다.'
+        });
+      });
     })
   );
+});
+
+// 메시지 이벤트 - 클라이언트로부터 명령 받기
+self.addEventListener('message', function(event) {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    console.log('⏭️ skipWaiting 요청 받음');
+    self.skipWaiting();
+  }
 });
 
 // 새 버전 감지 시 자동 새로고침 메시지 전송

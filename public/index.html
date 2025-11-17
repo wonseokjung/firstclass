@@ -187,6 +187,30 @@
             // 페이지 새로고침 (이미 위에서 reload 호출했으므로 중복 방지)
             // window.location.reload();
           });
+          
+          // Service Worker로부터 메시지 받기
+          navigator.serviceWorker.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'SW_UPDATED') {
+              console.log('📢 Service Worker 업데이트 알림:', event.data);
+              
+              // 캐시 완전 삭제
+              if ('caches' in window) {
+                caches.keys().then(function(names) {
+                  for (let name of names) {
+                    caches.delete(name);
+                    console.log('🗑️ 캐시 삭제:', name);
+                  }
+                  
+                  // 캐시 삭제 후 즉시 새로고침
+                  console.log('🔄 페이지를 새로고침합니다...');
+                  window.location.reload(true);
+                });
+              } else {
+                // 캐시 API가 없으면 바로 새로고침
+                window.location.reload(true);
+              }
+            }
+          });
         });
       }
     </script>
