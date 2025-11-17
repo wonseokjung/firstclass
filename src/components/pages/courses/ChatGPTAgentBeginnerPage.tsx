@@ -269,8 +269,9 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               background: '#000'
             }}>
               <iframe
-                src="https://www.youtube.com/embed/BZynp51fBRU?si=VrlJkUGqbOrR-NLA"
+                src="https://www.youtube.com/embed/BZynp51fBRU"
                 title="YouTube video player"
+                frameBorder="0"
                 style={{
                   position: 'absolute',
                   top: 0,
@@ -281,9 +282,238 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   border: 'none'
                 }}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
               />
+            </div>
+          </div>
+
+          {/* 🔥 라이브 Q&A 섹션 - 특별 혜택 */}
+          <div style={{
+            background: 'linear-gradient(135deg, #dc2626, #991b1b)',
+            borderRadius: '20px',
+            padding: 'clamp(30px, 5vw, 50px)',
+            marginBottom: '60px',
+            boxShadow: '0 20px 60px rgba(220, 38, 38, 0.3)',
+            border: '3px solid #fca5a5',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            {/* 배경 장식 */}
+            <div style={{
+              position: 'absolute',
+              top: '-50px',
+              right: '-50px',
+              width: '200px',
+              height: '200px',
+              background: 'rgba(255, 255, 255, 0.1)',
+              borderRadius: '50%',
+              filter: 'blur(60px)'
+            }}></div>
+
+            <div style={{
+              textAlign: 'center',
+              marginBottom: '40px',
+              position: 'relative',
+              zIndex: 1
+            }}>
+              <div style={{
+                display: 'inline-block',
+                background: '#fef3c7',
+                color: '#dc2626',
+                padding: '8px 20px',
+                borderRadius: '25px',
+                fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
+                fontWeight: '800',
+                marginBottom: '20px',
+                border: '2px solid #fbbf24'
+              }}>
+                🎁 수강생 특별 혜택
+              </div>
+
+              <h2 style={{
+                fontSize: 'clamp(2rem, 4vw, 2.8rem)',
+                fontWeight: '900',
+                color: 'white',
+                marginBottom: '20px',
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)'
+              }}>
+                📺 매일 저녁 8시, 라이브 Q&A
+              </h2>
+
+              <p style={{
+                fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+                color: '#fef2f2',
+                fontWeight: '600',
+                lineHeight: '1.8',
+                maxWidth: '800px',
+                margin: '0 auto 30px auto'
+              }}>
+                강의 수강자에게 <strong style={{ color: '#fde68a' }}>우선 질문권</strong>이 주어집니다!<br/>
+                쉬운 질문도, 어려운 질문도 모두 환영합니다 🙌
+              </p>
+            </div>
+
+            {/* 이미지 */}
+            <div style={{
+              borderRadius: '15px',
+              overflow: 'hidden',
+              marginBottom: '30px',
+              boxShadow: '0 10px 40px rgba(0, 0, 0, 0.4)',
+              border: '3px solid rgba(255, 255, 255, 0.2)'
+            }}>
+              <img 
+                src="/images/agent_beginer/liveqanda.png" 
+                alt="매일 저녁 8시 라이브 Q&A"
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block'
+                }}
+              />
+            </div>
+
+            {/* 혜택 상세 */}
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.95)',
+              borderRadius: '15px',
+              padding: 'clamp(25px, 4vw, 35px)',
+              marginBottom: '30px'
+            }}>
+              <h3 style={{
+                fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)',
+                fontWeight: '800',
+                color: '#dc2626',
+                marginBottom: '25px',
+                textAlign: 'center'
+              }}>
+                ✨ 라이브 Q&A 혜택
+              </h3>
+
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                gap: '20px'
+              }}>
+                <div style={{
+                  background: '#fef2f2',
+                  padding: '20px',
+                  borderRadius: '12px',
+                  border: '2px solid #fecaca'
+                }}>
+                  <div style={{ fontSize: '2rem', marginBottom: '10px' }}>🎯</div>
+                  <h4 style={{
+                    fontSize: '1.1rem',
+                    fontWeight: '700',
+                    color: '#991b1b',
+                    marginBottom: '10px'
+                  }}>
+                    우선 질문권
+                  </h4>
+                  <p style={{
+                    fontSize: '0.95rem',
+                    color: '#7f1d1d',
+                    lineHeight: '1.6',
+                    margin: 0
+                  }}>
+                    수강생의 질문을 가장 먼저 답변해드립니다
+                  </p>
+                </div>
+
+                <div style={{
+                  background: '#fef2f2',
+                  padding: '20px',
+                  borderRadius: '12px',
+                  border: '2px solid #fecaca'
+                }}>
+                  <div style={{ fontSize: '2rem', marginBottom: '10px' }}>🖥️</div>
+                  <h4 style={{
+                    fontSize: '1.1rem',
+                    fontWeight: '700',
+                    color: '#991b1b',
+                    marginBottom: '10px'
+                  }}>
+                    화면 공유 설명
+                  </h4>
+                  <p style={{
+                    fontSize: '0.95rem',
+                    color: '#7f1d1d',
+                    lineHeight: '1.6',
+                    margin: 0
+                  }}>
+                    막히는 부분을 화면으로 보며 자세히 설명
+                  </p>
+                </div>
+
+                <div style={{
+                  background: '#fef2f2',
+                  padding: '20px',
+                  borderRadius: '12px',
+                  border: '2px solid #fecaca'
+                }}>
+                  <div style={{ fontSize: '2rem', marginBottom: '10px' }}>💬</div>
+                  <h4 style={{
+                    fontSize: '1.1rem',
+                    fontWeight: '700',
+                    color: '#991b1b',
+                    marginBottom: '10px'
+                  }}>
+                    모든 질문 환영
+                  </h4>
+                  <p style={{
+                    fontSize: '0.95rem',
+                    color: '#7f1d1d',
+                    lineHeight: '1.6',
+                    margin: 0
+                  }}>
+                    쉬운 질문도 어려운 질문도 모두 가능
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* YouTube 링크 버튼 */}
+            <div style={{
+              textAlign: 'center'
+            }}>
+              <a
+                href="https://www.youtube.com/@CONNECT-AI-LAB"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  background: 'white',
+                  color: '#dc2626',
+                  padding: '18px 40px',
+                  fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)',
+                  fontWeight: '800',
+                  borderRadius: '12px',
+                  textDecoration: 'none',
+                  boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
+                  transition: 'all 0.3s ease',
+                  border: '3px solid #fca5a5'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.boxShadow = '0 12px 35px rgba(0, 0, 0, 0.4)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.3)';
+                }}
+              >
+                <span style={{ fontSize: '1.8rem' }}>📺</span>
+                커넥트AI LAB 라이브 참여하기
+              </a>
+              <p style={{
+                color: '#fef2f2',
+                fontSize: '0.95rem',
+                marginTop: '15px',
+                fontWeight: '600'
+              }}>
+                매일 저녁 8시, 유튜브 라이브로 만나요! 🎉
+              </p>
             </div>
           </div>
 
