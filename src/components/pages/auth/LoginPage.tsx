@@ -102,7 +102,16 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
       console.log('💾 사용자 세션 정보 저장:', userInfo);
       
       alert(`${user.name}님, 환영합니다!`);
-      navigate('/');
+      
+      // 로그인 후 리다이렉트 URL 확인
+      const redirectUrl = sessionStorage.getItem('redirect_after_login');
+      if (redirectUrl) {
+        sessionStorage.removeItem('redirect_after_login'); // 사용 후 제거
+        console.log('🔄 저장된 리다이렉트 URL로 이동:', redirectUrl);
+        window.location.href = redirectUrl;
+      } else {
+        navigate('/');
+      }
       
     } catch (error) {
       console.error('💥 로그인 에러:', error);
