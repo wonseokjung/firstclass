@@ -354,15 +354,15 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
         margin: '40px auto',
         padding: '0 20px'
       }}>
-        {/* 🚨 중요 안내: OpenAI API 정책 변경 */}
+        {/* 💡 중요 안내: OpenAI API 정책 변경 */}
         <div style={{
-          background: 'linear-gradient(135deg, #ef4444, #dc2626)',
-          color: 'white',
+          background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+          color: '#92400e',
           borderRadius: '15px',
           padding: '30px',
           marginBottom: '30px',
-          boxShadow: '0 8px 30px rgba(239, 68, 68, 0.3)',
-          border: '3px solid #b91c1c'
+          boxShadow: '0 4px 20px rgba(251, 191, 36, 0.2)',
+          border: '2px solid #f59e0b'
         }}>
           <div style={{
             display: 'flex',
@@ -371,40 +371,38 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
             marginBottom: '20px'
           }}>
             <div style={{
-              fontSize: '2.5rem',
-              animation: 'pulse 2s ease-in-out infinite'
+              fontSize: '2rem'
             }}>
-              ⚠️
+              💡
             </div>
             <h2 style={{
               fontSize: 'clamp(1.3rem, 3vw, 1.8rem)',
-              fontWeight: '800',
-              margin: 0,
-              textShadow: '0 2px 4px rgba(0,0,0,0.2)'
+              fontWeight: '700',
+              margin: 0
             }}>
               중요 안내: OpenAI API 정책 변경
             </h2>
           </div>
           
           <div style={{
-            background: 'rgba(255, 255, 255, 0.15)',
+            background: 'rgba(255, 255, 255, 0.6)',
             borderRadius: '12px',
             padding: '25px',
-            backdropFilter: 'blur(10px)',
-            border: '2px solid rgba(255, 255, 255, 0.2)'
+            border: '1px solid rgba(245, 158, 11, 0.3)'
           }}>
             <p style={{
               fontSize: 'clamp(1.05rem, 2.5vw, 1.2rem)',
               lineHeight: '1.8',
               margin: '0 0 20px 0',
-              fontWeight: '600'
+              fontWeight: '500',
+              color: '#78350f'
             }}>
-              OpenAI가 최근 <strong style={{ color: '#fef08a' }}>API 사용 정책을 변경</strong>하여, 이전에는 가능했던 <strong style={{ color: '#fef08a' }}>무료 Skip 옵션이 사라지고 처음부터 최소 $5(약 7,000원) 결제가 필수</strong>가 되었습니다.
+              OpenAI가 최근 <strong>API 사용 정책을 변경</strong>하여, 이전에는 가능했던 <strong>무료 Skip 옵션이 사라지고 처음부터 최소 $5(약 7,000원) 결제가 필수</strong>가 되었습니다.
             </p>
             
             <div style={{
-              background: 'rgba(254, 240, 138, 0.2)',
-              borderLeft: '4px solid #fef08a',
+              background: 'rgba(245, 158, 11, 0.1)',
+              borderLeft: '4px solid #f59e0b',
               padding: '20px',
               borderRadius: '8px',
               marginBottom: '20px'
@@ -413,10 +411,10 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                 fontSize: 'clamp(1rem, 2.5vw, 1.15rem)',
                 lineHeight: '1.8',
                 margin: 0,
-                fontWeight: '700',
-                color: '#fef9c3'
+                fontWeight: '600',
+                color: '#92400e'
               }}>
-                💡 <strong>추천 드립니다:</strong> Day 1 이론만 보시고, <strong style={{ fontSize: '1.2em', color: '#fef08a' }}>Day 2부터 Google Opal(무료)</strong>로 학습을 시작하시는 것을 강력히 권장합니다!
+                💡 <strong>추천 드립니다:</strong> Day 1 이론만 보시고, <strong style={{ fontSize: '1.1em', color: '#d97706' }}>Day 2부터 Google Opal(무료)</strong>로 학습을 시작하시는 것을 강력히 권장합니다!
               </p>
             </div>
             
@@ -424,9 +422,9 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
               fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
               lineHeight: '1.7',
               margin: 0,
-              opacity: '0.95'
+              color: '#78350f'
             }}>
-              Google Opal은 완전 무료이며, OpenAI보다 더 강력한 멀티모달 기능(영상/이미지/음악 생성)을 제공합니다. 실전 수익화에도 더 유리합니다! 🚀
+              Google Opal은 완전 무료이며, OpenAI보다 더 강력한 멀티모달 기능(영상/이미지/음악 생성)을 제공합니다.
             </p>
           </div>
         </div>
