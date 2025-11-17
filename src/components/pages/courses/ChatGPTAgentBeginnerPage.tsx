@@ -287,14 +287,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             </div>
           </div>
 
-          {/* 🔥 라이브 Q&A 섹션 - 특별 혜택 */}
+          {/* 🎁 라이브 Q&A 섹션 - 특별 혜택 */}
           <div style={{
-            background: 'linear-gradient(135deg, #dc2626, #991b1b)',
+            background: 'linear-gradient(135deg, #1e40af, #0ea5e9)',
             borderRadius: '20px',
             padding: 'clamp(30px, 5vw, 50px)',
             marginBottom: '60px',
-            boxShadow: '0 20px 60px rgba(220, 38, 38, 0.3)',
-            border: '3px solid #fca5a5',
+            boxShadow: '0 20px 60px rgba(14, 165, 233, 0.3)',
+            border: '3px solid #93c5fd',
             position: 'relative',
             overflow: 'hidden'
           }}>
@@ -318,14 +318,15 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             }}>
               <div style={{
                 display: 'inline-block',
-                background: '#fef3c7',
-                color: '#dc2626',
+                background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                color: '#92400e',
                 padding: '8px 20px',
                 borderRadius: '25px',
                 fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
                 fontWeight: '800',
                 marginBottom: '20px',
-                border: '2px solid #fbbf24'
+                border: '2px solid #fbbf24',
+                boxShadow: '0 4px 15px rgba(251, 191, 36, 0.3)'
               }}>
                 🎁 수강생 특별 혜택
               </div>
@@ -342,13 +343,13 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
               <p style={{
                 fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-                color: '#fef2f2',
+                color: '#e0f2fe',
                 fontWeight: '600',
                 lineHeight: '1.8',
                 maxWidth: '800px',
                 margin: '0 auto 30px auto'
               }}>
-                강의 수강자에게 <strong style={{ color: '#fde68a' }}>우선 질문권</strong>이 주어집니다!<br/>
+                강의 수강자에게 <strong style={{ color: '#fef08a', textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)' }}>우선 질문권</strong>이 주어집니다!<br/>
                 쉬운 질문도, 어려운 질문도 모두 환영합니다 🙌
               </p>
             </div>
@@ -382,7 +383,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               <h3 style={{
                 fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)',
                 fontWeight: '800',
-                color: '#dc2626',
+                color: '#1e40af',
                 marginBottom: '25px',
                 textAlign: 'center'
               }}>
@@ -395,23 +396,24 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 gap: '20px'
               }}>
                 <div style={{
-                  background: '#fef2f2',
+                  background: 'linear-gradient(135deg, #eff6ff, #dbeafe)',
                   padding: '20px',
                   borderRadius: '12px',
-                  border: '2px solid #fecaca'
+                  border: '2px solid #93c5fd',
+                  boxShadow: '0 4px 15px rgba(14, 165, 233, 0.1)'
                 }}>
                   <div style={{ fontSize: '2rem', marginBottom: '10px' }}>🎯</div>
                   <h4 style={{
                     fontSize: '1.1rem',
                     fontWeight: '700',
-                    color: '#991b1b',
+                    color: '#1e40af',
                     marginBottom: '10px'
                   }}>
                     우선 질문권
                   </h4>
                   <p style={{
                     fontSize: '0.95rem',
-                    color: '#7f1d1d',
+                    color: '#1e3a8a',
                     lineHeight: '1.6',
                     margin: 0
                   }}>
@@ -420,23 +422,24 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 </div>
 
                 <div style={{
-                  background: '#fef2f2',
+                  background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
                   padding: '20px',
                   borderRadius: '12px',
-                  border: '2px solid #fecaca'
+                  border: '2px solid #fbbf24',
+                  boxShadow: '0 4px 15px rgba(251, 191, 36, 0.2)'
                 }}>
                   <div style={{ fontSize: '2rem', marginBottom: '10px' }}>🖥️</div>
                   <h4 style={{
                     fontSize: '1.1rem',
                     fontWeight: '700',
-                    color: '#991b1b',
+                    color: '#92400e',
                     marginBottom: '10px'
                   }}>
                     화면 공유 설명
                   </h4>
                   <p style={{
                     fontSize: '0.95rem',
-                    color: '#7f1d1d',
+                    color: '#78350f',
                     lineHeight: '1.6',
                     margin: 0
                   }}>
@@ -445,23 +448,24 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 </div>
 
                 <div style={{
-                  background: '#fef2f2',
+                  background: 'linear-gradient(135deg, #eff6ff, #dbeafe)',
                   padding: '20px',
                   borderRadius: '12px',
-                  border: '2px solid #fecaca'
+                  border: '2px solid #93c5fd',
+                  boxShadow: '0 4px 15px rgba(14, 165, 233, 0.1)'
                 }}>
                   <div style={{ fontSize: '2rem', marginBottom: '10px' }}>💬</div>
                   <h4 style={{
                     fontSize: '1.1rem',
                     fontWeight: '700',
-                    color: '#991b1b',
+                    color: '#1e40af',
                     marginBottom: '10px'
                   }}>
                     모든 질문 환영
                   </h4>
                   <p style={{
                     fontSize: '0.95rem',
-                    color: '#7f1d1d',
+                    color: '#1e3a8a',
                     lineHeight: '1.6',
                     margin: 0
                   }}>
@@ -592,72 +596,193 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               </p>
             </div>
 
-            {/* 가격 정보 - 강조된 박스 */}
+            {/* 가격 & CTA 박스 - 강력한 시각적 강조 */}
             <div style={{
-              background: '#f8fafc',
-              borderRadius: '20px',
-              padding: 'clamp(30px, 5vw, 40px)',
+              background: 'linear-gradient(135deg, #1e40af, #0ea5e9)',
+              borderRadius: '25px',
+              padding: 'clamp(40px, 6vw, 60px) clamp(30px, 5vw, 50px)',
               marginBottom: '30px',
-              border: '2px solid #e2e8f0'
+              border: '4px solid #93c5fd',
+              boxShadow: '0 20px 60px rgba(14, 165, 233, 0.4)',
+              position: 'relative',
+              overflow: 'hidden'
             }}>
+              {/* 배경 장식 */}
               <div style={{
-                fontSize: 'clamp(3rem, 6vw, 4rem)',
-                fontWeight: '900',
-                marginBottom: '12px',
-                color: '#1f2937'
+                position: 'absolute',
+                top: '-100px',
+                right: '-100px',
+                width: '300px',
+                height: '300px',
+                background: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: '50%',
+                filter: 'blur(80px)'
+              }}></div>
+
+              {/* 할인 뱃지 */}
+              <div style={{
+                textAlign: 'center',
+                marginBottom: '25px',
+                position: 'relative',
+                zIndex: 1
               }}>
-                ₩{coursePrice.toLocaleString()}
+                <div style={{
+                  display: 'inline-block',
+                  background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                  color: '#92400e',
+                  padding: '10px 25px',
+                  borderRadius: '30px',
+                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                  fontWeight: '800',
+                  border: '2px solid #fbbf24',
+                  boxShadow: '0 4px 15px rgba(251, 191, 36, 0.4)'
+                }}>
+                  🎉 특별 할인가
+                </div>
+              </div>
+
+              {/* 가격 정보 */}
+              <div style={{
+                textAlign: 'center',
+                marginBottom: '30px',
+                position: 'relative',
+                zIndex: 1
+              }}>
+                <div style={{
+                  fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+                  color: '#e0f2fe',
+                  textDecoration: 'line-through',
+                  marginBottom: '10px',
+                  fontWeight: '600',
+                  opacity: 0.8
+                }}>
+                  정가 ₩150,000
+                </div>
+                <div style={{
+                  fontSize: 'clamp(3.5rem, 8vw, 5rem)',
+                  fontWeight: '900',
+                  color: 'white',
+                  marginBottom: '15px',
+                  textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+                  lineHeight: '1'
+                }}>
+                  ₩{coursePrice.toLocaleString()}
+                </div>
+                <div style={{
+                  display: 'inline-block',
+                  background: 'rgba(254, 243, 199, 0.2)',
+                  color: '#fef08a',
+                  padding: '8px 20px',
+                  borderRadius: '20px',
+                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                  fontWeight: '700',
+                  border: '1px solid rgba(254, 240, 138, 0.3)'
+                }}>
+                  💰 55,000원 할인
+                </div>
+              </div>
+
+              {/* 혜택 리스트 */}
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.15)',
+                borderRadius: '15px',
+                padding: 'clamp(20px, 4vw, 30px)',
+                marginBottom: '35px',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                position: 'relative',
+                zIndex: 1
+              }}>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                  gap: '15px',
+                  fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
+                  color: 'white',
+                  fontWeight: '600'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ fontSize: '1.5rem' }}>✅</span>
+                    <span>10일 완성 커리큘럼</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ fontSize: '1.5rem' }}>✅</span>
+                    <span>평생 소장 & 무료 업데이트</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ fontSize: '1.5rem' }}>✅</span>
+                    <span>매일 저녁 8시 라이브 Q&A</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ fontSize: '1.5rem' }}>✅</span>
+                    <span>실전 프로젝트 파일 제공</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 메인 수강 신청 버튼 */}
+              <div style={{
+                textAlign: 'center',
+                position: 'relative',
+                zIndex: 1
+              }}>
+                <button
+                  onClick={handleEarlyBirdPayment}
+                  style={{
+                    background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                    color: '#92400e',
+                    border: '3px solid #fbbf24',
+                    padding: '25px 60px',
+                    fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
+                    fontWeight: '900',
+                    borderRadius: '15px',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 8px 30px rgba(251, 191, 36, 0.5)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '15px',
+                    minWidth: '320px',
+                    marginBottom: '20px'
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                    e.currentTarget.style.boxShadow = '0 12px 40px rgba(251, 191, 36, 0.6)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    e.currentTarget.style.boxShadow = '0 8px 30px rgba(251, 191, 36, 0.5)';
+                  }}
+                >
+                  <span style={{ fontSize: '1.8rem' }}>🚀</span>
+                  지금 바로 수강하기
+                </button>
+                <p style={{
+                  fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
+                  color: '#e0f2fe',
+                  margin: '0',
+                  fontWeight: '600'
+                }}>
+                  💳 안전한 결제 · 평생 소장 가능
+                </p>
               </div>
             </div>
 
-            {/* 메인 수강 신청 버튼 - 깔끔한 디자인 */}
+            {/* 추가 안내 */}
             <div style={{
-              display: 'inline-block',
+              textAlign: 'center',
               marginBottom: '20px'
             }}>
-              <button
-                onClick={handleEarlyBirdPayment}
-                style={{
-                  background: '#2563eb',
-                  color: '#ffffff',
-                  border: 'none',
-                  padding: '25px 60px',
-                  fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
-                  fontWeight: '800',
-                  borderRadius: '12px',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '12px',
-                  minWidth: '300px'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.background = '#1d4ed8';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(37, 99, 235, 0.4)';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.background = '#2563eb';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(37, 99, 235, 0.3)';
-                }}
-              >
-                <span style={{ fontSize: '1.5rem' }}>🚀</span>
-                지금 바로 수강하기
-              </button>
+              <p style={{
+                fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                color: '#64748b',
+                lineHeight: '1.6',
+                margin: '0'
+              }}>
+                💡 결제 후 즉시 수강 가능 · Day 6-10은 순차 오픈 예정
+              </p>
             </div>
-
-            <p style={{
-              fontSize: '1rem',
-              color: '#64748b',
-              margin: '0',
-              fontWeight: '500'
-            }}>
-              💳 안전한 결제
-            </p>
           </div>
 
           {/* 우리의 미션 섹션 */}
@@ -1347,6 +1472,154 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                       </div>
                 </div>
               ))}
+              </div>
+            </div>
+
+            {/* 하단 CTA - 가격 & 수강 신청 버튼 */}
+            <div style={{
+              background: 'linear-gradient(135deg, #1e40af, #0ea5e9)',
+              borderRadius: '25px',
+              padding: 'clamp(40px, 6vw, 60px) clamp(30px, 5vw, 50px)',
+              marginTop: '80px',
+              border: '4px solid #93c5fd',
+              boxShadow: '0 20px 60px rgba(14, 165, 233, 0.4)',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              {/* 배경 장식 */}
+              <div style={{
+                position: 'absolute',
+                top: '-100px',
+                left: '-100px',
+                width: '300px',
+                height: '300px',
+                background: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: '50%',
+                filter: 'blur(80px)'
+              }}></div>
+
+              {/* 마지막 기회 뱃지 */}
+              <div style={{
+                textAlign: 'center',
+                marginBottom: '25px',
+                position: 'relative',
+                zIndex: 1
+              }}>
+                <div style={{
+                  display: 'inline-block',
+                  background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                  color: '#92400e',
+                  padding: '10px 25px',
+                  borderRadius: '30px',
+                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                  fontWeight: '800',
+                  border: '2px solid #fbbf24',
+                  boxShadow: '0 4px 15px rgba(251, 191, 36, 0.4)'
+                }}>
+                  🎓 지금 바로 시작하세요
+                </div>
+              </div>
+
+              <h3 style={{
+                fontSize: 'clamp(2rem, 4vw, 2.8rem)',
+                fontWeight: '900',
+                color: 'white',
+                textAlign: 'center',
+                marginBottom: '30px',
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)',
+                position: 'relative',
+                zIndex: 1
+              }}>
+                10일 완성 AI 에이전트 마스터가 되세요
+              </h3>
+
+              {/* 가격 정보 */}
+              <div style={{
+                textAlign: 'center',
+                marginBottom: '30px',
+                position: 'relative',
+                zIndex: 1
+              }}>
+                <div style={{
+                  fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+                  color: '#e0f2fe',
+                  textDecoration: 'line-through',
+                  marginBottom: '10px',
+                  fontWeight: '600',
+                  opacity: 0.8
+                }}>
+                  정가 ₩150,000
+                </div>
+                <div style={{
+                  fontSize: 'clamp(3.5rem, 8vw, 5rem)',
+                  fontWeight: '900',
+                  color: 'white',
+                  marginBottom: '15px',
+                  textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+                  lineHeight: '1'
+                }}>
+                  ₩{coursePrice.toLocaleString()}
+                </div>
+                <div style={{
+                  display: 'inline-block',
+                  background: 'rgba(254, 243, 199, 0.2)',
+                  color: '#fef08a',
+                  padding: '8px 20px',
+                  borderRadius: '20px',
+                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                  fontWeight: '700',
+                  border: '1px solid rgba(254, 240, 138, 0.3)'
+                }}>
+                  💰 55,000원 할인
+                </div>
+              </div>
+
+              {/* 메인 수강 신청 버튼 */}
+              <div style={{
+                textAlign: 'center',
+                position: 'relative',
+                zIndex: 1
+              }}>
+                <button
+                  onClick={handleEarlyBirdPayment}
+                  style={{
+                    background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                    color: '#92400e',
+                    border: '3px solid #fbbf24',
+                    padding: '25px 60px',
+                    fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
+                    fontWeight: '900',
+                    borderRadius: '15px',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 8px 30px rgba(251, 191, 36, 0.5)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '15px',
+                    minWidth: '320px',
+                    marginBottom: '20px'
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                    e.currentTarget.style.boxShadow = '0 12px 40px rgba(251, 191, 36, 0.6)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    e.currentTarget.style.boxShadow = '0 8px 30px rgba(251, 191, 36, 0.5)';
+                  }}
+                >
+                  <span style={{ fontSize: '1.8rem' }}>🚀</span>
+                  지금 바로 수강하기
+                </button>
+                <p style={{
+                  fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
+                  color: '#e0f2fe',
+                  margin: '0',
+                  fontWeight: '600'
+                }}>
+                  💳 안전한 결제 · 평생 소장 가능
+                </p>
               </div>
             </div>
           </div>
