@@ -6527,3 +6527,57 @@ body {
   overflow: auto !important;
   z-index: 100000 !important;
 }
+
+/* 모바일 반응형: 로그인/회원가입 페이지 */
+@media (max-width: 768px) {
+  .auth-content {
+    padding: 1rem 0;
+    min-height: calc(100vh - 60px);
+  }
+
+  .auth-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+
+  .auth-form-wrapper {
+    padding: 2rem 1.5rem;
+  }
+
+  .auth-title {
+    font-size: 1.75rem;
+  }
+
+  .auth-subtitle {
+    font-size: 1rem;
+  }
+
+  .auth-benefits {
+    padding: 1.5rem;
+  }
+
+  .auth-benefits h3 {
+    font-size: 1.25rem;
+  }
+
+  .form-input {
+    padding: 0.75rem;
+    font-size: 16px; /* iOS 줌 방지 */
+  }
+
+  .auth-submit-button {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .error-message {
+    font-size: 0.8rem;
+  }
+
+  .error-message.general-error {
+    padding: 0.75rem;
+    white-space: pre-line;
+    word-break: break-word;
+  }
+}
