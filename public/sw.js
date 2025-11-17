@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aicitybuilders-v1.0.7'; // 버전 업데이트로 강제 캐시 무효화
+const CACHE_NAME = 'aicitybuilders-v1.0.8'; // 버전 업데이트로 강제 캐시 무효화 (Azure 요청 제외)
 const urlsToCache = [
   '/',
   '/manifest.json',
@@ -41,6 +41,20 @@ self.addEventListener('fetch', function(event) {
   // 개발 환경에서는 항상 네트워크 우선
   if (event.request.url.includes('localhost')) {
     event.respondWith(fetch(event.request));
+    return;
+  }
+
+  // Azure Storage, Vimeo, YouTube 등 외부 API 요청은 Service Worker가 처리하지 않음
+  if (
+    event.request.url.includes('azure.com') ||
+    event.request.url.includes('table.core.windows.net') ||
+    event.request.url.includes('blob.core.windows.net') ||
+    event.request.url.includes('vimeo.com') ||
+    event.request.url.includes('youtube.com') ||
+    event.request.url.includes('ytimg.com') ||
+    event.request.url.includes('googleapis.com')
+  ) {
+    // 외부 API는 Service Worker를 거치지 않고 직접 네트워크 요청
     return;
   }
 
