@@ -74,8 +74,9 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         const paymentKey = urlParams.get('paymentKey');
         const orderId = urlParams.get('orderId');
         const amount = urlParams.get('amount');
+        const actualAmount = amount ? parseInt(amount) : 0;
         
-        console.log('📋 URL 파라미터:', { courseParam, paymentKey, orderId, amount });
+        console.log('📋 URL 파라미터:', { courseParam, paymentKey, orderId, amount, actualAmount });
         
         // 토스페이먼츠 결제 승인 처리 (중복 방지)
         if (paymentKey && orderId && amount) {
@@ -145,10 +146,10 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           } else if (courseParam === '1002' || courseParam === 'chatgpt-agent-beginner') {
             courseData = {
               id: '1002',
-              title: 'ChatGPT AI AGENT 비기너편',
-              price: 45000
+              title: 'Google Opal 유튜브 수익화 에이전트 기초',
+              price: actualAmount || 95000  // 실제 결제 금액 사용, 없으면 정가
             };
-            setCourseName('ChatGPT AI AGENT 비기너편');
+            setCourseName('Google Opal 유튜브 수익화 에이전트 기초');
           }
           
           if (courseData.id && user.email) {

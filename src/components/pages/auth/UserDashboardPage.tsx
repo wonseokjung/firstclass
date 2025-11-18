@@ -883,8 +883,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               {userStats.purchasedCourses.map((purchase, index) => {
                 // 강의 정보 매핑
                 const courseInfoMap: { [key: string]: string } = {
-                  '1002': 'ChatGPT AI AGENT 비기너편',
-                  'chatgpt-agent-beginner': 'ChatGPT AI AGENT 비기너편',
+                  '1002': 'Google Opal 유튜브 수익화 에이전트 기초',
+                  'chatgpt-agent-beginner': 'Google Opal 유튜브 수익화 에이전트 기초',
                   '999': 'AI 건물 짓기 - 디지털 건축가 과정',
                   'ai-building': 'AI 건물 짓기 - 디지털 건축가 과정',
                   'ai-building-course': 'AI 건물 짓기 - 디지털 건축가 과정',

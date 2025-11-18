@@ -74,7 +74,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
   const courseData = {
     weeks: [
       {
-        title: 'Part 1 (Day 1-5)',
+        title: 'Part 1 (1강-5강)',
         subtitle: '수익화하는 인공지능 에이전트 첫걸음',
         days: [
           { 
@@ -110,7 +110,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
         ]
       },
       {
-        title: 'Part 2 (Day 6-10)',
+        title: 'Part 2 (6강-10강)',
         subtitle: '실전 수익화 컨텐츠 자동 생성 에이전트',
         days: [
           { 
@@ -212,7 +212,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
     <div style={{ minHeight: '100vh', background: 'linear-gradient(to bottom, #f8fafc, #ffffff)' }}>
       <NavigationBar
         onBack={onBack}
-        breadcrumbText="ChatGPT AI AGENT 비기너편"
+        breadcrumbText="Google Opal 유튜브 수익화 에이전트 기초"
       />
 
       {/* 헤더 & 진행률 */}
@@ -344,7 +344,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             }}>
               {week.days.map((lesson) => {
                 const isCompleted = completedDays.has(lesson.day);
-                const isAvailable = lesson.day <= 5; // Day 1, 2, 3, 4, 5 사용 가능
+                const isAvailable = lesson.day <= 5; // 1강, 2강, 3강, 4강, 5강 사용 가능
 
                 return (
                   <div

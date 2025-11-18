@@ -45,7 +45,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
     loadUserProgress();
   }, []);
 
-  // Day 1 완료 처리
+  // 1강 완료 처리
   const handleCompleteDay = async () => {
     if (!userEmail) {
       alert('로그인이 필요합니다.');
@@ -75,7 +75,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
 
       if (success) {
         setIsDayCompleted(true);
-        alert('🎉 Day 1 완료! 다음 강의로 이동하세요!');
+        alert('🎉 1강 완료! 다음 강의로 이동하세요!');
       } else {
         console.error('❌ Day 완료 실패 - success: false');
         console.log('📧 현재 이메일:', userEmail);
@@ -414,7 +414,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                 fontWeight: '600',
                 color: '#92400e'
               }}>
-                💡 <strong>추천 드립니다:</strong> Day 1 이론만 보시고, <strong style={{ fontSize: '1.1em', color: '#d97706' }}>Day 2부터 Google Opal(무료)</strong>로 학습을 시작하시는 것을 강력히 권장합니다!
+                💡 <strong>추천 드립니다:</strong> 1강 이론만 보시고, <strong style={{ fontSize: '1.1em', color: '#d97706' }}>2강부터 Google Opal(무료)</strong>로 학습을 시작하시는 것을 강력히 권장합니다!
               </p>
             </div>
             
@@ -1015,7 +1015,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
           </div>
         </div>
 
-        {/* Day 1 완료 버튼 */}
+        {/* 1강 완료 버튼 */}
         <div style={{
           background: isDayCompleted 
             ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)' 
@@ -1033,7 +1033,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
             color: isDayCompleted ? '#059669' : '#0284c7',
             marginBottom: '15px'
           }}>
-            {isDayCompleted ? '✅ Day 1 완료됨!' : '📚 Day 1 완료하기'}
+            {isDayCompleted ? '✅ 1강 완료됨!' : '📚 1강 완료하기'}
           </h3>
           <p style={{
             color: '#64748b',
@@ -1041,7 +1041,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
             fontSize: '0.95rem'
           }}>
             {isDayCompleted 
-              ? 'Day 1을 완료했습니다! 다음 강의로 이동하세요.' 
+              ? '1강을 완료했습니다! 다음 강의로 이동하세요.' 
               : '강의를 수강한 후 버튼을 눌러주세요.'}
           </p>
           
@@ -1075,7 +1075,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                 }
               }}
             >
-              {isCompletingDay ? '처리 중...' : 'Day 1 완료하기 →'}
+              {isCompletingDay ? '처리 중...' : '1강 완료하기 →'}
             </button>
           ) : (
             <button
@@ -1101,7 +1101,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)';
               }}
             >
-              ✓ 완료! Day 2로 →
+              ✓ 완료! 2강으로 →
             </button>
           )}
         </div>

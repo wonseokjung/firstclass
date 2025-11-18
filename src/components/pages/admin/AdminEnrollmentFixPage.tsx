@@ -22,7 +22,10 @@ const AdminEnrollmentFixPage: React.FC = () => {
   const [allUsers, setAllUsers] = useState<any[]>([]);
   const [showUserTable, setShowUserTable] = useState(false);
   const [payments, setPayments] = useState<Payment[]>([
-    // 최신 가상계좌 결제 (2025-11-18 추가)
+    // 최신 가상계좌 결제 (2025-11-18 저녁 추가)
+    { orderId: 'order_1763468415179_nun9q7mog', name: '김*열', maskedEmail: 'kd****@naver.com', amount: 95000, date: '2025-11-18 21:33:07' },
+    { orderId: 'order_1763463685894_i1rqtrzvk', name: '최*화', maskedEmail: 'bj*******@gmail.com', amount: 95000, date: '2025-11-18 20:02:49' },
+    { orderId: 'order_1763457428837_f21kab6nb', name: '임*규', maskedEmail: 'so********@gmail.com', amount: 95000, date: '2025-11-18 18:18:24' },
     { orderId: 'order_1763446764506_57rqniisb', name: '조*원', maskedEmail: 'ha*****@daum.net', amount: 95000, date: '2025-11-18 15:21:19' },
     { orderId: 'order_1763444404660_z1rnzwhcm', name: '김*오', maskedEmail: 'kn*****@gmail.com', amount: 95000, date: '2025-11-18 14:42:22' },
     { orderId: 'order_1763414365144_y9dobb1fw', name: '윤*임', maskedEmail: 'ac******@gmail.com', amount: 45000, date: '2025-11-18 06:21:58' },
@@ -45,7 +48,8 @@ const AdminEnrollmentFixPage: React.FC = () => {
     { orderId: 'order_1763275018004_wpk6e7wcz', name: '임*동', maskedEmail: 'ju*******@gmail.com', amount: 45000, date: '2025-11-16 15:48:29' },
     { orderId: 'order_1763272439291_l9x8sqvuc', name: '조*가', maskedEmail: 'ch********@naver.com', amount: 45000, date: '2025-11-16 15:00:05' },
     
-    // 최신 가상계좌 결제 (2025-11-16 저녁 추가)
+    // 최신 가상계좌 결제 (2025-11-16 저녁 추가 - 추가분)
+    { orderId: 'order_1763293801432_9knj53vxl', name: '고*석', maskedEmail: 'lg********@naver.com', amount: 45000, date: '2025-11-16 20:56:55' },
     { orderId: 'order_1763290352287_ztrtnsp80', name: '노*오', maskedEmail: 'em********@gmail.com', amount: 45000, date: '2025-11-16 19:57:35' },
     
     // 최신 가상계좌 결제 (2025-11-16 오후 추가)
@@ -371,11 +375,11 @@ const AdminEnrollmentFixPage: React.FC = () => {
           await AzureTableService.addPurchaseAndEnrollmentToUser({
             email: matchedUser.email,
             courseId: '1002',
-            title: 'ChatGPT AI AGENT 비기너편',
+            title: 'Google Opal 유튜브 수익화 에이전트 기초',
             amount: payment.amount,
             paymentMethod: 'card',
             orderId: payment.orderId,
-            orderName: 'ChatGPT AI AGENT 비기너편'
+            orderName: 'Google Opal 유튜브 수익화 에이전트 기초'
           });
 
           console.log(`✅ 강의 추가 완료: ${matchedUser.email}`);
@@ -798,11 +802,11 @@ const AdminEnrollmentFixPage: React.FC = () => {
                                   await AzureTableService.addPurchaseAndEnrollmentToUser({
                                     email: user.email,
                                     courseId: '1002',
-                                    title: 'ChatGPT AI AGENT 비기너편',
+                                    title: 'Google Opal 유튜브 수익화 에이전트 기초',
                                     amount: 45000,
                                     paymentMethod: 'card',
                                     orderId: `manual_${Date.now()}`,
-                                    orderName: 'ChatGPT AI AGENT 비기너편'
+                                    orderName: 'Google Opal 유튜브 수익화 에이전트 기초'
                                   });
                                   alert('강의가 추가되었습니다!');
                                   loadAllUsers(); // 새로고침

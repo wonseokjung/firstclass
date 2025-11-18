@@ -45,7 +45,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack }) => {
           color: '#1f2937',
           marginBottom: '15px'
         }}>
-          🚀 Day 7 준비 중
+          🚀 7강 준비 중
         </h2>
 
         <div style={{
@@ -78,7 +78,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack }) => {
             margin: 0,
             lineHeight: '1.6'
           }}>
-            Day 7 강의가 곧 공개됩니다.<br/>
+            7강 강의가 곧 공개됩니다.<br/>
             조금만 기다려주세요! 🎬
           </p>
         </div>

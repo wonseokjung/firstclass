@@ -13,14 +13,14 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
 
   const course = {
     id: 1002,
-    title: "🤖 AI Agent, 10일 완성",
-    subtitle: "수익화하는 인공지능 에이전트 만들기",
+    title: "🎬 Google Opal 유튜브 수익화, 10일 완성",
+    subtitle: "구글 AI로 유튜브 자동 수익 창출하기",
     lessons: [
-      // Part 1 (Day 1-5) - 수익화하는 인공지능 에이전트 첫걸음
+      // Part 1 (1강-5강) - 수익화하는 인공지능 에이전트 첫걸음
       {
         id: 1,
         day: 1,
-        title: "Day 1: 내 첫 AI 친구: ChatGPT와 Agent의 차이",
+        title: "1강: 내 첫 AI 친구: ChatGPT와 Agent의 차이",
         hasQuiz: true,
         sections: {
           theory: "• ChatGPT는 대화형 AI, 에이전트는 워크플로우 기반 자동화 AI\n• 워크플로우를 한 번 설정하면 여러 단계 작업 자동 실행\n• 예시: '유튜브 콘텐츠 만들어줘' → 조사, 스크립트, 제목, 설명 자동 생성",
@@ -30,7 +30,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
       {
         id: 2,
         day: 2,
-        title: "Day 2: Work Flow Design 기초 - 나의 일을 AI가 이해할 수 있게 쪼개기",
+        title: "2강: Work Flow Design 기초 - 나의 일을 AI가 이해할 수 있게 쪼개기",
         hasQuiz: true,
         sections: {
           theory: "• 워크플로란? 사람의 직관을 AI가 이해 가능한 논리적 구조로 전환\n• 디컴포지션(분해): 목표를 작은 태스크 유닛으로 쪼개기\n• 시퀀싱(순서화): 태스크를 논리적 순서로 배치 (순서 중요!)",
@@ -40,7 +40,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
       {
         id: 3,
         day: 3,
-        title: "Day 3: Google Opal로 영상 자동 생성 에이전트 만들기",
+        title: "3강: Google Opal로 영상 자동 생성 에이전트 만들기",
         hasQuiz: true,
         sections: {
           theory: "• ChatGPT(텍스트) vs Google Opal(영상/이미지/음악) 비교\n• 멀티모달 AI 핵심 모델: Veo(영상), Imagen(이미지), Lyria(음악), AudioLM(음성)\n• 도구 이원화 전략: 기획은 ChatGPT, 콘텐츠 생성은 Google Opal",
@@ -50,7 +50,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
       {
         id: 4,
         day: 4,
-        title: "Day 4: 협찬/광고 수익을 만드는 '콘텐츠 자동 생성 에이전트' 제작법",
+        title: "4강: 협찬/광고 수익을 만드는 '콘텐츠 자동 생성 에이전트' 제작법",
         hasQuiz: false,
         sections: {
           theory: "• 디컴포지션: 복잡한 업무를 독립적인 AI 작업 단위로 분해\n• Plan and Execute Model (Gemini 1.5 Flash 기반)\n• 반복 비즈니스 프로세스 자동화로 시간/비용 절감",
@@ -60,18 +60,18 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
       {
         id: 5,
         day: 5,
-        title: "Day 5: 유튜브 컨텐츠 수익화하는 인공지능 에이전트 만들기",
+        title: "5강: 유튜브 컨텐츠 수익화하는 인공지능 에이전트 만들기",
         hasQuiz: true,
         sections: {
           theory: "• 수익화 정의: AI가 업무를 대신해 퍼포먼스↑ 비용/시간/리소스↓\n• 콘텐츠 수익화: 광고 수익, 제품 판매(쇼핑 태그), 강연 등\n• 한 번의 클릭으로 트렌드 분석부터 편집까지 완전 자동화",
           practice: "• 완성형 워크플로우: 입력 → 연구 → 썸네일 → 영상(VEO) → 메타데이터\n• Google OPAL로 유튜브 쇼츠 3개(24초) 자동 생성\n• 클릭률 높이는 제목/설명/태그 자동 작성 시스템 구축"
         }
       },
-      // Part 2 (Day 6-10) - 실전 수익화 컨텐츠 자동 생성 에이전트
+      // Part 2 (6강-10강) - 실전 수익화 컨텐츠 자동 생성 에이전트
       {
         id: 6,
         day: 6,
-        title: "Day 6: 판매 수익화 에이전트 - 제품 판매 영상 자동 생성",
+        title: "6강: 판매 수익화 에이전트 - 제품 판매 영상 자동 생성",
         hasQuiz: false,
         launchDate: "2025-11-18 19:00",
         sections: {
@@ -82,7 +82,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
       {
         id: 7,
         day: 7,
-        title: "Day 7: 바이럴 마케팅 에이전트 - 조회수 폭발 컨텐츠 생성",
+        title: "7강: 바이럴 마케팅 에이전트 - 조회수 폭발 컨텐츠 생성",
         hasQuiz: false,
         launchDate: "2025-11-19 19:00",
         sections: {
@@ -93,7 +93,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
       {
         id: 8,
         day: 8,
-        title: "Day 8: 음성 컨텐츠 에이전트 - ASMR & 지식 나눔 영상 생성",
+        title: "8강: 음성 컨텐츠 에이전트 - ASMR & 지식 나눔 영상 생성",
         hasQuiz: false,
         launchDate: "2025-11-20 19:00",
         sections: {
@@ -104,7 +104,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
       {
         id: 9,
         day: 9,
-        title: "Day 9: 대량 생산 에이전트 - 한 번에 15개 영상 자동 생성",
+        title: "9강: 대량 생산 에이전트 - 한 번에 15개 영상 자동 생성",
         hasQuiz: false,
         launchDate: "2025-11-21 19:00",
         sections: {
@@ -115,7 +115,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
       {
         id: 10,
         day: 10,
-        title: "Day 10: 완전 자동화 수익 시스템 - 분석부터 업로드까지",
+        title: "10강: 완전 자동화 수익 시스템 - 분석부터 업로드까지",
         hasQuiz: true,
         launchDate: "2025-11-22 19:00",
         sections: {
@@ -788,7 +788,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                 lineHeight: '1.6',
                 margin: '0'
               }}>
-                💡 결제 후 즉시 수강 가능 · Day 6-10은 순차 오픈 예정
+                💡 결제 후 즉시 수강 가능 · 6강-10강은 순차 오픈 예정
               </p>
             </div>
           </div>
@@ -1343,7 +1343,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
               하루 1시간 × 10일 = 수익화 에이전트 마스터 🎓
             </p>
 
-            {/* CORE: Day 1-3 */}
+            {/* CORE: 1강-3강 */}
             <div style={{ marginBottom: '60px' }}>
               <div style={{
                 background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
@@ -1360,7 +1360,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   margin: '0 0 15px 0',
                   letterSpacing: '0.5px'
                 }}>
-                  🎯 Part 1 (Day 1-5)
+                  🎯 Part 1 (1강-5강)
                 </h4>
                 <p style={{
                         margin: '0',
@@ -1413,7 +1413,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
               </div>
             </div>
 
-            {/* Part 2: Day 6-10 */}
+            {/* Part 2: 6강-10강 */}
             <div style={{ marginBottom: '60px' }}>
               <div style={{
                 background: 'linear-gradient(135deg, #10b981, #059669)',
@@ -1430,7 +1430,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   margin: '0 0 15px 0',
                   letterSpacing: '0.5px'
                 }}>
-                  🚀 Part 2 (Day 6-10)
+                  🚀 Part 2 (6강-10강)
                 </h4>
                 <p style={{
                         margin: '0',

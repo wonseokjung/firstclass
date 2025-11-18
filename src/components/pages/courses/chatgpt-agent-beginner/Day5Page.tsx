@@ -47,7 +47,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
     loadUserProgress();
   }, []);
 
-  // Day 5 완료 처리
+  // 5강 완료 처리
   const handleCompleteDay = async () => {
     if (!userEmail) {
       alert('로그인이 필요합니다.');
@@ -74,7 +74,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
 
       if (success) {
         setIsDayCompleted(true);
-        alert('🎉 Day 5 완료! 다음 강의로 이동하세요!');
+        alert('🎉 5강 완료! 다음 강의로 이동하세요!');
       } else {
         alert('❌ Day 완료 처리에 실패했습니다.');
       }
@@ -362,7 +362,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
             color: '#1f2937',
             marginBottom: '15px'
           }}>
-            🚀 Day 5 준비 중
+            🚀 5강 준비 중
           </h2>
 
           <div style={{
@@ -1192,7 +1192,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
           </div>
         </div>
 
-        {/* Day 4 완료 버튼 */}
+        {/* 5강 완료 버튼 */}
         <div style={{
           background: isDayCompleted 
             ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)' 
@@ -1210,7 +1210,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
             color: isDayCompleted ? '#059669' : '#0284c7',
             marginBottom: '15px'
           }}>
-            {isDayCompleted ? '✅ Day 5 완료됨!' : '📚 Day 5 완료하기'}
+            {isDayCompleted ? '✅ 5강 완료됨!' : '📚 5강 완료하기'}
           </h3>
           <p style={{
             color: '#64748b',
@@ -1218,7 +1218,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
             fontSize: '0.95rem'
           }}>
             {isDayCompleted 
-              ? 'Day 5를 완료했습니다! 다음 강의로 이동하세요.' 
+              ? '5강을 완료했습니다! 다음 강의로 이동하세요.' 
               : '강의를 수강한 후 버튼을 눌러주세요.'}
           </p>
           
@@ -1252,7 +1252,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
                 }
               }}
             >
-              {isCompletingDay ? '처리 중...' : 'Day 5 완료하기 →'}
+              {isCompletingDay ? '처리 중...' : '5강 완료하기 →'}
             </button>
           ) : (
             <button
@@ -1278,7 +1278,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)';
               }}
             >
-              ✓ 완료! Day 6로 →
+              ✓ 완료! 6강으로 →
             </button>
           )}
         </div>

@@ -1018,8 +1018,8 @@ export class AzureTableService {
         'ai-교육-다큐멘터리': 'AI 교육 다큐멘터리',
         'ai-building': 'AI 건물 짓기 - 디지털 건축가 과정',
         'ai-building-course': 'AI 건물 짓기 - 디지털 건축가 과정',
-        '1002': 'ChatGPT AI AGENT 비기너편',
-        'chatgpt-agent-beginner': 'ChatGPT AI AGENT 비기너편',
+        '1002': 'Google Opal 유튜브 수익화 에이전트 기초',
+        'chatgpt-agent-beginner': 'Google Opal 유튜브 수익화 에이전트 기초',
         '999': 'AI 건물 짓기 - 디지털 건축가 과정'
       };
       
