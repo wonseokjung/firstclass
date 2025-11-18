@@ -238,6 +238,25 @@ const AdminDashboardPage: React.FC = () => {
     }
   };
 
+  // 이메일 목록 복사
+  const copyAllEmails = () => {
+    const emails = filteredUsers.map(user => user.email).join(', ');
+    
+    navigator.clipboard.writeText(emails).then(() => {
+      alert(`✅ ${filteredUsers.length}개의 이메일 주소가 클립보드에 복사되었습니다!\n\n이메일 클라이언트의 BCC 필드에 붙여넣으세요.`);
+    }).catch(err => {
+      console.error('복사 실패:', err);
+      // 복사 실패 시 텍스트 영역으로 표시
+      const textarea = document.createElement('textarea');
+      textarea.value = emails;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      alert(`✅ ${filteredUsers.length}개의 이메일 주소가 클립보드에 복사되었습니다!`);
+    });
+  };
+
   // CSV 다운로드
   const downloadCSV = () => {
     const headers = ['이메일', '이름', '가입일', '구매 강의', '총 결제액', '진행률', '마지막 접속'];
@@ -478,6 +497,29 @@ const AdminDashboardPage: React.FC = () => {
             >
               <Download size={18} />
               CSV 다운로드
+            </button>
+
+            <button
+              onClick={copyAllEmails}
+              style={{
+                padding: '12px 20px',
+                borderRadius: '10px',
+                border: 'none',
+                background: '#f59e0b',
+                color: 'white',
+                fontSize: '1rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                transition: 'all 0.2s'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.background = '#d97706'}
+              onMouseOut={(e) => e.currentTarget.style.background = '#f59e0b'}
+            >
+              📋 이메일 복사 ({filteredUsers.length})
             </button>
 
             <button
