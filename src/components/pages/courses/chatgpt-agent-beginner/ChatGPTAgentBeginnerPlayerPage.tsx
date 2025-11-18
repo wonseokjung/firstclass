@@ -62,7 +62,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
     checkAuthStatus();
   }, []);
 
-  // localStorage에서 완료된 Day 불러오기
+  // localStorage에서 완료된 강의 불러오기
   useEffect(() => {
     const saved = localStorage.getItem('completed-days-chatgpt-agent');
     if (saved) {
@@ -178,7 +178,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
     } else if (day === 10) {
       navigate('/chatgpt-agent-beginner/day10');
     } else {
-      alert(`Day ${day} 강의는 준비 중입니다. 곧 공개될 예정입니다! 🚀`);
+      alert(`${day}강은 준비 중입니다. 곧 공개될 예정입니다! 🚀`);
     }
   };
 
@@ -344,7 +344,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             }}>
               {week.days.map((lesson) => {
                 const isCompleted = completedDays.has(lesson.day);
-                const isAvailable = lesson.day <= 5; // 1강, 2강, 3강, 4강, 5강 사용 가능
+                const isAvailable = lesson.day <= 6; // 1강, 2강, 3강, 4강, 5강, 6강 사용 가능
 
                 return (
                   <div
@@ -425,7 +425,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                           fontWeight: '600',
                           marginBottom: '4px'
                         }}>
-                          Day {lesson.day}
+                          {lesson.day}강
                         </div>
                         <div style={{
                           fontSize: '0.85rem',
