@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, FileText, Award, Lock } from 'lucide-react';
+import { ArrowLeft, FileText, Award } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
 
 interface Day6PageProps {
@@ -86,130 +86,115 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
     day: 6,
     title: "시니어 타겟 유튜브 콘텐츠 자동 제작",
     duration: "",
-    description: "AI 에이전트를 활용하여 시니어(고연령층)를 대상으로 한 유튜브 수익화 콘텐츠를 자동으로 생성하는 방법을 배웁니다. 25개의 멀티 에이전트 시스템으로 아이디어 구상부터 최종 콘텐츠 자산(이미지, 음성, 텍스트)까지 제작하는 전 과정을 실습합니다.",
+    description: "25개의 멀티 에이전트로 시니어 타겟 유튜브 콘텐츠를 자동 생성합니다. 아이디어부터 이미지, 음성, 텍스트까지 완전 자동화된 워크플로우를 구축합니다.",
     objectives: [
-      "시니어 시장의 잠재력과 콘텐츠 소비 특성 이해하기",
-      "멀티 에이전트 시스템의 워크플로우 구조 파악하기",
-      "리서치 → 기획 → 생성 → 가공의 자동화 프로세스 구축하기",
-      "AI 에이전트 훈련 및 문제 해결 방법 익히기",
-      "나만의 AI 자산으로 수익화 시스템 만들기"
+      "시니어 시장의 특성과 콘텐츠 선호도 이해하기",
+      "25개 멀티 에이전트 시스템 구조 파악하기",
+      "AI 에이전트 훈련 및 문제 해결 방법 실습하기"
     ],
     sections: [
       {
-        id: 'intro',
-        title: '📌 6강 개요',
-        type: 'text' as const,
-        content: `이번 강의에서는 AI 에이전트를 활용하여 시니어(고연령층)를 대상으로 한 유튜브 수익화 콘텐츠를 자동으로 생성하는 방법을 배웁니다.
-
-25개의 멀티 에이전트가 협력하여 아이디어 구상부터 최종 콘텐츠 제작까지 자동화하는 실전 시스템을 구축합니다.`
-      },
-      {
-        id: 'video-1',
-        title: '🎬 6강 강의 영상: 시니어 타겟 유튜브 콘텐츠 자동 제작',
-        type: 'video' as const,
-        content: '',
+        id: 'theory-1',
+        type: 'theory',
+        title: '시니어 타겟 유튜브 콘텐츠 자동 제작 (이론 + 실습)',
+        duration: '',
         videoUrl: 'https://player.vimeo.com/video/1138156565?badge=0&autopause=0&player_id=0&app_id=58479',
-        isVimeo: true
-      },
-      {
-        id: 'section-1',
-        title: '1️⃣ 왜 시니어를 타겟으로 하는가?',
-        type: 'text' as const,
-        content: `🎯 **시장 잠재력**
-시니어 인구는 계속 증가하고 있으며 구매력도 갖추고 있습니다. 반면 젊은 층 인구는 감소 추세이므로 시니어 시장은 점차 커질 것입니다.
-
-📱 **변화된 콘텐츠 소비 습관**
-현대의 시니어들은 단순히 TV를 시청하는 것을 넘어, AI와 같은 새로운 기술을 배우고 도전하는 등 적극적으로 콘텐츠를 소비합니다.
-
-🎧 **선호 콘텐츠 유형**
-빠르고 자극적인 영상(쇼츠 등)보다는, 정보와 지식을 제공하는 느린 호흡의 콘텐츠를 선호합니다. 특히 영상미보다는 '소리(오디오)'에 집중하는 경향이 큽니다.`
-      },
-      {
-        id: 'section-2',
-        title: '2️⃣ 시니어 콘텐츠 제작 AI 에이전트 시스템 구조',
-        type: 'text' as const,
-        content: `🔹 **입력 (Input)**
-사용자는 4가지 핵심 정보를 입력합니다:
-① 타겟 (시니어)
-② 주제 (예: 건강, 재테크, 취미)
-③ 목적 (정보 제공, 제품 소개 등)
-④ 언어 (한국어, 영어 등)
-
-🔹 **1단계: 리서치 에이전트**
-입력된 정보를 바탕으로 웹 검색 도구를 사용해 현재 시니어들의 관심사, 트렌드, 인기 제품 등을 실시간으로 분석하고 리서치합니다.
-
-🔹 **2단계: 콘텐츠 기획 및 생성 에이전트**
-• **장면(Scene) 생성 에이전트 (총 5개)**: 리서치 결과를 바탕으로 영상의 스토리를 5개의 장면으로 나누어 순차적으로 시나리오를 생성합니다. 각 장면 에이전트는 이전 장면의 내용을 이어받아 이야기의 연속성을 유지합니다.
-• **썸네일/SEO 에이전트**: 리서치 내용을 기반으로 유튜브 썸네일 이미지, 제목, 설명, 태그를 생성합니다.
-
-🔹 **3단계: 콘텐츠 가공 및 제작 에이전트**
-• **대본 정제 에이전트**: 장면 시나리오에서 'MC:', '#장면1' 등 불필요한 지시문을 제거하고, 오직 음성으로 변환될 대사(나레이션)만 추출합니다.
-• **음성 생성(TTS) 에이전트**: 정제된 대본을 받아 구글의 'Audio LM' 모델을 통해 자연스러운 음성 파일로 변환합니다.
-• **이미지 생성 에이전트**: 각 장면 시나리오에 맞는 이미지를 생성합니다.
-
-🔹 **출력 (Output)**
-최종적으로 썸네일, 제목, 설명, 태그, 그리고 각 장면에 맞는 이미지와 음성 파일이 한 번에 생성되어 다운로드할 수 있게 됩니다.`
-      },
-      {
-        id: 'section-3',
-        title: '3️⃣ 실전 문제 해결 (Troubleshooting)',
-        type: 'text' as const,
-        content: `⚠️ **발생할 수 있는 문제들**
-• 이미지 생성기에 텍스트가 섞여 나옴
-• 음성 파일에 'MC:'와 같은 불필요한 단어가 포함됨
-• 이미지 비율이 맞지 않음
-
-🔧 **원인 분석**
-**이미지 문제:**
-① 이미지 생성 프롬프트에 텍스트를 제외하라는 명령이 없었음
-② 장면 시나리오 전체가 이미지 생성 프롬프트로 들어가면서 불필요한 텍스트가 생성됨
-③ 이미지 비율 설정이 1:1로 되어 있었음
-
-**음성 문제:**
-대본 정제 에이전트가 인물 이름까지는 제거하지 못했음
-
-✅ **해결 방법**
-**이미지 해결:**
-• 장면 생성 에이전트와 이미지 생성 에이전트 사이에 '이미지 프롬프트 변환 에이전트'를 추가
-• 프롬프트에 '텍스트 생성 금지(no text generation)' 명령 추가
-• 이미지 비율을 16:9로 변경
-
-**음성 해결:**
-• 대본 정제 에이전트에게 '인물 이름도 모두 제거하라'는 구체적인 지시 추가`
-      },
-      {
-        id: 'section-4',
-        title: '4️⃣ 핵심 철학 및 실행 전략',
-        type: 'text' as const,
-        content: `💡 **AI 에이전트는 '훈련시키는 직원'**
-처음부터 완벽한 결과물을 만들지 못하므로, 원하는 결과가 나올 때까지 지시를 수정하고 에이전트를 개선하는 과정이 필수적입니다.
-
-🎯 **자동화의 진정한 목표**
-단순히 작업을 자동화하는 것을 넘어, 자신의 아이디어와 전략을 시스템에 녹여내어 인건비와 시간을 줄이고 순수익을 극대화하는 것이 목표입니다.
-
-🏆 **'나만의 AI 자산' 구축**
-이 과정을 통해 만들어진 고유한 워크플로우는 다른 사람이 복제할 수 없는 자신만의 강력한 'AI 자산'이 됩니다.
-
-🔄 **실행과 개선의 반복**
-'만들기 → 게시 → 반응 확인 → 수정'의 순환 과정을 꾸준히 반복하며 시스템을 고도화하고 자신만의 인사이트를 쌓는 것이 중요합니다.`
-      },
-      {
-        id: 'homework',
-        title: '📝 오늘의 과제',
-        type: 'text' as const,
-        content: `🎯 **실습 과제**
-영상을 참고하여 직접 시니어 타겟 콘텐츠를 만드는 '장면 1개'짜리 기본 워크플로우를 구축해보세요!
-
-**구축해야 할 것:**
-1. 타겟, 주제, 목적, 언어를 입력받는 입력 시스템
-2. 리서치 에이전트 (웹 검색 기능 포함)
-3. 장면 1개 생성 에이전트
-4. 대본 정제 에이전트
-5. 음성 생성 에이전트
-6. 이미지 생성 에이전트
-
-**목표:**
-간단한 1장면짜리 콘텐츠를 완전 자동으로 생성하는 시스템을 만들어보세요!`
+        isVimeo: true,
+        content: `
+          <h3>1. 왜 시니어를 타겟으로 하는가?</h3>
+          
+          <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
+            🎯 <strong>시장 잠재력:</strong> 시니어 인구는 계속 증가 + 구매력 보유. 젊은층은 감소 추세.<br/>
+            📱 <strong>콘텐츠 소비:</strong> AI 등 새 기술 적극 학습, 정보와 지식 콘텐츠 선호.<br/>
+            🎧 <strong>핵심 포인트:</strong> 영상미보다 '소리(오디오)'에 집중하는 경향.
+          </p>
+          
+          <hr style="margin: 40px 0; border: none; border-top: 1px solid #e2e8f0;" />
+          
+          <h3>2. 시니어 콘텐츠 제작 AI 에이전트 시스템 해부</h3>
+          <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
+            25개의 AI 에이전트가 유기적으로 협력하여 콘텐츠를 제작하는 워크플로우입니다.
+          </p>
+          
+          <table style="width: 100%; border-collapse: collapse; margin: 25px 0;">
+            <tr style="background: #f8fafc;">
+              <th style="padding: 12px; text-align: left; border: 1px solid #e2e8f0; width: 30%;">단계</th>
+              <th style="padding: 12px; text-align: left; border: 1px solid #e2e8f0;">설명</th>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>입력 (Input)</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">① 타겟 (시니어) ② 주제 (건강, 재테크, 취미 등) ③ 목적 (정보 제공, 제품 소개) ④ 언어 (한국어, 영어 등)</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>리서치 에이전트</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">웹 검색을 통해 현재 시니어들의 관심사, 트렌드, 인기 제품 등을 실시간 분석</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>장면 생성 에이전트 (5개)</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">영상 스토리를 5개 장면으로 나누어 순차적 시나리오 생성. 각 에이전트는 이전 장면을 이어받아 연속성 유지</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>썸네일/SEO 에이전트</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">유튜브 썸네일, 제목, 설명, 태그 자동 생성</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>대본 정제 에이전트</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">'MC:', '#장면1' 등 불필요한 지시문 제거, 음성 변환용 순수 대사만 추출</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>음성 생성 (TTS) 에이전트</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">구글 Audio LM 모델로 자연스러운 음성 파일 변환</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>이미지 생성 에이전트</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">각 장면 시나리오에 맞는 이미지 생성 (Imagen 4, Nanobanana 모델)</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;"><strong>출력 (Output)</strong></td>
+              <td style="padding: 12px; border: 1px solid #e2e8f0;">썸네일, 제목, 설명, 태그, 장면별 이미지와 음성 파일 일괄 다운로드</td>
+            </tr>
+          </table>
+          
+          <hr style="margin: 40px 0; border: none; border-top: 1px solid #e2e8f0;" />
+          
+          <h3>3. 문제 해결 (Troubleshooting)</h3>
+          
+          <div style="background: #fff7ed; border-left: 4px solid #ea580c; padding: 20px; margin: 25px 0; border-radius: 8px;">
+            <p style="color: #78350f; margin: 0; font-size: 1.05rem; line-height: 1.8;">
+              <strong>⚠️ 발생 문제:</strong> 이미지에 텍스트 섞임, 음성에 'MC:' 포함, 비율 불일치 (1:1 → 16:9)
+            </p>
+          </div>
+          
+          <div style="background: #dcfce7; border-left: 4px solid #16a34a; padding: 20px; margin: 25px 0; border-radius: 8px;">
+            <p style="color: #15803d; margin: 0; font-size: 1.05rem; line-height: 1.8;">
+              <strong>✅ 해결:</strong> 이미지 프롬프트 변환 에이전트 추가 + 'no text generation' 명령 + 16:9 비율 설정 + 대본 정제 강화
+            </p>
+          </div>
+          
+          <hr style="margin: 40px 0; border: none; border-top: 1px solid #e2e8f0;" />
+          
+          <h3>4. 핵심 철학</h3>
+          
+          <div style="background: #f0f9ff; border-left: 4px solid #0ea5e9; padding: 20px; margin: 25px 0; border-radius: 8px;">
+            <p style="font-size: 1.05rem; line-height: 1.8; color: #0c4a6e; margin: 0;">
+              💡 <strong>AI 에이전트 = 훈련시키는 직원</strong><br/>
+              🎯 <strong>목표:</strong> 인건비·시간 절감 + 순수익 극대화<br/>
+              🏆 <strong>결과:</strong> 복제 불가능한 나만의 AI 자산<br/>
+              🔄 <strong>방법:</strong> 만들기 → 게시 → 개선 반복
+            </p>
+          </div>
+          
+          <hr style="margin: 40px 0; border: none; border-top: 1px solid #e2e8f0;" />
+          
+          <h3>5. 오늘의 과제</h3>
+          
+          <div style="background: #fef3c7; border-left: 4px solid #fbbf24; padding: 20px; margin: 25px 0; border-radius: 8px;">
+            <p style="font-size: 1.05rem; line-height: 1.8; color: #78350f; margin: 0;">
+              <strong>🎯 과제:</strong> 장면 1개짜리 시니어 콘텐츠 생성 워크플로우 구축<br/>
+              <strong>📌 구성:</strong> 입력(타겟/주제/목적/언어) → 리서치 → 장면 생성 → 대본 정제 → 음성·이미지 생성
+            </p>
+          </div>
+        `
       }
     ],
     quiz: {
@@ -223,35 +208,10 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             "화려한 편집과 이펙트",
             "젊은층을 위한 유행어 사용"
           ],
-          correctAnswer: 1,
-          explanation: "시니어들은 빠르고 자극적인 영상보다 정보와 지식을 제공하는 느린 호흡의 콘텐츠를 선호하며, 특히 영상미보다 '소리(오디오)'에 집중하는 경향이 큽니다."
+          correctAnswer: 1
         },
         {
           id: 2,
-          question: "멀티 에이전트 시스템에서 '리서치 에이전트'의 역할은 무엇인가요?",
-          options: [
-            "이미지를 생성하는 역할",
-            "음성 파일을 만드는 역할",
-            "웹 검색을 통해 시니어들의 관심사와 트렌드를 실시간 분석하는 역할",
-            "썸네일을 제작하는 역할"
-          ],
-          correctAnswer: 2,
-          explanation: "리서치 에이전트는 입력된 정보를 바탕으로 웹 검색 도구를 사용해 현재 시니어들의 관심사, 트렌드, 인기 제품 등을 실시간으로 분석하고 리서치합니다."
-        },
-        {
-          id: 3,
-          question: "이미지 생성 시 텍스트가 섞여 나오는 문제를 해결하는 방법이 아닌 것은?",
-          options: [
-            "이미지 프롬프트 변환 에이전트를 추가하여 시나리오를 키워드로 변환",
-            "프롬프트에 '텍스트 생성 금지(no text generation)' 명령 추가",
-            "이미지 생성 모델을 더 강력한 것으로 변경하기만 하면 됨",
-            "장면 시나리오 전체가 아닌 최적화된 프롬프트만 전달"
-          ],
-          correctAnswer: 2,
-          explanation: "모델을 변경하는 것만으로는 문제가 해결되지 않습니다. 프롬프트 변환 에이전트 추가, 텍스트 생성 금지 명령, 최적화된 프롬프트 전달 등의 구체적인 해결책이 필요합니다."
-        },
-        {
-          id: 4,
           question: "AI 에이전트를 어떻게 이해해야 하나요?",
           options: [
             "완벽하게 작동하는 자동화 도구",
@@ -259,231 +219,88 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             "훈련시키는 직원처럼 지속적으로 개선해야 하는 대상",
             "복잡할수록 좋은 시스템"
           ],
-          correctAnswer: 2,
-          explanation: "AI 에이전트는 '훈련시키는 직원'과 같습니다. 처음부터 완벽한 결과물을 만들지 못하므로, 원하는 결과가 나올 때까지 지시를 수정하고 에이전트를 개선하는 과정이 필수적입니다."
-        },
-        {
-          id: 5,
-          question: "'나만의 AI 자산'이란 무엇을 의미하나요?",
-          options: [
-            "AI 도구를 많이 구매하는 것",
-            "자신의 아이디어와 전략이 녹아있는 고유한 워크플로우",
-            "AI 회사의 주식을 보유하는 것",
-            "AI 관련 자격증을 취득하는 것"
-          ],
-          correctAnswer: 1,
-          explanation: "나만의 AI 자산은 자신의 아이디어와 전략을 시스템에 녹여내어 만든 고유한 워크플로우를 의미합니다. 이는 다른 사람이 복제할 수 없는 강력한 자산이 됩니다."
+          correctAnswer: 2
         }
       ]
     }
   };
 
-  const handleVideoLoad = (sectionId: string) => {
-    setLoadingVideos(prev => {
-      const newSet = new Set(prev);
-      newSet.delete(sectionId);
-      return newSet;
-    });
-  };
-
-  const handleQuizSubmit = () => {
-    setQuizSubmitted(true);
-    const allCorrect = lessonData.quiz.questions.every(
-      (q) => quizAnswers[q.id] === q.correctAnswer
-    );
-    
-    if (allCorrect) {
-      alert('🎉 모든 문제를 맞히셨습니다!');
-    }
-  };
-
-  const allQuestionsAnswered = lessonData.quiz.questions.every(
-    (q) => quizAnswers[q.id] !== undefined
-  );
-
-  const renderSection = (section: typeof lessonData.sections[0]) => {
-    const isCompleted = completedSections.has(section.id);
-    const isLoading = loadingVideos.has(section.id);
-
-    return (
-      <div
-        key={section.id}
-        style={{
-          background: 'white',
-          borderRadius: '15px',
-          padding: '30px',
-          marginBottom: '25px',
-          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
-          border: isCompleted ? '3px solid #10b981' : '1px solid #e5e7eb'
-        }}
-      >
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginBottom: '20px'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <FileText size={24} color="#0ea5e9" />
-            <h3 style={{
-              fontSize: '1.4rem',
-              fontWeight: '700',
-              color: '#1f2937',
-              margin: 0
-            }}>
-              {section.title}
-            </h3>
-          </div>
-          {isCompleted && (
-            <Award size={28} color="#10b981" />
-          )}
-        </div>
-
-        {section.type === 'video' && section.videoUrl && (
-          <div style={{ 
-            marginTop: '20px',
-            borderRadius: '12px',
-            overflow: 'hidden',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
-          }}>
-            {isLoading && (
-              <div style={{
-                padding: '100px',
-                textAlign: 'center',
-                background: '#f3f4f6'
-              }}>
-                <div style={{
-                  display: 'inline-block',
-                  width: '50px',
-                  height: '50px',
-                  border: '5px solid #e5e7eb',
-                  borderTopColor: '#0ea5e9',
-                  borderRadius: '50%',
-                  animation: 'spin 1s linear infinite'
-                }}></div>
-                <p style={{ marginTop: '20px', color: '#6b7280' }}>영상 로딩 중...</p>
-              </div>
-            )}
-            {section.isVimeo ? (
-              <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
-                <iframe 
-                  src={section.videoUrl}
-                  frameBorder="0" 
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%'
-                  }}
-                  title={section.title}
-                  onLoad={() => handleVideoLoad(section.id)}
-                />
-              </div>
-            ) : (
-              <video
-                controls
-                style={{
-                  width: '100%',
-                  borderRadius: '12px'
-                }}
-                onLoadedData={() => handleVideoLoad(section.id)}
-              >
-                <source src={section.videoUrl} type="video/mp4" />
-                브라우저가 비디오 태그를 지원하지 않습니다.
-              </video>
-            )}
-          </div>
-        )}
-
-        {section.type === 'text' && section.content && (
-          <div style={{
-            fontSize: '1.1rem',
-            lineHeight: '1.8',
-            color: '#374151',
-            whiteSpace: 'pre-line'
-          }}>
-            {section.content}
-          </div>
-        )}
-      </div>
-    );
-  };
+  const progressPercentage = (completedSections.size / lessonData.sections.length) * 100;
 
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
-      padding: '40px 20px'
+      background: 'linear-gradient(to bottom, #f8fafc, #ffffff)',
+      paddingBottom: '60px'
     }}>
-      <style>
-        {`
-          @keyframes spin {
-            to { transform: rotate(360deg); }
-          }
-        `}
-      </style>
-
+      {/* 헤더 */}
       <div style={{
-        maxWidth: '900px',
-        margin: '0 auto'
+        background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+        color: 'white',
+        padding: '30px 20px',
+        boxShadow: '0 4px 20px rgba(14, 165, 233, 0.3)'
       }}>
-        {/* 헤더 */}
-        <button
-          onClick={onBack}
-          style={{
-            background: 'rgba(255, 255, 255, 0.2)',
-            backdropFilter: 'blur(10px)',
-            border: 'none',
-            padding: '12px 24px',
-            borderRadius: '10px',
-            color: 'white',
-            fontSize: '1rem',
-            fontWeight: '600',
-            cursor: 'pointer',
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto'
+        }}>
+          <button
+            onClick={onBack}
+            style={{
+              background: 'rgba(255, 255, 255, 0.2)',
+              border: 'none',
+              color: 'white',
+              padding: '10px 20px',
+              borderRadius: '10px',
+              cursor: 'pointer',
+              fontSize: '1rem',
+              fontWeight: '600',
+              marginBottom: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+            }}
+          >
+            <ArrowLeft size={20} />
+            강의 목록으로
+          </button>
+
+          <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px',
-            marginBottom: '30px',
-            transition: 'all 0.3s ease'
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)';
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
-          }}
-        >
-          <ArrowLeft size={20} />
-          강의 목록으로
-        </button>
-
-        {/* 강의 제목 카드 */}
-        <div style={{
-          background: 'white',
-          borderRadius: '20px',
-          padding: '40px',
-          marginBottom: '30px',
-          boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)'
-        }}>
-          <div style={{
-            display: 'inline-block',
-            background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-            color: 'white',
-            padding: '8px 20px',
-            borderRadius: '20px',
-            fontSize: '0.9rem',
-            fontWeight: '700',
-            marginBottom: '20px'
+            gap: '15px',
+            marginBottom: '15px'
           }}>
-            6강
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.2)',
+              padding: '8px 16px',
+              borderRadius: '20px',
+              fontSize: '0.9rem',
+              fontWeight: '600'
+            }}>
+              6강
+            </div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.2)',
+              padding: '8px 16px',
+              borderRadius: '20px',
+              fontSize: '0.9rem',
+              fontWeight: '600'
+            }}>
+              ⏱️ {lessonData.duration}
+            </div>
           </div>
 
           <h1 style={{
-            fontSize: '2.5rem',
+            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
             fontWeight: '800',
-            color: '#1f2937',
             marginBottom: '15px',
             lineHeight: '1.3'
           }}>
@@ -491,269 +308,716 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
           </h1>
 
           <p style={{
-            fontSize: '1.2rem',
-            color: '#6b7280',
-            lineHeight: '1.8',
-            marginBottom: '25px'
+            fontSize: '1.1rem',
+            opacity: '0.95',
+            marginBottom: '25px',
+            lineHeight: '1.6'
           }}>
             {lessonData.description}
           </p>
 
+          {/* 진행률 바 */}
           <div style={{
-            background: '#f0f9ff',
-            borderLeft: '4px solid #0ea5e9',
-            borderRadius: '8px',
-            padding: '20px',
-            marginTop: '25px'
+            background: 'rgba(255, 255, 255, 0.2)',
+            borderRadius: '10px',
+            padding: '15px',
+            backdropFilter: 'blur(10px)'
           }}>
-            <h3 style={{
-              fontSize: '1.1rem',
-              fontWeight: '700',
-              color: '#0c4a6e',
-              marginBottom: '15px'
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '10px'
             }}>
-              📚 학습 목표
-            </h3>
-            <ul style={{
-              margin: 0,
-              paddingLeft: '20px',
-              color: '#0c4a6e'
+              <span style={{ fontSize: '0.9rem', fontWeight: '600' }}>학습 진행률</span>
+              <span style={{ fontSize: '1.1rem', fontWeight: '700' }}>{Math.round(progressPercentage)}%</span>
+            </div>
+            <div style={{
+              width: '100%',
+              height: '10px',
+              background: 'rgba(255, 255, 255, 0.3)',
+              borderRadius: '10px',
+              overflow: 'hidden',
+              position: 'relative' as const
             }}>
-              {lessonData.objectives.map((obj, idx) => (
-                <li key={idx} style={{
-                  marginBottom: '10px',
-                  fontSize: '1rem',
-                  lineHeight: '1.6'
-                }}>
-                  {obj}
-                </li>
-              ))}
-            </ul>
+              <div style={{
+                width: `${progressPercentage}%`,
+                height: '100%',
+                background: 'linear-gradient(90deg, #ffffff, #f0f9ff, #ffffff)',
+                backgroundSize: '200% 100%',
+                animation: 'shimmer 2s infinite',
+                borderRadius: '10px',
+                transition: 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: '0 0 10px rgba(255, 255, 255, 0.5)'
+              }}></div>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* 강의 섹션들 */}
-        {lessonData.sections.map(section => renderSection(section))}
-
-        {/* 퀴즈 섹션 */}
+      {/* 메인 컨텐츠 */}
+      <div style={{
+        maxWidth: '1200px',
+        margin: '40px auto',
+        padding: '0 20px'
+      }}>
+        {/* 학습 목표 */}
         <div style={{
           background: 'white',
           borderRadius: '15px',
           padding: '30px',
-          marginBottom: '25px',
-          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)'
+          marginBottom: '30px',
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
+          border: '2px solid #e2e8f0'
         }}>
-          <h3 style={{
+          <h2 style={{
             fontSize: '1.5rem',
             fontWeight: '700',
-            color: '#1f2937',
-            marginBottom: '25px',
+            color: '#0ea5e9',
+            marginBottom: '20px',
             display: 'flex',
             alignItems: 'center',
             gap: '10px'
           }}>
-            📝 확인 퀴즈
-          </h3>
-
-          {lessonData.quiz.questions.map((question, qIndex) => (
-            <div key={question.id} style={{ marginBottom: '30px' }}>
-              <p style={{
-                fontSize: '1.1rem',
-                fontWeight: '600',
-                color: '#374151',
-                marginBottom: '15px'
-              }}>
-                Q{qIndex + 1}. {question.question}
-              </p>
-
-              {question.options.map((option, oIndex) => {
-                const isSelected = quizAnswers[question.id] === oIndex;
-                const isCorrect = oIndex === question.correctAnswer;
-                const showResult = quizSubmitted && isSelected;
-
-                return (
-                  <label
-                    key={oIndex}
-                    style={{
-                      display: 'block',
-                      padding: '15px',
-                      marginBottom: '10px',
-                      borderRadius: '10px',
-                      border: `2px solid ${
-                        showResult
-                          ? isCorrect
-                            ? '#10b981'
-                            : '#ef4444'
-                          : isSelected
-                          ? '#0ea5e9'
-                          : '#e5e7eb'
-                      }`,
-                      background: showResult
-                        ? isCorrect
-                          ? '#d1fae5'
-                          : '#fee2e2'
-                        : isSelected
-                        ? '#e0f2fe'
-                        : 'white',
-                      cursor: quizSubmitted ? 'default' : 'pointer',
-                      transition: 'all 0.2s ease'
-                    }}
-                  >
-                    <input
-                      type="radio"
-                      name={`question-${question.id}`}
-                      value={oIndex}
-                      checked={isSelected}
-                      onChange={() => {
-                        if (!quizSubmitted) {
-                          setQuizAnswers({
-                            ...quizAnswers,
-                            [question.id]: oIndex
-                          });
-                        }
-                      }}
-                      disabled={quizSubmitted}
-                      style={{ marginRight: '10px' }}
-                    />
-                    {option}
-                    {showResult && (
-                      <span style={{ marginLeft: '10px' }}>
-                        {isCorrect ? '✅' : '❌'}
-                      </span>
-                    )}
-                  </label>
-                );
-              })}
-
-              {quizSubmitted && quizAnswers[question.id] !== undefined && (
-                <div style={{
-                  marginTop: '15px',
-                  padding: '15px',
-                  background: '#f0f9ff',
-                  borderRadius: '8px',
-                  borderLeft: '4px solid #0ea5e9'
-                }}>
-                  <p style={{
-                    margin: 0,
-                    color: '#0c4a6e',
-                    fontSize: '0.95rem',
-                    lineHeight: '1.6'
-                  }}>
-                    <strong>해설:</strong> {question.explanation}
-                  </p>
-                </div>
-              )}
-            </div>
-          ))}
-
-          {!quizSubmitted && (
-            <button
-              onClick={handleQuizSubmit}
-              disabled={!allQuestionsAnswered}
-              style={{
-                width: '100%',
-                background: allQuestionsAnswered
-                  ? 'linear-gradient(135deg, #0ea5e9, #0284c7)'
-                  : '#d1d5db',
-                color: 'white',
-                border: 'none',
-                padding: '15px',
-                borderRadius: '10px',
-                fontSize: '1.1rem',
-                fontWeight: '700',
-                cursor: allQuestionsAnswered ? 'pointer' : 'not-allowed',
-                transition: 'all 0.3s ease'
+            <Award size={24} />
+            학습 목표
+          </h2>
+          <ul style={{
+            listStyle: 'none',
+            padding: 0,
+            margin: 0
+          }}>
+            {lessonData.objectives.map((objective, index) => (
+              <li key={index} style={{
+                padding: '15px 20px',
+                borderBottom: index < lessonData.objectives.length - 1 ? '1px solid #f1f5f9' : 'none',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '15px',
+                fontSize: '1.05rem',
+                color: '#1f2937',
+                transition: 'all 0.3s ease',
+                borderRadius: '8px'
               }}
-            >
-              제출하기
-            </button>
-          )}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = '#f0f9ff';
+                e.currentTarget.style.transform = 'translateX(5px)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = 'transparent';
+                e.currentTarget.style.transform = 'translateX(0)';
+              }}>
+                <span style={{ 
+                  color: 'white',
+                  fontWeight: '700',
+                  background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                  borderRadius: '50%',
+                  width: '28px',
+                  height: '28px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                  fontSize: '0.9rem'
+                }}>{index + 1}</span>
+                {objective}
+              </li>
+            ))}
+          </ul>
         </div>
 
-        {/* Day 완료 버튼 */}
+        {/* 강의 섹션들 */}
+        {lessonData.sections.map((section, index) => (
+          <div key={section.id} style={{
+            background: 'white',
+            borderRadius: '15px',
+            padding: '30px',
+            marginBottom: '20px',
+            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
+            border: completedSections.has(section.id) ? '2px solid #10b981' : '2px solid #e2e8f0'
+          }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+              marginBottom: '20px',
+              flexWrap: 'wrap',
+              gap: '15px'
+            }}>
+              <div>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  marginBottom: '10px'
+                }}>
+                  <div style={{
+                    background: section.type === 'theory' ? '#dbeafe' : '#dcfce7',
+                    color: section.type === 'theory' ? '#1e40af' : '#166534',
+                    padding: '6px 14px',
+                    borderRadius: '20px',
+                    fontSize: '0.85rem',
+                    fontWeight: '700'
+                  }}>
+                    {section.type === 'theory' ? '📚 이론' : '💻 실습'}
+                  </div>
+                  <span style={{
+                    color: '#64748b',
+                    fontSize: '0.9rem',
+                    fontWeight: '600'
+                  }}>
+                    ⏱️ {section.duration}
+                  </span>
+                </div>
+                <h3 style={{
+                  fontSize: '1.3rem',
+                  fontWeight: '700',
+                  color: '#1f2937',
+                  marginBottom: '0'
+                }}>
+                  {section.title}
+                </h3>
+              </div>
+            </div>
+
+            {/* 비디오 플레이어 */}
+            <div style={{
+              marginBottom: '25px',
+              borderRadius: '12px',
+              overflow: 'hidden',
+              background: '#000',
+              aspectRatio: '16/9',
+              position: 'relative' as const
+            }}>
+              {(() => {
+                const isVimeo = (section as any).isVimeo || section.videoUrl.includes('vimeo.com');
+                
+                if (isVimeo) {
+                  return (
+                    <div style={{
+                      marginBottom: '25px',
+                      borderRadius: '12px',
+                      overflow: 'hidden',
+                      position: 'relative',
+                      paddingBottom: '56.25%',
+                      height: 0
+                    }}>
+                      <iframe
+                        src={section.videoUrl}
+                        frameBorder="0"
+                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+          style={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+            width: '100%',
+                          height: '100%',
+            border: 'none',
+                          borderRadius: '12px'
+                        }}
+                        title={section.title}
+                      />
+                    </div>
+                  );
+                }
+                
+                return null;
+              })()}
+            </div>
+
+            {/* 강의 내용 */}
+            <div 
+              style={{
+                fontSize: '1.05rem',
+                lineHeight: '1.8',
+                color: '#374151'
+              }}
+              dangerouslySetInnerHTML={{ __html: section.content }}
+            />
+          </div>
+        ))}
+
+        {/* 퀴즈 섹션 */}
         <div style={{
-          background: 'white',
-          borderRadius: '15px',
-          padding: '30px',
-          marginBottom: '25px',
-          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
-          textAlign: 'center'
+          marginBottom: '40px'
         }}>
-          <h3 style={{
-            fontSize: '1.5rem',
+          <h2 style={{
+            fontSize: '1.8rem',
             fontWeight: '700',
             color: '#1f2937',
-            marginBottom: '20px'
+            marginBottom: '30px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px'
+          }}>
+            <FileText size={28} />
+            퀴즈
+          </h2>
+          {lessonData.quiz.questions.map((q, index) => {
+            const isCorrect = quizAnswers[q.id] === q.correctAnswer;
+            
+            return (
+              <div key={q.id} style={{
+                marginBottom: '30px',
+                paddingBottom: '30px',
+                borderBottom: index < lessonData.quiz.questions.length - 1 ? '1px solid #e5e7eb' : 'none'
+              }}>
+                <p style={{
+                  fontWeight: '700',
+                  marginBottom: '15px',
+                  color: '#1f2937',
+                  fontSize: '1.05rem'
+                }}>
+                  Q{index + 1}. {q.question}
+                </p>
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '12px'
+                }}>
+                  {q.options.map((option, optIndex) => {
+                    const isSelected = quizAnswers[q.id] === optIndex;
+                    const isCorrectOption = optIndex === q.correctAnswer;
+                    
+                    let backgroundColor = 'white';
+                    let borderColor = '#e5e7eb';
+                    
+                    if (quizSubmitted && isSelected) {
+                      backgroundColor = isCorrect ? '#ecfdf5' : '#fef2f2';
+                      borderColor = isCorrect ? '#10b981' : '#ef4444';
+                    } else if (quizSubmitted && isCorrectOption) {
+                      backgroundColor = '#ecfdf5';
+                      borderColor = '#10b981';
+                    }
+                    
+                    return (
+                      <label key={optIndex} style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        padding: '14px 16px',
+                        background: backgroundColor,
+                        borderRadius: '8px',
+                        cursor: quizSubmitted ? 'default' : 'pointer',
+                        transition: 'all 0.2s ease',
+                        border: `1px solid ${borderColor}`,
+                        position: 'relative' as const,
+                        opacity: quizSubmitted && !isSelected && !isCorrectOption ? 0.5 : 1
+                      }}
+                      onMouseOver={(e) => {
+                        if (!quizSubmitted) {
+                          e.currentTarget.style.background = '#f9fafb';
+                        }
+                      }}
+                      onMouseOut={(e) => {
+                        if (!quizSubmitted) {
+                          e.currentTarget.style.background = 'white';
+                        }
+                      }}>
+                        <input 
+                          type="radio" 
+                          name={`question-${q.id}`} 
+                          value={optIndex}
+                          checked={isSelected}
+                          disabled={quizSubmitted}
+                          onChange={() => {
+                            setQuizAnswers({
+                              ...quizAnswers,
+                              [q.id]: optIndex
+                            });
+                          }}
+                          style={{
+                            width: '20px',
+                            height: '20px',
+                            cursor: quizSubmitted ? 'default' : 'pointer',
+                            accentColor: '#0ea5e9'
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '1rem',
+                          color: '#1f2937',
+                          flex: 1,
+                          fontWeight: quizSubmitted && isCorrectOption ? '600' : 'normal'
+                        }}>{option}</span>
+                        {quizSubmitted && isCorrectOption && (
+                          <span style={{ color: '#10b981', fontWeight: '700' }}>✓</span>
+                        )}
+                        {quizSubmitted && isSelected && !isCorrect && (
+                          <span style={{ color: '#ef4444', fontWeight: '700' }}>✗</span>
+                        )}
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+          
+          {/* 정답 보기 버튼 */}
+          <div style={{ marginTop: '30px' }}>
+            <button
+              onClick={() => setQuizSubmitted(true)}
+              disabled={quizSubmitted}
+              style={{
+                padding: '14px 32px',
+                background: quizSubmitted 
+                  ? 'linear-gradient(135deg, #10b981, #059669)' 
+                  : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '1rem',
+                fontWeight: '600',
+                cursor: quizSubmitted 
+                  ? 'not-allowed' 
+                  : 'pointer',
+                transition: 'all 0.2s ease',
+                marginRight: '10px',
+                boxShadow: quizSubmitted 
+                  ? '0 2px 8px rgba(16, 185, 129, 0.3)'
+                  : '0 2px 8px rgba(14, 165, 233, 0.3)',
+                opacity: quizSubmitted ? 0.7 : 1
+              }}
+            >
+              {quizSubmitted 
+                ? `✓ ${lessonData.quiz.questions.filter((q, idx) => quizAnswers[q.id] === q.correctAnswer).length}/${lessonData.quiz.questions.length} 정답` 
+                : '정답 보기'}
+            </button>
+            
+            {quizSubmitted && (
+              <button
+                onClick={() => {
+                  setQuizAnswers({});
+                  setQuizSubmitted(false);
+                }}
+                style={{
+                  padding: '14px 32px',
+                  background: 'white',
+                  color: '#6b7280',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                다시 풀기
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* 워크플로우 다이어그램 */}
+        <div style={{
+          background: 'white',
+          borderRadius: '20px',
+          padding: '40px',
+          marginBottom: '40px',
+          boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
+          border: '1px solid #e5e7eb'
+        }}>
+          {/* 헤더 */}
+          <div style={{
+            marginBottom: '30px'
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '15px',
+              flexWrap: 'wrap',
+              gap: '10px'
+            }}>
+              <h2 style={{
+                fontSize: '1.75rem',
+                fontWeight: '700',
+                color: '#1f2937',
+                margin: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                🎬 실전 워크플로우 다이어그램
+              </h2>
+              <div style={{
+                display: 'inline-block',
+                background: '#dc2626',
+                color: 'white',
+                padding: '5px 14px',
+                borderRadius: '6px',
+                fontSize: '0.8rem',
+                fontWeight: '600'
+              }}>
+                🔥 지속 업데이트
+              </div>
+            </div>
+            <p style={{
+              fontSize: '0.95rem',
+              lineHeight: '1.6',
+              color: '#6b7280',
+              margin: 0
+            }}>
+              시니어 타겟 콘텐츠 제작 AI 에이전트 완성본 — ConnexionAI의 최신 업데이트가 자동 반영됩니다
+            </p>
+          </div>
+
+          {/* 워크플로우 이미지 */}
+          <div style={{
+            background: '#f9fafb',
+            borderRadius: '12px',
+            padding: '15px',
+            border: '1px solid #e5e7eb'
+          }}>
+            <img 
+              src="/images/day5/day6.png" 
+              alt="시니어 타겟 AI 에이전트 워크플로우 다이어그램"
+              style={{
+                width: '100%',
+                height: 'auto',
+                borderRadius: '8px',
+                display: 'block'
+              }}
+            />
+          </div>
+        </div>
+
+        {/* AI 에이전트 시니어 콘텐츠 워크플로우 */}
+        <div style={{
+          background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+          borderRadius: '20px',
+          padding: '40px',
+          marginBottom: '40px',
+          boxShadow: '0 4px 20px rgba(14, 165, 233, 0.3)',
+          position: 'relative' as const,
+          overflow: 'hidden'
+        }}>
+          {/* 배경 패턴 */}
+          <div style={{
+            position: 'absolute' as const,
+            top: 0,
+            right: 0,
+            width: '250px',
+            height: '250px',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%)',
+            borderRadius: '50%',
+            transform: 'translate(50%, -50%)'
+          }} />
+
+          <div style={{
+            position: 'relative' as const,
+            zIndex: 1
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '18px',
+              flexWrap: 'wrap',
+              gap: '12px'
+            }}>
+              <h2 style={{
+                fontSize: '1.8rem',
+                fontWeight: '700',
+                color: 'white',
+                margin: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                🎬 시니어 수익화 콘텐츠 에이전트
+              </h2>
+              <div style={{
+                background: '#fbbf24',
+                color: '#92400e',
+                padding: '6px 16px',
+                borderRadius: '8px',
+                fontSize: '0.8rem',
+                fontWeight: '700',
+                boxShadow: '0 2px 10px rgba(251, 191, 36, 0.3)'
+              }}>
+                🔥 실시간 업데이트
+              </div>
+            </div>
+
+            <p style={{
+              color: 'rgba(255, 255, 255, 0.95)',
+              fontSize: '1rem',
+              lineHeight: '1.7',
+              marginBottom: '25px'
+            }}>
+              ConnexionAI가 지속 연구하며 업데이트하는 실전 워크플로우입니다. <br/>
+              영상과 다를 수 있습니다 — 더 나은 성능을 위해 계속 개선 중
+            </p>
+
+            <a
+              href="https://opal.google/?flow=drive:/1DXxgg6JbIKyWmT9dvdRd0MitDwOsJZaO&shared&mode=app"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '12px',
+                background: '#fbbf24',
+                color: '#92400e',
+                padding: '16px 35px',
+                borderRadius: '12px',
+                fontSize: '1.15rem',
+                fontWeight: '700',
+                textDecoration: 'none',
+                boxShadow: '0 6px 20px rgba(251, 191, 36, 0.5)',
+                transition: 'all 0.3s ease',
+                border: 'none'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
+                e.currentTarget.style.boxShadow = '0 10px 30px rgba(251, 191, 36, 0.6)';
+                e.currentTarget.style.background = '#fcd34d';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(251, 191, 36, 0.5)';
+                e.currentTarget.style.background = '#fbbf24';
+              }}
+            >
+              <span style={{ fontSize: '1.3rem' }}>🚀</span>
+              워크플로우 바로 가기
+              <span style={{ fontSize: '1.3rem', fontWeight: '800' }}>→</span>
+            </a>
+          </div>
+        </div>
+
+        {/* 6강 완료 버튼 */}
+        <div style={{
+          background: isDayCompleted 
+            ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)' 
+            : 'linear-gradient(135deg, #eff6ff, #dbeafe)',
+          padding: '30px',
+          borderRadius: '15px',
+          marginBottom: '30px',
+          border: isDayCompleted ? '2px solid #10b981' : '2px solid #0ea5e9',
+          textAlign: 'center',
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)'
+        }}>
+          <h3 style={{
+            fontSize: '1.3rem',
+            fontWeight: '700',
+            color: isDayCompleted ? '#059669' : '#0284c7',
+            marginBottom: '15px'
           }}>
             {isDayCompleted ? '✅ 6강 완료됨!' : '📚 6강 완료하기'}
           </h3>
-
-          {!isDayCompleted && (
+          <p style={{
+            color: '#64748b',
+            marginBottom: '20px',
+            fontSize: '0.95rem'
+          }}>
+            {isDayCompleted 
+              ? '6강을 완료했습니다! 다음 강의로 이동하세요.' 
+              : '강의를 수강한 후 버튼을 눌러주세요.'}
+          </p>
+          
+          {!isDayCompleted ? (
             <button
               onClick={handleCompleteDay}
               disabled={isCompletingDay}
               style={{
-                width: '100%',
-                background: isCompletingDay
-                  ? '#d1d5db'
-                  : 'linear-gradient(135deg, #10b981, #059669)',
+                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                 color: 'white',
                 border: 'none',
-                padding: '18px',
+                padding: '15px 40px',
                 borderRadius: '12px',
-                fontSize: '1.2rem',
+                fontSize: '1.1rem',
                 fontWeight: '700',
                 cursor: isCompletingDay ? 'not-allowed' : 'pointer',
                 transition: 'all 0.3s ease',
-                boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
+                boxShadow: '0 4px 12px rgba(14, 165, 233, 0.3)',
+                opacity: isCompletingDay ? 0.6 : 1
               }}
               onMouseOver={(e) => {
                 if (!isCompletingDay) {
                   e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(16, 185, 129, 0.4)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(14, 165, 233, 0.4)';
                 }
               }}
               onMouseOut={(e) => {
                 if (!isCompletingDay) {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.3)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(14, 165, 233, 0.3)';
                 }
               }}
             >
               {isCompletingDay ? '처리 중...' : '6강 완료하기 →'}
             </button>
-          )}
-
-          {isDayCompleted && onNext && (
+          ) : (
             <button
-              onClick={onNext}
+              onClick={onNext || onBack}
               style={{
-                width: '100%',
-                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                background: 'linear-gradient(135deg, #10b981, #059669)',
                 color: 'white',
                 border: 'none',
-                padding: '18px',
+                padding: '15px 40px',
                 borderRadius: '12px',
-                fontSize: '1.2rem',
+                fontSize: '1.1rem',
                 fontWeight: '700',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
-                boxShadow: '0 4px 15px rgba(14, 165, 233, 0.3)'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(14, 165, 233, 0.4)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 15px rgba(14, 165, 233, 0.3)';
-              }}
-            >
+                boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(16, 185, 129, 0.4)';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)';
+          }}
+        >
               ✓ 완료! 7강으로 →
-            </button>
+        </button>
           )}
         </div>
       </div>
+
+      {/* CSS for content styling */}
+      <style>{`
+        @keyframes shimmer {
+          0% {
+            background-position: 200% 0;
+          }
+          100% {
+            background-position: -200% 0;
+          }
+        }
+        
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+        
+        h3 {
+          color: #1f2937;
+          font-size: 1.25rem;
+          font-weight: 700;
+          margin-top: 25px;
+          margin-bottom: 15px;
+        }
+        
+        ul, ol {
+          margin: 15px 0;
+          padding-left: 25px;
+        }
+        
+        li {
+          margin: 8px 0;
+          line-height: 1.6;
+        }
+      `}</style>
     </div>
   );
 };
