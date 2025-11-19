@@ -998,38 +998,6 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                     paddingTop: '20px',
                     marginTop: '20px'
                   }}>
-                    <div style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      marginBottom: '15px'
-                    }}>
-                      <div>
-                        <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '4px' }}>
-                          결제 금액
-                        </div>
-                        <div style={{ 
-                          fontSize: '1.3rem', 
-                          fontWeight: '800', 
-                          color: '#10b981'
-                        }}>
-                          ₩{(purchase.amount || 0).toLocaleString()}
-                        </div>
-                      </div>
-                      <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '4px' }}>
-                          주문번호
-                        </div>
-                        <div style={{ 
-                          fontSize: '0.85rem', 
-                          fontWeight: '600', 
-                          color: '#475569',
-                          fontFamily: 'monospace'
-                        }}>
-                          {displayOrderId !== 'N/A' ? `${displayOrderId.slice(0, 12)}...` : 'N/A'}
-                        </div>
-                      </div>
-                    </div>
 
                     {purchase.paymentMethod && (
                       <div style={{

@@ -292,23 +292,6 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
               </span>
             </div>
 
-            <div style={{
-              marginTop: '15px',
-              padding: '12px',
-              background: 'white',
-              borderRadius: '10px',
-              textAlign: 'center',
-              border: '1px solid #bae6fd'
-            }}>
-              <p style={{
-                fontSize: '0.95rem',
-                color: '#64748b',
-                margin: 0,
-                fontWeight: '600'
-              }}>
-                💰 월 {Math.floor(courseInfo.earlyBirdPrice / 12).toLocaleString()}원 (12개월 무이자 할부 가능)
-              </p>
-            </div>
           </div>
 
           {/* 혜택 안내 */}

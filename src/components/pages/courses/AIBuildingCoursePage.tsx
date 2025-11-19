@@ -461,14 +461,6 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   ₩{earlyBirdPrice.toLocaleString()}
                 </div>
                 <div style={{
-                  fontSize: '1.2rem',
-                  opacity: '0.9',
-                  marginBottom: '15px',
-                  fontWeight: '500'
-                }}>
-                  월 {Math.floor(earlyBirdPrice / 12).toLocaleString()}원 (12개월 무이자)
-                </div>
-                <div style={{
                   fontSize: '1.1rem',
                   color: '#fbbf24',
                   fontWeight: '700',

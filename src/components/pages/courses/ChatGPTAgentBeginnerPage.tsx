@@ -626,28 +626,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 filter: 'blur(80px)'
               }}></div>
 
-              {/* 할인 뱃지 */}
-              <div style={{
-                textAlign: 'center',
-                marginBottom: '25px',
-                position: 'relative',
-                zIndex: 1
-              }}>
-                <div style={{
-                  display: 'inline-block',
-                  background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-                  color: '#92400e',
-                  padding: '10px 25px',
-                  borderRadius: '30px',
-                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                  fontWeight: '800',
-                  border: '2px solid #fbbf24',
-                  boxShadow: '0 4px 15px rgba(251, 191, 36, 0.4)'
-                }}>
-                  🎉 특별 할인가
-                </div>
-              </div>
-
               {/* 가격 정보 */}
               <div style={{
                 textAlign: 'center',
@@ -656,16 +634,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 zIndex: 1
               }}>
                 <div style={{
-                  fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-                  color: '#e0f2fe',
-                  textDecoration: 'line-through',
-                  marginBottom: '10px',
-                  fontWeight: '600',
-                  opacity: 0.8
-                }}>
-                  정가 ₩150,000
-                </div>
-                <div style={{
                   fontSize: 'clamp(3.5rem, 8vw, 5rem)',
                   fontWeight: '900',
                   color: 'white',
@@ -673,19 +641,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
                   lineHeight: '1'
                 }}>
-                  ₩{coursePrice.toLocaleString()}
-                </div>
-                <div style={{
-                  display: 'inline-block',
-                  background: 'rgba(254, 243, 199, 0.2)',
-                  color: '#fef08a',
-                  padding: '8px 20px',
-                  borderRadius: '20px',
-                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                  fontWeight: '700',
-                  border: '1px solid rgba(254, 240, 138, 0.3)'
-                }}>
-                  💰 55,000원 할인
+                  ₩95,000
                 </div>
               </div>
 
@@ -1549,16 +1505,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 zIndex: 1
               }}>
                 <div style={{
-                  fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-                  color: '#e0f2fe',
-                  textDecoration: 'line-through',
-                  marginBottom: '10px',
-                  fontWeight: '600',
-                  opacity: 0.8
-                }}>
-                  정가 ₩150,000
-                </div>
-                <div style={{
                   fontSize: 'clamp(3.5rem, 8vw, 5rem)',
                   fontWeight: '900',
                   color: 'white',
@@ -1566,19 +1512,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
                   lineHeight: '1'
                 }}>
-                  ₩{coursePrice.toLocaleString()}
-                </div>
-                <div style={{
-                  display: 'inline-block',
-                  background: 'rgba(254, 243, 199, 0.2)',
-                  color: '#fef08a',
-                  padding: '8px 20px',
-                  borderRadius: '20px',
-                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                  fontWeight: '700',
-                  border: '1px solid rgba(254, 240, 138, 0.3)'
-                }}>
-                  💰 55,000원 할인
+                  ₩95,000
                 </div>
               </div>
 
