@@ -126,8 +126,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     ]
   };
 
-  const coursePrice = 95000;
-
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
