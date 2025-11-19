@@ -140,28 +140,28 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             title: '바이럴 마케팅 에이전트 - 조회수 폭발 컨텐츠 생성', 
             subtitle: '실습: Google OPAL로 트렌드 분석 + 바이럴 영상 자동 제작',
             hasQuiz: false,
-            launchDate: '2025-11-19 23:00'
+            launchDate: '2025-11-20 23:00'
           },
           { 
             day: 8, 
             title: '음성 컨텐츠 에이전트 - ASMR & 지식 나눔 영상 생성', 
             subtitle: '실습: Google OPAL로 오디오북, 명상, 교육 컨텐츠 자동 제작',
             hasQuiz: false,
-            launchDate: '2025-11-20 19:00'
+            launchDate: '2025-11-21 19:00'
           },
           { 
             day: 9, 
             title: '대량 생산 에이전트 - 한 번에 15개 영상 자동 생성', 
             subtitle: '실습: 배치 처리 시스템으로 대량 컨텐츠 자동화',
             hasQuiz: false,
-            launchDate: '2025-11-21 19:00'
+            launchDate: '2025-11-22 19:00'
           },
           { 
             day: 10, 
             title: '완전 자동화 수익 시스템 - 분석부터 업로드까지', 
             subtitle: '최종 프로젝트: 트렌드 분석 → 생성 → 편집 → 유튜브 업로드 완전 자동화',
             hasQuiz: true,
-            launchDate: '2025-11-22 19:00'
+            launchDate: '2025-11-23 19:00'
           }
         ]
       }

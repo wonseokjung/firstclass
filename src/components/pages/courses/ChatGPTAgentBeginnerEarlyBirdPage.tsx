@@ -84,7 +84,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
         day: 7,
         title: "7강: 바이럴 마케팅 에이전트 - 조회수 폭발 컨텐츠 생성",
         hasQuiz: false,
-        launchDate: "2025-11-19 23:00",
+        launchDate: "2025-11-20 23:00",
         sections: {
           theory: "• 바이럴 컨텐츠의 5가지 핵심 요소\n• 실시간 트렌드 분석 및 활용 전략\n• 알고리즘 친화적인 컨텐츠 설계",
           practice: "• Google OPAL로 트렌드 기반 바이럴 영상 자동 생성\n• 클릭율 높이는 썸네일 자동 제작\n• 바이럴 제목/태그 최적화 시스템 구축"
@@ -95,7 +95,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
         day: 8,
         title: "8강: 음성 컨텐츠 에이전트 - ASMR & 지식 나눔 영상 생성",
         hasQuiz: false,
-        launchDate: "2025-11-20 19:00",
+        launchDate: "2025-11-21 19:00",
         sections: {
           theory: "• 음성 기반 컨텐츠 시장 분석 (ASMR, 오디오북, 명상)\n• AudioLM을 활용한 고품질 음성 생성\n• 음성 컨텐츠의 수익화 전략",
           practice: "• Google OPAL로 ASMR 영상 자동 생성\n• 오디오북 및 지식 나눔 컨텐츠 제작 자동화\n• 명상/교육 음성 컨텐츠 시스템 구축"
@@ -106,7 +106,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
         day: 9,
         title: "9강: 대량 생산 에이전트 - 한 번에 15개 영상 자동 생성",
         hasQuiz: false,
-        launchDate: "2025-11-21 19:00",
+        launchDate: "2025-11-22 19:00",
         sections: {
           theory: "• 배치 처리(Batch Processing) 시스템의 원리\n• 대량 컨텐츠 생성 시 품질 관리 방법\n• 효율적인 리소스 관리 및 최적화 전략",
           practice: "• 배치 처리 에이전트 워크플로우 설계\n• 15개 영상을 동시에 생성하는 시스템 개발\n• 대량 생산 자동화로 컨텐츠 확장성 확보"
@@ -117,7 +117,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
         day: 10,
         title: "10강: 완전 자동화 수익 시스템 - 분석부터 업로드까지",
         hasQuiz: true,
-        launchDate: "2025-11-22 19:00",
+        launchDate: "2025-11-23 19:00",
         sections: {
           theory: "• End-to-End 완전 자동화 시스템 설계\n• 트렌드 분석 → 컨텐츠 생성 → 편집 → 업로드 전체 파이프라인\n• 지속 가능한 수익 창출 전략 및 확장 방법",
           practice: "• 트렌드 자동 분석 에이전트 구축\n• 컨텐츠 생성부터 유튜브 자동 업로드까지 완전 연결\n• 최종 프로젝트: 완전 자동화 유튜브 수익 시스템 완성"
