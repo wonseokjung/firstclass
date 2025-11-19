@@ -69,7 +69,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack }) => {
               margin: 0,
               fontWeight: '700'
             }}>
-              2025년 11월 19일 오후 7시
+              2025년 11월 20일 오후 11시
             </p>
           </div>
           <p style={{
