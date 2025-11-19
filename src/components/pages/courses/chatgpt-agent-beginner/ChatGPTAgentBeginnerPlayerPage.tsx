@@ -34,6 +34,29 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
 
             if ((paymentStatus && paymentStatus.isPaid) || isTestAccount) {
               setIsPaidUser(true);
+              
+              // Azure에서 완료된 강의 데이터 가져오기
+              try {
+                const enrollments = await AzureTableService.getUserEnrollmentsByEmail(parsedUserInfo.email);
+                console.log('📚 전체 수강 정보:', enrollments);
+                
+                // chatgpt-agent-beginner 또는 1002 강의 찾기
+                const targetCourse = enrollments.find((e: any) => 
+                  e.courseId === 'chatgpt-agent-beginner' || e.courseId === '1002'
+                );
+                
+                if (targetCourse && targetCourse.completedDays) {
+                  console.log('✅ 완료된 강의:', targetCourse.completedDays);
+                  setCompletedDays(new Set(targetCourse.completedDays));
+                } else {
+                  console.log('ℹ️ 완료된 강의가 없습니다.');
+                  setCompletedDays(new Set());
+                }
+              } catch (progressError) {
+                console.error('❌ 학습 진행률 조회 실패:', progressError);
+                // 진행률 조회 실패해도 강의는 볼 수 있도록 함
+                setCompletedDays(new Set());
+              }
             } else {
               // 결제하지 않은 사용자는 결제 페이지로 리다이렉트
               alert('이 강의는 결제 후 수강하실 수 있습니다.');
@@ -60,14 +83,6 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
     };
 
     checkAuthStatus();
-  }, []);
-
-  // localStorage에서 완료된 강의 불러오기
-  useEffect(() => {
-    const saved = localStorage.getItem('completed-days-chatgpt-agent');
-    if (saved) {
-      setCompletedDays(new Set(JSON.parse(saved)));
-    }
   }, []);
 
   // 강의 데이터
@@ -125,7 +140,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             title: '바이럴 마케팅 에이전트 - 조회수 폭발 컨텐츠 생성', 
             subtitle: '실습: Google OPAL로 트렌드 분석 + 바이럴 영상 자동 제작',
             hasQuiz: false,
-            launchDate: '2025-11-19 19:00'
+            launchDate: '2025-11-19 23:00'
           },
           { 
             day: 8, 
