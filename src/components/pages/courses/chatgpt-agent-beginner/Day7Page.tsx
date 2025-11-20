@@ -78,8 +78,11 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack }) => {
             margin: 0,
             lineHeight: '1.6'
           }}>
-            7강 강의가 곧 공개됩니다.<br/>
-            조금만 기다려주세요! 🎬
+            <strong style={{ fontSize: '1.05rem', color: '#92400e' }}>🔥 특별 업데이트!</strong><br/>
+            유튜브 추천 알고리즘 공식 논문을 활용한<br/>
+            <strong>"알고리즘 해킹 에이전트"</strong> 강의로 재촬영 중입니다!<br/>
+            <br/>
+            더 강력한 내용으로 곧 공개됩니다! 🚀
           </p>
         </div>
 
