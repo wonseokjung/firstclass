@@ -590,7 +590,16 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               maxWidth: '1200px',
               margin: '0 auto'
             }}>
-              {userStats.enrolledCourses.map((course, index) => (
+              {userStats.enrolledCourses.map((course, index) => {
+                // 강의 이름 매핑 (옛날 이름 → 새 이름)
+                const courseTitleMap: { [key: string]: string } = {
+                  'ChatGPT AI AGENT 비기너편': 'Google Opal 유튜브 수익화 에이전트 기초',
+                  'AI 건물 짓기 - 디지털 건축가 과정': 'AI 건물 짓기 - 디지털 건축가 과정'
+                };
+
+                const displayTitle = courseTitleMap[course.title] || course.title;
+
+                return (
                 <div key={index} style={{
                   background: 'white',
                   border: 'none',
@@ -620,7 +629,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                         margin: 0,
                         flex: 1
                       }}>
-                        {course.title}
+                        {displayTitle}
                       </h3>
                       <span style={{
                         padding: '4px 12px',
@@ -762,7 +771,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                     {course.status === 'completed' ? '다시 보기' : '이어서 학습'}
                   </button>
                 </div>
-              ))}
+              );
+              })}
             </div>
           ) : (
             <div style={{
@@ -881,7 +891,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               margin: '0 auto'
             }}>
               {userStats.purchasedCourses.map((purchase, index) => {
-                // 강의 정보 매핑
+                // 강의 정보 매핑 (courseId 기반)
                 const courseInfoMap: { [key: string]: string } = {
                   '1002': 'Google Opal 유튜브 수익화 에이전트 기초',
                   'chatgpt-agent-beginner': 'Google Opal 유튜브 수익화 에이전트 기초',
@@ -892,12 +902,18 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   'prompt-engineering': 'AI 건물 짓기 - 디지털 건축가 과정'
                 };
 
-                // 강의명 결정
-                const displayCourseName = purchase.courseName 
-                  || purchase.courseTitle 
-                  || purchase.orderName
-                  || courseInfoMap[purchase.courseId]
-                  || '강의';
+                // 옛날 이름 매핑 (title 기반)
+                const titleMap: { [key: string]: string } = {
+                  'ChatGPT AI AGENT 비기너편': 'Google Opal 유튜브 수익화 에이전트 기초'
+                };
+
+                // 강의명 결정 (우선순위: courseId 매핑 > 저장된 이름의 매핑 > 저장된 이름 그대로)
+                let displayCourseName = courseInfoMap[purchase.courseId];
+                
+                if (!displayCourseName) {
+                  const savedName = purchase.courseName || purchase.courseTitle || purchase.orderName;
+                  displayCourseName = savedName ? (titleMap[savedName] || savedName) : '강의';
+                }
                 
                 // 디버깅: 강의명이 어떻게 결정되었는지 로그
                 console.log(`🎯 강의 ${index + 1} 이름 결정:`, {
