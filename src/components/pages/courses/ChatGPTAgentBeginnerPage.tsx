@@ -131,7 +131,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
       try {
         const storedUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
 
-        console.log('🔍 ChatGPT AI AGENT 비기너편 페이지 - 로그인 상태 체크:', {
+        console.log('🔍 Google Opal 유튜브 수익화 에이전트 페이지 - 로그인 상태 체크:', {
           sessionStorage: storedUserInfo ? 'exists' : 'null'
         });
 
@@ -212,7 +212,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     <div className="masterclass-container">
       <NavigationBar
         onBack={onBack}
-        breadcrumbText="ChatGPT AI AGENT 비기너편"
+        breadcrumbText="Google Opal 유튜브 수익화 에이전트"
       />
 
 
@@ -287,242 +287,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
               />
-            </div>
-          </div>
-
-          {/* 🎁 라이브 Q&A 섹션 - 특별 혜택 */}
-          <div style={{
-            background: 'linear-gradient(135deg, #1e40af, #0ea5e9)',
-            borderRadius: 'clamp(12px, 3vw, 20px)',
-            padding: 'clamp(20px, 5vw, 50px)',
-            marginBottom: 'clamp(40px, 8vw, 60px)',
-            boxShadow: '0 10px 40px rgba(14, 165, 233, 0.3)',
-            border: 'clamp(2px, 0.5vw, 3px) solid #93c5fd',
-            position: 'relative',
-            overflow: 'hidden',
-            margin: '0 clamp(10px, 3vw, 20px) clamp(40px, 8vw, 60px)'
-          }}>
-            {/* 배경 장식 */}
-            <div style={{
-              position: 'absolute',
-              top: '-50px',
-              right: '-50px',
-              width: 'clamp(150px, 30vw, 200px)',
-              height: 'clamp(150px, 30vw, 200px)',
-              background: 'rgba(255, 255, 255, 0.1)',
-              borderRadius: '50%',
-              filter: 'blur(60px)'
-            }}></div>
-
-            <div style={{
-              textAlign: 'center',
-              marginBottom: '40px',
-              position: 'relative',
-              zIndex: 1
-            }}>
-              <div style={{
-                display: 'inline-block',
-                background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-                color: '#92400e',
-                padding: '8px 20px',
-                borderRadius: '25px',
-                fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
-                fontWeight: '800',
-                marginBottom: '20px',
-                border: '2px solid #fbbf24',
-                boxShadow: '0 4px 15px rgba(251, 191, 36, 0.3)'
-              }}>
-                🎁 수강생 특별 혜택
-              </div>
-
-              <h2 style={{
-                fontSize: 'clamp(2rem, 4vw, 2.8rem)',
-                fontWeight: '900',
-                color: 'white',
-                marginBottom: '20px',
-                textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)'
-              }}>
-                📺 매일 저녁 8시, 라이브 Q&A
-              </h2>
-
-              <p style={{
-                fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-                color: '#e0f2fe',
-                fontWeight: '600',
-                lineHeight: '1.8',
-                maxWidth: '800px',
-                margin: '0 auto 30px auto'
-              }}>
-                강의 수강자에게 <strong style={{ color: '#fef08a', textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)' }}>우선 질문권</strong>이 주어집니다!<br />
-                쉬운 질문도, 어려운 질문도 모두 환영합니다 🙌
-              </p>
-            </div>
-
-            {/* 이미지 */}
-            <div style={{
-              borderRadius: '15px',
-              overflow: 'hidden',
-              marginBottom: '30px',
-              boxShadow: '0 10px 40px rgba(0, 0, 0, 0.4)',
-              border: '3px solid rgba(255, 255, 255, 0.2)'
-            }}>
-              <img
-                src="/images/agent_beginer/liveqanda.png"
-                alt="매일 저녁 8시 라이브 Q&A"
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  display: 'block'
-                }}
-              />
-            </div>
-
-            {/* 혜택 상세 */}
-            <div style={{
-              background: 'rgba(255, 255, 255, 0.95)',
-              borderRadius: '15px',
-              padding: 'clamp(25px, 4vw, 35px)',
-              marginBottom: '30px'
-            }}>
-              <h3 style={{
-                fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)',
-                fontWeight: '800',
-                color: '#1e40af',
-                marginBottom: '25px',
-                textAlign: 'center'
-              }}>
-                ✨ 라이브 Q&A 혜택
-              </h3>
-
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))',
-                gap: 'clamp(15px, 3vw, 20px)'
-              }}>
-                <div style={{
-                  background: 'linear-gradient(135deg, #eff6ff, #dbeafe)',
-                  padding: '20px',
-                  borderRadius: '12px',
-                  border: '2px solid #93c5fd',
-                  boxShadow: '0 4px 15px rgba(14, 165, 233, 0.1)'
-                }}>
-                  <div style={{ fontSize: '2rem', marginBottom: '10px' }}>🎯</div>
-                  <h4 style={{
-                    fontSize: '1.1rem',
-                    fontWeight: '700',
-                    color: '#1e40af',
-                    marginBottom: '10px'
-                  }}>
-                    우선 질문권
-                  </h4>
-                  <p style={{
-                    fontSize: '0.95rem',
-                    color: '#1e3a8a',
-                    lineHeight: '1.6',
-                    margin: 0
-                  }}>
-                    수강생의 질문을 가장 먼저 답변해드립니다
-                  </p>
-                </div>
-
-                <div style={{
-                  background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-                  padding: '20px',
-                  borderRadius: '12px',
-                  border: '2px solid #fbbf24',
-                  boxShadow: '0 4px 15px rgba(251, 191, 36, 0.2)'
-                }}>
-                  <div style={{ fontSize: '2rem', marginBottom: '10px' }}>🖥️</div>
-                  <h4 style={{
-                    fontSize: '1.1rem',
-                    fontWeight: '700',
-                    color: '#92400e',
-                    marginBottom: '10px'
-                  }}>
-                    화면 공유 1:1 코칭
-                  </h4>
-                  <p style={{
-                    fontSize: '0.95rem',
-                    color: '#78350f',
-                    lineHeight: '1.6',
-                    margin: 0
-                  }}>
-                    막히는 부분은 화면을 보며<br />
-                    자세하게 해결해드립니다
-                  </p>
-                </div>
-
-                <div style={{
-                  background: 'linear-gradient(135deg, #eff6ff, #dbeafe)',
-                  padding: '20px',
-                  borderRadius: '12px',
-                  border: '2px solid #93c5fd',
-                  boxShadow: '0 4px 15px rgba(14, 165, 233, 0.1)'
-                }}>
-                  <div style={{ fontSize: '2rem', marginBottom: '10px' }}>💬</div>
-                  <h4 style={{
-                    fontSize: '1.1rem',
-                    fontWeight: '700',
-                    color: '#1e40af',
-                    marginBottom: '10px'
-                  }}>
-                    모든 질문 환영
-                  </h4>
-                  <p style={{
-                    fontSize: '0.95rem',
-                    color: '#1e3a8a',
-                    lineHeight: '1.6',
-                    margin: 0
-                  }}>
-                    쉬운 질문도 어려운 질문도 모두 가능
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* YouTube 링크 버튼 */}
-            <div style={{
-              textAlign: 'center'
-            }}>
-              <a
-                href="https://www.youtube.com/@CONNECT-AI-LAB"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  background: 'white',
-                  color: '#dc2626',
-                  padding: '18px 40px',
-                  fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)',
-                  fontWeight: '800',
-                  borderRadius: '12px',
-                  textDecoration: 'none',
-                  boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
-                  transition: 'all 0.3s ease',
-                  border: '3px solid #fca5a5'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow = '0 12px 35px rgba(0, 0, 0, 0.4)';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.3)';
-                }}
-              >
-                <span style={{ fontSize: '1.8rem' }}>📺</span>
-                커넥트AI LAB 라이브 참여하기
-              </a>
-              <p style={{
-                color: '#fef2f2',
-                fontSize: '0.95rem',
-                marginTop: '15px',
-                fontWeight: '600'
-              }}>
-                매일 저녁 8시, 유튜브 라이브로 만나요! 🎉
-              </p>
             </div>
           </div>
 
@@ -605,6 +369,246 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               }}>
                 💡 커리큘럼은 변경될 수 있습니다.
               </p>
+            </div>
+
+            {/* 🎁 라이브 Q&A 섹션 - 특별 혜택 */}
+            <div style={{
+              background: 'linear-gradient(135deg, #1e40af, #0ea5e9)',
+              borderRadius: 'clamp(12px, 3vw, 20px)',
+              padding: 'clamp(30px, 5vw, 50px) clamp(20px, 4vw, 40px)',
+              marginBottom: 'clamp(40px, 8vw, 60px)',
+              boxShadow: '0 10px 40px rgba(14, 165, 233, 0.3)',
+              border: 'clamp(2px, 0.5vw, 3px) solid #93c5fd',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              {/* 배경 장식 */}
+              <div style={{
+                position: 'absolute',
+                top: '-50px',
+                right: '-50px',
+                width: 'clamp(150px, 30vw, 200px)',
+                height: 'clamp(150px, 30vw, 200px)',
+                background: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: '50%',
+                filter: 'blur(60px)'
+              }}></div>
+
+              <div style={{
+                textAlign: 'center',
+                marginBottom: 'clamp(30px, 5vw, 40px)',
+                position: 'relative',
+                zIndex: 1
+              }}>
+                <div style={{
+                  display: 'inline-block',
+                  background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                  color: '#92400e',
+                  padding: 'clamp(6px, 1.5vw, 8px) clamp(16px, 4vw, 20px)',
+                  borderRadius: '25px',
+                  fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
+                  fontWeight: '800',
+                  marginBottom: 'clamp(15px, 3vw, 20px)',
+                  border: '2px solid #fbbf24',
+                  boxShadow: '0 4px 15px rgba(251, 191, 36, 0.3)'
+                }}>
+                  🎁 수강생 특별 혜택
+                </div>
+
+                <h2 style={{
+                  fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
+                  fontWeight: '900',
+                  color: 'white',
+                  marginBottom: 'clamp(15px, 3vw, 20px)',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)'
+                }}>
+                  📺 매일 저녁 8시, 라이브 Q&A
+                </h2>
+
+                <p style={{
+                  fontSize: 'clamp(1rem, 2.5vw, 1.4rem)',
+                  color: '#e0f2fe',
+                  fontWeight: '600',
+                  lineHeight: '1.8',
+                  maxWidth: '800px',
+                  margin: '0 auto'
+                }}>
+                  강의 수강자에게 <strong style={{ color: '#fef08a', textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)' }}>우선 질문권</strong>이 주어집니다!<br />
+                  쉬운 질문도, 어려운 질문도 모두 환영합니다 🙌
+                </p>
+              </div>
+
+              {/* 이미지 */}
+              <div style={{
+                borderRadius: 'clamp(12px, 2vw, 15px)',
+                overflow: 'hidden',
+                marginBottom: 'clamp(25px, 4vw, 30px)',
+                boxShadow: '0 10px 40px rgba(0, 0, 0, 0.4)',
+                border: '3px solid rgba(255, 255, 255, 0.2)',
+                position: 'relative',
+                zIndex: 1
+              }}>
+                <img
+                  src="/images/agent_beginer/liveqanda.png"
+                  alt="매일 저녁 8시 라이브 Q&A"
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block'
+                  }}
+                />
+              </div>
+
+              {/* 혜택 상세 */}
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: 'clamp(12px, 2vw, 15px)',
+                padding: 'clamp(20px, 4vw, 35px)',
+                marginBottom: 'clamp(25px, 4vw, 30px)',
+                position: 'relative',
+                zIndex: 1
+              }}>
+                <h3 style={{
+                  fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
+                  fontWeight: '800',
+                  color: '#1e40af',
+                  marginBottom: 'clamp(20px, 4vw, 25px)',
+                  textAlign: 'center'
+                }}>
+                  ✨ 라이브 Q&A 혜택
+                </h3>
+
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
+                  gap: 'clamp(15px, 3vw, 20px)'
+                }}>
+                  <div style={{
+                    background: 'linear-gradient(135deg, #eff6ff, #dbeafe)',
+                    padding: 'clamp(16px, 3vw, 20px)',
+                    borderRadius: '12px',
+                    border: '2px solid #93c5fd',
+                    boxShadow: '0 4px 15px rgba(14, 165, 233, 0.1)'
+                  }}>
+                    <div style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', marginBottom: '10px' }}>🎯</div>
+                    <h4 style={{
+                      fontSize: 'clamp(1rem, 2vw, 1.1rem)',
+                      fontWeight: '700',
+                      color: '#1e40af',
+                      marginBottom: '10px'
+                    }}>
+                      우선 질문권
+                    </h4>
+                    <p style={{
+                      fontSize: 'clamp(0.9rem, 1.8vw, 0.95rem)',
+                      color: '#1e3a8a',
+                      lineHeight: '1.6',
+                      margin: 0
+                    }}>
+                      수강생의 질문을 가장 먼저 답변해드립니다
+                    </p>
+                  </div>
+
+                  <div style={{
+                    background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                    padding: 'clamp(16px, 3vw, 20px)',
+                    borderRadius: '12px',
+                    border: '2px solid #fbbf24',
+                    boxShadow: '0 4px 15px rgba(251, 191, 36, 0.2)'
+                  }}>
+                    <div style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', marginBottom: '10px' }}>🖥️</div>
+                    <h4 style={{
+                      fontSize: 'clamp(1rem, 2vw, 1.1rem)',
+                      fontWeight: '700',
+                      color: '#92400e',
+                      marginBottom: '10px'
+                    }}>
+                      화면 공유 1:1 코칭
+                    </h4>
+                    <p style={{
+                      fontSize: 'clamp(0.9rem, 1.8vw, 0.95rem)',
+                      color: '#78350f',
+                      lineHeight: '1.6',
+                      margin: 0
+                    }}>
+                      막히는 부분은 화면을 보며 자세하게 해결해드립니다
+                    </p>
+                  </div>
+
+                  <div style={{
+                    background: 'linear-gradient(135deg, #eff6ff, #dbeafe)',
+                    padding: 'clamp(16px, 3vw, 20px)',
+                    borderRadius: '12px',
+                    border: '2px solid #93c5fd',
+                    boxShadow: '0 4px 15px rgba(14, 165, 233, 0.1)'
+                  }}>
+                    <div style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', marginBottom: '10px' }}>💬</div>
+                    <h4 style={{
+                      fontSize: 'clamp(1rem, 2vw, 1.1rem)',
+                      fontWeight: '700',
+                      color: '#1e40af',
+                      marginBottom: '10px'
+                    }}>
+                      모든 질문 환영
+                    </h4>
+                    <p style={{
+                      fontSize: 'clamp(0.9rem, 1.8vw, 0.95rem)',
+                      color: '#1e3a8a',
+                      lineHeight: '1.6',
+                      margin: 0
+                    }}>
+                      쉬운 질문도 어려운 질문도 모두 가능
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* YouTube 링크 버튼 */}
+              <div style={{
+                textAlign: 'center',
+                position: 'relative',
+                zIndex: 1
+              }}>
+                <a
+                  href="https://www.youtube.com/@CONNECT-AI-LAB"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 'clamp(8px, 2vw, 12px)',
+                    background: 'white',
+                    color: '#dc2626',
+                    padding: 'clamp(14px, 3vw, 18px) clamp(30px, 6vw, 40px)',
+                    fontSize: 'clamp(1rem, 2.5vw, 1.3rem)',
+                    fontWeight: '800',
+                    borderRadius: '12px',
+                    textDecoration: 'none',
+                    boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
+                    transition: 'all 0.3s ease',
+                    border: '3px solid #fca5a5'
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 12px 35px rgba(0, 0, 0, 0.4)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.3)';
+                  }}
+                >
+                  <span style={{ fontSize: 'clamp(1.5rem, 3vw, 1.8rem)' }}>📺</span>
+                  커넥트AI LAB 라이브 참여하기
+                </a>
+                <p style={{
+                  color: '#fef2f2',
+                  fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
+                  marginTop: 'clamp(12px, 2vw, 15px)',
+                  fontWeight: '600'
+                }}>
+                  매일 저녁 8시, 유튜브 라이브로 만나요! 🎉
+                </p>
+              </div>
             </div>
 
             {/* 가격 & CTA 박스 - 강력한 시각적 강조 */}
@@ -756,31 +760,33 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
           {/* 🔥 핵심 차별점: Living Template 섹션 */}
           <div style={{
             background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
-            borderRadius: '20px',
+            borderRadius: 'clamp(16px, 3vw, 20px)',
             padding: 'clamp(30px, 5vw, 50px) clamp(20px, 4vw, 40px)',
-            marginBottom: '60px',
+            marginBottom: 'clamp(40px, 6vw, 60px)',
             boxShadow: '0 10px 30px rgba(14, 165, 233, 0.1)',
             border: '2px solid #bae6fd',
             textAlign: 'center'
           }}>
             <div style={{
-              fontSize: '3rem',
-              marginBottom: '20px'
+              fontSize: 'clamp(2.5rem, 6vw, 3rem)',
+              marginBottom: 'clamp(15px, 3vw, 20px)'
             }}>🧬</div>
             <h2 style={{
-              fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
+              fontSize: 'clamp(1.6rem, 3vw, 2.5rem)',
               fontWeight: '800',
               color: '#0369a1',
-              marginBottom: '20px'
+              marginBottom: 'clamp(15px, 3vw, 20px)',
+              lineHeight: '1.3'
             }}>
               계속 진화하는 "Living Template"
             </h2>
             <p style={{
-              fontSize: 'clamp(1.1rem, 2vw, 1.3rem)',
+              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
               color: '#0c4a6e',
               lineHeight: '1.8',
               maxWidth: '800px',
-              margin: '0 auto 40px auto'
+              margin: '0 auto clamp(30px, 5vw, 40px) auto',
+              padding: '0 clamp(10px, 2vw, 20px)'
             }}>
               강의만 팔고 끝나는 것이 아닙니다.<br />
               우리가 연구한 <strong>최신 OPAL 에이전트 템플릿 링크</strong>를 공유해드립니다.<br />
@@ -789,61 +795,117 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-              gap: '20px',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
+              gap: 'clamp(15px, 3vw, 25px)',
               maxWidth: '1000px',
               margin: '0 auto'
             }}>
+              {/* Card 1: 링크 공유 방식 */}
               <div style={{
                 background: 'white',
-                padding: '25px',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                gap: '25px',
-                maxWidth: '1000px',
-                margin: '0 auto'
+                padding: 'clamp(20px, 4vw, 30px)',
+                borderRadius: 'clamp(14px, 2vw, 18px)',
+                boxShadow: '0 4px 15px rgba(0,0,0,0.06)',
+                border: '2px solid #e0f2fe',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseOver={(e) => { 
+                e.currentTarget.style.transform = 'translateY(-5px)'; 
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.12)'; 
+              }} 
+              onMouseOut={(e) => { 
+                e.currentTarget.style.transform = 'translateY(0)'; 
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.06)'; 
               }}>
-                {/* Card 1: 링크 공유 방식 */}
-                <div style={{
-                  background: 'white',
-                  padding: '30px',
-                  borderRadius: '18px',
-                  boxShadow: '0 8px 25px rgba(0,0,0,0.08)',
-                  border: '1px solid #e0f2fe',
-                  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                  cursor: 'pointer'
-                }} onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 12px 35px rgba(0,0,0,0.12)'; }} onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.08)'; }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>🔗</div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: '800', marginBottom: '10px', color: '#1f2937' }}>링크 공유 방식</h3>
-                  <p style={{ color: '#64748b', lineHeight: '1.6', fontSize: '1rem' }}>복잡한 설치 과정 없이,<br />공유받은 링크 하나로<br />즉시 에이전트 복제!</p>
-                </div>
-                {/* Card 2: 실시간 업데이트 */}
-                <div style={{
-                  background: 'white',
-                  padding: '30px',
-                  borderRadius: '18px',
-                  boxShadow: '0 8px 25px rgba(0,0,0,0.08)',
-                  border: '1px solid #e0f2fe',
-                  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                  cursor: 'pointer'
-                }} onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 12px 35px rgba(0,0,0,0.12)'; }} onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.08)'; }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>🔄</div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: '800', marginBottom: '10px', color: '#1f2937' }}>실시간 업데이트</h3>
-                  <p style={{ color: '#64748b', lineHeight: '1.6', fontSize: '1rem' }}>최신 프롬프트와 로직이<br />자동으로 반영되어<br />항상 최적의 성능 유지!</p>
-                </div>
-                {/* Card 3: 수익화 최적화 */}
-                <div style={{
-                  background: 'white',
-                  padding: '30px',
-                  borderRadius: '18px',
-                  boxShadow: '0 8px 25px rgba(0,0,0,0.08)',
-                  border: '1px solid #e0f2fe',
-                  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                  cursor: 'pointer'
-                }} onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 12px 35px rgba(0,0,0,0.12)'; }} onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.08)'; }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>💰</div>
-                  <h3 style={{ fontSize: '1.3rem', fontWeight: '800', marginBottom: '10px', color: '#1f2937' }}>수익화 최적화</h3>
-                  <p style={{ color: '#64748b', lineHeight: '1.6', fontSize: '1rem' }}>실제 수익 창출에 특화된<br />검증된 템플릿 제공으로<br />빠른 성과 달성!</p>
-                </div>
+                <div style={{ fontSize: 'clamp(2rem, 5vw, 2.5rem)', marginBottom: 'clamp(10px, 2vw, 15px)' }}>🔗</div>
+                <h3 style={{ 
+                  fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)', 
+                  fontWeight: '800', 
+                  marginBottom: 'clamp(8px, 1.5vw, 10px)', 
+                  color: '#1f2937' 
+                }}>
+                  링크 공유 방식
+                </h3>
+                <p style={{ 
+                  color: '#64748b', 
+                  lineHeight: '1.6', 
+                  fontSize: 'clamp(0.9rem, 1.8vw, 1rem)',
+                  margin: 0 
+                }}>
+                  복잡한 설치 과정 없이,<br />공유받은 링크 하나로<br />즉시 에이전트 복제!
+                </p>
+              </div>
+
+              {/* Card 2: 실시간 업데이트 */}
+              <div style={{
+                background: 'white',
+                padding: 'clamp(20px, 4vw, 30px)',
+                borderRadius: 'clamp(14px, 2vw, 18px)',
+                boxShadow: '0 4px 15px rgba(0,0,0,0.06)',
+                border: '2px solid #e0f2fe',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseOver={(e) => { 
+                e.currentTarget.style.transform = 'translateY(-5px)'; 
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.12)'; 
+              }} 
+              onMouseOut={(e) => { 
+                e.currentTarget.style.transform = 'translateY(0)'; 
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.06)'; 
+              }}>
+                <div style={{ fontSize: 'clamp(2rem, 5vw, 2.5rem)', marginBottom: 'clamp(10px, 2vw, 15px)' }}>🔄</div>
+                <h3 style={{ 
+                  fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)', 
+                  fontWeight: '800', 
+                  marginBottom: 'clamp(8px, 1.5vw, 10px)', 
+                  color: '#1f2937' 
+                }}>
+                  실시간 업데이트
+                </h3>
+                <p style={{ 
+                  color: '#64748b', 
+                  lineHeight: '1.6', 
+                  fontSize: 'clamp(0.9rem, 1.8vw, 1rem)',
+                  margin: 0 
+                }}>
+                  최신 프롬프트와 로직이<br />자동으로 반영되어<br />항상 최적의 성능 유지!
+                </p>
+              </div>
+
+              {/* Card 3: 수익화 최적화 */}
+              <div style={{
+                background: 'white',
+                padding: 'clamp(20px, 4vw, 30px)',
+                borderRadius: 'clamp(14px, 2vw, 18px)',
+                boxShadow: '0 4px 15px rgba(0,0,0,0.06)',
+                border: '2px solid #e0f2fe',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseOver={(e) => { 
+                e.currentTarget.style.transform = 'translateY(-5px)'; 
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.12)'; 
+              }} 
+              onMouseOut={(e) => { 
+                e.currentTarget.style.transform = 'translateY(0)'; 
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.06)'; 
+              }}>
+                <div style={{ fontSize: 'clamp(2rem, 5vw, 2.5rem)', marginBottom: 'clamp(10px, 2vw, 15px)' }}>💰</div>
+                <h3 style={{ 
+                  fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)', 
+                  fontWeight: '800', 
+                  marginBottom: 'clamp(8px, 1.5vw, 10px)', 
+                  color: '#1f2937' 
+                }}>
+                  수익화 최적화
+                </h3>
+                <p style={{ 
+                  color: '#64748b', 
+                  lineHeight: '1.6', 
+                  fontSize: 'clamp(0.9rem, 1.8vw, 1rem)',
+                  margin: 0 
+                }}>
+                  실제 수익 창출에 특화된<br />검증된 템플릿 제공으로<br />빠른 성과 달성!
+                </p>
               </div>
             </div>
 

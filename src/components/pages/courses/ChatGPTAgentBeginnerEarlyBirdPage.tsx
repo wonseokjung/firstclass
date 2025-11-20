@@ -133,7 +133,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
       try {
         const storedUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
 
-        console.log('🔍 ChatGPT AI AGENT 비기너편 페이지 - 로그인 상태 체크:', {
+        console.log('🔍 Google Opal 유튜브 수익화 에이전트 페이지 - 로그인 상태 체크:', {
           sessionStorage: storedUserInfo ? 'exists' : 'null'
         });
 
@@ -214,7 +214,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
     <div className="masterclass-container">
       <NavigationBar
         onBack={onBack}
-        breadcrumbText="ChatGPT AI AGENT 비기너편 (얼리버드)"
+        breadcrumbText="Google Opal 유튜브 수익화 에이전트 (얼리버드)"
       />
 
 

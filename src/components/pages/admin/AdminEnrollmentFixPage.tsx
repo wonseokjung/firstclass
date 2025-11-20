@@ -472,7 +472,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
       await AzureTableService.addPurchaseAndEnrollmentToUser({
         email: payment.realEmail,
         courseId: '1002',
-        title: 'ChatGPT AI AGENT 비기너편',
+        title: 'Google Opal 유튜브 수익화 에이전트 기초',
         amount: payment.amount,
         paymentMethod: 'card',
         orderId: payment.orderId,

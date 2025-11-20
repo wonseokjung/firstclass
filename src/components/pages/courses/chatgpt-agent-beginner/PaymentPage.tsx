@@ -21,7 +21,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
 
   const courseInfo = {
     id: '1002',
-    title: 'ChatGPT AI AGENT 비기너편',
+    title: 'Google Opal 유튜브 수익화 에이전트 기초',
     subtitle: '10일 완성, 수익화하는 인공지능 에이전트 만들기',
     originalPrice: isEarlyBird ? 95000 : 150000,
     earlyBirdPrice: isEarlyBird ? 45000 : 95000,
