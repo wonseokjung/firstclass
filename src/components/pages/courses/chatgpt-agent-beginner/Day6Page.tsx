@@ -917,6 +917,47 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
               : '강의를 수강한 후 버튼을 눌러주세요.'}
           </p>
           
+          {/* 7강 업데이트 안내 */}
+          <div style={{
+            background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+            borderRadius: '12px',
+            padding: '20px',
+            marginBottom: '20px',
+            border: '2px solid #fbbf24'
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              marginBottom: '12px'
+            }}>
+              <span style={{ fontSize: '1.5rem' }}>📢</span>
+              <h4 style={{
+                fontSize: '1.2rem',
+                fontWeight: '800',
+                color: '#92400e',
+                margin: 0
+              }}>
+                7강 특별 업데이트 안내
+              </h4>
+            </div>
+            <p style={{
+              fontSize: '1rem',
+              color: '#78350f',
+              lineHeight: '1.7',
+              margin: 0
+            }}>
+              <strong>🔥 유튜브 추천 알고리즘 공식 논문</strong>을 활용한 새로운 콘텐츠로 업그레이드 중입니다!<br/>
+              <br/>
+              <strong style={{ color: '#92400e' }}>7강: 알고리즘 해킹 에이전트</strong><br/>
+              • 유튜브 추천 시스템 논문 AI 학습<br/>
+              • 논문 기반 바이럴 영상 자동 생성<br/>
+              • 알고리즘 친화적 콘텐츠 최적화<br/>
+              <br/>
+              더 강력한 내용으로 재촬영 후 곧 공개 예정입니다! 🚀
+            </p>
+          </div>
+
           {!isDayCompleted ? (
             <button
               onClick={handleCompleteDay}
