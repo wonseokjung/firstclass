@@ -69,20 +69,26 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack }) => {
               margin: 0,
               fontWeight: '700'
             }}>
-              2025년 11월 20일 오후 11시
+              2025년 11월 21일 오후 5시
             </p>
           </div>
           <p style={{
             color: '#78350f',
             fontSize: '0.95rem',
             margin: 0,
-            lineHeight: '1.6'
+            lineHeight: '1.7'
           }}>
-            <strong style={{ fontSize: '1.05rem', color: '#92400e' }}>🔥 특별 업데이트!</strong><br/>
-            유튜브 추천 알고리즘 공식 논문을 활용한<br/>
-            <strong>"알고리즘 해킹 에이전트"</strong> 강의로 재촬영 중입니다!<br/>
+            <strong style={{ fontSize: '1.05rem', color: '#92400e' }}>📢 중요 업데이트 안내</strong><br/>
             <br/>
-            더 강력한 내용으로 곧 공개됩니다! 🚀
+            최신 유튜브 추천 알고리즘 논문이 공개되어,<br/>
+            이를 반영한 새로운 내용으로 7강을 재촬영하였습니다.<br/>
+            <br/>
+            <strong style={{ color: '#92400e' }}>▸ 7강: 알고리즘 해킹 에이전트</strong><br/>
+            - 유튜브 추천 시스템 최신 논문 분석<br/>
+            - AI가 논문을 학습하여 바이럴 영상 생성<br/>
+            - 알고리즘 친화적 콘텐츠 자동 최적화<br/>
+            <br/>
+            <strong style={{ color: '#0369a1' }}>2025년 11월 21일 오후 5시 공개 예정</strong>
           </p>
         </div>
 
