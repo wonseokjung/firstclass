@@ -1867,6 +1867,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 };
