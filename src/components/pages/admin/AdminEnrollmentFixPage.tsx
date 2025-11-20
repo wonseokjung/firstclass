@@ -22,10 +22,21 @@ const AdminEnrollmentFixPage: React.FC = () => {
   const [allUsers, setAllUsers] = useState<any[]>([]);
   const [showUserTable, setShowUserTable] = useState(false);
   const [payments, setPayments] = useState<Payment[]>([
-    // 최신 가상계좌 결제 (2025-11-19 새벽 추가)
+    // 최신 가상계좌 결제 (2025-11-21 새벽 추가)
+    { orderId: 'order_1763661962359_blefd32a7', name: '이*솔', maskedEmail: 'y8****@naver.com', amount: 95000, date: '2025-11-21 03:08:09' },
+    
+    // 최신 가상계좌 결제 (2025-11-20 저녁 추가)
+    { orderId: 'order_1763640001255_7cbcuqxpt', name: '김*아', maskedEmail: 'ke*****@naver.com', amount: 95000, date: '2025-11-20 21:02:04' },
+    { orderId: 'order_1763638855409_be9z30z05', name: '김*공', maskedEmail: 'a0**********@gmail.com', amount: 95000, date: '2025-11-20 20:46:09' },
+    { orderId: 'order_1763633513966_fk0z1xxl1', name: '조*균', maskedEmail: 'ej********@gmail.com', amount: 95000, date: '2025-11-20 19:20:08' },
+    { orderId: 'order_1763632081834_lyuijb2vc', name: '윤*효', maskedEmail: 'la********@gmail.com', amount: 95000, date: '2025-11-20 18:49:50' },
+    { orderId: 'order_1763638785785_bdfb5fxtl', name: '김*곤', maskedEmail: 'sa*******@naver.com', amount: 95000, date: '2025-11-20 20:51:45' },
+    
+    // 이전 가상계좌 결제 (2025-11-19)
+    { orderId: 'order_1763538249272_x4nezsjcr', name: '전*근', maskedEmail: '29**@naver.com', amount: 95000, date: '2025-11-19 16:53:32' },
     { orderId: 'order_1763496158511_ikxrp7y0o', name: '봉*갑', maskedEmail: 'ka*****@gmail.com', amount: 95000, date: '2025-11-19 05:04:17' },
     
-    // 최신 가상계좌 결제 (2025-11-18 저녁 추가)
+    // 이전 가상계좌 결제 (2025-11-18)
     { orderId: 'order_1763471208240_e3f13bwzd', name: '조*주', maskedEmail: 'wo******@naver.com', amount: 95000, date: '2025-11-18 22:08:12' },
     { orderId: 'order_1763468415179_nun9q7mog', name: '김*열', maskedEmail: 'kd****@naver.com', amount: 95000, date: '2025-11-18 21:33:07' },
     { orderId: 'order_1763463685894_i1rqtrzvk', name: '최*화', maskedEmail: 'bj*******@gmail.com', amount: 95000, date: '2025-11-18 20:02:49' },
