@@ -476,7 +476,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
         amount: payment.amount,
         paymentMethod: 'card',
         orderId: payment.orderId,
-        orderName: 'ChatGPT AI AGENT 비기너편'
+        orderName: 'Google Opal 유튜브 수익화 에이전트 기초'
       });
 
       newPayments[index].status = 'success';
