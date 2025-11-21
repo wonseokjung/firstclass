@@ -517,8 +517,22 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                             flexDirection: 'column',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            gap: '4px'
+                            gap: '6px'
                           }}>
+                            {lesson.day === 7 && (
+                              <div style={{
+                                background: 'linear-gradient(135deg, #fecaca, #fca5a5)',
+                                color: '#991b1b',
+                                padding: '6px 12px',
+                                borderRadius: '6px',
+                                fontSize: '0.8rem',
+                                fontWeight: '700',
+                                border: '1px solid #dc2626',
+                                marginBottom: '4px'
+                              }}>
+                                🎬 Veo 2 업데이트 반영 중
+                              </div>
+                            )}
                             <div style={{
                               background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
                               color: '#92400e',
