@@ -23,6 +23,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
   const [showUserTable, setShowUserTable] = useState(false);
   const [payments, setPayments] = useState<Payment[]>([
     // 최신 가상계좌 결제 (2025-11-21 추가)
+    { orderId: 'order_1763713902172_yzg66ddrp', name: '김*수', maskedEmail: 'al*****@naver.com', amount: 95000, date: '2025-11-21 17:33:37' },
     { orderId: 'order_1763712949403_fggf8awp7', name: '김*우', maskedEmail: 'ta****@naver.com', amount: 95000, date: '2025-11-21 17:17:30' },
     { orderId: 'order_1763684683639_2ye5vgkjl', name: '김*형', maskedEmail: 'km*****@naver.com', amount: 95000, date: '2025-11-21 09:25:06' },
     { orderId: 'order_1763661962359_blefd32a7', name: '이*솔', maskedEmail: 'y8****@naver.com', amount: 95000, date: '2025-11-21 03:08:09' },
@@ -310,25 +311,79 @@ const AdminEnrollmentFixPage: React.FC = () => {
     }
   };
 
-  // 마스킹된 이메일과 실제 이메일 매칭
+  // 마스킹된 이메일과 실제 이메일 매칭 (퍼지 매칭)
   const matchMaskedEmail = (maskedEmail: string, realEmail: string): boolean => {
-    const [maskedLocal, domain] = maskedEmail.split('@');
-    const [realLocal, realDomain] = realEmail.split('@');
+    if (maskedEmail === 'no-email') return false;
     
-    // 도메인이 다르면 false
-    if (domain !== realDomain) return false;
+    const [maskedLocal, maskedDomain] = maskedEmail.split('@');
+    const [realLocal, realDomain] = realEmail.toLowerCase().split('@');
+    
+    // 도메인 비교 (대소문자 무시)
+    if (maskedDomain.toLowerCase() !== realDomain) return false;
+    
+    // 로컬 부분 비교
+    const maskedChars = maskedLocal.split('');
+    const realChars = realLocal.split('');
     
     // 길이가 다르면 false
-    if (maskedLocal.length !== realLocal.length) return false;
+    if (maskedChars.length !== realChars.length) return false;
     
-    // 각 문자 비교
-    for (let i = 0; i < maskedLocal.length; i++) {
-      if (maskedLocal[i] !== '*' && maskedLocal[i] !== realLocal[i]) {
+    // 각 문자 비교 (대소문자 무시)
+    for (let i = 0; i < maskedChars.length; i++) {
+      if (maskedChars[i] !== '*' && maskedChars[i].toLowerCase() !== realChars[i].toLowerCase()) {
         return false;
       }
     }
     
     return true;
+  };
+
+  // 마스킹된 이름과 실제 이름 매칭
+  const matchMaskedName = (maskedName: string, realName: string): boolean => {
+    if (!maskedName || !realName) return false;
+    
+    // 이름에서 *를 제거하고 남은 문자들의 위치 확인
+    const maskedChars = maskedName.split('');
+    const realChars = realName.split('');
+    
+    // 길이가 다르면 false
+    if (maskedChars.length !== realChars.length) return false;
+    
+    // 각 문자 비교
+    for (let i = 0; i < maskedChars.length; i++) {
+      if (maskedChars[i] !== '*' && maskedChars[i] !== realChars[i]) {
+        return false;
+      }
+    }
+    
+    return true;
+  };
+
+  // 향상된 자동 매칭 (이메일 + 이름)
+  const findBestMatch = (payment: Payment, users: any[]): any | null => {
+    // 1단계: realEmail이 있으면 정확히 매칭
+    if (payment.realEmail) {
+      const exactMatch = users.find(u => u.email?.toLowerCase() === payment.realEmail?.toLowerCase());
+      if (exactMatch) return exactMatch;
+    }
+
+    // 2단계: 이메일 패턴 매칭
+    const emailMatches = users.filter(user => 
+      user.email && matchMaskedEmail(payment.maskedEmail, user.email)
+    );
+
+    if (emailMatches.length === 0) return null;
+    if (emailMatches.length === 1) return emailMatches[0];
+
+    // 3단계: 이메일 매칭이 여러 개면 이름으로 추가 필터링
+    const nameAndEmailMatches = emailMatches.filter(user => 
+      user.name && matchMaskedName(payment.name, user.name)
+    );
+
+    if (nameAndEmailMatches.length === 1) return nameAndEmailMatches[0];
+    
+    // 4단계: 여전히 여러 개면 첫 번째 반환 (가장 최근 가입자)
+    return emailMatches[0];
   };
 
   // 자동 매칭 및 일괄 추가
@@ -356,20 +411,18 @@ const AdminEnrollmentFixPage: React.FC = () => {
         try {
           console.log(`\n🔍 처리 중: ${payment.name} (${payment.maskedEmail})`);
           
-          // 매칭되는 사용자 찾기
-          const matchedUser = users.find(user => 
-            user.email && matchMaskedEmail(payment.maskedEmail, user.email)
-          );
+          // 향상된 자동 매칭 사용 (이름 + 이메일)
+          const matchedUser = findBestMatch(payment, users);
 
           if (!matchedUser) {
-            console.log(`❌ 매칭 실패: ${payment.maskedEmail}`);
-            failCount++;
+            console.log(`❌ 매칭 실패: ${payment.name} (${payment.maskedEmail})`);
+            skipCount++;
             matchLog.push(`❌ ${payment.name} (${payment.maskedEmail}) - 매칭 실패`);
             continue;
           }
 
-          console.log(`✅ 매칭 성공: ${payment.maskedEmail} → ${matchedUser.email}`);
-          matchLog.push(`✅ ${payment.name}: ${payment.maskedEmail} → ${matchedUser.email}`);
+          console.log(`✅ 매칭 성공: ${payment.name} (${payment.maskedEmail}) → ${matchedUser.name} (${matchedUser.email})`);
+          matchLog.push(`✅ ${payment.name}: ${payment.maskedEmail} → ${matchedUser.name} (${matchedUser.email})`);
 
           // 이미 강의가 있는지 확인
           if (matchedUser.enrolledCourses) {
