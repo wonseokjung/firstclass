@@ -315,11 +315,172 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
         </div>
       </div>
 
+      {/* 업데이트 안내 배너 */}
+      <div style={{
+        background: 'linear-gradient(135deg, #e0f2fe, #bae6fd)',
+        borderBottom: '3px solid #0ea5e9',
+        padding: '30px 20px',
+        boxShadow: '0 6px 20px rgba(14, 165, 233, 0.4)'
+      }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto'
+        }}>
+          {/* 비디오 임베딩 */}
+          <div style={{
+            marginBottom: '25px',
+            background: 'white',
+            borderRadius: '15px',
+            overflow: 'hidden',
+            boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)'
+          }}>
+            <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
+              <iframe 
+                src="https://player.vimeo.com/video/1139252235?badge=0&autopause=0&player_id=0&app_id=58479" 
+                frameBorder="0" 
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                referrerPolicy="strict-origin-when-cross-origin" 
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} 
+                title="추가업로드공지"
+              />
+            </div>
+            <script src="https://player.vimeo.com/api/player.js"></script>
+          </div>
+
+          <div style={{
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: '15px'
+          }}>
+            <div style={{
+              fontSize: '2.5rem',
+              flexShrink: 0
+            }}>
+              📢
+            </div>
+            <div style={{ flex: 1 }}>
+              <h3 style={{
+                fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
+                fontWeight: '900',
+                color: '#0369a1',
+                marginBottom: '15px',
+                marginTop: '5px',
+                textShadow: '0 1px 2px rgba(3, 105, 161, 0.1)'
+              }}>
+                🔥 강의 업데이트 안내
+              </h3>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                gap: '15px'
+              }}>
+                <div style={{
+                  background: 'white',
+                  padding: '18px 20px',
+                  borderRadius: '12px',
+                  border: '2px solid #0ea5e9',
+                  boxShadow: '0 4px 12px rgba(14, 165, 233, 0.2)'
+                }}>
+                  <div style={{
+                    fontSize: '1rem',
+                    fontWeight: '800',
+                    color: '#0369a1',
+                    marginBottom: '8px'
+                  }}>
+                    🎬 1강 업데이트
+                  </div>
+                  <div style={{
+                    fontSize: '1rem',
+                    color: '#0c4a6e',
+                    lineHeight: '1.6',
+                    marginBottom: '8px'
+                  }}>
+                    OpenAI Builder Preview 변경사항 추가
+                  </div>
+                  <div style={{
+                    fontSize: '1.05rem',
+                    fontWeight: '700',
+                    color: '#0284c7',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px'
+                  }}>
+                    📅 11월 22일 업로드 예정
+                  </div>
+                </div>
+                <div style={{
+                  background: 'white',
+                  padding: '18px 20px',
+                  borderRadius: '12px',
+                  border: '2px solid #0ea5e9',
+                  boxShadow: '0 4px 12px rgba(14, 165, 233, 0.2)'
+                }}>
+                  <div style={{
+                    fontSize: '1rem',
+                    fontWeight: '800',
+                    color: '#0369a1',
+                    marginBottom: '8px'
+                  }}>
+                    🎥 7강 재촬영 중
+                  </div>
+                  <div style={{
+                    fontSize: '1rem',
+                    color: '#0c4a6e',
+                    lineHeight: '1.6',
+                    marginBottom: '8px'
+                  }}>
+                    나노바나나 프로 내용 업데이트 반영 중
+                  </div>
+                  <div style={{
+                    fontSize: '1.05rem',
+                    fontWeight: '700',
+                    color: '#0284c7',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px'
+                  }}>
+                    📅 11월 21일 오후 10시 공개
+                  </div>
+                </div>
+              </div>
+              <div style={{
+                marginTop: '18px',
+                padding: '18px 20px',
+                background: 'white',
+                borderRadius: '12px',
+                border: '2px solid #0ea5e9',
+                boxShadow: '0 4px 12px rgba(14, 165, 233, 0.15)'
+              }}>
+                <div style={{
+                  fontSize: '1.1rem',
+                  color: '#0369a1',
+                  lineHeight: '1.8',
+                  fontWeight: '700',
+                  marginBottom: '10px'
+                }}>
+                  🎯 이번주 인공지능 빅 업데이트로 인한 재촬영 안내
+                </div>
+                <div style={{
+                  fontSize: '1rem',
+                  color: '#0c4a6e',
+                  lineHeight: '1.7',
+                  fontWeight: '500'
+                }}>
+                  OpenAI, Google 등 주요 AI 기업들의 대규모 업데이트로 인해 강의 내용을 재촬영하고 있습니다. 
+                  <strong style={{ color: '#0369a1' }}>11월 26일까지 모든 영상을 공개할 예정</strong>이니 조금만 기다려주세요. 
+                  최신 기술이 반영된 제대로 된 좋은 교육을 드리기 위해 최선을 다하고 있습니다.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* 강의 목록 */}
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '40px 20px'
+        padding: '0 20px 40px'
       }}>
         {courseData.weeks.map((week, weekIndex) => (
           <div key={weekIndex} style={{
