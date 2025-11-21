@@ -82,7 +82,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
       {
         id: 7,
         day: 7,
-        title: "7강: 바이럴 마케팅 에이전트 - 조회수 폭발 컨텐츠 생성",
+        title: "7강: 알고리즘 해킹 에이전트 - 유튜브 추천 시스템 분석",
         hasQuiz: false,
         launchDate: "2025-11-21 22:00",
         sections: {
