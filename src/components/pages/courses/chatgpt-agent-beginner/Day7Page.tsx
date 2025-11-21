@@ -80,13 +80,11 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack }) => {
           }}>
             <strong style={{ fontSize: '1.05rem', color: '#92400e' }}>📢 중요 업데이트 안내</strong><br/>
             <br/>
-            최신 유튜브 추천 알고리즘 논문이 공개되어,<br/>
-            이를 반영한 새로운 내용으로 7강을 재촬영하였습니다.<br/>
+            금일 새벽 1시에 <strong>Google의 Veo 2 (나노바나나)</strong>가<br/>
+            새롭게 업데이트되면서 이번 챕터 내용이 크게 바뀌었습니다.<br/>
             <br/>
-            <strong style={{ color: '#92400e' }}>▸ 7강: 알고리즘 해킹 에이전트</strong><br/>
-            - 유튜브 추천 시스템 최신 논문 분석<br/>
-            - AI가 논문을 학습하여 바이럴 영상 생성<br/>
-            - 알고리즘 친화적 콘텐츠 자동 최적화<br/>
+            더 나은 강의를 드리기 위해 새롭게 촬영하고 있으니<br/>
+            조금만 기다려주세요! 🙏<br/>
             <br/>
             <strong style={{ color: '#0369a1' }}>2025년 11월 21일 오후 10시 공개 예정</strong>
           </p>
