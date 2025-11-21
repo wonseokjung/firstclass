@@ -69,7 +69,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack }) => {
               margin: 0,
               fontWeight: '700'
             }}>
-              2025년 11월 21일 오후 5시
+              2025년 11월 21일 오후 10시
             </p>
           </div>
           <p style={{
@@ -88,7 +88,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack }) => {
             - AI가 논문을 학습하여 바이럴 영상 생성<br/>
             - 알고리즘 친화적 콘텐츠 자동 최적화<br/>
             <br/>
-            <strong style={{ color: '#0369a1' }}>2025년 11월 21일 오후 5시 공개 예정</strong>
+            <strong style={{ color: '#0369a1' }}>2025년 11월 21일 오후 10시 공개 예정</strong>
           </p>
         </div>
 

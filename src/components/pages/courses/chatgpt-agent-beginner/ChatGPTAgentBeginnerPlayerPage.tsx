@@ -140,7 +140,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             title: '바이럴 마케팅 에이전트 - 조회수 폭발 컨텐츠 생성', 
             subtitle: '실습: Google OPAL로 트렌드 분석 + 바이럴 영상 자동 제작',
             hasQuiz: false,
-            launchDate: '2025-11-20 23:00'
+            launchDate: '2025-11-21 22:00'
           },
           { 
             day: 8, 
