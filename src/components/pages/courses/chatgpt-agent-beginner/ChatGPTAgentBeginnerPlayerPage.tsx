@@ -140,7 +140,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             title: '알고리즘 해킹 에이전트 - 유튜브 추천 시스템 분석', 
             subtitle: '실습: AI가 논문을 학습하여 알고리즘 친화적 바이럴 영상 생성',
             hasQuiz: false,
-            launchDate: '2025-11-21 22:00'
+            launchDate: '2025-11-22 19:00'
           },
           { 
             day: 8, 

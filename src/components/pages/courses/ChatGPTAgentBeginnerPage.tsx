@@ -84,7 +84,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
         day: 7,
         title: "7강: 알고리즘 해킹 에이전트 - 유튜브 추천 시스템 분석",
         hasQuiz: false,
-        launchDate: "2025-11-21 22:00",
+        launchDate: "2025-11-22 19:00",
         sections: {
           theory: "• 바이럴 컨텐츠의 5가지 핵심 요소\n• 실시간 트렌드 분석 및 활용 전략\n• 알고리즘 친화적인 컨텐츠 설계",
           practice: "• Google OPAL로 트렌드 기반 바이럴 영상 자동 생성\n• 클릭율 높이는 썸네일 자동 제작\n• 바이럴 제목/태그 최적화 시스템 구축"

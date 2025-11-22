@@ -69,7 +69,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack }) => {
               margin: 0,
               fontWeight: '700'
             }}>
-              2025년 11월 21일 오후 10시
+              2025년 11월 22일 오후 7시
             </p>
           </div>
           <p style={{
@@ -86,7 +86,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack }) => {
             더 나은 강의를 드리기 위해 새롭게 촬영하고 있으니<br/>
             조금만 기다려주세요! 🙏<br/>
             <br/>
-            <strong style={{ color: '#0369a1' }}>2025년 11월 21일 오후 10시 공개 예정</strong>
+            <strong style={{ color: '#0369a1' }}>2025년 11월 22일 오후 7시 공개 예정</strong>
           </p>
         </div>
 
