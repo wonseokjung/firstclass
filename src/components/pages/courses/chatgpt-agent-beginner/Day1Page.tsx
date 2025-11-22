@@ -134,22 +134,6 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
     ],
     sections: [
       {
-        id: 'warning-video',
-        type: 'theory',
-        title: '⚠️ 추가 영상: 중요 안내',
-        duration: '필수 시청',
-        videoUrl: 'https://player.vimeo.com/video/1139551525?badge=0&autopause=0&player_id=0&app_id=58479',
-        isVimeo: true,
-        content: `
-          <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 20px; border-radius: 10px; margin: 15px 0; border: 2px solid #fbbf24;">
-            <p style="margin: 0; font-size: 1.1rem; color: #92400e; font-weight: 700; line-height: 1.8;">
-              ⚠️ 이 영상을 먼저 시청해주세요!<br/>
-              강의 진행 전 반드시 알아야 할 중요한 내용입니다.
-            </p>
-          </div>
-        `
-      },
-      {
         id: 'theory-1',
         type: 'theory',
         title: '이론 강의: ChatGPT와 Agent의 차이',
