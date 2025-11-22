@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import NavigationBar from '../common/NavigationBar';
-import { Plus, Youtube, TrendingUp, Video, Zap } from 'lucide-react';
+import { Plus, Youtube, Video, Zap } from 'lucide-react';
 
 interface AICityMapPageProps {
   onBack: () => void;
