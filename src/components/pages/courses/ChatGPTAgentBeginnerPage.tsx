@@ -269,7 +269,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               background: '#000'
             }}>
               <iframe
-                src="https://www.youtube.com/embed/BZynp51fBRU"
+                src="https://www.youtube.com/embed/BZynp51fBRU?si=-69U57RR4UNMwwNy"
                 title="YouTube video player"
                 frameBorder="0"
                 style={{
@@ -282,6 +282,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   border: 'none'
                 }}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
               />
             </div>

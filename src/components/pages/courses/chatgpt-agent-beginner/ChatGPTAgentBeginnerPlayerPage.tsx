@@ -34,6 +34,21 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
 
             if ((paymentStatus && paymentStatus.isPaid) || isTestAccount) {
               setIsPaidUser(true);
+              
+              // Azure에서 진도 불러오기
+              try {
+                const progress = await AzureTableService.getCourseDayProgress(
+                  parsedUserInfo.email,
+                  'chatgpt-agent-beginner'
+                );
+                
+                if (progress && progress.completedDays) {
+                  console.log('✅ 진도 불러오기 성공:', progress.completedDays);
+                  setCompletedDays(new Set(progress.completedDays));
+                }
+              } catch (progressError) {
+                console.error('❌ 진도 불러오기 실패:', progressError);
+              }
             } else {
               // 결제하지 않은 사용자는 결제 페이지로 리다이렉트
               alert('이 강의는 결제 후 수강하실 수 있습니다.');
@@ -60,14 +75,6 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
     };
 
     checkAuthStatus();
-  }, []);
-
-  // localStorage에서 완료된 Day 불러오기
-  useEffect(() => {
-    const saved = localStorage.getItem('completed-days-chatgpt-agent');
-    if (saved) {
-      setCompletedDays(new Set(JSON.parse(saved)));
-    }
   }, []);
 
   // 강의 데이터
