@@ -74,8 +74,8 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
   const courseData = {
     weeks: [
       {
-        title: 'Part 1 (Day 1-5)',
-        subtitle: '수익화하는 인공지능 에이전트 첫걸음',
+        title: 'Part 1 (Day 1-6)',
+        subtitle: 'OpenAI 에이전트부터 Google OPAL 에이전트까지 - 수익화 컨텐츠 에이전트 기초 다지기',
         days: [
           { 
             day: 1, 
@@ -106,45 +106,44 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             title: '수익화 인공지능 에이전트 구축하기', 
             subtitle: '실습: 한 번의 클릭으로 완성하는 자동화 워크플로우',
             hasQuiz: true 
+          },
+          { 
+            day: 6, 
+            title: '시니어 타겟 유튜브 콘텐츠 자동 제작 에이전트', 
+            subtitle: '실습: 시니어 콘텐츠 자동 생성 워크플로우 구축 (트렌드 분석 + 영상 제작)',
+            hasQuiz: false
           }
         ]
       },
       {
-        title: 'Part 2 (Day 6-10)',
-        subtitle: '실전 수익화 컨텐츠 자동 생성 에이전트',
+        title: 'Part 2 (Day 7-10)',
+        subtitle: '실전! 유튜브 채널 개설부터 퍼널 전략까지 - 완전 자동화 수익 시스템',
         days: [
           { 
-            day: 6, 
-            title: '판매 수익화 에이전트 - 제품 판매 영상 자동 생성', 
-            subtitle: '실습: Google OPAL로 리뷰/소개/광고 영상 자동 제작',
-            hasQuiz: false,
-            launchDate: '2025-11-18 19:00'
-          },
-          { 
             day: 7, 
-            title: '바이럴 마케팅 에이전트 - 조회수 폭발 컨텐츠 생성', 
-            subtitle: '실습: Google OPAL로 트렌드 분석 + 바이럴 영상 자동 제작',
+            title: '최적화된 유튜브 채널 한번에 만드는 에이전트', 
+            subtitle: '실습: AI로 채널 개설부터 브랜딩까지 완전 자동화 (퍼널 전략 적용)',
             hasQuiz: false,
             launchDate: '2025-11-19 19:00'
           },
           { 
             day: 8, 
-            title: '음성 컨텐츠 에이전트 - ASMR & 지식 나눔 영상 생성', 
-            subtitle: '실습: Google OPAL로 오디오북, 명상, 교육 컨텐츠 자동 제작',
+            title: '만들어진 채널에 숏츠 콘텐츠 자동 생성 에이전트 만들기', 
+            subtitle: '실습: 숏츠 에이전트로 바이럴 콘텐츠 대량 제작 및 자동 업로드',
             hasQuiz: false,
             launchDate: '2025-11-20 19:00'
           },
           { 
             day: 9, 
-            title: '대량 생산 에이전트 - 한 번에 15개 영상 자동 생성', 
-            subtitle: '실습: 배치 처리 시스템으로 대량 컨텐츠 자동화',
+            title: '만들어진 채널에 롱폼 콘텐츠 자동 생성 에이전트 만들기', 
+            subtitle: '실습: 롱폼 에이전트로 심화 콘텐츠 제작 및 자동 업로드',
             hasQuiz: false,
             launchDate: '2025-11-21 19:00'
           },
           { 
             day: 10, 
-            title: '완전 자동화 수익 시스템 - 분석부터 업로드까지', 
-            subtitle: '최종 프로젝트: 트렌드 분석 → 생성 → 편집 → 유튜브 업로드 완전 자동화',
+            title: '콘텐츠 분석 & 퍼널 전략으로 성공 채널 선택하기', 
+            subtitle: '최종 프로젝트: 업로드한 콘텐츠 분석 → 반응 좋은 채널 선택 → 집중 운영 전략',
             hasQuiz: true,
             launchDate: '2025-11-22 19:00'
           }
@@ -306,45 +305,81 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
         margin: '0 auto',
         padding: '40px 20px'
       }}>
-        {courseData.weeks.map((week, weekIndex) => (
-          <div key={weekIndex} style={{
-            marginBottom: '50px'
-          }}>
-            {/* Week 헤더 */}
-            <div style={{
-              background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
-              borderRadius: '15px',
-              padding: '25px 30px',
-              marginBottom: '25px',
-              border: '2px solid #0ea5e9'
-            }}>
-              <h2 style={{
-                fontSize: 'clamp(1.5rem, 3vw, 1.8rem)',
-                fontWeight: '800',
-                color: '#0369a1',
-                marginBottom: '8px'
-              }}>
-                📚 {week.title}
-              </h2>
-              <p style={{
-                fontSize: 'clamp(1rem, 2vw, 1.1rem)',
-                color: '#0c4a6e',
-                margin: 0,
-                fontWeight: '600'
-              }}>
-                {week.subtitle}
-              </p>
-            </div>
+        {courseData.weeks.map((week, weekIndex) => {
+          // Part 1: 파란색, Part 2: 노란색
+          const isPart1 = weekIndex === 0;
+          const headerBg = isPart1 
+            ? 'linear-gradient(135deg, #eff6ff, #dbeafe, #bfdbfe)' 
+            : 'linear-gradient(135deg, #fefce8, #fef3c7, #fde68a)';
+          const borderColor = isPart1 ? '#0ea5e9' : '#f59e0b';
+          const titleColor = isPart1 ? '#0369a1' : '#92400e';
+          const subtitleColor = isPart1 ? '#0c4a6e' : '#78350f';
+          const icon = isPart1 ? '📚' : '🚀';
 
-            {/* Day 카드들 */}
-            <div style={{
+          return (
+            <div key={weekIndex} style={{
+              marginBottom: '50px'
+            }}>
+              {/* Week 헤더 */}
+              <div style={{
+                background: headerBg,
+                borderRadius: '20px',
+                padding: '30px 35px',
+                marginBottom: '30px',
+                border: `3px solid ${borderColor}`,
+                boxShadow: isPart1 
+                  ? '0 8px 30px rgba(14, 165, 233, 0.15)' 
+                  : '0 8px 30px rgba(245, 158, 11, 0.15)',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                {/* 배경 장식 */}
+                <div style={{
+                  position: 'absolute',
+                  top: '-50px',
+                  right: '-50px',
+                  width: '200px',
+                  height: '200px',
+                  background: isPart1 
+                    ? 'radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%)' 
+                    : 'radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%)',
+                  borderRadius: '50%'
+                }}></div>
+                
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                  <h2 style={{
+                    fontSize: 'clamp(1.6rem, 3vw, 2rem)',
+                    fontWeight: '800',
+                    color: titleColor,
+                    marginBottom: '12px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px'
+                  }}>
+                    <span style={{ fontSize: '2rem' }}>{icon}</span>
+                    {week.title}
+                  </h2>
+                  <p style={{
+                    fontSize: 'clamp(1rem, 2vw, 1.15rem)',
+                    color: subtitleColor,
+                    margin: 0,
+                    fontWeight: '600',
+                    lineHeight: '1.6'
+                  }}>
+                    {week.subtitle}
+                  </p>
+                </div>
+              </div>
+
+              {/* Day 카드들 */}
+              <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
               gap: '20px'
             }}>
               {week.days.map((lesson) => {
                 const isCompleted = completedDays.has(lesson.day);
-                const isAvailable = lesson.day <= 6; // Day 1-6 사용 가능
+                const isAvailable = lesson.day <= 7; // Day 1-7 사용 가능
 
                 return (
                   <div
@@ -532,9 +567,10 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                   </div>
                 );
               })}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
 
         {/* 학습 완료 시 축하 메시지 */}
         {completedDays.size === totalDays && (
