@@ -47,7 +47,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
     loadUserProgress();
   }, []);
 
-  // 5강 완료 처리
+  // Day 5 완료 처리
   const handleCompleteDay = async () => {
     if (!userEmail) {
       alert('로그인이 필요합니다.');
@@ -74,7 +74,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
 
       if (success) {
         setIsDayCompleted(true);
-        alert('🎉 5강 완료! 다음 강의로 이동하세요!');
+        alert('🎉 Day 5 완료! 다음 강의로 이동하세요!');
       } else {
         alert('❌ Day 완료 처리에 실패했습니다.');
       }
@@ -362,7 +362,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
             color: '#1f2937',
             marginBottom: '15px'
           }}>
-            🚀 5강 준비 중
+            🚀 Day 5 준비 중
           </h2>
 
           <div style={{
@@ -621,6 +621,185 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
           </ul>
         </div>
 
+        {/* 워크플로우 다이어그램 - 영상 바로 아래 */}
+        <div style={{
+          background: 'white',
+          borderRadius: '20px',
+          padding: '40px',
+          marginBottom: '40px',
+          boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
+          border: '1px solid #e5e7eb'
+        }}>
+          {/* 헤더 */}
+          <div style={{
+            marginBottom: '30px'
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '15px',
+              flexWrap: 'wrap',
+              gap: '10px'
+            }}>
+              <h2 style={{
+                fontSize: '1.75rem',
+                fontWeight: '700',
+                color: '#1f2937',
+                margin: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                🎬 실전 워크플로우 다이어그램
+              </h2>
+              <div style={{
+                display: 'inline-block',
+                background: '#dc2626',
+                color: 'white',
+                padding: '5px 14px',
+                borderRadius: '6px',
+                fontSize: '0.8rem',
+                fontWeight: '600'
+              }}>
+                🔥 지속 업데이트
+              </div>
+            </div>
+            <p style={{
+              fontSize: '0.95rem',
+              lineHeight: '1.6',
+              color: '#6b7280',
+              margin: 0
+            }}>
+              수익화 AI 에이전트 완성본 — ConnexionAI의 최신 업데이트가 자동 반영됩니다
+            </p>
+          </div>
+
+          {/* 워크플로우 이미지 */}
+          <div style={{
+            background: '#f9fafb',
+            borderRadius: '12px',
+            padding: '15px',
+            border: '1px solid #e5e7eb'
+          }}>
+            <img 
+              src="/images/day5/workflow-diagram.png" 
+              alt="AI 에이전트 워크플로우 다이어그램"
+              style={{
+                width: '100%',
+                height: 'auto',
+                borderRadius: '8px',
+                display: 'block'
+              }}
+            />
+          </div>
+        </div>
+
+        {/* AI 에이전트 숏츠 만드는 워크플로우 */}
+        <div style={{
+          background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+          borderRadius: '20px',
+          padding: '40px',
+          marginBottom: '40px',
+          boxShadow: '0 4px 20px rgba(14, 165, 233, 0.3)',
+          position: 'relative' as const,
+          overflow: 'hidden'
+        }}>
+          {/* 배경 패턴 */}
+          <div style={{
+            position: 'absolute' as const,
+            top: 0,
+            right: 0,
+            width: '250px',
+            height: '250px',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%)',
+            borderRadius: '50%',
+            transform: 'translate(50%, -50%)'
+          }} />
+
+          <div style={{
+            position: 'relative' as const,
+            zIndex: 1
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '18px',
+              flexWrap: 'wrap',
+              gap: '12px'
+            }}>
+              <h2 style={{
+                fontSize: '1.8rem',
+                fontWeight: '700',
+                color: 'white',
+                margin: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                🎬 AI 에이전트 숏츠 워크플로우
+              </h2>
+              <div style={{
+                background: '#fbbf24',
+                color: '#92400e',
+                padding: '6px 16px',
+                borderRadius: '8px',
+                fontSize: '0.8rem',
+                fontWeight: '700',
+                boxShadow: '0 2px 10px rgba(251, 191, 36, 0.3)'
+              }}>
+                🔥 실시간 업데이트
+              </div>
+            </div>
+
+            <p style={{
+              color: 'rgba(255, 255, 255, 0.95)',
+              fontSize: '1rem',
+              lineHeight: '1.7',
+              marginBottom: '25px'
+            }}>
+              ConnexionAI가 지속 연구하며 업데이트하는 실전 워크플로우입니다. <br/>
+              영상과 다를 수 있습니다 — 더 나은 성능을 위해 계속 개선 중
+            </p>
+
+            <a
+              href="https://opal.google/?flow=drive:/17JvxIVkjx6tDzzTPPfwrNtURuEsSMTpM&shared&mode=app"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '12px',
+                background: '#fbbf24',
+                color: '#92400e',
+                padding: '16px 35px',
+                borderRadius: '12px',
+                fontSize: '1.15rem',
+                fontWeight: '700',
+                textDecoration: 'none',
+                boxShadow: '0 6px 20px rgba(251, 191, 36, 0.5)',
+                transition: 'all 0.3s ease',
+                border: 'none'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
+                e.currentTarget.style.boxShadow = '0 10px 30px rgba(251, 191, 36, 0.6)';
+                e.currentTarget.style.background = '#fcd34d';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(251, 191, 36, 0.5)';
+                e.currentTarget.style.background = '#fbbf24';
+              }}
+            >
+              <span style={{ fontSize: '1.3rem' }}>🚀</span>
+              워크플로우 바로 가기
+              <span style={{ fontSize: '1.3rem', fontWeight: '800' }}>→</span>
+            </a>
+          </div>
+        </div>
+
         {/* 강의 섹션들 */}
         {lessonData.sections.map((section, index) => (
           <div key={section.id} style={{
@@ -842,185 +1021,6 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
           </div>
         ))}
 
-        {/* 워크플로우 다이어그램 */}
-        <div style={{
-          background: 'white',
-          borderRadius: '20px',
-          padding: '40px',
-          marginBottom: '40px',
-          boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
-          border: '1px solid #e5e7eb'
-        }}>
-          {/* 헤더 */}
-          <div style={{
-            marginBottom: '30px'
-          }}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: '15px',
-              flexWrap: 'wrap',
-              gap: '10px'
-            }}>
-              <h2 style={{
-                fontSize: '1.75rem',
-                fontWeight: '700',
-                color: '#1f2937',
-                margin: 0,
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px'
-              }}>
-                🎬 실전 워크플로우 다이어그램
-              </h2>
-              <div style={{
-                display: 'inline-block',
-                background: '#dc2626',
-                color: 'white',
-                padding: '5px 14px',
-                borderRadius: '6px',
-                fontSize: '0.8rem',
-                fontWeight: '600'
-              }}>
-                🔥 지속 업데이트
-              </div>
-            </div>
-            <p style={{
-              fontSize: '0.95rem',
-              lineHeight: '1.6',
-              color: '#6b7280',
-              margin: 0
-            }}>
-              수익화 AI 에이전트 완성본 — ConnexionAI의 최신 업데이트가 자동 반영됩니다
-            </p>
-          </div>
-
-          {/* 워크플로우 이미지 */}
-          <div style={{
-            background: '#f9fafb',
-            borderRadius: '12px',
-            padding: '15px',
-            border: '1px solid #e5e7eb'
-          }}>
-            <img 
-              src="/images/day5/workflow-diagram.png" 
-              alt="AI 에이전트 워크플로우 다이어그램"
-              style={{
-                width: '100%',
-                height: 'auto',
-                borderRadius: '8px',
-                display: 'block'
-              }}
-            />
-          </div>
-        </div>
-
-        {/* AI 에이전트 숏츠 만드는 워크플로우 */}
-        <div style={{
-          background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-          borderRadius: '20px',
-          padding: '40px',
-          marginBottom: '40px',
-          boxShadow: '0 4px 20px rgba(14, 165, 233, 0.3)',
-          position: 'relative' as const,
-          overflow: 'hidden'
-        }}>
-          {/* 배경 패턴 */}
-          <div style={{
-            position: 'absolute' as const,
-            top: 0,
-            right: 0,
-            width: '250px',
-            height: '250px',
-            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%)',
-            borderRadius: '50%',
-            transform: 'translate(50%, -50%)'
-          }} />
-
-          <div style={{
-            position: 'relative' as const,
-            zIndex: 1
-          }}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: '18px',
-              flexWrap: 'wrap',
-              gap: '12px'
-            }}>
-              <h2 style={{
-                fontSize: '1.8rem',
-                fontWeight: '700',
-                color: 'white',
-                margin: 0,
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px'
-              }}>
-                🎬 AI 에이전트 숏츠 워크플로우
-              </h2>
-              <div style={{
-                background: '#fbbf24',
-                color: '#92400e',
-                padding: '6px 16px',
-                borderRadius: '8px',
-                fontSize: '0.8rem',
-                fontWeight: '700',
-                boxShadow: '0 2px 10px rgba(251, 191, 36, 0.3)'
-              }}>
-                🔥 실시간 업데이트
-              </div>
-            </div>
-
-            <p style={{
-              color: 'rgba(255, 255, 255, 0.95)',
-              fontSize: '1rem',
-              lineHeight: '1.7',
-              marginBottom: '25px'
-            }}>
-              ConnexionAI가 지속 연구하며 업데이트하는 실전 워크플로우입니다. <br/>
-              영상과 다를 수 있습니다 — 더 나은 성능을 위해 계속 개선 중
-            </p>
-
-            <a
-              href="https://opal.google/?flow=drive:/17JvxIVkjx6tDzzTPPfwrNtURuEsSMTpM&shared&mode=app"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '12px',
-                background: '#fbbf24',
-                color: '#92400e',
-                padding: '16px 35px',
-                borderRadius: '12px',
-                fontSize: '1.15rem',
-                fontWeight: '700',
-                textDecoration: 'none',
-                boxShadow: '0 6px 20px rgba(251, 191, 36, 0.5)',
-                transition: 'all 0.3s ease',
-                border: 'none'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
-                e.currentTarget.style.boxShadow = '0 10px 30px rgba(251, 191, 36, 0.6)';
-                e.currentTarget.style.background = '#fcd34d';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(251, 191, 36, 0.5)';
-                e.currentTarget.style.background = '#fbbf24';
-              }}
-            >
-              <span style={{ fontSize: '1.3rem' }}>🚀</span>
-              워크플로우 바로 가기
-              <span style={{ fontSize: '1.3rem', fontWeight: '800' }}>→</span>
-            </a>
-          </div>
-        </div>
-
         {/* 퀴즈 섹션 */}
         <div style={{
           marginBottom: '40px'
@@ -1192,7 +1192,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
           </div>
         </div>
 
-        {/* 5강 완료 버튼 */}
+        {/* Day 4 완료 버튼 */}
         <div style={{
           background: isDayCompleted 
             ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)' 
@@ -1210,7 +1210,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
             color: isDayCompleted ? '#059669' : '#0284c7',
             marginBottom: '15px'
           }}>
-            {isDayCompleted ? '✅ 5강 완료됨!' : '📚 5강 완료하기'}
+            {isDayCompleted ? '✅ Day 5 완료됨!' : '📚 Day 5 완료하기'}
           </h3>
           <p style={{
             color: '#64748b',
@@ -1218,7 +1218,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
             fontSize: '0.95rem'
           }}>
             {isDayCompleted 
-              ? '5강을 완료했습니다! 다음 강의로 이동하세요.' 
+              ? 'Day 5를 완료했습니다! 다음 강의로 이동하세요.' 
               : '강의를 수강한 후 버튼을 눌러주세요.'}
           </p>
           
@@ -1252,7 +1252,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
                 }
               }}
             >
-              {isCompletingDay ? '처리 중...' : '5강 완료하기 →'}
+              {isCompletingDay ? '처리 중...' : 'Day 5 완료하기 →'}
             </button>
           ) : (
             <button
@@ -1278,7 +1278,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)';
               }}
             >
-              ✓ 완료! 6강으로 →
+              ✓ 완료! Day 6로 →
             </button>
           )}
         </div>

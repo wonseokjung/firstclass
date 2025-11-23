@@ -33,7 +33,6 @@ const AIEducationDocumentaryPage = React.lazy(() => import('./components/pages/c
 const AIBuildingCoursePage = React.lazy(() => import('./components/pages/courses/AIBuildingCoursePage'));
 const AIBuildingCoursePlayerPage = React.lazy(() => import('./components/pages/courses/AIBuildingCoursePlayerPage'));
 const ChatGPTAgentBeginnerPage = React.lazy(() => import('./components/pages/courses/ChatGPTAgentBeginnerPage'));
-const ChatGPTAgentBeginnerEarlyBirdPage = React.lazy(() => import('./components/pages/courses/ChatGPTAgentBeginnerEarlyBirdPage'));
 const ChatGPTAgentBeginnerPlayerPage = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/ChatGPTAgentBeginnerPlayerPage'));
 const Day1Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day1Page'));
 const Day2Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day2Page'));
@@ -242,15 +241,6 @@ const ChatGPTCoursePageWrapper = () => {
     return (
       <Suspense fallback={<LoadingSpinner />}>
         <ChatGPTAgentBeginnerPage onBack={() => navigate('/')} />
-      </Suspense>
-    );
-  };
-
-  const ChatGPTAgentBeginnerEarlyBirdPageWrapper = () => {
-    const navigate = useNavigate();
-    return (
-      <Suspense fallback={<LoadingSpinner />}>
-        <ChatGPTAgentBeginnerEarlyBirdPage onBack={() => navigate('/')} />
       </Suspense>
     );
   };
@@ -548,7 +538,6 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/ai-building-course" element={<AIBuildingCoursePageWrapper />} />
               <Route path="/ai-building-course/player" element={<AIBuildingCoursePlayerPageWrapper />} />
               <Route path="/chatgpt-agent-beginner" element={<ChatGPTAgentBeginnerPageWrapper />} />
-              <Route path="/chatgpt-agent-beginner-early-bird" element={<ChatGPTAgentBeginnerEarlyBirdPageWrapper />} />
               <Route path="/chatgpt-agent-beginner/payment" element={<ChatGPTAgentBeginnerPaymentPageWrapper />} />
               <Route path="/chatgpt-agent-beginner/player" element={<ChatGPTAgentBeginnerPlayerPageWrapper />} />
               <Route path="/chatgpt-agent-beginner/day1" element={<Day1PageWrapper />} />

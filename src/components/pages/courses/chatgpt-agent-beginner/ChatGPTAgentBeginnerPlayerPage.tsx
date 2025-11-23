@@ -34,29 +34,6 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
 
             if ((paymentStatus && paymentStatus.isPaid) || isTestAccount) {
               setIsPaidUser(true);
-              
-              // Azure에서 완료된 강의 데이터 가져오기
-              try {
-                const enrollments = await AzureTableService.getUserEnrollmentsByEmail(parsedUserInfo.email);
-                console.log('📚 전체 수강 정보:', enrollments);
-                
-                // chatgpt-agent-beginner 또는 1002 강의 찾기
-                const targetCourse = enrollments.find((e: any) => 
-                  e.courseId === 'chatgpt-agent-beginner' || e.courseId === '1002'
-                );
-                
-                if (targetCourse && targetCourse.completedDays) {
-                  console.log('✅ 완료된 강의:', targetCourse.completedDays);
-                  setCompletedDays(new Set(targetCourse.completedDays));
-                } else {
-                  console.log('ℹ️ 완료된 강의가 없습니다.');
-                  setCompletedDays(new Set());
-                }
-              } catch (progressError) {
-                console.error('❌ 학습 진행률 조회 실패:', progressError);
-                // 진행률 조회 실패해도 강의는 볼 수 있도록 함
-                setCompletedDays(new Set());
-              }
             } else {
               // 결제하지 않은 사용자는 결제 페이지로 리다이렉트
               alert('이 강의는 결제 후 수강하실 수 있습니다.');
@@ -85,11 +62,19 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
     checkAuthStatus();
   }, []);
 
+  // localStorage에서 완료된 Day 불러오기
+  useEffect(() => {
+    const saved = localStorage.getItem('completed-days-chatgpt-agent');
+    if (saved) {
+      setCompletedDays(new Set(JSON.parse(saved)));
+    }
+  }, []);
+
   // 강의 데이터
   const courseData = {
     weeks: [
       {
-        title: 'Part 1 (1강-5강)',
+        title: 'Part 1 (Day 1-5)',
         subtitle: '수익화하는 인공지능 에이전트 첫걸음',
         days: [
           { 
@@ -125,7 +110,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
         ]
       },
       {
-        title: 'Part 2 (6강-10강)',
+        title: 'Part 2 (Day 6-10)',
         subtitle: '실전 수익화 컨텐츠 자동 생성 에이전트',
         days: [
           { 
@@ -137,31 +122,31 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
           },
           { 
             day: 7, 
-            title: '알고리즘 해킹 에이전트 - 유튜브 추천 시스템 분석', 
-            subtitle: '실습: AI가 논문을 학습하여 알고리즘 친화적 바이럴 영상 생성',
+            title: '바이럴 마케팅 에이전트 - 조회수 폭발 컨텐츠 생성', 
+            subtitle: '실습: Google OPAL로 트렌드 분석 + 바이럴 영상 자동 제작',
             hasQuiz: false,
-            launchDate: '2025-11-22 19:00'
+            launchDate: '2025-11-19 19:00'
           },
           { 
             day: 8, 
             title: '음성 컨텐츠 에이전트 - ASMR & 지식 나눔 영상 생성', 
             subtitle: '실습: Google OPAL로 오디오북, 명상, 교육 컨텐츠 자동 제작',
             hasQuiz: false,
-            launchDate: '2025-11-21 19:00'
+            launchDate: '2025-11-20 19:00'
           },
           { 
             day: 9, 
             title: '대량 생산 에이전트 - 한 번에 15개 영상 자동 생성', 
             subtitle: '실습: 배치 처리 시스템으로 대량 컨텐츠 자동화',
             hasQuiz: false,
-            launchDate: '2025-11-22 19:00'
+            launchDate: '2025-11-21 19:00'
           },
           { 
             day: 10, 
             title: '완전 자동화 수익 시스템 - 분석부터 업로드까지', 
             subtitle: '최종 프로젝트: 트렌드 분석 → 생성 → 편집 → 유튜브 업로드 완전 자동화',
             hasQuiz: true,
-            launchDate: '2025-11-23 19:00'
+            launchDate: '2025-11-22 19:00'
           }
         ]
       }
@@ -193,7 +178,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
     } else if (day === 10) {
       navigate('/chatgpt-agent-beginner/day10');
     } else {
-      alert(`${day}강은 준비 중입니다. 곧 공개될 예정입니다! 🚀`);
+      alert(`Day ${day} 강의는 준비 중입니다. 곧 공개될 예정입니다! 🚀`);
     }
   };
 
@@ -227,7 +212,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
     <div style={{ minHeight: '100vh', background: 'linear-gradient(to bottom, #f8fafc, #ffffff)' }}>
       <NavigationBar
         onBack={onBack}
-        breadcrumbText="Google Opal 유튜브 수익화 에이전트 기초"
+        breadcrumbText="ChatGPT AI AGENT 비기너편"
       />
 
       {/* 헤더 & 진행률 */}
@@ -315,172 +300,11 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
         </div>
       </div>
 
-      {/* 업데이트 안내 배너 */}
-      <div style={{
-        background: 'linear-gradient(135deg, #e0f2fe, #bae6fd)',
-        borderBottom: '3px solid #0ea5e9',
-        padding: '30px 20px',
-        boxShadow: '0 6px 20px rgba(14, 165, 233, 0.4)'
-      }}>
-        <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto'
-        }}>
-          {/* 비디오 임베딩 */}
-          <div style={{
-            marginBottom: '25px',
-            background: 'white',
-            borderRadius: '15px',
-            overflow: 'hidden',
-            boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)'
-          }}>
-            <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
-              <iframe 
-                src="https://player.vimeo.com/video/1139252235?badge=0&autopause=0&player_id=0&app_id=58479" 
-                frameBorder="0" 
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                referrerPolicy="strict-origin-when-cross-origin" 
-                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} 
-                title="추가업로드공지"
-              />
-            </div>
-            <script src="https://player.vimeo.com/api/player.js"></script>
-          </div>
-
-          <div style={{
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: '15px'
-          }}>
-            <div style={{
-              fontSize: '2.5rem',
-              flexShrink: 0
-            }}>
-              📢
-            </div>
-            <div style={{ flex: 1 }}>
-              <h3 style={{
-                fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
-                fontWeight: '900',
-                color: '#0369a1',
-                marginBottom: '15px',
-                marginTop: '5px',
-                textShadow: '0 1px 2px rgba(3, 105, 161, 0.1)'
-              }}>
-                🔥 강의 업데이트 안내
-              </h3>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                gap: '15px'
-              }}>
-                <div style={{
-                  background: 'white',
-                  padding: '18px 20px',
-                  borderRadius: '12px',
-                  border: '2px solid #0ea5e9',
-                  boxShadow: '0 4px 12px rgba(14, 165, 233, 0.2)'
-                }}>
-                  <div style={{
-                    fontSize: '1rem',
-                    fontWeight: '800',
-                    color: '#0369a1',
-                    marginBottom: '8px'
-                  }}>
-                    🎬 1강 업데이트
-                  </div>
-                  <div style={{
-                    fontSize: '1rem',
-                    color: '#0c4a6e',
-                    lineHeight: '1.6',
-                    marginBottom: '8px'
-                  }}>
-                    OpenAI Builder Preview 변경사항 추가
-                  </div>
-                  <div style={{
-                    fontSize: '1.05rem',
-                    fontWeight: '700',
-                    color: '#0284c7',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px'
-                  }}>
-                    📅 11월 22일 업로드 예정
-                  </div>
-                </div>
-                <div style={{
-                  background: 'white',
-                  padding: '18px 20px',
-                  borderRadius: '12px',
-                  border: '2px solid #0ea5e9',
-                  boxShadow: '0 4px 12px rgba(14, 165, 233, 0.2)'
-                }}>
-                  <div style={{
-                    fontSize: '1rem',
-                    fontWeight: '800',
-                    color: '#0369a1',
-                    marginBottom: '8px'
-                  }}>
-                    🎥 7강 재촬영 중
-                  </div>
-                  <div style={{
-                    fontSize: '1rem',
-                    color: '#0c4a6e',
-                    lineHeight: '1.6',
-                    marginBottom: '8px'
-                  }}>
-                    나노바나나 프로 내용 업데이트 반영 중
-                  </div>
-                  <div style={{
-                    fontSize: '1.05rem',
-                    fontWeight: '700',
-                    color: '#0284c7',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px'
-                  }}>
-                    📅 11월 21일 오후 10시 공개
-                  </div>
-                </div>
-              </div>
-              <div style={{
-                marginTop: '18px',
-                padding: '18px 20px',
-                background: 'white',
-                borderRadius: '12px',
-                border: '2px solid #0ea5e9',
-                boxShadow: '0 4px 12px rgba(14, 165, 233, 0.15)'
-              }}>
-                <div style={{
-                  fontSize: '1.1rem',
-                  color: '#0369a1',
-                  lineHeight: '1.8',
-                  fontWeight: '700',
-                  marginBottom: '10px'
-                }}>
-                  🎯 이번주 인공지능 빅 업데이트로 인한 재촬영 안내
-                </div>
-                <div style={{
-                  fontSize: '1rem',
-                  color: '#0c4a6e',
-                  lineHeight: '1.7',
-                  fontWeight: '500'
-                }}>
-                  OpenAI, Google 등 주요 AI 기업들의 대규모 업데이트로 인해 강의 내용을 재촬영하고 있습니다. 
-                  <strong style={{ color: '#0369a1' }}>11월 26일까지 모든 영상을 공개할 예정</strong>이니 조금만 기다려주세요. 
-                  최신 기술이 반영된 제대로 된 좋은 교육을 드리기 위해 최선을 다하고 있습니다.
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* 강의 목록 */}
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '0 20px 40px'
+        padding: '40px 20px'
       }}>
         {courseData.weeks.map((week, weekIndex) => (
           <div key={weekIndex} style={{
@@ -520,7 +344,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             }}>
               {week.days.map((lesson) => {
                 const isCompleted = completedDays.has(lesson.day);
-                const isAvailable = lesson.day <= 6; // 1강, 2강, 3강, 4강, 5강, 6강 사용 가능
+                const isAvailable = lesson.day <= 5; // Day 1, 2, 3, 4, 5 사용 가능
 
                 return (
                   <div
@@ -601,7 +425,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                           fontWeight: '600',
                           marginBottom: '4px'
                         }}>
-                          {lesson.day}강
+                          Day {lesson.day}
                         </div>
                         <div style={{
                           fontSize: '0.85rem',
@@ -678,22 +502,8 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                             flexDirection: 'column',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            gap: '6px'
+                            gap: '4px'
                           }}>
-                            {lesson.day === 7 && (
-                              <div style={{
-                                background: 'linear-gradient(135deg, #fecaca, #fca5a5)',
-                                color: '#991b1b',
-                                padding: '6px 12px',
-                                borderRadius: '6px',
-                                fontSize: '0.8rem',
-                                fontWeight: '700',
-                                border: '1px solid #dc2626',
-                                marginBottom: '4px'
-                              }}>
-                                🎬 Veo 2 업데이트 반영 중
-                              </div>
-                            )}
                             <div style={{
                               background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
                               color: '#92400e',

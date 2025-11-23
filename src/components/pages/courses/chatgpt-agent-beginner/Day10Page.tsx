@@ -45,7 +45,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack }) => {
           color: '#1f2937',
           marginBottom: '15px'
         }}>
-          🚀 10강 준비 중
+          🚀 Day 10 준비 중
         </h2>
 
         <div style={{
@@ -69,7 +69,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack }) => {
               margin: 0,
               fontWeight: '700'
             }}>
-              2025년 11월 23일 오후 7시
+              2025년 11월 22일 오후 7시
             </p>
           </div>
           <p style={{
@@ -78,7 +78,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack }) => {
             margin: 0,
             lineHeight: '1.6'
           }}>
-            10강 강의가 곧 공개됩니다.<br/>
+            Day 10 강의가 곧 공개됩니다.<br/>
             조금만 기다려주세요! 🎬
           </p>
         </div>

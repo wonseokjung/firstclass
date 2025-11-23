@@ -45,7 +45,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack }) => {
           color: '#1f2937',
           marginBottom: '15px'
         }}>
-          🚀 9강 준비 중
+          🚀 Day 9 준비 중
         </h2>
 
         <div style={{
@@ -69,7 +69,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack }) => {
               margin: 0,
               fontWeight: '700'
             }}>
-              2025년 11월 22일 오후 7시
+              2025년 11월 21일 오후 7시
             </p>
           </div>
           <p style={{
@@ -78,7 +78,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack }) => {
             margin: 0,
             lineHeight: '1.6'
           }}>
-            9강 강의가 곧 공개됩니다.<br/>
+            Day 9 강의가 곧 공개됩니다.<br/>
             조금만 기다려주세요! 🎬
           </p>
         </div>

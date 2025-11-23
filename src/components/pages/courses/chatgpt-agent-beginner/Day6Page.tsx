@@ -9,6 +9,7 @@ interface Day6PageProps {
 
 const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
   const [completedSections] = useState<Set<string>>(new Set());
+  const [loadingVideos, setLoadingVideos] = useState<Set<string>>(new Set());
   const [quizAnswers, setQuizAnswers] = useState<{[key: number]: number}>({});
   const [quizSubmitted, setQuizSubmitted] = useState<boolean>(false);
   const [isDayCompleted, setIsDayCompleted] = useState<boolean>(false);
@@ -425,6 +426,185 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
           </ul>
         </div>
 
+        {/* 워크플로우 다이어그램 - 영상 바로 아래 */}
+        <div style={{
+          background: 'white',
+          borderRadius: '20px',
+          padding: '40px',
+          marginBottom: '40px',
+          boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
+          border: '1px solid #e5e7eb'
+        }}>
+          {/* 헤더 */}
+          <div style={{
+            marginBottom: '30px'
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '15px',
+              flexWrap: 'wrap',
+              gap: '10px'
+            }}>
+              <h2 style={{
+                fontSize: '1.75rem',
+                fontWeight: '700',
+                color: '#1f2937',
+                margin: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                🎬 실전 워크플로우 다이어그램
+              </h2>
+              <div style={{
+                display: 'inline-block',
+                background: '#dc2626',
+                color: 'white',
+                padding: '5px 14px',
+                borderRadius: '6px',
+                fontSize: '0.8rem',
+                fontWeight: '600'
+              }}>
+                🔥 지속 업데이트
+              </div>
+            </div>
+            <p style={{
+              fontSize: '0.95rem',
+              lineHeight: '1.6',
+              color: '#6b7280',
+              margin: 0
+            }}>
+              시니어 타겟 콘텐츠 제작 AI 에이전트 완성본 — ConnexionAI의 최신 업데이트가 자동 반영됩니다
+            </p>
+          </div>
+
+          {/* 워크플로우 이미지 */}
+          <div style={{
+            background: '#f9fafb',
+            borderRadius: '12px',
+            padding: '15px',
+            border: '1px solid #e5e7eb'
+          }}>
+            <img 
+              src="/images/day5/day6.png" 
+              alt="시니어 타겟 AI 에이전트 워크플로우 다이어그램"
+              style={{
+                width: '100%',
+                height: 'auto',
+                borderRadius: '8px',
+                display: 'block'
+              }}
+            />
+          </div>
+        </div>
+
+        {/* AI 에이전트 시니어 콘텐츠 워크플로우 */}
+        <div style={{
+          background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+          borderRadius: '20px',
+          padding: '40px',
+          marginBottom: '40px',
+          boxShadow: '0 4px 20px rgba(14, 165, 233, 0.3)',
+          position: 'relative' as const,
+          overflow: 'hidden'
+        }}>
+          {/* 배경 패턴 */}
+          <div style={{
+            position: 'absolute' as const,
+            top: 0,
+            right: 0,
+            width: '250px',
+            height: '250px',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%)',
+            borderRadius: '50%',
+            transform: 'translate(50%, -50%)'
+          }} />
+
+          <div style={{
+            position: 'relative' as const,
+            zIndex: 1
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '18px',
+              flexWrap: 'wrap',
+              gap: '12px'
+            }}>
+              <h2 style={{
+                fontSize: '1.8rem',
+                fontWeight: '700',
+                color: 'white',
+                margin: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                🎬 시니어 콘텐츠 워크플로우
+              </h2>
+              <div style={{
+                background: '#fbbf24',
+                color: '#92400e',
+                padding: '6px 16px',
+                borderRadius: '8px',
+                fontSize: '0.8rem',
+                fontWeight: '700',
+                boxShadow: '0 2px 10px rgba(251, 191, 36, 0.3)'
+              }}>
+                🔥 실시간 업데이트
+              </div>
+            </div>
+
+            <p style={{
+              color: 'rgba(255, 255, 255, 0.95)',
+              fontSize: '1rem',
+              lineHeight: '1.7',
+              marginBottom: '25px'
+            }}>
+              ConnexionAI가 지속 연구하며 업데이트하는 실전 워크플로우입니다. <br/>
+              영상과 다를 수 있습니다 — 더 나은 성능을 위해 계속 개선 중
+            </p>
+
+            <a
+              href="https://opal.google/?flow=drive:/16j3JLjnO3w3_8sCCoCe-p1vUGOkjgIyA&shared&mode=app"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '12px',
+                background: '#fbbf24',
+                color: '#92400e',
+                padding: '16px 35px',
+                borderRadius: '12px',
+                fontSize: '1.15rem',
+                fontWeight: '700',
+                textDecoration: 'none',
+                boxShadow: '0 6px 20px rgba(251, 191, 36, 0.5)',
+                transition: 'all 0.3s ease',
+                border: 'none'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
+                e.currentTarget.style.boxShadow = '0 10px 30px rgba(251, 191, 36, 0.6)';
+                e.currentTarget.style.background = '#fcd34d';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(251, 191, 36, 0.5)';
+                e.currentTarget.style.background = '#fbbf24';
+              }}
+            >
+              <span style={{ fontSize: '1.3rem' }}>🚀</span>
+              워크플로우 바로 가기
+              <span style={{ fontSize: '1.3rem', fontWeight: '800' }}>→</span>
+            </a>
+          </div>
+        </div>
+
         {/* 강의 섹션들 */}
         {lessonData.sections.map((section, index) => (
           <div key={section.id} style={{
@@ -708,185 +888,6 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
           </div>
         </div>
 
-        {/* 워크플로우 다이어그램 */}
-        <div style={{
-          background: 'white',
-          borderRadius: '20px',
-          padding: '40px',
-          marginBottom: '40px',
-          boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
-          border: '1px solid #e5e7eb'
-        }}>
-          {/* 헤더 */}
-          <div style={{
-            marginBottom: '30px'
-          }}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: '15px',
-              flexWrap: 'wrap',
-              gap: '10px'
-            }}>
-              <h2 style={{
-                fontSize: '1.75rem',
-                fontWeight: '700',
-                color: '#1f2937',
-                margin: 0,
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px'
-              }}>
-                🎬 실전 워크플로우 다이어그램
-              </h2>
-              <div style={{
-                display: 'inline-block',
-                background: '#dc2626',
-                color: 'white',
-                padding: '5px 14px',
-                borderRadius: '6px',
-                fontSize: '0.8rem',
-                fontWeight: '600'
-              }}>
-                🔥 지속 업데이트
-              </div>
-            </div>
-            <p style={{
-              fontSize: '0.95rem',
-              lineHeight: '1.6',
-              color: '#6b7280',
-              margin: 0
-            }}>
-              시니어 타겟 콘텐츠 제작 AI 에이전트 완성본 — ConnexionAI의 최신 업데이트가 자동 반영됩니다
-            </p>
-          </div>
-
-          {/* 워크플로우 이미지 */}
-          <div style={{
-            background: '#f9fafb',
-            borderRadius: '12px',
-            padding: '15px',
-            border: '1px solid #e5e7eb'
-          }}>
-            <img 
-              src="/images/day5/day6.png" 
-              alt="시니어 타겟 AI 에이전트 워크플로우 다이어그램"
-              style={{
-                width: '100%',
-                height: 'auto',
-                borderRadius: '8px',
-                display: 'block'
-              }}
-            />
-          </div>
-        </div>
-
-        {/* AI 에이전트 시니어 콘텐츠 워크플로우 */}
-        <div style={{
-          background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-          borderRadius: '20px',
-          padding: '40px',
-          marginBottom: '40px',
-          boxShadow: '0 4px 20px rgba(14, 165, 233, 0.3)',
-          position: 'relative' as const,
-          overflow: 'hidden'
-        }}>
-          {/* 배경 패턴 */}
-          <div style={{
-            position: 'absolute' as const,
-            top: 0,
-            right: 0,
-            width: '250px',
-            height: '250px',
-            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%)',
-            borderRadius: '50%',
-            transform: 'translate(50%, -50%)'
-          }} />
-
-          <div style={{
-            position: 'relative' as const,
-            zIndex: 1
-          }}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: '18px',
-              flexWrap: 'wrap',
-              gap: '12px'
-            }}>
-              <h2 style={{
-                fontSize: '1.8rem',
-                fontWeight: '700',
-                color: 'white',
-                margin: 0,
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px'
-              }}>
-                🎬 시니어 수익화 콘텐츠 에이전트
-              </h2>
-              <div style={{
-                background: '#fbbf24',
-                color: '#92400e',
-                padding: '6px 16px',
-                borderRadius: '8px',
-                fontSize: '0.8rem',
-                fontWeight: '700',
-                boxShadow: '0 2px 10px rgba(251, 191, 36, 0.3)'
-              }}>
-                🔥 실시간 업데이트
-              </div>
-            </div>
-
-            <p style={{
-              color: 'rgba(255, 255, 255, 0.95)',
-              fontSize: '1rem',
-              lineHeight: '1.7',
-              marginBottom: '25px'
-            }}>
-              ConnexionAI가 지속 연구하며 업데이트하는 실전 워크플로우입니다. <br/>
-              영상과 다를 수 있습니다 — 더 나은 성능을 위해 계속 개선 중
-            </p>
-
-            <a
-              href="https://opal.google/?flow=drive:/1DXxgg6JbIKyWmT9dvdRd0MitDwOsJZaO&shared&mode=app"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '12px',
-                background: '#fbbf24',
-                color: '#92400e',
-                padding: '16px 35px',
-                borderRadius: '12px',
-                fontSize: '1.15rem',
-                fontWeight: '700',
-                textDecoration: 'none',
-                boxShadow: '0 6px 20px rgba(251, 191, 36, 0.5)',
-                transition: 'all 0.3s ease',
-                border: 'none'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
-                e.currentTarget.style.boxShadow = '0 10px 30px rgba(251, 191, 36, 0.6)';
-                e.currentTarget.style.background = '#fcd34d';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(251, 191, 36, 0.5)';
-                e.currentTarget.style.background = '#fbbf24';
-              }}
-            >
-              <span style={{ fontSize: '1.3rem' }}>🚀</span>
-              워크플로우 바로 가기
-              <span style={{ fontSize: '1.3rem', fontWeight: '800' }}>→</span>
-            </a>
-          </div>
-        </div>
-
         {/* 6강 완료 버튼 */}
         <div style={{
           background: isDayCompleted 
@@ -917,48 +918,6 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
               : '강의를 수강한 후 버튼을 눌러주세요.'}
           </p>
           
-          {/* 7강 업데이트 안내 */}
-          <div style={{
-            background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-            borderRadius: '12px',
-            padding: '20px',
-            marginBottom: '20px',
-            border: '2px solid #fbbf24'
-          }}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              marginBottom: '12px'
-            }}>
-              <span style={{ fontSize: '1.5rem' }}>📢</span>
-              <h4 style={{
-                fontSize: '1.2rem',
-                fontWeight: '800',
-                color: '#92400e',
-                margin: 0
-              }}>
-                7강 중요 업데이트 안내
-              </h4>
-            </div>
-            <p style={{
-              fontSize: '0.95rem',
-              color: '#78350f',
-              lineHeight: '1.7',
-              margin: 0
-            }}>
-              최신 유튜브 추천 알고리즘 논문이 공개되어,<br/>
-              이를 반영한 새로운 내용으로 7강을 재촬영하였습니다.<br/>
-              <br/>
-              <strong style={{ color: '#92400e' }}>▸ 7강: 알고리즘 해킹 에이전트</strong><br/>
-              • 유튜브 추천 시스템 최신 논문 분석<br/>
-              • AI가 논문을 학습하여 바이럴 영상 생성<br/>
-              • 알고리즘 친화적 콘텐츠 자동 최적화<br/>
-              <br/>
-              <strong style={{ color: '#0369a1' }}>📅 2025년 11월 21일 오후 5시 공개 예정</strong>
-            </p>
-          </div>
-
           {!isDayCompleted ? (
             <button
               onClick={handleCompleteDay}

@@ -45,7 +45,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack }) => {
           color: '#1f2937',
           marginBottom: '15px'
         }}>
-          🚀 7강 준비 중
+          🚀 Day 7 준비 중
         </h2>
 
         <div style={{
@@ -69,24 +69,17 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack }) => {
               margin: 0,
               fontWeight: '700'
             }}>
-              2025년 11월 22일 오후 7시
+              2025년 11월 19일 오후 7시
             </p>
           </div>
           <p style={{
             color: '#78350f',
             fontSize: '0.95rem',
             margin: 0,
-            lineHeight: '1.7'
+            lineHeight: '1.6'
           }}>
-            <strong style={{ fontSize: '1.05rem', color: '#92400e' }}>📢 중요 업데이트 안내</strong><br/>
-            <br/>
-            금일 새벽 1시에 <strong>Google의 Veo 2 (나노바나나)</strong>가<br/>
-            새롭게 업데이트되면서 이번 챕터 내용이 크게 바뀌었습니다.<br/>
-            <br/>
-            더 나은 강의를 드리기 위해 새롭게 촬영하고 있으니<br/>
-            조금만 기다려주세요! 🙏<br/>
-            <br/>
-            <strong style={{ color: '#0369a1' }}>2025년 11월 22일 오후 7시 공개 예정</strong>
+            Day 7 강의가 곧 공개됩니다.<br/>
+            조금만 기다려주세요! 🎬
           </p>
         </div>
 

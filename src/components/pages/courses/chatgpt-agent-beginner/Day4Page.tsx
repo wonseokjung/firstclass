@@ -538,6 +538,111 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
           </ul>
         </div>
 
+        {/* AI 에이전트 워크플로우 - 영상 바로 아래 */}
+        <div style={{
+          background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+          borderRadius: '20px',
+          padding: '40px',
+          marginBottom: '40px',
+          boxShadow: '0 4px 20px rgba(14, 165, 233, 0.3)',
+          position: 'relative' as const,
+          overflow: 'hidden'
+        }}>
+          {/* 배경 패턴 */}
+          <div style={{
+            position: 'absolute' as const,
+            top: 0,
+            right: 0,
+            width: '250px',
+            height: '250px',
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%)',
+            borderRadius: '50%',
+            transform: 'translate(50%, -50%)'
+          }} />
+
+          <div style={{
+            position: 'relative' as const,
+            zIndex: 1
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '18px',
+              flexWrap: 'wrap',
+              gap: '12px'
+            }}>
+              <h2 style={{
+                fontSize: '1.8rem',
+                fontWeight: '700',
+                color: 'white',
+                margin: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                🎬 인스타그램 포스팅 에이전트
+              </h2>
+              <div style={{
+                background: '#fbbf24',
+                color: '#92400e',
+                padding: '6px 16px',
+                borderRadius: '8px',
+                fontSize: '0.8rem',
+                fontWeight: '700',
+                boxShadow: '0 2px 10px rgba(251, 191, 36, 0.3)'
+              }}>
+                🔥 실시간 업데이트
+              </div>
+            </div>
+
+            <p style={{
+              color: 'rgba(255, 255, 255, 0.95)',
+              fontSize: '1rem',
+              lineHeight: '1.7',
+              marginBottom: '25px'
+            }}>
+              ConnexionAI가 지속 연구하며 업데이트하는 실전 워크플로우입니다. <br/>
+              영상과 다를 수 있습니다 — 더 나은 성능을 위해 계속 개선 중
+            </p>
+
+            <a
+              href="https://opal.google/_app/?flow=drive:/11u2HBc4EV7LK_XrAnNjJNvlbbPELt_IU&shared&mode=app"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '12px',
+                background: '#fbbf24',
+                color: '#92400e',
+                padding: '16px 35px',
+                borderRadius: '12px',
+                fontSize: '1.15rem',
+                fontWeight: '700',
+                textDecoration: 'none',
+                boxShadow: '0 6px 20px rgba(251, 191, 36, 0.5)',
+                transition: 'all 0.3s ease',
+                border: 'none'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
+                e.currentTarget.style.boxShadow = '0 10px 30px rgba(251, 191, 36, 0.6)';
+                e.currentTarget.style.background = '#fcd34d';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(251, 191, 36, 0.5)';
+                e.currentTarget.style.background = '#fbbf24';
+              }}
+            >
+              <span style={{ fontSize: '1.3rem' }}>🚀</span>
+              워크플로우 바로 가기
+              <span style={{ fontSize: '1.3rem', fontWeight: '800' }}>→</span>
+            </a>
+          </div>
+        </div>
+
         {/* 강의 섹션들 */}
         {lessonData.sections.map((section, index) => (
           <div key={section.id} style={{
@@ -932,111 +1037,6 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
                 다시 풀기
               </button>
             )}
-          </div>
-        </div>
-
-        {/* AI 에이전트 워크플로우 */}
-        <div style={{
-          background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-          borderRadius: '20px',
-          padding: '40px',
-          marginBottom: '40px',
-          boxShadow: '0 4px 20px rgba(14, 165, 233, 0.3)',
-          position: 'relative' as const,
-          overflow: 'hidden'
-        }}>
-          {/* 배경 패턴 */}
-          <div style={{
-            position: 'absolute' as const,
-            top: 0,
-            right: 0,
-            width: '250px',
-            height: '250px',
-            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%)',
-            borderRadius: '50%',
-            transform: 'translate(50%, -50%)'
-          }} />
-
-          <div style={{
-            position: 'relative' as const,
-            zIndex: 1
-          }}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: '18px',
-              flexWrap: 'wrap',
-              gap: '12px'
-            }}>
-              <h2 style={{
-                fontSize: '1.8rem',
-                fontWeight: '700',
-                color: 'white',
-                margin: 0,
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px'
-              }}>
-                🎬 인스타그램 포스팅 에이전트
-              </h2>
-              <div style={{
-                background: '#fbbf24',
-                color: '#92400e',
-                padding: '6px 16px',
-                borderRadius: '8px',
-                fontSize: '0.8rem',
-                fontWeight: '700',
-                boxShadow: '0 2px 10px rgba(251, 191, 36, 0.3)'
-              }}>
-                🔥 실시간 업데이트
-              </div>
-            </div>
-
-            <p style={{
-              color: 'rgba(255, 255, 255, 0.95)',
-              fontSize: '1rem',
-              lineHeight: '1.7',
-              marginBottom: '25px'
-            }}>
-              ConnexionAI가 지속 연구하며 업데이트하는 실전 워크플로우입니다. <br/>
-              영상과 다를 수 있습니다 — 더 나은 성능을 위해 계속 개선 중
-            </p>
-
-            <a
-              href="https://opal.google/_app/?flow=drive:/11u2HBc4EV7LK_XrAnNjJNvlbbPELt_IU&shared&mode=app"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '12px',
-                background: '#fbbf24',
-                color: '#92400e',
-                padding: '16px 35px',
-                borderRadius: '12px',
-                fontSize: '1.15rem',
-                fontWeight: '700',
-                textDecoration: 'none',
-                boxShadow: '0 6px 20px rgba(251, 191, 36, 0.5)',
-                transition: 'all 0.3s ease',
-                border: 'none'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
-                e.currentTarget.style.boxShadow = '0 10px 30px rgba(251, 191, 36, 0.6)';
-                e.currentTarget.style.background = '#fcd34d';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(251, 191, 36, 0.5)';
-                e.currentTarget.style.background = '#fbbf24';
-              }}
-            >
-              <span style={{ fontSize: '1.3rem' }}>🚀</span>
-              워크플로우 바로 가기
-              <span style={{ fontSize: '1.3rem', fontWeight: '800' }}>→</span>
-            </a>
           </div>
         </div>
 
