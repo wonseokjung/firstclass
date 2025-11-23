@@ -9,7 +9,6 @@ interface Day6PageProps {
 
 const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
   const [completedSections] = useState<Set<string>>(new Set());
-  const [loadingVideos, setLoadingVideos] = useState<Set<string>>(new Set());
   const [quizAnswers, setQuizAnswers] = useState<{[key: number]: number}>({});
   const [quizSubmitted, setQuizSubmitted] = useState<boolean>(false);
   const [isDayCompleted, setIsDayCompleted] = useState<boolean>(false);
