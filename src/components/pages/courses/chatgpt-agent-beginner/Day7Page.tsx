@@ -118,8 +118,8 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
         type: 'theory',
         title: '유튜브 채널 자동 생성 & 최적화 (본강의)',
         duration: '80분',
-        videoUrl: '',
-        isVimeo: false,
+        videoUrl: 'https://player.vimeo.com/video/1139767191?badge=0&autopause=0&player_id=0&app_id=58479',
+        isVimeo: true,
         content: `
           <h3>1. 강의 핵심 목표: "퍼널(Funnel) 전략"</h3>
           

@@ -379,7 +379,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             }}>
               {week.days.map((lesson) => {
                 const isCompleted = completedDays.has(lesson.day);
-                const isAvailable = lesson.day <= 7; // Day 1-7 사용 가능
+                const isAvailable = lesson.day <= 8; // Day 1-8 사용 가능
 
                 return (
                   <div
