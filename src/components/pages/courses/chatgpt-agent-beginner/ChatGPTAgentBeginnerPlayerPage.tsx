@@ -131,7 +131,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             title: '만들어진 채널에 숏츠 콘텐츠 자동 생성 에이전트 만들기', 
             subtitle: '실습: 숏츠 에이전트로 바이럴 콘텐츠 대량 제작 및 자동 업로드',
             hasQuiz: false,
-            launchDate: '2025-11-20 19:00'
+            launchDate: '2025-11-24 23:00'
           },
           { 
             day: 9, 
@@ -409,7 +409,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             }}>
               {week.days.map((lesson) => {
                 const isCompleted = completedDays.has(lesson.day);
-                const isAvailable = lesson.day <= 8; // Day 1-8 사용 가능
+                const isAvailable = lesson.day <= 7; // Day 1-7 사용 가능
 
                 return (
                   <div
