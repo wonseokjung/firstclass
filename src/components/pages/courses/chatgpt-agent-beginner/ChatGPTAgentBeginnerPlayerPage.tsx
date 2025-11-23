@@ -261,6 +261,36 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             </div>
           </div>
 
+          {/* 업데이트 공지 */}
+          <div style={{
+            background: 'rgba(34, 197, 94, 0.15)',
+            border: '2px solid rgba(34, 197, 94, 0.3)',
+            borderRadius: '15px',
+            padding: '20px',
+            marginBottom: '20px',
+            backdropFilter: 'blur(10px)'
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              marginBottom: '10px'
+            }}>
+              <span style={{ fontSize: '1.8rem' }}>✅</span>
+              <span style={{ fontSize: '1.2rem', fontWeight: '800', color: 'white' }}>
+                Day 1-7 전체 강의 업로드 완료!
+              </span>
+            </div>
+            <p style={{
+              fontSize: '1rem',
+              margin: 0,
+              opacity: '0.95',
+              lineHeight: '1.6'
+            }}>
+              모든 강의가 준비되었습니다. 지금 바로 학습을 시작하세요! 🚀
+            </p>
+          </div>
+
           {/* 진행률 */}
           <div style={{
             background: 'rgba(255, 255, 255, 0.2)',
