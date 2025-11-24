@@ -94,6 +94,56 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               const paymentResult = await confirmPayment(paymentKey, orderId, parseInt(amount));
               console.log('✅ 결제 승인 성공:', paymentResult);
               
+              // ⭐ 마스킹 없는 전체 결제 정보 저장
+              if (paymentResult) {
+                const fullPaymentInfo = {
+                  orderId: paymentResult.orderId,
+                  paymentKey: paymentResult.paymentKey,
+                  // 고객 정보 (마스킹 없음!)
+                  customerName: paymentResult.customer?.name || paymentResult.virtualAccount?.customerName || '정보없음',
+                  customerEmail: paymentResult.customer?.email || '정보없음',
+                  customerPhone: paymentResult.customer?.phoneNumber || paymentResult.customer?.mobilePhone || '정보없음',
+                  // 결제 정보
+                  method: paymentResult.method,
+                  amount: paymentResult.totalAmount,
+                  status: paymentResult.status,
+                  // 가상계좌 정보 (있는 경우)
+                  virtualAccount: paymentResult.virtualAccount ? {
+                    accountNumber: paymentResult.virtualAccount.accountNumber,
+                    bank: paymentResult.virtualAccount.bank,
+                    customerName: paymentResult.virtualAccount.customerName,
+                    dueDate: paymentResult.virtualAccount.dueDate
+                  } : null,
+                  // 타임스탬프
+                  approvedAt: paymentResult.approvedAt || new Date().toISOString(),
+                  savedAt: new Date().toISOString()
+                };
+                
+                console.log('📝 전체 결제 정보 (마스킹 없음):', fullPaymentInfo);
+                
+                // 로컬 스토리지에 저장 (관리자가 확인할 수 있도록)
+                try {
+                  const storageKey = `payment_full_${orderId}`;
+                  localStorage.setItem(storageKey, JSON.stringify(fullPaymentInfo));
+                  console.log(`💾 결제 정보 저장 완료: ${storageKey}`);
+                  
+                  // 전체 결제 내역 목록에도 추가
+                  const allPayments = localStorage.getItem('all_payment_details');
+                  const paymentsList = allPayments ? JSON.parse(allPayments) : [];
+                  paymentsList.unshift(fullPaymentInfo); // 최신이 앞에
+                  
+                  // 최대 100개만 저장
+                  if (paymentsList.length > 100) {
+                    paymentsList.pop();
+                  }
+                  
+                  localStorage.setItem('all_payment_details', JSON.stringify(paymentsList));
+                  console.log('📋 전체 결제 내역 업데이트 완료');
+                } catch (storageError) {
+                  console.error('❌ 로컬 스토리지 저장 실패:', storageError);
+                }
+              }
+              
               // 성공 시 완료 표시
               sessionStorage.setItem(processedKey, 'completed');
             } catch (error) {

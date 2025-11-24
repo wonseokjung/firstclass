@@ -329,6 +329,74 @@ const AdminDashboardPage: React.FC = () => {
       </div>
 
       <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '40px 20px' }}>
+        {/* 관리 메뉴 버튼 */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '15px',
+          marginBottom: '30px'
+        }}>
+          <button
+            onClick={() => navigate('/admin/payment-details')}
+            style={{
+              background: 'linear-gradient(135deg, #10b981, #059669)',
+              color: 'white',
+              border: 'none',
+              padding: '20px',
+              borderRadius: '12px',
+              cursor: 'pointer',
+              fontSize: '1rem',
+              fontWeight: '700',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '10px',
+              boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 6px 20px rgba(16, 185, 129, 0.4)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.3)';
+            }}
+          >
+            💳 전체 결제 정보 (마스킹 없음)
+          </button>
+
+          <button
+            onClick={() => navigate('/admin/fix-enrollments')}
+            style={{
+              background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+              color: 'white',
+              border: 'none',
+              padding: '20px',
+              borderRadius: '12px',
+              cursor: 'pointer',
+              fontSize: '1rem',
+              fontWeight: '700',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '10px',
+              boxShadow: '0 4px 15px rgba(245, 158, 11, 0.3)',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 6px 20px rgba(245, 158, 11, 0.4)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 15px rgba(245, 158, 11, 0.3)';
+            }}
+          >
+            🔧 수동 수강 등록
+          </button>
+        </div>
+
         {/* 통계 카드 */}
         <div style={{
           display: 'grid',

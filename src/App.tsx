@@ -60,6 +60,7 @@ const PaymentFailPage = React.lazy(() => import('./components/pages/payment/Paym
 // 관리자 페이지
 const AdminEnrollmentFixPage = React.lazy(() => import('./components/pages/admin/AdminEnrollmentFixPage'));
 const AdminDashboardPage = React.lazy(() => import('./components/pages/admin/AdminDashboardPage'));
+const PaymentDetailsViewPage = React.lazy(() => import('./components/pages/admin/PaymentDetailsViewPage'));
 
 // 각 페이지 컴포넌트를 래핑해서 useNavigate 사용
 const MainPageWrapper = () => {
@@ -567,6 +568,11 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/payment/fail" element={<PaymentFailPageWrapper />} />
               <Route path="/admin" element={<AdminDashboardPage />} />
               <Route path="/admin/fix-enrollments" element={<AdminEnrollmentFixPage />} />
+              <Route path="/admin/payment-details" element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <PaymentDetailsViewPage onBack={() => window.location.href = '/admin'} />
+                </Suspense>
+              } />
               {/* 멘토링 라우트들 제거됨 - 강의 사이트에 집중 */}
             </Routes>
           </Suspense>
