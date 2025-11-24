@@ -621,6 +621,79 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
           </ul>
         </div>
 
+        {/* 워크플로우 로딩 문제 해결 알림 */}
+        <div style={{
+          background: '#fff7ed',
+          border: '2px solid #fb923c',
+          borderRadius: '15px',
+          padding: '20px 25px',
+          marginBottom: '30px',
+          boxShadow: '0 2px 10px rgba(251, 146, 60, 0.15)'
+        }}>
+          <h3 style={{
+            color: '#ea580c',
+            fontSize: '1.2rem',
+            fontWeight: '800',
+            marginBottom: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            ⚠️ 추가 알림!
+          </h3>
+          <p style={{
+            color: '#9a3412',
+            fontSize: '1rem',
+            lineHeight: '1.7',
+            margin: '0 0 12px 0'
+          }}>
+            <strong>워크플로우가 로딩되지 않는 경우</strong>, 이는 Google의 일시적인 오류입니다.
+          </p>
+          <div style={{
+            background: 'white',
+            borderRadius: '10px',
+            padding: '15px',
+            border: '1px solid #fed7aa'
+          }}>
+            <p style={{
+              color: '#9a3412',
+              fontSize: '0.95rem',
+              lineHeight: '1.6',
+              margin: '0 0 8px 0',
+              fontWeight: '600'
+            }}>
+              💡 해결 방법:
+            </p>
+            <p style={{
+              color: '#9a3412',
+              fontSize: '0.95rem',
+              lineHeight: '1.6',
+              margin: 0
+            }}>
+              <code style={{
+                background: '#fef3c7',
+                padding: '4px 12px',
+                borderRadius: '6px',
+                fontWeight: '700',
+                fontSize: '0.9rem',
+                border: '1px solid #fbbf24'
+              }}>
+                Ctrl + Shift + R
+              </code> (Windows/Linux) 또는{' '}
+              <code style={{
+                background: '#fef3c7',
+                padding: '4px 12px',
+                borderRadius: '6px',
+                fontWeight: '700',
+                fontSize: '0.9rem',
+                border: '1px solid #fbbf24'
+              }}>
+                Cmd + Shift + R
+              </code> (Mac)을 눌러서 <strong>캐시 새로고침</strong>을 하시면 해결됩니다!
+            </p>
+          </div>
+        </div>
+
         {/* 워크플로우 다이어그램 - 영상 바로 아래 */}
         <div style={{
           background: 'white',
