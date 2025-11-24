@@ -22,6 +22,9 @@ const AdminEnrollmentFixPage: React.FC = () => {
   const [allUsers, setAllUsers] = useState<any[]>([]);
   const [showUserTable, setShowUserTable] = useState(false);
   const [payments, setPayments] = useState<Payment[]>([
+    // 최신 가상계좌 결제 (2025-11-24 추가 - 오후)
+    { orderId: 'order_1763954823063_stx6gipkt', name: '박*덕', maskedEmail: 'hu****@gmail.com', amount: 95000, date: '2025-11-24 12:45:32' },
+    
     // 최신 가상계좌 결제 (2025-11-23/24 추가 - 깊은 밤)
     { orderId: 'order_1763907050932_dtf2hhj3i', name: '전*헌', maskedEmail: 'yb**********@gmail.com', amount: 95000, date: '2025-11-23 23:13:06' },
     
