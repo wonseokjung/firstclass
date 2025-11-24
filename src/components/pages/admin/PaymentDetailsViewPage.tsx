@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Copy, Check, Download, Search, Filter } from 'lucide-react';
+import { ArrowLeft, Copy, Check, Download, Search } from 'lucide-react';
 
 interface PaymentDetail {
   orderId: string;
