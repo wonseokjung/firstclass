@@ -138,21 +138,21 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             title: '만들어진 채널에 숏츠 콘텐츠 자동 생성 에이전트 만들기', 
             subtitle: '실습: 숏츠 에이전트로 바이럴 콘텐츠 대량 제작 및 자동 업로드',
             hasQuiz: false,
-            launchDate: '2025-11-24 23:00'
+            launchDate: '2025-11-26 19:00'
           },
           { 
             day: 9, 
             title: '만들어진 채널에 롱폼 콘텐츠 자동 생성 에이전트 만들기', 
             subtitle: '실습: 롱폼 에이전트로 심화 콘텐츠 제작 및 자동 업로드',
             hasQuiz: false,
-            launchDate: '2025-11-21 19:00'
+            launchDate: '2025-11-27 19:00'
           },
           { 
             day: 10, 
             title: '콘텐츠 분석 & 퍼널 전략으로 성공 채널 선택하기', 
             subtitle: '최종 프로젝트: 업로드한 콘텐츠 분석 → 반응 좋은 채널 선택 → 집중 운영 전략',
             hasQuiz: true,
-            launchDate: '2025-11-22 19:00'
+            launchDate: '2025-11-29 17:00'
           }
         ]
       }
