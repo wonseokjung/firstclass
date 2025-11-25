@@ -714,7 +714,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ fontSize: '1.5rem' }}>✅</span>
-                    <span>평생 소장 & 무료 업데이트</span>
+                    <span>구매 후 2년간 이용 가능</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ fontSize: '1.5rem' }}>✅</span>
@@ -772,7 +772,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   margin: '0',
                   fontWeight: '600'
                 }}>
-                  💳 안전한 결제 · 평생 소장 가능
+                  💳 안전한 결제 · 구매 후 2년간 이용 가능
                 </p>
               </div>
             </div>
@@ -788,7 +788,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                 lineHeight: '1.6',
                 margin: '0'
               }}>
-                💡 결제 후 즉시 수강 가능 · 6강-10강은 순차 오픈 예정
+                💡 결제 후 즉시 수강 가능 · Day 8(11/26), Day 9(11/27), Day 10(11/29) 오픈 예정
               </p>
             </div>
           </div>
@@ -894,7 +894,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   지속 성장
                 </h3>
                 <p style={{ fontSize: '0.95rem', color: '#64748b', lineHeight: '1.6', margin: '0' }}>
-                  평생 소장하며<br/>계속 업데이트
+                  구매 후 2년간<br/>무제한 학습
                 </p>
               </div>
             </div>
@@ -1626,7 +1626,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   margin: '0',
                   fontWeight: '600'
                 }}>
-                  💳 안전한 결제 · 평생 소장 가능
+                  💳 안전한 결제 · 구매 후 2년간 이용 가능
                 </p>
               </div>
             </div>

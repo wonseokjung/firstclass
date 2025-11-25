@@ -1415,7 +1415,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     <strong>난이도:</strong> 초급~중급 (AI 경험 불필요)
                   </li>
                   <li style={{ marginBottom: '8px' }}>
-                    <strong>수강 기간:</strong> 평생 무제한
+                    <strong>수강 기간:</strong> 구매 후 2년간
                   </li>
                   <li style={{ marginBottom: '8px' }}>
                     <strong>업데이트:</strong> 매월 새로운 AI 도구 추가
