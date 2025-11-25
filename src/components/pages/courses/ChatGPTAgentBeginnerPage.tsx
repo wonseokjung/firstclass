@@ -16,15 +16,15 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     title: "🤖 AI Agent, 10일 완성",
     subtitle: "수익화하는 인공지능 에이전트 만들기",
     lessons: [
-      // Part 1 (Day 1-5) - 수익화하는 인공지능 에이전트 첫걸음
+      // Part 1 (Day 1-7) - OpenAI 에이전트부터 Google OPAL 에이전트까지
       {
         id: 1,
         day: 1,
         title: "Day 1: 내 첫 AI 친구: ChatGPT와 Agent의 차이",
         hasQuiz: true,
         sections: {
-          theory: "• ChatGPT는 대화형 AI, 에이전트는 워크플로우 기반 자동화 AI\n• 워크플로우를 한 번 설정하면 여러 단계 작업 자동 실행\n• 예시: '유튜브 콘텐츠 만들어줘' → 조사, 스크립트, 제목, 설명 자동 생성",
-          practice: "• ChatGPT 에이전트 빌더 시작하기\n• 유튜브 콘텐츠 기획 에이전트 만들기\n• 워크플로우 자동화 실습"
+          theory: "• ChatGPT와 에이전트 빌더의 차이점 이해하기\n• 워크플로우 자동화 개념 배우기",
+          practice: "• ChatGPT 에이전트 빌더 시작하기\n• 실습으로 에이전트 빌더 사용해보기"
         }
       },
       {
@@ -33,8 +33,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
         title: "Day 2: Work Flow Design 기초 - 나의 일을 AI가 이해할 수 있게 쪼개기",
         hasQuiz: true,
         sections: {
-          theory: "• 워크플로란? 사람의 직관을 AI가 이해 가능한 논리적 구조로 전환\n• 디컴포지션(분해): 목표를 작은 태스크 유닛으로 쪼개기\n• 시퀀싱(순서화): 태스크를 논리적 순서로 배치 (순서 중요!)",
-          practice: "• 4개의 전문 에이전트를 연결한 자동화 시스템 구축\n• 웹 검색 → 대본 작성 → 제목 선정 → 설명글/태그 생성\n• 실전 비즈니스 모델: 유튜브 콘텐츠 제작으로 수익화"
+          theory: "• 워크플로 디자인의 핵심 원리: 디컴포지션(분해)과 시퀀싱(순서화)\n• 복잡한 업무를 작은 태스크 유닛으로 쪼개는 방법",
+          practice: "• 4개의 전문 에이전트를 연결한 유튜브 콘텐츠 자동 생성 시스템 만들기\n• 웹 검색 → 대본 작성 → 제목 선정 → 설명글/태그 생성 워크플로우 구축"
         }
       },
       {
@@ -43,8 +43,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
         title: "Day 3: Google Opal로 영상 자동 생성 에이전트 만들기",
         hasQuiz: true,
         sections: {
-          theory: "• ChatGPT(텍스트) vs Google Opal(영상/이미지/음악) 비교\n• 멀티모달 AI 핵심 모델: Veo(영상), Imagen(이미지), Lyria(음악), AudioLM(음성)\n• 도구 이원화 전략: 기획은 ChatGPT, 콘텐츠 생성은 Google Opal",
-          practice: "• 웹 트렌드 검색 + 자동 홍보 영상 생성 에이전트 구축\n• Google Docs/Drive 연동으로 자동 저장\n• 완전 자동화 영상 생성 시스템 완성"
+          theory: "• ChatGPT 에이전트 빌더 vs Google Opal의 차이점 이해\n• Google Opal의 핵심 AI 모델 (Veo, Gemini 2.5 Flash, Imagen) 활용법",
+          practice: "• 트렌드 검색 + 영상 생성 자동화 에이전트 직접 만들기\n• Google Docs/Drive 연동으로 자동 저장 시스템 구축"
         }
       },
       {
@@ -53,74 +53,74 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
         title: "Day 4: 협찬/광고 수익을 만드는 '콘텐츠 자동 생성 에이전트' 제작법",
         hasQuiz: false,
         sections: {
-          theory: "• 디컴포지션: 복잡한 업무를 독립적인 AI 작업 단위로 분해\n• Plan and Execute Model (Gemini 1.5 Flash 기반)\n• 반복 비즈니스 프로세스 자동화로 시간/비용 절감",
-          practice: "• 4개 에이전트 연결: 웹사이트 분석 → 캡션 작성 → 이미지 생성\n• 인스타그램 포스팅 완전 자동화 워크플로우 구축\n• Prompt Engineering 핵심 지침 (페르소나 설정)"
+          theory: "• 디컴포지션 원리로 복잡한 업무를 AI 작업 단위로 분해\n• OpenAI vs Google Opal의 차이점을 직접 체감",
+          practice: "• 4개 에이전트를 연결한 인스타그램 포스팅 자동화 워크플로우 구축\n• 웹사이트 분석 → 캡션 작성 → 이미지 생성 자동화 시스템 완성"
         }
       },
       {
         id: 5,
         day: 5,
-        title: "Day 5: 유튜브 컨텐츠 수익화하는 인공지능 에이전트 만들기",
+        title: "Day 5: 수익화 인공지능 에이전트 구축하기",
         hasQuiz: true,
         sections: {
-          theory: "• 수익화 정의: AI가 업무를 대신해 퍼포먼스↑ 비용/시간/리소스↓\n• 콘텐츠 수익화: 광고 수익, 제품 판매(쇼핑 태그), 강연 등\n• 한 번의 클릭으로 트렌드 분석부터 편집까지 완전 자동화",
-          practice: "• 완성형 워크플로우: 입력 → 연구 → 썸네일 → 영상(VEO) → 메타데이터\n• Google OPAL로 유튜브 쇼츠 3개(24초) 자동 생성\n• 클릭률 높이는 제목/설명/태그 자동 작성 시스템 구축"
+          theory: "• 수익화의 정의와 AI 에이전트의 목적 이해\n• 트렌드 분석부터 편집까지 완전 자동화 개념",
+          practice: "• Google OPAL로 완전 자동화된 콘텐츠 생성 워크플로우 구축\n• 트렌드 분석 → 영상/썸네일 생성 → 메타데이터 최적화까지 실전 프로젝트 완성"
         }
       },
-      // Part 2 (Day 6-10) - 실전 수익화 컨텐츠 자동 생성 에이전트
       {
         id: 6,
         day: 6,
-        title: "Day 6: 판매 수익화 에이전트 - 제품 판매 영상 자동 생성",
+        title: "Day 6: 시니어 타겟 유튜브 콘텐츠 자동 제작",
         hasQuiz: false,
         launchDate: "2025-11-18 19:00",
         sections: {
-          theory: "• 제품 판매 영상의 핵심 구조와 전략\n• 리뷰/소개/광고 영상의 효과적인 구성 방법\n• 구매 전환율을 높이는 영상 제작 기법",
-          practice: "• Google OPAL로 제품 리뷰 영상 자동 생성\n• 제품 소개 및 홍보 컨텐츠 자동화\n• 판매 전환을 위한 CTA(행동 유도) 최적화"
+          theory: "• 시니어 시장의 특성과 콘텐츠 선호도 이해\n• 25개 멀티 에이전트 시스템 구조 파악",
+          practice: "• AI 에이전트 훈련 및 문제 해결 방법 실습\n• 장면 1개짜리 시니어 콘텐츠 생성 워크플로우 구축"
         }
       },
       {
         id: 7,
         day: 7,
-        title: "Day 7: 바이럴 마케팅 에이전트 - 조회수 폭발 컨텐츠 생성",
+        title: "Day 7: 유튜브 채널 자동 생성 & 최적화 에이전트",
         hasQuiz: false,
         launchDate: "2025-11-19 19:00",
         sections: {
-          theory: "• 바이럴 컨텐츠의 5가지 핵심 요소\n• 실시간 트렌드 분석 및 활용 전략\n• 알고리즘 친화적인 컨텐츠 설계",
-          practice: "• Google OPAL로 트렌드 기반 바이럴 영상 자동 생성\n• 클릭율 높이는 썸네일 자동 제작\n• 바이럴 제목/태그 최적화 시스템 구축"
+          theory: "• 퍼널 전략: 다수 채널 운영으로 성공 확률 극대화\n• 11개 AI 에이전트로 채널 세팅 완전 자동화",
+          practice: "• 트렌드 분석부터 브랜딩까지 원스톱 워크플로우 구축\n• 5-10개 채널을 동시에 운영하는 퍼널 전략 실습"
         }
       },
+      // Part 2 (Day 8-10) - 실전! 채널 운영부터 퍼널 전략까지
       {
         id: 8,
         day: 8,
-        title: "Day 8: 음성 컨텐츠 에이전트 - ASMR & 지식 나눔 영상 생성",
+        title: "Day 8: 만들어진 채널에 숏츠 콘텐츠 자동 생성 에이전트 만들기",
         hasQuiz: false,
-        launchDate: "2025-11-20 19:00",
+        launchDate: "2025-11-26 19:00",
         sections: {
-          theory: "• 음성 기반 컨텐츠 시장 분석 (ASMR, 오디오북, 명상)\n• AudioLM을 활용한 고품질 음성 생성\n• 음성 컨텐츠의 수익화 전략",
-          practice: "• Google OPAL로 ASMR 영상 자동 생성\n• 오디오북 및 지식 나눔 컨텐츠 제작 자동화\n• 명상/교육 음성 컨텐츠 시스템 구축"
+          theory: "• 숏츠 콘텐츠 전략과 알고리즘 이해\n• 바이럴 숏츠의 핵심 요소 파악",
+          practice: "• 숏츠 에이전트로 바이럴 콘텐츠 대량 제작\n• 자동 업로드 시스템 구축"
         }
       },
       {
         id: 9,
         day: 9,
-        title: "Day 9: 대량 생산 에이전트 - 한 번에 15개 영상 자동 생성",
+        title: "Day 9: 만들어진 채널에 롱폼 콘텐츠 자동 생성 에이전트 만들기",
         hasQuiz: false,
-        launchDate: "2025-11-21 19:00",
+        launchDate: "2025-11-27 19:00",
         sections: {
-          theory: "• 배치 처리(Batch Processing) 시스템의 원리\n• 대량 컨텐츠 생성 시 품질 관리 방법\n• 효율적인 리소스 관리 및 최적화 전략",
-          practice: "• 배치 처리 에이전트 워크플로우 설계\n• 15개 영상을 동시에 생성하는 시스템 개발\n• 대량 생산 자동화로 컨텐츠 확장성 확보"
+          theory: "• 롱폼 콘텐츠의 구조와 전략\n• 시청 유지율을 높이는 방법",
+          practice: "• 롱폼 에이전트로 심화 콘텐츠 제작\n• 자동 업로드 및 최적화 시스템 구축"
         }
       },
       {
         id: 10,
         day: 10,
-        title: "Day 10: 완전 자동화 수익 시스템 - 분석부터 업로드까지",
+        title: "Day 10: 콘텐츠 분석 & 퍼널 전략으로 성공 채널 선택하기",
         hasQuiz: true,
-        launchDate: "2025-11-22 19:00",
+        launchDate: "2025-11-29 17:00",
         sections: {
-          theory: "• End-to-End 완전 자동화 시스템 설계\n• 트렌드 분석 → 컨텐츠 생성 → 편집 → 업로드 전체 파이프라인\n• 지속 가능한 수익 창출 전략 및 확장 방법",
-          practice: "• 트렌드 자동 분석 에이전트 구축\n• 컨텐츠 생성부터 유튜브 자동 업로드까지 완전 연결\n• 최종 프로젝트: 완전 자동화 유튜브 수익 시스템 완성"
+          theory: "• 업로드한 콘텐츠 분석 방법\n• 데이터 기반 채널 선택 전략",
+          practice: "• 반응 좋은 채널 선택 및 집중 운영 전략 수립\n• 최종 프로젝트: 완전 자동화 유튜브 수익 시스템 완성"
         }
       }
     ]
