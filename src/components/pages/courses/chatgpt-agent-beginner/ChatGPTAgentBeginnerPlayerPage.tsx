@@ -135,24 +135,23 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
           },
           { 
             day: 8, 
-            title: '만들어진 채널에 숏츠 콘텐츠 자동 생성 에이전트 만들기', 
-            subtitle: '실습: 숏츠 에이전트로 바이럴 콘텐츠 대량 제작 및 자동 업로드',
-            hasQuiz: false,
-            launchDate: '2025-11-26 19:00'
+            title: 'Opal의 숨겨진 비밀: 대화로 워크플로우 자동 생성 + 구글 스프레드시트 연동', 
+            subtitle: '실습: 대화형 워크플로우 자동 생성 + 구글 스프레드시트로 콘텐츠 계획 관리',
+            hasQuiz: true
           },
           { 
             day: 9, 
             title: '만들어진 채널에 롱폼 콘텐츠 자동 생성 에이전트 만들기', 
             subtitle: '실습: 롱폼 에이전트로 심화 콘텐츠 제작 및 자동 업로드',
             hasQuiz: false,
-            launchDate: '2025-11-27 19:00'
+            launchDate: '2025-11-28 19:00'
           },
           { 
             day: 10, 
             title: '콘텐츠 분석 & 퍼널 전략으로 성공 채널 선택하기', 
             subtitle: '최종 프로젝트: 업로드한 콘텐츠 분석 → 반응 좋은 채널 선택 → 집중 운영 전략',
             hasQuiz: true,
-            launchDate: '2025-11-29 17:00'
+            launchDate: '2025-11-30 17:00'
           }
         ]
       }
@@ -285,7 +284,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             }}>
               <span style={{ fontSize: '1.8rem' }}>✅</span>
               <span style={{ fontSize: '1.2rem', fontWeight: '800', color: 'white' }}>
-                Day 1-7 전체 강의 업로드 완료!
+                Day 1-8 전체 강의 업로드 완료!
               </span>
             </div>
             <p style={{
@@ -354,11 +353,11 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
           const icon = isPart1 ? '📚' : '🚀';
 
           return (
-            <div key={weekIndex} style={{
-              marginBottom: '50px'
-            }}>
-              {/* Week 헤더 */}
-              <div style={{
+          <div key={weekIndex} style={{
+            marginBottom: '50px'
+          }}>
+            {/* Week 헤더 */}
+            <div style={{
                 background: headerBg,
                 borderRadius: '20px',
                 padding: '30px 35px',
@@ -384,39 +383,39 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                 }}></div>
                 
                 <div style={{ position: 'relative', zIndex: 1 }}>
-                  <h2 style={{
+              <h2 style={{
                     fontSize: 'clamp(1.6rem, 3vw, 2rem)',
-                    fontWeight: '800',
+                fontWeight: '800',
                     color: titleColor,
                     marginBottom: '12px',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '12px'
-                  }}>
+              }}>
                     <span style={{ fontSize: '2rem' }}>{icon}</span>
                     {week.title}
-                  </h2>
-                  <p style={{
+              </h2>
+              <p style={{
                     fontSize: 'clamp(1rem, 2vw, 1.15rem)',
                     color: subtitleColor,
-                    margin: 0,
+                margin: 0,
                     fontWeight: '600',
                     lineHeight: '1.6'
-                  }}>
-                    {week.subtitle}
-                  </p>
+              }}>
+                {week.subtitle}
+              </p>
                 </div>
-              </div>
+            </div>
 
-              {/* Day 카드들 */}
-              <div style={{
+            {/* Day 카드들 */}
+            <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
               gap: '20px'
             }}>
               {week.days.map((lesson) => {
                 const isCompleted = completedDays.has(lesson.day);
-                const isAvailable = lesson.day <= 7; // Day 1-7 사용 가능
+                const isAvailable = lesson.day <= 8; // Day 1-8 사용 가능
 
                 return (
                   <div
@@ -561,12 +560,12 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          color: '#94a3b8',
+                        color: '#94a3b8',
                           fontSize: '0.85rem',
                           fontWeight: '600',
                           marginBottom: '10px'
-                        }}>
-                          🔒 곧 공개 예정
+                      }}>
+                        🔒 곧 공개 예정
                         </div>
                         {(lesson as any).launchDate && (
                           <div style={{
@@ -604,8 +603,8 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                   </div>
                 );
               })}
-              </div>
             </div>
+          </div>
           );
         })}
 

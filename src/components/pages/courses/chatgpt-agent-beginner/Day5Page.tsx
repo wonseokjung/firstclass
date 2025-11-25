@@ -1395,16 +1395,16 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #e0f2fe, #dbeafe)';
-                  e.currentTarget.style.borderColor = '#0ea5e9';
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(14, 165, 233, 0.2)';
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #e0f2fe, #dbeafe)';
+                    e.currentTarget.style.borderColor = '#0ea5e9';
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(14, 165, 233, 0.2)';
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #f8fafc, #f0f9ff)';
-                  e.currentTarget.style.borderColor = '#e2e8f0';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.05)';
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #f8fafc, #f0f9ff)';
+                    e.currentTarget.style.borderColor = '#e2e8f0';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.05)';
                 }}
               >
                 <div style={{
@@ -1432,8 +1432,8 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
                     }}>
                       {resource.title}
                     </div>
+                      </div>
                   </div>
-                </div>
               </a>
             ))}
           </div>

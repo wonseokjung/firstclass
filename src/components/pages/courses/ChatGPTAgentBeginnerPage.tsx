@@ -661,14 +661,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 </div>
                 <div style={{
                   fontSize: 'clamp(3.5rem, 8vw, 5rem)',
-                  fontWeight: '900',
+                fontWeight: '900',
                   color: 'white',
                   marginBottom: '15px',
                   textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
                   lineHeight: '1'
-                }}>
-                  ₩{coursePrice.toLocaleString()}
-                </div>
+              }}>
+                ₩{coursePrice.toLocaleString()}
+              </div>
                 <div style={{
                   display: 'inline-block',
                   background: 'rgba(254, 243, 199, 0.2)',
@@ -681,10 +681,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 }}>
                   💰 55,000원 할인
                 </div>
-              </div>
+            </div>
 
               {/* 혜택 리스트 */}
-              <div style={{
+            <div style={{
                 background: 'rgba(255, 255, 255, 0.15)',
                 borderRadius: '15px',
                 padding: 'clamp(20px, 4vw, 30px)',
@@ -726,39 +726,39 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 textAlign: 'center',
                 position: 'relative',
                 zIndex: 1
-              }}>
-                <button
-                  onClick={handleEarlyBirdPayment}
-                  style={{
+            }}>
+              <button
+                onClick={handleEarlyBirdPayment}
+                style={{
                     background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
                     color: '#92400e',
                     border: '3px solid #fbbf24',
-                    padding: '25px 60px',
+                  padding: '25px 60px',
                     fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
                     fontWeight: '900',
                     borderRadius: '15px',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
                     boxShadow: '0 8px 30px rgba(251, 191, 36, 0.5)',
                     display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                     gap: '15px',
                     minWidth: '320px',
                     marginBottom: '20px'
-                  }}
-                  onMouseOver={(e) => {
+                }}
+                onMouseOver={(e) => {
                     e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
                     e.currentTarget.style.boxShadow = '0 12px 40px rgba(251, 191, 36, 0.6)';
-                  }}
-                  onMouseOut={(e) => {
+                }}
+                onMouseOut={(e) => {
                     e.currentTarget.style.transform = 'translateY(0) scale(1)';
                     e.currentTarget.style.boxShadow = '0 8px 30px rgba(251, 191, 36, 0.5)';
-                  }}
-                >
+                }}
+              >
                   <span style={{ fontSize: '1.8rem' }}>🚀</span>
-                  지금 바로 수강하기
-                </button>
+                지금 바로 수강하기
+              </button>
                 <p style={{
                   fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
                   color: '#e0f2fe',
@@ -775,14 +775,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               textAlign: 'center',
               marginBottom: '20px'
             }}>
-              <p style={{
+            <p style={{
                 fontSize: 'clamp(0.9rem, 2vw, 1rem)',
-                color: '#64748b',
+              color: '#64748b',
                 lineHeight: '1.6',
                 margin: '0'
-              }}>
+            }}>
                 💡 결제 후 즉시 수강 가능 · Day 8(11/26), Day 9(11/27), Day 10(11/29) 오픈 예정
-              </p>
+            </p>
             </div>
           </div>
 
