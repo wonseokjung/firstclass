@@ -162,12 +162,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
               if ((paymentStatus && paymentStatus.isPaid) || isTestAccount) {
                 setIsPaidUser(true);
-                console.log('✅ 결제 확인됨 - 강의 시청 페이지로 리다이렉트');
-                // 결제된 사용자는 새로운 강의 시청 페이지로 리다이렉트
-                setTimeout(() => {
-                  window.location.href = '/chatgpt-agent-beginner-player';
-                }, 1000);
-                return;
+                console.log('✅ 결제 확인됨 - 소개 페이지에 "내 강의 보기" 버튼 표시');
+                // 자동 리다이렉트 제거 - 사용자가 직접 "내 강의 보기" 버튼 클릭
               } else {
                 console.log('❌ 결제되지 않음 - 강의 구매 페이지 표시');
               }
@@ -194,8 +190,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
   const handleEarlyBirdPayment = async () => {
     console.log('🔍 수강 신청 버튼 클릭 - 결제 페이지로 이동');
+    console.log('🔍 현재 로그인 상태:', isLoggedIn);
+    console.log('🔍 세션 정보:', sessionStorage.getItem('aicitybuilders_user_session'));
     
-    if (!isLoggedIn) {
+    // 세션 정보 재확인 (로그인 상태가 제대로 반영 안 된 경우 대비)
+    const sessionUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
+    const isActuallyLoggedIn = !!sessionUserInfo;
+    
+    if (!isActuallyLoggedIn) {
       const confirmLogin = window.confirm('로그인이 필요한 서비스입니다. 먼저 로그인해주세요.\n\n로그인 페이지로 이동하시겠습니까?');
       if (confirmLogin) {
         window.location.href = '/login';
@@ -204,6 +206,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     }
     
     // 결제 페이지로 이동
+    console.log('✅ 결제 페이지로 이동:', '/chatgpt-agent-beginner/payment');
     window.location.href = '/chatgpt-agent-beginner/payment';
   };
 
@@ -215,36 +218,88 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
         breadcrumbText="ChatGPT AI AGENT 비기너편"
       />
 
-
-      {isPaidUser ? (
-        // 결제 후: 새로운 강의 시청 페이지로 리다이렉트
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '400px',
-          flexDirection: 'column',
-          gap: '20px'
-        }}>
-          <div style={{
-            width: '40px',
-            height: '40px',
-            border: '4px solid #e2e8f0',
-            borderTop: '4px solid #0ea5e9',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite'
-          }}></div>
-          <p style={{ color: '#64748b', fontSize: '16px' }}>
-            강의 시청 페이지로 이동 중...
-          </p>
-        </div>
-      ) : (
-        // 결제 전: 강의 구매 페이지
+      {/* 모든 사용자에게 강의 소개 페이지 표시 */}
+      {/* 결제 전: 강의 구매 페이지 / 결제 후: "내 강의 보기" 버튼 추가 */}
+      {true && (
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
           padding: '40px 20px'
         }}>
+
+          {/* 결제한 사용자를 위한 "내 강의 보기" 버튼 */}
+          {isPaidUser && (
+            <div style={{
+              background: 'linear-gradient(135deg, #10b981, #059669)',
+              borderRadius: '20px',
+              padding: '30px',
+              marginBottom: '40px',
+              boxShadow: '0 10px 40px rgba(16, 185, 129, 0.3)',
+              border: '3px solid #34d399',
+              textAlign: 'center'
+            }}>
+              <div style={{
+                fontSize: '3rem',
+                marginBottom: '15px'
+              }}>
+                🎉
+              </div>
+              <h2 style={{
+                fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+                fontWeight: '800',
+                color: 'white',
+                marginBottom: '15px'
+              }}>
+                이미 수강 중인 강의입니다!
+              </h2>
+              <p style={{
+                fontSize: 'clamp(1rem, 2vw, 1.1rem)',
+                color: '#d1fae5',
+                marginBottom: '25px',
+                lineHeight: '1.6'
+              }}>
+                아래 버튼을 클릭하여 강의를 계속 학습하세요 📚
+              </p>
+              <button
+                onClick={() => window.location.href = '/chatgpt-agent-beginner-player'}
+                style={{
+                  background: 'white',
+                  color: '#059669',
+                  border: 'none',
+                  padding: 'clamp(18px, 4vw, 22px) clamp(40px, 8vw, 60px)',
+                  fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
+                  fontWeight: '900',
+                  borderRadius: '15px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 8px 30px rgba(255, 255, 255, 0.3)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 'clamp(10px, 2vw, 15px)',
+                  width: '100%',
+                  maxWidth: '400px'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                  e.currentTarget.style.boxShadow = '0 12px 40px rgba(255, 255, 255, 0.4)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.boxShadow = '0 8px 30px rgba(255, 255, 255, 0.3)';
+                }}
+                onTouchStart={(e) => {
+                  e.currentTarget.style.transform = 'scale(0.98)';
+                }}
+                onTouchEnd={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
+              >
+                <span style={{ fontSize: 'clamp(1.3rem, 3vw, 1.5rem)' }}>📖</span>
+                내 강의 보기
+              </button>
+            </div>
+          )}
 
           {/* 강의 소개 영상 */}
           <div style={{
@@ -733,18 +788,19 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
                     color: '#92400e',
                     border: '3px solid #fbbf24',
-                  padding: '25px 60px',
-                    fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
+                    padding: 'clamp(18px, 4vw, 25px) clamp(40px, 8vw, 60px)',
+                    fontSize: 'clamp(1.1rem, 3.5vw, 1.6rem)',
                     fontWeight: '900',
                     borderRadius: '15px',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
                     boxShadow: '0 8px 30px rgba(251, 191, 36, 0.5)',
                     display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                    gap: '15px',
-                    minWidth: '320px',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 'clamp(10px, 2vw, 15px)',
+                    width: '100%',
+                    maxWidth: '500px',
                     marginBottom: '20px'
                 }}
                 onMouseOver={(e) => {
@@ -755,8 +811,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     e.currentTarget.style.transform = 'translateY(0) scale(1)';
                     e.currentTarget.style.boxShadow = '0 8px 30px rgba(251, 191, 36, 0.5)';
                 }}
+                onTouchStart={(e) => {
+                    e.currentTarget.style.transform = 'scale(0.98)';
+                }}
+                onTouchEnd={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                }}
               >
-                  <span style={{ fontSize: '1.8rem' }}>🚀</span>
+                  <span style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>🚀</span>
                 지금 바로 수강하기
               </button>
                 <p style={{
@@ -781,7 +843,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 lineHeight: '1.6',
                 margin: '0'
             }}>
-                💡 결제 후 즉시 수강 가능 · Day 8(11/26), Day 9(11/27), Day 10(11/29) 오픈 예정
+                💡 결제 후 즉시 수강 가능 · Day 9(11/28), Day 10(11/30) 오픈 예정
             </p>
             </div>
           </div>
@@ -1587,8 +1649,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
                     color: '#92400e',
                     border: '3px solid #fbbf24',
-                    padding: '25px 60px',
-                    fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
+                    padding: 'clamp(18px, 4vw, 25px) clamp(40px, 8vw, 60px)',
+                    fontSize: 'clamp(1.1rem, 3.5vw, 1.6rem)',
                     fontWeight: '900',
                     borderRadius: '15px',
                     cursor: 'pointer',
@@ -1597,8 +1659,9 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '15px',
-                    minWidth: '320px',
+                    gap: 'clamp(10px, 2vw, 15px)',
+                    width: '100%',
+                    maxWidth: '500px',
                     marginBottom: '20px'
                   }}
                   onMouseOver={(e) => {
@@ -1609,8 +1672,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     e.currentTarget.style.transform = 'translateY(0) scale(1)';
                     e.currentTarget.style.boxShadow = '0 8px 30px rgba(251, 191, 36, 0.5)';
                   }}
+                  onTouchStart={(e) => {
+                    e.currentTarget.style.transform = 'scale(0.98)';
+                  }}
+                  onTouchEnd={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                  }}
                 >
-                  <span style={{ fontSize: '1.8rem' }}>🚀</span>
+                  <span style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>🚀</span>
                   지금 바로 수강하기
                 </button>
                 <p style={{
