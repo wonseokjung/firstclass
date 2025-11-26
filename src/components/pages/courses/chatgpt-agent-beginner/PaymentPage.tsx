@@ -348,8 +348,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
               <strong style={{ color: '#78350f', fontSize: '1.05rem' }}>⏰ 가상계좌/계좌이체 결제 안내</strong><br />
               • <strong>가상계좌 또는 계좌이체로 결제하신 경우</strong>, 입금 확인 후 수강 권한이 부여됩니다.<br />
               • 평일 기준 <strong>2~3시간 이내</strong> 확인되며, 주말/공휴일은 다소 지연될 수 있습니다.<br />
-              • 입금 확인 후 <strong>자동으로 강의 시청이 가능</strong>합니다.<br />
-              • 급한 경우 카카오톡 채널로 문의 주세요: <strong>@커넥션에이아이</strong>
+              • 입금 확인 후 <strong>자동으로 강의 시청이 가능</strong>합니다.
             </p>
           </div>
 
