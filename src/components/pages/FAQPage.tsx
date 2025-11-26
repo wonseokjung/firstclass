@@ -43,7 +43,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
 
               <h5>🔸 지속 가능한 자산 구축</h5>
               <ul>
-                <li><strong>평생 소유 가능:</strong> 한 번 구축하면 계속 수익을 창출하는 디지털 자산</li>
+                <li><strong>지속 가능한 수익:</strong> 한 번 구축하면 계속 수익을 창출하는 디지털 자산</li>
                 <li><strong>확장 가능한 모델:</strong> 하나의 건물에서 시작해 다수의 건물로 확장</li>
                 <li><strong>AI 자동화:</strong> 인공지능으로 운영을 자동화하여 효율성 극대화</li>
               </ul>

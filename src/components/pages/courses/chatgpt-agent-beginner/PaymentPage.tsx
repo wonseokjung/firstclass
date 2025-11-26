@@ -326,7 +326,6 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
               <li><strong>구매 후 2년간 이용 가능</strong> - 기간 내 무제한 수강</li>
               <li><strong>무제한 시청</strong> - 횟수 제한 없이 반복 학습</li>
               <li><strong>실습 파일 제공</strong> - 모든 강의 자료 다운로드</li>
-              <li><strong>커뮤니티 지원</strong> - 카카오톡 오픈채팅 실시간 Q&A</li>
               <li><strong>수료증 발급</strong> - 강의 완료 시 수료증 제공</li>
             </ul>
           </div>
