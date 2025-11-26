@@ -8,9 +8,9 @@ interface Day4PageProps {
 }
 
 const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
-  const [completedSections] = useState<Set<string>>(new Set());
+  const [completedDaysCount, setCompletedDaysCount] = useState<number>(0);
   const [loadingVideos, setLoadingVideos] = useState<Set<string>>(new Set());
-  const [quizAnswers, setQuizAnswers] = useState<{[key: number]: number}>({});
+  const [quizAnswers, setQuizAnswers] = useState<{ [key: number]: number }>({});
   const [quizSubmitted, setQuizSubmitted] = useState<boolean>(false);
   const [isDayCompleted, setIsDayCompleted] = useState<boolean>(false);
   const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
@@ -34,8 +34,11 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
             'chatgpt-agent-beginner'
           );
 
-          if (progress && progress.completedDays.includes(4)) {
-            setIsDayCompleted(true);
+          if (progress && progress.completedDays) {
+            setCompletedDaysCount(progress.completedDays.length);
+            if (progress.completedDays.includes(4)) {
+              setIsDayCompleted(true);
+            }
           }
         }
       } catch (error) {
@@ -60,10 +63,10 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
 
     try {
       setIsCompletingDay(true);
-      
+
       // 학습 시간 계산 (예: 60분)
       const learningTimeMinutes = 60;
-      
+
       const success = await AzureTableService.completeCourseDay(
         userEmail,
         'chatgpt-agent-beginner',
@@ -254,7 +257,8 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
     ]
   };
 
-  const progressPercentage = (completedSections.size / lessonData.sections.length) * 100;
+  const totalDays = 10;
+  const progressPercentage = (completedDaysCount / totalDays) * 100;
 
   // 런칭 전이면 오버레이 표시
   if (!isLaunched) {
@@ -511,15 +515,15 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
                 transition: 'all 0.3s ease',
                 borderRadius: '8px'
               }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.background = '#f0f9ff';
-                e.currentTarget.style.transform = 'translateX(5px)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.background = 'transparent';
-                e.currentTarget.style.transform = 'translateX(0)';
-              }}>
-                <span style={{ 
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = '#f0f9ff';
+                  e.currentTarget.style.transform = 'translateX(5px)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = 'transparent';
+                  e.currentTarget.style.transform = 'translateX(0)';
+                }}>
+                <span style={{
                   color: 'white',
                   fontWeight: '700',
                   background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
@@ -675,7 +679,7 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
               lineHeight: '1.7',
               marginBottom: '25px'
             }}>
-              ConnexionAI가 지속 연구하며 업데이트하는 실전 워크플로우입니다. <br/>
+              ConnexionAI가 지속 연구하며 업데이트하는 실전 워크플로우입니다. <br />
               영상과 다를 수 있습니다 — 더 나은 성능을 위해 계속 개선 중
             </p>
 
@@ -724,7 +728,7 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
             padding: '30px',
             marginBottom: '20px',
             boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
-            border: completedSections.has(section.id) ? '2px solid #10b981' : '2px solid #e2e8f0'
+            border: isDayCompleted ? '2px solid #10b981' : '2px solid #e2e8f0'
           }}>
             <div style={{
               display: 'flex',
@@ -774,7 +778,7 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
             {(() => {
               const isVimeo = (section as any).isVimeo || section.videoUrl.includes('vimeo.com');
               const isYouTube = section.videoUrl.includes('youtube.com') || section.videoUrl.includes('youtu.be');
-              
+
               if (isVimeo) {
                 // Vimeo 링크 처리
                 return (
@@ -805,7 +809,7 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
                   </div>
                 );
               }
-              
+
               // YouTube와 일반 비디오는 기존 컨테이너 사용
               return (
                 <div style={{
@@ -818,120 +822,120 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
                 }}>
                   {(() => {
                     if (isYouTube) {
-                  // 유튜브 링크 처리
-                  return (
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      src={section.videoUrl}
-                      title={section.title}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      style={{
-                        border: 'none',
-                        display: 'block',
-                        width: '100%',
-                        height: '100%',
-                        position: 'absolute',
-                        top: 0,
-                        left: 0
-                      }}
-                    />
-                  );
-                } else {
-                  // 일반 비디오 파일 처리
-                  return (
-                    <>
-                      {loadingVideos.has(section.id) && (
-                        <div style={{
-                          position: 'absolute' as const,
-                          top: '50%',
-                          left: '50%',
-                          transform: 'translate(-50%, -50%)',
-                          zIndex: 10,
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          gap: '15px'
-                        }}>
-                          <div style={{
-                            width: '50px',
-                            height: '50px',
-                            border: '4px solid rgba(255, 255, 255, 0.3)',
-                            borderTop: '4px solid #0ea5e9',
-                            borderRadius: '50%',
-                            animation: 'spin 1s linear infinite'
-                          }}></div>
-                          <span style={{
-                            color: 'white',
-                            fontSize: '0.9rem',
-                            fontWeight: '600'
-                          }}>
-                            비디오 로딩 중...
-                          </span>
-                        </div>
-                      )}
-                      <video
-                        width="100%"
-                        height="100%"
-                        controls
-                        controlsList="nodownload noremoteplayback"
-                        disablePictureInPicture
-                        preload="auto"
-                        playsInline
-                        onContextMenu={(e) => e.preventDefault()}
-                        onLoadStart={() => {
-                          const newLoading = new Set(loadingVideos);
-                          newLoading.add(section.id);
-                          setLoadingVideos(newLoading);
-                        }}
-                        onCanPlay={() => {
-                          const newLoading = new Set(loadingVideos);
-                          newLoading.delete(section.id);
-                          setLoadingVideos(newLoading);
-                        }}
-                        onError={(e) => {
-                          const newLoading = new Set(loadingVideos);
-                          newLoading.delete(section.id);
-                          setLoadingVideos(newLoading);
-                          console.error('Video error:', e);
-                        }}
-                        style={{ 
-                          border: 'none',
-                          display: 'block',
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'contain',
-                          backgroundColor: '#000'
-                        }}
-                      >
-                        {section.videoUrl.endsWith('.mov') ? (
-                          <>
-                            <source src={section.videoUrl} type="video/quicktime; codecs=hvc1" />
-                            <source src={section.videoUrl} type="video/mp4" />
-                          </>
-                        ) : (
-                          <>
-                            <source src={section.videoUrl} type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
-                            <source src={section.videoUrl} type="video/mp4" />
-                          </>
-                        )}
-                        <p style={{ color: 'white', padding: '20px', textAlign: 'center' }}>
-                          브라우저가 비디오를 지원하지 않습니다.<br/>
-                          <a href={section.videoUrl} style={{ color: '#0ea5e9' }}>직접 다운로드하기</a>
-                        </p>
-                      </video>
-                    </>
-                  );
-                }
+                      // 유튜브 링크 처리
+                      return (
+                        <iframe
+                          width="100%"
+                          height="100%"
+                          src={section.videoUrl}
+                          title={section.title}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          style={{
+                            border: 'none',
+                            display: 'block',
+                            width: '100%',
+                            height: '100%',
+                            position: 'absolute',
+                            top: 0,
+                            left: 0
+                          }}
+                        />
+                      );
+                    } else {
+                      // 일반 비디오 파일 처리
+                      return (
+                        <>
+                          {loadingVideos.has(section.id) && (
+                            <div style={{
+                              position: 'absolute' as const,
+                              top: '50%',
+                              left: '50%',
+                              transform: 'translate(-50%, -50%)',
+                              zIndex: 10,
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center',
+                              gap: '15px'
+                            }}>
+                              <div style={{
+                                width: '50px',
+                                height: '50px',
+                                border: '4px solid rgba(255, 255, 255, 0.3)',
+                                borderTop: '4px solid #0ea5e9',
+                                borderRadius: '50%',
+                                animation: 'spin 1s linear infinite'
+                              }}></div>
+                              <span style={{
+                                color: 'white',
+                                fontSize: '0.9rem',
+                                fontWeight: '600'
+                              }}>
+                                비디오 로딩 중...
+                              </span>
+                            </div>
+                          )}
+                          <video
+                            width="100%"
+                            height="100%"
+                            controls
+                            controlsList="nodownload noremoteplayback"
+                            disablePictureInPicture
+                            preload="auto"
+                            playsInline
+                            onContextMenu={(e) => e.preventDefault()}
+                            onLoadStart={() => {
+                              const newLoading = new Set(loadingVideos);
+                              newLoading.add(section.id);
+                              setLoadingVideos(newLoading);
+                            }}
+                            onCanPlay={() => {
+                              const newLoading = new Set(loadingVideos);
+                              newLoading.delete(section.id);
+                              setLoadingVideos(newLoading);
+                            }}
+                            onError={(e) => {
+                              const newLoading = new Set(loadingVideos);
+                              newLoading.delete(section.id);
+                              setLoadingVideos(newLoading);
+                              console.error('Video error:', e);
+                            }}
+                            style={{
+                              border: 'none',
+                              display: 'block',
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'contain',
+                              backgroundColor: '#000'
+                            }}
+                          >
+                            {section.videoUrl.endsWith('.mov') ? (
+                              <>
+                                <source src={section.videoUrl} type="video/quicktime; codecs=hvc1" />
+                                <source src={section.videoUrl} type="video/mp4" />
+                              </>
+                            ) : (
+                              <>
+                                <source src={section.videoUrl} type="video/mp4; codecs=avc1.42E01E,mp4a.40.2" />
+                                <source src={section.videoUrl} type="video/mp4" />
+                              </>
+                            )}
+                            <p style={{ color: 'white', padding: '20px', textAlign: 'center' }}>
+                              브라우저가 비디오를 지원하지 않습니다.<br />
+                              <a href={section.videoUrl} style={{ color: '#0ea5e9' }}>직접 다운로드하기</a>
+                            </p>
+                          </video>
+                        </>
+                      );
+                    }
                   })()}
                 </div>
               );
             })()}
 
             {/* 강의 내용 */}
-            <div 
+            <div
               style={{
                 fontSize: '1.05rem',
                 lineHeight: '1.8',
@@ -960,7 +964,7 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
           </h2>
           {lessonData.quiz.questions.map((q, index) => {
             const isCorrect = quizAnswers[q.id] === q.correctAnswer;
-            
+
             return (
               <div key={q.id} style={{
                 marginBottom: '30px',
@@ -983,10 +987,10 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
                   {q.options.map((option, optIndex) => {
                     const isSelected = quizAnswers[q.id] === optIndex;
                     const isCorrectOption = optIndex === q.correctAnswer;
-                    
+
                     let backgroundColor = 'white';
                     let borderColor = '#e5e7eb';
-                    
+
                     if (quizSubmitted && isSelected) {
                       backgroundColor = isCorrect ? '#ecfdf5' : '#fef2f2';
                       borderColor = isCorrect ? '#10b981' : '#ef4444';
@@ -994,7 +998,7 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
                       backgroundColor = '#ecfdf5';
                       borderColor = '#10b981';
                     }
-                    
+
                     return (
                       <label key={optIndex} style={{
                         display: 'flex',
@@ -1009,19 +1013,19 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
                         position: 'relative' as const,
                         opacity: quizSubmitted && !isSelected && !isCorrectOption ? 0.5 : 1
                       }}
-                      onMouseOver={(e) => {
-                        if (!quizSubmitted) {
-                          e.currentTarget.style.background = '#f9fafb';
-                        }
-                      }}
-                      onMouseOut={(e) => {
-                        if (!quizSubmitted) {
-                          e.currentTarget.style.background = 'white';
-                        }
-                      }}>
-                        <input 
-                          type="radio" 
-                          name={`question-${q.id}`} 
+                        onMouseOver={(e) => {
+                          if (!quizSubmitted) {
+                            e.currentTarget.style.background = '#f9fafb';
+                          }
+                        }}
+                        onMouseOut={(e) => {
+                          if (!quizSubmitted) {
+                            e.currentTarget.style.background = 'white';
+                          }
+                        }}>
+                        <input
+                          type="radio"
+                          name={`question-${q.id}`}
                           value={optIndex}
                           checked={isSelected}
                           disabled={quizSubmitted}
@@ -1038,7 +1042,7 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
                             accentColor: '#0ea5e9'
                           }}
                         />
-                        <span style={{ 
+                        <span style={{
                           fontSize: '1rem',
                           color: '#1f2937',
                           flex: 1,
@@ -1057,7 +1061,7 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
               </div>
             );
           })}
-          
+
           {/* 정답 보기 버튼 */}
           <div style={{ marginTop: '30px' }}>
             <button
@@ -1065,30 +1069,30 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
               disabled={quizSubmitted}
               style={{
                 padding: '14px 32px',
-                background: quizSubmitted 
-                  ? 'linear-gradient(135deg, #10b981, #059669)' 
+                background: quizSubmitted
+                  ? 'linear-gradient(135deg, #10b981, #059669)'
                   : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                 color: 'white',
                 border: 'none',
                 borderRadius: '8px',
                 fontSize: '1rem',
                 fontWeight: '600',
-                cursor: quizSubmitted 
-                  ? 'not-allowed' 
+                cursor: quizSubmitted
+                  ? 'not-allowed'
                   : 'pointer',
                 transition: 'all 0.2s ease',
                 marginRight: '10px',
-                boxShadow: quizSubmitted 
+                boxShadow: quizSubmitted
                   ? '0 2px 8px rgba(16, 185, 129, 0.3)'
                   : '0 2px 8px rgba(14, 165, 233, 0.3)',
                 opacity: quizSubmitted ? 0.7 : 1
               }}
             >
-              {quizSubmitted 
-                ? `✓ ${lessonData.quiz.questions.filter((q, idx) => quizAnswers[q.id] === q.correctAnswer).length}/${lessonData.quiz.questions.length} 정답` 
+              {quizSubmitted
+                ? `✓ ${lessonData.quiz.questions.filter((q, idx) => quizAnswers[q.id] === q.correctAnswer).length}/${lessonData.quiz.questions.length} 정답`
                 : '정답 보기'}
             </button>
-            
+
             {quizSubmitted && (
               <button
                 onClick={() => {
@@ -1115,8 +1119,8 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
 
         {/* 4강 완료 버튼 */}
         <div style={{
-          background: isDayCompleted 
-            ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)' 
+          background: isDayCompleted
+            ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)'
             : 'linear-gradient(135deg, #eff6ff, #dbeafe)',
           padding: '30px',
           borderRadius: '15px',
@@ -1138,11 +1142,11 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
             marginBottom: '20px',
             fontSize: '0.95rem'
           }}>
-            {isDayCompleted 
-              ? '4강을 완료했습니다! 다음 강의로 이동하세요.' 
+            {isDayCompleted
+              ? '4강을 완료했습니다! 다음 강의로 이동하세요.'
               : '강의를 수강한 후 버튼을 눌러주세요.'}
           </p>
-          
+
           {!isDayCompleted ? (
             <button
               onClick={handleCompleteDay}

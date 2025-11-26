@@ -8,8 +8,8 @@ interface Day6PageProps {
 }
 
 const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
-  const [completedSections] = useState<Set<string>>(new Set());
-  const [quizAnswers, setQuizAnswers] = useState<{[key: number]: number}>({});
+  const [completedDaysCount, setCompletedDaysCount] = useState<number>(0);
+  const [quizAnswers, setQuizAnswers] = useState<{ [key: number]: number }>({});
   const [quizSubmitted, setQuizSubmitted] = useState<boolean>(false);
   const [isDayCompleted, setIsDayCompleted] = useState<boolean>(false);
   const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
@@ -30,8 +30,11 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             'chatgpt-agent-beginner'
           );
 
-          if (progress && progress.completedDays.includes(6)) {
-            setIsDayCompleted(true);
+          if (progress && progress.completedDays) {
+            setCompletedDaysCount(progress.completedDays.length);
+            if (progress.completedDays.includes(6)) {
+              setIsDayCompleted(true);
+            }
           }
         }
       } catch (error) {
@@ -56,10 +59,10 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
 
     try {
       setIsCompletingDay(true);
-      
+
       // 학습 시간 계산 (예: 60분)
       const learningTimeMinutes = 60;
-      
+
       const success = await AzureTableService.completeCourseDay(
         userEmail,
         'chatgpt-agent-beginner',
@@ -224,7 +227,8 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
     }
   };
 
-  const progressPercentage = (completedSections.size / lessonData.sections.length) * 100;
+  const totalDays = 10;
+  const progressPercentage = (completedDaysCount / totalDays) * 100;
 
   return (
     <div style={{
@@ -398,15 +402,15 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                 transition: 'all 0.3s ease',
                 borderRadius: '8px'
               }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.background = '#f0f9ff';
-                e.currentTarget.style.transform = 'translateX(5px)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.background = 'transparent';
-                e.currentTarget.style.transform = 'translateX(0)';
-              }}>
-                <span style={{ 
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = '#f0f9ff';
+                  e.currentTarget.style.transform = 'translateX(5px)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = 'transparent';
+                  e.currentTarget.style.transform = 'translateX(0)';
+                }}>
+                <span style={{
                   color: 'white',
                   fontWeight: '700',
                   background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
@@ -559,8 +563,8 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             padding: '15px',
             border: '1px solid #e5e7eb'
           }}>
-            <img 
-              src="/images/day5/day6.png" 
+            <img
+              src="/images/day5/day6.png"
               alt="시니어 타겟 AI 에이전트 워크플로우 다이어그램"
               style={{
                 width: '100%',
@@ -636,7 +640,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
               lineHeight: '1.7',
               marginBottom: '25px'
             }}>
-              ConnexionAI가 지속 연구하며 업데이트하는 실전 워크플로우입니다. <br/>
+              ConnexionAI가 지속 연구하며 업데이트하는 실전 워크플로우입니다. <br />
               영상과 다를 수 있습니다 — 더 나은 성능을 위해 계속 개선 중
             </p>
 
@@ -685,7 +689,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             padding: '30px',
             marginBottom: '20px',
             boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
-            border: completedSections.has(section.id) ? '2px solid #10b981' : '2px solid #e2e8f0'
+            border: isDayCompleted ? '2px solid #10b981' : '2px solid #e2e8f0'
           }}>
             <div style={{
               display: 'flex',
@@ -742,7 +746,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             }}>
               {(() => {
                 const isVimeo = (section as any).isVimeo || section.videoUrl.includes('vimeo.com');
-                
+
                 if (isVimeo) {
                   return (
                     <div style={{
@@ -758,13 +762,13 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                         frameBorder="0"
                         allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                         referrerPolicy="strict-origin-when-cross-origin"
-          style={{
+                        style={{
                           position: 'absolute',
                           top: 0,
                           left: 0,
-            width: '100%',
+                          width: '100%',
                           height: '100%',
-            border: 'none',
+                          border: 'none',
                           borderRadius: '12px'
                         }}
                         title={section.title}
@@ -772,13 +776,13 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                     </div>
                   );
                 }
-                
+
                 return null;
               })()}
             </div>
 
             {/* 강의 내용 */}
-            <div 
+            <div
               style={{
                 fontSize: '1.05rem',
                 lineHeight: '1.8',
@@ -807,7 +811,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
           </h2>
           {lessonData.quiz.questions.map((q, index) => {
             const isCorrect = quizAnswers[q.id] === q.correctAnswer;
-            
+
             return (
               <div key={q.id} style={{
                 marginBottom: '30px',
@@ -830,10 +834,10 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                   {q.options.map((option, optIndex) => {
                     const isSelected = quizAnswers[q.id] === optIndex;
                     const isCorrectOption = optIndex === q.correctAnswer;
-                    
+
                     let backgroundColor = 'white';
                     let borderColor = '#e5e7eb';
-                    
+
                     if (quizSubmitted && isSelected) {
                       backgroundColor = isCorrect ? '#ecfdf5' : '#fef2f2';
                       borderColor = isCorrect ? '#10b981' : '#ef4444';
@@ -841,7 +845,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                       backgroundColor = '#ecfdf5';
                       borderColor = '#10b981';
                     }
-                    
+
                     return (
                       <label key={optIndex} style={{
                         display: 'flex',
@@ -856,19 +860,19 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                         position: 'relative' as const,
                         opacity: quizSubmitted && !isSelected && !isCorrectOption ? 0.5 : 1
                       }}
-                      onMouseOver={(e) => {
-                        if (!quizSubmitted) {
-                          e.currentTarget.style.background = '#f9fafb';
-                        }
-                      }}
-                      onMouseOut={(e) => {
-                        if (!quizSubmitted) {
-                          e.currentTarget.style.background = 'white';
-                        }
-                      }}>
-                        <input 
-                          type="radio" 
-                          name={`question-${q.id}`} 
+                        onMouseOver={(e) => {
+                          if (!quizSubmitted) {
+                            e.currentTarget.style.background = '#f9fafb';
+                          }
+                        }}
+                        onMouseOut={(e) => {
+                          if (!quizSubmitted) {
+                            e.currentTarget.style.background = 'white';
+                          }
+                        }}>
+                        <input
+                          type="radio"
+                          name={`question-${q.id}`}
                           value={optIndex}
                           checked={isSelected}
                           disabled={quizSubmitted}
@@ -885,7 +889,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                             accentColor: '#0ea5e9'
                           }}
                         />
-                        <span style={{ 
+                        <span style={{
                           fontSize: '1rem',
                           color: '#1f2937',
                           flex: 1,
@@ -904,7 +908,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
               </div>
             );
           })}
-          
+
           {/* 정답 보기 버튼 */}
           <div style={{ marginTop: '30px' }}>
             <button
@@ -912,30 +916,30 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
               disabled={quizSubmitted}
               style={{
                 padding: '14px 32px',
-                background: quizSubmitted 
-                  ? 'linear-gradient(135deg, #10b981, #059669)' 
+                background: quizSubmitted
+                  ? 'linear-gradient(135deg, #10b981, #059669)'
                   : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                 color: 'white',
                 border: 'none',
                 borderRadius: '8px',
                 fontSize: '1rem',
                 fontWeight: '600',
-                cursor: quizSubmitted 
-                  ? 'not-allowed' 
+                cursor: quizSubmitted
+                  ? 'not-allowed'
                   : 'pointer',
                 transition: 'all 0.2s ease',
                 marginRight: '10px',
-                boxShadow: quizSubmitted 
+                boxShadow: quizSubmitted
                   ? '0 2px 8px rgba(16, 185, 129, 0.3)'
                   : '0 2px 8px rgba(14, 165, 233, 0.3)',
                 opacity: quizSubmitted ? 0.7 : 1
               }}
             >
-              {quizSubmitted 
-                ? `✓ ${lessonData.quiz.questions.filter((q, idx) => quizAnswers[q.id] === q.correctAnswer).length}/${lessonData.quiz.questions.length} 정답` 
+              {quizSubmitted
+                ? `✓ ${lessonData.quiz.questions.filter((q, idx) => quizAnswers[q.id] === q.correctAnswer).length}/${lessonData.quiz.questions.length} 정답`
                 : '정답 보기'}
             </button>
-            
+
             {quizSubmitted && (
               <button
                 onClick={() => {
@@ -962,8 +966,8 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
 
         {/* 6강 완료 버튼 */}
         <div style={{
-          background: isDayCompleted 
-            ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)' 
+          background: isDayCompleted
+            ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)'
             : 'linear-gradient(135deg, #eff6ff, #dbeafe)',
           padding: '30px',
           borderRadius: '15px',
@@ -985,11 +989,11 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             marginBottom: '20px',
             fontSize: '0.95rem'
           }}>
-            {isDayCompleted 
-              ? '6강을 완료했습니다! 다음 강의로 이동하세요.' 
+            {isDayCompleted
+              ? '6강을 완료했습니다! 다음 강의로 이동하세요.'
               : '강의를 수강한 후 버튼을 눌러주세요.'}
           </p>
-          
+
           {!isDayCompleted ? (
             <button
               onClick={handleCompleteDay}
@@ -1036,18 +1040,18 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
                 boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
                 e.currentTarget.style.boxShadow = '0 6px 16px rgba(16, 185, 129, 0.4)';
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)';
-          }}
-        >
+              }}
+            >
               ✓ 완료! 7강으로 →
-        </button>
+            </button>
           )}
         </div>
       </div>
