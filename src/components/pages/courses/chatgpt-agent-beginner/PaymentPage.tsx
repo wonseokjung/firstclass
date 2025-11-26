@@ -172,7 +172,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
         <div style={{
           background: 'white',
           borderRadius: '20px',
-          padding: '40px',
+          padding: 'clamp(20px, 5vw, 40px)',
           marginBottom: '30px',
           boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)',
           border: '2px solid #e2e8f0'
@@ -199,17 +199,19 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             </div>
             <div style={{ flex: 1 }}>
               <h2 style={{
-                fontSize: '1.5rem',
+                fontSize: 'clamp(1.1rem, 3vw, 1.5rem)',
                 fontWeight: '700',
                 color: '#1f2937',
-                marginBottom: '5px'
+                marginBottom: '5px',
+                lineHeight: '1.3'
               }}>
                 {courseInfo.title}
               </h2>
               <p style={{
-                fontSize: '0.95rem',
+                fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
                 color: '#64748b',
-                margin: 0
+                margin: 0,
+                lineHeight: '1.4'
               }}>
                 {courseInfo.subtitle}
               </p>
@@ -284,7 +286,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                 최종 결제 금액
               </span>
               <span style={{
-                fontSize: '2.2rem',
+                fontSize: 'clamp(1.8rem, 4vw, 2.2rem)',
                 color: '#0ea5e9',
                 fontWeight: '900'
               }}>
@@ -327,6 +329,29 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
               <li><strong>커뮤니티 지원</strong> - 카카오톡 오픈채팅 실시간 Q&A</li>
               <li><strong>수료증 발급</strong> - 강의 완료 시 수료증 제공</li>
             </ul>
+          </div>
+
+          {/* 가상계좌/계좌이체 안내 */}
+          <div style={{
+            background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+            borderRadius: '12px',
+            padding: '20px',
+            marginBottom: '20px',
+            border: '2px solid #fbbf24'
+          }}>
+            <p style={{
+              fontSize: '0.95rem',
+              color: '#92400e',
+              lineHeight: '1.8',
+              margin: 0,
+              fontWeight: '600'
+            }}>
+              <strong style={{ color: '#78350f', fontSize: '1.05rem' }}>⏰ 가상계좌/계좌이체 결제 안내</strong><br />
+              • <strong>가상계좌 또는 계좌이체로 결제하신 경우</strong>, 입금 확인 후 수강 권한이 부여됩니다.<br />
+              • 평일 기준 <strong>2~3시간 이내</strong> 확인되며, 주말/공휴일은 다소 지연될 수 있습니다.<br />
+              • 입금 확인 후 <strong>자동으로 강의 시청이 가능</strong>합니다.<br />
+              • 급한 경우 카카오톡 채널로 문의 주세요: <strong>@커넥션에이아이</strong>
+            </p>
           </div>
 
           {/* 결제 안내 */}
