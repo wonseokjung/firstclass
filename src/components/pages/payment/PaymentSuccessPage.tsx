@@ -208,7 +208,9 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 email: user.email,
                 courseId: courseData.id,
                 amount: courseData.price,
-                paymentMethod: 'card'
+                paymentMethod: 'card',
+                orderId: orderId,
+                timestamp: new Date().toISOString()
               });
               
               const result = await AzureTableService.addPurchaseWithReward({
@@ -222,19 +224,53 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               });
               
               console.log(`✅ ${courseData.title} 구매 완료, 결과:`, result);
+              console.log(`✅ 결제 정보:`, {
+                payment: result.payment,
+                enrollment: result.enrollment,
+                rewardProcessed: result.rewardProcessed
+              });
+              
               if (result.rewardProcessed) {
                 console.log('🎁 추천 리워드 지급 완료!');
               } else {
                 console.log('ℹ️ 추천인이 없어 리워드 처리를 건너뜀');
               }
+              
+              // 성공 여부 확인
+              if (result && result.enrollment) {
+                console.log('✅✅✅ Azure 등록 100% 성공 확인!');
+              } else {
+                console.error('⚠️⚠️⚠️ Azure 등록 결과가 이상합니다:', result);
+              }
             } catch (paymentError: any) {
-              console.error('❌ 구매 실패:', paymentError);
+              console.error('❌❌❌ 구매 실패 - 중요!:', paymentError);
               console.error('❌ 구매 실패 상세:', {
                 errorMessage: paymentError?.message || String(paymentError),
                 errorStack: paymentError?.stack,
                 courseData,
-                user: { email: user.email, name: user.name }
+                user: { email: user.email, name: user.name },
+                timestamp: new Date().toISOString()
               });
+              
+              // 실패 시 로컬스토리지에 기록 (관리자가 확인할 수 있도록)
+              try {
+                const failedPayments = localStorage.getItem('failed_azure_payments') || '[]';
+                const failedList = JSON.parse(failedPayments);
+                failedList.push({
+                  email: user.email,
+                  courseId: courseData.id,
+                  orderId: orderId,
+                  error: paymentError?.message || String(paymentError),
+                  timestamp: new Date().toISOString()
+                });
+                localStorage.setItem('failed_azure_payments', JSON.stringify(failedList));
+                console.log('💾 실패한 결제 정보 로컬스토리지에 저장 완료');
+              } catch (storageError) {
+                console.error('❌ 로컬스토리지 저장 실패:', storageError);
+              }
+              
+              // 사용자에게 알림 (선택적)
+              alert('⚠️ 결제는 완료되었으나, 시스템 등록 중 오류가 발생했습니다.\n고객센터(jay@connexionai.kr)로 문의해주시면 즉시 처리해드리겠습니다.\n\n주문번호: ' + (orderId || '없음'));
             }
           } else {
             console.warn('⚠️ 구매 정보 부족:', {
