@@ -93,12 +93,12 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
       {
         id: 8,
         day: 8,
-        title: "Day 8: 만들어진 채널에 숏츠 콘텐츠 자동 생성 에이전트 만들기",
-        hasQuiz: false,
+        title: "Day 8: Opal의 숨겨진 비밀: 대화로 워크플로우 자동 생성 + 구글 스프레드시트 연동",
+        hasQuiz: true,
         launchDate: "2025-11-26 19:00",
         sections: {
-          theory: "• 숏츠 콘텐츠 전략과 알고리즘 이해\n• 바이럴 숏츠의 핵심 요소 파악",
-          practice: "• 숏츠 에이전트로 바이럴 콘텐츠 대량 제작\n• 자동 업로드 시스템 구축"
+          theory: "• 대화형으로 워크플로우를 자동 생성하는 방법\n• 노드와 프롬프트를 한글로 자동 작성하기",
+          practice: "• 구글 스프레드시트에 콘텐츠 계획 자동 저장\n• 유튜브 콘텐츠 계획표 자동 생성 실습\n• 다양한 업무에 적용 가능한 자동화 전략"
         }
       },
       {
