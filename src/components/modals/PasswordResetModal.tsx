@@ -110,11 +110,64 @@ const PasswordResetModal: React.FC<PasswordResetModalProps> = ({
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="password-reset-form">
-              <p className="reset-description">
+              {/* 개발 중 안내 */}
+              <div style={{
+                background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                border: '2px solid #fbbf24',
+                borderRadius: '12px',
+                padding: '20px',
+                marginBottom: '20px',
+                textAlign: 'center'
+              }}>
+                <div style={{ fontSize: '2rem', marginBottom: '10px' }}>🚧</div>
+                <h3 style={{
+                  fontSize: '1.1rem',
+                  fontWeight: '700',
+                  color: '#92400e',
+                  marginBottom: '12px'
+                }}>
+                  비밀번호 찾기 기능 개발 중
+                </h3>
+                <p style={{
+                  fontSize: '0.95rem',
+                  color: '#78350f',
+                  lineHeight: '1.7',
+                  margin: '0 0 15px 0'
+                }}>
+                  현재 자동 비밀번호 재설정 기능을 개발 중입니다.<br />
+                  비밀번호 재설정이 필요하신 경우,<br />
+                  아래 연락처로 문의해주세요.
+                </p>
+                <div style={{
+                  background: 'white',
+                  borderRadius: '8px',
+                  padding: '15px',
+                  border: '1px solid #fbbf24'
+                }}>
+                  <p style={{
+                    fontSize: '0.9rem',
+                    color: '#92400e',
+                    margin: '0 0 8px 0',
+                    fontWeight: '600'
+                  }}>
+                    📧 이메일: <strong>jay@connexionai.kr</strong>
+                  </p>
+                  <p style={{
+                    fontSize: '0.9rem',
+                    color: '#92400e',
+                    margin: 0,
+                    fontWeight: '600'
+                  }}>
+                    💬 카카오톡: <strong>@커넥션에이아이</strong>
+                  </p>
+                </div>
+              </div>
+
+              <p className="reset-description" style={{ display: 'none' }}>
                 가입하신 이메일 주소를 입력하시면, 비밀번호 재설정 링크를 보내드립니다.
               </p>
 
-              <div className="form-group">
+              <div className="form-group" style={{ display: 'none' }}>
                 <label htmlFor="reset-email" className="form-label">
                   <Mail size={20} />
                   이메일 주소
@@ -126,7 +179,7 @@ const PasswordResetModal: React.FC<PasswordResetModalProps> = ({
                   onChange={handleEmailChange}
                   className={`form-input ${error ? 'error' : ''}`}
                   placeholder="your@email.com"
-                  disabled={isLoading}
+                  disabled={true}
                   autoFocus
                 />
                 {error && (
@@ -142,16 +195,14 @@ const PasswordResetModal: React.FC<PasswordResetModalProps> = ({
                   type="button"
                   className="modal-cancel-button"
                   onClick={handleClose}
-                  disabled={isLoading}
+                  style={{
+                    width: '100%',
+                    background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                    color: 'white',
+                    border: 'none'
+                  }}
                 >
-                  취소
-                </button>
-                <button
-                  type="submit"
-                  className="auth-submit-button"
-                  disabled={isLoading || !email.trim()}
-                >
-                  {isLoading ? '전송 중...' : '재설정 링크 전송'}
+                  확인
                 </button>
               </div>
             </form>
