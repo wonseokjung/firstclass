@@ -21,6 +21,7 @@ const MainPage = React.lazy(() => import('./components/pages/MainPage'));
 const AICityMapPage = React.lazy(() => import('./components/pages/AICityMapPage'));
 const ChatGPTPrompts40Page = React.lazy(() => import('./components/pages/ChatGPTPrompts40Page'));
 const AIMoneyMasterPromptsPage = React.lazy(() => import('./components/pages/AIMoneyMasterPromptsPage'));
+const AIMoneyImagePromptsPage = React.lazy(() => import('./components/pages/AIMoneyImagePromptsPage'));
 const FAQPage = React.lazy(() => import('./components/pages/FAQPage'));
 const CEOPage = React.lazy(() => import('./components/pages/CEOPage'));
 const ContactPage = React.lazy(() => import('./components/pages/ContactPage'));
@@ -527,6 +528,15 @@ const ChatGPTCoursePageWrapper = () => {
     );
   };
   
+  const AIMoneyImagePromptsPageWrapper = () => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <AIMoneyImagePromptsPage onBack={() => navigate('/')} />
+      </Suspense>
+    );
+  };
+  
   
   
   function App() {
@@ -572,6 +582,7 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/ai-city-map" element={<AICityMapPageWrapper />} />
               <Route path="/chatgpt-prompts-40plus" element={<ChatGPTPrompts40PageWrapper />} />
               <Route path="/ai-money-master-prompts" element={<AIMoneyMasterPromptsPageWrapper />} />
+              <Route path="/ai-money-image-prompts" element={<AIMoneyImagePromptsPageWrapper />} />
               <Route path="/login" element={<LoginPageWrapper />} />
               <Route path="/signup" element={<SignUpPageWrapper />} />
               <Route path="/dashboard" element={<UserDashboardPageWrapper />} />
