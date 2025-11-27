@@ -22,51 +22,54 @@ const AdminEnrollmentFixPage: React.FC = () => {
   const [allUsers, setAllUsers] = useState<any[]>([]);
   const [showUserTable, setShowUserTable] = useState(false);
   const [payments, setPayments] = useState<Payment[]>([
+    // 최신 카드 결제 (2025-11-27 추가)
+    { orderId: 'order_1764207441979_37281', name: '정*영', maskedEmail: 'wj******@naver.com', amount: 95000, date: '2025-11-27 10:37:21' },
+
     // 최신 카드 결제 (2025-11-26 추가)
     { orderId: 'order_1764121446064_s4d7cucoa', name: '한*옥', maskedEmail: 'h***@*****.com', amount: 95000, date: '2025-11-26 10:49:46' },
-    
+
     // 최신 가상계좌 결제 (2025-11-24 추가 - 오후)
     { orderId: 'order_1763954823063_stx6gipkt', name: '박*덕', maskedEmail: 'hu****@gmail.com', amount: 95000, date: '2025-11-24 12:45:32' },
-    
+
     // 최신 가상계좌 결제 (2025-11-23/24 추가 - 깊은 밤)
     { orderId: 'order_1763907050932_dtf2hhj3i', name: '전*헌', maskedEmail: 'yb**********@gmail.com', amount: 95000, date: '2025-11-23 23:13:06' },
-    
+
     // 최신 가상계좌 결제 (2025-11-23 추가 - 저녁)
     { orderId: 'order_1763902409182_a1pr6d15e', name: '정*미', maskedEmail: 'ss*********@naver.com', amount: 95000, date: '2025-11-23 21:56:21' },
     { orderId: 'order_1763900075944_ra9jxdgye', name: '김*란', maskedEmail: 'ju****@nate.com', amount: 95000, date: '2025-11-23 21:16:22' },
     { orderId: 'order_1763896585623_pklai6a25', name: '김*균', maskedEmail: 'na********@naver.com', amount: 95000, date: '2025-11-23 22:12:29' },
-    
+
     // 최신 가상계좌 결제 (2025-11-23 추가 - 오후)
     { orderId: 'order_1763878235980_96bc3l0rc', name: '박*현', maskedEmail: 'ma**************@gmail.com', amount: 95000, date: '2025-11-23 15:12:17' },
     { orderId: 'order_1763877730956_cpraori2p', name: '윤*원', maskedEmail: 'rm***@naver.com', amount: 95000, date: '2025-11-23 15:04:09' },
     { orderId: 'order_1763866743396_mdz8rp1h4', name: '조*옥', maskedEmail: 'cy*****@naver.com', amount: 95000, date: '2025-11-23 12:16:10' },
-    
+
     // 최신 가상계좌 결제 (2025-11-23 추가 - 오전)
     { orderId: 'order_1763856058813_yqelfyz01', name: '김*', maskedEmail: 'kc******@naver.com', amount: 95000, date: '2025-11-23 09:03:52' },
-    
+
     // 최신 가상계좌 결제 (2025-11-22/23 추가 - 깊은 밤)
     { orderId: 'order_1763823544460_hgx3suk55', name: '홍*원', maskedEmail: 'cl*******@naver.com', amount: 95000, date: '2025-11-23 00:41:07' },
     { orderId: 'order_1763816921505_7wy975t5t', name: '박*영', maskedEmail: 'mo******@gmail.com', amount: 95000, date: '2025-11-22 22:17:08' },
     { orderId: 'order_1763815878958_02t258ysx', name: '김*선', maskedEmail: 'ha*******@gmail.com', amount: 95000, date: '2025-11-22 21:54:51' },
-    
+
     // 최신 가상계좌 결제 (2025-11-22 추가 - 저녁)
     { orderId: 'order_1763814216666_i8vb3v2qt', name: '추*수', maskedEmail: 'ko*********@gmail.com', amount: 95000, date: '2025-11-22 21:28:31' },
-    
+
     // 최신 가상계좌 결제 (2025-11-22 추가)
     { orderId: 'order_1763775544431_6klcff4t0', name: '안*훈', maskedEmail: 'pi*************@gmail.com', amount: 95000, date: '2025-11-22 10:40:48' },
     { orderId: 'order_1763737564564_w1j5b529r', name: '윤*순', maskedEmail: 'g7****@naver.com', amount: 95000, date: '2025-11-22 00:35:21' },
-    
+
     // 최신 가상계좌 결제 (2025-11-21 추가 - 저녁)
     { orderId: 'order_1763732223995_7bt087p57', name: '안*한', maskedEmail: 'ab*******@naver.com', amount: 95000, date: '2025-11-21 22:40:26' },
     { orderId: 'order_1763728213601_57nv5shgk', name: '최*', maskedEmail: 'rk*******@gmail.com', amount: 95000, date: '2025-11-21 21:38:10' },
-    
+
     // 최신 가상계좌 결제 (2025-11-21 추가)
     { orderId: 'order_1763717917638_uybonn4cl', name: '권*문', maskedEmail: 'ja*******@kakao.com', amount: 95000, date: '2025-11-21 18:41:13' },
     { orderId: 'order_1763713902172_yzg66ddrp', name: '김*수', maskedEmail: 'al*****@naver.com', amount: 95000, date: '2025-11-21 17:33:37' },
     { orderId: 'order_1763712949403_fggf8awp7', name: '김*우', maskedEmail: 'ta****@naver.com', amount: 95000, date: '2025-11-21 17:17:30' },
     { orderId: 'order_1763684683639_2ye5vgkjl', name: '김*형', maskedEmail: 'km*****@naver.com', amount: 95000, date: '2025-11-21 09:25:06' },
     { orderId: 'order_1763661962359_blefd32a7', name: '이*솔', maskedEmail: 'y8****@naver.com', amount: 95000, date: '2025-11-21 03:08:09' },
-    
+
     // 최신 가상계좌 결제 (2025-11-20 추가)
     { orderId: 'order_1763587437106_iyd7q2en0', name: '김*수', maskedEmail: 'js******@naver.com', amount: 95000, date: '2025-11-20 06:25:37' },
     { orderId: 'order_1763640001255_7cbcuqxpt', name: '김*아', maskedEmail: 'ke*****@naver.com', amount: 95000, date: '2025-11-20 21:02:04' },
@@ -74,11 +77,11 @@ const AdminEnrollmentFixPage: React.FC = () => {
     { orderId: 'order_1763633513966_fk0z1xxl1', name: '조*균', maskedEmail: 'ej********@gmail.com', amount: 95000, date: '2025-11-20 19:20:08' },
     { orderId: 'order_1763632081834_lyuijb2vc', name: '윤*효', maskedEmail: 'la********@gmail.com', amount: 95000, date: '2025-11-20 18:49:50' },
     { orderId: 'order_1763638785785_bdfb5fxtl', name: '김*곤', maskedEmail: 'sa*******@naver.com', amount: 95000, date: '2025-11-20 20:51:45' },
-    
+
     // 이전 가상계좌 결제 (2025-11-19)
     { orderId: 'order_1763538249272_x4nezsjcr', name: '전*근', maskedEmail: '29**@naver.com', amount: 95000, date: '2025-11-19 16:53:32' },
     { orderId: 'order_1763496158511_ikxrp7y0o', name: '봉*갑', maskedEmail: 'ka*****@gmail.com', amount: 95000, date: '2025-11-19 05:04:17' },
-    
+
     // 이전 가상계좌 결제 (2025-11-18)
     { orderId: 'order_1763471208240_e3f13bwzd', name: '조*주', maskedEmail: 'wo******@naver.com', amount: 95000, date: '2025-11-18 22:08:12' },
     { orderId: 'order_1763468415179_nun9q7mog', name: '김*열', maskedEmail: 'kd****@naver.com', amount: 95000, date: '2025-11-18 21:33:07' },
@@ -87,39 +90,39 @@ const AdminEnrollmentFixPage: React.FC = () => {
     { orderId: 'order_1763446764506_57rqniisb', name: '조*원', maskedEmail: 'ha*****@daum.net', amount: 95000, date: '2025-11-18 15:21:19' },
     { orderId: 'order_1763444404660_z1rnzwhcm', name: '김*오', maskedEmail: 'kn*****@gmail.com', amount: 95000, date: '2025-11-18 14:42:22' },
     { orderId: 'order_1763414365144_y9dobb1fw', name: '윤*임', maskedEmail: 'ac******@gmail.com', amount: 45000, date: '2025-11-18 06:21:58' },
-    
+
     // 최신 가상계좌 결제 (2025-11-17 오후 추가)
     { orderId: 'order_1763365930099_o0n4qnh7b', name: '김*미', maskedEmail: 'tu*********@gmail.com', amount: 45000, date: '2025-11-17 16:54:33' },
     { orderId: 'order_1763354116077_fi10wuo43', name: '한*선', maskedEmail: 'su******@gmail.com', amount: 95000, date: '2025-11-17 13:40:51' },
     { orderId: 'order_1763348709740_tzv3lc1fy', name: '임*애', maskedEmail: 'li*****@adullamcorp.com', amount: 95000, date: '2025-11-17 12:06:51' },
-    
+
     // 최신 가상계좌 결제 (2025-11-17 새벽 추가)
     { orderId: 'order_1763317453848_vhm8vck18', name: '채*숙', maskedEmail: 'ki***************@gmail.com', amount: 45000, date: '2025-11-17 03:24:25' },
     { orderId: 'order_1763303800015_z7abipyer', name: '김*', maskedEmail: 'kc******@naver.com', amount: 45000, date: '2025-11-16 23:37:40' },
-    
+
     // 최신 가상계좌 결제 (2025-11-16 밤 추가 - 3차)
     { orderId: 'order_1763298439550_3abgdf8mg', name: '이*현', maskedEmail: 'su**********@naver.com', amount: 45000, date: '2025-11-16 22:09:28' },
     { orderId: 'order_1763297190441_8oy3h7b5x', name: '오*란', maskedEmail: 'gr*******@naver.com', amount: 45000, date: '2025-11-16 21:50:56' },
-    
+
     // 최신 가상계좌 결제 (2025-11-16 저녁 추가 - 2차)
     { orderId: 'order_1763290851025_8l13uqm3f', name: '김*홍', maskedEmail: 'qk*****@gmail.com', amount: 45000, date: '2025-11-16 20:42:40' },
     { orderId: 'order_1763275018004_wpk6e7wcz', name: '임*동', maskedEmail: 'ju*******@gmail.com', amount: 45000, date: '2025-11-16 15:48:29' },
     { orderId: 'order_1763272439291_l9x8sqvuc', name: '조*가', maskedEmail: 'ch********@naver.com', amount: 45000, date: '2025-11-16 15:00:05' },
-    
+
     // 최신 가상계좌 결제 (2025-11-16 저녁 추가 - 추가분)
     { orderId: 'order_1763293801432_9knj53vxl', name: '고*석', maskedEmail: 'lg********@naver.com', amount: 45000, date: '2025-11-16 20:56:55' },
     { orderId: 'order_1763290352287_ztrtnsp80', name: '노*오', maskedEmail: 'em********@gmail.com', amount: 45000, date: '2025-11-16 19:57:35' },
-    
+
     // 최신 가상계좌 결제 (2025-11-16 오후 추가)
     { orderId: 'order_1763269943321_lpg0r58xx', name: '류*림', maskedEmail: 'ho******@hanmail.net', amount: 45000, date: '2025-11-16 14:14:39' },
     { orderId: 'order_1763268376454_sr7wsqnfu', name: '박*정', maskedEmail: 'yo*****@naver.com', amount: 45000, date: '2025-11-16 13:54:12' },
     { orderId: 'order_1763267521122_875uke489', name: '방*운', maskedEmail: 'sa********@gmail.com', amount: 45000, date: '2025-11-16 13:33:59' },
     { orderId: 'order_1763267154071_jgj75nhpt', name: 'Se**********an', maskedEmail: 'oz********@gmail.com', amount: 45000, date: '2025-11-16 13:27:44' },
-    
+
     // 최신 가상계좌 결제 (2025-11-16 오전 추가)
     { orderId: 'order_1763259373907_821zf8j6h', name: '대*', maskedEmail: 'da****@gmail.com', amount: 45000, date: '2025-11-16 11:28:52' },
     { orderId: 'order_1763221856237_k7hwd51r1', name: '김*란', maskedEmail: 'mr****@naver.com', amount: 45000, date: '2025-11-16 00:58:41' },
-    
+
     // 가상계좌 결제 (2025-11-15 저녁 추가)
     { orderId: 'order_1763213606265_s21pctq2y', name: '김*열', maskedEmail: '', amount: 45000, date: '2025-11-15 22:40:17' },
     { orderId: 'order_1763213509053_kf0pkerx0', name: '구*철', maskedEmail: 'gu****@gmail.com', amount: 45000, date: '2025-11-15 22:36:11' },
@@ -130,7 +133,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
     { orderId: 'order_1763184039257_hx4qgtr2q', name: '진*호', maskedEmail: 'ji*******@gmail.com', amount: 45000, date: '2025-11-15 12:08:28' },
     { orderId: 'order_1763176068866_1wy3ukbmm', name: '김*태', maskedEmail: 'on******@gmail.com', amount: 45000, date: '2025-11-15 06:35:02' },
     { orderId: 'order_1763155799967_oin9rfjds', name: '박*도', maskedEmail: 'sh*******@gmail.com', amount: 45000, date: '2025-11-15 02:21:44' },
-    
+
     // 최신 가상계좌 결제 (2025-11-15 추가 - 63건 완료)
     { orderId: 'order_1763209616354_m6rd8xr80', name: '오*현', maskedEmail: 'os******@naver.com', amount: 45000, date: '2025-11-15 21:29:30' },
     { orderId: 'order_1763204300893_o78gzc57r', name: '권*훈', maskedEmail: 'sa******@naver.com', amount: 45000, date: '2025-11-15 20:02:11' },
@@ -158,17 +161,17 @@ const AdminEnrollmentFixPage: React.FC = () => {
     { orderId: 'order_1762947956026_hjbr0zfra', name: '이*주', maskedEmail: 'za*******@naver.com', amount: 45000, date: '2025-11-12 22:31:25' },
     { orderId: 'order_1762694258374_zpyr2skqo', name: '아***딸', maskedEmail: 'kh*********@gmail.com', amount: 45000, date: '2025-11-09 22:28:33' },
     { orderId: 'order_1760460974354_dflgnw48v', name: '서*란', maskedEmail: 'ok*******@gmail.com', amount: 45000, date: '2025-10-15 02:02:33' },
-    
+
     // 최신 카드 결제 (2025-11-15 밤 늦게 추가)
     { orderId: 'order_1763213606265_s21pctq2y', name: '김*열', maskedEmail: 'no-email', amount: 45000, date: '2025-11-15 22:40:17' },
     { orderId: 'order_1763213509053_kf0pkerx0', name: '구*철', maskedEmail: 'gu****@gmail.com', amount: 45000, date: '2025-11-15 22:36:11' },
     { orderId: 'order_1763205974492_13hjyumjn', name: '김*원', maskedEmail: 'ed*******@gmail.com', amount: 45000, date: '2025-11-15 20:29:08' },
-    
+
     // 카드 결제 (2025-11-15 오후 추가)
     { orderId: 'order_1763187060971_l7psrfhgm', name: '양*석', maskedEmail: 'jj**********@gmail.com', amount: 45000, date: '2025-11-15 15:13:31' },
     { orderId: 'order_1763184550490_6h1q7wdui', name: '김*량', maskedEmail: 'ry*********@gmail.com', amount: 45000, date: '2025-11-15 14:32:00' },
     { orderId: 'order_1763184039257_hx4qgtr2q', name: '최*경', maskedEmail: 'ch*******@hanmail.net', amount: 45000, date: '2025-11-15 14:29:05' },
-    
+
     // 카드 결제 (2025-11-15 오전)
     { orderId: 'order_1763146620326_eksp2awco', name: '김*식', maskedEmail: 'id******@naver.com', amount: 45000, date: '2025-11-15 03:57:26' },
     { orderId: 'order_1763142702036_8jh73lg8k', name: '이*훈', maskedEmail: 'so********@gmail.com', amount: 45000, date: '2025-11-15 02:52:50' },
@@ -292,7 +295,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
 
     try {
       setProcessing(true);
-      
+
       // 1. 기존 사용자 데이터 가져오기
       const oldUser = await AzureTableService.getUserByEmail(oldEmail);
       if (!oldUser) {
@@ -337,10 +340,10 @@ const AdminEnrollmentFixPage: React.FC = () => {
       await AzureTableService.createUserDirect(newUserData);
 
       alert(`✅ 이메일이 성공적으로 변경되었습니다!\n\n${oldEmail} → ${newEmail}\n\n사용자에게 새 이메일(${newEmail})로 로그인하라고 안내해주세요.\n\n⚠️ 중요: 기존 이메일(${oldEmail})로는 더 이상 로그인할 수 없습니다.`);
-      
+
       // 4. 사용자 목록 새로고침
       await loadAllUsers();
-      
+
     } catch (error) {
       console.error('이메일 변경 실패:', error);
       alert('이메일 변경에 실패했습니다. 다시 시도해주세요.\n\n에러: ' + (error as Error).message);
@@ -353,48 +356,48 @@ const AdminEnrollmentFixPage: React.FC = () => {
   // 마스킹된 이메일과 실제 이메일 매칭 (퍼지 매칭)
   const matchMaskedEmail = (maskedEmail: string, realEmail: string): boolean => {
     if (maskedEmail === 'no-email') return false;
-    
+
     const [maskedLocal, maskedDomain] = maskedEmail.split('@');
     const [realLocal, realDomain] = realEmail.toLowerCase().split('@');
-    
+
     // 도메인 비교 (대소문자 무시)
     if (maskedDomain.toLowerCase() !== realDomain) return false;
-    
+
     // 로컬 부분 비교
     const maskedChars = maskedLocal.split('');
     const realChars = realLocal.split('');
-    
+
     // 길이가 다르면 false
     if (maskedChars.length !== realChars.length) return false;
-    
+
     // 각 문자 비교 (대소문자 무시)
     for (let i = 0; i < maskedChars.length; i++) {
       if (maskedChars[i] !== '*' && maskedChars[i].toLowerCase() !== realChars[i].toLowerCase()) {
         return false;
       }
     }
-    
+
     return true;
   };
 
   // 마스킹된 이름과 실제 이름 매칭
   const matchMaskedName = (maskedName: string, realName: string): boolean => {
     if (!maskedName || !realName) return false;
-    
+
     // 이름에서 *를 제거하고 남은 문자들의 위치 확인
     const maskedChars = maskedName.split('');
     const realChars = realName.split('');
-    
+
     // 길이가 다르면 false
     if (maskedChars.length !== realChars.length) return false;
-    
+
     // 각 문자 비교
     for (let i = 0; i < maskedChars.length; i++) {
       if (maskedChars[i] !== '*' && maskedChars[i] !== realChars[i]) {
         return false;
       }
     }
-    
+
     return true;
   };
 
@@ -407,7 +410,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
     }
 
     // 2단계: 이메일 패턴 매칭
-    const emailMatches = users.filter(user => 
+    const emailMatches = users.filter(user =>
       user.email && matchMaskedEmail(payment.maskedEmail, user.email)
     );
 
@@ -415,12 +418,12 @@ const AdminEnrollmentFixPage: React.FC = () => {
     if (emailMatches.length === 1) return emailMatches[0];
 
     // 3단계: 이메일 매칭이 여러 개면 이름으로 추가 필터링
-    const nameAndEmailMatches = emailMatches.filter(user => 
+    const nameAndEmailMatches = emailMatches.filter(user =>
       user.name && matchMaskedName(payment.name, user.name)
     );
 
     if (nameAndEmailMatches.length === 1) return nameAndEmailMatches[0];
-    
+
     // 4단계: 여전히 여러 개면 첫 번째 반환 (가장 최근 가입자)
     return emailMatches[0];
   };
@@ -449,7 +452,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
       for (const payment of payments) {
         try {
           console.log(`\n🔍 처리 중: ${payment.name} (${payment.maskedEmail})`);
-          
+
           // 향상된 자동 매칭 사용 (이름 + 이메일)
           const matchedUser = findBestMatch(payment, users);
 
@@ -467,12 +470,12 @@ const AdminEnrollmentFixPage: React.FC = () => {
           if (matchedUser.enrolledCourses) {
             const enrolledData = JSON.parse(matchedUser.enrolledCourses);
             const enrollments = Array.isArray(enrolledData) ? enrolledData : (enrolledData.enrollments || []);
-            const hasCourse = enrollments.some((e: any) => 
-              e.courseId === '1002' || 
-              e.courseId === 'chatgpt-agent-beginner' || 
+            const hasCourse = enrollments.some((e: any) =>
+              e.courseId === '1002' ||
+              e.courseId === 'chatgpt-agent-beginner' ||
               e.courseId === 'workflow-automation'
             );
-            
+
             if (hasCourse) {
               console.log(`ℹ️ 이미 등록됨: ${matchedUser.email}`);
               skipCount++;
@@ -535,7 +538,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
 
   const handleAddEnrollment = async (index: number) => {
     const payment = payments[index];
-    
+
     if (!payment.realEmail) {
       alert('이메일을 입력해주세요.');
       return;
@@ -548,7 +551,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
     try {
       // 사용자 확인
       const user = await AzureTableService.getUserByEmail(payment.realEmail);
-      
+
       if (!user) {
         newPayments[index].status = 'error';
         newPayments[index].message = '사용자를 찾을 수 없습니다';
@@ -560,12 +563,12 @@ const AdminEnrollmentFixPage: React.FC = () => {
       if (user.enrolledCourses) {
         const userData = JSON.parse(user.enrolledCourses);
         const enrollments = Array.isArray(userData) ? userData : (userData.enrollments || []);
-        const alreadyEnrolled = enrollments.some((e: any) => 
-          e.courseId === '1002' || 
-          e.courseId === 'chatgpt-agent-beginner' || 
+        const alreadyEnrolled = enrollments.some((e: any) =>
+          e.courseId === '1002' ||
+          e.courseId === 'chatgpt-agent-beginner' ||
           e.courseId === 'workflow-automation'
         );
-        
+
         if (alreadyEnrolled) {
           newPayments[index].status = 'skip';
           newPayments[index].message = '이미 등록되어 있습니다';
@@ -605,7 +608,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
 
     for (let i = 0; i < payments.length; i++) {
       const payment = payments[i];
-      
+
       // 이메일이 있고 아직 처리되지 않은 항목만
       if (payment.realEmail && !payment.status) {
         await handleAddEnrollment(i);
@@ -620,11 +623,11 @@ const AdminEnrollmentFixPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        minHeight: '100vh' 
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh'
       }}>
         <Loader size={48} className="animate-spin" />
       </div>
@@ -649,10 +652,10 @@ const AdminEnrollmentFixPage: React.FC = () => {
 
       <div style={{ maxWidth: '1600px', margin: '0 auto', padding: '40px 20px' }}>
         {/* 헤더 */}
-        <div style={{ 
-          background: 'linear-gradient(135deg, #ef4444, #dc2626)', 
-          borderRadius: '20px', 
-          padding: '40px', 
+        <div style={{
+          background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+          borderRadius: '20px',
+          padding: '40px',
           marginBottom: '40px',
           color: 'white'
         }}>
@@ -723,53 +726,53 @@ const AdminEnrollmentFixPage: React.FC = () => {
         </div>
 
         {/* 통계 */}
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-          gap: '20px', 
-          marginBottom: '30px' 
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '20px',
+          marginBottom: '30px'
         }}>
-          <div style={{ 
-            background: 'white', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
+          <div style={{
+            background: 'white',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
           }}>
             <div style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '5px' }}>전체</div>
             <div style={{ fontSize: '2rem', fontWeight: '700', color: '#1f2937' }}>{stats.total}</div>
           </div>
-          <div style={{ 
-            background: 'white', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
+          <div style={{
+            background: 'white',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
           }}>
             <div style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '5px' }}>완료</div>
             <div style={{ fontSize: '2rem', fontWeight: '700', color: '#10b981' }}>{stats.completed}</div>
           </div>
-          <div style={{ 
-            background: 'white', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
+          <div style={{
+            background: 'white',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
           }}>
             <div style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '5px' }}>건너뜀</div>
             <div style={{ fontSize: '2rem', fontWeight: '700', color: '#f59e0b' }}>{stats.skipped}</div>
           </div>
-          <div style={{ 
-            background: 'white', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
+          <div style={{
+            background: 'white',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
           }}>
             <div style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '5px' }}>오류</div>
             <div style={{ fontSize: '2rem', fontWeight: '700', color: '#ef4444' }}>{stats.errors}</div>
           </div>
-          <div style={{ 
-            background: 'white', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
+          <div style={{
+            background: 'white',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
           }}>
             <div style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '5px' }}>대기중</div>
             <div style={{ fontSize: '2rem', fontWeight: '700', color: '#0ea5e9' }}>{stats.pending}</div>
@@ -778,12 +781,12 @@ const AdminEnrollmentFixPage: React.FC = () => {
 
         {/* 사용자 테이블 */}
         {showUserTable && (
-          <div style={{ 
-            background: 'white', 
-            borderRadius: '20px', 
-            padding: '30px', 
+          <div style={{
+            background: 'white',
+            borderRadius: '20px',
+            padding: '30px',
             marginBottom: '30px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
           }}>
             <h2 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '20px' }}>
               👥 전체 사용자 ({allUsers.length}명)
@@ -803,147 +806,147 @@ const AdminEnrollmentFixPage: React.FC = () => {
                   {allUsers
                     .filter(u => !searchEmail || u.email?.includes(searchEmail) || u.name?.includes(searchEmail))
                     .map((user, index) => {
-                    const enrolledData = user.enrolledCourses ? JSON.parse(user.enrolledCourses) : null;
-                    const enrollments = Array.isArray(enrolledData) ? enrolledData : (enrolledData?.enrollments || []);
-                    const hasCourse = enrollments.some((e: any) => 
-                      e.courseId === '1002' || 
-                      e.courseId === 'chatgpt-agent-beginner' || 
-                      e.courseId === 'workflow-automation'
-                    );
-                    
-                    return (
-                      <tr key={index} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                        <td style={{ padding: '12px' }}>{user.name || '-'}</td>
-                        <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.9rem' }}>
-                          {user.email}
-                        </td>
-                        <td style={{ padding: '12px', fontSize: '0.85rem', color: '#64748b' }}>
-                          {user.createdAt ? new Date(user.createdAt).toLocaleDateString('ko-KR') : '-'}
-                        </td>
-                        <td style={{ padding: '12px' }}>
-                          {hasCourse ? (
-                            <span style={{ 
-                              color: '#10b981', 
-                              background: '#f0fdf4', 
-                              padding: '4px 12px', 
-                              borderRadius: '12px', 
-                              fontSize: '0.85rem',
-                              fontWeight: '600'
-                            }}>
-                              ✓ AI Agent 비기너
-                            </span>
-                          ) : (
-                            <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>없음</span>
-                          )}
-                        </td>
-                        <td style={{ padding: '12px', display: 'flex', gap: '8px', alignItems: 'center' }}>
-                          {editingEmail?.oldEmail === user.email && editingEmail ? (
-                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                              <input
-                                type="email"
-                                value={editingEmail.newEmail}
-                                onChange={(e) => setEditingEmail({ oldEmail: editingEmail.oldEmail, newEmail: e.target.value })}
-                                placeholder="새 이메일"
-                                style={{
-                                  padding: '6px 10px',
-                                  borderRadius: '6px',
-                                  border: '1px solid #0ea5e9',
-                                  fontSize: '0.85rem',
-                                  width: '200px'
-                                }}
-                              />
-                              <button
-                                onClick={() => handleUpdateEmail(editingEmail.oldEmail, editingEmail.newEmail)}
-                                disabled={!editingEmail.newEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(editingEmail.newEmail)}
-                                style={{
-                                  padding: '6px 12px',
-                                  borderRadius: '6px',
-                                  border: 'none',
-                                  background: 'linear-gradient(135deg, #10b981, #059669)',
-                                  color: 'white',
-                                  fontSize: '0.85rem',
-                                  fontWeight: '600',
-                                  cursor: 'pointer',
-                                  whiteSpace: 'nowrap'
-                                }}
-                              >
-                                ✓ 저장
-                              </button>
-                              <button
-                                onClick={() => setEditingEmail(null)}
-                                style={{
-                                  padding: '6px 12px',
-                                  borderRadius: '6px',
-                                  border: '1px solid #e2e8f0',
-                                  background: 'white',
-                                  color: '#64748b',
-                                  fontSize: '0.85rem',
-                                  cursor: 'pointer'
-                                }}
-                              >
-                                취소
-                              </button>
-                            </div>
-                          ) : (
-                            <>
-                              <button
-                                onClick={() => setEditingEmail({ oldEmail: user.email, newEmail: '' })}
-                                disabled={processing}
-                                style={{
-                                  padding: '6px 12px',
-                                  borderRadius: '6px',
-                                  border: '1px solid #0ea5e9',
-                                  background: 'white',
-                                  color: '#0ea5e9',
-                                  fontSize: '0.85rem',
-                                  fontWeight: '600',
-                                  cursor: 'pointer',
-                                  whiteSpace: 'nowrap'
-                                }}
-                              >
-                                ✏️ 이메일 수정
-                              </button>
-                              {!hasCourse && (
-                                <button
-                                  onClick={async () => {
-                                if (!window.confirm(`${user.name || user.email}에게 강의를 추가하시겠습니까?`)) return;
-                                
-                                try {
-                                  await AzureTableService.addPurchaseAndEnrollmentToUser({
-                                    email: user.email,
-                                    courseId: '1002',
-                                    title: 'Google Opal 유튜브 수익화 에이전트 기초',
-                                    amount: 45000,
-                                    paymentMethod: 'card',
-                                    orderId: `manual_${Date.now()}`,
-                                    orderName: 'Google Opal 유튜브 수익화 에이전트 기초'
-                                  });
-                                  alert('강의가 추가되었습니다!');
-                                  loadAllUsers(); // 새로고침
-                                } catch (error: any) {
-                                  alert(`오류: ${error.message}`);
-                                }
-                              }}
-                              style={{
-                                padding: '6px 14px',
-                                borderRadius: '6px',
-                                border: 'none',
-                                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-                                color: 'white',
+                      const enrolledData = user.enrolledCourses ? JSON.parse(user.enrolledCourses) : null;
+                      const enrollments = Array.isArray(enrolledData) ? enrolledData : (enrolledData?.enrollments || []);
+                      const hasCourse = enrollments.some((e: any) =>
+                        e.courseId === '1002' ||
+                        e.courseId === 'chatgpt-agent-beginner' ||
+                        e.courseId === 'workflow-automation'
+                      );
+
+                      return (
+                        <tr key={index} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                          <td style={{ padding: '12px' }}>{user.name || '-'}</td>
+                          <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.9rem' }}>
+                            {user.email}
+                          </td>
+                          <td style={{ padding: '12px', fontSize: '0.85rem', color: '#64748b' }}>
+                            {user.createdAt ? new Date(user.createdAt).toLocaleDateString('ko-KR') : '-'}
+                          </td>
+                          <td style={{ padding: '12px' }}>
+                            {hasCourse ? (
+                              <span style={{
+                                color: '#10b981',
+                                background: '#f0fdf4',
+                                padding: '4px 12px',
+                                borderRadius: '12px',
                                 fontSize: '0.85rem',
-                                fontWeight: '600',
-                                cursor: 'pointer'
-                              }}
-                            >
-                              강의 추가
-                            </button>
-                              )}
-                            </>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                                fontWeight: '600'
+                              }}>
+                                ✓ AI Agent 비기너
+                              </span>
+                            ) : (
+                              <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>없음</span>
+                            )}
+                          </td>
+                          <td style={{ padding: '12px', display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            {editingEmail?.oldEmail === user.email && editingEmail ? (
+                              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                <input
+                                  type="email"
+                                  value={editingEmail.newEmail}
+                                  onChange={(e) => setEditingEmail({ oldEmail: editingEmail.oldEmail, newEmail: e.target.value })}
+                                  placeholder="새 이메일"
+                                  style={{
+                                    padding: '6px 10px',
+                                    borderRadius: '6px',
+                                    border: '1px solid #0ea5e9',
+                                    fontSize: '0.85rem',
+                                    width: '200px'
+                                  }}
+                                />
+                                <button
+                                  onClick={() => handleUpdateEmail(editingEmail.oldEmail, editingEmail.newEmail)}
+                                  disabled={!editingEmail.newEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(editingEmail.newEmail)}
+                                  style={{
+                                    padding: '6px 12px',
+                                    borderRadius: '6px',
+                                    border: 'none',
+                                    background: 'linear-gradient(135deg, #10b981, #059669)',
+                                    color: 'white',
+                                    fontSize: '0.85rem',
+                                    fontWeight: '600',
+                                    cursor: 'pointer',
+                                    whiteSpace: 'nowrap'
+                                  }}
+                                >
+                                  ✓ 저장
+                                </button>
+                                <button
+                                  onClick={() => setEditingEmail(null)}
+                                  style={{
+                                    padding: '6px 12px',
+                                    borderRadius: '6px',
+                                    border: '1px solid #e2e8f0',
+                                    background: 'white',
+                                    color: '#64748b',
+                                    fontSize: '0.85rem',
+                                    cursor: 'pointer'
+                                  }}
+                                >
+                                  취소
+                                </button>
+                              </div>
+                            ) : (
+                              <>
+                                <button
+                                  onClick={() => setEditingEmail({ oldEmail: user.email, newEmail: '' })}
+                                  disabled={processing}
+                                  style={{
+                                    padding: '6px 12px',
+                                    borderRadius: '6px',
+                                    border: '1px solid #0ea5e9',
+                                    background: 'white',
+                                    color: '#0ea5e9',
+                                    fontSize: '0.85rem',
+                                    fontWeight: '600',
+                                    cursor: 'pointer',
+                                    whiteSpace: 'nowrap'
+                                  }}
+                                >
+                                  ✏️ 이메일 수정
+                                </button>
+                                {!hasCourse && (
+                                  <button
+                                    onClick={async () => {
+                                      if (!window.confirm(`${user.name || user.email}에게 강의를 추가하시겠습니까?`)) return;
+
+                                      try {
+                                        await AzureTableService.addPurchaseAndEnrollmentToUser({
+                                          email: user.email,
+                                          courseId: '1002',
+                                          title: 'Google Opal 유튜브 수익화 에이전트 기초',
+                                          amount: 45000,
+                                          paymentMethod: 'card',
+                                          orderId: `manual_${Date.now()}`,
+                                          orderName: 'Google Opal 유튜브 수익화 에이전트 기초'
+                                        });
+                                        alert('강의가 추가되었습니다!');
+                                        loadAllUsers(); // 새로고침
+                                      } catch (error: any) {
+                                        alert(`오류: ${error.message}`);
+                                      }
+                                    }}
+                                    style={{
+                                      padding: '6px 14px',
+                                      borderRadius: '6px',
+                                      border: 'none',
+                                      background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                                      color: 'white',
+                                      fontSize: '0.85rem',
+                                      fontWeight: '600',
+                                      cursor: 'pointer'
+                                    }}
+                                  >
+                                    강의 추가
+                                  </button>
+                                )}
+                              </>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
@@ -980,122 +983,122 @@ const AdminEnrollmentFixPage: React.FC = () => {
 
         {/* 결제 목록 */}
         {!showUserTable && (
-        <div style={{ 
-          background: 'white', 
-          borderRadius: '20px', 
-          padding: '30px', 
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
-        }}>
-          <div style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
-            <input
-              type="text"
-              placeholder="이메일로 검색..."
-              value={searchEmail}
-              onChange={(e) => setSearchEmail(e.target.value)}
-              style={{
-                flex: 1,
-                padding: '12px',
-                borderRadius: '8px',
-                border: '1px solid #e2e8f0',
-                fontSize: '1rem'
-              }}
-            />
-          </div>
+          <div style={{
+            background: 'white',
+            borderRadius: '20px',
+            padding: '30px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+          }}>
+            <div style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
+              <input
+                type="text"
+                placeholder="이메일로 검색..."
+                value={searchEmail}
+                onChange={(e) => setSearchEmail(e.target.value)}
+                style={{
+                  flex: 1,
+                  padding: '12px',
+                  borderRadius: '8px',
+                  border: '1px solid #e2e8f0',
+                  fontSize: '1rem'
+                }}
+              />
+            </div>
 
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
-                  <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>이름</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>마스킹 이메일</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>실제 이메일</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>날짜</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>상태</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>작업</th>
-                </tr>
-              </thead>
-              <tbody>
-                {payments
-                  .filter(p => !searchEmail || p.realEmail?.includes(searchEmail) || p.maskedEmail.includes(searchEmail) || p.name.includes(searchEmail))
-                  .map((payment, index) => (
-                  <tr key={payment.orderId} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                    <td style={{ padding: '12px' }}>{payment.name}</td>
-                    <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.9rem' }}>{payment.maskedEmail}</td>
-                    <td style={{ padding: '12px' }}>
-                      <input
-                        type="email"
-                        value={payment.realEmail || ''}
-                        onChange={(e) => handleEmailChange(index, e.target.value)}
-                        placeholder="실제 이메일 입력"
-                        disabled={!!payment.status}
-                        style={{
-                          padding: '8px 12px',
-                          borderRadius: '6px',
-                          border: '1px solid #e2e8f0',
-                          fontSize: '0.9rem',
-                          width: '100%',
-                          maxWidth: '300px',
-                          background: payment.status ? '#f8fafc' : 'white'
-                        }}
-                      />
-                    </td>
-                    <td style={{ padding: '12px', fontSize: '0.85rem', color: '#64748b' }}>
-                      {payment.date.split(' ')[0]}
-                    </td>
-                    <td style={{ padding: '12px' }}>
-                      {payment.status === 'success' && (
-                        <span style={{ color: '#10b981', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                          <CheckCircle size={16} /> 완료
-                        </span>
-                      )}
-                      {payment.status === 'error' && (
-                        <span style={{ color: '#ef4444', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                          <AlertCircle size={16} /> 오류
-                        </span>
-                      )}
-                      {payment.status === 'skip' && (
-                        <span style={{ color: '#f59e0b' }}>건너뜀</span>
-                      )}
-                      {payment.status === 'processing' && (
-                        <span style={{ color: '#0ea5e9', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                          <Loader size={16} className="animate-spin" /> 처리중
-                        </span>
-                      )}
-                      {!payment.status && payment.realEmail && (
-                        <span style={{ color: '#0ea5e9' }}>대기중</span>
-                      )}
-                    </td>
-                    <td style={{ padding: '12px' }}>
-                      {!payment.status && (
-                        <button
-                          onClick={() => handleAddEnrollment(index)}
-                          disabled={!payment.realEmail}
-                          style={{
-                            padding: '8px 16px',
-                            borderRadius: '6px',
-                            border: 'none',
-                            background: payment.realEmail ? 'linear-gradient(135deg, #0ea5e9, #0284c7)' : '#e2e8f0',
-                            color: payment.realEmail ? 'white' : '#94a3b8',
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            cursor: payment.realEmail ? 'pointer' : 'not-allowed'
-                          }}
-                        >
-                          추가
-                        </button>
-                      )}
-                      {payment.message && (
-                        <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '5px' }}>
-                          {payment.message}
-                        </div>
-                      )}
-                    </td>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>이름</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>마스킹 이메일</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>실제 이메일</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>날짜</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>상태</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>작업</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {payments
+                    .filter(p => !searchEmail || p.realEmail?.includes(searchEmail) || p.maskedEmail.includes(searchEmail) || p.name.includes(searchEmail))
+                    .map((payment, index) => (
+                      <tr key={payment.orderId} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                        <td style={{ padding: '12px' }}>{payment.name}</td>
+                        <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.9rem' }}>{payment.maskedEmail}</td>
+                        <td style={{ padding: '12px' }}>
+                          <input
+                            type="email"
+                            value={payment.realEmail || ''}
+                            onChange={(e) => handleEmailChange(index, e.target.value)}
+                            placeholder="실제 이메일 입력"
+                            disabled={!!payment.status}
+                            style={{
+                              padding: '8px 12px',
+                              borderRadius: '6px',
+                              border: '1px solid #e2e8f0',
+                              fontSize: '0.9rem',
+                              width: '100%',
+                              maxWidth: '300px',
+                              background: payment.status ? '#f8fafc' : 'white'
+                            }}
+                          />
+                        </td>
+                        <td style={{ padding: '12px', fontSize: '0.85rem', color: '#64748b' }}>
+                          {payment.date.split(' ')[0]}
+                        </td>
+                        <td style={{ padding: '12px' }}>
+                          {payment.status === 'success' && (
+                            <span style={{ color: '#10b981', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                              <CheckCircle size={16} /> 완료
+                            </span>
+                          )}
+                          {payment.status === 'error' && (
+                            <span style={{ color: '#ef4444', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                              <AlertCircle size={16} /> 오류
+                            </span>
+                          )}
+                          {payment.status === 'skip' && (
+                            <span style={{ color: '#f59e0b' }}>건너뜀</span>
+                          )}
+                          {payment.status === 'processing' && (
+                            <span style={{ color: '#0ea5e9', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                              <Loader size={16} className="animate-spin" /> 처리중
+                            </span>
+                          )}
+                          {!payment.status && payment.realEmail && (
+                            <span style={{ color: '#0ea5e9' }}>대기중</span>
+                          )}
+                        </td>
+                        <td style={{ padding: '12px' }}>
+                          {!payment.status && (
+                            <button
+                              onClick={() => handleAddEnrollment(index)}
+                              disabled={!payment.realEmail}
+                              style={{
+                                padding: '8px 16px',
+                                borderRadius: '6px',
+                                border: 'none',
+                                background: payment.realEmail ? 'linear-gradient(135deg, #0ea5e9, #0284c7)' : '#e2e8f0',
+                                color: payment.realEmail ? 'white' : '#94a3b8',
+                                fontSize: '0.9rem',
+                                fontWeight: '600',
+                                cursor: payment.realEmail ? 'pointer' : 'not-allowed'
+                              }}
+                            >
+                              추가
+                            </button>
+                          )}
+                          {payment.message && (
+                            <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '5px' }}>
+                              {payment.message}
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
         )}
       </div>
     </div>

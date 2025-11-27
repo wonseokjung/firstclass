@@ -57,7 +57,7 @@ const aiMasterClasses: Course[] = [
 
 // 프리미엄 강의 (path 추가)
 const premiumClasses: Course[] = [
-  { id: 999, instructor: '정원석 (AI 멘토 제이)', title: '강의 1: AI 건물 짓기', subtitle: '🏗️ 디지털 건축가 과정', description: '🎯 4050 세대를 위한 특별 설계! AI를 활용해 나만의 디지털 상품을 만들고 수익화하는 완전한 가이드. 평생 현역으로 일하고 싶은 당신을 위한 실전 비즈니스 로드맵', image: `${process.env.PUBLIC_URL}/images/aibuilidng.png`, isNew: true, category: 'Premium', path: '/ai-building-course', isPremium: true, launchDate: '2025-02-01', price: 149000, originalPrice: 349000, isComingSoon: false },
+  // { id: 999, instructor: '정원석 (AI 멘토 제이)', title: '강의 1: AI 건물 짓기', subtitle: '🏗️ 디지털 건축가 과정', description: '🎯 4050 세대를 위한 특별 설계! AI를 활용해 나만의 디지털 상품을 만들고 수익화하는 완전한 가이드. 평생 현역으로 일하고 싶은 당신을 위한 실전 비즈니스 로드맵', image: `${process.env.PUBLIC_URL}/images/aibuilidng.png`, isNew: true, category: 'Premium', path: '/ai-building-course', isPremium: true, launchDate: '2025-02-01', price: 149000, originalPrice: 349000, isComingSoon: false },
   { id: 1002, instructor: '정원석 (AI 멘토 제이)', title: 'Google Opal 유튜브 수익화 에이전트 기초', subtitle: '🎬 구글 AI로 유튜브 수익 만들기', description: '💰 Google Opal과 AI 에이전트를 활용해 유튜브 콘텐츠를 자동 생성하고 수익화하는 완전한 가이드! 영상 제작부터 업로드까지 10일이면 충분합니다', image: `${process.env.PUBLIC_URL}/images/ChatGPT에이전트.png`, isNew: true, category: 'Premium', path: '/chatgpt-agent-beginner', isPremium: true, launchDate: '2025-11-15', price: 95000, originalPrice: 95000, isComingSoon: false }
   // Coming Soon 강의들 (숨김 처리)
   // { id: 1000, instructor: '정원석 (AI 멘토 제이)', title: '강의 2: AI 마을 만들기', subtitle: '🏘️ The Thriving Village', description: '💼 AI 도구들을 연결해서 번영하는 마을을 만들어보세요. 커뮤니티 구축부터 지속가능한 생태계까지!', image: `${process.env.PUBLIC_URL}/images/aibuilidng.png`, isNew: true, category: 'Premium', path: '/coming-soon', isPremium: true, launchDate: 'Coming Soon', price: 199000, originalPrice: 399000, isComingSoon: true },
@@ -137,11 +137,11 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
           amount: selectedCourse.price || 0,
           paymentMethod: 'card'
         });
-        
+
         setEnrolledCourses(prev => new Set(prev).add(selectedCourse.id));
         alert('결제가 완료되었습니다! 수강을 시작해보세요.');
         navigate(selectedCourse.path);
-        
+
       } catch (error) {
         console.error('구매 정보 저장 실패:', error);
         alert('구매 정보 저장에 실패했습니다. 관리자에게 문의해주세요.');
@@ -156,13 +156,13 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
       setShowComingSoonModal(true);
       return;
     }
-    
+
     // AI 건물 짓기 강의는 준비중으로 접근 차단
     if (course.id === 999) {
       alert('🚧 준비중입니다!\n곧 만나볼 수 있습니다. 조금만 기다려주세요!');
       return;
     }
-    
+
     navigate(course.path);
   };
 
@@ -185,19 +185,19 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
 
   const renderPremiumCard = (course: Course) => {
     const isEnrolled = enrolledCourses.has(course.id);
-    
+
     const actionButton = (
       <button
         className="watch-trailer-btn"
         onClick={(e) => {
           e.stopPropagation();
-          
+
           // AI 건물 짓기 강의는 준비중으로 접근 차단
           if (course.id === 999) {
             alert('🚧 준비중입니다!\n곧 만나볼 수 있습니다. 조금만 기다려주세요!');
             return;
           }
-          
+
           if (isEnrolled) {
             navigate(course.path);
           } else {
@@ -293,12 +293,12 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
               <p><strong>이메일:</strong> jay@connexionai.kr</p>
               <p>
                 <strong>💬 실시간 문의:</strong>{' '}
-                <a 
-                  href="https://open.kakao.com/o/s2NzW41h" 
-                  target="_blank" 
+                <a
+                  href="https://open.kakao.com/o/s2NzW41h"
+                  target="_blank"
                   rel="noopener noreferrer"
-                  style={{ 
-                    color: '#FFE812', 
+                  style={{
+                    color: '#FFE812',
                     textDecoration: 'none',
                     fontWeight: '600',
                     transition: 'opacity 0.2s'
