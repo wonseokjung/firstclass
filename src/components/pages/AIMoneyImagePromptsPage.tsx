@@ -222,8 +222,8 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
           </p>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
-            gap: 'clamp(15px, 3vw, 25px)',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 450px), 1fr))',
+            gap: 'clamp(20px, 4vw, 35px)',
             marginBottom: '20px'
           }}>
             {[
