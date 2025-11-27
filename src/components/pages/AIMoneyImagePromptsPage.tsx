@@ -200,6 +200,62 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
         </div>
       </div>
 
+      <div style={{ padding: '50px 20px 30px', background: CARD_BG }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <h2 style={{ 
+            fontSize: '1.8rem', 
+            fontWeight: 800, 
+            color: '#0f172a', 
+            marginBottom: '20px',
+            textAlign: 'center'
+          }}>
+            ✨ 이 프롬프트로 생성한 예제 이미지
+          </h2>
+          <p style={{
+            textAlign: 'center',
+            color: '#64748b',
+            marginBottom: '30px',
+            fontSize: '1rem'
+          }}>
+            아래 이미지들은 실제로 이 프롬프트를 사용해 Gemini로 생성한 결과물입니다
+          </p>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '20px',
+            marginBottom: '20px'
+          }}>
+            {[
+              { src: '/images/Gemini_Generated_Image_5o0k4i5o0k4i5o0k.jpeg', alt: '카페 메뉴판 예제' },
+              { src: '/Gemini_Generated_Image_2jc1oe2jc1oe2jc1.jpeg', alt: '재테크 썸네일 예제' },
+              { src: '/Gemini_Generated_Image_6lumev6lumev6lum.jpeg', alt: '맛집 리뷰 예제' },
+              { src: '/Gemini_Generated_Image_ho64trho64trho64.jpeg', alt: 'AI 수익화 예제' }
+            ].map((image, index) => (
+              <div
+                key={index}
+                style={{
+                  borderRadius: '14px',
+                  overflow: 'hidden',
+                  boxShadow: '0 10px 30px rgba(15, 23, 42, 0.15)',
+                  border: '1px solid #e2e8f0',
+                  background: 'white'
+                }}
+              >
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block'
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <div style={{ padding: '50px 20px', background: CARD_BG }}>
         <div style={{
           maxWidth: '1000px',
