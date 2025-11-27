@@ -200,13 +200,13 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
         </div>
       </div>
 
-      <div style={{ padding: '50px 20px 30px', background: CARD_BG }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+      <div style={{ padding: 'clamp(40px, 8vw, 70px) clamp(15px, 5vw, 20px)', background: CARD_BG }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{ 
-            fontSize: '1.8rem', 
+            fontSize: 'clamp(1.5rem, 4vw, 2.2rem)', 
             fontWeight: 800, 
             color: '#0f172a', 
-            marginBottom: '20px',
+            marginBottom: 'clamp(15px, 3vw, 25px)',
             textAlign: 'center'
           }}>
             ✨ 이 프롬프트로 생성한 예제 이미지
@@ -214,15 +214,16 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
           <p style={{
             textAlign: 'center',
             color: '#64748b',
-            marginBottom: '30px',
-            fontSize: '1rem'
+            marginBottom: 'clamp(25px, 5vw, 40px)',
+            fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
+            lineHeight: 1.6
           }}>
             아래 이미지들은 실제로 이 프롬프트를 사용해 Gemini로 생성한 결과물입니다
           </p>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '20px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+            gap: 'clamp(15px, 3vw, 25px)',
             marginBottom: '20px'
           }}>
             {[
@@ -234,11 +235,21 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
               <div
                 key={index}
                 style={{
-                  borderRadius: '14px',
+                  borderRadius: 'clamp(12px, 2vw, 16px)',
                   overflow: 'hidden',
-                  boxShadow: '0 10px 30px rgba(15, 23, 42, 0.15)',
-                  border: '1px solid #e2e8f0',
-                  background: 'white'
+                  boxShadow: '0 10px 35px rgba(15, 23, 42, 0.2)',
+                  border: '2px solid #e2e8f0',
+                  background: 'white',
+                  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-5px)';
+                  e.currentTarget.style.boxShadow = '0 15px 45px rgba(15, 23, 42, 0.25)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 10px 35px rgba(15, 23, 42, 0.2)';
                 }}
               >
                 <img
@@ -247,7 +258,8 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
                   style={{
                     width: '100%',
                     height: 'auto',
-                    display: 'block'
+                    display: 'block',
+                    objectFit: 'cover'
                   }}
                 />
               </div>
