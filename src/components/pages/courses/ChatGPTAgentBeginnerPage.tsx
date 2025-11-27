@@ -229,7 +229,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
           {/* 결제한 사용자를 위한 "내 강의 보기" 버튼 */}
           {isPaidUser && (
-            <div style={{
+        <div style={{
               background: 'linear-gradient(135deg, #10b981, #059669)',
               borderRadius: '20px',
               padding: '30px',
@@ -237,13 +237,13 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               boxShadow: '0 10px 40px rgba(16, 185, 129, 0.3)',
               border: '3px solid #34d399',
               textAlign: 'center'
-            }}>
-              <div style={{
+        }}>
+          <div style={{
                 fontSize: '3rem',
                 marginBottom: '15px'
               }}>
                 🎉
-              </div>
+        </div>
               <h2 style={{
                 fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                 fontWeight: '800',
@@ -300,70 +300,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               </button>
             </div>
           )}
-
-          {/* ⚠️ 중요 안내 영상 */}
-          <div style={{
-            marginBottom: '40px',
-            maxWidth: '900px',
-            margin: '0 auto 40px auto'
-          }}>
-            <div style={{
-              background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-              padding: '20px',
-              borderRadius: '12px',
-              marginBottom: '20px',
-              border: '3px solid #fbbf24',
-              boxShadow: '0 4px 12px rgba(251, 191, 36, 0.3)'
-            }}>
-              <h2 style={{
-                fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
-                fontWeight: '700',
-                color: '#92400e',
-                marginBottom: '10px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px'
-              }}>
-                ⚠️ 먼저 시청하세요!
-              </h2>
-              <p style={{
-                margin: 0,
-                fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
-                color: '#92400e',
-                fontWeight: '600',
-                lineHeight: 1.8
-              }}>
-                강의 진행 전 반드시 알아야 할 중요한 내용입니다.<br/>
-                수강 전 꼭 시청해주세요!
-              </p>
-            </div>
-            <div style={{
-              position: 'relative',
-              paddingBottom: '56.25%',
-              height: 0,
-              overflow: 'hidden',
-              borderRadius: '12px',
-              background: '#000',
-              border: '3px solid #fbbf24'
-            }}>
-              <iframe
-                src="https://player.vimeo.com/video/1139551525?badge=0&autopause=0&player_id=0&app_id=58479"
-                title="중요 안내 영상"
-                frameBorder="0"
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '12px',
-                  border: 'none'
-                }}
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </div>
 
           {/* 강의 소개 영상 */}
           <div style={{
@@ -565,7 +501,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   border: '1px solid rgba(254, 240, 138, 0.3)'
                 }}>
                   💰 55,000원 할인
-                </div>
+              </div>
             </div>
 
               {/* 혜택 리스트 */}
@@ -618,12 +554,12 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     fontSize: 'clamp(1.1rem, 3.5vw, 1.6rem)',
                     fontWeight: '900',
                     borderRadius: '15px',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
                     boxShadow: '0 8px 30px rgba(251, 191, 36, 0.5)',
                     display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                     gap: 'clamp(10px, 2vw, 15px)',
                     width: '100%',
                     maxWidth: '500px',
