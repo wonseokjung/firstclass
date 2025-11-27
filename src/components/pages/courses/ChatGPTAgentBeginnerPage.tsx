@@ -301,6 +301,70 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             </div>
           )}
 
+          {/* ⚠️ 중요 안내 영상 */}
+          <div style={{
+            marginBottom: '40px',
+            maxWidth: '900px',
+            margin: '0 auto 40px auto'
+          }}>
+            <div style={{
+              background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+              padding: '20px',
+              borderRadius: '12px',
+              marginBottom: '20px',
+              border: '3px solid #fbbf24',
+              boxShadow: '0 4px 12px rgba(251, 191, 36, 0.3)'
+            }}>
+              <h2 style={{
+                fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
+                fontWeight: '700',
+                color: '#92400e',
+                marginBottom: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                ⚠️ 먼저 시청하세요!
+              </h2>
+              <p style={{
+                margin: 0,
+                fontSize: 'clamp(1rem, 2.5vw, 1.1rem)',
+                color: '#92400e',
+                fontWeight: '600',
+                lineHeight: 1.8
+              }}>
+                강의 진행 전 반드시 알아야 할 중요한 내용입니다.<br/>
+                수강 전 꼭 시청해주세요!
+              </p>
+            </div>
+            <div style={{
+              position: 'relative',
+              paddingBottom: '56.25%',
+              height: 0,
+              overflow: 'hidden',
+              borderRadius: '12px',
+              background: '#000',
+              border: '3px solid #fbbf24'
+            }}>
+              <iframe
+                src="https://player.vimeo.com/video/1139551525?badge=0&autopause=0&player_id=0&app_id=58479"
+                title="중요 안내 영상"
+                frameBorder="0"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '12px',
+                  border: 'none'
+                }}
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
           {/* 강의 소개 영상 */}
           <div style={{
             marginBottom: '60px',
