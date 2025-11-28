@@ -9,8 +9,6 @@ interface Day9PageProps {
 
 const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
   const [completedDaysCount, setCompletedDaysCount] = useState<number>(0);
-  const [quizAnswers, setQuizAnswers] = useState<{ [key: number]: number }>({});
-  const [quizSubmitted, setQuizSubmitted] = useState<boolean>(false);
   const [isDayCompleted, setIsDayCompleted] = useState<boolean>(false);
   const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>('');
