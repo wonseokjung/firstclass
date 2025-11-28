@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Copy, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../common/NavigationBar';
 
 interface AIMoneyMasterPromptsPageProps {
@@ -441,8 +442,33 @@ const BRAND_GOLD = '#facc15';
 const CARD_BG = '#f7f8fb';
 
 const AIMoneyMasterPromptsPage: React.FC<AIMoneyMasterPromptsPageProps> = ({ onBack }) => {
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<string>('');
   const [copiedPromptId, setCopiedPromptId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  // 로그인 체크
+  useEffect(() => {
+    const checkAuth = () => {
+      try {
+        const userSession = sessionStorage.getItem('aicitybuilders_user_session');
+        if (!userSession) {
+          alert('로그인이 필요한 페이지입니다.');
+          navigate('/login');
+          return;
+        }
+        setIsLoggedIn(true);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('❌ 인증 확인 실패:', error);
+        alert('로그인이 필요한 페이지입니다.');
+        navigate('/login');
+      }
+    };
+
+    checkAuth();
+  }, [navigate]);
 
   const toggleSection = (sectionId: string) => {
     setActiveSection((prev) => (prev === sectionId ? '' : sectionId));
@@ -457,6 +483,36 @@ const AIMoneyMasterPromptsPage: React.FC<AIMoneyMasterPromptsPageProps> = ({ onB
       console.error('프롬프트 복사 실패:', error);
     }
   };
+
+  // 로딩 중이거나 로그인하지 않은 경우
+  if (isLoading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        minHeight: '100vh',
+        background: '#f7f8fb'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ 
+            width: '50px', 
+            height: '50px', 
+            border: '5px solid #e2e8f0',
+            borderTop: '5px solid #0b1220',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto 20px'
+          }}></div>
+          <p style={{ color: '#64748b', fontSize: '1.1rem' }}>로그인 확인 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isLoggedIn) {
+    return null;
+  }
 
   return (
     <div className="masterclass-container">

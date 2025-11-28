@@ -556,10 +556,10 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                         paddingTop: '15px',
                         borderTop: '1px solid #e2e8f0'
                       }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                         color: '#94a3b8',
                           fontSize: '0.85rem',
                           fontWeight: '600',
