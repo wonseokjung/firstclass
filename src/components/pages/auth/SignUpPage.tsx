@@ -47,11 +47,13 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
       newErrors.email = '올바른 이메일 형식이 아닙니다.';
     }
 
-    // 핸드폰 번호 validation
+    // 핸드폰 번호 validation (국내외 모두 허용)
     if (!formData.phone.trim()) {
-      newErrors.phone = '핸드폰 번호를 입력해주세요.';
-    } else if (!/^01[0-9]-?[0-9]{4}-?[0-9]{4}$/.test(formData.phone.replace(/\s+/g, ''))) {
-      newErrors.phone = '올바른 핸드폰 번호 형식이 아닙니다. (예: 010-1234-5678)';
+      newErrors.phone = '전화번호를 입력해주세요.';
+    } else if (formData.phone.trim().length < 8) {
+      newErrors.phone = '전화번호는 최소 8자 이상이어야 합니다.';
+    } else if (!/^[0-9+\-\s()]+$/.test(formData.phone)) {
+      newErrors.phone = '전화번호는 숫자, +, -, (), 공백만 입력 가능합니다.';
     }
 
     // 패스워드 validation
@@ -298,11 +300,11 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
                 )}
               </div>
 
-              {/* 핸드폰 번호 입력 필드 */}
+              {/* 전화번호 입력 필드 (국내외 모두 가능) */}
               <div className="form-group">
                 <label htmlFor="phone" className="form-label">
                   <Phone size={18} />
-                  핸드폰 번호
+                  전화번호
                 </label>
                 <input
                   type="tel"
@@ -311,7 +313,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
                   value={formData.phone}
                   onChange={handleInputChange}
                   className={`form-input ${errors.phone ? 'error' : ''}`}
-                  placeholder="010-1234-5678"
+                  placeholder="국내: 010-1234-5678 / 해외: +1-234-567-8900"
                   disabled={isLoading}
                 />
                 {errors.phone && (
