@@ -69,7 +69,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack }) => {
               margin: 0,
               fontWeight: '700'
             }}>
-              2025년 11월 30일 오후 5시
+              2025년 11월 29일 오후 5시
             </p>
           </div>
           <p style={{

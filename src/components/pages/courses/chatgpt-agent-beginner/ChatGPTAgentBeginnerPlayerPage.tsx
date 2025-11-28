@@ -151,7 +151,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             title: '콘텐츠 분석 & 퍼널 전략으로 성공 채널 선택하기', 
             subtitle: '최종 프로젝트: 업로드한 콘텐츠 분석 → 반응 좋은 채널 선택 → 집중 운영 전략',
             hasQuiz: true,
-            launchDate: '2025-11-30 17:00'
+            launchDate: '2025-11-29 17:00'
           }
         ]
       }
@@ -284,7 +284,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             }}>
               <span style={{ fontSize: '1.8rem' }}>✅</span>
               <span style={{ fontSize: '1.2rem', fontWeight: '800', color: 'white' }}>
-                Day 1-8 전체 강의 업로드 완료!
+                Day 1-9 전체 강의 업로드 완료!
               </span>
             </div>
             <p style={{
@@ -415,7 +415,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             }}>
               {week.days.map((lesson) => {
                 const isCompleted = completedDays.has(lesson.day);
-                const isAvailable = lesson.day <= 8; // Day 1-8 사용 가능
+                const isAvailable = lesson.day <= 9; // Day 1-9 사용 가능
 
                 return (
                   <div
