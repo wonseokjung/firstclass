@@ -54,6 +54,7 @@ const CostOptimizationExamplesPage = React.lazy(() => import('./components/pages
 // 인증 페이지
 const LoginPage = React.lazy(() => import('./components/pages/auth/LoginPage'));
 const SignUpPage = React.lazy(() => import('./components/pages/auth/SignUpPage'));
+const ForgotPasswordPage = React.lazy(() => import('./components/pages/ForgotPasswordPage'));
 const UserDashboardPage = React.lazy(() => import('./components/pages/auth/UserDashboardPage'));
 
 // 결제 페이지
@@ -596,6 +597,7 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/ai-money-video-prompts" element={<AIMoneyVideoPromptsPageWrapper />} />
               <Route path="/login" element={<LoginPageWrapper />} />
               <Route path="/signup" element={<SignUpPageWrapper />} />
+              <Route path="/forgot-password" element={<Suspense fallback={<LoadingSpinner />}><ForgotPasswordPage /></Suspense>} />
               <Route path="/dashboard" element={<UserDashboardPageWrapper />} />
               <Route path="/payment/success" element={<PaymentSuccessPageWrapper />} />
               <Route path="/payment/fail" element={<PaymentFailPageWrapper />} />

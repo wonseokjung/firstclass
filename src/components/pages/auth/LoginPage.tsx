@@ -166,7 +166,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
   };
 
   const handleForgotPasswordClick = () => {
-    setShowPasswordResetModal(true);
+    navigate('/forgot-password');
   };
 
   return (

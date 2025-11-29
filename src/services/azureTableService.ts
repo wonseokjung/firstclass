@@ -1803,77 +1803,6 @@ export class AzureTableService {
     }
   }
 
-  // 재설정 토큰 검증
-  static async verifyPasswordResetToken(email: string, token: string): Promise<boolean> {
-    try {
-      console.log('🔍 재설정 토큰 검증:', email, token);
-
-      const user = await this.getUserByEmail(email);
-      if (!user) {
-        console.log('❌ 사용자를 찾을 수 없음:', email);
-        return false;
-      }
-
-      // 토큰 확인
-      if (!user.passwordResetToken || user.passwordResetToken !== token) {
-        console.log('❌ 잘못된 재설정 토큰:', token);
-        return false;
-      }
-
-      // 토큰 만료 확인
-      if (!user.passwordResetTokenExpiry || new Date() > new Date(user.passwordResetTokenExpiry)) {
-        console.log('❌ 만료된 재설정 토큰:', user.passwordResetTokenExpiry);
-        return false;
-      }
-
-      console.log('✅ 재설정 토큰 검증 성공:', email);
-      return true;
-    } catch (error: any) {
-      console.error('❌ 재설정 토큰 검증 실패:', error.message);
-      return false;
-    }
-  }
-
-  // 새 비밀번호로 업데이트
-  static async resetPassword(email: string, token: string, newPassword: string): Promise<boolean> {
-    try {
-      console.log('🔐 비밀번호 재설정 실행:', email);
-
-      // 토큰 검증
-      const isValidToken = await this.verifyPasswordResetToken(email, token);
-      if (!isValidToken) {
-        console.log('❌ 토큰 검증 실패');
-        return false;
-      }
-
-      const user = await this.getUserByEmail(email);
-      if (!user) {
-        console.log('❌ 사용자를 찾을 수 없음:', email);
-        return false;
-      }
-
-      // 새 비밀번호 해시화
-      const newPasswordHash = await hashPassword(newPassword);
-
-      // 사용자 정보 업데이트 (토큰 제거 및 비밀번호 변경)
-      const updatedUser = {
-        ...user,
-        passwordHash: newPasswordHash,
-        passwordResetToken: '', // 토큰 제거
-        passwordResetTokenExpiry: '', // 만료 시간 제거
-        updatedAt: new Date().toISOString()
-      };
-
-      // Azure에 업데이트
-      await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
-
-      console.log('✅ 비밀번호 재설정 완료:', email);
-      return true;
-    } catch (error: any) {
-      console.error('❌ 비밀번호 재설정 실패:', error.message);
-      return false;
-    }
-  }
 
   // === Day별 진행 상황 관리 (AI Agent 10일 과정용) ===
 
@@ -2158,6 +2087,136 @@ export class AzureTableService {
       console.error('❌ 비밀번호 변경 실패:', error.message);
       return false;
     }
+  }
+
+  /**
+   * 비밀번호 재설정 코드 생성 및 저장
+   * @param email 사용자 이메일
+   */
+  static async generatePasswordResetCode(email: string): Promise<string | null> {
+    try {
+      console.log('🔐 비밀번호 재설정 코드 생성:', email);
+
+      // 사용자 존재 확인
+      const user = await this.getUserByEmail(email);
+      if (!user) {
+        console.log('❌ 사용자를 찾을 수 없음:', email);
+        return null;
+      }
+
+      // 6자리 랜덤 코드 생성
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      const expiresAt = Date.now() + 10 * 60 * 1000; // 10분 후 만료
+
+      // localStorage에 임시 저장 (프론트엔드에서만 사용)
+      const resetData = {
+        email,
+        code,
+        expiresAt,
+        used: false,
+        createdAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(`password_reset_${email}`, JSON.stringify(resetData));
+
+      console.log('✅ 재설정 코드 생성 완료:', code);
+      return code;
+    } catch (error: any) {
+      console.error('❌ 재설정 코드 생성 실패:', error.message);
+      return null;
+    }
+  }
+
+  /**
+   * 비밀번호 재설정 코드 검증
+   * @param email 사용자 이메일
+   * @param code 입력한 코드
+   */
+  static async verifyPasswordResetCode(email: string, code: string): Promise<boolean> {
+    try {
+      console.log('🔍 재설정 코드 검증:', email, code);
+
+      const savedDataString = localStorage.getItem(`password_reset_${email}`);
+      if (!savedDataString) {
+        console.log('❌ 저장된 코드 없음');
+        return false;
+      }
+
+      const savedData = JSON.parse(savedDataString);
+
+      // 만료 확인
+      if (Date.now() > savedData.expiresAt) {
+        console.log('❌ 코드 만료됨');
+        localStorage.removeItem(`password_reset_${email}`);
+        return false;
+      }
+
+      // 이미 사용됨
+      if (savedData.used) {
+        console.log('❌ 이미 사용된 코드');
+        return false;
+      }
+
+      // 코드 일치 확인
+      if (savedData.code !== code) {
+        console.log('❌ 코드 불일치');
+        return false;
+      }
+
+      console.log('✅ 코드 검증 성공');
+      return true;
+    } catch (error: any) {
+      console.error('❌ 코드 검증 실패:', error.message);
+      return false;
+    }
+  }
+
+  /**
+   * 비밀번호 재설정 (코드 검증 후)
+   * @param email 사용자 이메일
+   * @param code 인증 코드
+   * @param newPassword 새 비밀번호
+   */
+  static async resetPassword(email: string, code: string, newPassword: string): Promise<boolean> {
+    try {
+      console.log('🔐 비밀번호 재설정 시작:', email);
+
+      // 코드 검증
+      const isValid = await this.verifyPasswordResetCode(email, code);
+      if (!isValid) {
+        console.log('❌ 코드 검증 실패');
+        return false;
+      }
+
+      // 비밀번호 변경
+      const success = await this.adminChangePassword(email, newPassword);
+      if (!success) {
+        return false;
+      }
+
+      // 사용된 코드로 표시
+      const savedDataString = localStorage.getItem(`password_reset_${email}`);
+      if (savedDataString) {
+        const savedData = JSON.parse(savedDataString);
+        savedData.used = true;
+        localStorage.setItem(`password_reset_${email}`, JSON.stringify(savedData));
+      }
+
+      console.log('✅ 비밀번호 재설정 완료');
+      return true;
+    } catch (error: any) {
+      console.error('❌ 비밀번호 재설정 실패:', error.message);
+      return false;
+    }
+  }
+
+  /**
+   * 비밀번호 재설정 코드 삭제
+   * @param email 사용자 이메일
+   */
+  static async clearPasswordResetCode(email: string): Promise<void> {
+    localStorage.removeItem(`password_reset_${email}`);
+    console.log('🗑️ 재설정 코드 삭제:', email);
   }
 }
 
