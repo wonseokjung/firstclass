@@ -15,7 +15,6 @@ const ForgotPasswordPage: React.FC = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [generatedCode, setGeneratedCode] = useState<string>(''); // 테스트용
 
   // 이메일 유효성 검사
   const isValidEmail = (email: string): boolean => {
@@ -48,13 +47,11 @@ const ForgotPasswordPage: React.FC = () => {
       const emailSent = await EmailService.sendPasswordResetCode(email, generatedCode);
       
       if (emailSent) {
-        setGeneratedCode(generatedCode);
-        alert(`✅ 인증 코드가 이메일로 전송되었습니다!\n\n이메일을 확인하세요: ${email}\n\n(테스트용 코드: ${generatedCode})`);
+        alert(`✅ 인증 코드가 이메일로 전송되었습니다!\n\n이메일을 확인하세요: ${email}`);
         setStep('code');
       } else {
-        alert('⚠️ 이메일 발송에 실패했습니다.\n\n테스트용 코드: ' + generatedCode + '\n\n이 코드로 계속 진행할 수 있습니다.');
-        setGeneratedCode(generatedCode);
-        setStep('code');
+        alert('⚠️ 이메일 발송에 실패했습니다.\n네트워크 연결을 확인하거나 잠시 후 다시 시도해주세요.');
+        return;
       }
     } catch (error) {
       alert('오류가 발생했습니다. 다시 시도해주세요.');
@@ -280,24 +277,6 @@ const ForgotPasswordPage: React.FC = () => {
                 <strong>{email}</strong>로 전송된<br />
                 6자리 인증 코드를 입력하세요.
               </p>
-              {generatedCode && (
-                <div style={{
-                  marginTop: '15px',
-                  padding: '10px',
-                  background: '#fef3c7',
-                  borderRadius: '8px',
-                  border: '2px solid #fbbf24'
-                }}>
-                  <p style={{
-                    margin: 0,
-                    color: '#92400e',
-                    fontSize: '0.85rem',
-                    fontWeight: 600
-                  }}>
-                    🔐 테스트 코드: {generatedCode}
-                  </p>
-                </div>
-              )}
             </div>
 
             <div style={{ marginBottom: '20px' }}>

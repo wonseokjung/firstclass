@@ -18,9 +18,8 @@ class EmailService {
       console.log('📧 이메일 발송 시작:', toEmail);
 
       const templateParams = {
-        to_email: toEmail,
-        code: code,
-        to_name: toEmail.split('@')[0] // 이메일 앞부분을 이름으로 사용
+        email: toEmail,  // EmailJS 템플릿의 {{email}}과 일치
+        code: code
       };
 
       const response = await emailjs.send(
