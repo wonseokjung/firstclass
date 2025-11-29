@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Copy, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import NavigationBar from '../common/NavigationBar';
+import NavigationBar from '../../common/NavigationBar';
 
 interface AIMoneyVideoPromptsPageProps {
   onBack: () => void;

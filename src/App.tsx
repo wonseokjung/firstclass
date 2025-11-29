@@ -20,9 +20,9 @@ const LoadingSpinner: React.FC = () => (
 const MainPage = React.lazy(() => import('./components/pages/MainPage'));
 const AICityMapPage = React.lazy(() => import('./components/pages/AICityMapPage'));
 const ChatGPTPrompts40Page = React.lazy(() => import('./components/pages/ChatGPTPrompts40Page'));
-const AIMoneyMasterPromptsPage = React.lazy(() => import('./components/pages/AIMoneyMasterPromptsPage'));
-const AIMoneyImagePromptsPage = React.lazy(() => import('./components/pages/AIMoneyImagePromptsPage'));
-const AIMoneyVideoPromptsPage = React.lazy(() => import('./components/pages/AIMoneyVideoPromptsPage'));
+const AIMoneyMasterPromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyMasterPromptsPage'));
+const AIMoneyImagePromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyImagePromptsPage'));
+const AIMoneyVideoPromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyVideoPromptsPage'));
 const FAQPage = React.lazy(() => import('./components/pages/FAQPage'));
 const CEOPage = React.lazy(() => import('./components/pages/CEOPage'));
 const ContactPage = React.lazy(() => import('./components/pages/ContactPage'));

@@ -16,7 +16,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     title: "🤖 AI Agent, 10일 완성",
     subtitle: "수익화하는 인공지능 에이전트 만들기",
     lessons: [
-      // Part 1 (Day 1-7) - OpenAI 에이전트부터 Google OPAL 에이전트까지
+      // Part 1 (Day 1-6) - OpenAI 에이전트부터 Google OPAL 에이전트까지
       {
         id: 1,
         day: 1,
@@ -72,30 +72,27 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
         day: 6,
         title: "Day 6: 시니어 타겟 유튜브 콘텐츠 자동 제작",
         hasQuiz: false,
-        launchDate: "2025-11-18 19:00",
         sections: {
           theory: "• 시니어 시장의 특성과 콘텐츠 선호도 이해\n• 25개 멀티 에이전트 시스템 구조 파악",
-          practice: "• AI 에이전트 훈련 및 문제 해결 방법 실습\n• 장면 1개짜리 시니어 콘텐츠 생성 워크플로우 구축"
+          practice: "• AI 에이전트 훈련 및 문제 해결 방법 실습\n• 아이디어→이미지→음성→텍스트 완전 자동화 워크플로우 구축"
         }
       },
+      // Part 2 (Day 7-10) - 실전! 채널 운영부터 퍼널 전략까지
       {
         id: 7,
         day: 7,
         title: "Day 7: 유튜브 채널 자동 생성 & 최적화 에이전트",
         hasQuiz: false,
-        launchDate: "2025-11-19 19:00",
         sections: {
           theory: "• 퍼널 전략: 다수 채널 운영으로 성공 확률 극대화\n• 11개 AI 에이전트로 채널 세팅 완전 자동화",
           practice: "• 트렌드 분석부터 브랜딩까지 원스톱 워크플로우 구축\n• 5-10개 채널을 동시에 운영하는 퍼널 전략 실습"
         }
       },
-      // Part 2 (Day 8-10) - 실전! 채널 운영부터 퍼널 전략까지
       {
         id: 8,
         day: 8,
         title: "Day 8: Opal의 숨겨진 비밀: 대화로 워크플로우 자동 생성 + 구글 스프레드시트 연동",
         hasQuiz: true,
-        launchDate: "2025-11-26 19:00",
         sections: {
           theory: "• 대화형으로 워크플로우를 자동 생성하는 방법\n• 노드와 프롬프트를 한글로 자동 작성하기",
           practice: "• 구글 스프레드시트에 콘텐츠 계획 자동 저장\n• 유튜브 콘텐츠 계획표 자동 생성 실습\n• 다양한 업무에 적용 가능한 자동화 전략"
@@ -104,23 +101,21 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
       {
         id: 9,
         day: 9,
-        title: "Day 9: 만들어진 채널에 롱폼 콘텐츠 자동 생성 에이전트 만들기",
+        title: "Day 9: 일관성 있는 이미지 시리즈 만들기 - Google Opal로 브랜드 스토리텔링",
         hasQuiz: false,
-        launchDate: "2025-11-27 19:00",
         sections: {
-          theory: "• 롱폼 콘텐츠의 구조와 전략\n• 시청 유지율을 높이는 방법",
-          practice: "• 롱폼 에이전트로 심화 콘텐츠 제작\n• 자동 업로드 및 최적화 시스템 구축"
+          theory: "• 일관성 있는 이미지 시리즈 생성의 중요성 이해\n• 브랜드 아이덴티티와 스토리텔링 전략",
+          practice: "• Google Opal로 같은 캐릭터/제품이 등장하는 이미지 시리즈 생성\n• 워크플로우 커스터마이징: 프롬프트 변경, 노드 추가/삭제\n• 제품 광고 시리즈를 유튜브 콘텐츠로 제작 및 업로드"
         }
       },
       {
         id: 10,
         day: 10,
-        title: "Day 10: 콘텐츠 분석 & 퍼널 전략으로 성공 채널 선택하기",
-        hasQuiz: true,
-        launchDate: "2025-11-29 17:00",
+        title: "Day 10: 영상 콘텐츠 자동화 - JSON 프롬프트와 Google Opal 에이전트로 쇼츠/롱폼 제작",
+        hasQuiz: false,
         sections: {
-          theory: "• 업로드한 콘텐츠 분석 방법\n• 데이터 기반 채널 선택 전략",
-          practice: "• 반응 좋은 채널 선택 및 집중 운영 전략 수립\n• 최종 프로젝트: 완전 자동화 유튜브 수익 시스템 완성"
+          theory: "• JSON 프롬프트를 활용한 고품질 영상 생성 이해\n• 일관성 있는 영상 스토리텔링을 위한 에이전트 설계",
+          practice: "• 22개 Google Opal 에이전트로 자동화 워크플로우 구축\n• 제품 광고 영상(코카콜라, 환타 등) 시리즈 제작\n• 배경음악, 카메라 무빙 등 세부 요소 제어 방법 실습\n• 최종 프로젝트: 완전 자동화 영상 제작 시스템 완성"
         }
       }
     ]

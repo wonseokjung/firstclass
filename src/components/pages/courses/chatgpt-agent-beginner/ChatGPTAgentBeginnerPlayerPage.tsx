@@ -86,38 +86,38 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
         days: [
           { 
             day: 1, 
-            title: '나의 목표에 맞는 에이전트 찾기 - ChatGPT vs ChatGPT Agent', 
-            subtitle: '이론: ChatGPT vs Agent, AI의 전체 구조 이해 | 실습: ChatGPT 회원가입 → 에이전트 API 등록',
+            title: '내 첫 AI 친구: ChatGPT와 Agent의 차이', 
+            subtitle: 'ChatGPT와 에이전트 빌더의 차이점 이해 | 워크플로우 자동화 개념 배우기',
             hasQuiz: true 
           },
           { 
             day: 2, 
             title: 'Work Flow Design 기초 - 나의 일을 AI가 이해할 수 있게 쪼개기', 
-            subtitle: '이론: 디컴포지션(분해)과 시퀀싱(순서화) | 실습: 4개 에이전트 연결한 유튜브 콘텐츠 자동 생성 시스템 구축',
+            subtitle: '디컴포지션(분해)과 시퀀싱(순서화) 원리 | 4개 에이전트로 유튜브 콘텐츠 자동 생성',
             hasQuiz: true 
           },
           { 
             day: 3, 
             title: 'Google Opal로 영상 자동 생성 에이전트 만들기', 
-            subtitle: '이론: ChatGPT vs Google Opal 비교, 멀티모달 AI 이해 | 실습: 트렌드 검색 + 영상 생성 자동화 (Gemini 2.5 Flash + Veo)',
+            subtitle: 'ChatGPT vs Google Opal 비교 | 트렌드 검색 + 영상 생성 자동화 (Veo + Gemini 2.5)',
             hasQuiz: true 
           },
           { 
             day: 4, 
             title: '협찬/광고 수익을 만드는 \'콘텐츠 자동 생성 에이전트\' 제작법', 
-            subtitle: '실습: 두 플랫폼으로 같은 에이전트 만들어보며 차이점 체감하기',
+            subtitle: '4개 에이전트로 인스타그램 포스팅 자동화 | OpenAI vs Google Opal 실전 비교',
             hasQuiz: false 
           },
           { 
             day: 5, 
             title: '수익화 인공지능 에이전트 구축하기', 
-            subtitle: '실습: 한 번의 클릭으로 완성하는 자동화 워크플로우',
+            subtitle: 'Google OPAL 완전 자동화 워크플로우 | 트렌드→영상→썸네일→메타데이터 최적화',
             hasQuiz: true 
           },
           { 
             day: 6, 
-            title: '시니어 타겟 유튜브 콘텐츠 자동 제작 에이전트', 
-            subtitle: '실습: 시니어 콘텐츠 자동 생성 워크플로우 구축 (트렌드 분석 + 영상 제작)',
+            title: '시니어 타겟 유튜브 콘텐츠 자동 제작', 
+            subtitle: '25개 멀티 에이전트 시스템 | 아이디어→이미지→음성→텍스트 완전 자동화',
             hasQuiz: false
           }
         ]
@@ -128,30 +128,27 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
         days: [
           { 
             day: 7, 
-            title: '최적화된 유튜브 채널 한번에 만드는 에이전트', 
-            subtitle: '실습: AI로 채널 개설부터 브랜딩까지 완전 자동화 (퍼널 전략 적용)',
-            hasQuiz: false,
-            launchDate: '2025-11-19 19:00'
+            title: '유튜브 채널 자동 생성 & 최적화 에이전트', 
+            subtitle: '11개 AI 에이전트로 채널 세팅 완전 자동화 | 퍼널 전략으로 5-10개 채널 동시 운영',
+            hasQuiz: false
           },
           { 
             day: 8, 
             title: 'Opal의 숨겨진 비밀: 대화로 워크플로우 자동 생성 + 구글 스프레드시트 연동', 
-            subtitle: '실습: 대화형 워크플로우 자동 생성 + 구글 스프레드시트로 콘텐츠 계획 관리',
+            subtitle: '대화형 워크플로우 자동 생성 | 구글 스프레드시트 콘텐츠 계획 자동 저장',
             hasQuiz: true
           },
           { 
             day: 9, 
-            title: '만들어진 채널에 롱폼 콘텐츠 자동 생성 에이전트 만들기', 
-            subtitle: '실습: 롱폼 에이전트로 심화 콘텐츠 제작 및 자동 업로드',
-            hasQuiz: false,
-            launchDate: '2025-11-28 19:00'
+            title: '일관성 있는 이미지 시리즈 만들기 - Google Opal로 브랜드 스토리텔링', 
+            subtitle: '같은 캐릭터/제품/스타일로 연결되는 이미지 시리즈 생성 | 제품 광고 콘텐츠 제작',
+            hasQuiz: false
           },
           { 
             day: 10, 
-            title: '콘텐츠 분석 & 퍼널 전략으로 성공 채널 선택하기', 
-            subtitle: '최종 프로젝트: 업로드한 콘텐츠 분석 → 반응 좋은 채널 선택 → 집중 운영 전략',
-            hasQuiz: true,
-            launchDate: '2025-11-29 17:00'
+            title: '영상 콘텐츠 자동화 - JSON 프롬프트와 Google Opal 에이전트로 쇼츠/롱폼 제작', 
+            subtitle: '22개 에이전트로 일관성 있는 영상 시리즈 생성 | 코카콜라/환타 광고 실습',
+            hasQuiz: false
           }
         ]
       }
@@ -282,9 +279,9 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
               gap: '12px',
               marginBottom: '10px'
             }}>
-              <span style={{ fontSize: '1.8rem' }}>✅</span>
+              <span style={{ fontSize: '1.8rem' }}>🎉</span>
               <span style={{ fontSize: '1.2rem', fontWeight: '800', color: 'white' }}>
-                Day 1-9 전체 강의 업로드 완료!
+                Day 1-10 전체 강의 업로드 완료!
               </span>
             </div>
             <p style={{
@@ -293,7 +290,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
               opacity: '0.95',
               lineHeight: '1.6'
             }}>
-              모든 강의가 준비되었습니다. 지금 바로 학습을 시작하세요! 🚀
+              전체 과정 수료 시 5,000 포인트 보상! 지금 바로 학습을 시작하세요! 🚀
             </p>
           </div>
 
@@ -415,7 +412,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             }}>
               {week.days.map((lesson) => {
                 const isCompleted = completedDays.has(lesson.day);
-                const isAvailable = lesson.day <= 9; // Day 1-9 사용 가능
+                const isAvailable = lesson.day <= 10; // Day 1-10 전체 사용 가능
 
                 return (
                   <div

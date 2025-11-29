@@ -72,12 +72,12 @@ export interface EnrolledCourse {
 // 리워드 관련 인터페이스
 export interface RewardTransaction {
   id: string;
-  fromUserId: string; // 구매한 사용자
-  toUserId: string; // 리워드 받는 사용자 (추천인)
-  amount: number; // 리워드 금액
+  fromUserId: string; // 구매한 사용자 또는 'system'
+  toUserId: string; // 리워드 받는 사용자 (추천인) 또는 'system'
+  amount: number; // 리워드 금액 (포인트 사용 시 음수)
   sourceAmount: number; // 원본 구매 금액
-  sourceType: 'course_purchase' | 'package_purchase' | 'subscription' | 'signup_reward';
-  sourceId: string; // 구매한 강의/패키지 ID
+  sourceType: 'course_purchase' | 'package_purchase' | 'subscription' | 'signup_reward' | 'course_completion' | 'point_usage';
+  sourceId: string; // 구매한 강의/패키지 ID 또는 주문 ID
   status: 'pending' | 'completed' | 'cancelled';
   createdAt: string;
   completedAt?: string;
@@ -2217,6 +2217,161 @@ export class AzureTableService {
   static async clearPasswordResetCode(email: string): Promise<void> {
     localStorage.removeItem(`password_reset_${email}`);
     console.log('🗑️ 재설정 코드 삭제:', email);
+  }
+
+  // === 수료 보상 시스템 ===
+
+  /**
+   * 강의 수료 시 포인트 지급
+   * @param email 사용자 이메일
+   * @param courseId 강의 ID
+   * @param pointAmount 지급할 포인트 금액 (기본 10,000)
+   */
+  static async grantCompletionReward(
+    email: string,
+    courseId: string,
+    pointAmount: number = 10000
+  ): Promise<boolean> {
+    try {
+      console.log('🎁 수료 보상 지급 시작:', email, courseId, pointAmount);
+
+      // 사용자 정보 조회
+      const user = await this.getUserByEmail(email);
+      if (!user) {
+        console.error('❌ 사용자를 찾을 수 없음:', email);
+        return false;
+      }
+
+      // 이미 해당 강의의 수료 보상을 받았는지 확인
+      const rewardHistory = RewardUtils.parseRewardHistory(user.rewardHistory || '[]');
+      const alreadyRewarded = rewardHistory.some(
+        r => r.sourceType === 'course_completion' && r.sourceId === courseId
+      );
+
+      if (alreadyRewarded) {
+        console.log('ℹ️ 이미 수료 보상을 받은 강의입니다:', courseId);
+        return false;
+      }
+
+      // 수료 보상 트랜잭션 생성
+      const completionReward: RewardTransaction = {
+        id: `completion_reward_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        fromUserId: 'system',
+        toUserId: user.rowKey,
+        amount: pointAmount,
+        sourceAmount: 0,
+        sourceType: 'course_completion' as any, // 새로운 타입
+        sourceId: courseId,
+        status: 'completed',
+        createdAt: new Date().toISOString(),
+        completedAt: new Date().toISOString(),
+        note: `${courseId} 강의 수료 축하 보상`
+      };
+
+      // 리워드 내역 업데이트
+      rewardHistory.push(completionReward);
+
+      // 사용자 포인트 업데이트
+      const updatedUser = {
+        ...user,
+        totalRewards: (user.totalRewards || 0) + pointAmount,
+        rewardHistory: RewardUtils.stringifyRewardHistory(rewardHistory),
+        updatedAt: new Date().toISOString()
+      };
+
+      // Azure에 업데이트
+      await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
+
+      console.log('✅ 수료 보상 지급 완료:', email, pointAmount, '포인트');
+      return true;
+    } catch (error: any) {
+      console.error('❌ 수료 보상 지급 실패:', error.message);
+      return false;
+    }
+  }
+
+  /**
+   * 결제 시 포인트 사용
+   * @param email 사용자 이메일
+   * @param pointsToUse 사용할 포인트
+   * @param orderId 주문 ID
+   */
+  static async usePointsForPayment(
+    email: string,
+    pointsToUse: number,
+    orderId: string
+  ): Promise<boolean> {
+    try {
+      console.log('💰 포인트 사용 시작:', email, pointsToUse, '포인트');
+
+      // 사용자 정보 조회
+      const user = await this.getUserByEmail(email);
+      if (!user) {
+        console.error('❌ 사용자를 찾을 수 없음:', email);
+        return false;
+      }
+
+      // 포인트 잔액 확인
+      const currentPoints = user.totalRewards || 0;
+      if (currentPoints < pointsToUse) {
+        console.error('❌ 포인트 잔액 부족:', currentPoints, '<', pointsToUse);
+        return false;
+      }
+
+      // 포인트 사용 트랜잭션 생성
+      const pointUsageTransaction: RewardTransaction = {
+        id: `point_usage_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        fromUserId: user.rowKey,
+        toUserId: 'system',
+        amount: -pointsToUse, // 음수로 차감 표시
+        sourceAmount: pointsToUse,
+        sourceType: 'point_usage' as any, // 새로운 타입
+        sourceId: orderId,
+        status: 'completed',
+        createdAt: new Date().toISOString(),
+        completedAt: new Date().toISOString(),
+        note: `주문 ${orderId} - 포인트 사용`
+      };
+
+      // 리워드 내역 업데이트
+      const rewardHistory = RewardUtils.parseRewardHistory(user.rewardHistory || '[]');
+      rewardHistory.push(pointUsageTransaction);
+
+      // 사용자 포인트 차감
+      const updatedUser = {
+        ...user,
+        totalRewards: currentPoints - pointsToUse,
+        rewardHistory: RewardUtils.stringifyRewardHistory(rewardHistory),
+        updatedAt: new Date().toISOString()
+      };
+
+      // Azure에 업데이트
+      await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
+
+      console.log('✅ 포인트 사용 완료:', email, pointsToUse, '포인트 차감');
+      console.log('💰 남은 포인트:', currentPoints - pointsToUse);
+      return true;
+    } catch (error: any) {
+      console.error('❌ 포인트 사용 실패:', error.message);
+      return false;
+    }
+  }
+
+  /**
+   * 사용자 포인트 잔액 조회
+   * @param email 사용자 이메일
+   */
+  static async getUserPoints(email: string): Promise<number> {
+    try {
+      const user = await this.getUserByEmail(email);
+      if (!user) {
+        return 0;
+      }
+      return user.totalRewards || 0;
+    } catch (error: any) {
+      console.error('❌ 포인트 조회 실패:', error.message);
+      return 0;
+    }
   }
 }
 
