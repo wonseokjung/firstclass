@@ -2296,7 +2296,7 @@ export class AzureTableService {
    * @param pointsToUse 사용할 포인트
    * @param orderId 주문 ID
    */
-  static async deductPointsForPayment(
+  static async usePointsForPayment(
     email: string,
     pointsToUse: number,
     orderId: string
