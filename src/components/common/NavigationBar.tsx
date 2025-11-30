@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import AzureTableService from '../../services/azureTableService';
 
 interface NavigationBarProps {
   onBack?: () => void;
@@ -21,6 +22,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [userPoints, setUserPoints] = useState(0);
 
   useEffect(() => {
     // 로그인 상태 확인
@@ -38,6 +40,29 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
       }
     }
   }, []);
+
+  // 사용자 포인트 조회
+  useEffect(() => {
+    const loadPoints = async () => {
+      if (!userInfo?.email) return;
+
+      try {
+        const points = await AzureTableService.getUserPoints(userInfo.email);
+        setUserPoints(points);
+      } catch (error) {
+        console.error('포인트 조회 실패:', error);
+        setUserPoints(0);
+      }
+    };
+
+    if (isLoggedIn && userInfo) {
+      loadPoints();
+      
+      // 30초마다 포인트 갱신
+      const interval = setInterval(loadPoints, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [isLoggedIn, userInfo]);
 
   const handleLogoClick = () => {
     if (onBack) {
@@ -73,6 +98,36 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
       
       return (
         <>
+          {/* 포인트 표시 */}
+          <div 
+            style={{
+              background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+              color: '#92400e',
+              padding: '8px 16px',
+              borderRadius: '20px',
+              fontWeight: '800',
+              fontSize: '0.95rem',
+              border: '2px solid #fbbf24',
+              boxShadow: '0 2px 8px rgba(251, 191, 36, 0.3)',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}
+            onClick={() => navigate('/dashboard')}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(251, 191, 36, 0.4)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 2px 8px rgba(251, 191, 36, 0.3)';
+            }}
+          >
+            💰 {userPoints.toLocaleString()}P
+          </div>
+
           <button 
             className="nav-link" 
             onClick={() => navigate('/dashboard')}
@@ -206,6 +261,24 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
             
             {isLoggedIn ? (
               <>
+                {/* 모바일 포인트 표시 */}
+                <div 
+                  style={{
+                    background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                    color: '#92400e',
+                    padding: '15px 20px',
+                    borderRadius: '12px',
+                    fontWeight: '800',
+                    fontSize: '1.1rem',
+                    border: '2px solid #fbbf24',
+                    textAlign: 'center',
+                    margin: '10px 0'
+                  }}
+                  onClick={() => handleMobileNavClick(() => navigate('/dashboard'))}
+                >
+                  💰 보유 포인트: {userPoints.toLocaleString()}P
+                </div>
+
                 <button 
                   className="mobile-nav-link" 
                   onClick={() => handleMobileNavClick(() => navigate('/dashboard'))}

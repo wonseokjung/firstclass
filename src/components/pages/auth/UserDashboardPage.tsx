@@ -38,7 +38,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
     enrolledCourses: [],
     purchasedCourses: []
   });
-  const [, setRewardData] = useState<RewardData | null>(null);
+  const [rewardData, setRewardData] = useState<RewardData | null>(null);
+  const [userPoints, setUserPoints] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -103,6 +104,11 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
           setRewardData(rewards);
           console.log('🎁 리워드 데이터 로딩 완료:', rewards);
         }
+
+        // 포인트 조회
+        const points = await AzureTableService.getUserPoints(parsedUserInfo.email);
+        setUserPoints(points);
+        console.log('💰 사용자 포인트:', points);
 
       } catch (error) {
         console.error('사용자 데이터 로드 실패:', error);
@@ -530,6 +536,109 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               </p>
             </div>
           </div>
+
+          {/* 포인트 카드 (통계 그리드 아래) */}
+          {userPoints > 0 && (
+            <div style={{
+              maxWidth: '1200px',
+              margin: '40px auto 0',
+              background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+              borderRadius: '24px',
+              padding: 'clamp(28px, 5vw, 40px)',
+              border: '3px solid #fbbf24',
+              boxShadow: '0 15px 40px rgba(251, 191, 36, 0.3)',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              {/* 배경 장식 */}
+              <div style={{
+                position: 'absolute',
+                top: '-40px',
+                right: '-40px',
+                width: '150px',
+                height: '150px',
+                background: 'rgba(251, 191, 36, 0.2)',
+                borderRadius: '50%'
+              }}></div>
+              <div style={{
+                position: 'absolute',
+                bottom: '-30px',
+                left: '-30px',
+                width: '120px',
+                height: '120px',
+                background: 'rgba(251, 191, 36, 0.15)',
+                borderRadius: '50%'
+              }}></div>
+
+              <div style={{
+                position: 'relative',
+                zIndex: 2,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '20px'
+              }}>
+                <div style={{ flex: 1, minWidth: '250px' }}>
+                  <div style={{
+                    fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                    fontWeight: '700',
+                    color: '#92400e',
+                    marginBottom: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    <Zap size={24} color="#f59e0b" />
+                    내 포인트
+                  </div>
+                  <div style={{
+                    fontSize: 'clamp(2.2rem, 5vw, 3rem)',
+                    fontWeight: '900',
+                    color: '#92400e',
+                    marginBottom: '8px'
+                  }}>
+                    {userPoints.toLocaleString()}P
+                  </div>
+                  <div style={{
+                    fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)',
+                    color: '#78350f',
+                    fontWeight: '600'
+                  }}>
+                    결제 시 현금처럼 사용 가능합니다! 💳
+                  </div>
+                </div>
+
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.8)',
+                  borderRadius: '16px',
+                  padding: 'clamp(20px, 3vw, 28px)',
+                  minWidth: '200px',
+                  backdropFilter: 'blur(10px)'
+                }}>
+                  <div style={{
+                    fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)',
+                    fontWeight: '700',
+                    color: '#78350f',
+                    marginBottom: '12px'
+                  }}>
+                    🎁 포인트 적립 방법
+                  </div>
+                  <ul style={{
+                    fontSize: 'clamp(0.8rem, 1.3vw, 0.9rem)',
+                    color: '#92400e',
+                    margin: 0,
+                    paddingLeft: '20px',
+                    lineHeight: '1.8'
+                  }}>
+                    <li>강의 수료: 5,000P</li>
+                    <li>리뷰 작성: 5,000P</li>
+                    <li>친구 추천 시 적립</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
