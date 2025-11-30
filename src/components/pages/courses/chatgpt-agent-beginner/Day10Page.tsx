@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, FileText, Award } from 'lucide-react';
+import { ArrowLeft, Award } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
 
 interface Day10PageProps {
@@ -348,14 +348,6 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
         `
       }
     ]
-  };
-
-  // 스크롤 이벤트 핸들러
-  const handleScroll = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
   };
 
   return (
