@@ -125,7 +125,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
         const orderId = `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
         
         // 포인트 전액 사용
-        const pointSuccess = await AzureTableService.usePointsForPayment(
+        const pointSuccess = await AzureTableService.deductPointsForPayment(
           userInfo.email,
           price, // 전체 금액을 포인트로 결제
           orderId
@@ -170,7 +170,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
       // 포인트 사용 (있는 경우)
       if (pointsToUse > 0) {
         console.log('💰 포인트 차감 시작:', pointsToUse);
-        const pointSuccess = await AzureTableService.usePointsForPayment(
+        const pointSuccess = await AzureTableService.deductPointsForPayment(
           userInfo.email,
           pointsToUse,
           orderId
@@ -250,7 +250,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
       try {
         const orderId = `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
         
-        const pointSuccess = await AzureTableService.usePointsForPayment(
+        const pointSuccess = await AzureTableService.deductPointsForPayment(
           userInfo.email,
           price,
           orderId
@@ -282,7 +282,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
       // 포인트 사용 (있는 경우)
       if (pointsToUse > 0) {
         console.log('💰 포인트 차감 시작:', pointsToUse);
-        const pointSuccess = await AzureTableService.usePointsForPayment(
+        const pointSuccess = await AzureTableService.deductPointsForPayment(
           userInfo.email,
           pointsToUse,
           orderId
