@@ -51,10 +51,14 @@ const aiMasterClasses: Course[] = [
   { id: 3, instructor: 'GOOGLE AI', title: 'Google AI 완전정복', subtitle: '구글이 만든 인공지능, VEO, Gemini, CLI', description: 'AI 멘토 JAY와 함께하는 Google AI 실전 가이드', image: `${process.env.PUBLIC_URL}/images/gemini3.png`, isNew: true, category: 'AI & Technology', path: '/google-ai-course', isDocumentary: false },
   { id: 4, instructor: 'AI BUSINESS', title: 'AI 비즈니스 전략', subtitle: '책임감 있는 AI 활용과 비즈니스 적용', description: '실무진을 위한 AI 비즈니스 완전정복', image: `${process.env.PUBLIC_URL}/images/business.png`, isNew: true, category: 'Business & Strategy', path: '/ai-business-course', isDocumentary: false },
   { id: 6, instructor: 'CHATGPT PROMPTS', title: '40대+ 직장인을 위한 ChatGPT 프롬프트 100선', subtitle: '실전 업무 최적화 프롬프트 모음', description: '경험 많은 직장인을 위한 AI 활용 가이드북', image: `${process.env.PUBLIC_URL}/images/40+prompt.png`, isNew: true, category: 'AI 실무', path: '/chatgpt-prompts-40plus', isDocumentary: false },
-  { id: 7, instructor: 'AI & MONEY', title: 'AI & Money Prompt Vault', subtitle: '기획부터 세일즈까지 38개 프롬프트', description: '디지털 제품·콘텐츠 수익화를 위한 마스터 프롬프트 패키지', image: `${process.env.PUBLIC_URL}/images/promptpractice.jpeg`, isNew: true, category: 'AI 실무', path: '/ai-money-master-prompts', isDocumentary: false },
-  { id: 8, instructor: 'AI IMAGE GENERATION', title: 'AI 수익화 이미지 생성 프롬프트 10선', subtitle: '썸네일부터 제품 사진까지', description: 'Gemini, ChatGPT, Midjourney로 만드는 고퀄리티 수익화 이미지', image: `${process.env.PUBLIC_URL}/images/AIIMAGMONEY.jpeg`, isNew: true, category: 'AI 실무', path: '/ai-money-image-prompts', isDocumentary: false },
-  { id: 9, instructor: 'AI VIDEO GENERATION', title: 'AI 수익화 비디오 생성 프롬프트 10선', subtitle: '숏폼부터 브랜드 광고까지', description: 'Google Veo, Runway, Pika로 만드는 프로급 수익화 영상', image: `${process.env.PUBLIC_URL}/images/AIVIDEOMONEY.jpeg`, isNew: true, category: 'AI 실무', path: '/ai-money-video-prompts', isDocumentary: false },
   { id: 2, instructor: 'AI EDUCATION', title: 'AI 교육의 격차들', subtitle: '줄이기 위한 여정', description: '모든 사람에게 양질의 AI 교육 기회를 제공하는 프로젝트', image: `${process.env.PUBLIC_URL}/images/aieducation.jpg`, isNew: true, category: 'Documentary', path: '/ai-education-documentary', isDocumentary: true, videoUrl: 'https://youtu.be/6VpOwlEq7UM?si=d0eQl9slU1ybxe4x' }
+];
+
+// 인공지능 수익화 무료 강의 클래스
+const freeMoneyClasses: Course[] = [
+  { id: 7, instructor: 'AI & MONEY', title: 'AI & Money Prompt Vault', subtitle: '기획부터 세일즈까지 38개 프롬프트', description: '디지털 제품·콘텐츠 수익화를 위한 마스터 프롬프트 패키지', image: `${process.env.PUBLIC_URL}/images/promptpractice.jpeg`, isNew: true, category: 'AI 수익화', path: '/ai-money-master-prompts', isDocumentary: false },
+  { id: 8, instructor: 'AI IMAGE GENERATION', title: 'AI 수익화 이미지 생성 프롬프트 10선', subtitle: '썸네일부터 제품 사진까지', description: 'Gemini, ChatGPT, Midjourney로 만드는 고퀄리티 수익화 이미지', image: `${process.env.PUBLIC_URL}/images/AIIMAGMONEY.jpeg`, isNew: true, category: 'AI 수익화', path: '/ai-money-image-prompts', isDocumentary: false },
+  { id: 9, instructor: 'AI VIDEO GENERATION', title: 'AI 수익화 비디오 생성 프롬프트 10선', subtitle: '숏폼부터 브랜드 광고까지', description: 'Google Veo, Runway, Pika로 만드는 프로급 수익화 영상', image: `${process.env.PUBLIC_URL}/images/AIVIDEOMONEY.jpeg`, isNew: true, category: 'AI 수익화', path: '/ai-money-video-prompts', isDocumentary: false }
 ];
 
 // 프리미엄 강의 (path 추가)
@@ -272,15 +276,54 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
         <section className="masterclass-section">
           <div className="section-header-mc">
             <h2 className="section-title-mc">
+              <span className="highlight-category" style={{
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}>💰 인공지능 수익화 무료 강의클래스</span>
+              <div style={{ fontSize: '0.8em', marginTop: '8px', fontWeight: 'normal', color: '#92400e' }}>
+                AI로 돈 버는 실전 프롬프트 가이드
+              </div>
+            </h2>
+            <div className="section-nav">
+              <button className="nav-arrow" aria-label="Previous Money courses" onClick={() => handleGridScroll(1, 'left')}><ChevronLeft size={24} /></button>
+              <button className="nav-arrow" aria-label="Next Money courses" onClick={() => handleGridScroll(1, 'right')}><ChevronRight size={24} /></button>
+            </div>
+          </div>
+          <div className="masterclass-grid" ref={(el) => { gridRefs.current[1] = el; }}>
+            {freeMoneyClasses.map((course) => (
+              <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>
+                <div className="card-image-container">
+                  <OptimizedImage src={course.image} alt={course.title} className="instructor-image" loading="lazy" placeholder="true" />
+                  <div className="free-badge-overlay" style={{
+                    background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                    fontWeight: '900'
+                  }}>FREE</div>
+                  <div className="card-overlay">
+                    <button className="watch-trailer-btn" onClick={(e) => { e.stopPropagation(); handleCourseClick(course); }}>
+                      <Play size={16} />
+                      강의 보기
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="masterclass-section">
+          <div className="section-header-mc">
+            <h2 className="section-title-mc">
               <span className="highlight-category">AI CITY BUILDER</span>
               <div style={{ fontSize: '0.8em', marginTop: '8px', fontWeight: 'normal' }}>나만의 AI 도시 세우기</div>
             </h2>
             <div className="section-nav">
-              <button className="nav-arrow" aria-label="Previous Premium courses" onClick={() => handleGridScroll(1, 'left')}><ChevronLeft size={24} /></button>
-              <button className="nav-arrow" aria-label="Next Premium courses" onClick={() => handleGridScroll(1, 'right')}><ChevronRight size={24} /></button>
+              <button className="nav-arrow" aria-label="Previous Premium courses" onClick={() => handleGridScroll(2, 'left')}><ChevronLeft size={24} /></button>
+              <button className="nav-arrow" aria-label="Next Premium courses" onClick={() => handleGridScroll(2, 'right')}><ChevronRight size={24} /></button>
             </div>
           </div>
-          <div className="masterclass-grid" ref={(el) => { gridRefs.current[1] = el; }}>
+          <div className="masterclass-grid" ref={(el) => { gridRefs.current[2] = el; }}>
             {premiumClasses.map(renderPremiumCard)}
           </div>
         </section>
