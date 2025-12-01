@@ -479,7 +479,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ fontSize: '1.5rem' }}>✅</span>
-                    <span>구매 후 2년간 이용 가능</span>
+                    <span>구매 후 1년간 이용 가능</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ fontSize: '1.5rem' }}>✅</span>
@@ -533,7 +533,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   margin: '0',
                   fontWeight: '600'
                 }}>
-                  💳 안전한 결제 · 구매 후 2년간 이용 가능
+                  💳 안전한 결제 · 구매 후 1년간 이용 가능
                 </p>
               </div>
             </div>
@@ -655,7 +655,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   지속 성장
                 </h3>
                 <p style={{ fontSize: '0.95rem', color: '#64748b', lineHeight: '1.6', margin: '0' }}>
-                  구매 후 2년간<br/>무제한 학습
+                  구매 후 1년간<br/>무제한 학습
                 </p>
               </div>
             </div>
@@ -1387,7 +1387,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   margin: '0',
                   fontWeight: '600'
                 }}>
-                  💳 안전한 결제 · 구매 후 2년간 이용 가능
+                  💳 안전한 결제 · 구매 후 1년간 이용 가능
                 </p>
               </div>
             </div>

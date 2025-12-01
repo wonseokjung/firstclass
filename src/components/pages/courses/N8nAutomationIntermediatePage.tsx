@@ -416,7 +416,7 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
                 <p style={{ marginBottom: '0' }}>
                   <strong style={{ color: '#ef4444' }}>4. 수익화 조건:</strong><br/>
                   - 구독자 1,000명 + 시청시간 4,000시간 필요<br/>
-                  - 36개 채널 모두 달성하려면 최소 1~2년 필요<br/>
+                  - 36개 채널 모두 달성하려면 최소 1년 이상 필요<br/>
                   - 저품질 자동 콘텐츠로는 승인 거의 불가능 ❌
                 </p>
               </div>
@@ -449,7 +449,7 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
                   <strong>• 예상 수익:</strong><br/>
                   &nbsp;&nbsp;- 6개월: 월 10~30만원<br/>
                   &nbsp;&nbsp;- 1년: 월 50~100만원<br/>
-                  &nbsp;&nbsp;- 2년: 월 100~300만원
+                  &nbsp;&nbsp;- 1년: 월 100~300만원
                 </p>
                 <p style={{
                   background: '#d1fae5',

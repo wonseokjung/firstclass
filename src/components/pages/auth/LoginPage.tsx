@@ -290,7 +290,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
             <h3>AI City Builders에서 얻을 수 있는 것</h3>
             <ul>
               <li>🚀 AI 전문가 수준의 실전 강의</li>
-              <li>💎 구매 후 2년간 이용 가능한 프리미엄 콘텐츠</li>
+              <li>💎 구매 후 1년간 이용 가능한 프리미엄 콘텐츠</li>
               <li>🏆 수료증 및 포트폴리오 지원</li>
               <li>🌟 AI 업계 네트워킹 기회</li>
             </ul>
