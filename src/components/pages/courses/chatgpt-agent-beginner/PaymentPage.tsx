@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, CreditCard, CheckCircle } from 'lucide-react';
 import NavigationBar from '../../../common/NavigationBar';
 import PaymentComponent from '../../payment/PaymentComponent';
@@ -10,7 +10,6 @@ interface PaymentPageProps {
 
 const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [userInfo, setUserInfo] = useState<any>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
