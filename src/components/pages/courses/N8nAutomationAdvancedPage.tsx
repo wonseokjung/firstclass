@@ -127,7 +127,6 @@ const N8nAutomationAdvancedPage: React.FC<N8nAutomationAdvancedPageProps> = ({ o
 
         if (storedUserInfo) {
           const parsedUserInfo = JSON.parse(storedUserInfo);
-          setIsLoggedIn(true);
 
           const testAccounts = ['test10@gmail.com'];
           const isTestAccount = testAccounts.includes(parsedUserInfo.email);
@@ -148,12 +147,9 @@ const N8nAutomationAdvancedPage: React.FC<N8nAutomationAdvancedPageProps> = ({ o
           } catch (azureError) {
             console.error('❌ Azure 테이블 조회 실패:', azureError);
           }
-        } else {
-          setIsLoggedIn(false);
         }
       } catch (error) {
         console.error('❌ 인증 상태 확인 실패:', error);
-        setIsLoggedIn(false);
       }
     };
 
