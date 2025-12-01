@@ -120,6 +120,8 @@ export interface User {
   // 비밀번호 재설정 필드 추가
   passwordResetToken?: string; // 재설정 토큰 (6자리 숫자)
   passwordResetTokenExpiry?: string; // 토큰 만료 시간
+  // AI City Map 필드 추가
+  cityMapData?: string; // AI City Map 건물주 정보 JSON 문자열
 }
 
 // 기존 분리된 테이블 인터페이스들은 Users 테이블에 통합되어 더 이상 사용하지 않음
@@ -2371,6 +2373,79 @@ export class AzureTableService {
     } catch (error: any) {
       console.error('❌ 포인트 조회 실패:', error.message);
       return 0;
+    }
+  }
+
+  /**
+   * 사용자 특정 필드 업데이트
+   * @param email 사용자 이메일
+   * @param fieldName 필드 이름
+   * @param value 필드 값
+   */
+  static async updateUserField(email: string, fieldName: string, value: any): Promise<boolean> {
+    try {
+      console.log(`🔄 사용자 필드 업데이트: ${email} - ${fieldName}`);
+
+      const user = await this.getUserByEmail(email);
+      if (!user) {
+        console.error('❌ 사용자를 찾을 수 없음:', email);
+        return false;
+      }
+
+      const updatedUser = {
+        PartitionKey: 'users',
+        RowKey: email,
+        email: user.email,
+        name: user.name,
+        phone: user.phone || '',
+        passwordHash: user.passwordHash,
+        emailVerified: user.emailVerified,
+        marketingAgreed: user.marketingAgreed,
+        createdAt: user.createdAt,
+        updatedAt: new Date().toISOString(),
+        lastLoginAt: user.lastLoginAt || '',
+        enrolledCourses: user.enrolledCourses || '',
+        referralCode: user.referralCode || '',
+        referredBy: user.referredBy || '',
+        totalEnrolledCourses: user.totalEnrolledCourses || 0,
+        completedCourses: user.completedCourses || 0,
+        totalLearningTimeMinutes: user.totalLearningTimeMinutes || 0,
+        totalRewards: user.totalRewards || 0,
+        pendingRewards: user.pendingRewards || 0,
+        rewardHistory: user.rewardHistory || '[]',
+        referralCount: user.referralCount || 0,
+        referralStats: user.referralStats || '{"totalReferrals":0,"activePurchasers":0,"totalRewardEarned":0,"thisMonthRewards":0,"topReferralMonth":""}',
+        passwordResetToken: user.passwordResetToken || '',
+        passwordResetTokenExpiry: user.passwordResetTokenExpiry || '',
+        cityMapData: user.cityMapData || '',
+        [fieldName]: value
+      };
+
+      // SAS URL에서 기본 URL과 SAS 토큰 분리
+      const baseUrl = AZURE_SAS_URLS.users.split('?')[0];
+      const sasToken = '?' + AZURE_SAS_URLS.users.split('?')[1];
+      const url = `${baseUrl}(PartitionKey='users',RowKey='${encodeURIComponent(email)}')${sasToken}`;
+
+      const response = await this.retryRequest(url, {
+        method: 'MERGE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json;odata=nometadata',
+          'If-Match': '*'
+        },
+        body: JSON.stringify(updatedUser)
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      }
+
+      console.log(`✅ ${fieldName} 업데이트 성공`);
+      return true;
+    } catch (error: any) {
+      console.error(`❌ ${fieldName} 업데이트 실패:`, error.message);
+      return false;
     }
   }
 }

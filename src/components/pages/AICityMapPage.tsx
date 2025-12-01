@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import NavigationBar from '../common/NavigationBar';
-import { Plus, Youtube, Video, Zap } from 'lucide-react';
+import { Plus, Youtube } from 'lucide-react';
+import AzureTableService from '../../services/azureTableService';
 
 interface AICityMapPageProps {
   onBack: () => void;
@@ -31,9 +32,7 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
   const [formData, setFormData] = useState({
     name: '',
     youtubeChannelName: '',
-    youtubeChannelUrl: '',
-    longFormViews: '',
-    shortsViews: ''
+    youtubeChannelUrl: ''
   });
 
   useEffect(() => {
@@ -50,28 +49,86 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
   }, []);
 
   const loadBuilders = async () => {
-    // TODO: Azure Table Storage에서 건물주 목록 로드
-    // 임시 샘플 데이터
-    const sampleBuilders: CityBuilder[] = [
-      {
-        id: '1',
-        email: 'sample1@example.com',
-        name: '김철수',
-        youtubeChannelName: '철수의 AI 도시',
-        youtubeChannelUrl: 'https://youtube.com/@sample1',
-        stats: {
-          longFormViews: 15420,
-          shortsViews: 8350,
-          lastUpdated: new Date().toISOString()
-        }
-      }
-    ];
-    setBuilders(sampleBuilders);
+    try {
+      console.log('🔄 건물주 데이터 로드 시작...');
+      
+      // Azure Table Storage에서 모든 사용자 조회
+      const allUsers = await AzureTableService.getAllUsers();
+      console.log('📋 전체 사용자 수:', allUsers.length);
+      
+      // cityMapData가 있는 사용자 확인
+      const usersWithCityData = allUsers.filter((user: any) => user.cityMapData);
+      console.log('🏗️ cityMapData가 있는 사용자 수:', usersWithCityData.length);
+      
+      // cityMapData가 있는 사용자들만 필터링
+      const cityBuilders: CityBuilder[] = usersWithCityData
+        .map((user: any) => {
+          try {
+            console.log('🔍 파싱 중:', user.email, '- cityMapData:', user.cityMapData);
+            
+            const cityData = typeof user.cityMapData === 'string' 
+              ? JSON.parse(user.cityMapData) 
+              : user.cityMapData;
+            
+            const builder: CityBuilder = {
+              id: user.rowKey,
+              email: user.email,
+              name: cityData.name || user.name,
+              youtubeChannelName: cityData.youtubeChannelName || '',
+              youtubeChannelUrl: cityData.youtubeChannelUrl || '',
+              profileImage: cityData.profileImage,
+              stats: {
+                longFormViews: cityData.longFormViews || 0,
+                shortsViews: cityData.shortsViews || 0,
+                lastUpdated: cityData.lastUpdated || new Date().toISOString()
+              }
+            };
+            
+            console.log('✅ 건물주 파싱 성공:', builder.name, '-', builder.youtubeChannelName);
+            return builder;
+          } catch (e) {
+            console.error('❌ cityMapData 파싱 오류:', user.email, e);
+            return null;
+          }
+        })
+        .filter((builder: CityBuilder | null): builder is CityBuilder => builder !== null);
+      
+      console.log('✅ AI City 건물주 로드 완료:', cityBuilders.length, '명');
+      console.log('👥 건물주 목록:', cityBuilders.map(b => b.name).join(', '));
+      
+      setBuilders(cityBuilders);
+    } catch (error) {
+      console.error('❌ 건물주 데이터 로드 실패:', error);
+    }
   };
 
   const checkUserRegistration = async (email: string) => {
-    // TODO: 이미 등록했는지 확인
-    setHasRegistered(false);
+    try {
+      const user = await AzureTableService.getUserByEmail(email);
+      if (user && user.cityMapData) {
+        setHasRegistered(true);
+        
+        // 기존 데이터로 폼 채우기
+        try {
+          const cityData = typeof user.cityMapData === 'string' 
+            ? JSON.parse(user.cityMapData) 
+            : user.cityMapData;
+          
+          setFormData({
+            name: cityData.name || user.name || '',
+            youtubeChannelName: cityData.youtubeChannelName || '',
+            youtubeChannelUrl: cityData.youtubeChannelUrl || ''
+          });
+        } catch (e) {
+          console.error('기존 데이터 파싱 오류:', e);
+        }
+      } else {
+        setHasRegistered(false);
+      }
+    } catch (error) {
+      console.error('❌ 등록 상태 확인 실패:', error);
+      setHasRegistered(false);
+    }
   };
 
   const handleRegister = async () => {
@@ -80,24 +137,46 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
       return;
     }
 
-    // TODO: Azure Table Storage에 저장
-    const newBuilder: CityBuilder = {
-      id: Date.now().toString(),
-      email: userEmail,
-      name: formData.name,
-      youtubeChannelName: formData.youtubeChannelName,
-      youtubeChannelUrl: formData.youtubeChannelUrl,
-      stats: {
-        longFormViews: parseInt(formData.longFormViews) || 0,
-        shortsViews: parseInt(formData.shortsViews) || 0,
+    try {
+      // Azure Table Storage에 저장
+      const cityMapData = {
+        name: formData.name,
+        youtubeChannelName: formData.youtubeChannelName,
+        youtubeChannelUrl: formData.youtubeChannelUrl,
+        longFormViews: 0,
+        shortsViews: 0,
         lastUpdated: new Date().toISOString()
-      }
-    };
+      };
 
-    setBuilders([...builders, newBuilder]);
-    setHasRegistered(true);
-    setShowRegisterForm(false);
-    alert('🎉 AI 도시 건물주로 등록되었습니다!');
+      // 사용자 정보 업데이트
+      const user = await AzureTableService.getUserByEmail(userEmail);
+      if (!user) {
+        alert('사용자 정보를 찾을 수 없습니다.');
+        return;
+      }
+
+      // cityMapData 컬럼에 저장
+      await AzureTableService.updateUserField(
+        userEmail,
+        'cityMapData',
+        JSON.stringify(cityMapData)
+      );
+
+      console.log('✅ AI City 건물주 등록 완료');
+
+      // 등록 상태 업데이트
+      setHasRegistered(true);
+      setShowRegisterForm(false);
+      
+      alert('🎉 AI 도시 건물주로 등록되었습니다!');
+      
+      // Azure 반영 대기 후 목록 새로고침 (1초 대기)
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      await loadBuilders();
+    } catch (error) {
+      console.error('❌ 건물주 등록 실패:', error);
+      alert('등록 중 오류가 발생했습니다. 다시 시도해주세요.');
+    }
   };
 
   return (
@@ -237,7 +316,8 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
             AI로 콘텐츠를 만들고, 함께 성장하는 크리에이터 커뮤니티
           </p>
 
-          {/* 통계 배지들 */}
+          {/* 통계 배지들 - 숨김 */}
+          {false && (
           <div style={{
             display: 'flex',
             justifyContent: 'center',
@@ -259,21 +339,8 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
                 {builders.length}
               </div>
             </div>
-            <div style={{
-              background: 'rgba(255, 255, 255, 0.15)',
-              backdropFilter: 'blur(10px)',
-              padding: '12px 24px',
-              borderRadius: '15px',
-              border: '1px solid rgba(255, 255, 255, 0.2)'
-            }}>
-              <span style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.9rem', fontWeight: '600' }}>
-                📊 총 조회수
-              </span>
-              <div style={{ color: 'white', fontSize: '1.5rem', fontWeight: '800', marginTop: '5px' }}>
-                {builders.reduce((sum, b) => sum + b.stats.longFormViews + b.stats.shortsViews, 0).toLocaleString()}
-              </div>
-            </div>
           </div>
+          )}
 
           {/* 로그인 안내 or 등록 버튼 */}
           {!isLoggedIn ? (
@@ -459,45 +526,6 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
                 />
               </div>
 
-              <div style={{ marginBottom: '20px' }}>
-                <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#1f2937' }}>
-                  📊 오늘의 롱폼 조회수
-                </label>
-                <input
-                  type="number"
-                  value={formData.longFormViews}
-                  onChange={(e) => setFormData({ ...formData, longFormViews: e.target.value })}
-                  placeholder="0"
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    borderRadius: '10px',
-                    border: '2px solid #e2e8f0',
-                    fontSize: '1rem',
-                    boxSizing: 'border-box'
-                  }}
-                />
-              </div>
-
-              <div style={{ marginBottom: '30px' }}>
-                <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#1f2937' }}>
-                  ⚡ 오늘의 숏츠 조회수
-                </label>
-                <input
-                  type="number"
-                  value={formData.shortsViews}
-                  onChange={(e) => setFormData({ ...formData, shortsViews: e.target.value })}
-                  placeholder="0"
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    borderRadius: '10px',
-                    border: '2px solid #e2e8f0',
-                    fontSize: '1rem',
-                    boxSizing: 'border-box'
-                  }}
-                />
-              </div>
 
               <div style={{ display: 'flex', gap: '10px' }}>
                 <button
@@ -539,6 +567,8 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
         )}
 
         {/* 건물주 카드 그리드 */}
+        {/* 건물주 카드들 - 현재 숨김 */}
+        {false && (
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
@@ -661,145 +691,13 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
                   {builder.youtubeChannelName}
                 </a>
               </div>
-
-              {/* 조회수 통계 */}
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '15px'
-              }}>
-                <div style={{
-                  background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-                  padding: '20px',
-                  borderRadius: '15px',
-                  textAlign: 'center',
-                  boxShadow: '0 8px 25px rgba(14, 165, 233, 0.3)',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}>
-                  <div style={{
-                    position: 'absolute',
-                    top: '-10px',
-                    right: '-10px',
-                    width: '80px',
-                    height: '80px',
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    borderRadius: '50%'
-                  }} />
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '6px',
-                    marginBottom: '10px',
-                    position: 'relative',
-                    zIndex: 1
-                  }}>
-                    <Video size={20} color="white" />
-                    <span style={{
-                      fontSize: '0.9rem',
-                      fontWeight: '700',
-                      color: 'white'
-                    }}>
-                      롱폼
-                    </span>
-                  </div>
-                  <div style={{
-                    fontSize: '1.8rem',
-                    fontWeight: '900',
-                    color: 'white',
-                    textShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
-                    position: 'relative',
-                    zIndex: 1
-                  }}>
-                    {builder.stats.longFormViews.toLocaleString()}
-                  </div>
-                  <div style={{
-                    fontSize: '0.75rem',
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    marginTop: '5px',
-                    fontWeight: '600'
-                  }}>
-                    오늘의 조회수
-                  </div>
-                </div>
-
-                <div style={{
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                  padding: '20px',
-                  borderRadius: '15px',
-                  textAlign: 'center',
-                  boxShadow: '0 8px 25px rgba(251, 191, 36, 0.3)',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}>
-                  <div style={{
-                    position: 'absolute',
-                    top: '-10px',
-                    right: '-10px',
-                    width: '80px',
-                    height: '80px',
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    borderRadius: '50%'
-                  }} />
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '6px',
-                    marginBottom: '10px',
-                    position: 'relative',
-                    zIndex: 1
-                  }}>
-                    <Zap size={20} color="white" />
-                    <span style={{
-                      fontSize: '0.9rem',
-                      fontWeight: '700',
-                      color: 'white'
-                    }}>
-                      숏츠
-                    </span>
-                  </div>
-                  <div style={{
-                    fontSize: '1.8rem',
-                    fontWeight: '900',
-                    color: 'white',
-                    textShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
-                    position: 'relative',
-                    zIndex: 1
-                  }}>
-                    {builder.stats.shortsViews.toLocaleString()}
-                  </div>
-                  <div style={{
-                    fontSize: '0.75rem',
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    marginTop: '5px',
-                    fontWeight: '600'
-                  }}>
-                    오늘의 조회수
-                  </div>
-                </div>
-              </div>
-
-              {/* 업데이트 시간 */}
-              <div style={{
-                marginTop: '20px',
-                padding: '10px',
-                background: 'rgba(100, 116, 139, 0.1)',
-                borderRadius: '10px',
-                fontSize: '0.85rem',
-                color: '#64748b',
-                textAlign: 'center',
-                fontWeight: '600'
-              }}>
-                📅 {new Date(builder.stats.lastUpdated).toLocaleDateString('ko-KR')} 업데이트
-              </div>
             </div>
           ))}
         </div>
+        )}
 
-        {/* 빈 상태 */}
-        {builders.length === 0 && (
+        {/* 빈 상태 - 숨김 */}
+        {false && builders.length === 0 && (
           <div style={{
             textAlign: 'center',
             padding: '60px 20px',

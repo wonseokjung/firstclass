@@ -204,7 +204,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
             </div>
 
             <a 
-              href="https://opal.google/?mode=canvas"
+              href="https://opal.google/_app/?flow=drive:/1WnRyqoQFV94yV83TyqG98fdQzDj8UsZ0&shared&mode=app"
               target="_blank"
               rel="noopener noreferrer"
               style="

@@ -280,8 +280,17 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
   }, []);
 
   const handleEarlyBirdPayment = async () => {
-    console.log('🔍 수강 신청 버튼 클릭 - 준비중 상태');
-    alert('🚧 준비중입니다!\n곧 만나볼 수 있습니다. 조금만 기다려주세요!');
+    console.log('🔍 수강 신청 버튼 클릭');
+    
+    // 로그인 확인
+    if (!userInfo) {
+      alert('로그인이 필요합니다.');
+      window.location.href = '/login';
+      return;
+    }
+    
+    // 결제 모달 열기
+    setShowPaymentModal(true);
   };
 
   // const handleLoginRequired = () => {

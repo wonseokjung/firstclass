@@ -2658,6 +2658,66 @@ body {
     display: none !important;
   }
 
+  /* 인공지능 수익화 무료 강의클래스 섹션 모바일 최적화 (두 번째 섹션) */
+  .masterclass-section:nth-child(2) .masterclass-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 0 15px !important;
+    margin: 0 -15px !important;
+    gap: 12px !important;
+    scroll-snap-type: x proximity !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-right: 30px !important;
+  }
+
+  .masterclass-section:nth-child(2) .masterclass-card {
+    flex: 0 0 calc(49vw) !important;
+    width: calc(49vw) !important;
+    min-width: calc(49vw) !important;
+    max-width: calc(49vw) !important;
+    scroll-snap-align: start !important;
+  }
+
+  .masterclass-section:nth-child(2) .section-nav {
+    display: none !important;
+  }
+
+  .masterclass-section:nth-child(2) .masterclass-card:last-child {
+    margin-right: 0 !important;
+  }
+
+  /* AI CITY BUILDER 섹션 모바일 최적화 (세 번째 섹션) */
+  .masterclass-section:nth-child(3) .masterclass-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 0 15px !important;
+    margin: 0 -15px !important;
+    gap: 12px !important;
+    scroll-snap-type: x proximity !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-right: 30px !important;
+  }
+
+  .masterclass-section:nth-child(3) .masterclass-card {
+    flex: 0 0 calc(49vw) !important;
+    width: calc(49vw) !important;
+    min-width: calc(49vw) !important;
+    max-width: calc(49vw) !important;
+    scroll-snap-align: start !important;
+  }
+
+  .masterclass-section:nth-child(3) .section-nav {
+    display: none !important;
+  }
+
+  .masterclass-section:nth-child(3) .masterclass-card:last-child {
+    margin-right: 0 !important;
+  }
+
   /* 모든 섹션 여백 조정 - 카드 크기에 비례 */
   .masterclass-section {
     margin-bottom: 12px !important;

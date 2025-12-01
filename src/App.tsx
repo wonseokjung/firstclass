@@ -49,6 +49,8 @@ const Day9Page = React.lazy(() => import('./components/pages/courses/chatgpt-age
 const Day10Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day10Page'));
 const ChatGPTAgentBeginnerPaymentPage = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/PaymentPage'));
 const CostOptimizationExamplesPage = React.lazy(() => import('./components/pages/courses/CostOptimizationExamplesPage'));
+const N8nAutomationIntermediatePage = React.lazy(() => import('./components/pages/courses/N8nAutomationIntermediatePage'));
+const N8nAutomationAdvancedPage = React.lazy(() => import('./components/pages/courses/N8nAutomationAdvancedPage'));
 // const LessonDetailPage = React.lazy(() => import('./components/pages/courses/LessonDetailPage'));
 
 // 인증 페이지
@@ -399,6 +401,24 @@ const ChatGPTCoursePageWrapper = () => {
     );
   };
 
+  const N8nAutomationIntermediatePageWrapper = () => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <N8nAutomationIntermediatePage onBack={() => navigate('/')} />
+      </Suspense>
+    );
+  };
+
+  const N8nAutomationAdvancedPageWrapper = () => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <N8nAutomationAdvancedPage onBack={() => navigate('/')} />
+      </Suspense>
+    );
+  };
+
   // 기존 URL 리다이렉트 컴포넌트
   const RedirectToNewPlayerUrl = () => {
     const navigate = useNavigate();
@@ -583,6 +603,8 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/chatgpt-agent-beginner/day9" element={<Day9PageWrapper />} />
               <Route path="/chatgpt-agent-beginner/day10" element={<Day10PageWrapper />} />
               <Route path="/cost-optimization-examples" element={<CostOptimizationExamplesPageWrapper />} />
+              <Route path="/n8n-automation-intermediate" element={<N8nAutomationIntermediatePageWrapper />} />
+              <Route path="/n8n-automation-advanced" element={<N8nAutomationAdvancedPageWrapper />} />
               {/* 기존 URL 리다이렉트 */}
               <Route path="/chatgpt-agent-beginner-player" element={<RedirectToNewPlayerUrl />} />
               <Route path="/ai-building-course-player" element={<RedirectToNewAIBuildingPlayerUrl />} />
