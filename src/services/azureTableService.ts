@@ -98,6 +98,7 @@ export interface User {
   email: string;
   name: string;
   phone?: string; // 핸드폰 번호 추가
+  countryCode?: string; // 국가 코드 추가 (예: +82, +1, +86)
   passwordHash: string;
   emailVerified: boolean;
   marketingAgreed: boolean;
@@ -678,6 +679,7 @@ export class AzureTableService {
     email: string;
     name: string;
     phone?: string; // 핸드폰 번호 추가
+    countryCode?: string; // 국가 코드 추가
     password: string;
     marketingAgreed: boolean;
     referredBy?: string; // 추천인 코드
@@ -714,6 +716,7 @@ export class AzureTableService {
       email: userData.email,
       name: userData.name,
       phone: userData.phone || '', // 핸드폰 번호 추가
+      countryCode: userData.countryCode || '+82', // 국가 코드 (기본값: 한국)
       passwordHash,
       emailVerified: false,
       marketingAgreed: userData.marketingAgreed,

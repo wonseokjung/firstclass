@@ -121,7 +121,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
     ]
   };
 
-  const coursePrice = 95000;
+  const coursePrice = 95000; // 정상가
 
   useEffect(() => {
     const checkAuthStatus = async () => {

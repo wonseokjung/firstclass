@@ -15,17 +15,11 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
-  // URL 파라미터에서 얼리버드 여부 확인
-  const searchParams = new URLSearchParams(location.search);
-  const isEarlyBird = searchParams.get('earlybird') === 'true';
-
   const courseInfo = {
     id: '1002',
     title: 'Google Opal 유튜브 수익화 에이전트 기초',
     subtitle: '10일 완성, 수익화하는 인공지능 에이전트 만들기',
-    originalPrice: isEarlyBird ? 95000 : 150000,
-    earlyBirdPrice: isEarlyBird ? 45000 : 95000,
-    discount: isEarlyBird ? 50000 : 55000
+    price: 95000 // 정상가
   };
 
   useEffect(() => {
@@ -121,7 +115,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
         <PaymentComponent
           courseId={courseInfo.id}
           courseTitle={courseInfo.title}
-          price={courseInfo.earlyBirdPrice}
+          price={courseInfo.price}
           userInfo={userInfo}
           onSuccess={handlePaymentSuccess}
           onClose={handlePaymentClose}
@@ -229,53 +223,6 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             <div style={{
               display: 'flex',
               justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '15px'
-            }}>
-              <span style={{
-                fontSize: '1.1rem',
-                color: '#64748b',
-                fontWeight: '600'
-              }}>
-                정가
-              </span>
-              <span style={{
-                fontSize: '1.3rem',
-                color: '#94a3b8',
-                textDecoration: 'line-through',
-                fontWeight: '600'
-              }}>
-                ₩{courseInfo.originalPrice.toLocaleString()}
-              </span>
-            </div>
-
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '15px',
-              paddingBottom: '15px',
-              borderBottom: '1px dashed #bae6fd'
-            }}>
-              <span style={{
-                fontSize: '1.1rem',
-                color: '#64748b',
-                fontWeight: '600'
-              }}>
-                얼리버드 할인 ({courseInfo.discount}%)
-              </span>
-              <span style={{
-                fontSize: '1.3rem',
-                color: '#ef4444',
-                fontWeight: '700'
-              }}>
-                -₩{(courseInfo.originalPrice - courseInfo.earlyBirdPrice).toLocaleString()}
-              </span>
-            </div>
-
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
               alignItems: 'center'
             }}>
               <span style={{
@@ -283,14 +230,14 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                 color: '#1f2937',
                 fontWeight: '700'
               }}>
-                최종 결제 금액
+                결제 금액
               </span>
               <span style={{
                 fontSize: 'clamp(1.8rem, 4vw, 2.2rem)',
                 color: '#0ea5e9',
                 fontWeight: '900'
               }}>
-                ₩{courseInfo.earlyBirdPrice.toLocaleString()}
+                ₩{courseInfo.price.toLocaleString()}
               </span>
             </div>
 
@@ -404,7 +351,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             }}
           >
             <CreditCard size={24} />
-            결제하기 (₩{courseInfo.earlyBirdPrice.toLocaleString()})
+            결제하기 (₩{courseInfo.price.toLocaleString()})
           </button>
 
           <p style={{

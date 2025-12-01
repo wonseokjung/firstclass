@@ -9,6 +9,77 @@ interface SignUpPageProps {
   onBack: () => void;
 }
 
+// 전 세계 국가 코드 목록 (각 국가의 현지 언어로 표시)
+const COUNTRY_CODES = [
+  // 아시아/오세아니아
+  { code: '+82', country: '대한민국 (Korea)', flag: '🇰🇷' },
+  { code: '+81', country: '日本 (Japan)', flag: '🇯🇵' },
+  { code: '+86', country: '中国 (China)', flag: '🇨🇳' },
+  { code: '+852', country: '香港 (Hong Kong)', flag: '🇭🇰' },
+  { code: '+853', country: '澳門 (Macau)', flag: '🇲🇴' },
+  { code: '+886', country: '台灣 (Taiwan)', flag: '🇹🇼' },
+  { code: '+65', country: 'Singapore', flag: '🇸🇬' },
+  { code: '+66', country: 'ไทย (Thailand)', flag: '🇹🇭' },
+  { code: '+84', country: 'Việt Nam', flag: '🇻🇳' },
+  { code: '+63', country: 'Philippines', flag: '🇵🇭' },
+  { code: '+60', country: 'Malaysia', flag: '🇲🇾' },
+  { code: '+62', country: 'Indonesia', flag: '🇮🇩' },
+  { code: '+95', country: 'Myanmar', flag: '🇲🇲' },
+  { code: '+855', country: 'កម្ពុជា (Cambodia)', flag: '🇰🇭' },
+  { code: '+856', country: 'ລາວ (Laos)', flag: '🇱🇦' },
+  { code: '+673', country: 'Brunei', flag: '🇧🇳' },
+  { code: '+91', country: 'भारत (India)', flag: '🇮🇳' },
+  { code: '+92', country: 'Pakistan', flag: '🇵🇰' },
+  { code: '+880', country: 'Bangladesh', flag: '🇧🇩' },
+  { code: '+94', country: 'Sri Lanka', flag: '🇱🇰' },
+  { code: '+977', country: 'नेपाल (Nepal)', flag: '🇳🇵' },
+  { code: '+61', country: 'Australia', flag: '🇦🇺' },
+  { code: '+64', country: 'New Zealand', flag: '🇳🇿' },
+  
+  // 북미/남미
+  { code: '+1', country: 'United States/Canada', flag: '🇺🇸' },
+  { code: '+52', country: 'México', flag: '🇲🇽' },
+  { code: '+55', country: 'Brasil', flag: '🇧🇷' },
+  { code: '+54', country: 'Argentina', flag: '🇦🇷' },
+  { code: '+56', country: 'Chile', flag: '🇨🇱' },
+  { code: '+57', country: 'Colombia', flag: '🇨🇴' },
+  { code: '+51', country: 'Perú', flag: '🇵🇪' },
+  { code: '+58', country: 'Venezuela', flag: '🇻🇪' },
+  
+  // 유럽
+  { code: '+44', country: 'United Kingdom', flag: '🇬🇧' },
+  { code: '+33', country: 'France', flag: '🇫🇷' },
+  { code: '+49', country: 'Deutschland', flag: '🇩🇪' },
+  { code: '+39', country: 'Italia', flag: '🇮🇹' },
+  { code: '+34', country: 'España', flag: '🇪🇸' },
+  { code: '+31', country: 'Nederland', flag: '🇳🇱' },
+  { code: '+32', country: 'België/Belgique', flag: '🇧🇪' },
+  { code: '+41', country: 'Schweiz/Suisse', flag: '🇨🇭' },
+  { code: '+43', country: 'Österreich', flag: '🇦🇹' },
+  { code: '+46', country: 'Sverige', flag: '🇸🇪' },
+  { code: '+47', country: 'Norge', flag: '🇳🇴' },
+  { code: '+45', country: 'Danmark', flag: '🇩🇰' },
+  { code: '+358', country: 'Suomi', flag: '🇫🇮' },
+  { code: '+48', country: 'Polska', flag: '🇵🇱' },
+  { code: '+420', country: 'Česko', flag: '🇨🇿' },
+  { code: '+36', country: 'Magyarország', flag: '🇭🇺' },
+  { code: '+351', country: 'Portugal', flag: '🇵🇹' },
+  { code: '+30', country: 'Ελλάδα (Greece)', flag: '🇬🇷' },
+  { code: '+353', country: 'Ireland', flag: '🇮🇪' },
+  { code: '+7', country: 'Россия (Russia)', flag: '🇷🇺' },
+  { code: '+380', country: 'Україна (Ukraine)', flag: '🇺🇦' },
+  { code: '+90', country: 'Türkiye', flag: '🇹🇷' },
+  
+  // 중동/아프리카
+  { code: '+971', country: 'الإمارات (UAE)', flag: '🇦🇪' },
+  { code: '+966', country: 'السعودية (Saudi Arabia)', flag: '🇸🇦' },
+  { code: '+972', country: 'ישראל (Israel)', flag: '🇮🇱' },
+  { code: '+20', country: 'مصر (Egypt)', flag: '🇪🇬' },
+  { code: '+27', country: 'South Africa', flag: '🇿🇦' },
+  { code: '+234', country: 'Nigeria', flag: '🇳🇬' },
+  { code: '+254', country: 'Kenya', flag: '🇰🇪' },
+];
+
 const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
   const { getStoredReferralCode, clearReferralCode } = useReferralTracking();
@@ -18,6 +89,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
     email: '',
     password: '',
     confirmPassword: '',
+    countryCode: '+82', // 기본값: 한국
     phone: ''
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -85,7 +157,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -159,6 +231,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
         email: formData.email,
         name: formData.name,
         password: formData.password,
+        countryCode: formData.countryCode, // 국가 코드 저장
         phone: formData.phone.replace(/\s+/g, ''), // 공백 제거
         marketingAgreed: agreements.marketing,
         referredBy: storedReferralCode || undefined
@@ -300,22 +373,77 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
                 )}
               </div>
 
-              {/* 전화번호 입력 필드 (국내외 모두 가능) */}
+              {/* 전화번호 입력 필드 (국가코드 선택 + 번호 입력) */}
               <div className="form-group">
                 <label htmlFor="phone" className="form-label">
                   <Phone size={18} />
                   전화번호
                 </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  className={`form-input ${errors.phone ? 'error' : ''}`}
-                  placeholder="국내: 010-1234-5678 / 해외: +1-234-567-8900"
-                  disabled={isLoading}
-                />
+                <div style={{ 
+                  display: 'flex', 
+                  gap: '10px',
+                  alignItems: 'flex-start'
+                }}>
+                  {/* 국가코드 드롭다운 */}
+                  <select
+                    name="countryCode"
+                    value={formData.countryCode}
+                    onChange={handleInputChange}
+                    disabled={isLoading}
+                    style={{
+                      flex: '0 0 140px',
+                      padding: '12px 16px',
+                      fontSize: '1rem',
+                      border: '2px solid #e2e8f0',
+                      borderRadius: '12px',
+                      backgroundColor: 'white',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      outline: 'none'
+                    }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#0ea5e9';
+                      e.currentTarget.style.boxShadow = '0 0 0 3px rgba(14, 165, 233, 0.1)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#e2e8f0';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
+                    {COUNTRY_CODES.map(({ code, country, flag }) => (
+                      <option key={code} value={code}>
+                        {flag} {code} {country}
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* 전화번호 입력 */}
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className={`form-input ${errors.phone ? 'error' : ''}`}
+                    placeholder={
+                      formData.countryCode === '+82' 
+                        ? '010-1234-5678' 
+                        : '123-456-7890'
+                    }
+                    disabled={isLoading}
+                    style={{ flex: 1 }}
+                  />
+                </div>
+                <div style={{
+                  fontSize: '0.85rem',
+                  color: '#64748b',
+                  marginTop: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}>
+                  💡 국가 코드를 선택하고 전화번호를 입력하세요
+                </div>
                 {errors.phone && (
                   <div className="error-message">
                     <AlertCircle size={16} />

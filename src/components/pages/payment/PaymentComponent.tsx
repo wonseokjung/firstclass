@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
 import { getPaymentConfig, createPaymentRequest, validateApiKey } from '../../../config/payment';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
 interface PaymentComponentProps {
   courseId: string;
@@ -24,6 +25,13 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
 
   // 토스페이먼츠 설정 가져오기
   const paymentConfig = getPaymentConfig();
+
+  // 사용자 국가 확인 (한국: +82, 외국: 그 외)
+  const isKoreanUser = userInfo?.countryCode === '+82';
+  
+  // KRW를 USD로 환산 (환율: 1300원 = 1달러)
+  // 95,000원 → $73.08 USD
+  const priceInUSD = (price / 1300).toFixed(2);
 
   useEffect(() => {
     const initializeTossPayments = async () => {
@@ -277,50 +285,113 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
           <div className="course-info">
             <h4>{courseTitle}</h4>
             <div className="price-display">
-              <span className="price">₩{price.toLocaleString()}</span>
-              <span className="original-price">₩299,000</span>
+              <span className="price">
+                {isKoreanUser ? `₩${price.toLocaleString()}` : `$${priceInUSD}`}
+              </span>
+              <span className="original-price">
+                {isKoreanUser ? '₩299,000' : '$230'}
+              </span>
               <span className="discount">33% 할인</span>
             </div>
+            {!isKoreanUser && (
+              <div style={{
+                fontSize: '0.85rem',
+                color: '#64748b',
+                marginTop: '8px'
+              }}>
+                💱 환율: ₩{price.toLocaleString()} ≈ ${priceInUSD} (1 USD = 1,300 KRW)
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="payment-methods">
-          <h5>결제 방법 선택</h5>
-          
-          <button 
-            className="payment-btn primary"
-            onClick={handlePayment}
-            disabled={isLoading || !tossPayments}
-          >
-            {isLoading ? '결제 진행 중...' : '💳 신용카드/체크카드'}
-          </button>
+        {/* 한국 사용자: Toss Payments */}
+        {isKoreanUser ? (
+          <div className="payment-methods">
+            <h5>결제 방법 선택</h5>
+            
+            <button 
+              className="payment-btn primary"
+              onClick={handlePayment}
+              disabled={isLoading || !tossPayments}
+            >
+              {isLoading ? '결제 진행 중...' : '💳 신용카드/체크카드'}
+            </button>
 
-          <button 
-            className="payment-btn"
-            onClick={() => handleOtherPayment('토스페이')}
-            disabled={isLoading || !tossPayments}
-          >
-            📱 토스페이
-          </button>
+            <button 
+              className="payment-btn"
+              onClick={() => handleOtherPayment('토스페이')}
+              disabled={isLoading || !tossPayments}
+            >
+              📱 토스페이
+            </button>
 
-          <button 
-            className="payment-btn"
-            onClick={() => handleOtherPayment('계좌이체')}
-            disabled={isLoading || !tossPayments}
-          >
-            🏦 계좌이체
-          </button>
+            <button 
+              className="payment-btn"
+              onClick={() => handleOtherPayment('계좌이체')}
+              disabled={isLoading || !tossPayments}
+            >
+              🏦 계좌이체
+            </button>
 
-          <button 
-            className="payment-btn"
-            onClick={() => handleOtherPayment('가상계좌')}
-            disabled={isLoading || !tossPayments}
-          >
-            🏧 가상계좌
-          </button>
-        </div>
+            <button 
+              className="payment-btn"
+              onClick={() => handleOtherPayment('가상계좌')}
+              disabled={isLoading || !tossPayments}
+            >
+              🏧 가상계좌
+            </button>
+          </div>
+        ) : (
+          /* 외국 사용자: PayPal */
+          <div className="payment-methods">
+            <h5>Payment Method</h5>
+            <div style={{ padding: '20px' }}>
+              <PayPalScriptProvider options={{
+                clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID || "YOUR_PAYPAL_CLIENT_ID",
+                currency: "USD"
+              }}>
+                <PayPalButtons
+                  style={{ layout: "vertical" }}
+                  createOrder={(data, actions) => {
+                    return actions.order.create({
+                      intent: "CAPTURE",
+                      purchase_units: [{
+                        amount: {
+                          value: priceInUSD,
+                          currency_code: "USD"
+                        },
+                        description: courseTitle
+                      }]
+                    });
+                  }}
+                  onApprove={async (data, actions) => {
+                    if (actions.order) {
+                      const details = await actions.order.capture();
+                      console.log('✅ PayPal 결제 성공:', details);
+                      
+                      // 결제 성공 처리
+                      onSuccess({
+                        orderId: details.id,
+                        paymentMethod: 'PayPal',
+                        amount: priceInUSD,
+                        currency: 'USD',
+                        courseId: courseId,
+                        userEmail: userInfo.email
+                      });
+                    }
+                  }}
+                  onError={(err) => {
+                    console.error('❌ PayPal 결제 실패:', err);
+                    alert('결제 중 오류가 발생했습니다. 다시 시도해주세요.');
+                  }}
+                />
+              </PayPalScriptProvider>
+            </div>
+          </div>
+        )}
 
-        {paymentConfig.environment === 'test' && (
+        {isKoreanUser && paymentConfig.environment === 'test' && (
           <div className="payment-notice" style={{
             background: '#fff3cd',
             border: '1px solid #ffc107',
@@ -346,19 +417,25 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
             margin: '15px 20px'
           }}>
             <p style={{ fontWeight: 'bold', color: '#0c5460', marginBottom: '10px' }}>
-              💳 실제 결제가 진행됩니다
+              💳 {isKoreanUser ? '실제 결제가 진행됩니다' : 'Real payment will be processed'}
             </p>
             <p style={{ fontSize: '0.9rem', color: '#0c5460' }}>
-              • 결제 완료 후 즉시 강의 수강이 가능합니다
+              • {isKoreanUser 
+                ? '결제 완료 후 즉시 강의 수강이 가능합니다' 
+                : 'You can start the course immediately after payment'}
             </p>
             <p style={{ fontSize: '0.9rem', color: '#0c5460' }}>
-              • 결제 관련 문의: jay@connexionai.kr
+              • {isKoreanUser ? '결제 관련 문의' : 'Payment inquiry'}: jay@connexionai.kr
             </p>
           </div>
         )}
 
         <div className="payment-footer">
-          <p>안전한 결제를 위해 토스페이먼츠를 사용합니다.</p>
+          <p>
+            {isKoreanUser 
+              ? '안전한 결제를 위해 토스페이먼츠를 사용합니다.' 
+              : 'Secure payment powered by PayPal'}
+          </p>
         </div>
       </div>
     </div>

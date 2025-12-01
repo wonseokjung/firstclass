@@ -7,7 +7,6 @@ interface N8nAutomationIntermediatePageProps {
 }
 
 const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps> = ({ onBack }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isPaidUser, setIsPaidUser] = useState(false);
   const [isPasswordVerified, setIsPasswordVerified] = useState(false);
 

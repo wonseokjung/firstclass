@@ -126,7 +126,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
     ]
   };
 
-  const coursePrice = 45000;
+  const coursePrice = 95000; // 정상가
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -214,7 +214,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
     <div className="masterclass-container">
       <NavigationBar
         onBack={onBack}
-        breadcrumbText="Google Opal 유튜브 수익화 에이전트 (얼리버드)"
+        breadcrumbText="Google Opal 유튜브 수익화 에이전트"
       />
 
 
@@ -409,7 +409,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   border: '2px solid #fbbf24',
                   boxShadow: '0 4px 15px rgba(251, 191, 36, 0.4)'
                 }}>
-                  🐦 얼리버드 특가
+                  💰 특별가
                 </div>
               </div>
 
@@ -420,16 +420,6 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                 position: 'relative',
                 zIndex: 1
               }}>
-                <div style={{
-                  fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-                  color: '#e0f2fe',
-                  textDecoration: 'line-through',
-                  marginBottom: '10px',
-                  fontWeight: '600',
-                  opacity: 0.8
-                }}>
-                  정상가 ₩95,000
-                </div>
                 <div style={{
                   fontSize: 'clamp(3.5rem, 8vw, 5rem)',
                   fontWeight: '900',
@@ -450,7 +440,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   fontWeight: '700',
                   border: '1px solid rgba(254, 240, 138, 0.3)'
                 }}>
-                  🐦 얼리버드 50,000원 할인
+                  💎 정상가
                 </div>
               </div>
 
@@ -1310,16 +1300,6 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                 zIndex: 1
               }}>
                 <div style={{
-                  fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-                  color: '#e0f2fe',
-                  textDecoration: 'line-through',
-                  marginBottom: '10px',
-                  fontWeight: '600',
-                  opacity: 0.8
-                }}>
-                  정상가 ₩95,000
-                </div>
-                <div style={{
                   fontSize: 'clamp(3.5rem, 8vw, 5rem)',
                   fontWeight: '900',
                   color: 'white',
@@ -1339,7 +1319,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   fontWeight: '700',
                   border: '1px solid rgba(254, 240, 138, 0.3)'
                 }}>
-                  🐦 얼리버드 50,000원 할인
+                  💎 정상가
                 </div>
               </div>
 
