@@ -269,7 +269,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
         margin: 'auto'
       }}>
         <div className="payment-header">
-          <h3>수강신청</h3>
+          <h3>결제하기</h3>
           <button className="close-btn" onClick={onClose}>✕</button>
         </div>
         
