@@ -575,8 +575,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     e.currentTarget.style.transform = 'scale(1)';
                 }}
               >
-                  <span style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>🚀</span>
-                지금 바로 수강하기
+                  <span style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>💳</span>
+                결제하기
               </button>
                 <p style={{
                   fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
@@ -600,7 +600,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 lineHeight: '1.6',
                 margin: '0'
             }}>
-                💡 결제 후 즉시 수강 가능 · Day 9(11/28), Day 10(11/30) 오픈 예정
+                💡 결제 후 즉시 수강 가능
             </p>
             </div>
           </div>
