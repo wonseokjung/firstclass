@@ -70,15 +70,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
 
       if (success) {
         setIsDayCompleted(true);
-        
-        // 🎁 수료 보상 5,000 포인트 지급
-        try {
-          await AzureTableService.grantCompletionReward(userEmail, 'chatgpt-agent-beginner', 5000);
-          alert('🎉 10강 완료! 전체 과정을 수료하셨습니다!\n\n🎁 축하합니다! 수료 보상으로 5,000 포인트가 지급되었습니다!\n결제 시 사용하실 수 있습니다.');
-        } catch (rewardError) {
-          console.error('포인트 지급 오류:', rewardError);
-          alert('🎉 10강 완료! 전체 과정을 수료하셨습니다!');
-        }
+        alert('🎉 10강 완료! 전체 과정을 수료하셨습니다!\n\n축하합니다! 🎓');
       } else {
         alert('❌ 10강 완료 처리에 실패했습니다.');
       }

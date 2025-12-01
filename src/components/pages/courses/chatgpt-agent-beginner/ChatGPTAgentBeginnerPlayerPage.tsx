@@ -290,7 +290,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
               opacity: '0.95',
               lineHeight: '1.6'
             }}>
-              전체 과정 수료 시 5,000 포인트 보상! 지금 바로 학습을 시작하세요! 🚀
+              지금 바로 학습을 시작하세요! 🚀
             </p>
           </div>
 
