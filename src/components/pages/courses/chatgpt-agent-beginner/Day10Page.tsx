@@ -594,7 +594,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
             fontSize: '1.05rem'
           }}>
             {isDayCompleted
-              ? '축하합니다! ChatGPT 에이전트 초급 과정을 모두 완료하셨습니다!'
+              ? '축하합니다! ChatGPT 에이전트 기초 과정을 모두 완료하셨습니다!'
               : '강의를 모두 시청하셨다면 완료 버튼을 눌러주세요.'}
           </p>
         <button

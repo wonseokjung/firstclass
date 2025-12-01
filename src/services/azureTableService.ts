@@ -1738,7 +1738,7 @@ export class AzureTableService {
 
       // 해당 강의의 수강 상태 확인 (여러 courseId 허용)
       const enrollment = enrolledCourses.find(course => matchIds.includes(course.courseId));
-      const isEnrolled = enrollment && enrollment.status === 'active';
+      const isEnrolled = enrollment && (enrollment.status === 'active' || enrollment.status === 'completed');
 
       // 해당 강의의 결제 정보 확인 (여러 courseId 허용)
       const paymentInfo = payments.find(payment => matchIds.includes(payment.courseId));
