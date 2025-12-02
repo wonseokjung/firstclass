@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lightbulb, TrendingUp, Users, DollarSign, Clock, Sparkles, ArrowRight, Save } from 'lucide-react';
+import { TrendingUp, DollarSign, Clock, Sparkles, ArrowRight, Save } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
 
 interface Step1IdeaGeneratorPageProps {
