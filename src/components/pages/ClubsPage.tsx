@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Trophy, TrendingUp, Sparkles, Users, ArrowRight, CheckCircle } from 'lucide-react';
+import { Sparkles, ArrowRight, CheckCircle } from 'lucide-react';
 import NavigationBar from '../common/NavigationBar';
 
 interface ClubsPageProps {

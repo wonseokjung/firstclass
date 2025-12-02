@@ -609,15 +609,6 @@ const ChatGPTCoursePageWrapper = () => {
       </Suspense>
     );
   };
-
-  const Step1IdeaGeneratorPageWrapper = () => {
-    const navigate = useNavigate();
-    return (
-      <Suspense fallback={<LoadingSpinner />}>
-        <Step1IdeaGeneratorPage onBack={() => navigate('/ai-construction-site')} />
-      </Suspense>
-    );
-  };
   
   
   

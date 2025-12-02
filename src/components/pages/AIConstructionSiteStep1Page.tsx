@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lightbulb, Sparkles, TrendingUp, Users, DollarSign, Star, Loader } from 'lucide-react';
+import { Sparkles, TrendingUp, Users, DollarSign, Star, Loader } from 'lucide-react';
 import NavigationBar from '../common/NavigationBar';
 import { recommendYoutubeChannels } from '../../services/azureOpenAIService';
-import { recommendYoutubeChannelsFoundry } from '../../services/azureAIFoundryService';
 
 interface ChannelIdea {
   title: string;
