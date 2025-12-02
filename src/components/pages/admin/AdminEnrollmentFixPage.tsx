@@ -22,6 +22,33 @@ const AdminEnrollmentFixPage: React.FC = () => {
   const [allUsers, setAllUsers] = useState<any[]>([]);
   const [showUserTable, setShowUserTable] = useState(false);
   const [payments, setPayments] = useState<Payment[]>([
+    // 최신 카드 결제 - Step 1: AI 건물주 되기 기초 (2025-12-02 추가)
+    { orderId: 'order_1764680301776_a2nrca6ch', name: '김*현', maskedEmail: 'Jo**********@gmail.com', amount: 45000, date: '2025-12-02 22:02:51' },
+    { orderId: 'order_1764680516296_soku1kczu', name: '신*영', maskedEmail: 'si*****@hanmail.net', amount: 45000, date: '2025-12-02 22:02:28' },
+    { orderId: 'order_1764679858477_5dkbcg9wp', name: '송*현', maskedEmail: 'ji*********@gmail.com', amount: 45000, date: '2025-12-02 21:52:08' },
+    { orderId: 'order_1764679276847_1oqxfcitt', name: '이*석', maskedEmail: 'fl*****@naver.com', amount: 45000, date: '2025-12-02 21:42:05' },
+    { orderId: 'order_1764679218094_z4voss1db', name: '손*열', maskedEmail: 'ka******@gmail.com', amount: 45000, date: '2025-12-02 21:40:56' },
+    { orderId: 'order_1764678752056_gftnbqaf7', name: '한*옥', maskedEmail: 're**********@gmail.com', amount: 45000, date: '2025-12-02 21:33:14' },
+    { orderId: 'order_1764678462486_7171u829l', name: '최*순', maskedEmail: 'ga*****@naver.com', amount: 45000, date: '2025-12-02 21:29:18' },
+    { orderId: 'order_1764678388989_nrpkkiclz', name: '장*란', maskedEmail: 'my********@gmail.com', amount: 45000, date: '2025-12-02 21:27:17' },
+    { orderId: 'order_1764677749440_zfp5hpq0y', name: '이*복', maskedEmail: '10******@hanmail.net', amount: 45000, date: '2025-12-02 21:18:09' },
+    { orderId: 'order_1764677373074_z2p8vwjgk', name: '심*람', maskedEmail: 'so******@gmail.com', amount: 45000, date: '2025-12-02 21:13:16' },
+    { orderId: 'order_1764677209097_svgbddrjz', name: '장*희', maskedEmail: 'yh*******@gmail.com', amount: 45000, date: '2025-12-02 21:07:30' },
+    { orderId: 'order_1764676933068_xqimca1kc', name: '조*영', maskedEmail: 'cl*********@gmail.com', amount: 45000, date: '2025-12-02 21:02:32' },
+    { orderId: 'order_1764676792997_1u8mfao4k', name: '양*민', maskedEmail: 'ym****@naver.com', amount: 45000, date: '2025-12-02 21:01:33' },
+    { orderId: 'order_1764676370811_wpkkpgwpb', name: '이*윤', maskedEmail: 'se*********@gmail.com', amount: 45000, date: '2025-12-02 20:53:16' },
+    { orderId: 'order_1764676341926_5iczkz09j', name: '정*헌', maskedEmail: 'yu*****@naver.com', amount: 45000, date: '2025-12-02 20:52:59' },
+    { orderId: 'order_1764676120076_lxre2ilmu', name: '강*영', maskedEmail: 'te*******@gmail.com', amount: 45000, date: '2025-12-02 20:52:28' },
+    { orderId: 'order_1764676099103_li58fapps', name: '지*미', maskedEmail: 'ly*******@naver.com', amount: 45000, date: '2025-12-02 20:54:44' },
+    { orderId: 'order_1764675735278_o8ixm5bgi', name: '박*용', maskedEmail: 'ge*******@gmail.com', amount: 45000, date: '2025-12-02 20:42:49' },
+    { orderId: 'order_1764675626438_jrpeai38i', name: '김*희', maskedEmail: 'sk*******@gmail.com', amount: 45000, date: '2025-12-02 20:42:37' },
+    { orderId: 'order_1764675487689_hmq2tnsue', name: '엄*강', maskedEmail: 'ya***@naver.com', amount: 45000, date: '2025-12-02 20:39:59' },
+    { orderId: 'order_1764674818992_2seqi2xr9', name: '김*향', maskedEmail: 'lo******@naver.com', amount: 45000, date: '2025-12-02 20:28:36' },
+    { orderId: 'order_1764673750891_9ahhpzu9q', name: '박*희', maskedEmail: 'gl********@gmail.com', amount: 45000, date: '2025-12-02 20:18:52' },
+
+    // 에이전트 강의 (95,000원)
+    { orderId: 'order_1764675958635_jd7yufn7i', name: '이*윤', maskedEmail: 'se*********@gmail.com', amount: 95000, date: '2025-12-02 20:48:10' },
+
     // 최신 카드 결제 (2025-11-27 추가)
     { orderId: 'order_1764207441979_37281', name: '정*영', maskedEmail: 'wj******@naver.com', amount: 95000, date: '2025-11-27 10:37:21' },
 
