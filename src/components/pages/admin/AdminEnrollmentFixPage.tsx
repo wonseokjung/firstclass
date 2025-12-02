@@ -493,18 +493,25 @@ const AdminEnrollmentFixPage: React.FC = () => {
           console.log(`✅ 매칭 성공: ${payment.name} (${payment.maskedEmail}) → ${matchedUser.name} (${matchedUser.email})`);
           matchLog.push(`✅ ${payment.name}: ${payment.maskedEmail} → ${matchedUser.name} (${matchedUser.email})`);
 
+          // 결제 금액에 따라 강의 결정
+          const isAIBuildingCourse = payment.amount === 45000;
+          const courseId = isAIBuildingCourse ? 'ai-building-course' : '1002';
+          const courseTitle = isAIBuildingCourse ? 'Step 1: AI 건물주 되기 기초' : 'Google Opal 유튜브 수익화 에이전트 기초';
+
           // 이미 강의가 있는지 확인
           if (matchedUser.enrolledCourses) {
             const enrolledData = JSON.parse(matchedUser.enrolledCourses);
             const enrollments = Array.isArray(enrolledData) ? enrolledData : (enrolledData.enrollments || []);
-            const hasCourse = enrollments.some((e: any) =>
-              e.courseId === '1002' ||
-              e.courseId === 'chatgpt-agent-beginner' ||
-              e.courseId === 'workflow-automation'
-            );
+            const alreadyHasCourse = enrollments.some((e: any) => {
+              if (isAIBuildingCourse) {
+                return e.courseId === '999' || e.courseId === 'ai-building-course';
+              } else {
+                return e.courseId === '1002' || e.courseId === 'chatgpt-agent-beginner' || e.courseId === 'workflow-automation';
+              }
+            });
 
-            if (hasCourse) {
-              console.log(`ℹ️ 이미 등록됨: ${matchedUser.email}`);
+            if (alreadyHasCourse) {
+              console.log(`ℹ️ 이미 등록됨: ${matchedUser.email} - ${courseTitle}`);
               skipCount++;
               matchLog.push(`  ℹ️ 건너뜀 (이미 등록됨)`);
               continue;
@@ -514,12 +521,12 @@ const AdminEnrollmentFixPage: React.FC = () => {
           // 강의 추가
           await AzureTableService.addPurchaseAndEnrollmentToUser({
             email: matchedUser.email,
-            courseId: '1002',
-            title: 'Google Opal 유튜브 수익화 에이전트 기초',
+            courseId: courseId,
+            title: courseTitle,
             amount: payment.amount,
             paymentMethod: 'card',
             orderId: payment.orderId,
-            orderName: 'Google Opal 유튜브 수익화 에이전트 기초'
+            orderName: courseTitle
           });
 
           console.log(`✅ 강의 추가 완료: ${matchedUser.email}`);
@@ -586,19 +593,26 @@ const AdminEnrollmentFixPage: React.FC = () => {
         return;
       }
 
+      // 결제 금액에 따라 강의 결정
+      const isAIBuildingCourse = payment.amount === 45000;
+      const courseId = isAIBuildingCourse ? 'ai-building-course' : '1002';
+      const courseTitle = isAIBuildingCourse ? 'Step 1: AI 건물주 되기 기초' : 'Google Opal 유튜브 수익화 에이전트 기초';
+
       // 이미 등록되어 있는지 확인
       if (user.enrolledCourses) {
         const userData = JSON.parse(user.enrolledCourses);
         const enrollments = Array.isArray(userData) ? userData : (userData.enrollments || []);
-        const alreadyEnrolled = enrollments.some((e: any) =>
-          e.courseId === '1002' ||
-          e.courseId === 'chatgpt-agent-beginner' ||
-          e.courseId === 'workflow-automation'
-        );
+        const alreadyEnrolled = enrollments.some((e: any) => {
+          if (isAIBuildingCourse) {
+            return e.courseId === '999' || e.courseId === 'ai-building-course';
+          } else {
+            return e.courseId === '1002' || e.courseId === 'chatgpt-agent-beginner' || e.courseId === 'workflow-automation';
+          }
+        });
 
         if (alreadyEnrolled) {
           newPayments[index].status = 'skip';
-          newPayments[index].message = '이미 등록되어 있습니다';
+          newPayments[index].message = `이미 ${courseTitle} 등록됨`;
           setPayments(newPayments);
           return;
         }
@@ -607,12 +621,12 @@ const AdminEnrollmentFixPage: React.FC = () => {
       // 강의 추가
       await AzureTableService.addPurchaseAndEnrollmentToUser({
         email: payment.realEmail,
-        courseId: '1002',
-        title: 'Google Opal 유튜브 수익화 에이전트 기초',
+        courseId: courseId,
+        title: courseTitle,
         amount: payment.amount,
         paymentMethod: 'card',
         orderId: payment.orderId,
-        orderName: 'Google Opal 유튜브 수익화 에이전트 기초'
+        orderName: courseTitle
       });
 
       newPayments[index].status = 'success';
@@ -840,6 +854,10 @@ const AdminEnrollmentFixPage: React.FC = () => {
                         e.courseId === 'chatgpt-agent-beginner' ||
                         e.courseId === 'workflow-automation'
                       );
+                      const hasAIBuildingCourse = enrollments.some((e: any) =>
+                        e.courseId === '999' ||
+                        e.courseId === 'ai-building-course'
+                      );
 
                       return (
                         <tr key={index} style={{ borderBottom: '1px solid #f1f5f9' }}>
@@ -851,20 +869,37 @@ const AdminEnrollmentFixPage: React.FC = () => {
                             {user.createdAt ? new Date(user.createdAt).toLocaleDateString('ko-KR') : '-'}
                           </td>
                           <td style={{ padding: '12px' }}>
-                            {hasCourse ? (
-                              <span style={{
-                                color: '#10b981',
-                                background: '#f0fdf4',
-                                padding: '4px 12px',
-                                borderRadius: '12px',
-                                fontSize: '0.85rem',
-                                fontWeight: '600'
-                              }}>
-                                ✓ AI Agent 비기너
-                              </span>
-                            ) : (
-                              <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>없음</span>
-                            )}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                              {hasCourse && (
+                                <span style={{
+                                  color: '#10b981',
+                                  background: '#f0fdf4',
+                                  padding: '4px 12px',
+                                  borderRadius: '12px',
+                                  fontSize: '0.85rem',
+                                  fontWeight: '600',
+                                  display: 'inline-block'
+                                }}>
+                                  ✓ AI Agent 비기너
+                                </span>
+                              )}
+                              {hasAIBuildingCourse && (
+                                <span style={{
+                                  color: '#3b82f6',
+                                  background: '#eff6ff',
+                                  padding: '4px 12px',
+                                  borderRadius: '12px',
+                                  fontSize: '0.85rem',
+                                  fontWeight: '600',
+                                  display: 'inline-block'
+                                }}>
+                                  ✓ AI 건물주 되기
+                                </span>
+                              )}
+                              {!hasCourse && !hasAIBuildingCourse && (
+                                <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>없음</span>
+                              )}
+                            </div>
                           </td>
                           <td style={{ padding: '12px', display: 'flex', gap: '8px', alignItems: 'center' }}>
                             {editingEmail?.oldEmail === user.email && editingEmail ? (
