@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, MessageSquare, MapPin, Send, CheckCircle } from 'lucide-react';
+import { Mail, MessageSquare, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import NavigationBar from '../common/NavigationBar';
 
 interface ContactPageProps {
@@ -251,10 +251,46 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
           <p style={{
             textAlign: 'center',
             color: '#64748b',
-            marginBottom: '40px'
+            marginBottom: '25px'
           }}>
             아래 양식을 작성해주시면 빠르게 답변드리겠습니다
           </p>
+
+          {/* 중요 안내 메시지 */}
+          <div style={{
+            background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+            border: '2px solid #f59e0b',
+            borderRadius: '12px',
+            padding: 'clamp(18px, 3vw, 25px)',
+            marginBottom: '30px',
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: '15px',
+            boxShadow: '0 4px 15px rgba(245, 158, 11, 0.15)'
+          }}>
+            <AlertCircle size={24} color="#d97706" style={{ flexShrink: 0, marginTop: '2px' }} />
+            <div>
+              <p style={{
+                color: '#92400e',
+                margin: 0,
+                fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
+                fontWeight: '700',
+                lineHeight: '1.6',
+                marginBottom: '8px'
+              }}>
+                ⚠️ 중요 안내
+              </p>
+              <p style={{
+                color: '#92400e',
+                margin: 0,
+                fontSize: 'clamp(0.9rem, 1.9vw, 1rem)',
+                lineHeight: '1.7'
+              }}>
+                본 문의는 <strong>AI City Builders 수강 관련 문의</strong>에만 사용해 주시기 바랍니다.<br />
+                수강과 무관한 문의는 답변이 어려울 수 있는 점 양해 부탁드립니다. 🙏
+              </p>
+            </div>
+          </div>
 
           {isSubmitted && (
             <div style={{
