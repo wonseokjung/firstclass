@@ -77,7 +77,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
             className="nav-link" 
             onClick={() => navigate('/dashboard')}
           >
-            📚 강의
+            내 강의
           </button>
           {isAdmin && (
             <button 
