@@ -392,8 +392,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 maxWidth: '700px',
                 margin: '0 auto'
               }}>
-                수강생들이 실제로 만든 프로페셔널 광고 영상들입니다.<br />
-                10일 후, 당신도 이런 영상을 만들 수 있습니다! 🚀
+                강의에서 실제로 만든 프로페셔널 콘텐츠입니다.<br />
+                <strong style={{ color: '#fbbf24' }}>Google OPAL 무료 AI</strong>로 이런 영상을 자동 생성하는 방법을 배웁니다! 🚀
               </p>
             </div>
 
@@ -526,54 +526,60 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 </div>
               </div>
 
-              {/* 영상 3: 참이슬 소주 광고 */}
+              {/* 워크플로우 3: 수익화 자동화 (Day 5) */}
               <div style={{
                 background: 'white',
                 borderRadius: 'clamp(12px, 2.5vw, 18px)',
                 overflow: 'hidden',
                 boxShadow: '0 15px 40px rgba(0, 0, 0, 0.2)',
-                transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                border: '2px solid #e2e8f0'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-8px)';
                 e.currentTarget.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.3)';
+                e.currentTarget.style.borderColor = '#3b82f6';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.2)';
+                e.currentTarget.style.borderColor = '#e2e8f0';
               }}>
                 <div style={{
-                  position: 'relative',
-                  paddingBottom: '56.25%',
-                  background: '#000'
+                  padding: 'clamp(18px, 3vw, 25px)',
+                  background: '#f8fafc'
                 }}>
-                  <iframe
-                    src="https://player.vimeo.com/video/1141346778?badge=0&autopause=0&player_id=0&app_id=58479"
-                    frameBorder="0"
-                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
+                  <img 
+                    src="/images/day5/workflow-diagram.png"
+                    alt="Day 5 - 수익화 AI 에이전트 워크플로우"
                     style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
                       width: '100%',
-                      height: '100%',
-                      border: 'none'
+                      height: 'auto',
+                      borderRadius: '8px',
+                      marginBottom: '15px'
                     }}
-                    title="참이슬 소주 스트리트 파티 광고"
                   />
                 </div>
                 <div style={{ padding: 'clamp(18px, 3vw, 25px)' }}>
+                  <div style={{
+                    display: 'inline-block',
+                    background: 'rgba(139, 92, 246, 0.15)',
+                    color: '#8b5cf6',
+                    padding: '4px 12px',
+                    borderRadius: '999px',
+                    fontSize: 'clamp(0.75rem, 1.7vw, 0.85rem)',
+                    fontWeight: '700',
+                    marginBottom: '10px'
+                  }}>
+                    Day 5 - 워크플로우
+                  </div>
                   <h4 style={{
                     fontSize: 'clamp(1.1rem, 2.3vw, 1.3rem)',
                     fontWeight: '800',
                     color: '#1e293b',
-                    marginBottom: '10px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
+                    marginBottom: '10px'
                   }}>
-                    🍶 참이슬 소주 광고
+                    💰 수익화 자동화 시스템
                   </h4>
                   <p style={{
                     fontSize: 'clamp(0.9rem, 2vw, 1rem)',
@@ -581,59 +587,65 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     lineHeight: '1.6',
                     margin: 0
                   }}>
-                    포장마차가 힙한 스트리트 파티로 변신하는 한국형 컨셉
+                    트렌드 분석 → 영상/썸네일 생성 → 메타데이터 최적화까지 완전 자동화
                   </p>
                 </div>
               </div>
 
-              {/* 영상 4: 캐릭터 합성 영상 */}
+              {/* 워크플로우 4: 유튜브 채널 생성 (Day 7) */}
               <div style={{
                 background: 'white',
                 borderRadius: 'clamp(12px, 2.5vw, 18px)',
                 overflow: 'hidden',
                 boxShadow: '0 15px 40px rgba(0, 0, 0, 0.2)',
-                transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                border: '2px solid #e2e8f0'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-8px)';
                 e.currentTarget.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.3)';
+                e.currentTarget.style.borderColor = '#3b82f6';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.2)';
+                e.currentTarget.style.borderColor = '#e2e8f0';
               }}>
                 <div style={{
-                  position: 'relative',
-                  paddingBottom: '56.25%',
-                  background: '#000'
+                  padding: 'clamp(18px, 3vw, 25px)',
+                  background: '#f8fafc'
                 }}>
-                  <iframe
-                    src="https://player.vimeo.com/video/1141361958?badge=0&autopause=0&player_id=0&app_id=58479"
-                    frameBorder="0"
-                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
+                  <img 
+                    src="/images/day5/day7.png"
+                    alt="Day 7 - 유튜브 채널 자동 생성 워크플로우"
                     style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
                       width: '100%',
-                      height: '100%',
-                      border: 'none'
+                      height: 'auto',
+                      borderRadius: '8px',
+                      marginBottom: '15px'
                     }}
-                    title="서울 밤거리 산책 영상"
                   />
                 </div>
                 <div style={{ padding: 'clamp(18px, 3vw, 25px)' }}>
+                  <div style={{
+                    display: 'inline-block',
+                    background: 'rgba(244, 63, 94, 0.15)',
+                    color: '#f43f5e',
+                    padding: '4px 12px',
+                    borderRadius: '999px',
+                    fontSize: 'clamp(0.75rem, 1.7vw, 0.85rem)',
+                    fontWeight: '700',
+                    marginBottom: '10px'
+                  }}>
+                    Day 7 - 워크플로우
+                  </div>
                   <h4 style={{
                     fontSize: 'clamp(1.1rem, 2.3vw, 1.3rem)',
                     fontWeight: '800',
                     color: '#1e293b',
-                    marginBottom: '10px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
+                    marginBottom: '10px'
                   }}>
-                    🌆 스토리텔링 영상
+                    📺 유튜브 채널 자동 생성
                   </h4>
                   <p style={{
                     fontSize: 'clamp(0.9rem, 2vw, 1rem)',
@@ -641,34 +653,55 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     lineHeight: '1.6',
                     margin: 0
                   }}>
-                    2개 이미지를 합성하여 하나의 감성 스토리 영상으로 제작
+                    11개 AI 에이전트로 채널 세팅부터 브랜딩까지 원스톱 자동화
                   </p>
                 </div>
               </div>
 
             </div>
 
-            {/* 하단 CTA */}
+            {/* 하단 Google OPAL 무료 강조 */}
             <div style={{
               textAlign: 'center',
-              marginTop: 'clamp(40px, 7vw, 60px)',
-              padding: 'clamp(25px, 4vw, 35px)',
-              background: 'rgba(251, 191, 36, 0.1)',
+              marginTop: 'clamp(50px, 8vw, 70px)',
+              padding: 'clamp(30px, 5vw, 40px)',
+              background: 'rgba(59, 130, 246, 0.12)',
               borderRadius: '16px',
-              border: '2px solid rgba(251, 191, 36, 0.3)',
+              border: '2px solid rgba(59, 130, 246, 0.3)',
               position: 'relative',
               zIndex: 1
             }}>
-              <p style={{
-                fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-                fontWeight: '700',
-                color: 'white',
-                lineHeight: '1.7',
-                margin: 0
+              <div style={{
+                fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                marginBottom: '20px'
               }}>
-                💡 <strong>이 모든 영상을 10일 안에 만들 수 있습니다!</strong><br />
-                <span style={{ fontSize: 'clamp(1rem, 2.2vw, 1.2rem)', opacity: '0.9' }}>
-                  코딩 지식 0%로 시작해서 프로급 광고 영상 제작까지 🎬
+                🚀
+              </div>
+              <h3 style={{
+                fontSize: 'clamp(1.3rem, 3vw, 1.8rem)',
+                fontWeight: '800',
+                color: 'white',
+                marginBottom: '18px',
+                lineHeight: '1.3'
+              }}>
+                Google OPAL = 100% 무료 AI 자동화
+              </h3>
+              <p style={{
+                fontSize: 'clamp(1rem, 2.3vw, 1.2rem)',
+                color: 'rgba(255,255,255,0.9)',
+                lineHeight: '1.9',
+                margin: 0,
+                maxWidth: '750px',
+                marginLeft: 'auto',
+                marginRight: 'auto'
+              }}>
+                💬 <strong>Gemini 2.5 Flash</strong> (텍스트 생성)<br />
+                🎬 <strong>Veo</strong> (영상 생성)<br />
+                🎨 <strong>Imagen</strong> (이미지 생성)<br />
+                🎙️ <strong>AudioLM</strong> (음성 생성)<br />
+                <br />
+                <span style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.35rem)', fontWeight: '800', color: '#60a5fa' }}>
+                  모두 무료로 사용하며 콘텐츠 자동화 에이전트를 구축합니다!
                 </span>
               </p>
             </div>
@@ -1508,7 +1541,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   margin: '0 0 15px 0',
                   letterSpacing: '0.5px'
                 }}>
-                  🎯 Part 1 (Day 1-5)
+                  🎯 Part 1 (Day 1-6)
                 </h4>
                 <p style={{
                         margin: '0',
@@ -1517,7 +1550,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                             fontWeight: '600',
                   lineHeight: '1.6'
                 }}>
-                  수익화하는 인공지능 에이전트 첫걸음
+                  AI 에이전트 기초부터 Google OPAL 마스터까지
                         </p>
                       </div>
 
@@ -1527,7 +1560,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 borderRadius: '15px',
                 border: '2px solid #e2e8f0'
               }}>
-                {course.lessons.slice(0, 5).map((lesson: any) => (
+                {course.lessons.slice(0, 6).map((lesson: any) => (
                 <div
                   key={lesson.id}
                   style={{
@@ -1578,7 +1611,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   margin: '0 0 15px 0',
                   letterSpacing: '0.5px'
                 }}>
-                  🚀 Part 2 (Day 6-10)
+                  🚀 Part 2 (Day 7-10)
                 </h4>
                 <p style={{
                         margin: '0',
@@ -1587,7 +1620,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                             fontWeight: '600',
                   lineHeight: '1.6'
                 }}>
-                  실전 수익화 컨텐츠 자동 생성 에이전트
+                  실전! 채널 운영부터 완전 자동화까지
                         </p>
                       </div>
 
@@ -1597,7 +1630,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 borderRadius: '15px',
                 border: '2px solid #e2e8f0'
               }}>
-                {course.lessons.slice(5, 10).map((lesson: any) => (
+                {course.lessons.slice(6, 10).map((lesson: any) => (
                 <div
                   key={lesson.id}
                   style={{
@@ -1793,3 +1826,4 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 };
 
 export default ChatGPTAgentBeginnerPage;
+
