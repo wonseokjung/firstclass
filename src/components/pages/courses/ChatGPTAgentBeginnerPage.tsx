@@ -219,18 +219,18 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '40px 20px'
+          padding: 'clamp(20px, 4vw, 40px) clamp(15px, 4vw, 20px)'
         }}>
 
           {/* 결제한 사용자를 위한 "내 강의 보기" 버튼 */}
           {isPaidUser && (
         <div style={{
               background: 'linear-gradient(135deg, #10b981, #059669)',
-              borderRadius: '20px',
-              padding: '30px',
-              marginBottom: '40px',
+              borderRadius: 'clamp(12px, 3vw, 20px)',
+              padding: 'clamp(20px, 5vw, 30px)',
+              marginBottom: 'clamp(25px, 5vw, 40px)',
               boxShadow: '0 10px 40px rgba(16, 185, 129, 0.3)',
-              border: '3px solid #34d399',
+              border: 'clamp(2px, 0.5vw, 3px) solid #34d399',
               textAlign: 'center'
         }}>
           <div style={{
@@ -298,9 +298,9 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
           {/* 강의 소개 영상 */}
           <div style={{
-            marginBottom: '60px',
+            marginBottom: 'clamp(30px, 6vw, 60px)',
             maxWidth: '900px',
-            margin: '0 auto 60px auto'
+            margin: '0 auto clamp(30px, 6vw, 60px) auto'
           }}>
             <h2 style={{
               fontSize: 'clamp(1.5rem, 3vw, 1.8rem)',
@@ -341,23 +341,23 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
           {/* 상단 메인 CTA */}
           <div style={{
             textAlign: 'center',
-            marginBottom: '50px'
+            marginBottom: 'clamp(30px, 6vw, 50px)'
           }}>
 
             {/* 강의 아이콘과 제목 */}
-            <div style={{ marginBottom: '40px' }}>
+            <div style={{ marginBottom: 'clamp(25px, 5vw, 40px)' }}>
               <div style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: '80px',
-                height: '80px',
+                width: 'clamp(60px, 12vw, 80px)',
+                height: 'clamp(60px, 12vw, 80px)',
                 background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                 borderRadius: '50%',
-                marginBottom: '25px',
+                marginBottom: 'clamp(15px, 4vw, 25px)',
                 boxShadow: '0 4px 15px rgba(14, 165, 233, 0.3)'
               }}>
-                <span style={{ fontSize: '2.5rem' }}>🤖</span>
+                <span style={{ fontSize: 'clamp(2rem, 5vw, 2.5rem)' }}>🤖</span>
               </div>
               <h1 style={{
                 fontSize: 'clamp(2rem, 4vw, 2.8rem)',
@@ -387,9 +387,9 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               {/* 코스 설명 */}
               <div style={{
                 background: '#f8fafc',
-                borderRadius: '12px',
-                padding: '20px 25px',
-                marginBottom: '25px',
+                borderRadius: 'clamp(8px, 2vw, 12px)',
+                padding: 'clamp(15px, 4vw, 20px) clamp(18px, 4.5vw, 25px)',
+                marginBottom: 'clamp(18px, 4vw, 25px)',
                 border: '1px solid #e2e8f0'
               }}>
                 <p style={{
@@ -439,7 +439,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               {/* 할인 뱃지 */}
               <div style={{
                 textAlign: 'center',
-                marginBottom: '25px',
+                marginBottom: 'clamp(18px, 4vw, 25px)',
                 position: 'relative',
                 zIndex: 1
               }}>
@@ -447,11 +447,11 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   display: 'inline-block',
                   background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
                   color: '#92400e',
-                  padding: '10px 25px',
-                  borderRadius: '30px',
+                  padding: 'clamp(8px, 2vw, 10px) clamp(18px, 4vw, 25px)',
+                  borderRadius: 'clamp(20px, 4vw, 30px)',
                   fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
                   fontWeight: '800',
-                  border: '2px solid #fbbf24',
+                  border: 'clamp(1.5px, 0.4vw, 2px) solid #fbbf24',
                   boxShadow: '0 4px 15px rgba(251, 191, 36, 0.4)'
                 }}>
                   🎉 특별 할인가
@@ -461,7 +461,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               {/* 가격 정보 */}
               <div style={{
                 textAlign: 'center',
-                marginBottom: '30px',
+                marginBottom: 'clamp(22px, 5vw, 30px)',
                 position: 'relative',
                 zIndex: 1
               }}>
@@ -502,9 +502,9 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               {/* 혜택 리스트 */}
             <div style={{
                 background: 'rgba(255, 255, 255, 0.15)',
-                borderRadius: '15px',
+                borderRadius: 'clamp(10px, 3vw, 15px)',
                 padding: 'clamp(20px, 4vw, 30px)',
-                marginBottom: '35px',
+                marginBottom: 'clamp(25px, 5vw, 35px)',
                 backdropFilter: 'blur(10px)',
                 border: '1px solid rgba(255, 255, 255, 0.2)',
                 position: 'relative',
@@ -512,8 +512,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               }}>
                 <div style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                  gap: '15px',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(min(160px, 100%), 1fr))',
+                  gap: 'clamp(12px, 3vw, 15px)',
                   fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
                   color: 'white',
                   fontWeight: '600'
@@ -1436,8 +1436,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     e.currentTarget.style.transform = 'scale(1)';
                   }}
                 >
-                  <span style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>🚀</span>
-                  지금 바로 수강하기
+                  <span style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>💳</span>
+                  결제하기
                 </button>
                 <p style={{
                   fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
