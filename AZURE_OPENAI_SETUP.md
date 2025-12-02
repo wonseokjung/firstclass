@@ -165,3 +165,4 @@ Pricing Tier: Standard
 
 # Azure OpenAI 환경 변수 설정 완료 - Tue Dec  2 21:15:22 KST 2025
 # Trigger redeploy for Azure env vars - Tue Dec  2 21:22:29 KST 2025
+# Redeploy with GitHub Secrets - Tue Dec  2 21:29:43 KST 2025
