@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Award } from 'lucide-react';
+import { ArrowLeft, Award, Copy, CheckCircle } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
 
 interface Day10PageProps {
@@ -12,6 +12,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
   const [isDayCompleted, setIsDayCompleted] = useState<boolean>(false);
   const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>('');
+  const [copiedPrompt, setCopiedPrompt] = useState<boolean>(false);
 
   // 사용자 정보 및 Day 완료 상태 로드
   useEffect(() => {
@@ -42,6 +43,49 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
 
     loadUserProgress();
   }, []);
+
+  // 프롬프트 복사 함수
+  const copyPromptToClipboard = async () => {
+    const coronaPrompt = `{
+  "description": "Cinematic close-up of a cold, dewy Corona bottle sitting alone on a weathered beach table. It begins to hum, vibrate. The bottle cap *pops*—and the entire environment unfolds from inside: palm trees rise, lights string themselves, speakers assemble mid-air, sand shifts into a dance floor. A DJ booth builds from driftwood. Music kicks in. A beach rave is born. No text.",
+  "style": "cinematic, magical realism",
+  "camera": "starts ultra close, zooms out and cranes overhead as the world expands",
+  "lighting": "sunset turning to neon—golden hour into party glow",
+  "environment": "quiet beach transforms into high-energy beach rave",
+  "elements": [
+    "Corona bottle (label visible, condensation dripping)",
+    "pop-top cap in slow motion",
+    "exploding citrus slice",
+    "sand morphing into dance floor",
+    "palm trees rising",
+    "neon lights snapping on",
+    "DJ booth building itself",
+    "crowd materializing mid-dance",
+    "fire pit lighting",
+    "surfboards as signage"
+  ],
+  "motion": "explosion of elements from bottle, everything assembles in rapid time-lapse",
+  "ending": "Corona bottle in foreground, beach rave in full swing behind it",
+  "text": "none",
+  "keywords": [
+    "Corona",
+    "beach party",
+    "bottle transforms",
+    "rave build",
+    "sunset to night",
+    "cinematic",
+    "no text"
+  ]
+}`;
+    try {
+      await navigator.clipboard.writeText(coronaPrompt);
+      setCopiedPrompt(true);
+      setTimeout(() => setCopiedPrompt(false), 2000);
+    } catch (error) {
+      console.error('프롬프트 복사 실패:', error);
+      alert('프롬프트 복사에 실패했습니다.');
+    }
+  };
 
   // 10강 완료 처리
   const handleCompleteDay = async () => {
@@ -191,13 +235,13 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
         title: '🔗 실습 워크플로우 시작하기',
         duration: '',
         content: `
-          <div style="background: linear-gradient(135deg, #e0f2fe, #bae6fd); border: 3px solid #0ea5e9; padding: 40px; margin: 30px 0; border-radius: 20px; box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3); text-align: center;">
+          <div style="background: linear-gradient(135deg, #e0f2fe, #bae6fd); border: 3px solid #0ea5e9; padding: clamp(25px, 5vw, 40px); margin: clamp(20px, 4vw, 30px) 0; border-radius: 20px; box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3); text-align: center;">
             <div style="margin-bottom: 25px;">
-              <span style="font-size: 4rem; display: block; margin-bottom: 15px;">🚀</span>
-              <h3 style="color: #0c4a6e; margin: 0 0 15px 0; font-size: 1.8rem; font-weight: 800;">
+              <span style="font-size: clamp(2.5rem, 8vw, 4rem); display: block; margin-bottom: 15px;">🚀</span>
+              <h3 style="color: #0c4a6e; margin: 0 0 15px 0; font-size: clamp(1.3rem, 3.5vw, 1.8rem); font-weight: 800;">
                 Google Opal 워크플로우로 영상 자동화 시작!
               </h3>
-              <p style="color: #0c4a6e; font-size: 1.1rem; line-height: 1.8; margin: 0;">
+              <p style="color: #0c4a6e; font-size: clamp(0.95rem, 2.5vw, 1.1rem); line-height: 1.8; margin: 0;">
                 아래 버튼을 클릭하여 Google Opal에서 영상 자동화 워크플로우를 시작하세요.<br/>
                 강의 내용을 따라하면서 직접 22개 에이전트를 구성해보세요!
               </p>
@@ -212,9 +256,9 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
                 background: linear-gradient(135deg, #0ea5e9, #0284c7);
                 color: white;
                 text-decoration: none;
-                padding: 20px 50px;
+                padding: clamp(15px, 3vw, 20px) clamp(30px, 6vw, 50px);
                 border-radius: 15px;
-                font-size: 1.3rem;
+                font-size: clamp(1.1rem, 2.5vw, 1.3rem);
                 font-weight: 800;
                 box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
                 transition: all 0.3s ease;
@@ -227,13 +271,20 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
             </a>
 
             <div style="margin-top: 25px; padding-top: 25px; border-top: 2px solid rgba(14, 165, 233, 0.3);">
-              <p style="font-size: 1rem; color: #0c4a6e; margin: 0; line-height: 1.6;">
+              <p style="font-size: clamp(0.9rem, 2vw, 1rem); color: #0c4a6e; margin: 0; line-height: 1.6;">
                 💡 <strong>Tip:</strong> Google Opal을 활용하여 영상 자동화 시스템을 구축합니다!<br/>
                 강의에서 배우는 22개 에이전트 시스템으로 고품질 영상 시리즈를 자동으로 제작할 수 있습니다.
               </p>
             </div>
           </div>
         `
+      },
+      {
+        id: 'corona-prompt-section',
+        type: 'interactive',
+        title: '🍺 실전 JSON 프롬프트: 코로나 맥주 광고',
+        duration: '',
+        content: 'CORONA_PROMPT_PLACEHOLDER'
       },
       {
         id: 'json-structure',
@@ -348,7 +399,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
       <header style={{
         background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
         color: 'white',
-        padding: '20px 0',
+        padding: 'clamp(15px, 3vw, 20px) 0',
         boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
         position: 'sticky',
         top: 0,
@@ -357,10 +408,12 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '0 20px',
+          padding: '0 clamp(15px, 4vw, 20px)',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: 'clamp(10px, 2vw, 15px)'
         }}>
           <button
             onClick={onBack}
@@ -368,13 +421,13 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
               background: 'rgba(255, 255, 255, 0.2)',
               border: 'none',
               color: 'white',
-              padding: '10px 20px',
+              padding: 'clamp(8px, 2vw, 10px) clamp(15px, 3vw, 20px)',
               borderRadius: '8px',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              fontSize: '1rem',
+              fontSize: 'clamp(0.9rem, 2vw, 1rem)',
               fontWeight: '600',
               transition: 'all 0.3s ease'
             }}
@@ -385,28 +438,34 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
               e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
             }}
           >
-            <ArrowLeft size={20} />
-            강의 목록으로
+            <ArrowLeft size={18} />
+            <span style={{ display: window.innerWidth < 640 ? 'none' : 'inline' }}>강의 목록으로</span>
+            <span style={{ display: window.innerWidth >= 640 ? 'none' : 'inline' }}>목록</span>
           </button>
 
-          <div style={{ textAlign: 'center' }}>
+          <div style={{ textAlign: 'center', flex: '1', minWidth: '200px' }}>
             <div style={{
               background: 'rgba(255, 255, 255, 0.2)',
-              padding: '4px 12px',
+              padding: 'clamp(3px, 1vw, 4px) clamp(10px, 2vw, 12px)',
               borderRadius: '20px',
-              fontSize: '0.85rem',
+              fontSize: 'clamp(0.75rem, 1.8vw, 0.85rem)',
               fontWeight: '600',
-              marginBottom: '8px',
+              marginBottom: 'clamp(6px, 1.5vw, 8px)',
               display: 'inline-block'
             }}>
               Day 10 / 10 (최종강)
             </div>
-            <h1 style={{ margin: 0, fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', fontWeight: '700' }}>
-              {lessonData.title}
+            <h1 style={{
+              margin: 0,
+              fontSize: 'clamp(0.95rem, 2.5vw, 1.5rem)',
+              fontWeight: '700',
+              lineHeight: '1.3'
+            }}>
+              Day 10: 영상 콘텐츠 자동화
             </h1>
           </div>
 
-          <div style={{ width: '140px' }}></div>
+          <div style={{ width: 'clamp(80px, 15vw, 140px)', display: window.innerWidth < 768 ? 'none' : 'block' }}></div>
         </div>
       </header>
 
@@ -414,29 +473,29 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
       <main style={{
         maxWidth: '900px',
         margin: '0 auto',
-        padding: '40px 20px'
+        padding: 'clamp(25px, 5vw, 40px) clamp(15px, 4vw, 20px)'
       }}>
         {/* 강의 정보 카드 */}
         <div style={{
           background: 'white',
-          borderRadius: '16px',
-          padding: '30px',
-          marginBottom: '30px',
+          borderRadius: 'clamp(12px, 3vw, 16px)',
+          padding: 'clamp(20px, 4vw, 30px)',
+          marginBottom: 'clamp(20px, 4vw, 30px)',
           boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
         }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '15px',
-            marginBottom: '20px',
+            gap: 'clamp(10px, 2vw, 15px)',
+            marginBottom: 'clamp(15px, 3vw, 20px)',
             flexWrap: 'wrap'
           }}>
             <span style={{
               background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
               color: 'white',
-              padding: '6px 16px',
+              padding: 'clamp(5px, 1.2vw, 6px) clamp(12px, 2.5vw, 16px)',
               borderRadius: '20px',
-              fontSize: '0.9rem',
+              fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
               fontWeight: '600'
             }}>
               {lessonData.duration}
@@ -444,16 +503,16 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
             <span style={{
               background: 'linear-gradient(135deg, #f59e0b, #d97706)',
               color: 'white',
-              padding: '6px 16px',
+              padding: 'clamp(5px, 1.2vw, 6px) clamp(12px, 2.5vw, 16px)',
               borderRadius: '20px',
-              fontSize: '0.9rem',
+              fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
               fontWeight: '600'
             }}>
               🏆 최종강
             </span>
             <span style={{
               color: '#64748b',
-              fontSize: '0.95rem'
+              fontSize: 'clamp(0.85rem, 1.9vw, 0.95rem)'
             }}>
               완료한 강의: {completedDaysCount}개
             </span>
@@ -461,30 +520,31 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
 
             <p style={{
             color: '#475569',
-            fontSize: '1.05rem',
+            fontSize: 'clamp(0.95rem, 2.2vw, 1.05rem)',
             lineHeight: '1.8',
             margin: 0
           }}>
             {lessonData.description}
           </p>
 
-          <div style={{ marginTop: '25px' }}>
+          <div style={{ marginTop: 'clamp(20px, 4vw, 25px)' }}>
             <h3 style={{
-              fontSize: '1.1rem',
+              fontSize: 'clamp(1rem, 2.3vw, 1.1rem)',
               fontWeight: '700',
               color: '#1e293b',
-              marginBottom: '15px'
+              marginBottom: 'clamp(12px, 2.5vw, 15px)'
             }}>
               📚 학습 목표
             </h3>
             <ul style={{
               margin: 0,
-              paddingLeft: '20px',
+              paddingLeft: 'clamp(18px, 3vw, 22px)',
               color: '#475569',
-              lineHeight: '2'
+              lineHeight: '1.9',
+              fontSize: 'clamp(0.9rem, 2vw, 1rem)'
             }}>
               {lessonData.objectives.map((objective, index) => (
-                <li key={index}>{objective}</li>
+                <li key={index} style={{ marginBottom: '8px' }}>{objective}</li>
               ))}
             </ul>
           </div>
@@ -497,9 +557,9 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
             id={section.id}
             style={{
               background: 'white',
-              borderRadius: '20px',
-              padding: '40px',
-              marginBottom: '30px',
+              borderRadius: 'clamp(15px, 3.5vw, 20px)',
+              padding: 'clamp(25px, 5vw, 40px)',
+              marginBottom: 'clamp(20px, 4vw, 30px)',
               boxShadow: '0 8px 30px rgba(0, 0, 0, 0.06)',
               border: '1px solid #f1f5f9',
               scrollMarginTop: '100px'
@@ -507,13 +567,13 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
           >
             {section.title && (
               <div style={{
-                marginBottom: '30px'
+                marginBottom: 'clamp(20px, 4vw, 30px)'
               }}>
                 <h2 style={{
-                  fontSize: '1.8rem',
+                  fontSize: 'clamp(1.3rem, 3.5vw, 1.8rem)',
                   fontWeight: '800',
                   color: '#1e293b',
-                  margin: '0 0 10px 0',
+                  margin: '0 0 clamp(8px, 2vw, 10px) 0',
                   lineHeight: '1.3'
                 }}>
                   {section.title}
@@ -521,7 +581,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
                 {section.duration && (
                   <p style={{
                     color: '#64748b',
-                    fontSize: '1rem',
+                    fontSize: 'clamp(0.9rem, 2vw, 1rem)',
                     margin: 0,
                     fontWeight: '500'
                   }}>
@@ -560,38 +620,210 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
             )}
 
             {/* 콘텐츠 */}
-            <div
-              style={{
-                fontSize: '1rem',
-                lineHeight: '1.8',
-                color: '#334155'
-              }}
-              dangerouslySetInnerHTML={{ __html: section.content }}
-            />
+            {section.id === 'corona-prompt-section' ? (
+              <div style={{ marginTop: '20px' }}>
+                <p style={{
+                  fontSize: 'clamp(0.95rem, 2.2vw, 1.05rem)',
+                  lineHeight: '1.8',
+                  color: '#475569',
+                  marginBottom: '25px'
+                }}>
+                  실전에서 바로 사용할 수 있는 고퀄리티 광고 영상 프롬프트입니다. 
+                  <strong> Google Veo, Runway Gen-3, Pika</strong> 등에 복사·붙여넣기하여 프로급 영상을 생성하세요!
+                </p>
+
+                <div style={{
+                  background: 'linear-gradient(135deg, #fffbeb, #fef3c7)',
+                  borderRadius: '16px',
+                  padding: 'clamp(20px, 4vw, 30px)',
+                  marginBottom: '25px',
+                  border: '2px solid #fbbf24',
+                  boxShadow: '0 8px 25px rgba(251, 191, 36, 0.2)'
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '20px',
+                    flexWrap: 'wrap',
+                    gap: '15px'
+                  }}>
+                    <h4 style={{
+                      fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)',
+                      fontWeight: '700',
+                      color: '#78350f',
+                      margin: 0,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px'
+                    }}>
+                      <span>📝</span>
+                      <span>JSON 프롬프트</span>
+                    </h4>
+                    <button
+                      onClick={copyPromptToClipboard}
+                      style={{
+                        background: copiedPrompt ? '#10b981' : '#fbbf24',
+                        color: copiedPrompt ? 'white' : '#78350f',
+                        border: 'none',
+                        padding: 'clamp(10px, 2vw, 12px) clamp(18px, 3vw, 25px)',
+                        borderRadius: '999px',
+                        fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        boxShadow: copiedPrompt ? '0 8px 20px rgba(16, 185, 129, 0.3)' : '0 8px 20px rgba(251, 191, 36, 0.3)',
+                        transition: 'all 0.3s ease',
+                        minWidth: 'clamp(110px, 20vw, 140px)',
+                        justifyContent: 'center'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!copiedPrompt) {
+                          e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
+                          e.currentTarget.style.boxShadow = '0 10px 25px rgba(251, 191, 36, 0.4)';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                        e.currentTarget.style.boxShadow = copiedPrompt ? '0 8px 20px rgba(16, 185, 129, 0.3)' : '0 8px 20px rgba(251, 191, 36, 0.3)';
+                      }}
+                    >
+                      {copiedPrompt ? (
+                        <>
+                          <CheckCircle size={18} />
+                          <span>복사됨!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy size={18} />
+                          <span>복사하기</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  <div style={{
+                    background: 'white',
+                    color: '#1f2937',
+                    padding: 'clamp(15px, 3vw, 25px)',
+                    borderRadius: '12px',
+                    fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+                    fontSize: 'clamp(0.75rem, 1.8vw, 0.9rem)',
+                    lineHeight: '1.7',
+                    overflowX: 'auto',
+                    border: '1px solid #e5e7eb',
+                    maxHeight: '400px',
+                    overflowY: 'auto'
+                  }}>
+                    <pre style={{
+                      margin: 0,
+                      whiteSpace: 'pre-wrap',
+                      wordBreak: 'break-word'
+                    }}>{`{
+  "description": "Cinematic close-up of a cold, dewy Corona bottle sitting alone on a weathered beach table. It begins to hum, vibrate. The bottle cap *pops*—and the entire environment unfolds from inside: palm trees rise, lights string themselves, speakers assemble mid-air, sand shifts into a dance floor. A DJ booth builds from driftwood. Music kicks in. A beach rave is born. No text.",
+  "style": "cinematic, magical realism",
+  "camera": "starts ultra close, zooms out and cranes overhead as the world expands",
+  "lighting": "sunset turning to neon—golden hour into party glow",
+  "environment": "quiet beach transforms into high-energy beach rave",
+  "elements": [
+    "Corona bottle (label visible, condensation dripping)",
+    "pop-top cap in slow motion",
+    "exploding citrus slice",
+    "sand morphing into dance floor",
+    "palm trees rising",
+    "neon lights snapping on",
+    "DJ booth building itself",
+    "crowd materializing mid-dance",
+    "fire pit lighting",
+    "surfboards as signage"
+  ],
+  "motion": "explosion of elements from bottle, everything assembles in rapid time-lapse",
+  "ending": "Corona bottle in foreground, beach rave in full swing behind it",
+  "text": "none",
+  "keywords": [
+    "Corona",
+    "beach party",
+    "bottle transforms",
+    "rave build",
+    "sunset to night",
+    "cinematic",
+    "no text"
+  ]
+}`}</pre>
+                  </div>
+                </div>
+
+                <div style={{
+                  background: 'linear-gradient(135deg, #dbeafe, #bae6fd)',
+                  borderRadius: '12px',
+                  padding: 'clamp(18px, 3.5vw, 25px)',
+                  border: '2px solid #0ea5e9'
+                }}>
+                  <h5 style={{
+                    fontSize: 'clamp(1rem, 2.2vw, 1.15rem)',
+                    fontWeight: '700',
+                    color: '#0c4a6e',
+                    margin: '0 0 12px 0',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    <span>💡</span>
+                    <span>활용 팁</span>
+                  </h5>
+                  <ul style={{
+                    margin: 0,
+                    paddingLeft: 'clamp(18px, 3vw, 22px)',
+                    color: '#0c4a6e',
+                    lineHeight: '1.9',
+                    fontSize: 'clamp(0.9rem, 2vw, 1rem)'
+                  }}>
+                    <li>이 JSON 형식을 그대로 사용하거나, 브랜드명과 배경을 변경하여 활용하세요</li>
+                    <li><strong>Google Veo, Runway Gen-3, Pika Labs</strong>에서 모두 사용 가능합니다</li>
+                    <li>각 필드(<code>description</code>, <code>style</code>, <code>elements</code> 등)를 수정하여 원하는 영상을 커스터마이징</li>
+                    <li>생성된 영상은 유튜브 광고, SNS 마케팅에 바로 활용할 수 있습니다</li>
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <div
+                style={{
+                  fontSize: 'clamp(0.95rem, 2vw, 1rem)',
+                  lineHeight: '1.8',
+                  color: '#334155'
+                }}
+                dangerouslySetInnerHTML={{ __html: section.content }}
+              />
+            )}
           </div>
         ))}
 
         {/* 완료 버튼 */}
         <div style={{
           background: 'white',
-          borderRadius: '16px',
-          padding: '40px',
+          borderRadius: 'clamp(12px, 3vw, 16px)',
+          padding: 'clamp(30px, 6vw, 40px)',
           boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
           textAlign: 'center'
         }}>
-          <Award size={48} color="#0ea5e9" style={{ marginBottom: '20px' }} />
+          <Award size={window.innerWidth < 640 ? 36 : 48} color="#0ea5e9" style={{ marginBottom: 'clamp(15px, 3vw, 20px)' }} />
           <h3 style={{
-            fontSize: '1.5rem',
+            fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
             fontWeight: '700',
             color: '#1e293b',
-            marginBottom: '15px'
+            marginBottom: 'clamp(12px, 2.5vw, 15px)',
+            lineHeight: '1.3'
           }}>
             {isDayCompleted ? '🎉 전체 과정 수료!' : '강의를 완료하셨나요?'}
           </h3>
           <p style={{
             color: '#64748b',
-            marginBottom: '25px',
-            fontSize: '1.05rem'
+            marginBottom: 'clamp(20px, 4vw, 25px)',
+            fontSize: 'clamp(0.95rem, 2.2vw, 1.05rem)',
+            lineHeight: '1.6',
+            padding: '0 clamp(10px, 2vw, 0)'
           }}>
             {isDayCompleted
               ? '축하합니다! ChatGPT 에이전트 기초 과정을 모두 완료하셨습니다!'
@@ -606,14 +838,16 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
                 : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
             color: 'white',
             border: 'none',
-              padding: '15px 40px',
-            fontSize: '1.1rem',
+              padding: 'clamp(12px, 2.5vw, 15px) clamp(30px, 6vw, 40px)',
+            fontSize: 'clamp(1rem, 2.2vw, 1.1rem)',
             fontWeight: '700',
-              borderRadius: '12px',
+              borderRadius: 'clamp(10px, 2vw, 12px)',
               cursor: (isCompletingDay || isDayCompleted) ? 'not-allowed' : 'pointer',
             transition: 'all 0.3s ease',
             boxShadow: '0 4px 15px rgba(14, 165, 233, 0.3)',
-              opacity: (isCompletingDay || isDayCompleted) ? 0.7 : 1
+              opacity: (isCompletingDay || isDayCompleted) ? 0.7 : 1,
+              width: window.innerWidth < 640 ? '100%' : 'auto',
+              maxWidth: '400px'
           }}
             onMouseEnter={(e) => {
               if (!isCompletingDay && !isDayCompleted) {
@@ -631,14 +865,15 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
 
           {isDayCompleted && (
             <div style={{
-              marginTop: '30px',
+              marginTop: 'clamp(25px, 5vw, 30px)',
               background: '#f0fdf4',
-              borderLeft: '4px solid #10b981',
-              padding: '20px',
-              borderRadius: '8px'
+              borderLeft: 'clamp(3px, 0.8vw, 4px) solid #10b981',
+              padding: 'clamp(15px, 3vw, 20px)',
+              borderRadius: '8px',
+              textAlign: 'left'
             }}>
               <p style={{
-                fontSize: '1.05rem',
+                fontSize: 'clamp(0.95rem, 2.2vw, 1.05rem)',
                 lineHeight: '1.8',
                 color: '#065f46',
                 margin: 0
