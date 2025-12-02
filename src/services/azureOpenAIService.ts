@@ -35,29 +35,64 @@ export async function recommendYoutubeChannels(
       throw new Error('Azure OpenAI 설정이 필요합니다. 환경 변수를 확인해주세요.');
     }
 
-    const prompt = `당신은 유튜브 채널 기획 전문가입니다. 사용자의 관심사를 분석하여 수익성 높은 유튜브 채널 주제 5가지를 추천해주세요.
+    // 사용자 정보 파싱 (userInterests에 모든 정보가 포함되어 있음)
+    const lines = userInterests.split('\n').filter(line => line.trim());
+    const parsedInfo: any = {};
+    lines.forEach(line => {
+      if (line.includes('관심사/전문성:')) parsedInfo.interests = line.split(':')[1]?.trim();
+      if (line.includes('인생 목표:')) parsedInfo.lifeGoal = line.split(':')[1]?.trim();
+      if (line.includes('이것을 하는 이유:')) parsedInfo.motivation = line.split(':')[1]?.trim();
+      if (line.includes('하루 일과:')) parsedInfo.dailyRoutine = line.split(':')[1]?.trim();
+    });
 
-사용자 관심사: ${userInterests}
-목표 월수익: ${targetIncome.toLocaleString()}원
+    const prompt = `당신은 2024-2025년 유튜브 채널 기획 및 수익화 전문가입니다. 
+최신 유튜브 알고리즘, 트렌드, CPM 데이터를 바탕으로 실전 가능한 채널을 추천합니다.
 
-다음 형식의 JSON으로 응답해주세요:
+# 📋 사용자 프로필
+${parsedInfo.interests ? `**관심사/전문성**: ${parsedInfo.interests}` : ''}
+${parsedInfo.lifeGoal ? `**인생 목표**: ${parsedInfo.lifeGoal}` : ''}
+${parsedInfo.motivation ? `**시작 동기**: ${parsedInfo.motivation}` : ''}
+${parsedInfo.dailyRoutine ? `**하루 일과**: ${parsedInfo.dailyRoutine}` : ''}
+**목표 월수익**: ${targetIncome.toLocaleString()}원
+
+# 🎯 분석 미션
+위 사용자의 **삶의 맥락**을 깊이 분석하여, 실현 가능성이 높은 유튜브 채널 5개를 추천하세요.
+
+## 필수 고려 사항
+1. **시간 현실성**: 하루 일과를 고려한 제작 가능 시간
+2. **전문성 활용**: 기존 관심사/전문성을 최대한 활용
+3. **2024-2025 트렌드**: 최신 유튜브 트렌드 (AI 활용, 숏폼, 자동화)
+4. **수익 가능성**: 목표 월수익 달성을 위한 현실적인 CPM, 조회수 전략
+5. **진입 장벽**: 초보자도 AI 도구로 시작 가능한 난이도
+6. **차별화 전략**: 경쟁이 덜한 틈새 시장 또는 독특한 앵글
+
+## 추천 기준
+- **초급**: AI 도구만으로 제작 가능, 편집 최소, 1일 1-2시간
+- **중급**: 일부 편집 필요, 1일 2-4시간, 기본 장비 필요
+- **고급**: 전문 편집/촬영, 1일 4시간 이상
+
+## 수익성 점수 (0-100)
+- 90-100: 높은 CPM ($5-10), 광고 수익 + 제휴 마케팅 가능
+- 70-89: 중간 CPM ($3-5), 광고 수익 중심
+- 50-69: 낮은 CPM ($1-3), 조회수 대량 필요
+
+다음 **JSON 형식**으로만 응답하세요:
 {
   "ideas": [
     {
-      "title": "채널명 예시",
-      "description": "채널 설명 (2-3문장)",
-      "targetAudience": "타겟 고객층",
+      "title": "구체적인 채널명 예시 (사용자 맥락 반영)",
+      "description": "채널 설명 (3-4문장: 무엇을 다루며, 왜 수익성이 높고, AI로 어떻게 자동화할 수 있는지)",
+      "targetAudience": "타겟 고객층 (연령대, 직업, 관심사)",
       "profitability": 85,
       "difficulty": "초급",
-      "keywords": ["키워드1", "키워드2", "키워드3"],
-      "expectedMonthlyIncome": "50만원 ~ 150만원"
+      "keywords": ["트렌드키워드1", "틈새키워드2", "차별화키워드3"],
+      "expectedMonthlyIncome": "50만원 ~ 150만원 (조회수 X만 기준)"
     }
   ],
-  "analysis": "전체적인 시장 분석 및 추천 이유"
+  "analysis": "사용자의 삶(일과, 목표, 동기)을 고려했을 때, 왜 이 5개 채널이 최적인지 구체적으로 설명 (3-5문장)"
 }
 
-profitability는 0-100 사이의 숫자로, 수익성을 나타냅니다.
-difficulty는 "초급", "중급", "고급" 중 하나입니다.`;
+**중요**: 사용자가 입력한 관심사, 동기, 일과를 **반드시 반영**하여 개인 맞춤형 추천을 제공하세요.`;
 
     const url = `${endpoint}/openai/deployments/${deploymentName}/chat/completions?api-version=2024-05-01-preview`;
 
@@ -71,16 +106,32 @@ difficulty는 "초급", "중급", "고급" 중 하나입니다.`;
         messages: [
           {
             role: 'system',
-            content: '당신은 유튜브 채널 기획 및 수익화 전문가입니다. AI를 활용한 콘텐츠 제작과 수익 최적화에 대한 깊은 지식을 가지고 있습니다.',
+            content: `당신은 10년 경력의 유튜브 전문 컨설턴트입니다.
+
+**전문 분야:**
+- 2024-2025 유튜브 알고리즘 및 최신 트렌드 분석
+- AI 도구(ChatGPT, Gemini, Veo, CapCut) 활용 콘텐츠 자동화
+- 숏폼 vs 롱폼 전략, CPM 최적화, 제휴 마케팅
+- 틈새 시장 발굴 및 차별화 전략
+- 0원 시작 → 월 100만원 달성 로드맵
+
+**답변 원칙:**
+1. 사용자의 삶(일과, 동기, 전문성)을 **깊이 반영**
+2. 실현 가능성 우선 (이론보다 실전)
+3. 구체적인 수치 제시 (조회수, CPM, 예상 수익)
+4. AI 자동화 방법 명시
+5. 경쟁 분석 및 차별화 포인트 제시`,
           },
           {
             role: 'user',
             content: prompt,
           },
         ],
-        max_tokens: 2000,
-        temperature: 0.7,
-        top_p: 0.95,
+        max_tokens: 3000,
+        temperature: 0.8,
+        top_p: 0.92,
+        frequency_penalty: 0.3,
+        presence_penalty: 0.3,
       }),
     });
 
@@ -156,7 +207,7 @@ difficulty는 "초급", "중급", "고급" 중 하나입니다.`;
           expectedMonthlyIncome: '60만원 ~ 150만원'
         }
       ],
-      analysis: `${userInterests}에 관심이 있으시다면, AI를 활용한 콘텐츠 자동화 채널이 가장 적합합니다. 초기 투자 비용이 적고, AI 도구만으로도 전문가 수준의 콘텐츠를 제작할 수 있어 목표 월수익 달성이 현실적입니다. 특히 숏폼 콘텐츠는 조회수 확보가 빠르고, 제작 시간이 짧아 초보자에게 추천합니다.`
+      analysis: `입력하신 정보를 바탕으로 AI를 활용한 콘텐츠 자동화 채널을 추천드립니다. 2024-2025년 트렌드는 숏폼과 AI 자동화이며, 초기 투자 비용 거의 없이 Google OPAL(Veo, Gemini, Imagen) 같은 무료 AI 도구만으로도 전문가 수준의 콘텐츠 제작이 가능합니다. 하루 1-2시간 투자로 월 ${(targetIncome / 10000).toFixed(0)}만원 달성이 현실적이며, 특히 숏폼 콘텐츠는 조회수 확보가 빠르고 제작 시간이 짧아 직장인/부업으로도 최적입니다.`
     };
   }
 }

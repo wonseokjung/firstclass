@@ -727,7 +727,7 @@ ${dailyRoutine ? `하루 일과: ${dailyRoutine}` : ''}
               <span style={{ color: '#ef4444' }}>*</span> 필수 항목 | 더 많은 정보를 입력할수록 정확한 추천을 받습니다
               <br />
               <span style={{ color: '#fbbf24', fontWeight: '700' }}>
-                💡 무료 {MAX_USAGE_COUNT}회 제공 | 더 많은 추천은 강의 구매 후 이용 가능
+                💡 무료 {MAX_USAGE_COUNT}회 제공
               </span>
             </p>
           </div>
