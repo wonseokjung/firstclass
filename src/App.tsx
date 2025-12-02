@@ -20,6 +20,7 @@ const LoadingSpinner: React.FC = () => (
 const MainPage = React.lazy(() => import('./components/pages/MainPage'));
 const AICityMapPage = React.lazy(() => import('./components/pages/AICityMapPage'));
 const AIConstructionSitePage = React.lazy(() => import('./components/pages/AIConstructionSitePage'));
+const Step1IdeaGeneratorPage = React.lazy(() => import('./components/pages/construction/Step1IdeaGeneratorPage'));
 const ChatGPTPrompts40Page = React.lazy(() => import('./components/pages/ChatGPTPrompts40Page'));
 const AIMoneyMasterPromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyMasterPromptsPage'));
 const AIMoneyImagePromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyImagePromptsPage'));
@@ -577,6 +578,15 @@ const ChatGPTCoursePageWrapper = () => {
       </Suspense>
     );
   };
+
+  const Step1IdeaGeneratorPageWrapper = () => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <Step1IdeaGeneratorPage onBack={() => navigate('/ai-construction-site')} />
+      </Suspense>
+    );
+  };
   
   
   
@@ -624,6 +634,7 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/contact" element={<ContactPageWrapper />} />
               <Route path="/ai-city-map" element={<AICityMapPageWrapper />} />
               <Route path="/ai-construction-site" element={<AIConstructionSitePageWrapper />} />
+              <Route path="/ai-construction-site/step1" element={<Step1IdeaGeneratorPageWrapper />} />
               <Route path="/chatgpt-prompts-40plus" element={<ChatGPTPrompts40PageWrapper />} />
               <Route path="/ai-money-master-prompts" element={<AIMoneyMasterPromptsPageWrapper />} />
               <Route path="/ai-money-image-prompts" element={<AIMoneyImagePromptsPageWrapper />} />

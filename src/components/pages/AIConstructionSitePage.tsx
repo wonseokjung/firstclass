@@ -29,8 +29,8 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
       title: '🎯 Step 1: 건물 설계',
       subtitle: '아이디어 발굴 & 시장 분석',
       icon: <Lightbulb size={32} />,
-      color: '#f59e0b',
-      gradient: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+      color: '#3b82f6',
+      gradient: 'linear-gradient(135deg, #60a5fa, #3b82f6)',
       description: 'AI가 당신의 관심사를 분석하고, 수익성 높은 사업 아이템과 유튜브 채널 주제를 추천해드립니다.',
       features: [
         '💡 AI 기반 사업 아이템 5가지 추천',
@@ -46,8 +46,8 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
       title: '🎨 Step 2: 기초 공사',
       subtitle: '채널 세팅 & 브랜딩',
       icon: <Settings size={32} />,
-      color: '#8b5cf6',
-      gradient: 'linear-gradient(135deg, #a78bfa, #8b5cf6)',
+      color: '#a855f7',
+      gradient: 'linear-gradient(135deg, #c084fc, #a855f7)',
       description: '채널명부터 로고, 배너까지 AI가 완벽한 브랜드 아이덴티티를 만들어드립니다.',
       features: [
         '✏️ AI 채널명 생성기 (10가지 옵션)',
@@ -63,8 +63,8 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
       title: '🎬 Step 3: 건물 짓기',
       subtitle: '콘텐츠 제작 (대본 → 영상)',
       icon: <Video size={32} />,
-      color: '#ef4444',
-      gradient: 'linear-gradient(135deg, #f87171, #ef4444)',
+      color: '#14b8a6',
+      gradient: 'linear-gradient(135deg, #5eead4, #14b8a6)',
       description: '대본 작성부터 영상 생성, 썸네일 제작까지 원스톱 자동화로 콘텐츠를 완성합니다.',
       features: [
         '📜 AI 대본 작성 (주제 입력 → 완성 스크립트)',
@@ -80,8 +80,8 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
       title: '✂️ Step 4: 인테리어',
       subtitle: '편집 & 자막 (최종 마무리)',
       icon: <FileText size={32} />,
-      color: '#06b6d4',
-      gradient: 'linear-gradient(135deg, #22d3ee, #06b6d4)',
+      color: '#f97316',
+      gradient: 'linear-gradient(135deg, #fb923c, #f97316)',
       description: '자막, 효과, 음악까지 AI가 자동으로 편집하여 전문가 수준의 영상을 완성합니다.',
       features: [
         '💬 자막 자동 생성 (Whisper API)',
@@ -120,8 +120,11 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
   };
 
   const handleStartStep = (stepId: number) => {
-    // TODO: 각 Step별 세부 페이지로 이동
-    alert(`Step ${stepId} 기능은 곧 출시됩니다! 🚀`);
+    if (stepId === 1) {
+      navigate('/ai-construction-site/step1');
+    } else {
+      alert(`Step ${stepId} 기능은 곧 출시됩니다! 🚀`);
+    }
   };
 
   return (
