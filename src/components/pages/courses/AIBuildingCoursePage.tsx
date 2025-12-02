@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Clock, Play, ChevronDown, ChevronRight, BookOpen, Wrench, Image } from 'lucide-react';
+import { Clock, ChevronDown, ChevronRight, BookOpen, Wrench, Image } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
 import AzureTableService from '../../../services/azureTableService';
 import { allCourses } from '../../../data/courseData';
