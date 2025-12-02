@@ -163,3 +163,4 @@ Pricing Tier: Standard
 - [Azure OpenAI Quickstart](https://learn.microsoft.com/azure/ai-services/openai/quickstart)
 - [Azure Functions 문서](https://learn.microsoft.com/azure/azure-functions/)
 
+# Azure OpenAI 환경 변수 설정 완료 - Tue Dec  2 21:15:22 KST 2025
