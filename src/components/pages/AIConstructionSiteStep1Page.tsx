@@ -35,20 +35,30 @@ const AIConstructionSiteStep1Page: React.FC = () => {
   useEffect(() => {
     const loadUsageCount = async () => {
       const currentUser = getCurrentUser();
+      console.log('🔍 현재 로그인 사용자:', currentUser);
+      
       if (!currentUser) {
+        console.warn('⚠️ 로그인된 사용자 없음');
         navigate('/login');
         return;
       }
 
       try {
+        console.log('📊 Azure Table에서 사용자 정보 로드 중...', currentUser.email);
         const user = await AzureTableService.getUserByEmail(currentUser.email);
+        console.log('📦 Azure Table 사용자 정보:', user);
+        
         if (user) {
           const count = user.aiRecommendationUsageCount || 0;
+          console.log('🎯 AI 추천 사용 횟수:', count);
           setUsageCount(count);
           setRemainingCount(MAX_USAGE_COUNT - count);
+          console.log(`✅ 남은 횟수: ${MAX_USAGE_COUNT - count}회`);
+        } else {
+          console.error('❌ 사용자 정보를 찾을 수 없음');
         }
       } catch (error) {
-        console.error('사용 횟수 로드 실패:', error);
+        console.error('❌ 사용 횟수 로드 실패:', error);
       }
     };
 

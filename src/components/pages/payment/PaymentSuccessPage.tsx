@@ -193,6 +193,13 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               price: 299000
             };
             setCourseName('AI 건물 짓기 - 디지털 건축가 과정');
+          } else if (courseParam === '999' || courseParam === 'ai-building-course') {
+            courseData = {
+              id: '999',
+              title: 'Step 1: AI 건물주 되기 기초',
+              price: actualAmount || 45000  // 얼리버드 45,000원
+            };
+            setCourseName('Step 1: AI 건물주 되기 기초');
           } else if (courseParam === '1002' || courseParam === 'chatgpt-agent-beginner') {
             courseData = {
               id: '1002',

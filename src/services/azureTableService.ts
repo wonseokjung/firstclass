@@ -2465,12 +2465,13 @@ export class AzureTableService {
         return false;
       }
 
+      console.log(`🔑 실제 RowKey: ${user.rowKey}`);
       const currentCount = user.aiRecommendationUsageCount || 0;
       const newCount = currentCount + 1;
 
       const updatedUser = {
         PartitionKey: 'users',
-        RowKey: email,
+        RowKey: user.rowKey, // 🔧 이메일이 아닌 실제 RowKey 사용!
         email: user.email,
         name: user.name,
         phone: user.phone || '',
@@ -2498,7 +2499,7 @@ export class AzureTableService {
 
       const baseUrl = AZURE_SAS_URLS.users.split('?')[0];
       const sasToken = AZURE_SAS_URLS.users.split('?')[1];
-      const url = `${baseUrl}(PartitionKey='users',RowKey='${encodeURIComponent(email)}')?${sasToken}`;
+      const url = `${baseUrl}(PartitionKey='users',RowKey='${encodeURIComponent(user.rowKey)}')?${sasToken}`;
 
       const response = await this.retryRequest(url, {
         method: 'PUT',

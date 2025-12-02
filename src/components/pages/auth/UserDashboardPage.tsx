@@ -895,9 +895,9 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 const courseInfoMap: { [key: string]: string } = {
                   '1002': 'Google Opal 유튜브 수익화 에이전트 기초',
                   'chatgpt-agent-beginner': 'Google Opal 유튜브 수익화 에이전트 기초',
-                  '999': 'AI 건물 짓기 - 디지털 건축가 과정',
+                  '999': 'Step 1: AI 건물주 되기 기초',
                   'ai-building': 'AI 건물 짓기 - 디지털 건축가 과정',
-                  'ai-building-course': 'AI 건물 짓기 - 디지털 건축가 과정',
+                  'ai-building-course': 'Step 1: AI 건물주 되기 기초',
                   'workflow-automation': 'AI 건물 짓기 - 디지털 건축가 과정',
                   'prompt-engineering': 'AI 건물 짓기 - 디지털 건축가 과정'
                 };
