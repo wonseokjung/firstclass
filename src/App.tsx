@@ -18,7 +18,6 @@ const LoadingSpinner: React.FC = () => (
 // 동적 임포트로 코드 스플리팅
 // 메인 페이지
 const MainPage = React.lazy(() => import('./components/pages/MainPage'));
-const AICityMapPage = React.lazy(() => import('./components/pages/AICityMapPage'));
 const AIConstructionSitePage = React.lazy(() => import('./components/pages/AIConstructionSitePage'));
 const AIConstructionSiteStep1Page = React.lazy(() => import('./components/pages/AIConstructionSiteStep1Page'));
 const ChatGPTPrompts40Page = React.lazy(() => import('./components/pages/ChatGPTPrompts40Page'));
@@ -225,15 +224,6 @@ const ChatGPTCoursePageWrapper = () => {
     return (
       <Suspense fallback={<LoadingSpinner />}>
         <PaymentFailPage onBack={() => navigate('/')} />
-      </Suspense>
-    );
-  };
-  
-  const AICityMapPageWrapper = () => {
-    const navigate = useNavigate();
-    return (
-      <Suspense fallback={<LoadingSpinner />}>
-        <AICityMapPage onBack={() => navigate('/')} />
       </Suspense>
     );
   };
@@ -655,7 +645,6 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/ceo" element={<CEOPageWrapper />} />
               <Route path="/contact" element={<ContactPageWrapper />} />
               <Route path="/clubs" element={<ClubsPageWrapper />} />
-              <Route path="/ai-city-map" element={<AICityMapPageWrapper />} />
               <Route path="/ai-construction-site" element={<AIConstructionSitePageWrapper />} />
               <Route path="/ai-construction-site/step1" element={<AIConstructionSiteStep1PageWrapper />} />
               <Route path="/chatgpt-prompts-40plus" element={<ChatGPTPrompts40PageWrapper />} />
