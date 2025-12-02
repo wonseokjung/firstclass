@@ -88,10 +88,21 @@ ${dailyRoutine ? `하루 일과: ${dailyRoutine}` : ''}
       // 사용 횟수 증가 (Azure Table에 저장)
       const currentUser = getCurrentUser();
       if (currentUser) {
-        const newCount = usageCount + 1;
-        await AzureTableService.incrementAIRecommendationUsage(currentUser.email);
-        setUsageCount(newCount);
-        setRemainingCount(MAX_USAGE_COUNT - newCount);
+        try {
+          console.log('📊 사용 횟수 증가 시도...', currentUser.email);
+          const success = await AzureTableService.incrementAIRecommendationUsage(currentUser.email);
+          
+          if (success) {
+            const newCount = usageCount + 1;
+            setUsageCount(newCount);
+            setRemainingCount(MAX_USAGE_COUNT - newCount);
+            console.log('✅ 사용 횟수 증가 성공:', newCount);
+          } else {
+            console.error('❌ 사용 횟수 증가 실패 (Azure Table 저장 실패)');
+          }
+        } catch (incrementError) {
+          console.error('❌ 사용 횟수 증가 중 에러:', incrementError);
+        }
       }
 
       console.log('✅ 추천 성공!', result);
