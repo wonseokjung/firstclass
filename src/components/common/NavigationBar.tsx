@@ -77,7 +77,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
             className="nav-link" 
             onClick={() => navigate('/dashboard')}
           >
-            📚 내 강의 보기
+            📚 강의
           </button>
           {isAdmin && (
             <button 
@@ -86,12 +86,13 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               style={{ 
                 background: 'linear-gradient(135deg, #ef4444, #dc2626)',
                 color: 'white',
-                padding: '8px 16px',
+                padding: '8px 14px',
                 borderRadius: '8px',
-                fontWeight: '700'
+                fontWeight: '700',
+                fontSize: '0.85rem'
               }}
             >
-              🔧 관리자
+              🔧
             </button>
           )}
           <span className="user-welcome">안녕하세요, {userInfo?.name || userInfo?.email}님!</span>
@@ -127,7 +128,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                     <div className="header-right desktop-nav">
               <button className="nav-link" onClick={() => navigate('/ceo')}>소개</button>
               <button className="nav-link" onClick={() => navigate('/ai-construction-site')}>🏗️ AI 도시 공사장</button>
-              <button 
+              {/* <button 
                 className="nav-link" 
                 onClick={() => navigate('/clubs')}
                 style={{ 
@@ -139,7 +140,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                 }}
               >
                 🏆 건물주 클럽
-              </button>
+              </button> */}
               {/* <button className="nav-link" onClick={() => navigate('/ai-city-map')}>🏙️ AI CITY</button> */}
               <button className="nav-link" onClick={onFAQClick || (() => navigate('/faq'))}>FAQ</button>
               <a 
@@ -149,18 +150,26 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                 className="nav-link"
                 style={{ 
                   background: '#FFE812',
-                  color: '#381E1E',
-                  padding: '8px 16px',
+                  color: '#1e293b',
+                  padding: '8px 14px',
                   borderRadius: '8px',
-                  fontWeight: '700',
+                  fontWeight: '800',
                   textDecoration: 'none',
                   display: 'inline-block',
-                  transition: 'all 0.2s'
+                  transition: 'all 0.2s',
+                  fontSize: '0.85rem',
+                  boxShadow: '0 2px 10px rgba(255, 232, 18, 0.3)'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.background = '#FDD700'}
-                onMouseOut={(e) => e.currentTarget.style.background = '#FFE812'}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = '#FDD700';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = '#FFE812';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
               >
-                💬 실시간 문의
+                💬 문의
               </a>
               {renderAuthButtons()}
             </div>
@@ -193,7 +202,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               🏗️ AI 도시 공사장
             </button>
 
-            <button 
+            {/* <button 
               className="mobile-nav-link" 
               onClick={() => handleMobileNavClick(() => navigate('/clubs'))}
               style={{ 
@@ -203,7 +212,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               }}
             >
               🏆 건물주 클럽
-            </button>
+            </button> */}
 
             {/* <button 
               className="mobile-nav-link" 
@@ -226,11 +235,12 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               className="mobile-nav-link"
               style={{ 
                 background: '#FFE812',
-                color: '#381E1E',
-                fontWeight: '700',
+                color: '#1e293b',
+                fontWeight: '800',
                 textDecoration: 'none',
                 display: 'block',
-                textAlign: 'left'
+                textAlign: 'left',
+                boxShadow: '0 2px 10px rgba(255, 232, 18, 0.3)'
               }}
               onClick={() => setIsMobileMenuOpen(false)}
             >

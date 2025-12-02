@@ -364,14 +364,15 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             <div style={{ textAlign: 'center', marginBottom: 'clamp(40px, 7vw, 60px)', position: 'relative', zIndex: 1 }}>
               <div style={{
                 display: 'inline-block',
-                background: 'rgba(251, 191, 36, 0.1)',
+                background: 'linear-gradient(135deg, #1e40af, #1e3a8a)',
                 border: '2px solid #fbbf24',
                 padding: '8px 20px',
                 borderRadius: '999px',
                 marginBottom: '20px',
                 fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
                 fontWeight: '700',
-                color: '#fbbf24'
+                color: '#fbbf24',
+                boxShadow: '0 4px 15px rgba(251, 191, 36, 0.3)'
               }}>
                 ✨ 실제 결과물
               </div>
@@ -538,7 +539,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-8px)';
                 e.currentTarget.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.3)';
-                e.currentTarget.style.borderColor = '#3b82f6';
+                e.currentTarget.style.borderColor = '#1d4ed8';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
@@ -592,118 +593,88 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 </div>
               </div>
 
-              {/* 워크플로우 4: 유튜브 채널 생성 (Day 7) */}
-              <div style={{
-                background: 'white',
-                borderRadius: 'clamp(12px, 2.5vw, 18px)',
-                overflow: 'hidden',
-                boxShadow: '0 15px 40px rgba(0, 0, 0, 0.2)',
-                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                border: '2px solid #e2e8f0'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-8px)';
-                e.currentTarget.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.3)';
-                e.currentTarget.style.borderColor = '#3b82f6';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.2)';
-                e.currentTarget.style.borderColor = '#e2e8f0';
-              }}>
-                <div style={{
-                  padding: 'clamp(18px, 3vw, 25px)',
-                  background: '#f8fafc'
-                }}>
-                  <img 
-                    src="/images/day5/day7.png"
-                    alt="Day 7 - 유튜브 채널 자동 생성 워크플로우"
-                    style={{
-                      width: '100%',
-                      height: 'auto',
-                      borderRadius: '8px',
-                      marginBottom: '15px'
-                    }}
-                  />
-                </div>
-                <div style={{ padding: 'clamp(18px, 3vw, 25px)' }}>
-                  <div style={{
-                    display: 'inline-block',
-                    background: 'rgba(244, 63, 94, 0.15)',
-                    color: '#f43f5e',
-                    padding: '4px 12px',
-                    borderRadius: '999px',
-                    fontSize: 'clamp(0.75rem, 1.7vw, 0.85rem)',
-                    fontWeight: '700',
-                    marginBottom: '10px'
-                  }}>
-                    Day 7 - 워크플로우
-                  </div>
-                  <h4 style={{
-                    fontSize: 'clamp(1.1rem, 2.3vw, 1.3rem)',
-                    fontWeight: '800',
-                    color: '#1e293b',
-                    marginBottom: '10px'
-                  }}>
-                    📺 유튜브 채널 자동 생성
-                  </h4>
-                  <p style={{
-                    fontSize: 'clamp(0.9rem, 2vw, 1rem)',
-                    color: '#64748b',
-                    lineHeight: '1.6',
-                    margin: 0
-                  }}>
-                    11개 AI 에이전트로 채널 세팅부터 브랜딩까지 원스톱 자동화
-                  </p>
-                </div>
-              </div>
-
             </div>
 
             {/* 하단 Google OPAL 무료 강조 */}
             <div style={{
               textAlign: 'center',
-              marginTop: 'clamp(50px, 8vw, 70px)',
-              padding: 'clamp(30px, 5vw, 40px)',
-              background: 'rgba(59, 130, 246, 0.12)',
-              borderRadius: '16px',
-              border: '2px solid rgba(59, 130, 246, 0.3)',
+              marginTop: 'clamp(60px, 9vw, 80px)',
+              padding: 'clamp(40px, 6vw, 55px) clamp(30px, 5vw, 45px)',
+              background: 'linear-gradient(135deg, #1e293b, #334155)',
+              borderRadius: '25px',
+              border: '4px solid #fbbf24',
               position: 'relative',
-              zIndex: 1
+              zIndex: 1,
+              boxShadow: '0 20px 60px rgba(30, 41, 59, 0.4)',
+              overflow: 'hidden'
             }}>
+              {/* 배경 장식 */}
               <div style={{
-                fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
-                marginBottom: '20px'
+                position: 'absolute',
+                top: '-80px',
+                right: '-80px',
+                width: '250px',
+                height: '250px',
+                background: 'rgba(251, 191, 36, 0.15)',
+                borderRadius: '50%',
+                filter: 'blur(80px)'
+              }}></div>
+
+              <div style={{
+                position: 'relative',
+                zIndex: 1
               }}>
-                🚀
+                <div style={{
+                  display: 'inline-block',
+                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  borderRadius: '50%',
+                  padding: '18px',
+                  marginBottom: '25px',
+                  boxShadow: '0 10px 30px rgba(251, 191, 36, 0.5)'
+                }}>
+                  <div style={{
+                    fontSize: 'clamp(2.5rem, 6vw, 3.5rem)'
+                  }}>
+                    🚀
+                  </div>
+                </div>
+                <h3 style={{
+                  fontSize: 'clamp(1.6rem, 3.5vw, 2.2rem)',
+                  fontWeight: '900',
+                  color: '#fbbf24',
+                  marginBottom: '25px',
+                  lineHeight: '1.3',
+                  textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
+                }}>
+                  Google OPAL = 100% 무료 AI 자동화
+                </h3>
+                <p style={{
+                  fontSize: 'clamp(1.05rem, 2.5vw, 1.3rem)',
+                  color: '#e0f2fe',
+                  lineHeight: '2',
+                  margin: '0 auto',
+                  maxWidth: '800px',
+                  fontWeight: '500'
+                }}>
+                  💬 <strong style={{ color: '#fbbf24' }}>Gemini 2.5 Flash</strong> <span style={{ color: '#cbd5e1' }}>(텍스트 생성)</span><br />
+                  🎬 <strong style={{ color: '#fbbf24' }}>Veo</strong> <span style={{ color: '#cbd5e1' }}>(영상 생성)</span><br />
+                  🎨 <strong style={{ color: '#fbbf24' }}>Imagen</strong> <span style={{ color: '#cbd5e1' }}>(이미지 생성)</span><br />
+                  🎙️ <strong style={{ color: '#fbbf24' }}>AudioLM</strong> <span style={{ color: '#cbd5e1' }}>(음성 생성)</span><br />
+                  <br />
+                  <span style={{
+                    fontSize: 'clamp(1.2rem, 2.8vw, 1.5rem)',
+                    fontWeight: '900',
+                    color: 'white',
+                    background: 'rgba(251, 191, 36, 0.2)',
+                    padding: '8px 20px',
+                    borderRadius: '12px',
+                    display: 'inline-block',
+                    border: '2px solid rgba(251, 191, 36, 0.4)'
+                  }}>
+                    모두 무료로 사용하며 콘텐츠 자동화 에이전트를 구축합니다!
+                  </span>
+                </p>
               </div>
-              <h3 style={{
-                fontSize: 'clamp(1.3rem, 3vw, 1.8rem)',
-                fontWeight: '800',
-                color: 'white',
-                marginBottom: '18px',
-                lineHeight: '1.3'
-              }}>
-                Google OPAL = 100% 무료 AI 자동화
-              </h3>
-              <p style={{
-                fontSize: 'clamp(1rem, 2.3vw, 1.2rem)',
-                color: 'rgba(255,255,255,0.9)',
-                lineHeight: '1.9',
-                margin: 0,
-                maxWidth: '750px',
-                marginLeft: 'auto',
-                marginRight: 'auto'
-              }}>
-                💬 <strong>Gemini 2.5 Flash</strong> (텍스트 생성)<br />
-                🎬 <strong>Veo</strong> (영상 생성)<br />
-                🎨 <strong>Imagen</strong> (이미지 생성)<br />
-                🎙️ <strong>AudioLM</strong> (음성 생성)<br />
-                <br />
-                <span style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.35rem)', fontWeight: '800', color: '#60a5fa' }}>
-                  모두 무료로 사용하며 콘텐츠 자동화 에이전트를 구축합니다!
-                </span>
-              </p>
             </div>
           </div>
 
@@ -721,10 +692,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 justifyContent: 'center',
                 width: 'clamp(60px, 12vw, 80px)',
                 height: 'clamp(60px, 12vw, 80px)',
-                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                background: 'linear-gradient(135deg, #1e40af, #1e3a8a)',
                 borderRadius: '50%',
                 marginBottom: 'clamp(15px, 4vw, 25px)',
-                boxShadow: '0 4px 15px rgba(14, 165, 233, 0.3)'
+                boxShadow: '0 4px 15px rgba(30, 64, 175, 0.3)'
               }}>
                 <span style={{ fontSize: 'clamp(2rem, 5vw, 2.5rem)' }}>🤖</span>
               </div>
@@ -784,12 +755,12 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
             {/* 가격 & CTA 박스 - 강력한 시각적 강조 */}
             <div style={{
-              background: 'linear-gradient(135deg, #1e40af, #0ea5e9)',
+              background: 'linear-gradient(135deg, #1e40af, #1e40af)',
               borderRadius: '25px',
               padding: 'clamp(40px, 6vw, 60px) clamp(30px, 5vw, 50px)',
               marginBottom: '30px',
               border: '4px solid #93c5fd',
-              boxShadow: '0 20px 60px rgba(14, 165, 233, 0.4)',
+              boxShadow: '0 20px 60px rgba(30, 64, 175, 0.4)',
               position: 'relative',
               overflow: 'hidden'
             }}>
@@ -976,105 +947,155 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
           {/* 우리의 미션 섹션 */}
           <div style={{
-            background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
+            background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
             borderRadius: '20px',
-            padding: 'clamp(30px, 5vw, 50px) clamp(20px, 4vw, 40px)',
-            marginBottom: '50px',
-            boxShadow: '0 10px 30px rgba(14, 165, 233, 0.1)',
-            border: '2px solid #bae6fd'
+            padding: 'clamp(40px, 6vw, 60px) clamp(30px, 5vw, 50px)',
+            marginBottom: '60px',
+            boxShadow: '0 20px 60px rgba(30, 41, 59, 0.4)',
+            border: '3px solid #fbbf24',
+            position: 'relative',
+            overflow: 'hidden'
           }}>
+            {/* 배경 장식 */}
             <div style={{
+              position: 'absolute',
+              top: '-150px',
+              right: '-150px',
+              width: '400px',
+              height: '400px',
+              background: 'rgba(251, 191, 36, 0.1)',
+              borderRadius: '50%',
+              filter: 'blur(100px)'
+            }}></div>
+
+            <div style={{
+              position: 'relative',
+              zIndex: 1,
               textAlign: 'center',
-              marginBottom: '40px'
+              marginBottom: '50px'
             }}>
               <div style={{
-                fontSize: '2.5rem',
-                marginBottom: '20px'
-              }}>💡</div>
+                display: 'inline-block',
+                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                borderRadius: '50%',
+                padding: '20px',
+                marginBottom: '25px',
+                boxShadow: '0 10px 30px rgba(251, 191, 36, 0.4)'
+              }}>
+                <div style={{ fontSize: '3rem' }}>💡</div>
+              </div>
               <h2 style={{
-                fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
-                fontWeight: '800',
-                color: '#0369a1',
-                marginBottom: '20px'
+                fontSize: 'clamp(2rem, 4.5vw, 3rem)',
+                fontWeight: '900',
+                color: 'white',
+                marginBottom: '30px',
+                textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
               }}>
                 우리의 미션
               </h2>
               <div style={{
-                fontSize: 'clamp(1.1rem, 2vw, 1.3rem)',
-                color: '#0c4a6e',
-                lineHeight: '1.8',
-                maxWidth: '800px',
+                fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+                color: '#e0f2fe',
+                lineHeight: '1.9',
+                maxWidth: '900px',
                 margin: '0 auto'
               }}>
-                <p style={{ marginBottom: '20px', fontWeight: '600' }}>
+                <p style={{ marginBottom: '25px', fontWeight: '600', color: '#fbbf24', fontSize: 'clamp(1.2rem, 2.8vw, 1.6rem)' }}>
                   과도하게 비싼 AI 교육 가격을 낮추고 싶습니다.
                 </p>
-                <p style={{ marginBottom: '20px' }}>
-                  AI 교육은 누구나 접근할 수 있어야 합니다. 하지만 현실은 수십만 원에서 수백만 원의 높은 가격 장벽이 존재합니다.
+                <p style={{ marginBottom: '25px', color: '#cbd5e1' }}>
+                  AI 교육은 누구나 접근할 수 있어야 합니다.<br/>
+                  하지만 현실은 <strong style={{ color: '#fbbf24' }}>수십만 원에서 수백만 원</strong>의 높은 가격 장벽이 존재합니다.
                 </p>
-                <p style={{ marginBottom: '20px', fontWeight: '600', color: '#0ea5e9' }}>
+                <p style={{ marginBottom: '25px', fontWeight: '700', color: 'white', fontSize: 'clamp(1.2rem, 2.8vw, 1.5rem)' }}>
                   그래서 우리는 직접 플랫폼을 만들었습니다.
                 </p>
-                <p style={{ marginBottom: '0' }}>
+                <p style={{ marginBottom: '0', color: '#cbd5e1' }}>
                   Jay 멘토가 직접 강의를 제작하고, 중간 유통 비용 없이 여러분께 전달합니다. 
-                  이것이 바로 <strong style={{ color: '#0369a1' }}>AI City Builders</strong>의 시작입니다.
+                  이것이 바로 <strong style={{ color: '#fbbf24', fontSize: '1.1em' }}>AI City Builders</strong>의 시작입니다.
                 </p>
               </div>
             </div>
 
             <div style={{
+              position: 'relative',
+              zIndex: 1,
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '20px',
-              marginTop: '40px'
+              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+              gap: '25px',
+              marginTop: '50px'
             }}>
               <div style={{
-                background: 'white',
-                borderRadius: '15px',
-                padding: '30px',
+                background: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '20px',
+                padding: '35px 25px',
                 textAlign: 'center',
-                boxShadow: '0 4px 15px rgba(14, 165, 233, 0.1)',
-                border: '1px solid #bae6fd'
-              }}>
-                <div style={{ fontSize: '2rem', marginBottom: '15px' }}>🎯</div>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#0369a1', marginBottom: '10px' }}>
+                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
+                border: '2px solid #fbbf24',
+                transition: 'transform 0.3s ease',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-8px)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+                <div style={{
+                  fontSize: '2.5rem',
+                  marginBottom: '20px',
+                  filter: 'drop-shadow(0 4px 8px rgba(251, 191, 36, 0.3))'
+                }}>🎯</div>
+                <h3 style={{ fontSize: '1.3rem', fontWeight: '800', color: '#1e40af', marginBottom: '12px' }}>
                   합리적인 가격
                 </h3>
-                <p style={{ fontSize: '0.95rem', color: '#64748b', lineHeight: '1.6', margin: '0' }}>
+                <p style={{ fontSize: '1rem', color: '#64748b', lineHeight: '1.7', margin: '0', fontWeight: '500' }}>
                   중간 유통 비용 없이<br/>직접 제작·판매
                 </p>
               </div>
 
               <div style={{
-                background: 'white',
-                borderRadius: '15px',
-                padding: '30px',
+                background: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '20px',
+                padding: '35px 25px',
                 textAlign: 'center',
-                boxShadow: '0 4px 15px rgba(14, 165, 233, 0.1)',
-                border: '1px solid #bae6fd'
-              }}>
-                <div style={{ fontSize: '2rem', marginBottom: '15px' }}>👨‍🏫</div>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#0369a1', marginBottom: '10px' }}>
+                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
+                border: '2px solid #fbbf24',
+                transition: 'transform 0.3s ease',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-8px)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+                <div style={{
+                  fontSize: '2.5rem',
+                  marginBottom: '20px',
+                  filter: 'drop-shadow(0 4px 8px rgba(251, 191, 36, 0.3))'
+                }}>👨‍🏫</div>
+                <h3 style={{ fontSize: '1.3rem', fontWeight: '800', color: '#1e40af', marginBottom: '12px' }}>
                   실전 경험
                 </h3>
-                <p style={{ fontSize: '0.95rem', color: '#64748b', lineHeight: '1.6', margin: '0' }}>
+                <p style={{ fontSize: '1rem', color: '#64748b', lineHeight: '1.7', margin: '0', fontWeight: '500' }}>
                   현업 AI 전문가의<br/>생생한 노하우
                 </p>
               </div>
 
               <div style={{
-                background: 'white',
-                borderRadius: '15px',
-                padding: '30px',
+                background: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '20px',
+                padding: '35px 25px',
                 textAlign: 'center',
-                boxShadow: '0 4px 15px rgba(14, 165, 233, 0.1)',
-                border: '1px solid #bae6fd'
-              }}>
-                <div style={{ fontSize: '2rem', marginBottom: '15px' }}>🌱</div>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#0369a1', marginBottom: '10px' }}>
+                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
+                border: '2px solid #fbbf24',
+                transition: 'transform 0.3s ease',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-8px)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+                <div style={{
+                  fontSize: '2.5rem',
+                  marginBottom: '20px',
+                  filter: 'drop-shadow(0 4px 8px rgba(251, 191, 36, 0.3))'
+                }}>🌱</div>
+                <h3 style={{ fontSize: '1.3rem', fontWeight: '800', color: '#1e40af', marginBottom: '12px' }}>
                   지속 성장
                 </h3>
-                <p style={{ fontSize: '0.95rem', color: '#64748b', lineHeight: '1.6', margin: '0' }}>
+                <p style={{ fontSize: '1rem', color: '#64748b', lineHeight: '1.7', margin: '0', fontWeight: '500' }}>
                   구매 후 1년간<br/>무제한 학습
                 </p>
               </div>
@@ -1099,7 +1120,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               padding: 'clamp(30px, 5vw, 40px)',
                 borderRadius: '15px',
               marginBottom: '50px',
-                border: '2px solid #0ea5e9',
+                border: '2px solid #1e40af',
                 textAlign: 'center'
               }}>
                 <div style={{
@@ -1111,7 +1132,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   flexWrap: 'wrap'
                 }}>
                   <div style={{
-                    background: '#0ea5e9',
+                    background: '#1e40af',
                     color: 'white',
                   padding: '12px 24px',
                     borderRadius: '25px',
@@ -1121,7 +1142,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     🏢 커넥젼에이아이 대표
                   </div>
                   <div style={{
-                    background: '#0ea5e9',
+                    background: '#1e40af',
                     color: 'white',
                   padding: '12px 24px',
                     borderRadius: '25px',
@@ -1131,7 +1152,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     🎓 서울사이버대학교 대우교수
                   </div>
                   <div style={{
-                    background: '#0ea5e9',
+                    background: '#1e40af',
                     color: 'white',
                   padding: '12px 24px',
                     borderRadius: '25px',
@@ -1179,12 +1200,12 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     background: '#ffffff',
                   padding: '30px',
                     borderRadius: '15px',
-                    border: '2px solid #0ea5e9',
+                    border: '2px solid #1e40af',
                     textAlign: 'center',
-                    boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)'
+                    boxShadow: '0 5px 15px rgba(30, 64, 175, 0.1)'
                   }}>
                     <div style={{
-                      background: '#0ea5e9',
+                      background: '#1e40af',
                       color: 'white',
                     padding: '10px 20px',
                     borderRadius: '25px',
@@ -1212,7 +1233,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                       Illinois Institute of Technology
                     </p>
                     <p style={{
-                      color: '#0ea5e9',
+                      color: '#1e40af',
                     fontSize: 'clamp(1.1rem, 2vw, 1.2rem)',
                       fontWeight: '700',
                     marginBottom: '25px'
@@ -1221,10 +1242,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     </p>
                     
                     <div style={{
-                      background: 'rgba(14, 165, 233, 0.05)',
+                      background: 'rgba(30, 64, 175, 0.05)',
                       padding: '15px',
                       borderRadius: '10px',
-                      border: '1px solid rgba(14, 165, 233, 0.1)'
+                      border: '1px solid rgba(30, 64, 175, 0.1)'
                     }}>
                       <h5 style={{
                         fontSize: '1rem',
@@ -1244,7 +1265,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                       onClick={() => window.open('/images/illinoistch_graduation.png', '_blank')}
                       onMouseOver={(e) => {
                         e.currentTarget.style.transform = 'scale(1.02)';
-                        e.currentTarget.style.boxShadow = '0 5px 15px rgba(14, 165, 233, 0.2)';
+                        e.currentTarget.style.boxShadow = '0 5px 15px rgba(30, 64, 175, 0.2)';
                       }}
                       onMouseOut={(e) => {
                         e.currentTarget.style.transform = 'scale(1)';
@@ -1265,7 +1286,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                           position: 'absolute',
                           top: '10px',
                           right: '10px',
-                          background: '#0ea5e9',
+                          background: '#1e40af',
                           color: 'white',
                           padding: '5px 10px',
                           borderRadius: '15px',
@@ -1283,12 +1304,12 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     background: '#ffffff',
                   padding: '30px',
                     borderRadius: '15px',
-                    border: '2px solid #0ea5e9',
+                    border: '2px solid #1e40af',
                     textAlign: 'center',
-                    boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)'
+                    boxShadow: '0 5px 15px rgba(30, 64, 175, 0.1)'
                   }}>
                     <div style={{
-                      background: '#0ea5e9',
+                      background: '#1e40af',
                       color: 'white',
                     padding: '10px 20px',
                     borderRadius: '25px',
@@ -1316,7 +1337,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                       City University of New York - Baruch College
                     </p>
                     <p style={{
-                      color: '#0ea5e9',
+                      color: '#1e40af',
                     fontSize: 'clamp(1.1rem, 2vw, 1.2rem)',
                       fontWeight: '700',
                     marginBottom: '25px'
@@ -1325,10 +1346,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     </p>
                     
                     <div style={{
-                      background: 'rgba(14, 165, 233, 0.05)',
+                      background: 'rgba(30, 64, 175, 0.05)',
                       padding: '15px',
                       borderRadius: '10px',
-                      border: '1px solid rgba(14, 165, 233, 0.1)'
+                      border: '1px solid rgba(30, 64, 175, 0.1)'
                     }}>
                       <h5 style={{
                         fontSize: '1rem',
@@ -1348,7 +1369,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                       onClick={() => window.open('/images/baruch_graduation.png', '_blank')}
                       onMouseOver={(e) => {
                         e.currentTarget.style.transform = 'scale(1.02)';
-                        e.currentTarget.style.boxShadow = '0 5px 15px rgba(14, 165, 233, 0.2)';
+                        e.currentTarget.style.boxShadow = '0 5px 15px rgba(30, 64, 175, 0.2)';
                       }}
                       onMouseOut={(e) => {
                         e.currentTarget.style.transform = 'scale(1)';
@@ -1369,7 +1390,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                           position: 'absolute',
                           top: '10px',
                           right: '10px',
-                          background: '#0ea5e9',
+                          background: '#1e40af',
                           color: 'white',
                           padding: '5px 10px',
                           borderRadius: '15px',
@@ -1384,53 +1405,233 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 </div>
               </div>
 
-            {/* 주요 경력 섹션 - 간결한 텍스트 형식 */}
+            {/* 주요 경력 섹션 - 타임라인 형식 */}
               <div style={{
-                background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
-              padding: 'clamp(30px, 5vw, 50px)',
-              borderRadius: '15px',
-                border: '2px solid #e2e8f0',
-              marginBottom: '50px'
+                background: 'linear-gradient(135deg, #1e293b, #334155)',
+              padding: 'clamp(40px, 6vw, 60px) clamp(30px, 5vw, 50px)',
+              borderRadius: '20px',
+                border: '3px solid #fbbf24',
+              marginBottom: '60px',
+                boxShadow: '0 20px 60px rgba(30, 41, 59, 0.4)',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                {/* 배경 장식 */}
+                <div style={{
+                  position: 'absolute',
+                  top: '-100px',
+                  left: '-100px',
+                  width: '300px',
+                  height: '300px',
+                  background: 'rgba(251, 191, 36, 0.1)',
+                  borderRadius: '50%',
+                  filter: 'blur(100px)'
+                }}></div>
+
+                <div style={{
+                  position: 'relative',
+                  zIndex: 1
               }}>
                 <h3 style={{
-                  color: '#1f2937',
-                fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-                  fontWeight: '800',
-                  marginBottom: '30px',
-                textAlign: 'center'
+                    color: 'white',
+                  fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+                    fontWeight: '900',
+                    marginBottom: '50px',
+                  textAlign: 'center',
+                    textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
               }}>
                 💼 주요 경력
                 </h3>
                 
                 <div style={{
-                maxWidth: '900px',
+                  maxWidth: '1000px',
                 margin: '0 auto',
-                fontSize: 'clamp(1.05rem, 2vw, 1.2rem)',
-                lineHeight: '2.2',
-                color: '#1f2937'
-              }}>
-                <p style={{ marginBottom: '20px', fontWeight: '500' }}>
-                  <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>현재</strong> · 커넥젼에이아이 대표 · 서울사이버대학교 대우교수
-                </p>
-                <p style={{ marginBottom: '20px', fontWeight: '500' }}>
-                  <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>2023</strong> · 뤼튼 해커톤 1위 (AI 해킹 방어 툴 개발) · 블록체인 해커톤 2위
-                </p>
-                <p style={{ marginBottom: '20px', fontWeight: '500' }}>
-                  <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>2022</strong> · 메타 아시아 지역 글로벌 리더 선정 (4인 중 한 명)
-                </p>
-                <p style={{ marginBottom: '20px', fontWeight: '500' }}>
-                  <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>2020</strong> · AI 헬스케어 스타트업 옵트버스 설립 (기업가치 50억원)
-                </p>
-                <p style={{ marginBottom: '20px', fontWeight: '500' }}>
-                  <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>2019</strong> · 모두의연구소 인공지능 선임연구원 · AI COLLEGE 기획/운영 · 200명 이상 AI 연구원 양성
-                </p>
-                <p style={{ marginBottom: '20px', fontWeight: '500' }}>
-                  <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>2018</strong> · PostAI 강화학습 연구 · Best Poster Award 수상
-                </p>
-                <p style={{ marginBottom: '0', fontWeight: '500' }}>
-                  <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>2017</strong> · ConnexionAI 설립 · 200억 규모 AI 스마트팩토리 구축 프로젝트 컨설팅
+                    paddingLeft: 'clamp(20px, 4vw, 40px)',
+                    borderLeft: '4px solid #fbbf24'
+                }}>
+                  <div style={{ marginBottom: '35px', paddingLeft: '25px', position: 'relative' }}>
+                      <div style={{
+                        position: 'absolute',
+                        left: '-14px',
+                        top: '5px',
+                        width: '24px',
+                        height: '24px',
+                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        borderRadius: '50%',
+                        border: '4px solid #1e293b',
+                        boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)'
+                      }}></div>
+                      <p style={{ marginBottom: '12px', fontWeight: '600', fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)' }}>
+                      <strong style={{ 
+                          background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                          fontSize: 'clamp(1.3rem, 2.8vw, 1.6rem)',
+                          fontWeight: '900'
+                        }}>현재</strong>
+                      </p>
+                      <p style={{ color: '#e0f2fe', fontSize: 'clamp(1.05rem, 2.2vw, 1.2rem)', lineHeight: '1.8', margin: '0', fontWeight: '500' }}>
+                        커넥젼에이아이 대표 · 서울사이버대학교 대우교수
+                      </p>
+                    </div>
+
+                  <div style={{ marginBottom: '35px', paddingLeft: '25px', position: 'relative' }}>
+                      <div style={{
+                        position: 'absolute',
+                        left: '-14px',
+                        top: '5px',
+                        width: '24px',
+                        height: '24px',
+                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        borderRadius: '50%',
+                        border: '4px solid #1e293b',
+                        boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)'
+                      }}></div>
+                      <p style={{ marginBottom: '12px', fontWeight: '600', fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)' }}>
+                      <strong style={{ 
+                          background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                          fontSize: 'clamp(1.3rem, 2.8vw, 1.6rem)',
+                          fontWeight: '900'
+                        }}>2023</strong>
+                      </p>
+                      <p style={{ color: '#e0f2fe', fontSize: 'clamp(1.05rem, 2.2vw, 1.2rem)', lineHeight: '1.8', margin: '0', fontWeight: '500' }}>
+                        뤼튼 해커톤 1위 (AI 해킹 방어 툴 개발) · 블록체인 해커톤 2위
+                      </p>
+                    </div>
+
+                  <div style={{ marginBottom: '35px', paddingLeft: '25px', position: 'relative' }}>
+                      <div style={{
+                        position: 'absolute',
+                        left: '-14px',
+                        top: '5px',
+                        width: '24px',
+                        height: '24px',
+                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        borderRadius: '50%',
+                        border: '4px solid #1e293b',
+                        boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)'
+                      }}></div>
+                      <p style={{ marginBottom: '12px', fontWeight: '600', fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)' }}>
+                      <strong style={{ 
+                          background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                          fontSize: 'clamp(1.3rem, 2.8vw, 1.6rem)',
+                          fontWeight: '900'
+                        }}>2022</strong>
+                      </p>
+                      <p style={{ color: '#e0f2fe', fontSize: 'clamp(1.05rem, 2.2vw, 1.2rem)', lineHeight: '1.8', margin: '0', fontWeight: '500' }}>
+                        메타 아시아 지역 글로벌 리더 선정 (4인 중 한 명)
+                      </p>
+                    </div>
+
+                  <div style={{ marginBottom: '35px', paddingLeft: '25px', position: 'relative' }}>
+                      <div style={{
+                        position: 'absolute',
+                        left: '-14px',
+                        top: '5px',
+                        width: '24px',
+                        height: '24px',
+                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        borderRadius: '50%',
+                        border: '4px solid #1e293b',
+                        boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)'
+                      }}></div>
+                      <p style={{ marginBottom: '12px', fontWeight: '600', fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)' }}>
+                      <strong style={{ 
+                          background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                          fontSize: 'clamp(1.3rem, 2.8vw, 1.6rem)',
+                          fontWeight: '900'
+                        }}>2020</strong>
+                      </p>
+                      <p style={{ color: '#e0f2fe', fontSize: 'clamp(1.05rem, 2.2vw, 1.2rem)', lineHeight: '1.8', margin: '0', fontWeight: '500' }}>
+                        AI 헬스케어 스타트업 옵트버스 설립 (기업가치 50억원)
                     </p>
                   </div>
+
+                  <div style={{ marginBottom: '35px', paddingLeft: '25px', position: 'relative' }}>
+                      <div style={{
+                        position: 'absolute',
+                        left: '-14px',
+                        top: '5px',
+                        width: '24px',
+                        height: '24px',
+                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        borderRadius: '50%',
+                        border: '4px solid #1e293b',
+                        boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)'
+                      }}></div>
+                      <p style={{ marginBottom: '12px', fontWeight: '600', fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)' }}>
+                      <strong style={{ 
+                          background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                          fontSize: 'clamp(1.3rem, 2.8vw, 1.6rem)',
+                          fontWeight: '900'
+                        }}>2019</strong>
+                      </p>
+                      <p style={{ color: '#e0f2fe', fontSize: 'clamp(1.05rem, 2.2vw, 1.2rem)', lineHeight: '1.8', margin: '0', fontWeight: '500' }}>
+                        모두의연구소 인공지능 선임연구원 · AI COLLEGE 기획/운영 · 200명 이상 AI 연구원 양성
+                      </p>
+                    </div>
+
+                  <div style={{ marginBottom: '35px', paddingLeft: '25px', position: 'relative' }}>
+                      <div style={{
+                        position: 'absolute',
+                        left: '-14px',
+                        top: '5px',
+                        width: '24px',
+                        height: '24px',
+                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        borderRadius: '50%',
+                        border: '4px solid #1e293b',
+                        boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)'
+                      }}></div>
+                      <p style={{ marginBottom: '12px', fontWeight: '600', fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)' }}>
+                      <strong style={{ 
+                          background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                          fontSize: 'clamp(1.3rem, 2.8vw, 1.6rem)',
+                          fontWeight: '900'
+                        }}>2018</strong>
+                      </p>
+                      <p style={{ color: '#e0f2fe', fontSize: 'clamp(1.05rem, 2.2vw, 1.2rem)', lineHeight: '1.8', margin: '0', fontWeight: '500' }}>
+                        PostAI 강화학습 연구 · Best Poster Award 수상
+                      </p>
+                    </div>
+
+                  <div style={{ marginBottom: '0', paddingLeft: '25px', position: 'relative' }}>
+                      <div style={{
+                        position: 'absolute',
+                        left: '-14px',
+                        top: '5px',
+                        width: '24px',
+                        height: '24px',
+                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        borderRadius: '50%',
+                        border: '4px solid #1e293b',
+                        boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)'
+                      }}></div>
+                      <p style={{ marginBottom: '12px', fontWeight: '600', fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)' }}>
+                      <strong style={{ 
+                          background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                          fontSize: 'clamp(1.3rem, 2.8vw, 1.6rem)',
+                          fontWeight: '900'
+                        }}>2017</strong>
+                      </p>
+                      <p style={{ color: '#e0f2fe', fontSize: 'clamp(1.05rem, 2.2vw, 1.2rem)', lineHeight: '1.8', margin: '0', fontWeight: '500' }}>
+                        ConnexionAI 설립 · 200억 규모 AI 스마트팩토리 구축 프로젝트 컨설팅
+                      </p>
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
 
@@ -1451,10 +1652,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 justifyContent: 'center',
                 width: '80px',
                 height: '80px',
-                background: '#0ea5e9',
+                background: '#1e40af',
                 borderRadius: '50%',
                 marginBottom: '25px',
-                boxShadow: '0 8px 20px rgba(14, 165, 233, 0.3)'
+                boxShadow: '0 8px 20px rgba(30, 64, 175, 0.3)'
               }}>
                 <span style={{ fontSize: '2.5rem' }}>🤖</span>
               </div>
@@ -1470,7 +1671,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
               <p style={{
                 fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-                color: '#0ea5e9',
+                color: '#1e40af',
                 fontWeight: '600',
                 marginBottom: '30px'
               }}>
@@ -1492,9 +1693,9 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   margin: '0 0 30px 0',
                   fontWeight: '500'
                 }}>
-                  Google OPAL을 활용해 나만의 <strong style={{ color: '#0ea5e9' }}>수익화 에이전트</strong>를 만들고<br />
+                  Google OPAL을 활용해 나만의 <strong style={{ color: '#1e40af' }}>수익화 에이전트</strong>를 만들고<br />
                   실제 유튜브 컨텐츠 자동 생성 시스템을 구축하세요.<br />
-                  <strong style={{ color: '#0ea5e9' }}>10일 완성</strong> 실전 수익화 에이전트 개발 과정입니다.
+                  <strong style={{ color: '#1e40af' }}>10일 완성</strong> 실전 수익화 에이전트 개발 과정입니다.
                 </p>
                 </div>
               </div>
@@ -1505,41 +1706,77 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             maxWidth: '1100px',
             margin: '0 auto'
           }}>
+            <div style={{
+              textAlign: 'center',
+              marginBottom: '60px'
+            }}>
+              <div style={{
+                display: 'inline-block',
+                background: 'linear-gradient(135deg, #1e40af, #1e3a8a)',
+                border: '3px solid #fbbf24',
+                padding: '15px 30px',
+                borderRadius: '50px',
+                marginBottom: '25px',
+                boxShadow: '0 10px 30px rgba(30, 64, 175, 0.3)'
+          }}>
             <h3 style={{
-              color: '#1f2937',
-              fontSize: 'clamp(2rem, 4vw, 2.5rem)',
-              fontWeight: '800',
-              marginBottom: '15px',
-              textAlign: 'center'
+                  color: '#fbbf24',
+                  fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
+                  fontWeight: '900',
+                  margin: '0',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)'
             }}>
               📚 10일 완성 커리큘럼
             </h3>
+              </div>
             <p style={{
-              color: '#64748b',
-              fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-              marginBottom: '60px',
-              textAlign: 'center',
-              fontWeight: '600'
-            }}>
-              하루 1시간 × 10일 = 수익화 에이전트 마스터 🎓
-            </p>
+                color: '#1f2937',
+                fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
+                margin: '0',
+                fontWeight: '800'
+              }}>
+                하루 1시간 × 10일 = <span style={{ 
+                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  fontWeight: '900'
+                }}>수익화 에이전트 마스터</span> 🎓
+              </p>
+            </div>
 
             {/* CORE: Day 1-3 */}
             <div style={{ marginBottom: '60px' }}>
               <div style={{
-                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                background: 'linear-gradient(135deg, #1e293b, #334155)',
                 color: 'white',
-                padding: 'clamp(20px, 4vw, 35px)',
+                padding: 'clamp(25px, 5vw, 40px)',
                 borderRadius: '20px',
                 marginBottom: '30px',
                 textAlign: 'center',
-                boxShadow: '0 10px 30px rgba(14, 165, 233, 0.3)'
+                boxShadow: '0 15px 40px rgba(30, 41, 59, 0.4)',
+                border: '3px solid #fbbf24',
+                position: 'relative',
+                overflow: 'hidden'
               }}>
+                <div style={{
+                  position: 'absolute',
+                  top: '-50px',
+                  right: '-50px',
+                  width: '200px',
+                  height: '200px',
+                  background: 'rgba(251, 191, 36, 0.1)',
+                  borderRadius: '50%',
+                  filter: 'blur(60px)'
+                }}></div>
                 <h4 style={{
-                  fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-                  fontWeight: '800',
+                  position: 'relative',
+                  zIndex: 1,
+                  fontSize: 'clamp(1.8rem, 3.5vw, 2.3rem)',
+                  fontWeight: '900',
                   margin: '0 0 15px 0',
-                  letterSpacing: '0.5px'
+                  letterSpacing: '0.5px',
+                  color: '#fbbf24',
+                  textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
                 }}>
                   🎯 Part 1 (Day 1-6)
                 </h4>
@@ -1570,7 +1807,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     }}
                   >
                       <h5 style={{
-                      color: '#0ea5e9',
+                      color: '#1e40af',
                       fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
                       fontWeight: '800',
                       marginBottom: '15px'
@@ -1594,22 +1831,39 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               </div>
             </div>
 
-            {/* Part 2: Day 6-10 */}
+            {/* Part 2: Day 7-10 */}
             <div style={{ marginBottom: '60px' }}>
               <div style={{
-                background: 'linear-gradient(135deg, #10b981, #059669)',
+                background: 'linear-gradient(135deg, #1e293b, #334155)',
                 color: 'white',
-                padding: 'clamp(20px, 4vw, 35px)',
+                padding: 'clamp(25px, 5vw, 40px)',
                 borderRadius: '20px',
                 marginBottom: '30px',
                 textAlign: 'center',
-                boxShadow: '0 10px 30px rgba(16, 185, 129, 0.3)'
+                boxShadow: '0 15px 40px rgba(30, 41, 59, 0.4)',
+                border: '3px solid #fbbf24',
+                position: 'relative',
+                overflow: 'hidden'
               }}>
+                <div style={{
+                  position: 'absolute',
+                  top: '-50px',
+                  left: '-50px',
+                  width: '200px',
+                  height: '200px',
+                  background: 'rgba(251, 191, 36, 0.1)',
+                  borderRadius: '50%',
+                  filter: 'blur(60px)'
+                }}></div>
                 <h4 style={{
-                  fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-                  fontWeight: '800',
+                  position: 'relative',
+                  zIndex: 1,
+                  fontSize: 'clamp(1.8rem, 3.5vw, 2.3rem)',
+                  fontWeight: '900',
                   margin: '0 0 15px 0',
-                  letterSpacing: '0.5px'
+                  letterSpacing: '0.5px',
+                  color: '#fbbf24',
+                  textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
                 }}>
                   🚀 Part 2 (Day 7-10)
                 </h4>
@@ -1640,7 +1894,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     }}
                   >
                       <h5 style={{
-                      color: '#10b981',
+                      color: '#1e40af',
                       fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
                       fontWeight: '800',
                       marginBottom: '15px'
@@ -1666,25 +1920,35 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
             {/* 하단 CTA - 가격 & 수강 신청 버튼 */}
             <div style={{
-              background: 'linear-gradient(135deg, #1e40af, #0ea5e9)',
+              background: 'linear-gradient(135deg, #1e293b, #334155)',
               borderRadius: '25px',
-              padding: 'clamp(40px, 6vw, 60px) clamp(30px, 5vw, 50px)',
+              padding: 'clamp(50px, 7vw, 70px) clamp(35px, 6vw, 55px)',
               marginTop: '80px',
-              border: '4px solid #93c5fd',
-              boxShadow: '0 20px 60px rgba(14, 165, 233, 0.4)',
+              border: '4px solid #fbbf24',
+              boxShadow: '0 25px 70px rgba(30, 41, 59, 0.5)',
               position: 'relative',
               overflow: 'hidden'
             }}>
               {/* 배경 장식 */}
               <div style={{
                 position: 'absolute',
-                top: '-100px',
-                left: '-100px',
-                width: '300px',
-                height: '300px',
-                background: 'rgba(255, 255, 255, 0.1)',
+                top: '-120px',
+                left: '-120px',
+                width: '350px',
+                height: '350px',
+                background: 'rgba(251, 191, 36, 0.15)',
                 borderRadius: '50%',
-                filter: 'blur(80px)'
+                filter: 'blur(100px)'
+              }}></div>
+              <div style={{
+                position: 'absolute',
+                bottom: '-120px',
+                right: '-120px',
+                width: '350px',
+                height: '350px',
+                background: 'rgba(251, 191, 36, 0.15)',
+                borderRadius: '50%',
+                filter: 'blur(100px)'
               }}></div>
 
               {/* 마지막 기회 뱃지 */}

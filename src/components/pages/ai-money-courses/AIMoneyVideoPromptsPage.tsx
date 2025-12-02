@@ -378,14 +378,74 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
     <div className="masterclass-container">
       <NavigationBar onBack={onBack} breadcrumbText="AI & Money 비디오 생성 프롬프트" />
 
+      {/* 강의 영상 섹션 */}
+      <div style={{
+        background: 'linear-gradient(135deg, #1e293b, #334155)',
+        padding: '60px 20px',
+        borderBottom: '4px solid #fbbf24'
+      }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
+          <div style={{
+            display: 'inline-block',
+            background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+            color: '#1e293b',
+            padding: '8px 20px',
+            borderRadius: '25px',
+            fontSize: '0.9rem',
+            fontWeight: '800',
+            marginBottom: '20px',
+            boxShadow: '0 4px 15px rgba(251, 191, 36, 0.4)'
+          }}>
+            🎬 강의 영상
+          </div>
+          <h2 style={{
+            fontSize: 'clamp(1.5rem, 3.5vw, 2rem)',
+            fontWeight: '800',
+            color: 'white',
+            marginBottom: '30px',
+            textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
+          }}>
+            AI 수익화 비디오 생성 & 이미지 투 비디오 실전 강의
+          </h2>
+          <div style={{
+            position: 'relative',
+            paddingBottom: '56.25%',
+            height: 0,
+            borderRadius: '16px',
+            overflow: 'hidden',
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
+            border: '3px solid #fbbf24'
+          }}>
+            <iframe 
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%'
+              }}
+              src="https://www.youtube.com/embed/YDiJXC4mHVY?si=NfTqGING3poPousR" 
+              title="YouTube video player" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              referrerPolicy="strict-origin-when-cross-origin" 
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </div>
+
       <div
         style={{
-          background: `radial-gradient(circle at 15% 20%, rgba(250,204,21,0.4), transparent 45%), linear-gradient(120deg, ${BRAND_NAVY} 0%, ${BRAND_BLUE} 60%, #1f3ca6 100%)`,
+          background: `linear-gradient(rgba(30, 41, 59, 0.85), rgba(30, 41, 59, 0.85)), url('/images/ai_video_money.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
           color: 'white',
           padding: '70px 20px',
           textAlign: 'center',
           position: 'relative',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          borderBottom: '4px solid #fbbf24'
         }}
       >
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>

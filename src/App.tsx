@@ -20,6 +20,7 @@ const LoadingSpinner: React.FC = () => (
 const MainPage = React.lazy(() => import('./components/pages/MainPage'));
 const AICityMapPage = React.lazy(() => import('./components/pages/AICityMapPage'));
 const AIConstructionSitePage = React.lazy(() => import('./components/pages/AIConstructionSitePage'));
+const AIConstructionSiteStep1Page = React.lazy(() => import('./components/pages/AIConstructionSiteStep1Page'));
 const Step1IdeaGeneratorPage = React.lazy(() => import('./components/pages/construction/Step1IdeaGeneratorPage'));
 const ChatGPTPrompts40Page = React.lazy(() => import('./components/pages/ChatGPTPrompts40Page'));
 const AIMoneyMasterPromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyMasterPromptsPage'));
@@ -51,6 +52,7 @@ const Day8Page = React.lazy(() => import('./components/pages/courses/chatgpt-age
 const Day9Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day9Page'));
 const Day10Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day10Page'));
 const ChatGPTAgentBeginnerPaymentPage = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/PaymentPage'));
+const AIBuildingPaymentPage = React.lazy(() => import('./components/pages/courses/ai-building/PaymentPage'));
 const CostOptimizationExamplesPage = React.lazy(() => import('./components/pages/courses/CostOptimizationExamplesPage'));
 const N8nAutomationIntermediatePage = React.lazy(() => import('./components/pages/courses/N8nAutomationIntermediatePage'));
 const N8nAutomationAdvancedPage = React.lazy(() => import('./components/pages/courses/N8nAutomationAdvancedPage'));
@@ -413,6 +415,17 @@ const ChatGPTCoursePageWrapper = () => {
     );
   };
 
+  const AIBuildingPaymentPageWrapper = () => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <AIBuildingPaymentPage 
+          onBack={() => navigate('/ai-building-course')}
+        />
+      </Suspense>
+    );
+  };
+
   const N8nAutomationIntermediatePageWrapper = () => {
     const navigate = useNavigate();
     return (
@@ -589,6 +602,14 @@ const ChatGPTCoursePageWrapper = () => {
     );
   };
 
+  const AIConstructionSiteStep1PageWrapper = () => {
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <AIConstructionSiteStep1Page />
+      </Suspense>
+    );
+  };
+
   const Step1IdeaGeneratorPageWrapper = () => {
     const navigate = useNavigate();
     return (
@@ -618,6 +639,7 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/ai-coding-course" element={<AICodingCoursePageWrapper />} />
               <Route path="/ai-education-documentary" element={<AIEducationDocumentaryPageWrapper />} />
               <Route path="/ai-building-course" element={<AIBuildingCoursePageWrapper />} />
+              <Route path="/ai-building-course/payment" element={<AIBuildingPaymentPageWrapper />} />
               <Route path="/ai-building-course/player" element={<AIBuildingCoursePlayerPageWrapper />} />
               <Route path="/chatgpt-agent-beginner" element={<ChatGPTAgentBeginnerPageWrapper />} />
               <Route path="/chatgpt-agent-beginner/payment" element={<ChatGPTAgentBeginnerPaymentPageWrapper />} />
@@ -645,7 +667,7 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/clubs" element={<ClubsPageWrapper />} />
               <Route path="/ai-city-map" element={<AICityMapPageWrapper />} />
               <Route path="/ai-construction-site" element={<AIConstructionSitePageWrapper />} />
-              <Route path="/ai-construction-site/step1" element={<Step1IdeaGeneratorPageWrapper />} />
+              <Route path="/ai-construction-site/step1" element={<AIConstructionSiteStep1PageWrapper />} />
               <Route path="/chatgpt-prompts-40plus" element={<ChatGPTPrompts40PageWrapper />} />
               <Route path="/ai-money-master-prompts" element={<AIMoneyMasterPromptsPageWrapper />} />
               <Route path="/ai-money-image-prompts" element={<AIMoneyImagePromptsPageWrapper />} />

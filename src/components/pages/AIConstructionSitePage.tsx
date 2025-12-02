@@ -26,14 +26,14 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
   const steps: Step[] = [
     {
       id: 1,
-      title: '🎯 Step 1: 건물 설계',
-      subtitle: '아이디어 발굴 & 시장 분석',
+      title: '🎯 Step 1: 입지 선정',
+      subtitle: '유튜브 채널 주제 선정 & 시장 분석',
       icon: <Lightbulb size={32} />,
       color: '#3b82f6',
       gradient: 'linear-gradient(135deg, #60a5fa, #3b82f6)',
-      description: 'AI가 당신의 관심사를 분석하고, 수익성 높은 사업 아이템과 유튜브 채널 주제를 추천해드립니다.',
+      description: 'AI가 당신의 관심사를 분석하고, 수익성 높은 유튜브 채널 주제를 추천해드립니다.',
       features: [
-        '💡 AI 기반 사업 아이템 5가지 추천',
+        '💡 AI 기반 유튜브 채널 주제 5가지 추천',
         '📊 트렌드 분석 & 시장성 평가',
         '🎯 타겟 고객 분석',
         '💰 예상 수익성 점수 (0-100)',

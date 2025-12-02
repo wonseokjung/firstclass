@@ -16,8 +16,10 @@
 
 /* CSS 변수로 테마 관리 */
 :root {
-  --color-primary: #0ea5e9;
-  --color-primary-hover: #0284c7;
+  --color-primary: #1e40af;
+  --color-primary-hover: #1e3a8a;
+  --color-accent: #fbbf24;
+  --color-accent-hover: #f59e0b;
   --color-black: #ffffff;
   --color-white: #1f2937;
   --color-gray-100: #666666;
@@ -340,13 +342,14 @@ body {
 
 /* 공통 헤더 스타일 */
 .masterclass-header-original {
-  background: var(--color-black);
-  border-bottom: 1px solid var(--color-gray-500);
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border-bottom: 3px solid #fbbf24;
   padding: 16px 0;
   position: sticky;
   top: 0;
   z-index: 100;
   backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(30, 41, 59, 0.3);
 }
 
 .header-content {
@@ -370,25 +373,27 @@ body {
   gap: 8px;
   font-size: 20px;
   font-weight: 700;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .logo-icon {
   width: 32px;
   height: 32px;
-  background: var(--color-primary);
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
   border-radius: var(--border-radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1f2937;
+  color: #1e293b;
   font-weight: 700;
   font-size: 18px;
+  box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
 }
 
 .logo-text {
-  color: #1f2937;
+  color: #ffffff;
   font-size: 20px;
+  font-weight: 800;
 }
 
 .browse-btn {
@@ -447,48 +452,55 @@ body {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 12px;
+  flex-wrap: nowrap;
 }
 
 .nav-link {
   background: none;
   border: none;
-  color: #1f2937;
-  font-size: 16px;
+  color: #ffffff;
+  font-size: 0.9rem;
   cursor: pointer;
-  padding: 8px 16px;
-  border-radius: var(--border-radius-sm);
+  padding: 8px 14px;
+  border-radius: 8px;
   transition: var(--transition);
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .nav-link:hover {
-  background: rgba(14, 165, 233, 0.1);
-  color: var(--color-primary);
+  background: rgba(251, 191, 36, 0.15);
+  color: #fbbf24;
+  transform: translateY(-2px);
 }
 
 .user-welcome {
-  color: #1f2937;
-  font-size: 14px;
-  padding: 8px 12px;
+  color: #ffffff;
+  font-size: 0.85rem;
+  padding: 6px 10px;
   white-space: nowrap;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .cta-button {
-  background: var(--color-primary);
-  color: #1f2937;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #1e293b;
   border: none;
-  padding: 12px 24px;
-  border-radius: var(--border-radius-sm);
-  font-size: 16px;
-  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 800;
   cursor: pointer;
   transition: var(--transition);
+  box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+  white-space: nowrap;
 }
 
 .cta-button:hover {
-  background: var(--color-primary-hover);
-  transform: translateY(-2px);
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(251, 191, 36, 0.5);
 }
 
 /* 마스터클래스 메인 콘텐츠 */
@@ -532,21 +544,24 @@ body {
 .nav-arrow {
   width: 48px;
   height: 48px;
-  background: #0ea5e9;
-  border: 1px solid #0284c7;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  border: 2px solid #fbbf24;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: var(--transition);
-  color: #ffffff;
+  color: #1e293b;
+  box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
 }
 
 .nav-arrow:hover {
-  background: rgba(14, 165, 233, 0.1);
-  border-color: var(--color-primary);
-  color: var(--color-primary);
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border-color: #f59e0b;
+  color: #1e293b;
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
 }
 
 /* 마스터클래스 그리드 */
@@ -597,9 +612,10 @@ body {
 }
 
 .masterclass-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15);
-  border-color: var(--color-primary);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(30, 64, 175, 0.25);
+  border-color: #fbbf24;
+  border-width: 2px;
 }
 
 .card-image-container {
@@ -3751,13 +3767,14 @@ body {
   position: absolute;
   top: 12px;
   right: 12px;
-  background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  color: #1f2937;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #1e293b;
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 900;
   text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
   letter-spacing: 0.5px;
   z-index: 3;
   box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
@@ -3770,15 +3787,16 @@ body {
 }
 
 .free-badge {
-  background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  color: #1f2937;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #1e293b;
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   display: inline-block;
+  box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
 }
 
 /* Premium Course Styles */
@@ -3838,14 +3856,16 @@ body {
 }
 
 .premium-badge-text {
-  background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  color: #1f2937;
+  background: linear-gradient(135deg, #1e40af, #1e3a8a);
+  color: #fbbf24;
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(30, 64, 175, 0.4);
+  border: 1px solid #fbbf24;
 }
 
 .premium-subtitle {
@@ -4252,13 +4272,15 @@ body {
   position: absolute;
   top: 12px;
   left: 12px;
-  background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  color: #1f2937;
+  background: linear-gradient(135deg, #1e40af, #1e3a8a);
+  color: #fbbf24;
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 900;
   text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(30, 64, 175, 0.4);
+  border: 1px solid #fbbf24;
   letter-spacing: 0.5px;
   z-index: 3;
 }
@@ -6426,7 +6448,7 @@ body {
   display: none;
   background: none;
   border: none;
-  color: #1f2937;
+  color: #fbbf24;
   cursor: pointer;
   padding: 8px;
   border-radius: 4px;
@@ -6434,8 +6456,8 @@ body {
 }
 
 .mobile-menu-toggle:hover {
-  background: rgba(14, 165, 233, 0.1);
-  color: var(--color-primary);
+  background: rgba(251, 191, 36, 0.15);
+  color: #f59e0b;
 }
 
 .mobile-menu {
@@ -6443,10 +6465,10 @@ body {
   top: 100%;
   left: 0;
   right: 0;
-  background: white;
-  border-top: 2px solid #0ea5e9;
+  background: linear-gradient(135deg, #1e293b, #334155);
+  border-top: 3px solid #fbbf24;
   z-index: 1000;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .mobile-menu-content {
@@ -6459,7 +6481,7 @@ body {
 .mobile-nav-link {
   background: none;
   border: none;
-  color: #1f2937;
+  color: #e0f2fe;
   font-size: 1.05rem;
   font-weight: 600;
   padding: 14px 18px;
@@ -6471,25 +6493,27 @@ body {
 }
 
 .mobile-nav-link:hover {
-  background: #f0f9ff;
-  border-left-color: #0ea5e9;
+  background: rgba(251, 191, 36, 0.15);
+  border-left-color: #fbbf24;
   transform: translateX(5px);
-  color: #0ea5e9;
+  color: #fbbf24;
 }
 
 .mobile-nav-link.cta {
-  background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  color: white;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #1e293b;
   text-align: center;
   font-weight: 700;
   margin-top: 8px;
   border: none;
+  box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
 }
 
 .mobile-nav-link.cta:hover {
-  background: linear-gradient(135deg, #0284c7, #0369a1);
+  background: linear-gradient(135deg, #f59e0b, #d97706);
   transform: translateX(0) scale(1.02);
-  color: white;
+  color: #1e293b;
+  box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
 }
 
 .mobile-nav-link.logout {
@@ -6503,13 +6527,13 @@ body {
 }
 
 .mobile-user-info {
-  color: #1f2937;
+  color: #fbbf24;
   font-size: 0.95rem;
   font-weight: 600;
   padding: 12px 18px;
-  background: #f0f9ff;
+  background: rgba(251, 191, 36, 0.1);
   border-radius: 10px;
-  border-left: 3px solid #0ea5e9;
+  border-left: 3px solid #fbbf24;
 }
 
 /* 반응형: 데스크탑에서는 햄버거 메뉴 숨기고, 모바일에서는 기존 네비 숨기기 */
