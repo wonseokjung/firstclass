@@ -127,6 +127,19 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                     <div className="header-right desktop-nav">
               <button className="nav-link" onClick={() => navigate('/ceo')}>소개</button>
               <button className="nav-link" onClick={() => navigate('/ai-construction-site')}>🏗️ AI 도시 공사장</button>
+              <button 
+                className="nav-link" 
+                onClick={() => navigate('/clubs')}
+                style={{ 
+                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                  color: 'white',
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  fontWeight: '700'
+                }}
+              >
+                🏆 건물주 클럽
+              </button>
               {/* <button className="nav-link" onClick={() => navigate('/ai-city-map')}>🏙️ AI CITY</button> */}
               <button className="nav-link" onClick={onFAQClick || (() => navigate('/faq'))}>FAQ</button>
               <a 
@@ -178,6 +191,18 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               onClick={() => handleMobileNavClick(() => navigate('/ai-construction-site'))}
             >
               🏗️ AI 도시 공사장
+            </button>
+
+            <button 
+              className="mobile-nav-link" 
+              onClick={() => handleMobileNavClick(() => navigate('/clubs'))}
+              style={{ 
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                color: 'white',
+                fontWeight: '700'
+              }}
+            >
+              🏆 건물주 클럽
             </button>
 
             {/* <button 

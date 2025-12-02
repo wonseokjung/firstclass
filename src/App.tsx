@@ -28,6 +28,7 @@ const AIMoneyVideoPromptsPage = React.lazy(() => import('./components/pages/ai-m
 const FAQPage = React.lazy(() => import('./components/pages/FAQPage'));
 const CEOPage = React.lazy(() => import('./components/pages/CEOPage'));
 const ContactPage = React.lazy(() => import('./components/pages/ContactPage'));
+const ClubsPage = React.lazy(() => import('./components/pages/ClubsPage'));
 
 // 강의 페이지
 const ChatGPTCoursePage = React.lazy(() => import('./components/pages/courses/ChatGPTCoursePage'));
@@ -169,6 +170,15 @@ const ChatGPTCoursePageWrapper = () => {
     return (
       <Suspense fallback={<LoadingSpinner />}>
         <ContactPage onBack={() => navigate('/')} />
+      </Suspense>
+    );
+  };
+
+  const ClubsPageWrapper = () => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <ClubsPage onBack={() => navigate('/')} />
       </Suspense>
     );
   };
@@ -632,6 +642,7 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/faq" element={<FAQPageWrapper />} />
               <Route path="/ceo" element={<CEOPageWrapper />} />
               <Route path="/contact" element={<ContactPageWrapper />} />
+              <Route path="/clubs" element={<ClubsPageWrapper />} />
               <Route path="/ai-city-map" element={<AICityMapPageWrapper />} />
               <Route path="/ai-construction-site" element={<AIConstructionSitePageWrapper />} />
               <Route path="/ai-construction-site/step1" element={<Step1IdeaGeneratorPageWrapper />} />
