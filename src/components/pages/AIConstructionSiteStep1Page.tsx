@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sparkles, TrendingUp, Users, DollarSign, Star, Loader } from 'lucide-react';
+import { Sparkles, TrendingUp, Users, DollarSign, Star, Loader, AlertCircle } from 'lucide-react';
 import NavigationBar from '../common/NavigationBar';
 import { recommendYoutubeChannels } from '../../services/azureOpenAIService';
+import { getCurrentUser } from '../../services/authService';
+import AzureTableService from '../../services/azureTableService';
 
 interface ChannelIdea {
   title: string;
@@ -14,6 +16,8 @@ interface ChannelIdea {
   expectedMonthlyIncome: string;
 }
 
+const MAX_USAGE_COUNT = 3;
+
 const AIConstructionSiteStep1Page: React.FC = () => {
   const navigate = useNavigate();
   const [userInterests, setUserInterests] = useState('');
@@ -24,10 +28,42 @@ const AIConstructionSiteStep1Page: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [recommendations, setRecommendations] = useState<ChannelIdea[]>([]);
   const [analysis, setAnalysis] = useState('');
+  const [usageCount, setUsageCount] = useState(0);
+  const [remainingCount, setRemainingCount] = useState(MAX_USAGE_COUNT);
+
+  // 사용 횟수 로드 (Azure Table에서)
+  useEffect(() => {
+    const loadUsageCount = async () => {
+      const currentUser = getCurrentUser();
+      if (!currentUser) {
+        navigate('/login');
+        return;
+      }
+
+      try {
+        const user = await AzureTableService.getUserByEmail(currentUser.email);
+        if (user) {
+          const count = user.aiRecommendationUsageCount || 0;
+          setUsageCount(count);
+          setRemainingCount(MAX_USAGE_COUNT - count);
+        }
+      } catch (error) {
+        console.error('사용 횟수 로드 실패:', error);
+      }
+    };
+
+    loadUsageCount();
+  }, [navigate]);
 
   const handleRecommend = async () => {
     if (!userInterests.trim()) {
       alert('최소 1개 이상의 정보를 입력해주세요!');
+      return;
+    }
+
+    // 사용 횟수 체크
+    if (usageCount >= MAX_USAGE_COUNT) {
+      alert('무료 사용 횟수를 모두 사용하셨습니다. 더 많은 추천을 받으시려면 유료 강의를 구매해주세요!');
       return;
     }
 
@@ -43,12 +79,21 @@ ${dailyRoutine ? `하루 일과: ${dailyRoutine}` : ''}
       `.trim();
 
       console.log('🔄 Azure OpenAI로 추천 받는 중...');
-      console.log('📋 입력 정보:', fullContext);
       
       const result = await recommendYoutubeChannels(fullContext, targetIncome);
       
       setRecommendations(result.ideas);
       setAnalysis(result.analysis);
+
+      // 사용 횟수 증가 (Azure Table에 저장)
+      const currentUser = getCurrentUser();
+      if (currentUser) {
+        const newCount = usageCount + 1;
+        await AzureTableService.incrementAIRecommendationUsage(currentUser.email);
+        setUsageCount(newCount);
+        setRemainingCount(MAX_USAGE_COUNT - newCount);
+      }
+
       console.log('✅ 추천 성공!', result);
     } catch (error) {
       console.error('❌ 추천 실패:', error);
@@ -138,16 +183,48 @@ ${dailyRoutine ? `하루 일과: ${dailyRoutine}` : ''}
           </p>
 
           <div style={{
-            display: 'inline-block',
-            background: 'rgba(251, 191, 36, 0.2)',
-            border: '2px solid #fbbf24',
-            borderRadius: '30px',
-            padding: '10px 25px',
-            backdropFilter: 'blur(10px)'
+            display: 'flex',
+            gap: '15px',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexWrap: 'wrap'
           }}>
-            <span style={{ color: '#fbbf24', fontWeight: '700', fontSize: '1rem' }}>
-              ⚡ ConnectAI LAB's AI Analysis
-            </span>
+            <div style={{
+              display: 'inline-block',
+              background: 'rgba(251, 191, 36, 0.2)',
+              border: '2px solid #fbbf24',
+              borderRadius: '30px',
+              padding: '10px 25px',
+              backdropFilter: 'blur(10px)'
+            }}>
+              <span style={{ color: '#fbbf24', fontWeight: '700', fontSize: '1rem' }}>
+                ⚡ ConnectAI LAB's AI Analysis
+              </span>
+            </div>
+            
+            {/* 사용 횟수 표시 */}
+            <div style={{
+              display: 'inline-block',
+              background: remainingCount > 0 
+                ? 'rgba(16, 185, 129, 0.2)' 
+                : 'rgba(239, 68, 68, 0.2)',
+              border: remainingCount > 0 
+                ? '2px solid #10b981' 
+                : '2px solid #ef4444',
+              borderRadius: '30px',
+              padding: '10px 25px',
+              backdropFilter: 'blur(10px)'
+            }}>
+              <span style={{ 
+                color: remainingCount > 0 ? '#10b981' : '#ef4444', 
+                fontWeight: '700', 
+                fontSize: '1rem' 
+              }}>
+                {remainingCount > 0 
+                  ? `🎁 무료 ${remainingCount}회 남음` 
+                  : '❌ 무료 횟수 종료'}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -158,6 +235,61 @@ ${dailyRoutine ? `하루 일과: ${dailyRoutine}` : ''}
         margin: '0 auto',
         padding: 'clamp(30px, 5vw, 50px) clamp(15px, 3vw, 20px)'
       }}>
+        {/* 사용 횟수 종료 안내 */}
+        {remainingCount === 0 && (
+          <div style={{
+            background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+            border: '3px solid #f59e0b',
+            borderRadius: '20px',
+            padding: '30px',
+            marginBottom: '30px',
+            textAlign: 'center'
+          }}>
+            <AlertCircle size={48} style={{ color: '#f59e0b', marginBottom: '15px' }} />
+            <h3 style={{
+              fontSize: '1.5rem',
+              fontWeight: '900',
+              color: '#92400e',
+              marginBottom: '12px'
+            }}>
+              무료 사용 횟수를 모두 사용하셨습니다
+            </h3>
+            <p style={{
+              fontSize: '1.1rem',
+              color: '#78350f',
+              marginBottom: '20px',
+              lineHeight: '1.7'
+            }}>
+              더 많은 AI 추천과 함께 <strong>월수익 100만원 달성 로드맵</strong>을 배우고 싶으신가요?
+            </p>
+            <button
+              onClick={() => navigate('/ai-building-course')}
+              style={{
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                color: 'white',
+                border: 'none',
+                padding: '18px 40px',
+                borderRadius: '30px',
+                fontSize: '1.2rem',
+                fontWeight: '900',
+                cursor: 'pointer',
+                boxShadow: '0 10px 30px rgba(245, 158, 11, 0.4)',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-3px)';
+                e.currentTarget.style.boxShadow = '0 15px 40px rgba(245, 158, 11, 0.5)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 10px 30px rgba(245, 158, 11, 0.4)';
+              }}
+            >
+              🎓 AI 건물주 되기 강의 보러가기
+            </button>
+          </div>
+        )}
+
         {/* Input Section - 전문적인 다단계 질문 */}
         <div style={{
           background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
@@ -534,31 +666,31 @@ ${dailyRoutine ? `하루 일과: ${dailyRoutine}` : ''}
             {/* AI 추천 버튼 */}
             <button
               onClick={handleRecommend}
-              disabled={isLoading || !userInterests.trim()}
+              disabled={isLoading || !userInterests.trim() || remainingCount === 0}
               style={{
                 width: '100%',
-                background: isLoading || !userInterests.trim() 
+                background: isLoading || !userInterests.trim() || remainingCount === 0
                   ? 'linear-gradient(135deg, #64748b, #475569)' 
                   : 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                color: isLoading || !userInterests.trim() ? '#cbd5e1' : '#0f172a',
+                color: isLoading || !userInterests.trim() || remainingCount === 0 ? '#cbd5e1' : '#0f172a',
                 border: 'none',
                 padding: '22px',
                 borderRadius: '16px',
                 fontSize: '1.35rem',
                 fontWeight: '900',
-                cursor: isLoading || !userInterests.trim() ? 'not-allowed' : 'pointer',
+                cursor: isLoading || !userInterests.trim() || remainingCount === 0 ? 'not-allowed' : 'pointer',
                 transition: 'all 0.3s ease',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '12px',
-                boxShadow: isLoading || !userInterests.trim()
+                boxShadow: isLoading || !userInterests.trim() || remainingCount === 0
                   ? 'none'
                   : '0 10px 40px rgba(251, 191, 36, 0.5)',
-                textShadow: isLoading || !userInterests.trim() ? 'none' : '0 1px 2px rgba(0,0,0,0.1)'
+                textShadow: isLoading || !userInterests.trim() || remainingCount === 0 ? 'none' : '0 1px 2px rgba(0,0,0,0.1)'
               }}
               onMouseOver={(e) => {
-                if (!isLoading && userInterests.trim()) {
+                if (!isLoading && userInterests.trim() && remainingCount > 0) {
                   e.currentTarget.style.transform = 'translateY(-3px)';
                   e.currentTarget.style.boxShadow = '0 15px 50px rgba(251, 191, 36, 0.6)';
                 }
@@ -573,10 +705,14 @@ ${dailyRoutine ? `하루 일과: ${dailyRoutine}` : ''}
                   <Loader size={28} className="animate-spin" style={{ animation: 'spin 1s linear infinite' }} />
                   AI가 당신을 분석하고 있습니다...
                 </>
+              ) : remainingCount === 0 ? (
+                <>
+                  🔒 무료 횟수 종료
+                </>
               ) : (
                 <>
                   <Sparkles size={28} />
-                  🚀 AI 맞춤 채널 추천 받기
+                  🚀 AI 맞춤 채널 추천 받기 ({remainingCount}회 남음)
                 </>
               )}
             </button>
@@ -589,6 +725,10 @@ ${dailyRoutine ? `하루 일과: ${dailyRoutine}` : ''}
               lineHeight: '1.6'
             }}>
               <span style={{ color: '#ef4444' }}>*</span> 필수 항목 | 더 많은 정보를 입력할수록 정확한 추천을 받습니다
+              <br />
+              <span style={{ color: '#fbbf24', fontWeight: '700' }}>
+                💡 무료 {MAX_USAGE_COUNT}회 제공 | 더 많은 추천은 강의 구매 후 이용 가능
+              </span>
             </p>
           </div>
         </div>
