@@ -21,7 +21,6 @@ const MainPage = React.lazy(() => import('./components/pages/MainPage'));
 const AICityMapPage = React.lazy(() => import('./components/pages/AICityMapPage'));
 const AIConstructionSitePage = React.lazy(() => import('./components/pages/AIConstructionSitePage'));
 const AIConstructionSiteStep1Page = React.lazy(() => import('./components/pages/AIConstructionSiteStep1Page'));
-const Step1IdeaGeneratorPage = React.lazy(() => import('./components/pages/construction/Step1IdeaGeneratorPage'));
 const ChatGPTPrompts40Page = React.lazy(() => import('./components/pages/ChatGPTPrompts40Page'));
 const AIMoneyMasterPromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyMasterPromptsPage'));
 const AIMoneyImagePromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyImagePromptsPage'));
