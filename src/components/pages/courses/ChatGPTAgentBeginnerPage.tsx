@@ -338,6 +338,342 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             </div>
           </div>
 
+          {/* 🎬 이런 걸 배워요 - 실제 결과물 섹션 */}
+          <div style={{
+            maxWidth: '1100px',
+            margin: '0 auto clamp(60px, 10vw, 80px) auto',
+            padding: 'clamp(40px, 6vw, 60px) clamp(20px, 4vw, 40px)',
+            background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
+            borderRadius: 'clamp(15px, 3vw, 25px)',
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.25)',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            {/* 배경 장식 */}
+            <div style={{
+              position: 'absolute',
+              top: '-50px',
+              right: '-50px',
+              width: '200px',
+              height: '200px',
+              background: 'radial-gradient(circle, rgba(251, 191, 36, 0.15), transparent)',
+              borderRadius: '50%',
+              pointerEvents: 'none'
+            }} />
+            
+            <div style={{ textAlign: 'center', marginBottom: 'clamp(40px, 7vw, 60px)', position: 'relative', zIndex: 1 }}>
+              <div style={{
+                display: 'inline-block',
+                background: 'rgba(251, 191, 36, 0.1)',
+                border: '2px solid #fbbf24',
+                padding: '8px 20px',
+                borderRadius: '999px',
+                marginBottom: '20px',
+                fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
+                fontWeight: '700',
+                color: '#fbbf24'
+              }}>
+                ✨ 실제 결과물
+              </div>
+              
+              <h2 style={{
+                fontSize: 'clamp(2rem, 4.5vw, 3rem)',
+                fontWeight: '900',
+                color: 'white',
+                marginBottom: '20px',
+                lineHeight: '1.2'
+              }}>
+                이런 걸 배워요
+              </h2>
+              <p style={{
+                fontSize: 'clamp(1.05rem, 2.5vw, 1.3rem)',
+                color: 'rgba(255,255,255,0.85)',
+                lineHeight: '1.7',
+                maxWidth: '700px',
+                margin: '0 auto'
+              }}>
+                수강생들이 실제로 만든 프로페셔널 광고 영상들입니다.<br />
+                10일 후, 당신도 이런 영상을 만들 수 있습니다! 🚀
+              </p>
+            </div>
+
+            {/* 영상 그리드 */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 450px), 1fr))',
+              gap: 'clamp(25px, 4vw, 40px)',
+              position: 'relative',
+              zIndex: 1
+            }}>
+              
+              {/* 영상 1: 코로나 맥주 광고 */}
+              <div style={{
+                background: 'white',
+                borderRadius: 'clamp(12px, 2.5vw, 18px)',
+                overflow: 'hidden',
+                boxShadow: '0 15px 40px rgba(0, 0, 0, 0.2)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.3)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.2)';
+              }}>
+                <div style={{
+                  position: 'relative',
+                  paddingBottom: '56.25%',
+                  background: '#000'
+                }}>
+                  <iframe
+                    src="https://player.vimeo.com/video/1141339945?badge=0&autopause=0&player_id=0&app_id=58479"
+                    frameBorder="0"
+                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      border: 'none'
+                    }}
+                    title="코로나 맥주 비치 레이브 광고"
+                  />
+                </div>
+                <div style={{ padding: 'clamp(18px, 3vw, 25px)' }}>
+                  <h4 style={{
+                    fontSize: 'clamp(1.1rem, 2.3vw, 1.3rem)',
+                    fontWeight: '800',
+                    color: '#1e293b',
+                    marginBottom: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    🍺 코로나 맥주 광고
+                  </h4>
+                  <p style={{
+                    fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                    color: '#64748b',
+                    lineHeight: '1.6',
+                    margin: 0
+                  }}>
+                    병뚜껑이 열리는 순간, 해변 파티가 펼쳐지는 마법 같은 광고 영상
+                  </p>
+                </div>
+              </div>
+
+              {/* 영상 2: 코카콜라 북극 광고 */}
+              <div style={{
+                background: 'white',
+                borderRadius: 'clamp(12px, 2.5vw, 18px)',
+                overflow: 'hidden',
+                boxShadow: '0 15px 40px rgba(0, 0, 0, 0.2)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.3)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.2)';
+              }}>
+                <div style={{
+                  position: 'relative',
+                  paddingBottom: '56.25%',
+                  background: '#000'
+                }}>
+                  <iframe
+                    src="https://player.vimeo.com/video/1141339894?badge=0&autopause=0&player_id=0&app_id=58479"
+                    frameBorder="0"
+                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      border: 'none'
+                    }}
+                    title="코카콜라 북극 아이스 레이브 광고"
+                  />
+                </div>
+                <div style={{ padding: 'clamp(18px, 3vw, 25px)' }}>
+                  <h4 style={{
+                    fontSize: 'clamp(1.1rem, 2.3vw, 1.3rem)',
+                    fontWeight: '800',
+                    color: '#1e293b',
+                    marginBottom: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    🥤 코카콜라 광고
+                  </h4>
+                  <p style={{
+                    fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                    color: '#64748b',
+                    lineHeight: '1.6',
+                    margin: 0
+                  }}>
+                    북극 빙하에서 펼쳐지는 신비로운 오로라 파티 컨셉
+                  </p>
+                </div>
+              </div>
+
+              {/* 영상 3: 참이슬 소주 광고 */}
+              <div style={{
+                background: 'white',
+                borderRadius: 'clamp(12px, 2.5vw, 18px)',
+                overflow: 'hidden',
+                boxShadow: '0 15px 40px rgba(0, 0, 0, 0.2)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.3)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.2)';
+              }}>
+                <div style={{
+                  position: 'relative',
+                  paddingBottom: '56.25%',
+                  background: '#000'
+                }}>
+                  <iframe
+                    src="https://player.vimeo.com/video/1141346778?badge=0&autopause=0&player_id=0&app_id=58479"
+                    frameBorder="0"
+                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      border: 'none'
+                    }}
+                    title="참이슬 소주 스트리트 파티 광고"
+                  />
+                </div>
+                <div style={{ padding: 'clamp(18px, 3vw, 25px)' }}>
+                  <h4 style={{
+                    fontSize: 'clamp(1.1rem, 2.3vw, 1.3rem)',
+                    fontWeight: '800',
+                    color: '#1e293b',
+                    marginBottom: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    🍶 참이슬 소주 광고
+                  </h4>
+                  <p style={{
+                    fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                    color: '#64748b',
+                    lineHeight: '1.6',
+                    margin: 0
+                  }}>
+                    포장마차가 힙한 스트리트 파티로 변신하는 한국형 컨셉
+                  </p>
+                </div>
+              </div>
+
+              {/* 영상 4: 캐릭터 합성 영상 */}
+              <div style={{
+                background: 'white',
+                borderRadius: 'clamp(12px, 2.5vw, 18px)',
+                overflow: 'hidden',
+                boxShadow: '0 15px 40px rgba(0, 0, 0, 0.2)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.3)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.2)';
+              }}>
+                <div style={{
+                  position: 'relative',
+                  paddingBottom: '56.25%',
+                  background: '#000'
+                }}>
+                  <iframe
+                    src="https://player.vimeo.com/video/1141361958?badge=0&autopause=0&player_id=0&app_id=58479"
+                    frameBorder="0"
+                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      border: 'none'
+                    }}
+                    title="서울 밤거리 산책 영상"
+                  />
+                </div>
+                <div style={{ padding: 'clamp(18px, 3vw, 25px)' }}>
+                  <h4 style={{
+                    fontSize: 'clamp(1.1rem, 2.3vw, 1.3rem)',
+                    fontWeight: '800',
+                    color: '#1e293b',
+                    marginBottom: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    🌆 스토리텔링 영상
+                  </h4>
+                  <p style={{
+                    fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                    color: '#64748b',
+                    lineHeight: '1.6',
+                    margin: 0
+                  }}>
+                    2개 이미지를 합성하여 하나의 감성 스토리 영상으로 제작
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            {/* 하단 CTA */}
+            <div style={{
+              textAlign: 'center',
+              marginTop: 'clamp(40px, 7vw, 60px)',
+              padding: 'clamp(25px, 4vw, 35px)',
+              background: 'rgba(251, 191, 36, 0.1)',
+              borderRadius: '16px',
+              border: '2px solid rgba(251, 191, 36, 0.3)',
+              position: 'relative',
+              zIndex: 1
+            }}>
+              <p style={{
+                fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+                fontWeight: '700',
+                color: 'white',
+                lineHeight: '1.7',
+                margin: 0
+              }}>
+                💡 <strong>이 모든 영상을 10일 안에 만들 수 있습니다!</strong><br />
+                <span style={{ fontSize: 'clamp(1rem, 2.2vw, 1.2rem)', opacity: '0.9' }}>
+                  코딩 지식 0%로 시작해서 프로급 광고 영상 제작까지 🎬
+                </span>
+              </p>
+            </div>
+          </div>
+
           {/* 상단 메인 CTA */}
           <div style={{
             textAlign: 'center',
