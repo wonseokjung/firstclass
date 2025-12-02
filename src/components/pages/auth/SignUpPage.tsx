@@ -418,21 +418,21 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
                   </select>
 
                   {/* 전화번호 입력 */}
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className={`form-input ${errors.phone ? 'error' : ''}`}
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  className={`form-input ${errors.phone ? 'error' : ''}`}
                     placeholder={
                       formData.countryCode === '+82' 
                         ? '010-1234-5678' 
                         : '123-456-7890'
                     }
-                    disabled={isLoading}
+                  disabled={isLoading}
                     style={{ flex: 1 }}
-                  />
+                />
                 </div>
                 <div style={{
                   fontSize: '0.85rem',

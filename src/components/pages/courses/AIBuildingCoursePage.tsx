@@ -501,16 +501,29 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   🔥 52% 할인 (얼리버드 특가)
                 </div>
                 <div style={{
+                  fontSize: '1rem',
+                  color: '#fbbf24',
+                  fontWeight: '700',
+                  background: 'rgba(251, 191, 36, 0.15)',
+                  padding: '12px 20px',
+                  borderRadius: '12px',
+                  border: '2px solid rgba(251, 191, 36, 0.5)',
+                  display: 'inline-block',
+                  marginBottom: '10px'
+                }}>
+                  📅 강의 오픈: 2026년 1월 1일
+                </div>
+                <div style={{
                   fontSize: '0.95rem',
                   color: '#fbbf24',
                   fontWeight: '600',
-                  background: 'rgba(251, 191, 36, 0.15)',
+                  background: 'rgba(251, 191, 36, 0.1)',
                   padding: '10px 16px',
                   borderRadius: '12px',
                   border: '1px solid rgba(251, 191, 36, 0.3)',
                   display: 'inline-block'
                 }}>
-                  ⚠️ 2026년 1월 1일부터 95,000원으로 인상 예정
+                  ⚠️ 강의 오픈 시 95,000원으로 인상 예정
                 </div>
               </div>
 
@@ -576,7 +589,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 fontWeight: '600',
                 color: '#fbbf24'
               }}>
-                🎉 지금 등록하면 45,000원! | 2026년부터 95,000원
+                🎉 얼리버드 45,000원 | 📅 강의 오픈: 2026년 1월 1일
               </p>
             </div>
 
@@ -915,440 +928,28 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
               </div>
             </div>
 
-            {/* 🖼️ 성공 스토리 인포그래픽 - 3단계 성공 여정 */}
+            {/* 🖼️ 성공 여정 이미지 */}
             <div style={{
               background: '#ffffff',
-              padding: '40px',
+              padding: '20px',
               borderRadius: '20px',
               marginBottom: '40px',
-              border: '1px solid #e2e8f0',
-              textAlign: 'center'
-            }}>
-              <h4 style={{
-                fontSize: '1.5rem',
-                color: '#1f2937',
-                marginBottom: '30px',
-                fontWeight: '700'
-              }}>
-                3단계 성공 여정 인포그래픽
-              </h4>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                gap: '30px',
-                marginBottom: '20px'
-              }}>
-                <div style={{
-                  background: '#f8fafc',
-                  border: '2px dashed #cbd5e1',
-                  borderRadius: '15px',
-                  padding: '30px 20px',
-                  textAlign: 'center'
-                }}>
-                  <div style={{ marginBottom: '15px' }}>
-                    <Image size={48} color="#64748b" />
-                  </div>
-                  <h5 style={{ color: '#1f2937', marginBottom: '10px', fontWeight: '600' }}>BEFORE</h5>
-                  <p style={{ color: '#64748b', fontSize: '0.9rem', margin: '0' }}>
-                    직장인<br />월급에만 의존<br />부수입 0원
-                  </p>
-                </div>
-                <div style={{
-                  background: '#f8fafc',
-                  border: '2px dashed #cbd5e1',
-                  borderRadius: '15px',
-                  padding: '30px 20px',
-                  textAlign: 'center'
-                }}>
-                  <div style={{ marginBottom: '15px' }}>
-                    <Image size={48} color="#64748b" />
-                  </div>
-                  <h5 style={{ color: '#1f2937', marginBottom: '10px', fontWeight: '600' }}>LEARNING</h5>
-                  <p style={{ color: '#64748b', fontSize: '0.9rem', margin: '0' }}>
-                    AI 도구 학습<br />16강의 완주<br />실습 프로젝트
-                  </p>
-                </div>
-                <div style={{
-                  background: '#f8fafc',
-                  border: '2px dashed #cbd5e1',
-                  borderRadius: '15px',
-                  padding: '30px 20px',
-                  textAlign: 'center'
-                }}>
-                  <div style={{ marginBottom: '15px' }}>
-                    <Image size={48} color="#64748b" />
-                  </div>
-                  <h5 style={{ color: '#1f2937', marginBottom: '10px', fontWeight: '600' }}>AFTER</h5>
-                  <p style={{ color: '#64748b', fontSize: '0.9rem', margin: '0' }}>
-                    디지털 건물주<br />월 50만원 부수입<br />경제적 자유
-                  </p>
-                </div>
-              </div>
-              <div style={{
-                background: '#e2e8f0',
-                padding: '15px',
-                borderRadius: '10px',
-                fontSize: '14px',
-                color: '#475569'
-              }}>
-                <strong>디자인 요청:</strong> 깔끔한 아이콘 + 브랜드 컬러(#1e40af) + 구체적 숫자와 시각적 변화 표현
-              </div>
-            </div>
-          </div>
-
-          {/* AI City Builders 플랫폼 구조 */}
-          <div style={{
-            background: '#ffffff',
-            padding: '60px 40px',
-            borderRadius: '24px',
-            marginBottom: '80px',
-            border: '1px solid #e5e7eb',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)'
-          }}>
-            <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-              <h3 style={{
-                fontSize: '2.2rem',
-                fontWeight: '800',
-                marginBottom: '16px',
-                color: '#1f2937'
-              }}>
-                왜 AI City Builders가 더 저렴하면서도 더 나은가?
-              </h3>
-              <p style={{
-                fontSize: '1.1rem',
-                color: '#6b7280',
-                lineHeight: '1.6',
-                margin: '0'
-              }}>
-                기존 교육 플랫폼의 한계를 뛰어넘는 혁신적인 구조
-              </p>
-            </div>
-
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
-              gap: '32px',
-              marginBottom: '50px'
-            }}>
-              {/* 기존 플랫폼 구조 */}
-              <div style={{
-                background: '#ffffff',
-                padding: '32px',
-                borderRadius: '20px',
-                border: '2px solid #fee2e2',
-                position: 'relative',
-                boxShadow: '0 4px 12px rgba(239, 68, 68, 0.08)'
-              }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '-16px',
-                  left: '24px',
-                  background: '#ef4444',
-                  color: 'white',
-                  padding: '8px 20px',
-                  borderRadius: '50px',
-                  fontSize: '0.9rem',
-                  fontWeight: '700',
-                  boxShadow: '0 2px 8px rgba(239, 68, 68, 0.3)'
-                }}>
-                  기존 플랫폼
-                </div>
-
-                <div style={{ marginTop: '24px' }}>
-                  <div style={{
-                    background: '#fef7f7',
-                    padding: '20px',
-                    borderRadius: '16px',
-                    marginBottom: '20px',
-                    border: '1px solid #fecaca'
-                  }}>
-                    <h4 style={{
-                      fontSize: '1.1rem',
-                      fontWeight: '700',
-                      marginBottom: '16px',
-                      color: '#dc2626',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}>
-                      📊 수익 배분
-                    </h4>
-                    <div style={{ gap: '12px' }}>
-                      <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        padding: '8px 0',
-                        borderBottom: '1px solid #fecaca'
-                      }}>
-                        <span style={{ color: '#7f1d1d', fontSize: '0.95rem' }}>강사</span>
-                        <span style={{ fontWeight: '700', color: '#dc2626', fontSize: '1.1rem' }}>20~30%</span>
-                      </div>
-                      <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        padding: '8px 0'
-                      }}>
-                        <span style={{ color: '#7f1d1d', fontSize: '0.95rem' }}>플랫폼</span>
-                        <span style={{ fontWeight: '700', color: '#dc2626', fontSize: '1.1rem' }}>70~80%</span>
-                      </div>
-                    </div>
-                    <div style={{
-                      marginTop: '16px',
-                      padding: '12px',
-                      background: 'rgba(239, 68, 68, 0.1)',
-                      borderRadius: '8px',
-                      fontSize: '0.9rem',
-                      color: '#991b1b',
-                      fontWeight: '600'
-                    }}>
-                      → 광고비, 운영비로 인한 높은 수강료
-                    </div>
-                  </div>
-
-                  <div style={{
-                    background: '#fef7f7',
-                    padding: '20px',
-                    borderRadius: '16px',
-                    border: '1px solid #fecaca'
-                  }}>
-                    <h4 style={{
-                      fontSize: '1.1rem',
-                      fontWeight: '700',
-                      marginBottom: '16px',
-                      color: '#dc2626',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}>
-                      👥 학습 방식
-                    </h4>
-                    <ul style={{ margin: '0', paddingLeft: '0', listStyle: 'none' }}>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: '8px',
-                        color: '#7f1d1d'
-                      }}>
-                        <span style={{ color: '#dc2626', fontWeight: '700' }}>✕</span>
-                        단순 수강자로만 참여
-                      </li>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: '8px',
-                        color: '#7f1d1d'
-                      }}>
-                        <span style={{ color: '#dc2626', fontWeight: '700' }}>✕</span>
-                        일방향 학습
-                      </li>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        color: '#7f1d1d'
-                      }}>
-                        <span style={{ color: '#dc2626', fontWeight: '700' }}>✕</span>
-                        강의 완료 후 관계 종료
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* AI City Builders 구조 */}
-              <div style={{
-                background: '#ffffff',
-                padding: '32px',
-                borderRadius: '20px',
-                border: '2px solid #dbeafe',
-                position: 'relative',
-                boxShadow: '0 4px 12px rgba(14, 165, 233, 0.08)'
-              }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '-16px',
-                  left: '24px',
-                  background: '#1e40af',
-                  color: 'white',
-                  padding: '8px 20px',
-                  borderRadius: '50px',
-                  fontSize: '0.9rem',
-                  fontWeight: '700',
-                  boxShadow: '0 2px 8px rgba(14, 165, 233, 0.3)'
-                }}>
-                  AI City Builders
-                </div>
-
-                <div style={{ marginTop: '24px' }}>
-                  <div style={{
-                    background: '#f0f9ff',
-                    padding: '20px',
-                    borderRadius: '16px',
-                    marginBottom: '20px',
-                    border: '1px solid #bae6fd'
-                  }}>
-                    <h4 style={{
-                      fontSize: '1.1rem',
-                      fontWeight: '700',
-                      marginBottom: '16px',
-                      color: '#1e40af',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}>
-                      🚀 새로운 수익 구조
-                    </h4>
-                    <ul style={{ margin: '0', paddingLeft: '0', listStyle: 'none' }}>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: '10px',
-                        color: '#0c4a6e'
-                      }}>
-                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
-                        자체 제작으로 중간 수수료 없음
-                      </li>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: '10px',
-                        color: '#0c4a6e'
-                      }}>
-                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
-                        커뮤니티 홍보 시 10% 리워드 (현금 교환 가능)
-                      </li>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: '10px',
-                        color: '#0c4a6e'
-                      }}>
-                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
-                        등급 상승으로 수익률 증가
-                      </li>
-                    </ul>
-                    <div style={{
-                      marginTop: '16px',
-                      padding: '16px',
-                      background: '#1e40af',
-                      color: 'white',
-                      borderRadius: '12px',
-                      textAlign: 'center',
-                      fontWeight: '700',
-                      fontSize: '1.1rem'
-                    }}>
-                      결과: 50% 저렴한 수강료
-                    </div>
-                  </div>
-
-                  <div style={{
-                    background: '#f0f9ff',
-                    padding: '20px',
-                    borderRadius: '16px',
-                    border: '1px solid #bae6fd'
-                  }}>
-                    <h4 style={{
-                      fontSize: '1.1rem',
-                      fontWeight: '700',
-                      marginBottom: '16px',
-                      color: '#1e40af',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}>
-                      🌟 참여자 중심 생태계
-                    </h4>
-                    <ul style={{ margin: '0', paddingLeft: '0', listStyle: 'none' }}>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: '8px',
-                        color: '#0c4a6e'
-                      }}>
-                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
-                        단순 수강자에서 적극적 참여자로
-                      </li>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: '8px',
-                        color: '#0c4a6e'
-                      }}>
-                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
-                        함께 성장하는 커뮤니티
-                      </li>
-                      <li style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        color: '#0c4a6e'
-                      }}>
-                        <span style={{ color: '#22c55e', fontWeight: '700' }}>✓</span>
-                        홍보 참여로 수익 창출 기회
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 핵심 차별점 요약 */}
-            <div style={{
-              background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
-              padding: '40px',
-              borderRadius: '20px',
+              border: '3px solid #fbbf24',
               textAlign: 'center',
-              border: '1px solid #cbd5e1'
+              boxShadow: '0 10px 40px rgba(251, 191, 36, 0.2)'
             }}>
-              <div style={{
-                display: 'inline-block',
-                background: '#1e40af',
-                color: 'white',
-                padding: '10px 24px',
-                borderRadius: '50px',
-                fontSize: '0.95rem',
-                fontWeight: '700',
-                marginBottom: '24px',
-                boxShadow: '0 2px 8px rgba(14, 165, 233, 0.3)'
-              }}>
-                제이 멘토의 실제 조사 결과
-              </div>
-              <blockquote style={{
-                fontSize: '1.15rem',
-                lineHeight: '1.8',
-                margin: '0',
-                color: '#374151',
-                fontStyle: 'italic',
-                position: 'relative',
-                padding: '0 20px'
-              }}>
-                <span style={{
-                  fontSize: '3rem',
-                  color: '#1e40af',
-                  position: 'absolute',
-                  left: '-10px',
-                  top: '-10px',
-                  fontFamily: 'serif'
-                }}>"</span>
-                모든 주요 교육 플랫폼과 미팅하고 계약서를 분석한 결과, 기존 플랫폼들은 강사에게 20~30%만 주고 70~80%를 가져가 수강료가 비쌀 수밖에 없었습니다. AI City Builders는 이 구조를 완전히 뒤집어 여러분께 더 저렴하고 더 나은 가치를 제공합니다.
-                <span style={{
-                  fontSize: '3rem',
-                  color: '#1e40af',
-                  position: 'absolute',
-                  right: '-10px',
-                  bottom: '-30px',
-                  fontFamily: 'serif'
-                }}>"</span>
-              </blockquote>
+              <img 
+                src={`${process.env.PUBLIC_URL}/images/aicitybuilder/Gemini_Generated_Image_p27hetp27hetp27h.jpeg`}
+                alt="AI 건물주 되기 성공 여정"
+                style={{
+                  width: '100%',
+                  maxWidth: '1200px',
+                  height: 'auto',
+                  borderRadius: '15px',
+                  display: 'block',
+                  margin: '0 auto'
+                }}
+              />
             </div>
           </div>
 
@@ -2257,26 +1858,6 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 }}>
                   디지털 맨해튼에서 수익성 높은 땅을 찾는 법
                 </p>
-
-                {/* 📹 교훈 1 미리보기 영상 */}
-                <div style={{
-                  background: '#f8fafc',
-                  border: '2px dashed #1e40af',
-                  borderRadius: '12px',
-                  padding: '20px',
-                  margin: '15px 0',
-                  textAlign: 'center'
-                }}>
-                  <Play size={32} color="#1e40af" style={{ marginBottom: '10px' }} />
-                  <p style={{
-                    color: '#1e40af',
-                    fontSize: '0.9rem',
-                    fontWeight: '600',
-                    margin: '0'
-                  }}>
-                    30초 미리보기: GOOGLE AI STUDIO 실제 화면 조작
-                  </p>
-                </div>
               </div>
 
               {course.lessons.slice(0, 5).map((lesson: any, index: number) => (

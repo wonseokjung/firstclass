@@ -77,11 +77,11 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
               youtubeChannelName: cityData.youtubeChannelName || '',
               youtubeChannelUrl: cityData.youtubeChannelUrl || '',
               profileImage: cityData.profileImage,
-              stats: {
+        stats: {
                 longFormViews: cityData.longFormViews || 0,
                 shortsViews: cityData.shortsViews || 0,
                 lastUpdated: cityData.lastUpdated || new Date().toISOString()
-              }
+        }
             };
             
             console.log('✅ 건물주 파싱 성공:', builder.name, '-', builder.youtubeChannelName);
@@ -127,7 +127,7 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
       }
     } catch (error) {
       console.error('❌ 등록 상태 확인 실패:', error);
-      setHasRegistered(false);
+    setHasRegistered(false);
     }
   };
 
@@ -140,9 +140,9 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
     try {
       // Azure Table Storage에 저장
       const cityMapData = {
-        name: formData.name,
-        youtubeChannelName: formData.youtubeChannelName,
-        youtubeChannelUrl: formData.youtubeChannelUrl,
+      name: formData.name,
+      youtubeChannelName: formData.youtubeChannelName,
+      youtubeChannelUrl: formData.youtubeChannelUrl,
         longFormViews: 0,
         shortsViews: 0,
         lastUpdated: new Date().toISOString()
@@ -165,10 +165,10 @@ const AICityMapPage: React.FC<AICityMapPageProps> = ({ onBack }) => {
       console.log('✅ AI City 건물주 등록 완료');
 
       // 등록 상태 업데이트
-      setHasRegistered(true);
-      setShowRegisterForm(false);
+    setHasRegistered(true);
+    setShowRegisterForm(false);
       
-      alert('🎉 AI 도시 건물주로 등록되었습니다!');
+    alert('🎉 AI 도시 건물주로 등록되었습니다!');
       
       // Azure 반영 대기 후 목록 새로고침 (1초 대기)
       await new Promise(resolve => setTimeout(resolve, 1000));

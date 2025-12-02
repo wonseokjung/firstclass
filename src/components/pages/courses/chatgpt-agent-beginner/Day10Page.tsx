@@ -460,7 +460,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
               fontSize: 'clamp(0.95rem, 2.5vw, 1.5rem)',
               fontWeight: '700',
               lineHeight: '1.3'
-            }}>
+        }}>
               Day 10: 영상 콘텐츠 자동화
             </h1>
           </div>
@@ -474,7 +474,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
         maxWidth: '900px',
         margin: '0 auto',
         padding: 'clamp(25px, 5vw, 40px) clamp(15px, 4vw, 20px)'
-      }}>
+        }}>
         {/* 강의 정보 카드 */}
         <div style={{
           background: 'white',
@@ -507,7 +507,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
               borderRadius: '20px',
               fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
               fontWeight: '600'
-            }}>
+          }}>
               🏆 최종강
             </span>
             <span style={{
@@ -584,7 +584,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
                     fontSize: 'clamp(0.9rem, 2vw, 1rem)',
                     margin: 0,
                     fontWeight: '500'
-                  }}>
+            }}>
                     ⏱️ {section.duration}
                   </p>
                 )}

@@ -345,6 +345,11 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
     );
   }
 
+  // 🔒 강의 오픈 날짜 체크
+  const releaseDate = new Date('2026-01-01T00:00:00+09:00'); // 2026년 1월 1일
+  const now = new Date();
+  const isReleased = now >= releaseDate;
+
   // 인증된 사용자 - 강의 시청 페이지
   return (
     <div className="masterclass-container">
@@ -386,11 +391,61 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
             fontSize: '1rem',
             lineHeight: '1.6'
           }}>
-            환영합니다! 이제 실제 강의를 시청하고 나만의 수익형 디지털 건물을 완성해보세요.
+            {isReleased 
+              ? '환영합니다! 이제 실제 강의를 시청하고 나만의 수익형 디지털 건물을 완성해보세요.'
+              : '얼리버드로 등록해주셔서 감사합니다! 강의는 2026년 1월 1일에 공개됩니다.'}
           </p>
         </div>
 
-        {/* 비디오 플레이어 */}
+        {/* 🔒 강의 잠금 상태 또는 비디오 플레이어 */}
+        {!isReleased ? (
+          <div style={{
+            background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+            borderRadius: '20px',
+            padding: '60px 30px',
+            textAlign: 'center',
+            marginBottom: '50px',
+            border: '3px solid #fbbf24',
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
+          }}>
+            <div style={{ fontSize: '5rem', marginBottom: '20px' }}>🔒</div>
+            <h3 style={{
+              color: '#fbbf24',
+              fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+              marginBottom: '15px',
+              fontWeight: '800'
+            }}>
+              강의 오픈 예정
+            </h3>
+            <p style={{
+              color: '#e2e8f0',
+              fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)',
+              marginBottom: '25px',
+              lineHeight: '1.7'
+            }}>
+              이 강의는 <strong style={{ color: '#fbbf24' }}>2026년 1월 1일 자정</strong>에 공개됩니다.
+            </p>
+            <div style={{
+              background: 'rgba(251, 191, 36, 0.15)',
+              border: '2px solid rgba(251, 191, 36, 0.3)',
+              borderRadius: '15px',
+              padding: '20px',
+              maxWidth: '500px',
+              margin: '0 auto'
+            }}>
+              <p style={{
+                color: '#cbd5e1',
+                fontSize: '1rem',
+                margin: 0,
+                lineHeight: '1.6'
+              }}>
+                🎁 <strong style={{ color: '#fbbf24' }}>얼리버드 혜택</strong><br />
+                강의 오픈 시 이메일로 알림을 드립니다.<br />
+                그동안 <strong style={{ color: '#fbbf24' }}>AI 도시 공사장</strong>에서 채널 주제를 미리 선정해보세요!
+              </p>
+            </div>
+          </div>
+        ) : (
         <div style={{ marginBottom: '50px' }}>
           <div style={{
             background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
@@ -433,6 +488,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
             </div>
           </div>
         </div>
+        )}
 
         {/* 강의 목록 - 가운데 정렬 */}
         <div style={{
