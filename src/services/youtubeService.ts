@@ -453,6 +453,7 @@ class YouTubeService {
     }
 
     // 괄호 사용
+    // eslint-disable-next-line no-useless-escape
     const withBrackets = videos.filter(v => /[\[\]()【】]/.test(v.title)).length;
     if (withBrackets > videos.length / 3) {
       patterns.push('📌 [카테고리] 등 괄호로 정보 분류');
