@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CreditCard, CheckCircle, Globe } from 'lucide-react';
+import { CreditCard, Globe } from 'lucide-react';
 import NavigationBar from '../../../common/NavigationBar';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import AzureTableService from '../../../../services/azureTableService';
