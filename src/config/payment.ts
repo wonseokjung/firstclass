@@ -17,19 +17,18 @@ export interface PaymentConfig {
   failUrl: string;
 }
 
-// 현재 환경 감지 (개발/프로덕션)
-const isProduction = process.env.NODE_ENV === 'production';
+// 도메인 기반으로 라이브/테스트 환경 감지
+const isProduction = typeof window !== 'undefined' && 
+                     (window.location.hostname === 'www.aicitybuilders.com' || 
+                      window.location.hostname === 'aicitybuilders.com');
 
 // 도메인 설정
 const DOMAIN = isProduction 
-  ? 'https://www.aicitybuilders.com'  // 🎯 실제 배포 도메인으로 수정
-  : window.location.origin;
+  ? 'https://www.aicitybuilders.com'
+  : typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
 
-// 토스페이먼츠 키 설정
-// 🚨 임시 라이브 키 테스트 모드 (개발 환경에서 라이브 키 사용)
-const FORCE_LIVE_MODE = false; // 🎯 프로덕션에서만 라이브 키 사용
-
-const useLiveKey = isProduction || FORCE_LIVE_MODE;
+// 토스페이먼츠 키 설정 (도메인 기반)
+const useLiveKey = isProduction;
 
 const PAYMENT_CONFIG: PaymentConfig = {
   // 라이브 키 연동 완료! 🎉

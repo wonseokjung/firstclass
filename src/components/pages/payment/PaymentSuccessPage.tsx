@@ -6,15 +6,15 @@ import NavigationBar from '../../common/NavigationBar';
 
 // 토스페이먼츠 결제 승인 API 호출 함수
 const confirmPayment = async (paymentKey: string, orderId: string, amount: number) => {
-  // 🚨 임시 라이브 모드 (실제 결제 테스트)
-  const FORCE_LIVE_MODE = false; // TODO: 테스트 후 false로 변경
-  const isLiveMode = process.env.NODE_ENV === 'production' || FORCE_LIVE_MODE;
+  // 도메인 기반으로 라이브/테스트 환경 감지
+  const isLiveMode = window.location.hostname === 'www.aicitybuilders.com' || 
+                     window.location.hostname === 'aicitybuilders.com';
   
   const secretKey = isLiveMode
-    ? 'live_sk_AQ92ymxN34P4R5EKxBkO3ajRKXvd'  // 라이브 시크릿 키
-    : 'test_sk_vZnjEJeQVxG1oQy91vqq3PmOoBN0';   // 상점아이디 clathou1x0의 테스트 시크릿 키
+    ? 'live_sk_AQ92ymxN34P4R5EKxBkO3ajRKXvd'  // 🔴 라이브 시크릿 키
+    : 'test_sk_vZnjEJeQVxG1oQy91vqq3PmOoBN0';   // 🟡 테스트 시크릿 키
   
-  console.log(`💳 결제 승인 API 모드: ${isLiveMode ? '🔴 LIVE' : '🟡 TEST'}`);
+  console.log(`💳 결제 승인 API 모드: ${isLiveMode ? '🔴 LIVE' : '🟡 TEST'} (도메인: ${window.location.hostname})`);
   
   const basicAuth = btoa(`${secretKey}:`);
   
