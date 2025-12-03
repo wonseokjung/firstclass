@@ -343,24 +343,6 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             {/* 국내 결제 (토스페이먼츠) */}
             {activeTab === 'domestic' && (
               <div className="fade-in">
-                <div style={{
-                  background: '#f0f9ff',
-                  border: '2px solid #0ea5e9',
-                  borderRadius: '15px',
-                  padding: '20px',
-                  marginBottom: '20px'
-                }}>
-                  <p style={{
-                    textAlign: 'center',
-                    color: '#0369a1',
-                    fontSize: '0.95rem',
-                    fontWeight: '600',
-                    margin: 0
-                  }}>
-                    💳 토스페이먼츠로 안전하게 결제하세요
-                  </p>
-                </div>
-                
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(8px, 2vw, 12px)' }}>
                   <button
                     onClick={() => handleTossPayment('CARD')}
