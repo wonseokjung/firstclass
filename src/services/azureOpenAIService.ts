@@ -238,6 +238,54 @@ ${parsedInfo.dailyRoutine ? `**하루 일과**: ${parsedInfo.dailyRoutine}` : ''
 }
 
 /**
+ * Azure OpenAI 범용 호출 함수
+ * 다양한 프롬프트에 대해 Azure OpenAI를 호출합니다
+ */
+export async function callAzureOpenAI(
+  messages: Array<{ role: 'system' | 'user' | 'assistant'; content: string }>,
+  options?: {
+    maxTokens?: number;
+    temperature?: number;
+  }
+): Promise<string> {
+  try {
+    const endpoint = process.env.REACT_APP_AZURE_OPENAI_ENDPOINT;
+    const apiKey = process.env.REACT_APP_AZURE_OPENAI_KEY;
+    const deploymentName = process.env.REACT_APP_AZURE_OPENAI_DEPLOYMENT || 'gpt-4';
+
+    if (!endpoint || !apiKey) {
+      throw new Error('Azure OpenAI 설정이 필요합니다.');
+    }
+
+    const url = `${endpoint}/openai/deployments/${deploymentName}/chat/completions?api-version=2024-05-01-preview`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': apiKey,
+      },
+      body: JSON.stringify({
+        messages,
+        max_tokens: options?.maxTokens || 2000,
+        temperature: options?.temperature || 0.7,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Azure OpenAI API 오류: ${errorData.error?.message || response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0]?.message?.content || '';
+  } catch (error) {
+    console.error('Azure OpenAI 호출 오류:', error);
+    throw error;
+  }
+}
+
+/**
  * 백엔드 API를 통해 Azure OpenAI를 호출합니다 (보안 강화)
  */
 export async function recommendYoutubeChannelsViaBackend(

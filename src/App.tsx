@@ -20,6 +20,7 @@ const LoadingSpinner: React.FC = () => (
 const MainPage = React.lazy(() => import('./components/pages/MainPage'));
 const AIConstructionSitePage = React.lazy(() => import('./components/pages/AIConstructionSitePage'));
 const AIConstructionSiteStep1Page = React.lazy(() => import('./components/pages/AIConstructionSiteStep1Page'));
+const AIConstructionSiteStep2Page = React.lazy(() => import('./components/pages/AIConstructionSiteStep2Page'));
 const ChatGPTPrompts40Page = React.lazy(() => import('./components/pages/ChatGPTPrompts40Page'));
 const AIMoneyMasterPromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyMasterPromptsPage'));
 const AIMoneyImagePromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyImagePromptsPage'));
@@ -598,6 +599,14 @@ const ChatGPTCoursePageWrapper = () => {
       </Suspense>
     );
   };
+
+  const AIConstructionSiteStep2PageWrapper = () => {
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <AIConstructionSiteStep2Page />
+      </Suspense>
+    );
+  };
   
   
   
@@ -647,6 +656,7 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/clubs" element={<ClubsPageWrapper />} />
               <Route path="/ai-construction-site" element={<AIConstructionSitePageWrapper />} />
               <Route path="/ai-construction-site/step1" element={<AIConstructionSiteStep1PageWrapper />} />
+              <Route path="/ai-construction-site/step2" element={<AIConstructionSiteStep2PageWrapper />} />
               <Route path="/chatgpt-prompts-40plus" element={<ChatGPTPrompts40PageWrapper />} />
               <Route path="/ai-money-master-prompts" element={<AIMoneyMasterPromptsPageWrapper />} />
               <Route path="/ai-money-image-prompts" element={<AIMoneyImagePromptsPageWrapper />} />

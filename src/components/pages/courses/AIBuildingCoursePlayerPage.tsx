@@ -446,51 +446,51 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
             </div>
           </div>
         ) : (
-        <div style={{ marginBottom: '50px' }}>
-          <div style={{
-            background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
-            borderRadius: '20px',
-            padding: '30px',
-            textAlign: 'center'
-          }}>
-            <h3 style={{
-              color: '#1f2937',
-              marginBottom: '20px',
-              fontSize: '1.3rem',
-              fontWeight: '600'
-            }}>
-              Chapter 1. AI 건물 짓기 - 입지 선정부터 첫 월세까지
-            </h3>
-            <div style={{
-              position: 'relative',
-              width: '100%',
-              paddingBottom: '56.25%',
-              height: 0,
-              background: '#000',
-              borderRadius: '15px',
-              overflow: 'hidden',
-              border: '3px solid #0ea5e9'
-            }}>
-              <iframe
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
+          <>
+            <div style={{ marginBottom: '50px' }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
+                borderRadius: '20px',
+                padding: '30px',
+                textAlign: 'center'
+              }}>
+                <h3 style={{
+                  color: '#1f2937',
+                  marginBottom: '20px',
+                  fontSize: '1.3rem',
+                  fontWeight: '600'
+                }}>
+                  Chapter 1. AI 건물 짓기 - 입지 선정부터 첫 월세까지
+                </h3>
+                <div style={{
+                  position: 'relative',
                   width: '100%',
-                  height: '100%'
-                }}
-                src="https://www.youtube.com/embed/8od7wv6tJIY?si=cM1TpOCYU-y0HIhU"
-                title="AI 건물 짓기 - Chapter 1"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+                  paddingBottom: '56.25%',
+                  height: 0,
+                  background: '#000',
+                  borderRadius: '15px',
+                  overflow: 'hidden',
+                  border: '3px solid #0ea5e9'
+                }}>
+                  <iframe
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%'
+                    }}
+                    src="https://www.youtube.com/embed/8od7wv6tJIY?si=cM1TpOCYU-y0HIhU"
+                    title="AI 건물 짓기 - Chapter 1"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        )}
 
-        {/* 강의 목록 - 가운데 정렬 */}
+            {/* 강의 목록 - 가운데 정렬 */}
         <div style={{
           maxWidth: '900px',
           margin: '0 auto',
@@ -559,8 +559,10 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
               </div>
               <Play size={24} color="#0ea5e9" />
             </div>
-          ))}
-        </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

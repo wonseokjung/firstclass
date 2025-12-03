@@ -43,20 +43,20 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
     },
     {
       id: 2,
-      title: '🎨 Step 2: 기초 공사',
-      subtitle: '채널 세팅 & 브랜딩',
+      title: '🔍 Step 2: 레퍼런스 리서치',
+      subtitle: '트렌드 분석 & 성공 사례 수집',
       icon: <Settings size={32} />,
-      color: '#64748b',
-      gradient: 'linear-gradient(135deg, #94a3b8, #64748b)',
-      description: '채널명부터 로고, 배너까지 AI가 완벽한 브랜드 아이덴티티를 만들어드립니다.',
+      color: '#10b981',
+      gradient: 'linear-gradient(135deg, #10b981, #059669)',
+      description: '유튜브에서 트렌디한 채널과 인기 영상을 자동으로 분석하여 성공 패턴을 파악합니다.',
       features: [
-        '✏️ AI 채널명 생성기 (10가지 옵션)',
-        '🎨 로고 & 배너 자동 생성 (DALL-E)',
-        '📝 채널 설명 & 소개글 작성',
-        '🔍 SEO 최적화 키워드 추출',
-        '🎯 채널 컨셉 & 톤앤매너 설정'
+        '📊 트렌디한 채널 TOP 20 자동 검색',
+        '🎬 인기 영상 TOP 15 분석',
+        '📈 조회수, 구독자, 업로드 빈도 분석',
+        '🎯 AI 기반 콘텐츠 패턴 분석',
+        '💡 맞춤형 전략 인사이트 제공'
       ],
-      status: 'locked'
+      status: 'available'
     },
     {
       id: 3,
@@ -126,6 +126,8 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
   const handleStartStep = (stepId: number) => {
     if (stepId === 1) {
       navigate('/ai-construction-site/step1');
+    } else if (stepId === 2) {
+      navigate('/ai-construction-site/step2');
     } else {
       // locked 상태는 버튼이 보이지 않으므로 여기는 실행 안 됨
       alert(`Step ${stepId} 기능은 곧 출시됩니다! 🚀`);
