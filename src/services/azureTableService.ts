@@ -1734,10 +1734,12 @@ export class AzureTableService {
         payments = userData.payments;
       }
 
-      // courseId 매칭 (1002 <-> chatgpt-agent-beginner 호환)
+      // courseId 매칭 (호환성)
       const courseIdMap: { [key: string]: string[] } = {
         'chatgpt-agent-beginner': ['chatgpt-agent-beginner', '1002'],
-        '1002': ['chatgpt-agent-beginner', '1002']
+        '1002': ['chatgpt-agent-beginner', '1002'],
+        'ai-building-course': ['ai-building-course', '999'],
+        '999': ['ai-building-course', '999']
       };
 
       const matchIds = courseIdMap[courseId] || [courseId];

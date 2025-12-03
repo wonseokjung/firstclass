@@ -460,25 +460,25 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
               {/* 가격 정보 - 개선된 디자인 */}
               <div style={{
                 background: 'rgba(255, 255, 255, 0.15)',
-                borderRadius: '20px',
-                padding: '30px',
-                marginBottom: '40px',
+                borderRadius: 'clamp(12px, 3vw, 20px)',
+                padding: 'clamp(18px, 4vw, 30px)',
+                marginBottom: 'clamp(25px, 5vw, 40px)',
                 backdropFilter: 'blur(10px)',
                 border: '1px solid rgba(255, 255, 255, 0.2)',
                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
               }}>
                 <div style={{
-                  fontSize: '1.3rem',
+                  fontSize: 'clamp(0.95rem, 3vw, 1.3rem)',
                   textDecoration: 'line-through',
-                  marginBottom: '10px',
+                  marginBottom: '8px',
                   opacity: '0.8'
                 }}>
                   ₩{originalPrice.toLocaleString()}
                 </div>
                 <div style={{
-                  fontSize: 'clamp(3rem, 7vw, 4rem)',
+                  fontSize: 'clamp(2rem, 8vw, 3.5rem)',
                   fontWeight: '900',
-                  marginBottom: '15px',
+                  marginBottom: '12px',
                   textShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
                   background: 'linear-gradient(45deg, #ffffff, #fef3c7)',
                   WebkitBackgroundClip: 'text',
@@ -488,12 +488,12 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   ₩{earlyBirdPrice.toLocaleString()}
                 </div>
                 <div style={{
-                  fontSize: '1.1rem',
+                  fontSize: 'clamp(0.85rem, 2.5vw, 1.1rem)',
                   color: '#fbbf24',
                   fontWeight: '700',
-                  marginBottom: '15px',
+                  marginBottom: '12px',
                   background: 'rgba(251, 191, 36, 0.2)',
-                  padding: '8px 16px',
+                  padding: 'clamp(6px, 2vw, 8px) clamp(12px, 3vw, 16px)',
                   borderRadius: '25px',
                   display: 'inline-block',
                   border: '1px solid rgba(251, 191, 36, 0.3)'
@@ -550,39 +550,41 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     position: 'relative',
                     background: 'linear-gradient(135deg, #f59e0b, #d97706)',
                     color: 'white',
-                    border: '3px solid rgba(255, 255, 255, 0.8)',
-                    padding: '30px 70px',
-                    fontSize: '1.8rem',
+                    border: '2px solid rgba(255, 255, 255, 0.8)',
+                    padding: 'clamp(15px, 4vw, 30px) clamp(30px, 8vw, 70px)',
+                    fontSize: 'clamp(1rem, 4vw, 1.8rem)',
                     fontWeight: '900',
-                    borderRadius: '30px',
+                    borderRadius: 'clamp(15px, 4vw, 30px)',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease',
                     opacity: '1',
-                    boxShadow: '0 20px 50px rgba(245, 158, 11, 0.3)',
-                    textShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                    boxShadow: '0 15px 40px rgba(245, 158, 11, 0.3)',
+                    textShadow: '0 2px 6px rgba(0, 0, 0, 0.2)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '15px',
-                    minWidth: '320px',
+                    gap: 'clamp(8px, 2vw, 15px)',
+                    minWidth: 'auto',
+                    width: '100%',
+                    maxWidth: '400px',
                     backdropFilter: 'blur(10px)'
                   }}
                   onMouseOver={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-5px) scale(1.05)';
-                    e.currentTarget.style.boxShadow = '0 25px 60px rgba(245, 158, 11, 0.4)';
+                    e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                    e.currentTarget.style.boxShadow = '0 20px 50px rgba(245, 158, 11, 0.4)';
                   }}
                   onMouseOut={(e) => {
                     e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                    e.currentTarget.style.boxShadow = '0 20px 50px rgba(245, 158, 11, 0.3)';
+                    e.currentTarget.style.boxShadow = '0 15px 40px rgba(245, 158, 11, 0.3)';
                   }}
                 >
-                  <span style={{ fontSize: '1.5rem' }}>🔥</span>
+                  <span style={{ fontSize: 'clamp(1rem, 3vw, 1.5rem)' }}>🔥</span>
                   얼리버드 수강 신청
                 </button>
               </div>
 
               <p style={{
-                fontSize: '1.1rem',
+                fontSize: 'clamp(0.85rem, 2.5vw, 1.1rem)',
                 opacity: '0.95',
                 margin: '0',
                 textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',

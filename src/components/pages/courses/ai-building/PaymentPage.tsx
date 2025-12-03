@@ -82,7 +82,16 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
     
     try {
       const { loadTossPayments } = await import('@tosspayments/tosspayments-sdk');
-      const clientKey = process.env.REACT_APP_TOSS_CLIENT_KEY || 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
+      // 도메인 기반으로 라이브/테스트 환경 감지
+      const isProduction = window.location.hostname === 'www.aicitybuilders.com' || 
+                          window.location.hostname === 'aicitybuilders.com';
+      const clientKey = isProduction 
+        ? 'live_ck_DnyRpQWGrNwa9QGY664O8Kwv1M9E'  // 🔴 라이브 키
+        : 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'; // 🟡 테스트 키
+      
+      console.log(`🔧 결제 환경: ${isProduction ? '🔴 LIVE' : '🟡 TEST'} (도메인: ${window.location.hostname})`);
+      console.log(`🔑 사용 키: ${clientKey.substring(0, 20)}...`);
+      
       const tossPayments = await loadTossPayments(clientKey);
       
       const orderId = `order_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
@@ -178,38 +187,39 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
       <div style={{
         maxWidth: '800px',
         margin: '0 auto',
-        padding: '40px 20px'
+        padding: 'clamp(20px, 5vw, 40px) clamp(15px, 4vw, 20px)'
       }}>
         {/* 헤더 */}
         <div style={{
           textAlign: 'center',
-          marginBottom: '40px'
+          marginBottom: 'clamp(25px, 5vw, 40px)'
         }}>
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: '80px',
-            height: '80px',
+            width: 'clamp(60px, 12vw, 80px)',
+            height: 'clamp(60px, 12vw, 80px)',
             background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
             borderRadius: '50%',
-            marginBottom: '20px',
-            boxShadow: '0 10px 30px rgba(251, 191, 36, 0.4)'
+            marginBottom: 'clamp(12px, 3vw, 20px)',
+            boxShadow: '0 8px 25px rgba(251, 191, 36, 0.4)'
           }}>
-            <span style={{ fontSize: '2.5rem' }}>💳</span>
+            <span style={{ fontSize: 'clamp(1.8rem, 5vw, 2.5rem)' }}>💳</span>
           </div>
           <h1 style={{
-            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
+            fontSize: 'clamp(1.3rem, 4vw, 2rem)',
             fontWeight: '800',
             color: '#ffffff',
-            marginBottom: '15px'
+            marginBottom: 'clamp(8px, 2vw, 15px)',
+            lineHeight: '1.3'
           }}>
             {courseInfo.title}
           </h1>
           <p style={{
-            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+            fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
             color: '#e0f2fe',
-            marginBottom: '30px'
+            marginBottom: 'clamp(15px, 4vw, 30px)'
           }}>
             {courseInfo.subtitle}
           </p>
@@ -217,10 +227,10 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             display: 'inline-block',
             background: 'rgba(251, 191, 36, 0.2)',
             border: '2px solid #fbbf24',
-            padding: '8px 20px',
+            padding: 'clamp(6px, 2vw, 8px) clamp(12px, 3vw, 20px)',
             borderRadius: '25px',
             color: '#fbbf24',
-            fontSize: '0.9rem',
+            fontSize: 'clamp(0.8rem, 2.5vw, 0.9rem)',
             fontWeight: '700'
           }}>
             🔥 얼리버드 특가 진행 중
@@ -230,32 +240,32 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
         {/* 결제 정보 카드 */}
         <div style={{
           background: 'rgba(255, 255, 255, 0.95)',
-          borderRadius: '25px',
-          padding: '40px',
-          marginBottom: '30px',
+          borderRadius: 'clamp(15px, 4vw, 25px)',
+          padding: 'clamp(20px, 5vw, 40px)',
+          marginBottom: 'clamp(20px, 4vw, 30px)',
           boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
-          border: '3px solid #fbbf24'
+          border: '2px solid #fbbf24'
         }}>
           {/* 가격 정보 */}
           <div style={{
             textAlign: 'center',
-            paddingBottom: '30px',
+            paddingBottom: 'clamp(15px, 4vw, 30px)',
             borderBottom: '2px solid #e2e8f0',
-            marginBottom: '30px'
+            marginBottom: 'clamp(15px, 4vw, 30px)'
           }}>
             <div style={{
-              fontSize: '1rem',
+              fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
               color: '#94a3b8',
               textDecoration: 'line-through',
-              marginBottom: '10px'
+              marginBottom: '8px'
             }}>
               정가 ₩95,000
             </div>
             <div style={{
-              fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
+              fontSize: 'clamp(1.8rem, 6vw, 2.8rem)',
               fontWeight: '900',
               color: '#1e40af',
-              marginBottom: '15px'
+              marginBottom: '12px'
             }}>
               ₩{courseInfo.price.toLocaleString()}
             </div>
@@ -263,9 +273,9 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
               display: 'inline-block',
               background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
               color: '#92400e',
-              padding: '8px 20px',
+              padding: 'clamp(6px, 2vw, 8px) clamp(12px, 3vw, 20px)',
               borderRadius: '20px',
-              fontSize: '0.95rem',
+              fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)',
               fontWeight: '800',
               border: '2px solid #fbbf24'
             }}>
@@ -274,11 +284,11 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           </div>
 
           {/* 결제 방법 탭 */}
-          <div style={{ marginBottom: '30px' }}>
+          <div style={{ marginBottom: 'clamp(15px, 4vw, 30px)' }}>
             <div style={{
               display: 'flex',
-              marginBottom: '20px',
-              borderRadius: '12px',
+              marginBottom: 'clamp(12px, 3vw, 20px)',
+              borderRadius: '10px',
               overflow: 'hidden',
               border: '2px solid #e2e8f0'
             }}>
@@ -286,46 +296,46 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                 onClick={() => setActiveTab('domestic')}
                 style={{
                   flex: 1,
-                  padding: '15px 20px',
+                  padding: 'clamp(10px, 3vw, 15px) clamp(8px, 2vw, 20px)',
                   border: 'none',
                   background: activeTab === 'domestic' 
                     ? 'linear-gradient(135deg, #1e40af, #3b82f6)' 
                     : '#f8fafc',
                   color: activeTab === 'domestic' ? '#ffffff' : '#64748b',
-                  fontSize: '1.1rem',
+                  fontSize: 'clamp(0.85rem, 2.5vw, 1.1rem)',
                   fontWeight: '700',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '8px'
+                  gap: 'clamp(4px, 1.5vw, 8px)'
                 }}
               >
-                <CreditCard size={20} />
+                <CreditCard size={18} />
                 🇰🇷 국내 결제
               </button>
               <button
                 onClick={() => setActiveTab('international')}
                 style={{
                   flex: 1,
-                  padding: '15px 20px',
+                  padding: 'clamp(10px, 3vw, 15px) clamp(8px, 2vw, 20px)',
                   border: 'none',
                   background: activeTab === 'international' 
                     ? 'linear-gradient(135deg, #0070ba, #003087)' 
                     : '#f8fafc',
                   color: activeTab === 'international' ? '#ffffff' : '#64748b',
-                  fontSize: '1.1rem',
+                  fontSize: 'clamp(0.85rem, 2.5vw, 1.1rem)',
                   fontWeight: '700',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '8px'
+                  gap: 'clamp(4px, 1.5vw, 8px)'
                 }}
               >
-                <Globe size={20} />
+                <Globe size={18} />
                 🌍 해외 결제
               </button>
             </div>
@@ -351,7 +361,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                   </p>
                 </div>
                 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(8px, 2vw, 12px)' }}>
                   <button
                     onClick={() => handleTossPayment('CARD')}
                     disabled={isLoading}
@@ -360,21 +370,21 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                       background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
                       color: '#1e293b',
                       border: 'none',
-                      padding: '18px',
-                      borderRadius: '12px',
-                      fontSize: '1.2rem',
+                      padding: 'clamp(12px, 3vw, 18px)',
+                      borderRadius: '10px',
+                      fontSize: 'clamp(0.95rem, 3vw, 1.2rem)',
                       fontWeight: '800',
                       cursor: isLoading ? 'not-allowed' : 'pointer',
                       opacity: isLoading ? 0.7 : 1,
                       transition: 'all 0.3s ease',
-                      boxShadow: '0 8px 25px rgba(251, 191, 36, 0.4)',
+                      boxShadow: '0 6px 20px rgba(251, 191, 36, 0.4)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: '10px'
+                      gap: 'clamp(6px, 2vw, 10px)'
                     }}
                   >
-                    <CreditCard size={24} />
+                    <CreditCard size={20} />
                     {isLoading ? '처리 중...' : `카드 결제 ₩${courseInfo.price.toLocaleString()}`}
                   </button>
 
@@ -386,9 +396,9 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                       background: '#ffffff',
                       color: '#1e40af',
                       border: '2px solid #1e40af',
-                      padding: '16px',
-                      borderRadius: '12px',
-                      fontSize: '1.1rem',
+                      padding: 'clamp(10px, 2.5vw, 16px)',
+                      borderRadius: '10px',
+                      fontSize: 'clamp(0.9rem, 2.8vw, 1.1rem)',
                       fontWeight: '700',
                       cursor: isLoading ? 'not-allowed' : 'pointer',
                       opacity: isLoading ? 0.7 : 1,
@@ -406,9 +416,9 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                       background: '#ffffff',
                       color: '#475569',
                       border: '2px solid #cbd5e1',
-                      padding: '16px',
-                      borderRadius: '12px',
-                      fontSize: '1.1rem',
+                      padding: 'clamp(10px, 2.5vw, 16px)',
+                      borderRadius: '10px',
+                      fontSize: 'clamp(0.9rem, 2.8vw, 1.1rem)',
                       fontWeight: '700',
                       cursor: isLoading ? 'not-allowed' : 'pointer',
                       opacity: isLoading ? 0.7 : 1,

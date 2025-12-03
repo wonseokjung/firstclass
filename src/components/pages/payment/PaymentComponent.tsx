@@ -3,8 +3,8 @@ import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { getPaymentConfig, createPaymentRequest, validateApiKey } from '../../../config/payment';
 
-// PayPal Client ID (Sandbox)
-const PAYPAL_CLIENT_ID = 'AeUQjEuDCovOma4undCZrZ06UCZ8j0ATs8Wt1J-O21Ihimkwu7DLFo9RsP-6uC8URyQ40uPCdrCLDVT9';
+// PayPal Live Client ID
+const PAYPAL_CLIENT_ID = 'AVkkDf4qSOAW0AbS6i6Gy85KbYvLLWJz93KZcm55SXCoJ8Iy5OX-aiXceZsD10poCFlkCmZYlZ1y832d';
 
 // 환율 (1 USD = 1,400 KRW 기준)
 const KRW_TO_USD_RATE = 1400;

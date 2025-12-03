@@ -817,7 +817,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   borderRadius: '8px',
                   border: 'none',
                   background: 'var(--color-primary)',
-                  color: '#1f2937',
+                  color: '#ffffff',
                   fontSize: '1rem',
                   fontWeight: '600',
                   cursor: 'pointer',

@@ -82,7 +82,16 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
     
     try {
       const { loadTossPayments } = await import('@tosspayments/tosspayments-sdk');
-      const clientKey = process.env.REACT_APP_TOSS_CLIENT_KEY || 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
+      // 도메인 기반으로 라이브/테스트 환경 감지
+      const isProduction = window.location.hostname === 'www.aicitybuilders.com' || 
+                          window.location.hostname === 'aicitybuilders.com';
+      const clientKey = isProduction 
+        ? 'live_ck_DnyRpQWGrNwa9QGY664O8Kwv1M9E'  // 🔴 라이브 키
+        : 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'; // 🟡 테스트 키
+      
+      console.log(`🔧 결제 환경: ${isProduction ? '🔴 LIVE' : '🟡 TEST'} (도메인: ${window.location.hostname})`);
+      console.log(`🔑 사용 키: ${clientKey.substring(0, 20)}...`);
+      
       const tossPayments = await loadTossPayments(clientKey);
       
       const orderId = `order_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
