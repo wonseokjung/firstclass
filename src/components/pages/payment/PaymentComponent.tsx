@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { getPaymentConfig, createPaymentRequest, validateApiKey } from '../../../config/payment';
+
+// PayPal Client ID (Sandbox)
+const PAYPAL_CLIENT_ID = 'AeUQjEuDCovOma4undCZrZ06UCZ8j0ATs8Wt1J-O21Ihimkwu7DLFo9RsP-6uC8URyQ40uPCdrCLDVT9';
+
+// 환율 (1 USD = 1,400 KRW 기준)
+const KRW_TO_USD_RATE = 1400;
 
 interface PaymentComponentProps {
   courseId: string;
@@ -323,6 +330,102 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
           >
             🏧 가상계좌
           </button>
+
+          {/* PayPal 결제 섹션 */}
+          <div style={{
+            marginTop: '20px',
+            paddingTop: '20px',
+            borderTop: '1px solid #e2e8f0'
+          }}>
+            <p style={{
+              textAlign: 'center',
+              color: '#64748b',
+              fontSize: '0.9rem',
+              marginBottom: '15px'
+            }}>
+              ─── 해외 결제 ───
+            </p>
+            <div style={{
+              background: '#f8fafc',
+              borderRadius: '12px',
+              padding: '15px',
+              marginBottom: '10px'
+            }}>
+              <p style={{
+                fontSize: '0.85rem',
+                color: '#64748b',
+                marginBottom: '10px',
+                textAlign: 'center'
+              }}>
+                🌍 해외 카드 / PayPal 계정으로 결제
+              </p>
+              <p style={{
+                fontSize: '1.1rem',
+                fontWeight: '700',
+                color: '#1f2937',
+                textAlign: 'center',
+                marginBottom: '15px'
+              }}>
+                ${(price / KRW_TO_USD_RATE).toFixed(2)} USD
+              </p>
+              <PayPalScriptProvider options={{ 
+                clientId: PAYPAL_CLIENT_ID,
+                currency: "USD"
+              }}>
+                <PayPalButtons
+                  style={{ 
+                    layout: "vertical",
+                    color: "blue",
+                    shape: "rect",
+                    label: "paypal"
+                  }}
+                  disabled={isLoading || !userInfo}
+                  createOrder={(_data, actions) => {
+                    const usdAmount = (price / KRW_TO_USD_RATE).toFixed(2);
+                    return actions.order.create({
+                      intent: "CAPTURE",
+                      purchase_units: [{
+                        amount: {
+                          currency_code: "USD",
+                          value: usdAmount
+                        },
+                        description: courseTitle
+                      }]
+                    });
+                  }}
+                  onApprove={async (_data, actions) => {
+                    if (actions.order) {
+                      const details = await actions.order.capture();
+                      console.log('✅ PayPal 결제 성공:', details);
+                      
+                      // 결제 성공 처리
+                      const paymentData = {
+                        orderId: details.id,
+                        paymentMethod: 'paypal',
+                        amount: price,
+                        usdAmount: (price / KRW_TO_USD_RATE).toFixed(2),
+                        courseId: courseId,
+                        courseTitle: courseTitle,
+                        payerEmail: details.payer?.email_address,
+                        payerName: details.payer?.name?.given_name
+                      };
+                      
+                      alert(`🎉 PayPal 결제가 완료되었습니다!\n\n주문번호: ${details.id}`);
+                      onSuccess(paymentData);
+                    }
+                  }}
+                  onError={(err) => {
+                    console.error('❌ PayPal 결제 오류:', err);
+                    alert('PayPal 결제 중 오류가 발생했습니다. 다시 시도해주세요.');
+                  }}
+                  onCancel={() => {
+                    console.log('⚠️ PayPal 결제 취소됨');
+                    alert('PayPal 결제가 취소되었습니다.');
+                  }}
+                />
+              </PayPalScriptProvider>
+            </div>
+          </div>
         </div>
 
         {paymentConfig.environment === 'test' && (
