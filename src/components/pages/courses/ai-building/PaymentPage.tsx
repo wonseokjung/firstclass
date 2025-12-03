@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CreditCard, CheckCircle } from 'lucide-react';
+import { CreditCard, CheckCircle, Globe } from 'lucide-react';
 import NavigationBar from '../../../common/NavigationBar';
-import PaymentComponent from '../../payment/PaymentComponent';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import AzureTableService from '../../../../services/azureTableService';
+
+// PayPal Live Client ID
+const PAYPAL_CLIENT_ID = 'AVkkDf4qSOAW0AbS6i6Gy85KbYvLLWJz93KZcm55SXCoJ8Iy5OX-aiXceZsD10poCFlkCmZYlZ1y832d';
+
+// 해외 결제 USD 고정 가격
+const USD_PRICE = 40; // $40 USD
 
 interface PaymentPageProps {
   onBack?: () => void;
@@ -12,7 +19,8 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<any>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [activeTab, setActiveTab] = useState<'domestic' | 'international'>('domestic');
+  const [isLoading, setIsLoading] = useState(false);
 
   const courseInfo = {
     id: '999',
@@ -50,9 +58,11 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
     checkAuth();
   }, [navigate]);
 
+  // USD 고정 가격
+  const usdPrice = USD_PRICE; // $40 USD
+
   const handlePaymentSuccess = () => {
     console.log('🎉 결제 성공!');
-    setShowPaymentModal(false);
     alert('🎉 결제가 완료되었습니다! 강의 시청 페이지로 이동합니다.');
     
     // 결제 성공 후 강의 시청 페이지로 리다이렉트
@@ -61,13 +71,68 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
     }, 1000);
   };
 
-  const handlePaymentClose = () => {
-    setShowPaymentModal(false);
-    navigate('/ai-building-course');
+  // 토스페이먼츠 결제
+  const handleTossPayment = async (method: string) => {
+    if (!userInfo) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      const { loadTossPayments } = await import('@tosspayments/tosspayments-sdk');
+      const clientKey = process.env.REACT_APP_TOSS_CLIENT_KEY || 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
+      const tossPayments = await loadTossPayments(clientKey);
+      
+      const orderId = `order_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
+      
+      const payment = tossPayments.payment({ customerKey: userInfo.email || 'guest' });
+      
+      await payment.requestPayment({
+        method: method as any,
+        amount: { currency: 'KRW', value: courseInfo.price },
+        orderId: orderId,
+        orderName: courseInfo.title,
+        successUrl: `${window.location.origin}/payment/success?course=${courseInfo.id}`,
+        failUrl: `${window.location.origin}/payment/fail`,
+        customerEmail: userInfo.email,
+        customerName: userInfo.name || userInfo.displayName || '고객'
+      });
+    } catch (error: any) {
+      console.error('결제 오류:', error);
+      if (error?.code !== 'USER_CANCEL') {
+        alert(`결제 중 오류가 발생했습니다: ${error?.message || '알 수 없는 오류'}`);
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleStartPayment = () => {
-    setShowPaymentModal(true);
+  // PayPal 결제 성공 처리
+  const handlePayPalPaymentSuccess = async (details: any) => {
+    try {
+      setIsLoading(true);
+      
+      // Azure Table에 결제 정보 저장
+      await AzureTableService.addPurchaseAndEnrollmentToUser({
+        email: userInfo.email,
+        courseId: courseInfo.id,
+        title: courseInfo.title,
+        amount: usdPrice,
+        paymentMethod: 'paypal',
+        externalPaymentId: details.id,
+        orderId: details.id,
+        orderName: courseInfo.title
+      });
+      
+      handlePaymentSuccess();
+    } catch (error) {
+      console.error('PayPal 결제 저장 오류:', error);
+      alert('결제는 완료되었으나 등록 중 오류가 발생했습니다. 고객센터로 문의해주세요.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!isLoggedIn || !userInfo) {
@@ -109,17 +174,6 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
         breadcrumbText="결제하기"
       />
 
-      {/* PaymentComponent 모달 */}
-      {showPaymentModal && (
-        <PaymentComponent
-          courseId={courseInfo.id}
-          courseTitle={courseInfo.title}
-          price={courseInfo.price}
-          userInfo={userInfo}
-          onSuccess={handlePaymentSuccess}
-          onClose={handlePaymentClose}
-        />
-      )}
 
       <div style={{
         maxWidth: '800px',
@@ -219,100 +273,231 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             </div>
           </div>
 
-          {/* 수강 혜택 */}
-          <div style={{
-            marginBottom: '30px'
-          }}>
-            <h3 style={{
-              fontSize: '1.3rem',
-              fontWeight: '700',
-              color: '#1f2937',
-              marginBottom: '20px',
+          {/* 결제 방법 탭 */}
+          <div style={{ marginBottom: '30px' }}>
+            <div style={{
               display: 'flex',
-              alignItems: 'center',
-              gap: '10px'
+              marginBottom: '20px',
+              borderRadius: '12px',
+              overflow: 'hidden',
+              border: '2px solid #e2e8f0'
             }}>
-              <CheckCircle size={24} style={{ color: '#1e40af' }} />
-              수강 혜택
-            </h3>
-            <ul style={{
-              listStyle: 'none',
-              padding: 0,
-              margin: 0
-            }}>
-              {[
-                '🎥 AI로 유튜브 채널 완성',
-                '💰 첫 월수익 100만원 달성 전략',
-                '🤖 AI 콘텐츠 자동 생성 (텍스트/이미지/사운드/영상)',
-                '📹 숏폼·롱폼 영상 제작 완전 마스터',
-                '🎯 4가지 교훈: 입지→자재→시공→수익화',
-                '📈 수익 시스템 3종 세트 (애드센스/제휴/멤버십)',
-                '🎓 구매 후 1년간 무제한 수강',
-                '💬 실시간 Q&A 지원'
-              ].map((benefit, idx) => (
-                <li key={idx} style={{
-                  padding: '12px 0',
-                  color: '#475569',
-                  fontSize: '1.05rem',
-                  borderBottom: idx < 7 ? '1px solid #f1f5f9' : 'none',
+              <button
+                onClick={() => setActiveTab('domestic')}
+                style={{
+                  flex: 1,
+                  padding: '15px 20px',
+                  border: 'none',
+                  background: activeTab === 'domestic' 
+                    ? 'linear-gradient(135deg, #1e40af, #3b82f6)' 
+                    : '#f8fafc',
+                  color: activeTab === 'domestic' ? '#ffffff' : '#64748b',
+                  fontSize: '1.1rem',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '10px'
+                  justifyContent: 'center',
+                  gap: '8px'
+                }}
+              >
+                <CreditCard size={20} />
+                🇰🇷 국내 결제
+              </button>
+              <button
+                onClick={() => setActiveTab('international')}
+                style={{
+                  flex: 1,
+                  padding: '15px 20px',
+                  border: 'none',
+                  background: activeTab === 'international' 
+                    ? 'linear-gradient(135deg, #0070ba, #003087)' 
+                    : '#f8fafc',
+                  color: activeTab === 'international' ? '#ffffff' : '#64748b',
+                  fontSize: '1.1rem',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px'
+                }}
+              >
+                <Globe size={20} />
+                🌍 해외 결제
+              </button>
+            </div>
+
+            {/* 국내 결제 (토스페이먼츠) */}
+            {activeTab === 'domestic' && (
+              <div className="fade-in">
+                <div style={{
+                  background: '#f0f9ff',
+                  border: '2px solid #0ea5e9',
+                  borderRadius: '15px',
+                  padding: '20px',
+                  marginBottom: '20px'
                 }}>
-                  <span style={{
-                    width: '8px',
-                    height: '8px',
-                    background: '#1e40af',
-                    borderRadius: '50%',
-                    flexShrink: 0
-                  }}></span>
-                  {benefit}
-                </li>
-              ))}
-            </ul>
+                  <p style={{
+                    textAlign: 'center',
+                    color: '#0369a1',
+                    fontSize: '0.95rem',
+                    fontWeight: '600',
+                    margin: 0
+                  }}>
+                    💳 토스페이먼츠로 안전하게 결제하세요
+                  </p>
+                </div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <button
+                    onClick={() => handleTossPayment('CARD')}
+                    disabled={isLoading}
+                    style={{
+                      width: '100%',
+                      background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                      color: '#1e293b',
+                      border: 'none',
+                      padding: '18px',
+                      borderRadius: '12px',
+                      fontSize: '1.2rem',
+                      fontWeight: '800',
+                      cursor: isLoading ? 'not-allowed' : 'pointer',
+                      opacity: isLoading ? 0.7 : 1,
+                      transition: 'all 0.3s ease',
+                      boxShadow: '0 8px 25px rgba(251, 191, 36, 0.4)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '10px'
+                    }}
+                  >
+                    <CreditCard size={24} />
+                    {isLoading ? '처리 중...' : `카드 결제 ₩${courseInfo.price.toLocaleString()}`}
+                  </button>
+
+                  <button
+                    onClick={() => handleTossPayment('TRANSFER')}
+                    disabled={isLoading}
+                    style={{
+                      width: '100%',
+                      background: '#ffffff',
+                      color: '#1e40af',
+                      border: '2px solid #1e40af',
+                      padding: '16px',
+                      borderRadius: '12px',
+                      fontSize: '1.1rem',
+                      fontWeight: '700',
+                      cursor: isLoading ? 'not-allowed' : 'pointer',
+                      opacity: isLoading ? 0.7 : 1,
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    🏦 계좌이체
+                  </button>
+
+                  <button
+                    onClick={() => handleTossPayment('VIRTUAL_ACCOUNT')}
+                    disabled={isLoading}
+                    style={{
+                      width: '100%',
+                      background: '#ffffff',
+                      color: '#475569',
+                      border: '2px solid #cbd5e1',
+                      padding: '16px',
+                      borderRadius: '12px',
+                      fontSize: '1.1rem',
+                      fontWeight: '700',
+                      cursor: isLoading ? 'not-allowed' : 'pointer',
+                      opacity: isLoading ? 0.7 : 1,
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    💰 가상계좌
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* 해외 결제 (PayPal) */}
+            {activeTab === 'international' && (
+              <div className="fade-in">
+                <div style={{
+                  background: '#fef3c7',
+                  border: '2px solid #f59e0b',
+                  borderRadius: '15px',
+                  padding: '20px',
+                  marginBottom: '20px'
+                }}>
+                  <p style={{
+                    textAlign: 'center',
+                    color: '#92400e',
+                    fontSize: '0.95rem',
+                    fontWeight: '600',
+                    margin: 0
+                  }}>
+                    🌍 해외에서 결제하시는 분들을 위한 PayPal 결제<br />
+                    <span style={{ fontSize: '1.3rem', fontWeight: '800' }}>
+                      ${usdPrice.toFixed(2)} USD
+                    </span>
+                  </p>
+                </div>
+
+                <PayPalScriptProvider options={{
+                  clientId: PAYPAL_CLIENT_ID,
+                  currency: "USD"
+                }}>
+                  <PayPalButtons
+                    style={{
+                      layout: "vertical",
+                      color: "blue",
+                      shape: "rect",
+                      label: "paypal",
+                      height: 50
+                    }}
+                    disabled={isLoading || !userInfo}
+                    createOrder={(_data, actions) => {
+                      return actions.order.create({
+                        intent: "CAPTURE",
+                        purchase_units: [{
+                          amount: {
+                            currency_code: "USD",
+                            value: usdPrice.toFixed(2)
+                          },
+                          description: courseInfo.title
+                        }]
+                      });
+                    }}
+                    onApprove={async (_data, actions) => {
+                      if (actions.order) {
+                        const details = await actions.order.capture();
+                        console.log('PayPal 결제 완료:', details);
+                        await handlePayPalPaymentSuccess(details);
+                      }
+                    }}
+                    onError={(err) => {
+                      console.error('PayPal 오류:', err);
+                      alert('PayPal 결제 중 오류가 발생했습니다. 다시 시도해주세요.');
+                    }}
+                    onCancel={() => {
+                      console.log('PayPal 결제 취소됨');
+                    }}
+                  />
+                </PayPalScriptProvider>
+
+                <p style={{
+                  textAlign: 'center',
+                  color: '#64748b',
+                  fontSize: '0.85rem',
+                  marginTop: '15px'
+                }}>
+                  PayPal 계정 또는 해외 카드로 결제 가능합니다
+                </p>
+              </div>
+            )}
           </div>
-
-          {/* 결제 버튼 */}
-          <button
-            onClick={handleStartPayment}
-            style={{
-              width: '100%',
-              background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-              color: '#1e293b',
-              border: 'none',
-              padding: '20px',
-              borderRadius: '15px',
-              fontSize: '1.3rem',
-              fontWeight: '900',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 10px 30px rgba(251, 191, 36, 0.4)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '12px'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'translateY(-3px)';
-              e.currentTarget.style.boxShadow = '0 15px 40px rgba(251, 191, 36, 0.5)';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 10px 30px rgba(251, 191, 36, 0.4)';
-            }}
-          >
-            <CreditCard size={28} />
-            ₩{courseInfo.price.toLocaleString()} 결제하기
-          </button>
-
-          <p style={{
-            textAlign: 'center',
-            color: '#94a3b8',
-            fontSize: '0.9rem',
-            marginTop: '20px'
-          }}>
-            💳 안전한 토스페이먼츠 결제 시스템
-          </p>
         </div>
 
         {/* 주의사항 */}
@@ -352,6 +537,13 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
         @keyframes spin {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+          animation: fadeIn 0.3s ease-out;
         }
       `}</style>
     </div>
