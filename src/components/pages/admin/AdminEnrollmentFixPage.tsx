@@ -400,6 +400,15 @@ const AdminEnrollmentFixPage: React.FC = () => {
   }, [navigate]);
 
   const loadAllUsers = async () => {
+    // 🔒 프로덕션 환경 체크
+    const isProduction = window.location.hostname === 'www.aicitybuilders.com' || 
+                         window.location.hostname === 'aicitybuilders.com';
+    
+    if (isProduction) {
+      alert('🔒 보안 정책 안내\n\n개인정보 보호를 위해 프로덕션 환경에서는\n전체 사용자 조회 기능이 비활성화되어 있습니다.\n\n📍 관리자 작업은 로컬 환경(localhost)에서 진행해주세요.');
+      return;
+    }
+    
     try {
       setIsLoading(true);
       const users = await AzureTableService.getAllUsers();

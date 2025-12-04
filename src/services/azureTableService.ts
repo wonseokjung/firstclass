@@ -509,9 +509,20 @@ export class AzureTableService {
   // 사용자 관련 메서드 (Azure 우선, LocalStorage fallback)
 
   // 모든 사용자 가져오기 (관리자용) - 페이지네이션 지원 추가
+  // 🔒 보안: 로컬 환경에서만 사용 가능 (KISA 개인정보 보호 조치)
   static async getAllUsers(): Promise<User[]> {
+    // 프로덕션 환경에서는 차단!
+    const isProduction = window.location.hostname === 'www.aicitybuilders.com' || 
+                         window.location.hostname === 'aicitybuilders.com';
+    
+    if (isProduction) {
+      console.warn('🔒 보안: 프로덕션 환경에서는 전체 사용자 조회가 차단됩니다.');
+      console.warn('📍 관리자 작업은 로컬 환경(localhost)에서 진행해주세요.');
+      return []; // 빈 배열 반환 - 네트워크에 데이터 노출 안 됨!
+    }
+    
     try {
-      console.log('🔍 Azure Users 테이블에서 모든 사용자 조회 중...');
+      console.log('🔍 Azure Users 테이블에서 모든 사용자 조회 중... (로컬 환경)');
 
       let allUsers: User[] = [];
       let continuationNextPartitionKey: string | null = null;
