@@ -1592,10 +1592,10 @@ export class AzureTableService {
       // 해당 강의 찾기
       const enrollmentIndex = enrollments.findIndex((e: any) => 
         e.courseId === courseId || 
-        e.courseId === '999' && courseId === 'ai-building-course' ||
-        e.courseId === 'ai-building-course' && courseId === '999' ||
-        e.courseId === '1002' && courseId === 'chatgpt-agent-beginner' ||
-        e.courseId === 'chatgpt-agent-beginner' && courseId === '1002'
+        (e.courseId === '999' && courseId === 'ai-building-course') ||
+        (e.courseId === 'ai-building-course' && courseId === '999') ||
+        (e.courseId === '1002' && courseId === 'chatgpt-agent-beginner') ||
+        (e.courseId === 'chatgpt-agent-beginner' && courseId === '1002')
       );
 
       if (enrollmentIndex === -1) {
