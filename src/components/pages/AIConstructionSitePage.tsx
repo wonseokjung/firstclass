@@ -60,20 +60,20 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
     },
     {
       id: 3,
-      title: '🎬 Step 3: 건물 짓기',
-      subtitle: '콘텐츠 제작 (대본 → 영상)',
+      title: '🎬 Step 3: AI 콘텐츠 생성기',
+      subtitle: '이미지 → 대본 + 장면 이미지',
       icon: <Video size={32} />,
-      color: '#64748b',
-      gradient: 'linear-gradient(135deg, #94a3b8, #64748b)',
-      description: '대본 작성부터 영상 생성, 썸네일 제작까지 원스톱 자동화로 콘텐츠를 완성합니다.',
+      color: '#8b5cf6',
+      gradient: 'linear-gradient(135deg, #8b5cf6, #a855f7)',
+      description: '캐릭터 이미지와 주제만 입력하면 AI가 대본과 각 장면에 맞는 이미지를 자동 생성합니다.',
       features: [
-        '📜 AI 대본 작성 (주제 입력 → 완성 스크립트)',
-        '🎥 Google Veo 영상 자동 생성',
-        '🖼️ 썸네일 5종 자동 생성 (A/B 테스트)',
-        '🎵 배경음악 & 효과음 자동 추천',
-        '🎭 AI 음성 더빙 (ElevenLabs 연동)'
+        '📝 주제/분량 입력 → AI 대본 자동 생성',
+        '🎭 캐릭터 이미지 업로드',
+        '🖼️ Nano Banana Pro로 장면별 이미지 생성',
+        '📋 제목, 설명, 태그 자동 생성',
+        '⏱️ 5-6초 단위 장면 분할'
       ],
-      status: 'locked'
+      status: 'available'
     },
     {
       id: 4,
@@ -128,6 +128,8 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
       navigate('/ai-construction-site/step1');
     } else if (stepId === 2) {
       navigate('/ai-construction-site/step2');
+    } else if (stepId === 3) {
+      navigate('/ai-construction-site/step3');
     } else {
       // locked 상태는 버튼이 보이지 않으므로 여기는 실행 안 됨
       alert(`Step ${stepId} 기능은 곧 출시됩니다! 🚀`);
