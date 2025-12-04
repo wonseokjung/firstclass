@@ -1,646 +1,544 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight, Lightbulb, Settings, Video, FileText, Rocket, CheckCircle } from 'lucide-react';
+import { 
+  TrendingUp, 
+  Search, 
+  Video, 
+  Image, 
+  BarChart3, 
+  Upload,
+  Sparkles,
+  Zap,
+  Crown,
+  Star,
+  ArrowRight,
+  Bot,
+  Cpu
+} from 'lucide-react';
 import NavigationBar from '../common/NavigationBar';
 
 interface AIConstructionSitePageProps {
   onBack: () => void;
 }
 
-interface Step {
-  id: number;
+interface Agent {
+  id: string;
   title: string;
   subtitle: string;
   icon: React.ReactNode;
-  color: string;
   gradient: string;
+  glowColor: string;
   description: string;
   features: string[];
-  status: 'locked' | 'available' | 'completed';
+  status: 'available' | 'coming_soon';
+  route?: string;
 }
 
 const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack }) => {
   const navigate = useNavigate();
-  const [activeStep, setActiveStep] = useState<number | null>(null);
+  const [hoveredAgent, setHoveredAgent] = useState<string | null>(null);
 
-  const steps: Step[] = [
+  const agents: Agent[] = [
     {
-      id: 1,
-      title: '🎯 Step 1: 입지 선정',
-      subtitle: '유튜브 채널 주제 선정 & 시장 분석',
-      icon: <Lightbulb size={32} />,
-      color: '#fbbf24',
-      gradient: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-      description: 'AI가 당신의 관심사를 분석하고, 수익성 높은 유튜브 채널 주제를 추천해드립니다.',
-      features: [
-        '💡 AI 기반 유튜브 채널 주제 5가지 추천',
-        '📊 트렌드 분석 & 시장성 평가',
-        '🎯 타겟 고객 분석',
-        '💰 예상 수익성 점수 (0-100)',
-        '⭐ 난이도 평가 (초급/중급/고급)'
-      ],
-      status: 'available'
+      id: 'trend',
+      title: '트렌드 분석',
+      subtitle: 'Trend Analyzer',
+      icon: <TrendingUp size={36} />,
+      gradient: 'linear-gradient(135deg, #d4af37, #f4d03f)',
+      glowColor: 'rgba(212, 175, 55, 0.4)',
+      description: 'AI가 유튜브 시장을 분석하고 수익성 높은 채널 주제를 추천합니다.',
+      features: ['채널 주제 5가지 추천', '시장성 & 수익성 분석', '타겟 고객 파악'],
+      status: 'available',
+      route: '/ai-construction-site/step1'
     },
     {
-      id: 2,
-      title: '🔍 Step 2: 레퍼런스 리서치',
-      subtitle: '트렌드 분석 & 성공 사례 수집',
-      icon: <Settings size={32} />,
-      color: '#10b981',
+      id: 'research',
+      title: '레퍼런스 리서치',
+      subtitle: 'Reference Researcher',
+      icon: <Search size={36} />,
       gradient: 'linear-gradient(135deg, #10b981, #059669)',
-      description: '유튜브에서 트렌디한 채널과 인기 영상을 자동으로 분석하여 성공 패턴을 파악합니다.',
-      features: [
-        '📊 트렌디한 채널 TOP 20 자동 검색',
-        '🎬 인기 영상 TOP 15 분석',
-        '📈 조회수, 구독자, 업로드 빈도 분석',
-        '🎯 AI 기반 콘텐츠 패턴 분석',
-        '💡 맞춤형 전략 인사이트 제공'
-      ],
-      status: 'available'
+      glowColor: 'rgba(16, 185, 129, 0.4)',
+      description: '인기 채널과 영상을 자동 분석하여 성공 패턴을 파악합니다.',
+      features: ['트렌디 채널 TOP 20', '인기 영상 분석', 'AI 인사이트 제공'],
+      status: 'available',
+      route: '/ai-construction-site/step2'
     },
     {
-      id: 3,
-      title: '🎬 Step 3: AI 콘텐츠 생성기',
-      subtitle: '이미지 → 대본 + 장면 이미지',
-      icon: <Video size={32} />,
-      color: '#8b5cf6',
+      id: 'content',
+      title: '콘텐츠 생성기',
+      subtitle: 'Content Creator',
+      icon: <Video size={36} />,
       gradient: 'linear-gradient(135deg, #8b5cf6, #a855f7)',
-      description: '캐릭터 이미지와 주제만 입력하면 AI가 대본과 각 장면에 맞는 이미지를 자동 생성합니다.',
-      features: [
-        '📝 주제/분량 입력 → AI 대본 자동 생성',
-        '🎭 캐릭터 이미지 업로드',
-        '🖼️ Nano Banana Pro로 장면별 이미지 생성',
-        '📋 제목, 설명, 태그 자동 생성',
-        '⏱️ 5-6초 단위 장면 분할'
-      ],
-      status: 'available'
+      glowColor: 'rgba(139, 92, 246, 0.4)',
+      description: '대본, 이미지, 음성을 한 번에 자동 생성합니다.',
+      features: ['AI 대본 생성', '장면별 이미지 생성', 'TTS 음성 생성'],
+      status: 'available',
+      route: '/ai-construction-site/step3'
     },
     {
-      id: 4,
-      title: '✂️ Step 4: 인테리어',
-      subtitle: '편집 & 자막 (최종 마무리)',
-      icon: <FileText size={32} />,
-      color: '#64748b',
-      gradient: 'linear-gradient(135deg, #94a3b8, #64748b)',
-      description: '자막, 효과, 음악까지 AI가 자동으로 편집하여 전문가 수준의 영상을 완성합니다.',
-      features: [
-        '💬 자막 자동 생성 (Whisper API)',
-        '🎨 자막 스타일 & 애니메이션 적용',
-        '🎵 배경음악 자동 믹싱',
-        '✨ 트랜지션 & 효과 자동 추가',
-        '📱 숏폼 자동 변환 (세로 영상)'
-      ],
-      status: 'locked'
+      id: 'thumbnail',
+      title: '썸네일 생성기',
+      subtitle: 'Thumbnail Creator',
+      icon: <Image size={36} />,
+      gradient: 'linear-gradient(135deg, #f43f5e, #e11d48)',
+      glowColor: 'rgba(244, 63, 94, 0.4)',
+      description: 'AI가 클릭률 높은 썸네일을 자동으로 디자인합니다.',
+      features: ['AI 썸네일 디자인', '클릭률 예측', 'A/B 테스트 제안'],
+      status: 'coming_soon'
     },
     {
-      id: 5,
-      title: '🚀 Step 5: 준공 & 입주',
-      subtitle: '업로드 & 최적화',
-      icon: <Rocket size={32} />,
-      color: '#64748b',
-      gradient: 'linear-gradient(135deg, #94a3b8, #64748b)',
-      description: 'n8n 자동화로 YouTube 업로드부터 SEO 최적화까지 한 번에 완료합니다.',
-      features: [
-        '📤 YouTube 자동 업로드 (n8n 연동)',
-        '📝 제목/설명/태그 SEO 자동 최적화',
-        '⏰ 최적 게시 시간 AI 추천',
-        '📊 채널 분석 & 성과 리포트',
-        '🔄 퍼널 전략 자동화 가이드'
-      ],
-      status: 'locked'
+      id: 'analytics',
+      title: '채널 분석기',
+      subtitle: 'Channel Analyzer',
+      icon: <BarChart3 size={36} />,
+      gradient: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+      glowColor: 'rgba(59, 130, 246, 0.4)',
+      description: '채널 성과를 분석하고 성장 전략을 제안합니다.',
+      features: ['성과 리포트', '성장 전략 추천', '경쟁 분석'],
+      status: 'coming_soon'
+    },
+    {
+      id: 'upload',
+      title: '자동 업로드',
+      subtitle: 'Auto Uploader',
+      icon: <Upload size={36} />,
+      gradient: 'linear-gradient(135deg, #f59e0b, #d97706)',
+      glowColor: 'rgba(245, 158, 11, 0.4)',
+      description: 'n8n 연동으로 영상 업로드와 SEO를 자동화합니다.',
+      features: ['자동 업로드', 'SEO 최적화', '최적 시간 게시'],
+      status: 'coming_soon'
     }
   ];
 
-  const handleStepClick = (stepId: number, status: string) => {
-    if (status === 'locked') {
-      return; // locked 상태면 클릭 무시
-    }
-    
-    if (activeStep === stepId) {
-      setActiveStep(null);
-    } else {
-      setActiveStep(stepId);
-    }
-  };
-
-  const handleStartStep = (stepId: number) => {
-    if (stepId === 1) {
-      navigate('/ai-construction-site/step1');
-    } else if (stepId === 2) {
-      navigate('/ai-construction-site/step2');
-    } else if (stepId === 3) {
-      navigate('/ai-construction-site/step3');
-    } else {
-      // locked 상태는 버튼이 보이지 않으므로 여기는 실행 안 됨
-      alert(`Step ${stepId} 기능은 곧 출시됩니다! 🚀`);
+  const handleAgentClick = (agent: Agent) => {
+    if (agent.status === 'available' && agent.route) {
+      navigate(agent.route);
     }
   };
 
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(to bottom, #0f172a 0%, #1e293b 50%, #334155 100%)',
+      background: 'linear-gradient(180deg, #0a0a1a 0%, #0f1629 50%, #1a1a3a 100%)',
       paddingBottom: '80px'
     }}>
       <NavigationBar
         onBack={onBack}
-        breadcrumbText="AI 도시 공사장"
+        breadcrumbText="AI 에이전트"
       />
 
       {/* Hero Section */}
       <div style={{
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
-        padding: 'clamp(40px, 8vw, 80px) clamp(20px, 4vw, 40px)',
-        textAlign: 'center',
-        borderBottom: '4px solid #fbbf24',
         position: 'relative',
+        padding: '60px 20px 80px',
+        textAlign: 'center',
         overflow: 'hidden'
       }}>
-        {/* Background Pattern */}
+        {/* Background Effects */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '800px',
+          height: '800px',
+          background: 'radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%)',
+          pointerEvents: 'none'
+        }} />
         <div style={{
           position: 'absolute',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(251, 191, 36, 0.05) 35px, rgba(251, 191, 36, 0.05) 70px)`,
+          backgroundImage: `
+            radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+            radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.08) 0%, transparent 40%)
+          `,
           pointerEvents: 'none'
-        }}></div>
+        }} />
 
         <div style={{ position: 'relative', zIndex: 1 }}>
+          {/* Badge */}
           <div style={{
-            fontSize: 'clamp(3rem, 8vw, 5rem)',
-            marginBottom: '20px'
-          }}>
-            🏗️
-          </div>
-          <h1 style={{
-            fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-            fontWeight: '900',
-            color: 'white',
-            marginBottom: '20px',
-            lineHeight: '1.2'
-          }}>
-            AI 도시 공사장
-          </h1>
-          <p style={{
-            fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)',
-            color: '#e2e8f0',
-            marginBottom: '15px',
-            fontWeight: '600'
-          }}>
-            당신의 AI 비즈니스를 단계별로 건설합니다
-          </p>
-          <p style={{
-            fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-            color: '#94a3b8',
-            maxWidth: '700px',
-            margin: '0 auto',
-            lineHeight: '1.7'
-          }}>
-            아이디어 발굴부터 채널 세팅, 콘텐츠 제작, 편집, 업로드까지<br />
-            5단계로 완성하는 올인원 AI 자동화 시스템
-          </p>
-
-          {/* Progress Badge */}
-          <div style={{
-            display: 'inline-block',
-            background: 'rgba(251, 191, 36, 0.2)',
-            border: '2px solid #fbbf24',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1))',
+            border: '1px solid rgba(212, 175, 55, 0.4)',
             borderRadius: '50px',
-            padding: '12px 30px',
-            marginTop: '30px',
+            padding: '10px 24px',
+            marginBottom: '30px',
             backdropFilter: 'blur(10px)'
           }}>
+            <Crown size={18} color="#d4af37" />
             <span style={{
-              fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-              color: '#fbbf24',
-              fontWeight: '700'
+              color: '#d4af37',
+              fontSize: '0.9rem',
+              fontWeight: '700',
+              letterSpacing: '1px'
             }}>
-              🚧 공사 진행률: 0% → 100%
+              CONNECT AI LAB
             </span>
+          </div>
+
+          {/* Title */}
+          <h1 style={{
+            fontSize: 'clamp(2.5rem, 7vw, 4rem)',
+            fontWeight: '900',
+            background: 'linear-gradient(135deg, #ffffff 0%, #d4af37 50%, #f4d03f 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            marginBottom: '20px',
+            lineHeight: '1.1',
+            letterSpacing: '-1px'
+          }}>
+            AI 유튜브<br />
+            콘텐츠 에이전트
+          </h1>
+
+          <p style={{
+            fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+            color: '#94a3b8',
+            maxWidth: '600px',
+            margin: '0 auto 30px',
+            lineHeight: '1.7'
+          }}>
+            6개의 전문 AI 에이전트가 당신의 유튜브 채널을<br />
+            <span style={{ color: '#d4af37', fontWeight: '600' }}>완전 자동화</span>합니다
+          </p>
+
+          {/* Stats */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '40px',
+            flexWrap: 'wrap'
+          }}>
+            <div>
+              <div style={{ fontSize: '2rem', fontWeight: '800', color: '#d4af37' }}>6</div>
+              <div style={{ fontSize: '0.9rem', color: '#64748b' }}>AI 에이전트</div>
+            </div>
+            <div>
+              <div style={{ fontSize: '2rem', fontWeight: '800', color: '#10b981' }}>3</div>
+              <div style={{ fontSize: '0.9rem', color: '#64748b' }}>사용 가능</div>
+            </div>
+            <div>
+              <div style={{ fontSize: '2rem', fontWeight: '800', color: '#8b5cf6' }}>∞</div>
+              <div style={{ fontSize: '0.9rem', color: '#64748b' }}>자동화 가능</div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Agents Grid */}
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: 'clamp(30px, 6vw, 60px) clamp(15px, 4vw, 20px)'
+        padding: '0 20px'
       }}>
-        {/* Connect AI LAB 소개 */}
-        <div style={{
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
-          borderRadius: 'clamp(12px, 3vw, 20px)',
-          padding: 'clamp(30px, 6vw, 50px)',
-          marginBottom: 'clamp(30px, 6vw, 50px)',
-          boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)',
-          border: '3px solid #fbbf24',
-          position: 'relative',
-          overflow: 'hidden'
-        }}>
-          {/* 배경 패턴 */}
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundImage: `
-              radial-gradient(circle at 20% 30%, rgba(251, 191, 36, 0.15) 0%, transparent 50%),
-              radial-gradient(circle at 80% 70%, rgba(251, 191, 36, 0.1) 0%, transparent 50%)
-            `,
-            pointerEvents: 'none'
-          }}></div>
-
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <div style={{
-              display: 'inline-block',
-              background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-              padding: '8px 20px',
-              borderRadius: '30px',
-              marginBottom: '20px',
-              boxShadow: '0 4px 15px rgba(251, 191, 36, 0.4)'
-            }}>
-              <span style={{
-                fontSize: 'clamp(0.85rem, 1.8vw, 0.95rem)',
-                fontWeight: '800',
-                color: '#0f172a',
-                letterSpacing: '0.5px'
-              }}>
-                🔬 POWERED BY CONNECT AI LAB
-              </span>
-            </div>
-
-            <h2 style={{
-              fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
-              fontWeight: '900',
-              background: 'linear-gradient(135deg, #ffffff, #fbbf24)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              marginBottom: '20px',
-              lineHeight: '1.3'
-            }}>
-              인공지능 기반 유튜브 채널<br />
-              자동 생성 시스템
-            </h2>
-
-            <p style={{
-              fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)',
-              color: '#e2e8f0',
-              lineHeight: '1.8',
-              marginBottom: '25px',
-              fontWeight: '500'
-            }}>
-              <strong style={{ color: '#fbbf24' }}>Connect AI LAB</strong>이 연구·개발한 최첨단 AI 기술로<br />
-              아이디어부터 채널 운영, 콘텐츠 제작까지 <strong style={{ color: '#fbbf24' }}>완전 자동화</strong>합니다.
-            </p>
-
-            {/* 기술 스택 */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '15px',
-              marginTop: '30px'
-            }}>
-              <div style={{
-                background: 'rgba(251, 191, 36, 0.1)',
-                border: '2px solid rgba(251, 191, 36, 0.3)',
-                borderRadius: '12px',
-                padding: '15px',
-                backdropFilter: 'blur(10px)'
-              }}>
-                <div style={{ fontSize: '1.8rem', marginBottom: '8px' }}>🧠</div>
-                <div style={{ fontSize: 'clamp(0.9rem, 1.8vw, 1rem)', color: '#fbbf24', fontWeight: '700' }}>
-                  AI 분석 엔진
-                </div>
-                <div style={{ fontSize: 'clamp(0.8rem, 1.6vw, 0.9rem)', color: '#94a3b8', marginTop: '5px' }}>
-                  GPT-4.1 기반 시장 분석
-                </div>
-              </div>
-
-              <div style={{
-                background: 'rgba(251, 191, 36, 0.1)',
-                border: '2px solid rgba(251, 191, 36, 0.3)',
-                borderRadius: '12px',
-                padding: '15px',
-                backdropFilter: 'blur(10px)'
-              }}>
-                <div style={{ fontSize: '1.8rem', marginBottom: '8px' }}>🎬</div>
-                <div style={{ fontSize: 'clamp(0.9rem, 1.8vw, 1rem)', color: '#fbbf24', fontWeight: '700' }}>
-                  콘텐츠 자동 생성
-                </div>
-                <div style={{ fontSize: 'clamp(0.8rem, 1.6vw, 0.9rem)', color: '#94a3b8', marginTop: '5px' }}>
-                  Google OPAL 멀티모달
-                </div>
-              </div>
-
-              <div style={{
-                background: 'rgba(251, 191, 36, 0.1)',
-                border: '2px solid rgba(251, 191, 36, 0.3)',
-                borderRadius: '12px',
-                padding: '15px',
-                backdropFilter: 'blur(10px)'
-              }}>
-                <div style={{ fontSize: '1.8rem', marginBottom: '8px' }}>⚡</div>
-                <div style={{ fontSize: 'clamp(0.9rem, 1.8vw, 1rem)', color: '#fbbf24', fontWeight: '700' }}>
-                  워크플로우 자동화
-                </div>
-                <div style={{ fontSize: 'clamp(0.8rem, 1.6vw, 0.9rem)', color: '#94a3b8', marginTop: '5px' }}>
-                  n8n 기반 시스템
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Introduction */}
-        <div style={{
-          background: 'rgba(30, 41, 59, 0.8)',
-          borderRadius: 'clamp(12px, 3vw, 20px)',
-          padding: 'clamp(25px, 5vw, 40px)',
-          marginBottom: 'clamp(30px, 6vw, 50px)',
-          boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)',
-          border: '2px solid rgba(251, 191, 36, 0.3)',
-          backdropFilter: 'blur(10px)'
-        }}>
-          <h2 style={{
-            fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-            fontWeight: '800',
-            color: '#ffffff',
-            marginBottom: '20px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px'
-          }}>
-            <span>🎯</span>
-            <span>AI 도시 공사장이란?</span>
-          </h2>
-          <p style={{
-            fontSize: 'clamp(1rem, 2vw, 1.1rem)',
-            color: '#e2e8f0',
-            lineHeight: '1.8',
-            marginBottom: '20px'
-          }}>
-            복잡한 AI 비즈니스 구축 과정을 <strong style={{ color: '#fbbf24' }}>건설 프로젝트처럼 단계별로 나눠</strong> 누구나 쉽게 따라할 수 있게 만든 올인원 플랫폼입니다.
-          </p>
-          <div style={{
-            background: 'rgba(251, 191, 36, 0.15)',
-            borderLeft: '4px solid #fbbf24',
-            padding: '20px',
-            borderRadius: '8px',
-            border: '1px solid rgba(251, 191, 36, 0.3)'
-          }}>
-            <p style={{
-              fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
-              color: '#fbbf24',
-              margin: 0,
-              lineHeight: '1.7'
-            }}>
-              <strong>💡 핵심 철학:</strong> <span style={{ color: '#e2e8f0' }}>"건물을 짓듯이, AI 비즈니스도 설계 → 기초 → 건축 → 인테리어 → 준공 순서로!"</span><br />
-              <span style={{ color: '#cbd5e1' }}>각 단계마다 필요한 AI 도구와 자동화 시스템을 제공합니다.</span>
-            </p>
-          </div>
-        </div>
-
-        {/* Steps */}
+        {/* Section Header */}
         <div style={{
           display: 'flex',
-          flexDirection: 'column',
-          gap: 'clamp(20px, 4vw, 30px)'
+          alignItems: 'center',
+          gap: '15px',
+          marginBottom: '40px'
         }}>
-          {steps.map((step, index) => (
+          <div style={{
+            width: '50px',
+            height: '50px',
+            background: 'linear-gradient(135deg, #d4af37, #f4d03f)',
+            borderRadius: '15px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 20px rgba(212, 175, 55, 0.3)'
+          }}>
+            <Bot size={28} color="#0a0a1a" />
+          </div>
+          <div>
+            <h2 style={{
+              fontSize: '1.5rem',
+              fontWeight: '800',
+              color: '#ffffff',
+              margin: 0
+            }}>
+              AI 에이전트 선택
+            </h2>
+            <p style={{
+              fontSize: '0.95rem',
+              color: '#64748b',
+              margin: '5px 0 0 0'
+            }}>
+              원하는 에이전트를 클릭하여 시작하세요
+            </p>
+          </div>
+        </div>
+
+        {/* Agents Grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+          gap: '25px'
+        }}>
+          {agents.map((agent) => (
             <div
-              key={step.id}
+              key={agent.id}
+              onClick={() => handleAgentClick(agent)}
+              onMouseEnter={() => setHoveredAgent(agent.id)}
+              onMouseLeave={() => setHoveredAgent(null)}
               style={{
-                background: step.status === 'locked' 
-                  ? 'rgba(51, 65, 85, 0.6)' 
-                  : 'rgba(30, 41, 59, 0.9)',
-                borderRadius: 'clamp(12px, 3vw, 20px)',
+                position: 'relative',
+                background: hoveredAgent === agent.id 
+                  ? 'rgba(30, 30, 60, 0.95)' 
+                  : 'rgba(20, 20, 40, 0.8)',
+                borderRadius: '24px',
+                padding: '30px',
+                border: `2px solid ${hoveredAgent === agent.id ? 'rgba(212, 175, 55, 0.5)' : 'rgba(255, 255, 255, 0.1)'}`,
+                cursor: agent.status === 'available' ? 'pointer' : 'default',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                transform: hoveredAgent === agent.id ? 'translateY(-8px)' : 'translateY(0)',
+                boxShadow: hoveredAgent === agent.id 
+                  ? `0 20px 60px ${agent.glowColor}` 
+                  : '0 4px 30px rgba(0, 0, 0, 0.3)',
                 overflow: 'hidden',
-                boxShadow: step.status === 'locked'
-                  ? '0 4px 20px rgba(0, 0, 0, 0.2)'
-                  : activeStep === step.id 
-                    ? `0 10px 40px ${step.color}60` 
-                    : '0 6px 30px rgba(0, 0, 0, 0.3)',
-                border: `2px solid ${step.status === 'locked' ? 'rgba(100, 116, 139, 0.3)' : activeStep === step.id ? step.color : 'rgba(251, 191, 36, 0.3)'}`,
-                transition: 'all 0.3s ease',
-                cursor: step.status === 'locked' ? 'not-allowed' : 'pointer',
-                opacity: step.status === 'locked' ? 0.5 : 1,
-                backdropFilter: 'blur(10px)'
+                opacity: agent.status === 'coming_soon' ? 0.7 : 1
               }}
-              onClick={() => handleStepClick(step.id, step.status)}
             >
-              {/* Header */}
+              {/* Glow Effect */}
+              {hoveredAgent === agent.id && (
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: '2px',
+                  background: agent.gradient,
+                  boxShadow: `0 0 30px ${agent.glowColor}`
+                }} />
+              )}
+
+              {/* Status Badge */}
               <div style={{
-                background: step.gradient,
-                padding: 'clamp(20px, 4vw, 30px)',
+                position: 'absolute',
+                top: '20px',
+                right: '20px',
+                background: agent.status === 'available' 
+                  ? 'linear-gradient(135deg, #10b981, #059669)' 
+                  : 'linear-gradient(135deg, #64748b, #475569)',
+                padding: '6px 14px',
+                borderRadius: '20px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-                gap: '15px'
+                gap: '5px'
               }}>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 'clamp(15px, 3vw, 20px)',
-                  flex: 1
-                }}>
-                  <div style={{
-                    background: 'rgba(255, 255, 255, 0.3)',
-                    borderRadius: '50%',
-                    width: 'clamp(50px, 10vw, 70px)',
-                    height: 'clamp(50px, 10vw, 70px)',
+                {agent.status === 'available' ? (
+                  <>
+                    <Zap size={12} color="white" />
+                    <span style={{ fontSize: '0.75rem', color: 'white', fontWeight: '700' }}>
+                      사용 가능
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <Star size={12} color="white" />
+                    <span style={{ fontSize: '0.75rem', color: 'white', fontWeight: '700' }}>
+                      Coming Soon
+                    </span>
+                  </>
+                )}
+              </div>
+
+              {/* Icon */}
+              <div style={{
+                width: '70px',
+                height: '70px',
+                background: agent.gradient,
+                borderRadius: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '20px',
+                boxShadow: `0 8px 30px ${agent.glowColor}`,
+                color: 'white'
+              }}>
+                {agent.icon}
+              </div>
+
+              {/* Title */}
+              <h3 style={{
+                fontSize: '1.4rem',
+                fontWeight: '800',
+                color: '#ffffff',
+                marginBottom: '5px'
+              }}>
+                {agent.title}
+              </h3>
+              <p style={{
+                fontSize: '0.85rem',
+                color: '#64748b',
+                marginBottom: '15px',
+                fontFamily: 'monospace',
+                letterSpacing: '1px'
+              }}>
+                {agent.subtitle}
+              </p>
+
+              {/* Description */}
+              <p style={{
+                fontSize: '0.95rem',
+                color: '#94a3b8',
+                lineHeight: '1.6',
+                marginBottom: '20px'
+              }}>
+                {agent.description}
+              </p>
+
+              {/* Features */}
+              <div style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '8px',
+                marginBottom: '25px'
+              }}>
+                {agent.features.map((feature, idx) => (
+                  <span
+                    key={idx}
+                    style={{
+                      background: 'rgba(212, 175, 55, 0.1)',
+                      border: '1px solid rgba(212, 175, 55, 0.2)',
+                      borderRadius: '20px',
+                      padding: '6px 14px',
+                      fontSize: '0.8rem',
+                      color: '#d4af37',
+                      fontWeight: '500'
+                    }}
+                  >
+                    {feature}
+                  </span>
+                ))}
+              </div>
+
+              {/* CTA Button */}
+              {agent.status === 'available' && (
+                <button
+                  style={{
+                    width: '100%',
+                    background: hoveredAgent === agent.id ? agent.gradient : 'rgba(212, 175, 55, 0.1)',
+                    border: hoveredAgent === agent.id ? 'none' : '2px solid rgba(212, 175, 55, 0.3)',
+                    borderRadius: '14px',
+                    padding: '16px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: 'white',
-                    backdropFilter: 'blur(10px)'
-                  }}>
-                    {step.icon}
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <h3 style={{
-                      fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
-                      fontWeight: '800',
-                      color: 'white',
-                      marginBottom: '5px'
-                    }}>
-                      {step.title}
-                    </h3>
-                    <p style={{
-                      fontSize: 'clamp(0.9rem, 2vw, 1rem)',
-                      color: 'rgba(255, 255, 255, 0.9)',
-                      margin: 0
-                    }}>
-                      {step.subtitle}
-                    </p>
-                  </div>
-                </div>
-                <ChevronRight 
-                  size={28} 
-                  color="white" 
-                  style={{
-                    transform: activeStep === step.id ? 'rotate(90deg)' : 'rotate(0deg)',
-                    transition: 'transform 0.3s ease'
+                    gap: '10px',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    color: hoveredAgent === agent.id ? '#0a0a1a' : '#d4af37',
+                    fontSize: '1rem',
+                    fontWeight: '700'
                   }}
-                />
-              </div>
-
-              {/* Expanded Content */}
-              {activeStep === step.id && (
-                <div style={{
-                  padding: 'clamp(25px, 5vw, 35px)',
-                  borderTop: '2px solid rgba(251, 191, 36, 0.2)'
-                }}>
-                  <p style={{
-                    fontSize: 'clamp(1rem, 2vw, 1.1rem)',
-                    color: '#e2e8f0',
-                    lineHeight: '1.7',
-                    marginBottom: '25px'
-                  }}>
-                    {step.description}
-                  </p>
-
-                  {/* Features */}
-                  <div style={{
-                    background: 'rgba(15, 23, 42, 0.6)',
-                    borderRadius: '12px',
-                    padding: 'clamp(20px, 4vw, 25px)',
-                    marginBottom: '25px',
-                    border: '1px solid rgba(251, 191, 36, 0.2)'
-                  }}>
-                    <h4 style={{
-                      fontSize: 'clamp(1.05rem, 2vw, 1.2rem)',
-                      fontWeight: '700',
-                      color: '#fbbf24',
-                      marginBottom: '15px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}>
-                      <CheckCircle size={20} color={step.color} />
-                      <span>포함된 기능</span>
-                    </h4>
-                    <ul style={{
-                      listStyle: 'none',
-                      padding: 0,
-                      margin: 0,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '12px'
-                    }}>
-                      {step.features.map((feature, idx) => (
-                        <li
-                          key={idx}
-                          style={{
-                            fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
-                            color: '#cbd5e1',
-                            lineHeight: '1.6',
-                            paddingLeft: '0',
-                            display: 'flex',
-                            alignItems: 'flex-start',
-                            gap: '10px'
-                          }}
-                        >
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* CTA Button */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (step.status !== 'locked') {
-                        handleStartStep(step.id);
-                      }
-                    }}
-                    disabled={step.status === 'locked'}
-                    style={{
-                      width: '100%',
-                      background: step.status === 'locked' ? '#cbd5e1' : step.gradient,
-                      color: step.status === 'locked' ? '#64748b' : 'white',
-                      border: 'none',
-                      padding: 'clamp(15px, 3vw, 20px)',
-                      borderRadius: '12px',
-                      fontSize: 'clamp(1.05rem, 2vw, 1.2rem)',
-                      fontWeight: '800',
-                      cursor: step.status === 'locked' ? 'not-allowed' : 'pointer',
-                      transition: 'all 0.3s ease',
-                      boxShadow: step.status === 'locked' ? 'none' : `0 4px 15px ${step.color}40`,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '10px'
-                    }}
-                    onMouseOver={(e) => {
-                      if (step.status !== 'locked') {
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = `0 6px 25px ${step.color}60`;
-                      }
-                    }}
-                    onMouseOut={(e) => {
-                      if (step.status !== 'locked') {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = `0 4px 15px ${step.color}40`;
-                      }
-                    }}
-                  >
-                    {step.status === 'locked' ? (
-                      <>
-                        <span>🔒</span>
-                        <span>준비 중</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>🚀</span>
-                        <span>지금 시작하기</span>
-                      </>
-                    )}
-                  </button>
-                </div>
+                >
+                  <Sparkles size={18} />
+                  에이전트 시작하기
+                  <ArrowRight size={18} />
+                </button>
               )}
             </div>
           ))}
         </div>
 
+        {/* Bottom Section - Technology Stack */}
+        <div style={{
+          marginTop: '60px',
+          background: 'linear-gradient(135deg, rgba(20, 20, 40, 0.9), rgba(30, 30, 60, 0.9))',
+          borderRadius: '24px',
+          padding: '40px',
+          border: '2px solid rgba(212, 175, 55, 0.2)',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          {/* Background Decoration */}
+          <div style={{
+            position: 'absolute',
+            top: '-50%',
+            right: '-20%',
+            width: '400px',
+            height: '400px',
+            background: 'radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%)',
+            pointerEvents: 'none'
+          }} />
+
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '15px',
+              marginBottom: '30px'
+            }}>
+              <Cpu size={28} color="#d4af37" />
+              <h3 style={{
+                fontSize: '1.3rem',
+                fontWeight: '800',
+                color: '#ffffff',
+                margin: 0
+              }}>
+                최첨단 AI 기술 스택
+              </h3>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '20px'
+            }}>
+              {[
+                { icon: '🧠', name: 'GPT-4.1 Turbo', desc: 'OpenAI 최신 모델' },
+                { icon: '🎨', name: 'Gemini 3 Pro', desc: 'Google 이미지 AI' },
+                { icon: '🔊', name: 'ElevenLabs', desc: '초현실 음성 합성' },
+                { icon: '⚡', name: 'n8n Automation', desc: '워크플로우 자동화' }
+              ].map((tech, idx) => (
+                <div
+                  key={idx}
+                  style={{
+                    background: 'rgba(10, 10, 26, 0.6)',
+                    borderRadius: '16px',
+                    padding: '20px',
+                    border: '1px solid rgba(212, 175, 55, 0.15)',
+                    textAlign: 'center'
+                  }}
+                >
+                  <div style={{ fontSize: '2rem', marginBottom: '10px' }}>{tech.icon}</div>
+                  <div style={{ color: '#d4af37', fontWeight: '700', fontSize: '1rem', marginBottom: '5px' }}>
+                    {tech.name}
+                  </div>
+                  <div style={{ color: '#64748b', fontSize: '0.85rem' }}>
+                    {tech.desc}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Coming Soon Notice */}
         <div style={{
-          background: 'rgba(30, 41, 59, 0.8)',
-          borderRadius: 'clamp(12px, 3vw, 20px)',
-          padding: 'clamp(25px, 5vw, 35px)',
-          marginTop: 'clamp(30px, 6vw, 50px)',
-          border: '3px solid rgba(251, 191, 36, 0.4)',
+          marginTop: '40px',
           textAlign: 'center',
-          boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)',
-          backdropFilter: 'blur(10px)'
+          padding: '30px',
+          background: 'rgba(20, 20, 40, 0.5)',
+          borderRadius: '20px',
+          border: '1px dashed rgba(212, 175, 55, 0.3)'
         }}>
-          <div style={{
-            fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
-            marginBottom: '15px'
-          }}>
-            🚧
-          </div>
-          <h3 style={{
-            fontSize: 'clamp(1.3rem, 3vw, 1.8rem)',
-            fontWeight: '800',
-            color: '#fbbf24',
-            marginBottom: '15px'
-          }}>
-            현재 공사 중입니다!
-          </h3>
+          <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>🚀</div>
           <p style={{
-            fontSize: 'clamp(1rem, 2vw, 1.1rem)',
-            color: '#e2e8f0',
-            lineHeight: '1.7',
-            margin: 0
+            color: '#94a3b8',
+            fontSize: '1rem',
+            margin: 0,
+            lineHeight: '1.7'
           }}>
-            AI 도시 공사장의 모든 기능은 <strong style={{ color: '#fbbf24' }}>2025년 상반기</strong>에 순차적으로 오픈됩니다.
+            새로운 AI 에이전트가 <span style={{ color: '#d4af37', fontWeight: '600' }}>2025년 상반기</span>에 순차적으로 출시됩니다
           </p>
         </div>
       </div>
@@ -649,4 +547,3 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
 };
 
 export default AIConstructionSitePage;
-
