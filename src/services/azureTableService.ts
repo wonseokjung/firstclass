@@ -442,7 +442,17 @@ export class AzureTableService {
   }
 
   // Azure SAS URL을 사용한 테스트 함수 (단일 Users 테이블)
+  // 🔒 보안: 프로덕션에서는 전체 데이터 조회 차단
   static async testAzureConnection(): Promise<boolean> {
+    // 프로덕션 환경에서는 테스트 차단 (전체 데이터 노출 방지)
+    const isProduction = window.location.hostname === 'www.aicitybuilders.com' || 
+                         window.location.hostname === 'aicitybuilders.com';
+    
+    if (isProduction) {
+      console.log('🔒 보안: 프로덕션 환경에서는 연결 테스트가 차단됩니다.');
+      return true; // 프로덕션에서는 그냥 성공으로 처리
+    }
+    
     try {
       console.log('🧪 Azure Table Storage 단일 Users 테이블 SAS URL 테스트 시작...');
 
@@ -1345,8 +1355,31 @@ export class AzureTableService {
   // === 리워드 시스템 관련 메서드들 ===
 
   // 추천 코드로 사용자 조회
+  // 🔒 보안: 프로덕션에서는 필터 쿼리 사용 (전체 조회 차단)
   static async getUserByReferralCode(referralCode: string): Promise<User | null> {
     try {
+      // 프로덕션 환경에서는 필터 쿼리로 조회 (전체 데이터 노출 방지)
+      const isProduction = window.location.hostname === 'www.aicitybuilders.com' || 
+                           window.location.hostname === 'aicitybuilders.com';
+      
+      if (isProduction) {
+        // 필터 쿼리로 해당 추천 코드만 조회
+        const baseUrl = AZURE_SAS_URLS.users;
+        const filterQuery = `$filter=referralCode eq '${encodeURIComponent(referralCode)}'`;
+        const url = `${baseUrl}&${filterQuery}`;
+        
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: { 'Accept': 'application/json' }
+        });
+        
+        if (!response.ok) return null;
+        const data = await response.json();
+        const userList = data.value || [];
+        return userList.length > 0 ? userList[0] : null;
+      }
+      
+      // 로컬에서는 기존 방식 (전체 조회 후 필터)
       const users = await this.azureRequest('users', 'GET');
       const userList = users.value || [];
 
