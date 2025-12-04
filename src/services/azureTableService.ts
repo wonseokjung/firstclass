@@ -1567,6 +1567,74 @@ export class AzureTableService {
     }
   }
 
+  // 🗑️ 사용자의 수강 강의 삭제 (관리자용)
+  static async removeEnrollmentFromUser(email: string, courseId: string): Promise<boolean> {
+    try {
+      console.log(`🗑️ 강의 삭제 시작: ${email} → ${courseId}`);
+
+      // 사용자 정보 조회
+      const user = await this.getUserByEmail(email);
+      if (!user) {
+        throw new Error('사용자를 찾을 수 없습니다.');
+      }
+
+      // enrolledCourses 파싱
+      let enrolledData = user.enrolledCourses ? JSON.parse(user.enrolledCourses) : { enrollments: [], payments: [] };
+      
+      // 배열 형태인 경우 객체로 변환
+      if (Array.isArray(enrolledData)) {
+        enrolledData = { enrollments: enrolledData, payments: [] };
+      }
+
+      const enrollments = enrolledData.enrollments || [];
+      const payments = enrolledData.payments || [];
+
+      // 해당 강의 찾기
+      const enrollmentIndex = enrollments.findIndex((e: any) => 
+        e.courseId === courseId || 
+        e.courseId === '999' && courseId === 'ai-building-course' ||
+        e.courseId === 'ai-building-course' && courseId === '999' ||
+        e.courseId === '1002' && courseId === 'chatgpt-agent-beginner' ||
+        e.courseId === 'chatgpt-agent-beginner' && courseId === '1002'
+      );
+
+      if (enrollmentIndex === -1) {
+        console.log('⚠️ 해당 강의가 등록되어 있지 않습니다.');
+        return false;
+      }
+
+      // 강의 삭제
+      const removedEnrollment = enrollments.splice(enrollmentIndex, 1)[0];
+      console.log('🗑️ 삭제된 강의:', removedEnrollment);
+
+      // 관련 결제 정보도 삭제 (선택적)
+      const paymentIndex = payments.findIndex((p: any) => 
+        p.courseId === courseId || 
+        p.courseId === removedEnrollment?.courseId
+      );
+      if (paymentIndex !== -1) {
+        const removedPayment = payments.splice(paymentIndex, 1)[0];
+        console.log('🗑️ 삭제된 결제 정보:', removedPayment);
+      }
+
+      // 업데이트된 데이터 저장
+      const updatedEnrolledCourses = JSON.stringify({
+        enrollments,
+        payments
+      });
+
+      // Azure에 업데이트 (updateUserField 사용)
+      await this.updateUserField(email, 'enrolledCourses', updatedEnrolledCourses);
+      await this.updateUserField(email, 'totalEnrolledCourses', enrollments.length);
+      console.log(`✅ 강의 삭제 완료: ${email} → ${courseId}`);
+
+      return true;
+    } catch (error: any) {
+      console.error('❌ 강의 삭제 실패:', error.message);
+      throw new Error(`강의 삭제 실패: ${error.message}`);
+    }
+  }
+
   // 기존 사용자에게 추천 코드 생성 및 업데이트
   static async generateReferralCodeForUser(email: string): Promise<string> {
     try {

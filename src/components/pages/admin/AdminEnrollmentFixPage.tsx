@@ -970,30 +970,80 @@ const AdminEnrollmentFixPage: React.FC = () => {
                           <td style={{ padding: '12px' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                               {hasCourse && (
-                                <span style={{
-                                  color: '#10b981',
-                                  background: '#f0fdf4',
-                                  padding: '4px 12px',
-                                  borderRadius: '12px',
-                                  fontSize: '0.85rem',
-                                  fontWeight: '600',
-                                  display: 'inline-block'
-                                }}>
-                                  ✓ AI Agent 비기너
-                                </span>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                  <span style={{
+                                    color: '#10b981',
+                                    background: '#f0fdf4',
+                                    padding: '4px 12px',
+                                    borderRadius: '12px',
+                                    fontSize: '0.85rem',
+                                    fontWeight: '600',
+                                    display: 'inline-block'
+                                  }}>
+                                    ✓ AI Agent 비기너
+                                  </span>
+                                  <button
+                                    onClick={async () => {
+                                      if (!window.confirm(`정말로 ${user.name || user.email}의 에이전트 강의를 삭제하시겠습니까?\n\n⚠️ 이 작업은 되돌릴 수 없습니다!`)) return;
+                                      try {
+                                        await AzureTableService.removeEnrollmentFromUser(user.email, '1002');
+                                        alert('✅ 에이전트 강의가 삭제되었습니다.');
+                                        loadAllUsers();
+                                      } catch (error: any) {
+                                        alert(`오류: ${error.message}`);
+                                      }
+                                    }}
+                                    style={{
+                                      padding: '2px 8px',
+                                      borderRadius: '4px',
+                                      border: '1px solid #ef4444',
+                                      background: 'white',
+                                      color: '#ef4444',
+                                      fontSize: '0.75rem',
+                                      cursor: 'pointer'
+                                    }}
+                                  >
+                                    🗑️
+                                  </button>
+                                </div>
                               )}
                               {hasAIBuildingCourse && (
-                                <span style={{
-                                  color: '#3b82f6',
-                                  background: '#eff6ff',
-                                  padding: '4px 12px',
-                                  borderRadius: '12px',
-                                  fontSize: '0.85rem',
-                                  fontWeight: '600',
-                                  display: 'inline-block'
-                                }}>
-                                  ✓ AI 건물주 되기
-                                </span>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                  <span style={{
+                                    color: '#3b82f6',
+                                    background: '#eff6ff',
+                                    padding: '4px 12px',
+                                    borderRadius: '12px',
+                                    fontSize: '0.85rem',
+                                    fontWeight: '600',
+                                    display: 'inline-block'
+                                  }}>
+                                    ✓ AI 건물주 되기
+                                  </span>
+                                  <button
+                                    onClick={async () => {
+                                      if (!window.confirm(`정말로 ${user.name || user.email}의 건물주 강의를 삭제하시겠습니까?\n\n⚠️ 이 작업은 되돌릴 수 없습니다!`)) return;
+                                      try {
+                                        await AzureTableService.removeEnrollmentFromUser(user.email, 'ai-building-course');
+                                        alert('✅ 건물주 강의가 삭제되었습니다.');
+                                        loadAllUsers();
+                                      } catch (error: any) {
+                                        alert(`오류: ${error.message}`);
+                                      }
+                                    }}
+                                    style={{
+                                      padding: '2px 8px',
+                                      borderRadius: '4px',
+                                      border: '1px solid #ef4444',
+                                      background: 'white',
+                                      color: '#ef4444',
+                                      fontSize: '0.75rem',
+                                      cursor: 'pointer'
+                                    }}
+                                  >
+                                    🗑️
+                                  </button>
+                                </div>
                               )}
                               {!hasCourse && !hasAIBuildingCourse && (
                                 <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>없음</span>
@@ -1067,22 +1117,59 @@ const AdminEnrollmentFixPage: React.FC = () => {
                                 >
                                   ✏️ 이메일 수정
                                 </button>
+                                {/* 에이전트 강의 추가 버튼 */}
                                 {!hasCourse && (
                                   <button
                                     onClick={async () => {
-                                      if (!window.confirm(`${user.name || user.email}에게 강의를 추가하시겠습니까?`)) return;
+                                      if (!window.confirm(`${user.name || user.email}에게 에이전트 강의를 추가하시겠습니까?\n\n💰 가격: 95,000원\n📚 강의: Google Opal 유튜브 수익화 에이전트 기초`)) return;
 
                                       try {
                                         await AzureTableService.addPurchaseAndEnrollmentToUser({
                                           email: user.email,
                                           courseId: '1002',
                                           title: 'Google Opal 유튜브 수익화 에이전트 기초',
-                                          amount: 45000,
+                                          amount: 95000,
                                           paymentMethod: 'card',
-                                          orderId: `manual_${Date.now()}`,
+                                          orderId: `manual_agent_${Date.now()}`,
                                           orderName: 'Google Opal 유튜브 수익화 에이전트 기초'
                                         });
-                                        alert('강의가 추가되었습니다!');
+                                        alert('✅ 에이전트 강의가 추가되었습니다!');
+                                        loadAllUsers(); // 새로고침
+                                      } catch (error: any) {
+                                        alert(`오류: ${error.message}`);
+                                      }
+                                    }}
+                                    style={{
+                                      padding: '6px 14px',
+                                      borderRadius: '6px',
+                                      border: 'none',
+                                      background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                                      color: 'white',
+                                      fontSize: '0.85rem',
+                                      fontWeight: '600',
+                                      cursor: 'pointer'
+                                    }}
+                                  >
+                                    🤖 에이전트
+                                  </button>
+                                )}
+                                {/* 건물주 강의 추가 버튼 */}
+                                {!hasAIBuildingCourse && (
+                                  <button
+                                    onClick={async () => {
+                                      if (!window.confirm(`${user.name || user.email}에게 건물주 강의를 추가하시겠습니까?\n\n💰 가격: 45,000원\n📚 강의: Step 1: AI 건물주 되기 기초`)) return;
+
+                                      try {
+                                        await AzureTableService.addPurchaseAndEnrollmentToUser({
+                                          email: user.email,
+                                          courseId: 'ai-building-course',
+                                          title: 'Step 1: AI 건물주 되기 기초',
+                                          amount: 45000,
+                                          paymentMethod: 'card',
+                                          orderId: `manual_building_${Date.now()}`,
+                                          orderName: 'Step 1: AI 건물주 되기 기초'
+                                        });
+                                        alert('✅ 건물주 강의가 추가되었습니다!');
                                         loadAllUsers(); // 새로고침
                                       } catch (error: any) {
                                         alert(`오류: ${error.message}`);
@@ -1099,7 +1186,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
                                       cursor: 'pointer'
                                     }}
                                   >
-                                    강의 추가
+                                    🏢 건물주
                                   </button>
                                 )}
                               </>

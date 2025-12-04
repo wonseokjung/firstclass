@@ -489,26 +489,6 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                   >
                     🏦 계좌이체
                   </button>
-
-                  <button
-                    onClick={() => handleTossPayment('VIRTUAL_ACCOUNT')}
-                    disabled={isLoading}
-                    style={{
-                      width: '100%',
-                      background: '#ffffff',
-                      color: '#475569',
-                      border: '2px solid #cbd5e1',
-                      padding: '16px',
-                      borderRadius: '12px',
-                      fontSize: '1.1rem',
-                      fontWeight: '700',
-                      cursor: isLoading ? 'not-allowed' : 'pointer',
-                      opacity: isLoading ? 0.7 : 1,
-                      transition: 'all 0.3s ease'
-                    }}
-                  >
-                    💰 가상계좌
-                  </button>
                 </div>
               </div>
             )}

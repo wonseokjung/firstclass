@@ -54,6 +54,8 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
   const location = useLocation();
   const [isProcessing, setIsProcessing] = useState(true);
   const [courseName, setCourseName] = useState('');
+  const [paymentStatus, setPaymentStatus] = useState<string>(''); // 결제 상태 추가
+  const [virtualAccountInfo, setVirtualAccountInfo] = useState<any>(null); // 가상계좌 정보
 
   // 페이지 로드 즉시 로그 출력
   console.log('🎉 PaymentSuccessPage 컴포넌트 로드됨!');
@@ -94,6 +96,10 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               const paymentResult = await confirmPayment(paymentKey, orderId, parseInt(amount));
               console.log('✅ 결제 승인 성공:', paymentResult);
               
+              // 🔴 결제 상태 저장 (DONE, WAITING_FOR_DEPOSIT 등)
+              setPaymentStatus(paymentResult.status);
+              console.log(`📊 결제 상태: ${paymentResult.status}`);
+              
               // ⭐ 마스킹 없는 전체 결제 정보 저장
               if (paymentResult) {
                 const fullPaymentInfo = {
@@ -121,6 +127,18 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 
                 console.log('📝 전체 결제 정보 (마스킹 없음):', fullPaymentInfo);
                 
+                // 🔴 가상계좌인 경우 정보 저장 (입금 대기 상태)
+                if (paymentResult.status === 'WAITING_FOR_DEPOSIT' && paymentResult.virtualAccount) {
+                  setVirtualAccountInfo({
+                    bank: paymentResult.virtualAccount.bank,
+                    accountNumber: paymentResult.virtualAccount.accountNumber,
+                    customerName: paymentResult.virtualAccount.customerName,
+                    dueDate: paymentResult.virtualAccount.dueDate,
+                    amount: paymentResult.totalAmount
+                  });
+                  console.log('💰 가상계좌 발급됨 - 입금 대기 중:', paymentResult.virtualAccount);
+                }
+                
                 // 로컬 스토리지에 저장 (관리자가 확인할 수 있도록)
                 try {
                   const storageKey = `payment_full_${orderId}`;
@@ -141,6 +159,14 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                   console.log('📋 전체 결제 내역 업데이트 완료');
                 } catch (storageError) {
                   console.error('❌ 로컬 스토리지 저장 실패:', storageError);
+                }
+                
+                // 🔴🔴🔴 가상계좌(입금 대기)인 경우 Azure 등록 건너뛰기!
+                if (paymentResult.status === 'WAITING_FOR_DEPOSIT') {
+                  console.log('⏳ 가상계좌 입금 대기 중 - Azure 등록 건너뜀 (입금 확인 후 수동 등록 필요)');
+                  sessionStorage.setItem(processedKey, 'waiting_deposit');
+                  setIsProcessing(false);
+                  return; // 여기서 종료! Azure 등록 안 함!
                 }
               }
               
@@ -315,6 +341,144 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             <h2 className="text-2xl font-bold text-white mb-2">결제 정보를 처리 중입니다</h2>
             <p className="text-[#ccc] animate-pulse">잠시만 기다려주세요...</p>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 🔴 가상계좌 입금 대기 화면
+  if (paymentStatus === 'WAITING_FOR_DEPOSIT' && virtualAccountInfo) {
+    return (
+      <div className="masterclass-container">
+        <NavigationBar 
+          onBack={onBack}
+          breadcrumbText="입금 대기"
+        />
+        
+        <div style={{ 
+          maxWidth: '600px', 
+          margin: '0 auto', 
+          padding: '60px 20px',
+          textAlign: 'center'
+        }}>
+          {/* 아이콘 */}
+          <div style={{
+            width: '100px',
+            height: '100px',
+            background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 30px',
+            fontSize: '50px'
+          }}>
+            💰
+          </div>
+
+          <h1 style={{
+            fontSize: '2rem',
+            fontWeight: '800',
+            color: '#fbbf24',
+            marginBottom: '15px'
+          }}>
+            가상계좌 발급 완료!
+          </h1>
+          
+          <p style={{
+            fontSize: '1.1rem',
+            color: '#e2e8f0',
+            marginBottom: '40px'
+          }}>
+            아래 계좌로 입금해주시면 <strong>강의가 자동 등록</strong>됩니다.
+          </p>
+
+          {/* 가상계좌 정보 카드 */}
+          <div style={{
+            background: 'linear-gradient(135deg, #1e3a5f, #0f172a)',
+            border: '2px solid #fbbf24',
+            borderRadius: '20px',
+            padding: '30px',
+            marginBottom: '30px',
+            textAlign: 'left'
+          }}>
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '5px' }}>은행</div>
+              <div style={{ color: '#ffffff', fontSize: '1.3rem', fontWeight: '700' }}>
+                {virtualAccountInfo.bank}
+              </div>
+            </div>
+            
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '5px' }}>계좌번호</div>
+              <div style={{ 
+                color: '#fbbf24', 
+                fontSize: '1.5rem', 
+                fontWeight: '800',
+                fontFamily: 'monospace',
+                letterSpacing: '2px'
+              }}>
+                {virtualAccountInfo.accountNumber}
+              </div>
+            </div>
+            
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '5px' }}>예금주</div>
+              <div style={{ color: '#ffffff', fontSize: '1.2rem', fontWeight: '600' }}>
+                {virtualAccountInfo.customerName}
+              </div>
+            </div>
+            
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '5px' }}>입금액</div>
+              <div style={{ color: '#10b981', fontSize: '1.5rem', fontWeight: '800' }}>
+                ₩{virtualAccountInfo.amount?.toLocaleString()}
+              </div>
+            </div>
+            
+            <div>
+              <div style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '5px' }}>입금 기한</div>
+              <div style={{ color: '#ef4444', fontSize: '1.1rem', fontWeight: '600' }}>
+                {virtualAccountInfo.dueDate ? new Date(virtualAccountInfo.dueDate).toLocaleString('ko-KR') : '24시간 이내'}
+              </div>
+            </div>
+          </div>
+
+          {/* 주의사항 */}
+          <div style={{
+            background: 'rgba(239, 68, 68, 0.1)',
+            border: '1px solid rgba(239, 68, 68, 0.3)',
+            borderRadius: '12px',
+            padding: '20px',
+            marginBottom: '30px',
+            textAlign: 'left'
+          }}>
+            <h3 style={{ color: '#ef4444', fontWeight: '700', marginBottom: '10px' }}>
+              ⚠️ 주의사항
+            </h3>
+            <ul style={{ color: '#e2e8f0', fontSize: '0.95rem', lineHeight: '1.8', margin: 0, paddingLeft: '20px' }}>
+              <li>입금 기한 내에 정확한 금액을 입금해주세요</li>
+              <li>입금자명은 <strong>"{virtualAccountInfo.customerName}"</strong>으로 해주세요</li>
+              <li>입금 확인 후 <strong>관리자 확인을 거쳐</strong> 강의가 등록됩니다</li>
+              <li>문의: jay@connexionai.kr</li>
+            </ul>
+          </div>
+
+          <button
+            onClick={onBack}
+            style={{
+              background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+              color: 'white',
+              border: 'none',
+              padding: '15px 40px',
+              borderRadius: '12px',
+              fontSize: '1.1rem',
+              fontWeight: '700',
+              cursor: 'pointer'
+            }}
+          >
+            확인
+          </button>
         </div>
       </div>
     );
