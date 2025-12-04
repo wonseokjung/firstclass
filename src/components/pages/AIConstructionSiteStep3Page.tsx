@@ -14,7 +14,6 @@ import {
   AlertCircle,
   Copy,
   RefreshCw,
-  Volume2,
   Pause,
   Download,
   Mic
@@ -25,8 +24,8 @@ interface Scene {
   sceneNumber: number;
   startTime: string;
   endTime: string;
-  script: string;
-  imagePrompt: string;
+  narration: string;      // TTS가 읽을 대사
+  imagePrompt: string;    // 이미지 생성용 (UI에 숨김)
   generatedImage?: string;
   isGenerating?: boolean;
   // 음성 관련
@@ -49,7 +48,6 @@ const AIConstructionSiteStep3Page: React.FC = () => {
   const [duration, setDuration] = useState(60);
   const [style, setStyle] = useState('educational');
   const [characterImage, setCharacterImage] = useState<string | null>(null);
-  const [characterImageFile, setCharacterImageFile] = useState<File | null>(null);
   
   // API 키 (Google Gemini API)
   const [geminiApiKey, setGeminiApiKey] = useState('');
@@ -120,6 +118,7 @@ const AIConstructionSiteStep3Page: React.FC = () => {
     if (voices.length > 0) {
       setSelectedVoice(voices[0].id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scriptLanguage]);
   
   // 이미지 생성 모델 선택
@@ -165,7 +164,6 @@ const AIConstructionSiteStep3Page: React.FC = () => {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setCharacterImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setCharacterImage(reader.result as string);
@@ -235,17 +233,26 @@ const AIConstructionSiteStep3Page: React.FC = () => {
       "sceneNumber": 1,
       "startTime": "0:00",
       "endTime": "0:06",
-      "script": "첫 번째 장면 대사 (${langLabel}로, 자연스럽고 말하기 쉽게)",
-      "imagePrompt": "이 장면을 표현하는 이미지 설명 (영어로, 상세하게)"
+      "narration": "TTS가 읽을 나레이션 대사",
+      "imagePrompt": "이 장면을 표현하는 이미지 프롬프트 (영어)"
     }
   ]
 }
 
-중요:
-- 대사는 한국어로, 자연스럽게 말할 수 있도록
-- imagePrompt는 영어로, Gemini Image Generation에서 사용할 수 있도록 상세하게
-- 캐릭터가 등장하는 장면으로 구성
-- 각 장면은 5-6초 분량의 대사`;
+⚠️ 매우 중요 - 각 필드 작성 규칙:
+
+📢 narration (나레이션 대사):
+- TTS(음성합성)가 바로 읽을 대사입니다
+- 실제 성우/유튜버가 말하는 것처럼 자연스럽게 작성
+- 예시: "안녕하세요 여러분! 드디어 한국에 도착했어요. 치즈김밥이 너무 먹고 싶은데, 어디서 파는지 모르겠어요!"
+- 각 대사는 5-6초 분량 (약 30-50자)
+- ${langLabel}로 작성
+
+🎨 imagePrompt (이미지 프롬프트):
+- 이미지 AI가 그릴 장면 설명입니다
+- 반드시 영어로 상세하게 작성
+- 예시: "A confused traveler at a Korean airport, looking at signs, searching for cheese kimbap, realistic style"
+- 캐릭터, 배경, 표정, 행동을 구체적으로 묘사`;
 
       const response = await callAzureOpenAI([
         { role: 'system', content: '당신은 유튜브 쇼츠/릴스 콘텐츠 전문가입니다. JSON 형식으로만 응답합니다.' },
@@ -267,7 +274,7 @@ const AIConstructionSiteStep3Page: React.FC = () => {
           sceneNumber: s.sceneNumber || i + 1,
           startTime: s.startTime || '0:00',
           endTime: s.endTime || '0:06',
-          script: s.script || '',
+          narration: s.narration || s.script || '',
           imagePrompt: s.imagePrompt || '',
           generatedImage: undefined,
           isGenerating: false
@@ -307,7 +314,7 @@ const AIConstructionSiteStep3Page: React.FC = () => {
           setGeneratedContent({ ...content, scenes: [...updatedScenes] });
 
           try {
-            scene.generatedAudio = await generateSingleAudio(scene.script);
+            scene.generatedAudio = await generateSingleAudio(scene.narration);
           } catch (audioErr: any) {
             console.error(`장면 ${i + 1} 음성 생성 실패:`, audioErr);
           }
@@ -392,7 +399,7 @@ const AIConstructionSiteStep3Page: React.FC = () => {
     });
 
     try {
-      const audioUrl = await generateSingleAudio(scene.script);
+      const audioUrl = await generateSingleAudio(scene.narration);
       
       setGeneratedContent(prev => {
         if (!prev) return prev;
@@ -587,7 +594,7 @@ const AIConstructionSiteStep3Page: React.FC = () => {
     
     generatedContent.scenes.forEach((scene, i) => {
       scriptText += `[장면 ${scene.sceneNumber}] ${scene.startTime} ~ ${scene.endTime}\n`;
-      scriptText += `대사: ${scene.script}\n`;
+      scriptText += `대사: ${scene.narration}\n`;
       scriptText += `이미지 프롬프트: ${scene.imagePrompt}\n\n`;
     });
 
@@ -1420,13 +1427,13 @@ const AIConstructionSiteStep3Page: React.FC = () => {
                       padding: '0',
                       border: '1px solid #e5e7eb',
                       display: 'grid',
-                      gridTemplateColumns: '1fr 1.2fr 200px',
+                      gridTemplateColumns: '1fr 200px',
                       gap: '0',
                       overflow: 'hidden',
                       boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
                     }}
                   >
-                    {/* 왼쪽: 대사 (한국어) */}
+                    {/* 왼쪽: 나레이션 대사 + 음성 재생 */}
                     <div style={{
                       padding: '20px',
                       borderRight: '1px solid #e5e7eb',
@@ -1458,34 +1465,62 @@ const AIConstructionSiteStep3Page: React.FC = () => {
                           {scene.startTime} ~ {scene.endTime}
                         </span>
                       </div>
+                      
+                      {/* 나레이션 대사 */}
                       <p style={{
                         color: '#1f2937',
-                        fontSize: '0.95rem',
-                        lineHeight: '1.7',
-                        margin: 0,
-                        fontWeight: '500'
+                        fontSize: '1rem',
+                        lineHeight: '1.8',
+                        margin: '0 0 15px 0',
+                        fontWeight: '500',
+                        background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                        padding: '15px',
+                        borderRadius: '12px',
+                        border: '1px solid #f59e0b'
                       }}>
-                        {scene.script}
+                        🎤 "{scene.narration}"
                       </p>
-                    </div>
-
-                    {/* 가운데: 이미지 프롬프트 (영어) */}
-                    <div style={{
-                      padding: '20px',
-                      borderRight: '1px solid #e5e7eb',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center'
-                    }}>
-                      <p style={{
-                        color: '#374151',
-                        fontSize: '0.9rem',
-                        lineHeight: '1.6',
-                        margin: 0,
-                        fontStyle: 'italic'
-                      }}>
-                        {scene.imagePrompt}
-                      </p>
+                      
+                      {/* 음성 재생 버튼 */}
+                      {scene.generatedAudio && (
+                        <button
+                          onClick={() => playAudio(scene.generatedAudio!, index)}
+                          style={{
+                            background: playingAudioIndex === index 
+                              ? 'linear-gradient(135deg, #ef4444, #dc2626)'
+                              : 'linear-gradient(135deg, #10b981, #059669)',
+                            color: 'white',
+                            border: 'none',
+                            padding: '10px 20px',
+                            borderRadius: '25px',
+                            fontSize: '0.9rem',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+                          }}
+                        >
+                          {playingAudioIndex === index ? (
+                            <>
+                              <Pause size={16} />
+                              정지
+                            </>
+                          ) : (
+                            <>
+                              <Play size={16} />
+                              🔊 음성 재생
+                            </>
+                          )}
+                        </button>
+                      )}
+                      {!scene.generatedAudio && scene.isGeneratingAudio && (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#f59e0b' }}>
+                          <Loader2 size={16} className="animate-spin" />
+                          음성 생성 중...
+                        </div>
+                      )}
                     </div>
 
                     {/* 오른쪽: 생성 이미지 + 재생성 버튼 */}
@@ -1564,75 +1599,6 @@ const AIConstructionSiteStep3Page: React.FC = () => {
                           이미지
                         </button>
 
-                        {/* 음성 생성/재생 버튼 */}
-                        {elevenLabsApiKey && (
-                          <>
-                            {scene.generatedAudio ? (
-                              <button
-                                onClick={() => playAudio(scene.generatedAudio!, index)}
-                                style={{
-                                  background: playingAudioIndex === index 
-                                    ? 'linear-gradient(135deg, #ef4444, #dc2626)'
-                                    : 'linear-gradient(135deg, #22c55e, #16a34a)',
-                                  color: 'white',
-                                  border: 'none',
-                                  padding: '6px 12px',
-                                  borderRadius: '6px',
-                                  fontSize: '0.75rem',
-                                  fontWeight: '600',
-                                  cursor: 'pointer',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  gap: '4px'
-                                }}
-                              >
-                                {playingAudioIndex === index ? (
-                                  <>
-                                    <Pause size={12} />
-                                    정지
-                                  </>
-                                ) : (
-                                  <>
-                                    <Play size={12} />
-                                    재생
-                                  </>
-                                )}
-                              </button>
-                            ) : (
-                              <button
-                                onClick={() => generateSceneAudio(index)}
-                                disabled={scene.isGeneratingAudio}
-                                style={{
-                                  background: scene.isGeneratingAudio 
-                                    ? 'linear-gradient(135deg, #6b7280, #4b5563)'
-                                    : 'linear-gradient(135deg, #d4af37, #f4d03f)',
-                                  color: scene.isGeneratingAudio ? 'white' : '#0a0a1a',
-                                  border: 'none',
-                                  padding: '6px 12px',
-                                  borderRadius: '6px',
-                                  fontSize: '0.75rem',
-                                  fontWeight: '600',
-                                  cursor: scene.isGeneratingAudio ? 'not-allowed' : 'pointer',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  gap: '4px'
-                                }}
-                              >
-                                {scene.isGeneratingAudio ? (
-                                  <>
-                                    <Loader2 size={12} className="animate-spin" />
-                                    생성중
-                                  </>
-                                ) : (
-                                  <>
-                                    <Volume2 size={12} />
-                                    음성
-                                  </>
-                                )}
-                              </button>
-                            )}
-                          </>
-                        )}
                       </div>
                     </div>
                   </div>
