@@ -12,7 +12,6 @@ import ReactFlow, {
   NodeTypes,
   MiniMap,
   useReactFlow,
-  ReactFlowProvider,
   Panel,
   NodeResizer,
   OnSelectionChangeParams,
@@ -180,11 +179,7 @@ const ParticleBackground: React.FC = () => {
 // 커스텀 노드 컴포넌트 (인터랙티브! - 이미지처럼 예쁘게)
 const WorkflowNode = ({ data, selected }: { data: NodeData; selected: boolean }) => {
   const isRunning = data.status === 'running';
-  const isInput = data.label.includes('PD');
   const isOutput = data.label.includes('출력');
-  const isImage = data.label.includes('이미지');
-  const isCharacter = data.label.includes('캐릭터');
-  const isAudio = data.label.includes('음성');
   
   const getStatusIcon = () => {
     switch (data.status) {
@@ -381,7 +376,8 @@ const WorkflowNode = ({ data, selected }: { data: NodeData; selected: boolean })
   );
 };
 
-// 데이터 흐름 파티클 엣지
+// 데이터 흐름 파티클 엣지 (향후 사용 예정)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const FlowingEdge = ({ id, sourceX, sourceY, targetX, targetY, style }: any) => {
   const edgePath = `M ${sourceX} ${sourceY} C ${sourceX + 100} ${sourceY} ${targetX - 100} ${targetY} ${targetX} ${targetY}`;
   
@@ -804,7 +800,8 @@ const ZoomSlider = () => {
   );
 };
 
-// 노드 크기 설정 패널
+// 노드 크기 설정 패널 (향후 사용 예정)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const NodeSizeSettings = ({ nodeSize, onNodeSizeChange }: { 
   nodeSize: { width: number; height: number }; 
   onNodeSizeChange: (size: { width: number; height: number }) => void 
@@ -1054,6 +1051,7 @@ const AIConstructionSiteStep3Page: React.FC = () => {
   
   // 미리보기/영상 생성
   const [showPreview, setShowPreview] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [previewIndex, setPreviewIndex] = useState(0);
   const [isExportingVideo, setIsExportingVideo] = useState(false);
   const [exportProgress, setExportProgress] = useState(0);

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReactFlow, {
   Node,
@@ -346,6 +346,7 @@ const AIWorkflowEditorPage: React.FC = () => {
   }, [setNodes, setEdges]);
 
   // 초기 로드
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => {
     loadWorkflow();
   }, []);

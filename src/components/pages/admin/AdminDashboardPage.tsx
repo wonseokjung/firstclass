@@ -37,10 +37,14 @@ const AdminDashboardPage: React.FC = () => {
   const [emailSubject, setEmailSubject] = useState('');
   const [emailContent, setEmailContent] = useState('');
   
-  // 수강 정보 수정 모달
+  // 수강 정보 수정 모달 (향후 사용 예정)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showEnrollmentModal, setShowEnrollmentModal] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [enrollmentUserEmail, setEnrollmentUserEmail] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [enrollmentUserData, setEnrollmentUserData] = useState<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [enrollmentLoading, setEnrollmentLoading] = useState(false);
 
   // 관리자 권한 확인
