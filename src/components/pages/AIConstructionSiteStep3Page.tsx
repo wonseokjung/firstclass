@@ -2819,7 +2819,7 @@ if (selectedNode === 'image') {
       </div>
       
       {/* 메인 */}
-      <div style={{ flex: 1, display: 'flex', position: 'relative' }}>
+      <div style={{ flex: 1, display: 'flex', position: 'relative', minHeight: 0, overflow: 'hidden' }}>
         {/* 캔버스 */}
         <div style={{ flex: 1, position: 'relative' }}>
           <ParticleBackground />
@@ -2876,12 +2876,16 @@ if (selectedNode === 'image') {
         {/* 오른쪽: 설정 패널 */}
         <div style={{ 
           width: `${panelWidth}px`, 
+          height: '100%',
+          maxHeight: '100%',
           background: 'linear-gradient(180deg, #1a1a2e 0%, #12121f 100%)', 
           borderLeft: '2px solid #d4af3730', 
           padding: '20px', 
           overflowY: 'auto',
+          overflowX: 'hidden',
           boxShadow: '-4px 0 20px rgba(0,0,0,0.3)',
-          transition: isResizing ? 'none' : 'width 0.1s'
+          transition: isResizing ? 'none' : 'width 0.1s',
+          flexShrink: 0
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid #ffffff15' }}>
             <Settings size={22} color="#d4af37" />
