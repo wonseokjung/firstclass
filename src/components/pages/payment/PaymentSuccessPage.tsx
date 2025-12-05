@@ -82,10 +82,16 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         
         // 토스페이먼츠 결제 승인 처리 (중복 방지)
         if (paymentKey && orderId && amount) {
-          // 중복 승인 방지: sessionStorage로 이미 처리된 결제인지 확인
+          // 🔴🔴🔴 중복 등록 방지: localStorage + sessionStorage 둘 다 체크
           const processedKey = `payment_processed_${paymentKey}`;
-          if (sessionStorage.getItem(processedKey)) {
-            console.log('⚠️ 이미 처리된 결제입니다. 중복 승인 방지.');
+          const orderProcessedKey = `order_processed_${orderId}`;
+          
+          // 이미 처리된 결제면 즉시 종료!
+          if (sessionStorage.getItem(processedKey) || localStorage.getItem(orderProcessedKey)) {
+            console.log('⚠️ 이미 처리된 결제입니다. 중복 등록 방지!');
+            alert('이미 처리된 결제입니다.');
+            window.location.href = '/my-courses';
+            return; // 🔴 여기서 종료! 더 이상 진행 안 함!
           } else {
             console.log('💳 토스페이먼츠 결제 승인 시작...');
             
@@ -170,8 +176,13 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 }
               }
               
-              // 성공 시 완료 표시
+              // 성공 시 완료 표시 (sessionStorage + localStorage 둘 다!)
               sessionStorage.setItem(processedKey, 'completed');
+              localStorage.setItem(orderProcessedKey, JSON.stringify({
+                orderId,
+                paymentKey,
+                processedAt: new Date().toISOString()
+              }));
             } catch (error) {
               console.error('❌ 결제 승인 실패:', error);
               
@@ -185,7 +196,12 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             }
           }
         } else {
-          console.log('⚠️ 결제 승인 파라미터 없음 (테스트 결제 또는 기존 방식)');
+          // 🔴🔴🔴 보안 수정: 결제 파라미터 없으면 등록 중단!
+          console.error('🚨 결제 승인 파라미터 없음 - 무단 접근 차단!');
+          console.error('🚨 paymentKey, orderId, amount가 모두 필요합니다.');
+          alert('잘못된 접근입니다. 결제 정보가 없습니다.');
+          window.location.href = '/payment/fail?error=missing_payment_params';
+          return; // 여기서 종료! 등록 진행 안 함!
         }
         
         // 사용자 정보는 location.state에서 가져오기

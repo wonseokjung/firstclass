@@ -389,6 +389,37 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                   >
                     🏦 계좌이체
                   </button>
+
+                  <button
+                    onClick={() => handleTossPayment('VIRTUAL_ACCOUNT')}
+                    disabled={isLoading}
+                    style={{
+                      width: '100%',
+                      background: '#ffffff',
+                      color: '#059669',
+                      border: '2px solid #059669',
+                      padding: 'clamp(10px, 2.5vw, 16px)',
+                      borderRadius: '10px',
+                      fontSize: 'clamp(0.9rem, 2.8vw, 1.1rem)',
+                      fontWeight: '700',
+                      cursor: isLoading ? 'not-allowed' : 'pointer',
+                      opacity: isLoading ? 0.7 : 1,
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    🏧 가상계좌
+                  </button>
+
+                  <p style={{
+                    fontSize: 'clamp(0.75rem, 2vw, 0.85rem)',
+                    color: '#64748b',
+                    textAlign: 'center',
+                    marginTop: '8px',
+                    marginBottom: 0,
+                    lineHeight: '1.5'
+                  }}>
+                    💡 가상계좌: 발급된 계좌로 입금 시 자동 수강 등록
+                  </p>
                 </div>
               </div>
             )}
