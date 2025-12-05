@@ -346,9 +346,9 @@ const AIWorkflowEditorPage: React.FC = () => {
   }, [setNodes, setEdges]);
 
   // 초기 로드
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => {
     loadWorkflow();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
