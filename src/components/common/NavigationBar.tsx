@@ -127,7 +127,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
         {/* 데스크탑 네비게이션 */}
                     <div className="header-right desktop-nav">
               <button className="nav-link" onClick={() => navigate('/ceo')}>소개</button>
-              <button className="nav-link" onClick={() => navigate('/ai-construction-site')}>🏗️ AI 도시 공사장</button>
+              <button className="nav-link" onClick={() => navigate('/ai-construction-site')}>🏗️ AI 건물 공사장</button>
               {/* <button 
                 className="nav-link" 
                 onClick={() => navigate('/clubs')}
@@ -210,7 +210,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               className="mobile-nav-link" 
               onClick={() => handleMobileNavClick(() => navigate('/ai-construction-site'))}
             >
-              🏗️ AI 도시 공사장
+              🏗️ AI 건물 공사장
             </button>
 
             {/* <button 

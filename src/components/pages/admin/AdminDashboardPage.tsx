@@ -36,6 +36,12 @@ const AdminDashboardPage: React.FC = () => {
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
   const [emailSubject, setEmailSubject] = useState('');
   const [emailContent, setEmailContent] = useState('');
+  
+  // 수강 정보 수정 모달
+  const [showEnrollmentModal, setShowEnrollmentModal] = useState(false);
+  const [enrollmentUserEmail, setEnrollmentUserEmail] = useState('');
+  const [enrollmentUserData, setEnrollmentUserData] = useState<any>(null);
+  const [enrollmentLoading, setEnrollmentLoading] = useState(false);
 
   // 관리자 권한 확인
   useEffect(() => {

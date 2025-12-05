@@ -13,7 +13,8 @@ import {
   Star,
   ArrowRight,
   Bot,
-  Cpu
+  Cpu,
+  Workflow
 } from 'lucide-react';
 import NavigationBar from '../common/NavigationBar';
 
@@ -87,6 +88,18 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
       status: 'coming_soon'
     },
     {
+      id: 'workflow',
+      title: '워크플로우 에디터',
+      subtitle: 'Workflow Editor',
+      icon: <Workflow size={36} />,
+      gradient: 'linear-gradient(135deg, #d4af37, #f59e0b)',
+      glowColor: 'rgba(212, 175, 55, 0.5)',
+      description: 'n8n 스타일로 AI 에이전트를 자유롭게 연결하세요.',
+      features: ['노드 기반 UI', '드래그 & 드롭', '커스텀 워크플로우'],
+      status: 'available',
+      route: '/ai-workflow-editor'
+    },
+    {
       id: 'analytics',
       title: '채널 분석기',
       subtitle: 'Channel Analyzer',
@@ -124,7 +137,7 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
     }}>
       <NavigationBar
         onBack={onBack}
-        breadcrumbText="AI 에이전트"
+        breadcrumbText="AI 건물 공사장"
       />
 
       {/* Hero Section */}
@@ -194,8 +207,8 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
             lineHeight: '1.1',
             letterSpacing: '-1px'
           }}>
-            AI 유튜브<br />
-            콘텐츠 에이전트
+            🏗️ AI 건물<br />
+            공사장
           </h1>
 
           <p style={{
@@ -205,8 +218,8 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
             margin: '0 auto 30px',
             lineHeight: '1.7'
           }}>
-            6개의 전문 AI 에이전트가 당신의 유튜브 채널을<br />
-            <span style={{ color: '#d4af37', fontWeight: '600' }}>완전 자동화</span>합니다
+            AI 에이전트와 함께 당신의 유튜브 채널을<br />
+            <span style={{ color: '#d4af37', fontWeight: '600' }}>처음부터 끝까지</span> 건설하세요
           </p>
 
           {/* Stats */}
