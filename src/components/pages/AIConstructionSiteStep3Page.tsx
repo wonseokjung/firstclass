@@ -39,6 +39,7 @@ import {
   GripVertical
 } from 'lucide-react';
 import { callAzureOpenAI } from '../../services/azureOpenAIService';
+import { AzureTableService } from '../../services/azureTableService';
 
 // ResizeObserver 에러 완전 무시 + React 개발 오버레이 숨김
 if (typeof window !== 'undefined') {
@@ -1071,13 +1072,40 @@ const AIConstructionSiteStep3Page: React.FC = () => {
   
   // 에러 알림
   const [audioError, setAudioError] = useState<string | null>(null);
+  
+  // 사용 횟수 제한 (아이디당 3회)
+  const MAX_USAGE = 3;
+  const [usageCount, setUsageCount] = useState(0);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
 
-  // localStorage에서 API 키 로드
+  // localStorage에서 API 키 로드 + 사용 횟수 확인
   useEffect(() => {
     const savedGeminiKey = localStorage.getItem('gemini_api_key');
     const savedElevenLabsKey = localStorage.getItem('elevenlabs_api_key');
     if (savedGeminiKey) { setGeminiApiKey(savedGeminiKey); setSaveGeminiKey(true); }
     if (savedElevenLabsKey) { setElevenLabsApiKey(savedElevenLabsKey); setSaveElevenLabsKey(true); }
+    
+    // 로그인 사용자 확인 및 Azure에서 사용 횟수 로드
+    const userSession = sessionStorage.getItem('aicitybuilders_user_session');
+    if (userSession) {
+      try {
+        const user = JSON.parse(userSession);
+        setUserEmail(user.email);
+        
+        // Azure에서 사용 횟수 불러오기
+        AzureTableService.getUserByEmail(user.email).then(azureUser => {
+          if (azureUser) {
+            const usage = (azureUser as any).aiGeneratorUsage || 0;
+            setUsageCount(typeof usage === 'number' ? usage : parseInt(usage, 10) || 0);
+            console.log(`📊 AI 생성기 사용 횟수: ${usage}/${MAX_USAGE}`);
+          }
+        }).catch(err => {
+          console.error('Azure 사용 횟수 로드 실패:', err);
+        });
+      } catch (e) {
+        console.error('사용자 정보 로드 실패:', e);
+      }
+    }
   }, []);
 
 
@@ -1576,6 +1604,32 @@ const AIConstructionSiteStep3Page: React.FC = () => {
   // 4️⃣ 전체 워크플로우 실행 (기존 기능)
   const runWorkflow = async () => {
     if (!topic.trim()) { alert('주제를 입력해주세요.'); return; }
+    
+    // 로그인 체크
+    if (!userEmail) {
+      alert('🔒 로그인이 필요합니다.\n\nAI 콘텐츠 생성기를 사용하려면 먼저 로그인해주세요.');
+      navigate('/login');
+      return;
+    }
+    
+    // 사용 횟수 체크
+    if (usageCount >= MAX_USAGE) {
+      alert(`⚠️ 사용 횟수 초과\n\n현재 실험 단계로 아이디당 ${MAX_USAGE}회까지만 사용 가능합니다.\n\n이미 ${usageCount}회 사용하셨습니다.\n\n더 많은 사용을 원하시면 문의해주세요!`);
+      return;
+    }
+    
+    // 사용 횟수 증가 (Azure에 저장)
+    const newUsageCount = usageCount + 1;
+    setUsageCount(newUsageCount);
+    
+    // Azure에 사용 횟수 업데이트
+    try {
+      await AzureTableService.updateUserField(userEmail, 'aiGeneratorUsage', newUsageCount);
+      console.log(`📊 Azure 사용 횟수 업데이트: ${newUsageCount}/${MAX_USAGE}`);
+    } catch (err) {
+      console.error('Azure 사용 횟수 업데이트 실패:', err);
+    }
+    
     setIsRunning(true);
     resetAllNodes();
     
@@ -2683,9 +2737,48 @@ if (selectedNode === 'image') {
           <div>
             <h1 style={{ color: '#d4af37', fontSize: '1.3rem', fontWeight: '900', margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
               🎬 AI 콘텐츠 생성기
+              <span style={{
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                color: 'white',
+                fontSize: '0.65rem',
+                padding: '3px 8px',
+                borderRadius: '20px',
+                fontWeight: '700',
+                letterSpacing: '0.5px'
+              }}>
+                🧪 BETA
+              </span>
             </h1>
             <p style={{ color: '#64748b', fontSize: '1rem', margin: 0 }}>노드를 클릭해서 설정을 변경하세요</p>
           </div>
+        </div>
+        
+        {/* 사용 횟수 표시 */}
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: '15px',
+          background: 'rgba(255,255,255,0.05)',
+          border: '1px solid rgba(255,255,255,0.1)',
+          borderRadius: '12px',
+          padding: '8px 16px'
+        }}>
+          {userEmail ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ color: '#64748b', fontSize: '0.85rem' }}>남은 횟수:</span>
+              <span style={{ 
+                color: usageCount >= MAX_USAGE ? '#ef4444' : '#10b981', 
+                fontWeight: '800',
+                fontSize: '1rem'
+              }}>
+                {MAX_USAGE - usageCount}/{MAX_USAGE}
+              </span>
+            </div>
+          ) : (
+            <span style={{ color: '#f59e0b', fontSize: '0.85rem', fontWeight: '600' }}>
+              🔒 로그인 필요
+            </span>
+          )}
         </div>
         
         <div style={{ display: 'flex', gap: '10px' }}>
