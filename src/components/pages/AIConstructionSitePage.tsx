@@ -61,8 +61,7 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
       glowColor: 'rgba(16, 185, 129, 0.4)',
       description: '인기 채널과 영상을 자동 분석하여 성공 패턴을 파악합니다.',
       features: ['트렌디 채널 TOP 20', '인기 영상 분석', 'AI 인사이트 제공'],
-      status: 'available',
-      route: '/ai-construction-site/step2'
+      status: 'coming_soon'
     },
     {
       id: 'content',
@@ -96,8 +95,7 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
       glowColor: 'rgba(212, 175, 55, 0.5)',
       description: 'n8n 스타일로 AI 에이전트를 자유롭게 연결하세요.',
       features: ['노드 기반 UI', '드래그 & 드롭', '커스텀 워크플로우'],
-      status: 'available',
-      route: '/ai-workflow-editor'
+      status: 'coming_soon'
     },
     {
       id: 'analytics',
