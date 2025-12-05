@@ -153,45 +153,45 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               {/* <button className="nav-link" onClick={() => navigate('/ai-city-map')}>🏙️ AI CITY</button> */}
               <button className="nav-link" onClick={onFAQClick || (() => navigate('/faq'))}>FAQ</button>
               {hasEnrolledCourses && (
-                <button
-                  className="nav-link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const confirmed = window.confirm(
-                      '⚠️ 안내사항\n\n' +
-                      'AI City Builders 강의에 관련된 내용만 문의 가능합니다.\n\n' +
-                      '기타 문의는 받지 않으니 양해 부탁드립니다.\n\n' +
-                      '카카오톡 오픈채팅으로 이동하시겠습니까?'
-                    );
-                    if (confirmed) {
-                      window.open('https://open.kakao.com/o/s2NzW41h', '_blank', 'noopener,noreferrer');
-                    }
-                  }}
-                  style={{ 
-                    background: '#FFE812',
-                    color: '#1e293b',
-                    padding: '8px 14px',
-                    borderRadius: '8px',
-                    fontWeight: '800',
-                    textDecoration: 'none',
-                    display: 'inline-block',
-                    transition: 'all 0.2s',
-                    fontSize: '0.85rem',
-                    boxShadow: '0 2px 10px rgba(255, 232, 18, 0.3)',
-                    border: 'none',
-                    cursor: 'pointer'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.background = '#FDD700';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.background = '#FFE812';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                  }}
-                >
-                  💬 문의
-                </button>
+              <button
+                className="nav-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const confirmed = window.confirm(
+                    '⚠️ 안내사항\n\n' +
+                    'AI City Builders 강의에 관련된 내용만 문의 가능합니다.\n\n' +
+                    '기타 문의는 받지 않으니 양해 부탁드립니다.\n\n' +
+                    '카카오톡 오픈채팅으로 이동하시겠습니까?'
+                  );
+                  if (confirmed) {
+                    window.open('https://open.kakao.com/o/s2NzW41h', '_blank', 'noopener,noreferrer');
+                  }
+                }}
+                style={{ 
+                  background: '#FFE812',
+                  color: '#1e293b',
+                  padding: '8px 14px',
+                  borderRadius: '8px',
+                  fontWeight: '800',
+                  textDecoration: 'none',
+                  display: 'inline-block',
+                  transition: 'all 0.2s',
+                  fontSize: '0.85rem',
+                  boxShadow: '0 2px 10px rgba(255, 232, 18, 0.3)',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = '#FDD700';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = '#FFE812';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                💬 문의
+              </button>
               )}
               {renderAuthButtons()}
             </div>
@@ -251,35 +251,35 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
             </button>
 
             {hasEnrolledCourses && (
-              <button
-                className="mobile-nav-link"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const confirmed = window.confirm(
-                    '⚠️ 안내사항\n\n' +
-                    'AI City Builders 강의에 관련된 내용만 문의 가능합니다.\n\n' +
-                    '기타 문의는 받지 않으니 양해 부탁드립니다.\n\n' +
-                    '카카오톡 오픈채팅으로 이동하시겠습니까?'
-                  );
-                  if (confirmed) {
-                    window.open('https://open.kakao.com/o/s2NzW41h', '_blank', 'noopener,noreferrer');
-                  }
-                  setIsMobileMenuOpen(false);
-                }}
-                style={{ 
-                  background: '#FFE812',
-                  color: '#1e293b',
-                  fontWeight: '800',
-                  textDecoration: 'none',
-                  display: 'block',
-                  textAlign: 'left',
-                  boxShadow: '0 2px 10px rgba(255, 232, 18, 0.3)',
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
-              >
-                💬 실시간 문의
-              </button>
+            <button
+              className="mobile-nav-link"
+              onClick={(e) => {
+                e.preventDefault();
+                const confirmed = window.confirm(
+                  '⚠️ 안내사항\n\n' +
+                  'AI City Builders 강의에 관련된 내용만 문의 가능합니다.\n\n' +
+                  '기타 문의는 받지 않으니 양해 부탁드립니다.\n\n' +
+                  '카카오톡 오픈채팅으로 이동하시겠습니까?'
+                );
+                if (confirmed) {
+                  window.open('https://open.kakao.com/o/s2NzW41h', '_blank', 'noopener,noreferrer');
+                }
+                setIsMobileMenuOpen(false);
+              }}
+              style={{ 
+                background: '#FFE812',
+                color: '#1e293b',
+                fontWeight: '800',
+                textDecoration: 'none',
+                display: 'block',
+                textAlign: 'left',
+                boxShadow: '0 2px 10px rgba(255, 232, 18, 0.3)',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+            >
+              💬 실시간 문의
+            </button>
             )}
             
             {isLoggedIn ? (

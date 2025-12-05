@@ -138,6 +138,133 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
         breadcrumbText="AI 건물 공사장"
       />
 
+      {/* 🌱 가치 & 안내 배너 */}
+      <div style={{
+        background: 'linear-gradient(135deg, #1a1a2e 0%, #0f172a 100%)',
+        border: '1px solid rgba(212, 175, 55, 0.3)',
+        borderRadius: '16px',
+        margin: '20px auto',
+        maxWidth: '900px',
+        padding: '30px',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        {/* 배경 장식 */}
+        <div style={{
+          position: 'absolute',
+          top: '-50px',
+          right: '-50px',
+          width: '150px',
+          height: '150px',
+          background: 'radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%)',
+          pointerEvents: 'none'
+        }} />
+        
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          {/* 제목 */}
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '12px', 
+            marginBottom: '20px',
+            justifyContent: 'center'
+          }}>
+            <span style={{ fontSize: '2rem' }}>🌱</span>
+            <h2 style={{ 
+              color: '#d4af37', 
+              fontSize: '1.4rem', 
+              fontWeight: '800', 
+              margin: 0 
+            }}>
+              AI City Builders의 가치
+            </h2>
+          </div>
+          
+          {/* 메인 메시지 */}
+          <div style={{ 
+            background: 'rgba(212, 175, 55, 0.1)', 
+            borderRadius: '12px', 
+            padding: '20px',
+            marginBottom: '20px',
+            borderLeft: '4px solid #d4af37'
+          }}>
+            <p style={{ 
+              color: '#e0e0e0', 
+              fontSize: '1.1rem', 
+              lineHeight: '1.8',
+              margin: 0,
+              textAlign: 'center'
+            }}>
+              <strong style={{ color: '#d4af37' }}>"교육은 모두에게, 도구는 함께 만들어가는 사람에게"</strong>
+            </p>
+          </div>
+          
+          {/* 설명 */}
+          <div style={{ 
+            color: '#94a3b8', 
+            fontSize: '1rem', 
+            lineHeight: '1.8',
+            marginBottom: '20px'
+          }}>
+            <p style={{ margin: '0 0 12px 0' }}>
+              저희는 <strong style={{ color: '#ffffff' }}>모두에게 양질의 인공지능 교육</strong>을 제공하겠다는 철학을 가지고 있습니다.
+            </p>
+            <p style={{ margin: '0 0 12px 0' }}>
+              하지만 <strong style={{ color: '#ffffff' }}>도구</strong>는 다릅니다. AI 공사장은 매달 서버 비용, API 비용이 발생하고, 
+              수많은 시간과 노력이 들어간 결과물입니다.
+            </p>
+            <p style={{ margin: 0 }}>
+              지속 가능한 서비스를 위해, 그리고 함께 배우고 성장하는 커뮤니티를 위해 
+              <strong style={{ color: '#f59e0b' }}> 접근 방식에 대해 고민하고 있습니다.</strong>
+            </p>
+          </div>
+          
+          {/* 현재 상태 */}
+          <div style={{
+            display: 'flex',
+            gap: '16px',
+            flexWrap: 'wrap',
+            justifyContent: 'center'
+          }}>
+            <div style={{
+              background: 'rgba(16, 185, 129, 0.15)',
+              border: '1px solid rgba(16, 185, 129, 0.3)',
+              borderRadius: '10px',
+              padding: '12px 20px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}>
+              <span>📚</span>
+              <span style={{ color: '#10b981', fontWeight: '600' }}>교육/강의 → 열린 접근</span>
+            </div>
+            <div style={{
+              background: 'rgba(245, 158, 11, 0.15)',
+              border: '1px solid rgba(245, 158, 11, 0.3)',
+              borderRadius: '10px',
+              padding: '12px 20px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}>
+              <span>🔧</span>
+              <span style={{ color: '#f59e0b', fontWeight: '600' }}>도구 → 수강생/기여자 전용 검토 중</span>
+            </div>
+          </div>
+          
+          {/* 문의 */}
+          <p style={{ 
+            color: '#64748b', 
+            fontSize: '0.9rem', 
+            textAlign: 'center',
+            marginTop: '20px',
+            marginBottom: 0
+          }}>
+            문의: <a href="mailto:jay@connexionai.kr" style={{ color: '#d4af37' }}>jay@connexionai.kr</a>
+          </p>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <div style={{
         position: 'relative',

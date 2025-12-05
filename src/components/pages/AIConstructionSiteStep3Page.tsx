@@ -1069,7 +1069,7 @@ const AIConstructionSiteStep3Page: React.FC = () => {
   
   // Confetti
   const [showConfetti, setShowConfetti] = useState(false);
-  
+
   // 에러 알림
   const [audioError, setAudioError] = useState<string | null>(null);
   
@@ -2313,7 +2313,7 @@ const AIConstructionSiteStep3Page: React.FC = () => {
       );
     }
 
-if (selectedNode === 'image') {
+    if (selectedNode === 'image') {
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
