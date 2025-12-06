@@ -20,6 +20,16 @@ const MAX_USAGE_COUNT = 3;
 
 const AIConstructionSiteStep1Page: React.FC = () => {
   const navigate = useNavigate();
+  
+  // 비밀번호 인증 체크
+  React.useEffect(() => {
+    const authStatus = sessionStorage.getItem('ai_construction_auth');
+    if (authStatus !== 'authenticated') {
+      alert('🔒 AI 공사장 접근 권한이 필요합니다.\n\n먼저 AI 공사장 메인 페이지에서 인증해주세요.');
+      navigate('/ai-construction-site');
+    }
+  }, [navigate]);
+
   const [userInterests, setUserInterests] = useState('');
   const [lifeGoal, setLifeGoal] = useState('');
   const [dailyRoutine, setDailyRoutine] = useState('');

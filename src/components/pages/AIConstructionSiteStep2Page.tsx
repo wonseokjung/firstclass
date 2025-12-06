@@ -8,6 +8,16 @@ import { getCurrentUser } from '../../services/authService';
 
 const AIConstructionSiteStep2Page: React.FC = () => {
   const navigate = useNavigate();
+  
+  // 비밀번호 인증 체크
+  React.useEffect(() => {
+    const authStatus = sessionStorage.getItem('ai_construction_auth');
+    if (authStatus !== 'authenticated') {
+      alert('🔒 AI 공사장 접근 권한이 필요합니다.\n\n먼저 AI 공사장 메인 페이지에서 인증해주세요.');
+      navigate('/ai-construction-site');
+    }
+  }, [navigate]);
+
   const [topic, setTopic] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [trendData, setTrendData] = useState<TrendAnalysis | null>(null);

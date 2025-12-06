@@ -38,6 +38,277 @@ interface Agent {
 const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack }) => {
   const navigate = useNavigate();
   const [hoveredAgent, setHoveredAgent] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+
+  const SITE_PASSWORD = 'jay12345';
+  const AUTH_VERSION = 'v2_20251206'; // 버전 변경시 모든 사용자 재인증 필요
+
+  // 캐시 무효화 + 세션 스토리지에서 인증 상태 확인
+  React.useEffect(() => {
+    // 버전 체크 - 이전 버전이면 인증 초기화
+    const savedVersion = sessionStorage.getItem('ai_construction_version');
+    if (savedVersion !== AUTH_VERSION) {
+      sessionStorage.removeItem('ai_construction_auth');
+      sessionStorage.setItem('ai_construction_version', AUTH_VERSION);
+    }
+    
+    const authStatus = sessionStorage.getItem('ai_construction_auth');
+    if (authStatus === 'authenticated') {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const handlePasswordSubmit = () => {
+    if (passwordInput === SITE_PASSWORD) {
+      setIsAuthenticated(true);
+      sessionStorage.setItem('ai_construction_auth', 'authenticated');
+      setPasswordError(false);
+    } else {
+      setPasswordError(true);
+      setPasswordInput('');
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handlePasswordSubmit();
+    }
+  };
+
+  // 비밀번호 입력 화면
+  if (!isAuthenticated) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(180deg, #0a0a1a 0%, #0f1629 50%, #1a1a3a 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px'
+      }}>
+        <div style={{
+          background: 'linear-gradient(135deg, #1a1a2e 0%, #0f172a 100%)',
+          border: '2px solid rgba(212, 175, 55, 0.3)',
+          borderRadius: '24px',
+          padding: '50px 40px',
+          maxWidth: '500px',
+          width: '100%',
+          textAlign: 'center',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.5)'
+        }}>
+          {/* 로고 */}
+          <div style={{ marginBottom: '30px' }}>
+            <span style={{ fontSize: '4rem' }}>🏗️</span>
+          </div>
+          
+          {/* 제목 */}
+          <h1 style={{ 
+            color: '#d4af37', 
+            fontSize: '1.8rem', 
+            fontWeight: '900',
+            marginBottom: '10px'
+          }}>
+            AI 공사장
+          </h1>
+          <p style={{ 
+            color: '#f59e0b', 
+            fontSize: '1rem',
+            marginBottom: '30px',
+            fontWeight: '600'
+          }}>
+            🔒 비공개 베타 서비스
+          </p>
+          
+          {/* 안내 메시지 */}
+          <div style={{
+            background: 'rgba(212, 175, 55, 0.08)',
+            borderRadius: '16px',
+            padding: '30px',
+            marginBottom: '30px',
+            borderLeft: '4px solid #d4af37',
+            textAlign: 'left'
+          }}>
+            <h3 style={{ 
+              color: '#d4af37', 
+              fontSize: '1.15rem', 
+              marginBottom: '20px',
+              fontWeight: '800'
+            }}>
+              📢 서비스 일시 중단 안내
+            </h3>
+            
+            <p style={{ color: '#e0e0e0', fontSize: '0.93rem', lineHeight: '1.85', margin: '0 0 20px 0' }}>
+              안녕하세요. 툴 오픈 이후 지난밤 사이, 정말 많은 분들의 연락을 받았습니다. 
+              예상을 뛰어넘는 관심에 감사한 마음이 크지만, 동시에 개인적인 연락처와 이메일이 노출되어 
+              감당하기 어려운 연락을 받기도 했습니다.
+            </p>
+
+            <p style={{ color: '#ef4444', fontSize: '0.93rem', lineHeight: '1.85', margin: '0 0 20px 0', fontWeight: '600' }}>
+              무엇보다 트래픽을 확인하던 중, 비정상적인 접근과 서비스 구조를 무단으로 복제하려는 시도들이 
+              다수 발견되었습니다.
+            </p>
+
+            <p style={{ color: '#e0e0e0', fontSize: '0.93rem', lineHeight: '1.85', margin: '0 0 20px 0' }}>
+              이 과정을 겪으며 저는 한 가지를 분명하게 깨달았습니다.
+            </p>
+
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              borderRadius: '10px',
+              padding: '16px 20px',
+              marginBottom: '20px',
+              textAlign: 'center'
+            }}>
+              <p style={{ color: '#ffffff', fontSize: '1rem', fontWeight: '700', margin: 0 }}>
+                "콘텐츠를 만드는 일과, 소프트웨어 도구를 운영하는 일은 완전히 다르다"
+              </p>
+            </div>
+
+            <p style={{ color: '#e0e0e0', fontSize: '0.93rem', lineHeight: '1.85', margin: '0 0 20px 0' }}>
+              강의와 달리, AI 도구는 <strong style={{ color: '#f59e0b' }}>24시간 서버가 돌아가야</strong> 하고, 
+              소중한 데이터를 지키기 위한 <strong style={{ color: '#f59e0b' }}>보안 시스템과 전문 개발진의 지속적인 관리</strong>가 
+              필수적입니다. 현재의 개방된 형태로는 사용자분들의 안전과 서비스의 퀄리티를 
+              제가 생각하는 기준만큼 유지하기 어렵다고 판단했습니다.
+            </p>
+
+            <p style={{ color: '#ffffff', fontSize: '0.95rem', lineHeight: '1.85', margin: '0 0 20px 0', fontWeight: '600' }}>
+              이에 부득이하게 서비스를 잠시 멈추고, 재정비하는 시간을 가지려 합니다.
+            </p>
+
+            {/* 재정비 내용 */}
+            <div style={{
+              background: 'rgba(16, 185, 129, 0.1)',
+              border: '1px solid rgba(16, 185, 129, 0.3)',
+              borderRadius: '12px',
+              padding: '20px',
+              marginBottom: '20px'
+            }}>
+              <div style={{ marginBottom: '12px' }}>
+                <span style={{ color: '#10b981', fontWeight: '700' }}>🔒 보안 강화</span>
+                <p style={{ color: '#94a3b8', fontSize: '0.88rem', margin: '6px 0 0 0', lineHeight: '1.6' }}>
+                  외부의 무단 접근을 차단하고, 시스템을 안전하게 보호할 안전장치를 마련하겠습니다.
+                </p>
+              </div>
+              <div>
+                <span style={{ color: '#10b981', fontWeight: '700' }}>⚙️ 운영 방식 개편</span>
+                <p style={{ color: '#94a3b8', fontSize: '0.88rem', margin: '6px 0 0 0', lineHeight: '1.6' }}>
+                  막대한 서버 비용과 개발 유지비를 감당하며, 오랫동안 여러분 곁에서 서비스를 
+                  지속할 수 있는 합리적인 방법을 찾아 돌아오겠습니다.
+                </p>
+              </div>
+            </div>
+
+            {/* 목표 */}
+            <div style={{
+              background: 'rgba(212, 175, 55, 0.12)',
+              border: '1px solid rgba(212, 175, 55, 0.35)',
+              borderRadius: '12px',
+              padding: '20px 24px',
+              marginBottom: '20px'
+            }}>
+              <p style={{ 
+                color: '#94a3b8', 
+                fontSize: '0.9rem', 
+                margin: '0 0 12px 0',
+                textAlign: 'center'
+              }}>
+                저희의 목표는 명확합니다.
+              </p>
+              <p style={{ 
+                color: '#ffd700', 
+                fontSize: '0.95rem', 
+                fontWeight: '600',
+                margin: 0,
+                lineHeight: '1.8',
+                textAlign: 'center'
+              }}>
+                "인공지능으로 너무나도 빠르게 변하는 세상에<br />
+                <span style={{ color: '#ffffff' }}>양질의 인공지능 교육</span>을 주는 것.<br /><br />
+                그리고 가장 사람들이 어렵고 힘들어하는<br />
+                <span style={{ color: '#10b981' }}>AI 수익화와 콘텐츠 비즈니스</span> 분야에서<br />
+                <span style={{ fontSize: '1.05rem', color: '#ffffff' }}>세계 최고가 되는 것."</span>
+              </p>
+            </div>
+
+            <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: '1.8', margin: '0 0 16px 0', textAlign: 'center' }}>
+              그 꿈을 <strong style={{ color: '#10b981' }}>'계속'</strong> 지켜나가기 위해 잠시 숨을 고르는 것이니<br />
+              너른 양해 부탁드립니다.
+            </p>
+
+            <p style={{ color: '#d4af37', fontSize: '1rem', fontWeight: '700', margin: 0, textAlign: 'center' }}>
+              곧 더 나은 모습으로 돌아오겠습니다. 🙏
+            </p>
+          </div>
+          
+          {/* 비밀번호 입력 */}
+          <div style={{ marginBottom: '20px' }}>
+            <input
+              type="password"
+              value={passwordInput}
+              onChange={(e) => setPasswordInput(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="비밀번호 입력"
+              style={{
+                width: '100%',
+                padding: '16px 20px',
+                borderRadius: '12px',
+                border: passwordError ? '2px solid #ef4444' : '2px solid rgba(212, 175, 55, 0.3)',
+                background: '#0a0a1a',
+                color: 'white',
+                fontSize: '1.1rem',
+                textAlign: 'center',
+                outline: 'none',
+                transition: 'border-color 0.2s'
+              }}
+            />
+            {passwordError && (
+              <p style={{ color: '#ef4444', fontSize: '0.9rem', marginTop: '10px' }}>
+                비밀번호가 올바르지 않습니다.
+              </p>
+            )}
+          </div>
+          
+          <button
+            onClick={handlePasswordSubmit}
+            style={{
+              width: '100%',
+              padding: '16px',
+              borderRadius: '12px',
+              border: 'none',
+              background: 'linear-gradient(135deg, #d4af37, #f4d03f)',
+              color: '#0a0a1a',
+              fontSize: '1.1rem',
+              fontWeight: '800',
+              cursor: 'pointer',
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              boxShadow: '0 4px 20px rgba(212, 175, 55, 0.3)'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 6px 30px rgba(212, 175, 55, 0.4)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 20px rgba(212, 175, 55, 0.3)';
+            }}
+          >
+            🔓 접근하기
+          </button>
+          
+          {/* 문의 */}
+          <p style={{ 
+            color: '#64748b', 
+            fontSize: '0.85rem',
+            marginTop: '30px'
+          }}>
+            접근 권한 문의: <a href="mailto:jay@connexionai.kr" style={{ color: '#d4af37' }}>jay@connexionai.kr</a>
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const agents: Agent[] = [
     {
