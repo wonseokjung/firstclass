@@ -125,121 +125,64 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
           
           {/* 안내 메시지 */}
           <div style={{
-            background: 'rgba(212, 175, 55, 0.08)',
+            background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
             borderRadius: '16px',
-            padding: '30px',
+            padding: '28px',
             marginBottom: '30px',
-            borderLeft: '4px solid #d4af37',
+            border: '1px solid rgba(212, 175, 55, 0.4)',
             textAlign: 'left'
           }}>
             <h3 style={{ 
-              color: '#d4af37', 
-              fontSize: '1.15rem', 
+              color: '#ffd700', 
+              fontSize: '1.1rem', 
               marginBottom: '20px',
-              fontWeight: '800'
+              fontWeight: '800',
+              borderBottom: '1px solid rgba(212, 175, 55, 0.3)',
+              paddingBottom: '12px'
             }}>
               📢 서비스 일시 중단 안내
             </h3>
             
-            <p style={{ color: '#e0e0e0', fontSize: '0.93rem', lineHeight: '1.85', margin: '0 0 20px 0' }}>
-              안녕하세요. 툴 오픈 이후 지난밤 사이, 정말 많은 분들의 연락을 받았습니다. 
-              예상을 뛰어넘는 관심에 감사한 마음이 크지만, 동시에 개인적인 연락처와 이메일이 노출되어 
-              감당하기 어려운 연락을 받기도 했습니다.
+            <p style={{ color: '#ffffff', fontSize: '0.93rem', lineHeight: '1.85', margin: '0 0 18px 0' }}>
+              이 시장의 문제를 해결하려면 <strong style={{ color: '#ffd700' }}>'제대로 된 교육'</strong>과 
+              <strong style={{ color: '#ffd700' }}>'강력한 도구'</strong>가 반드시 함께 가야 한다고 믿었습니다. 
+              그래서 며칠 밤을 새워 만든 AI 자동화 에이전트 툴을 오픈했고, 
+              감사하게도 뜨거운 관심을 받았습니다.
             </p>
 
-            <p style={{ color: '#ef4444', fontSize: '0.93rem', lineHeight: '1.85', margin: '0 0 20px 0', fontWeight: '600' }}>
-              무엇보다 트래픽을 확인하던 중, 비정상적인 접근과 서비스 구조를 무단으로 복제하려는 시도들이 
-              다수 발견되었습니다.
+            <p style={{ color: '#ff6b6b', fontSize: '0.93rem', lineHeight: '1.85', margin: '0 0 18px 0', fontWeight: '500' }}>
+              하지만 예상을 뛰어넘는 트래픽 폭주와 보안 이슈가 발생했고, 
+              비정상적인 접근과 무단 복제 시도들이 다수 발견되었습니다.
             </p>
 
-            <p style={{ color: '#e0e0e0', fontSize: '0.93rem', lineHeight: '1.85', margin: '0 0 20px 0' }}>
-              이 과정을 겪으며 저는 한 가지를 분명하게 깨달았습니다.
+            <p style={{ color: '#ffffff', fontSize: '0.93rem', lineHeight: '1.85', margin: '0 0 18px 0' }}>
+              여러분과 지치지 않고 <strong style={{ color: '#ffd700' }}>'롱텀(Long-term)'</strong>으로 
+              함께 가기 위해, 잠시 재정비할 시간이 필요하다는 판단을 내렸습니다.
             </p>
 
+            {/* 요새화 작업 */}
             <div style={{
-              background: 'rgba(255, 255, 255, 0.05)',
+              background: 'rgba(255, 215, 0, 0.08)',
+              border: '1px solid rgba(255, 215, 0, 0.3)',
               borderRadius: '10px',
-              padding: '16px 20px',
-              marginBottom: '20px',
-              textAlign: 'center'
+              padding: '16px',
+              marginBottom: '18px'
             }}>
-              <p style={{ color: '#ffffff', fontSize: '1rem', fontWeight: '700', margin: 0 }}>
-                "콘텐츠를 만드는 일과, 소프트웨어 도구를 운영하는 일은 완전히 다르다"
+              <p style={{ color: '#ffd700', fontSize: '0.92rem', margin: 0, fontWeight: '700' }}>
+                🔒 현재 '요새화' 작업 진행 중
+              </p>
+              <p style={{ color: '#e0e0e0', fontSize: '0.88rem', margin: '10px 0 0 0', lineHeight: '1.7' }}>
+                외부 공격으로부터 흔들리지 않는 환경을 만들고 있습니다.<br />
+                도구 개발과 콘텐츠 연구는 멈추지 않고 계속됩니다! 🔧
               </p>
             </div>
 
-            <p style={{ color: '#e0e0e0', fontSize: '0.93rem', lineHeight: '1.85', margin: '0 0 20px 0' }}>
-              강의와 달리, AI 도구는 <strong style={{ color: '#f59e0b' }}>24시간 서버가 돌아가야</strong> 하고, 
-              소중한 데이터를 지키기 위한 <strong style={{ color: '#f59e0b' }}>보안 시스템과 전문 개발진의 지속적인 관리</strong>가 
-              필수적입니다. 현재의 개방된 형태로는 사용자분들의 안전과 서비스의 퀄리티를 
-              제가 생각하는 기준만큼 유지하기 어렵다고 판단했습니다.
+            <p style={{ color: '#e0e0e0', fontSize: '0.9rem', lineHeight: '1.75', margin: '0 0 14px 0', textAlign: 'center' }}>
+              AI 자동화 에이전트를 어떤 방식으로 다시 오픈하는 게 가장 합리적이고 안전할지,<br />
+              여러분과 소통하며 함께 방법을 찾아가겠습니다.
             </p>
 
-            <p style={{ color: '#ffffff', fontSize: '0.95rem', lineHeight: '1.85', margin: '0 0 20px 0', fontWeight: '600' }}>
-              이에 부득이하게 서비스를 잠시 멈추고, 재정비하는 시간을 가지려 합니다.
-            </p>
-
-            {/* 재정비 내용 */}
-            <div style={{
-              background: 'rgba(16, 185, 129, 0.1)',
-              border: '1px solid rgba(16, 185, 129, 0.3)',
-              borderRadius: '12px',
-              padding: '20px',
-              marginBottom: '20px'
-            }}>
-              <div style={{ marginBottom: '12px' }}>
-                <span style={{ color: '#10b981', fontWeight: '700' }}>🔒 보안 강화</span>
-                <p style={{ color: '#94a3b8', fontSize: '0.88rem', margin: '6px 0 0 0', lineHeight: '1.6' }}>
-                  외부의 무단 접근을 차단하고, 시스템을 안전하게 보호할 안전장치를 마련하겠습니다.
-                </p>
-              </div>
-              <div>
-                <span style={{ color: '#10b981', fontWeight: '700' }}>⚙️ 운영 방식 개편</span>
-                <p style={{ color: '#94a3b8', fontSize: '0.88rem', margin: '6px 0 0 0', lineHeight: '1.6' }}>
-                  막대한 서버 비용과 개발 유지비를 감당하며, 오랫동안 여러분 곁에서 서비스를 
-                  지속할 수 있는 합리적인 방법을 찾아 돌아오겠습니다.
-                </p>
-              </div>
-            </div>
-
-            {/* 목표 */}
-            <div style={{
-              background: 'rgba(212, 175, 55, 0.12)',
-              border: '1px solid rgba(212, 175, 55, 0.35)',
-              borderRadius: '12px',
-              padding: '20px 24px',
-              marginBottom: '20px'
-            }}>
-              <p style={{ 
-                color: '#94a3b8', 
-                fontSize: '0.9rem', 
-                margin: '0 0 12px 0',
-                textAlign: 'center'
-              }}>
-                저희의 목표는 명확합니다.
-              </p>
-              <p style={{ 
-                color: '#ffd700', 
-                fontSize: '0.95rem', 
-                fontWeight: '600',
-                margin: 0,
-                lineHeight: '1.8',
-                textAlign: 'center'
-              }}>
-                "인공지능으로 너무나도 빠르게 변하는 세상에<br />
-                <span style={{ color: '#ffffff' }}>양질의 인공지능 교육</span>을 주는 것.<br /><br />
-                그리고 가장 사람들이 어렵고 힘들어하는<br />
-                <span style={{ color: '#10b981' }}>AI 수익화와 콘텐츠 비즈니스</span> 분야에서<br />
-                <span style={{ fontSize: '1.05rem', color: '#ffffff' }}>세계 최고가 되는 것."</span>
-              </p>
-            </div>
-
-            <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: '1.8', margin: '0 0 16px 0', textAlign: 'center' }}>
-              그 꿈을 <strong style={{ color: '#10b981' }}>'계속'</strong> 지켜나가기 위해 잠시 숨을 고르는 것이니<br />
-              너른 양해 부탁드립니다.
-            </p>
-
-            <p style={{ color: '#d4af37', fontSize: '1rem', fontWeight: '700', margin: 0, textAlign: 'center' }}>
+            <p style={{ color: '#ffd700', fontSize: '1.05rem', fontWeight: '700', margin: 0, textAlign: 'center' }}>
               곧 더 나은 모습으로 돌아오겠습니다. 🙏
             </p>
           </div>
