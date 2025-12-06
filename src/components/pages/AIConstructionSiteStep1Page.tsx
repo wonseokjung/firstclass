@@ -17,14 +17,20 @@ interface ChannelIdea {
 }
 
 const MAX_USAGE_COUNT = 3;
+const AUTH_VERSION = 'v2_20251206';
 
 const AIConstructionSiteStep1Page: React.FC = () => {
   const navigate = useNavigate();
   
-  // 비밀번호 인증 체크
+  // 비밀번호 인증 체크 (버전 포함)
   React.useEffect(() => {
     const authStatus = sessionStorage.getItem('ai_construction_auth');
-    if (authStatus !== 'authenticated') {
+    const authVersion = sessionStorage.getItem('ai_construction_auth_version');
+    
+    if (authStatus !== 'authenticated' || authVersion !== AUTH_VERSION) {
+      // 이전 버전 인증 삭제
+      sessionStorage.removeItem('ai_construction_auth');
+      sessionStorage.removeItem('ai_construction_auth_version');
       alert('🔒 AI 공사장 접근 권한이 필요합니다.\n\n먼저 AI 공사장 메인 페이지에서 인증해주세요.');
       navigate('/ai-construction-site');
     }

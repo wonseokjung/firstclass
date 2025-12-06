@@ -48,14 +48,15 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
   // 캐시 무효화 + 세션 스토리지에서 인증 상태 확인
   React.useEffect(() => {
     // 버전 체크 - 이전 버전이면 인증 초기화
-    const savedVersion = sessionStorage.getItem('ai_construction_version');
+    const savedVersion = sessionStorage.getItem('ai_construction_auth_version');
     if (savedVersion !== AUTH_VERSION) {
       sessionStorage.removeItem('ai_construction_auth');
-      sessionStorage.setItem('ai_construction_version', AUTH_VERSION);
+      sessionStorage.removeItem('ai_construction_auth_version');
     }
     
     const authStatus = sessionStorage.getItem('ai_construction_auth');
-    if (authStatus === 'authenticated') {
+    const authVersion = sessionStorage.getItem('ai_construction_auth_version');
+    if (authStatus === 'authenticated' && authVersion === AUTH_VERSION) {
       setIsAuthenticated(true);
     }
   }, []);
@@ -64,6 +65,7 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
     if (passwordInput === SITE_PASSWORD) {
       setIsAuthenticated(true);
       sessionStorage.setItem('ai_construction_auth', 'authenticated');
+      sessionStorage.setItem('ai_construction_auth_version', AUTH_VERSION);
       setPasswordError(false);
     } else {
       setPasswordError(true);
