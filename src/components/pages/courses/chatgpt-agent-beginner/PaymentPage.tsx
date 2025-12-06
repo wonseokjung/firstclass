@@ -83,13 +83,14 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
     try {
       const { loadTossPayments } = await import('@tosspayments/tosspayments-sdk');
       // 도메인 기반으로 라이브/테스트 환경 감지
-      const isProduction = window.location.hostname === 'www.aicitybuilders.com' || 
-                          window.location.hostname === 'aicitybuilders.com';
-      const clientKey = isProduction 
-        ? 'live_ck_DnyRpQWGrNwa9QGY664O8Kwv1M9E'  // 🔴 라이브 키
-        : 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'; // 🟡 테스트 키
+      // localhost만 테스트 모드, 그 외 모든 도메인은 라이브 모드
+      const isTestMode = window.location.hostname === 'localhost' || 
+                         window.location.hostname === '127.0.0.1';
+      const clientKey = isTestMode 
+        ? 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq' // 🟡 테스트 키
+        : 'live_ck_DnyRpQWGrNwa9QGY664O8Kwv1M9E';  // 🔴 라이브 키
       
-      console.log(`🔧 결제 환경: ${isProduction ? '🔴 LIVE' : '🟡 TEST'} (도메인: ${window.location.hostname})`);
+      console.log(`🔧 결제 환경: ${isTestMode ? '🟡 TEST' : '🔴 LIVE'} (도메인: ${window.location.hostname})`);
       console.log(`🔑 사용 키: ${clientKey.substring(0, 20)}...`);
       
       const tossPayments = await loadTossPayments(clientKey);
