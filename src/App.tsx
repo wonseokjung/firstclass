@@ -23,6 +23,7 @@ const AIConstructionSiteStep1Page = React.lazy(() => import('./components/pages/
 const AIConstructionSiteStep2Page = React.lazy(() => import('./components/pages/AIConstructionSiteStep2Page'));
 const AIConstructionSiteStep3Page = React.lazy(() => import('./components/pages/AIConstructionSiteStep3Page'));
 const AIWorkflowEditorPage = React.lazy(() => import('./components/pages/AIWorkflowEditorPage'));
+const RoadmapPage = React.lazy(() => import('./components/pages/RoadmapPage'));
 const ChatGPTPrompts40Page = React.lazy(() => import('./components/pages/ChatGPTPrompts40Page'));
 const AIMoneyMasterPromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyMasterPromptsPage'));
 const AIMoneyImagePromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyImagePromptsPage'));
@@ -618,6 +619,14 @@ const ChatGPTCoursePageWrapper = () => {
     );
   };
 
+  const RoadmapPageWrapper = () => {
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <RoadmapPage />
+      </Suspense>
+    );
+  };
+
   const AIWorkflowEditorPageWrapper = () => {
     return (
       <Suspense fallback={<LoadingSpinner />}>
@@ -672,6 +681,7 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/ceo" element={<CEOPageWrapper />} />
               <Route path="/contact" element={<ContactPageWrapper />} />
               <Route path="/clubs" element={<ClubsPageWrapper />} />
+              <Route path="/roadmap" element={<RoadmapPageWrapper />} />
               <Route path="/ai-construction-site" element={<AIConstructionSitePageWrapper />} />
               <Route path="/ai-construction-site/step1" element={<AIConstructionSiteStep1PageWrapper />} />
               <Route path="/ai-construction-site/step2" element={<AIConstructionSiteStep2PageWrapper />} />

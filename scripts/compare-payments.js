@@ -3,7 +3,7 @@ const fs = require('fs');
 
 // Azure SAS URL (기본 URL)
 const AZURE_BASE_URL = 'https://clathonstorage.table.core.windows.net/users';
-const SAS_TOKEN = 'sp=raud&st=2025-08-13T02:04:25Z&se=2030-10-13T10:19:00Z&spr=https&sv=2024-11-04&sig=ulo8yMTJqBhKB%2FeeIKycUxl8knzpbDkClU6NTaPrHYw%3D&tn=users';
+const SAS_TOKEN = 'sp=r&st=2025-12-06T15:31:19Z&se=2026-12-24T23:46:00Z&spr=https&sv=2024-11-04&sig=816ZVlfpFraKPWccsltwMCkDhqgJ6fucLXTGWGw1qOM%3D&tn=users';
 
 async function fetchAllAzureUsers() {
   let allUsers = [];
@@ -52,9 +52,9 @@ async function fetchAllAzureUsers() {
 async function main() {
   console.log("📊 토스 vs Azure 결제 대사 시작...\n");
   
-  // 토스 결제 데이터 로드 (최근 4일 필터링: 12월 1일 ~ 12월 5일)
-  const filterStart = new Date('2025-12-01T00:00:00+09:00');
-  const filterEnd = new Date('2025-12-05T23:59:59+09:00');
+  // 토스 결제 데이터 로드 (최근 4일 필터링: 12월 4일 ~ 12월 7일)
+  const filterStart = new Date('2025-12-04T00:00:00+09:00');
+  const filterEnd = new Date('2025-12-07T23:59:59+09:00');
   
   const tossData = JSON.parse(fs.readFileSync('/tmp/toss_transactions.json', 'utf8'));
   const allDoneTransactions = tossData.filter(t => t.status === 'DONE');
@@ -63,7 +63,7 @@ async function main() {
     return txDate >= filterStart && txDate <= filterEnd;
   });
   
-  console.log(`📅 조회 기간: 2025-12-01 ~ 2025-12-05 (최근 4일)`);
+  console.log(`📅 조회 기간: 2025-12-04 ~ 2025-12-07 (최근 4일)`);
   console.log(`✅ 토스 결제 완료(DONE): ${doneTransactions.length}건 (전체: ${allDoneTransactions.length}건)`);
   
   // Azure 사용자 조회 (전체 페이지)
@@ -116,9 +116,9 @@ async function main() {
   
   // Azure에 있지만 토스에 없는 것 (조회 기간 내)
   const tossOrderIds = new Set(doneTransactions.map(t => t.orderId));
-  // 최근 4일 (12월 1일 ~ 12월 5일)
-  const startDate = new Date('2025-12-01');
-  const endDate = new Date('2025-12-05');
+  // 최근 4일 (12월 4일 ~ 12월 7일)
+  const startDate = new Date('2025-12-04');
+  const endDate = new Date('2025-12-07');
   endDate.setHours(23, 59, 59);
   
   let azureOnly = [];

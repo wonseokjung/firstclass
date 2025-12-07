@@ -980,17 +980,17 @@ const AdminEnrollmentFixPage: React.FC = () => {
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                               {hasCourse && (
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                  <span style={{
-                                    color: '#10b981',
-                                    background: '#f0fdf4',
-                                    padding: '4px 12px',
-                                    borderRadius: '12px',
-                                    fontSize: '0.85rem',
-                                    fontWeight: '600',
-                                    display: 'inline-block'
-                                  }}>
-                                    ✓ AI Agent 비기너
-                                  </span>
+                                <span style={{
+                                  color: '#10b981',
+                                  background: '#f0fdf4',
+                                  padding: '4px 12px',
+                                  borderRadius: '12px',
+                                  fontSize: '0.85rem',
+                                  fontWeight: '600',
+                                  display: 'inline-block'
+                                }}>
+                                  ✓ AI Agent 비기너
+                                </span>
                                   <button
                                     onClick={async () => {
                                       if (!window.confirm(`정말로 ${user.name || user.email}의 에이전트 강의를 삭제하시겠습니까?\n\n⚠️ 이 작업은 되돌릴 수 없습니다!`)) return;
@@ -1018,17 +1018,17 @@ const AdminEnrollmentFixPage: React.FC = () => {
                               )}
                               {hasAIBuildingCourse && (
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                  <span style={{
-                                    color: '#3b82f6',
-                                    background: '#eff6ff',
-                                    padding: '4px 12px',
-                                    borderRadius: '12px',
-                                    fontSize: '0.85rem',
-                                    fontWeight: '600',
-                                    display: 'inline-block'
-                                  }}>
-                                    ✓ AI 건물주 되기
-                                  </span>
+                                <span style={{
+                                  color: '#3b82f6',
+                                  background: '#eff6ff',
+                                  padding: '4px 12px',
+                                  borderRadius: '12px',
+                                  fontSize: '0.85rem',
+                                  fontWeight: '600',
+                                  display: 'inline-block'
+                                }}>
+                                  ✓ AI 건물주 되기
+                                </span>
                                   <button
                                     onClick={async () => {
                                       if (!window.confirm(`정말로 ${user.name || user.email}의 건물주 강의를 삭제하시겠습니까?\n\n⚠️ 이 작업은 되돌릴 수 없습니다!`)) return;

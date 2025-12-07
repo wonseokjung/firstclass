@@ -61,18 +61,19 @@ const freeMoneyClasses: Course[] = [
   { id: 9, instructor: 'AI VIDEO GENERATION', title: 'AI 수익화 비디오 생성 프롬프트 10선', subtitle: '숏폼부터 브랜드 광고까지', description: 'Google Veo, Runway, Pika로 만드는 프로급 수익화 영상', image: `${process.env.PUBLIC_URL}/images/ai_video_money.jpg`, isNew: true, category: 'AI 수익화', path: '/ai-money-video-prompts', isDocumentary: false }
 ];
 
-// 프리미엄 강의 - 3단계 Step 시스템
+// 프리미엄 강의 - 4단계 Step 시스템
 const premiumClasses: Course[] = [
-  // Step 1: AI 건물주 되기 기초 - 얼리버드 45,000원 (2026년부터 95,000원)
-  { id: 999, instructor: '정원석 (AI 멘토 제이)', title: 'Step 1: AI 건물주 되기 기초', subtitle: '🎥 AI로 유튜브 채널 만들고 첫 월수익 100만원!', description: '🎥 인공지능으로 유튜브 채널을 만들고 첫 월수익 100만원을 받을 때까지! AI 콘텐츠 자동 생성으로 나만의 수익형 채널을 완성하세요', image: `${process.env.PUBLIC_URL}/images/aibuilidng.png`, isNew: true, category: 'Premium', path: '/ai-building-course', isPremium: true, launchDate: '🔥 얼리버드 진행 중', price: 45000, originalPrice: 95000, isComingSoon: false },
+  // Step 1: AI 건물주 되기 - 얼리버드 45,000원 (2026년부터 95,000원)
+  { id: 999, instructor: '정원석 (AI 멘토 제이)', title: 'Step 1: AI 건물주 되기', subtitle: '🎥 AI로 콘텐츠 만들기 & 비즈니스 마인드 갖추기', description: '🎥 인공지능으로 유튜브 채널을 만들고 첫 월수익 100만원을 받을 때까지! AI 콘텐츠 자동 생성으로 나만의 수익형 채널을 완성하세요', image: `${process.env.PUBLIC_URL}/images/메인화면/1.jpeg`, isNew: true, category: 'Premium', path: '/ai-building-course', isPremium: true, launchDate: '🔥 얼리버드 진행 중', price: 45000, originalPrice: 95000, isComingSoon: false },
   
-  // Step 2: Google OPAL 자동화 에이전트 시스템화 (현재 판매 중)
-  { id: 1002, instructor: '정원석 (AI 멘토 제이)', title: 'Step 2: Google OPAL 자동화 에이전트', subtitle: '🤖 시스템화로 더 효율적인 수익화', description: '💎 Google OPAL로 콘텐츠 자동 생성 에이전트를 만들고 시스템화! 더 효율적인 수익 구조 완성', image: `${process.env.PUBLIC_URL}/images/ChatGPT에이전트.png`, isNew: true, category: 'Premium', path: '/chatgpt-agent-beginner', isPremium: true, launchDate: '지금 수강 가능', price: 95000, originalPrice: 95000, isComingSoon: false },
+  // Step 2: AI 에이전트 비기너 - Google OPAL로 여러 AI를 하나의 회사처럼
+  { id: 1002, instructor: '정원석 (AI 멘토 제이)', title: 'Step 2: AI 에이전트 비기너', subtitle: '🤖 여러 AI를 하나의 회사처럼', description: '💎 Google OPAL로 콘텐츠 자동 생성 에이전트를 만들고 시스템화! 더 효율적인 수익 구조 완성', image: `${process.env.PUBLIC_URL}/images/메인화면/2.jpeg`, isNew: true, category: 'Premium', path: '/chatgpt-agent-beginner', isPremium: true, launchDate: '지금 수강 가능', price: 95000, originalPrice: 95000, isComingSoon: false },
   
-  // Step 3: n8n 완전 자율화 - 웹사이트 개발 & 사업 확장 (오픈 예정)
-  { id: 1003, instructor: '정원석 (AI 멘토 제이)', title: 'Step 3: n8n 완전 자율화 - 중급', subtitle: '🚀 antigravity로 웹사이트 개발 & 사업 확장', description: '🌐 n8n과 antigravity를 활용해 웹사이트를 개발하고 사업을 확장하는 단계! AI 건물주의 완성', image: `${process.env.PUBLIC_URL}/images/n8n-intermediate.png`, isNew: true, category: 'Premium', path: '/n8n-automation-intermediate', isPremium: true, launchDate: '오픈 예정', price: 150000, originalPrice: 150000, isComingSoon: true },
+  // Step 3: connexionai - AI 수익화 전문 자동화 에이전트 (강의 + 도구 + 라이브)
+  { id: 1003, instructor: '정원석 (AI 멘토 제이)', title: 'Step 3: connexionai', subtitle: '⚡ AI 수익화 전문 자동화 에이전트', description: '🚀 강의 + 도구 + 라이브! AI 수익화에 특화된 자동화 에이전트로 프로덕트화 완성', image: `${process.env.PUBLIC_URL}/images/메인화면/3.jpeg`, isNew: true, category: 'Premium', path: '/connexionai', isPremium: true, launchDate: '오픈 예정', price: 79000, originalPrice: 79000, isComingSoon: true },
   
-  { id: 1004, instructor: '정원석 (AI 멘토 제이)', title: 'Step 3: n8n 완전 자율화 - 고급', subtitle: '💎 멀티 채널 전략 & 완전 자동화 마스터', description: '🏆 n8n으로 멀티 채널 운영부터 완전 자동화까지! AI 자동화의 최고봉을 경험하세요', image: `${process.env.PUBLIC_URL}/images/n8n-advanced.png`, isNew: true, category: 'Premium', path: '/n8n-automation-advanced', isPremium: true, launchDate: '오픈 예정', price: 200000, originalPrice: 200000, isComingSoon: true }
+  // Step 4: 1인 콘텐츠 기업 만들기 - 바이브코딩으로 서비스 개발
+  { id: 1004, instructor: '정원석 (AI 멘토 제이)', title: 'Step 4: 1인 콘텐츠 기업 만들기', subtitle: '🚀 바이브코딩으로 서비스 개발', description: '🏆 바이브코딩을 활용해 나만의 서비스를 개발하고 1인 콘텐츠 기업을 완성하는 단계!', image: `${process.env.PUBLIC_URL}/images/메인화면/4.jpeg`, isNew: true, category: 'Premium', path: '/content-business', isPremium: true, launchDate: '오픈 예정', price: 150000, originalPrice: 150000, isComingSoon: true }
 ];
 
 // ⭐️ onCourseSelect 속성 제거됨
@@ -217,14 +218,20 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
           <OptimizedImage src={course.image} alt={course.title} className="instructor-image" loading="lazy" placeholder="true" />
           <div className="premium-badge">PREMIUM</div>
           {course.isComingSoon ? (
-            <div className="coming-soon-placeholder" style={{
-              position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-              backgroundColor: 'rgba(255, 255, 255, 0.9)', display: 'flex', flexDirection: 'column',
-              alignItems: 'center', justifyContent: 'center', color: '#1f2937', fontSize: '3rem', fontWeight: 'bold'
+            <div className="coming-soon-overlay" style={{
+              position: 'absolute', bottom: 0, left: 0, width: '100%',
+              background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)',
+              padding: '60px 20px 20px 20px', display: 'flex', flexDirection: 'column',
+              alignItems: 'center', justifyContent: 'flex-end'
             }}>
-              <div style={{ fontSize: '4rem', marginBottom: '10px' }}>?</div>
-              <div style={{ fontSize: '1rem', textAlign: 'center', padding: '0 20px' }}>🚀 Coming Soon</div>
-              <div style={{ fontSize: '0.8rem', marginTop: '5px', opacity: 0.8 }}>{course.launchDate}</div>
+              <div style={{ 
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)', 
+                padding: '8px 20px', borderRadius: '20px', 
+                fontSize: '0.9rem', fontWeight: 'bold', color: '#fff',
+                boxShadow: '0 4px 15px rgba(245, 158, 11, 0.4)',
+                marginBottom: '8px'
+              }}>🚀 Coming Soon</div>
+              <div style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.9)' }}>{course.launchDate}</div>
             </div>
           ) : (
             <div className="card-overlay">{actionButton}</div>
@@ -352,24 +359,6 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
             <h4>문의하기</h4>
             <div className="business-info">
               <p><strong>이메일:</strong> jay@connexionai.kr</p>
-              <p>
-                <strong>💬 실시간 문의:</strong>{' '}
-                <a
-                  href="https://open.kakao.com/o/s2NzW41h"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    color: '#FFE812',
-                    textDecoration: 'none',
-                    fontWeight: '600',
-                    transition: 'opacity 0.2s'
-                  }}
-                  onMouseOver={(e) => e.currentTarget.style.opacity = '0.8'}
-                  onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
-                >
-                  카카오톡 오픈채팅
-                </a>
-              </p>
               <p><strong>운영시간:</strong> 평일 09:00-18:00</p>
             </div>
             <div style={{ marginTop: '12px', fontSize: '0.85rem', color: '#aaa' }}>
