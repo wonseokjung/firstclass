@@ -359,10 +359,10 @@ const CommunityStepPage: React.FC = () => {
                   padding: '14px 28px', borderRadius: '12px', fontWeight: '600', cursor: 'pointer'
                 }}>로그인</button>
               )}
-              <button onClick={() => navigate(config.coursePath)} style={{
+              <button onClick={() => navigate('/')} style={{
                 background: theme.gold, color: theme.navy, border: 'none',
                 padding: '14px 28px', borderRadius: '12px', fontWeight: '700', cursor: 'pointer'
-              }}>강의 보러가기 →</button>
+              }}>프리미엄 강의 보러가기 →</button>
             </div>
           </div>
         </div>

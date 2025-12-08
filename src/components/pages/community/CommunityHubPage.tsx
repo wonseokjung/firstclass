@@ -161,22 +161,6 @@ const CommunityHubPage: React.FC = () => {
             수강생들과 함께 질문하고, 공유하고, 성장하세요!
           </p>
 
-          {/* 통계 */}
-          <div style={{
-            display: 'flex', justifyContent: 'center', gap: 'clamp(25px, 5vw, 50px)',
-            marginTop: '25px', flexWrap: 'wrap'
-          }}>
-            {[
-              { value: '2,100+', label: '수강생' },
-              { value: '4', label: '강의 커뮤니티' },
-              { value: '200+', label: '게시글' }
-            ].map((stat, i) => (
-              <div key={i} style={{ textAlign: 'center' }}>
-                <div style={{ color: theme.gold, fontSize: 'clamp(1.3rem, 3vw, 2rem)', fontWeight: '800' }}>{stat.value}</div>
-                <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem' }}>{stat.label}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
@@ -359,17 +343,18 @@ const CommunityHubPage: React.FC = () => {
           background: theme.navy, borderRadius: '20px'
         }}>
           <h3 style={{ color: theme.gold, fontSize: '1.25rem', marginBottom: '12px' }}>
-            🎯 아직 강의를 수강하지 않으셨나요?
+            🎯 4단계 프리미엄 강의로 AI 콘텐츠 비즈니스를 시작하세요!
           </h3>
-          <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '25px' }}>
-            AI City Builders에서 AI 수익화의 첫 걸음을 시작하세요!
+          <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '25px', lineHeight: '1.6' }}>
+            인공지능 자동화 에이전트로 콘텐츠 비즈니스 월세 받기<br/>
+            STEP 1 → STEP 2 → STEP 3 → STEP 4
           </p>
-          <button onClick={() => navigate('/ai-construction-site')} style={{
+          <button onClick={() => navigate('/')} style={{
             background: theme.gold, color: theme.navy, border: 'none', 
             padding: '14px 35px', borderRadius: '12px', fontWeight: '700', 
             fontSize: '1rem', cursor: 'pointer'
           }}>
-            🏗️ AI 건물 공사장 둘러보기
+            ✨ 프리미엄 강의 보러가기
           </button>
         </div>
       </div>

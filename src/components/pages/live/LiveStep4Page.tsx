@@ -85,7 +85,7 @@ const LiveStep4Page: React.FC = () => {
         </div>
         
         <button
-          onClick={() => navigate('/ai-construction-site')}
+          onClick={() => navigate('/')}
           style={{
             background: 'transparent',
             color: '#94a3b8',
@@ -95,7 +95,7 @@ const LiveStep4Page: React.FC = () => {
             cursor: 'pointer'
           }}
         >
-          ← AI 건물 공사장으로 돌아가기
+          ← 메인으로 돌아가기
         </button>
       </div>
     </div>
