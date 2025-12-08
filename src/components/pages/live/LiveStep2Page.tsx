@@ -220,7 +220,7 @@ const LiveStep2Page: React.FC = () => {
           ))}
         </div>
 
-        {/* 알림 설정 */}
+        {/* 안내 */}
         <div style={{
           marginTop: '40px',
           background: 'linear-gradient(135deg, #06b6d420, #0891b210)',
@@ -230,16 +230,16 @@ const LiveStep2Page: React.FC = () => {
           textAlign: 'center'
         }}>
           <h3 style={{ color: '#06b6d4', marginBottom: '15px', fontSize: '1.2rem' }}>
-            💡 라이브 알림 받기
+            💬 커뮤니티에서 소통하세요
           </h3>
           <p style={{ color: '#94a3b8', marginBottom: '20px' }}>
-            카카오톡 오픈채팅에서 라이브 시작 알림을 받으세요!
+            수강생 전용 커뮤니티에서 질문하고 정보를 나눠보세요!
           </p>
           <button
-            onClick={() => window.open('https://open.kakao.com/o/s2NzW41h', '_blank')}
+            onClick={() => window.location.href = '/community/step2'}
             style={{
-              background: '#FFE812',
-              color: '#1e293b',
+              background: '#06b6d4',
+              color: 'white',
               border: 'none',
               padding: '12px 25px',
               borderRadius: '10px',
@@ -247,7 +247,7 @@ const LiveStep2Page: React.FC = () => {
               cursor: 'pointer'
             }}
           >
-            💬 오픈채팅 참여하기
+            커뮤니티 바로가기 →
           </button>
         </div>
       </div>

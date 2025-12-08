@@ -147,18 +147,10 @@ const PasswordResetModal: React.FC<PasswordResetModalProps> = ({
                   <p style={{
                     fontSize: '0.9rem',
                     color: '#92400e',
-                    margin: '0 0 8px 0',
-                    fontWeight: '600'
-                  }}>
-                    📧 이메일: <strong>jay@connexionai.kr</strong>
-                  </p>
-                  <p style={{
-                    fontSize: '0.9rem',
-                    color: '#92400e',
                     margin: 0,
                     fontWeight: '600'
                   }}>
-                    💬 카카오톡: <strong>@커넥션에이아이</strong>
+                    📧 이메일: <strong>jay@connexionai.kr</strong>
                   </p>
                 </div>
               </div>

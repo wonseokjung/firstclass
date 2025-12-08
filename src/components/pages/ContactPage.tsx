@@ -169,22 +169,23 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
               color: '#1f2937',
               marginBottom: '10px'
             }}>
-              카카오톡
+              수강생 커뮤니티
             </h3>
-            <p style={{
+            <a href="/community" style={{
               fontSize: '1rem',
-              color: '#64748b',
-              margin: 0
+              color: '#10b981',
+              textDecoration: 'none',
+              fontWeight: '500'
             }}>
-              준비 중입니다
-            </p>
+              커뮤니티 바로가기
+            </a>
             <p style={{
               fontSize: '0.9rem',
               color: '#64748b',
               marginTop: '10px',
               margin: '10px 0 0 0'
             }}>
-              곧 오픈 예정
+              수강생 전용 게시판
             </p>
           </div>
 
