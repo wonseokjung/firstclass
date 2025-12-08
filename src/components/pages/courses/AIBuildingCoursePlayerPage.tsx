@@ -441,7 +441,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
               }}>
                 🎁 <strong style={{ color: '#fbbf24' }}>얼리버드 혜택</strong><br />
                 강의 오픈 시 이메일로 알림을 드립니다.<br />
-                그동안 <strong style={{ color: '#fbbf24' }}>AI 건물 공사장</strong>에서 채널 주제를 미리 선정해보세요!
+                그동안 <strong style={{ color: '#fbbf24' }}>AI 도시 공사장</strong>에서 채널 주제를 미리 선정해보세요!
               </p>
             </div>
           </div>

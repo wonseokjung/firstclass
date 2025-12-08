@@ -58,32 +58,6 @@ const LiveStep4Page: React.FC = () => {
           <span style={{ color: '#a855f7' }}>수익화</span>까지 모든 것을 다룹니다.
         </p>
         
-        <div style={{
-          background: 'linear-gradient(135deg, #a855f720, #9333ea10)',
-          border: '1px solid #a855f750',
-          borderRadius: '16px',
-          padding: '25px',
-          marginBottom: '30px'
-        }}>
-          <p style={{ color: '#94a3b8', marginBottom: '15px' }}>
-            📧 오픈 알림을 받고 싶으시다면
-          </p>
-          <button
-            onClick={() => window.open('https://open.kakao.com/o/s2NzW41h', '_blank')}
-            style={{
-              background: '#FFE812',
-              color: '#1e293b',
-              border: 'none',
-              padding: '12px 25px',
-              borderRadius: '10px',
-              fontWeight: '700',
-              cursor: 'pointer'
-            }}
-          >
-            💬 오픈채팅 참여하기
-          </button>
-        </div>
-        
         <button
           onClick={() => navigate('/')}
           style={{

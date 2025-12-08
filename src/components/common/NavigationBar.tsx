@@ -30,7 +30,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [hasEnrolledCourses, setHasEnrolledCourses] = useState(false);
 
   useEffect(() => {
     // 로그인 상태 확인
@@ -40,19 +39,11 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
         const parsedUserInfo = JSON.parse(storedUserInfo);
         setIsLoggedIn(true);
         setUserInfo(parsedUserInfo);
-        
-        // 강의 등록 여부 확인
-        const enrolledCourses = parsedUserInfo?.enrolledCourses;
-        if (enrolledCourses) {
-          const enrollments = enrolledCourses.enrollments || [];
-          setHasEnrolledCourses(enrollments.length > 0);
-        }
       } catch (error) {
         console.error('사용자 정보 파싱 오류:', error);
         sessionStorage.removeItem('aicitybuilders_user_session');
         setIsLoggedIn(false);
         setUserInfo(null);
-        setHasEnrolledCourses(false);
       }
     }
   }, []);
@@ -95,19 +86,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
     border: 'none',
     cursor: 'pointer',
     transition: 'all 0.2s'
-  };
-
-  const goldButtonStyle = {
-    background: brandTheme.gold,
-    color: brandTheme.navy,
-    padding: '8px 14px',
-    borderRadius: '8px',
-    fontWeight: '800' as const,
-    fontSize: '0.85rem',
-    border: 'none',
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-    boxShadow: '0 2px 10px rgba(251, 191, 36, 0.3)'
   };
 
   const renderAuthButtons = () => {
@@ -196,34 +174,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
             💬 커뮤니티
           </button>
           <button className="nav-link" onClick={onFAQClick || (() => navigate('/faq'))}>FAQ</button>
-          {hasEnrolledCourses && (
-            <button
-              className="nav-link"
-              onClick={(e) => {
-                e.preventDefault();
-                const confirmed = window.confirm(
-                  '⚠️ 안내사항\n\n' +
-                  'AI City Builders 강의에 관련된 내용만 문의 가능합니다.\n\n' +
-                  '기타 문의는 받지 않으니 양해 부탁드립니다.\n\n' +
-                  '카카오톡 오픈채팅으로 이동하시겠습니까?'
-                );
-                if (confirmed) {
-                  window.open('https://open.kakao.com/o/s2NzW41h', '_blank', 'noopener,noreferrer');
-                }
-              }}
-              style={goldButtonStyle}
-              onMouseOver={(e) => {
-                e.currentTarget.style.background = brandTheme.goldDark;
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.background = brandTheme.gold;
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
-            >
-              💬 문의
-            </button>
-          )}
           {renderAuthButtons()}
         </div>
 
@@ -284,38 +234,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
             >
               FAQ
             </button>
-
-            {hasEnrolledCourses && (
-              <button
-                className="mobile-nav-link"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const confirmed = window.confirm(
-                    '⚠️ 안내사항\n\n' +
-                    'AI City Builders 강의에 관련된 내용만 문의 가능합니다.\n\n' +
-                    '기타 문의는 받지 않으니 양해 부탁드립니다.\n\n' +
-                    '카카오톡 오픈채팅으로 이동하시겠습니까?'
-                  );
-                  if (confirmed) {
-                    window.open('https://open.kakao.com/o/s2NzW41h', '_blank', 'noopener,noreferrer');
-                  }
-                  setIsMobileMenuOpen(false);
-                }}
-                style={{ 
-                  background: brandTheme.gold,
-                  color: brandTheme.navy,
-                  fontWeight: '800',
-                  textDecoration: 'none',
-                  display: 'block',
-                  textAlign: 'left',
-                  boxShadow: '0 2px 10px rgba(251, 191, 36, 0.3)',
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
-              >
-                💬 실시간 문의
-              </button>
-            )}
             
             {isLoggedIn ? (
               <>

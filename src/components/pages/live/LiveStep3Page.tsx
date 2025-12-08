@@ -57,32 +57,6 @@ const LiveStep3Page: React.FC = () => {
           완벽한 수익화 시스템을 준비하고 있습니다.
         </p>
         
-        <div style={{
-          background: 'linear-gradient(135deg, #eab30820, #ca8a0410)',
-          border: '1px solid #eab30850',
-          borderRadius: '16px',
-          padding: '25px',
-          marginBottom: '30px'
-        }}>
-          <p style={{ color: '#94a3b8', marginBottom: '15px' }}>
-            📧 오픈 알림을 받고 싶으시다면
-          </p>
-          <button
-            onClick={() => window.open('https://open.kakao.com/o/s2NzW41h', '_blank')}
-            style={{
-              background: '#FFE812',
-              color: '#1e293b',
-              border: 'none',
-              padding: '12px 25px',
-              borderRadius: '10px',
-              fontWeight: '700',
-              cursor: 'pointer'
-            }}
-          >
-            💬 오픈채팅 참여하기
-          </button>
-        </div>
-        
         <button
           onClick={() => navigate('/')}
           style={{
