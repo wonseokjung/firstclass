@@ -278,12 +278,9 @@ const CommunityStepPage: React.FC = () => {
     try { return JSON.parse(post.likedBy).includes(userInfo.email); } catch { return false; }
   };
 
-  // 검색 필터링
+  // 검색 필터링 (내용만)
   const filteredPosts = searchQuery.trim()
-    ? posts.filter(p => 
-        p.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.authorName.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+    ? posts.filter(p => p.content.toLowerCase().includes(searchQuery.toLowerCase()))
     : posts;
 
   if (loading) {
