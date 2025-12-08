@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Award, Building, GraduationCap, Briefcase, Users, Globe, Trophy, Target, Youtube, Instagram, X, Sparkles, Bot, Zap, Building2, ArrowRight, CheckCircle } from 'lucide-react';
+import { Award, Building, GraduationCap, Briefcase, Users, Globe, Trophy, Youtube, Instagram, X, Sparkles, Bot, Zap, Building2, ArrowRight } from 'lucide-react';
 import NavigationBar from '../common/NavigationBar';
 
 interface CEOPageProps {
@@ -10,10 +10,6 @@ interface CEOPageProps {
 const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
   const [selectedTranscript, setSelectedTranscript] = useState<string | null>(null);
-
-  const openTranscriptModal = (imageSrc: string) => {
-    setSelectedTranscript(imageSrc);
-  };
 
   const closeTranscriptModal = () => {
     setSelectedTranscript(null);
