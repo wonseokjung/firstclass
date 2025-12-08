@@ -129,6 +129,7 @@ const CommunityStepPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [newPostContent, setNewPostContent] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   
   // 스레드 상세
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
@@ -277,6 +278,14 @@ const CommunityStepPage: React.FC = () => {
     try { return JSON.parse(post.likedBy).includes(userInfo.email); } catch { return false; }
   };
 
+  // 검색 필터링
+  const filteredPosts = searchQuery.trim()
+    ? posts.filter(p => 
+        p.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.authorName.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : posts;
+
   if (loading) {
     return (
       <div style={{ minHeight: '100vh', background: theme.white, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -316,6 +325,30 @@ const CommunityStepPage: React.FC = () => {
       </div>
 
       <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
+        
+        {/* 검색바 */}
+        <div style={{
+          background: theme.white, borderRadius: '25px', padding: '10px 16px',
+          marginBottom: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+          display: 'flex', alignItems: 'center', gap: '10px'
+        }}>
+          <span style={{ color: theme.gray }}>🔍</span>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="스레드 검색..."
+            style={{
+              flex: 1, border: 'none', outline: 'none',
+              fontSize: '0.95rem', color: theme.navy, background: 'transparent'
+            }}
+          />
+          {searchQuery && (
+            <button onClick={() => setSearchQuery('')} style={{
+              background: 'none', border: 'none', color: theme.gray, cursor: 'pointer', fontSize: '1rem'
+            }}>✕</button>
+          )}
+        </div>
         
         {/* 새 글 작성 (스레드 스타일) */}
         {isEnrolled && (
@@ -370,17 +403,19 @@ const CommunityStepPage: React.FC = () => {
         )}
 
         {/* 스레드 목록 */}
-        {posts.length === 0 ? (
+        {filteredPosts.length === 0 ? (
           <div style={{ background: theme.white, borderRadius: '16px', padding: '40px', textAlign: 'center' }}>
-            <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>💬</div>
-            <p style={{ color: theme.gray }}>아직 글이 없습니다. 첫 번째 글을 작성해보세요!</p>
+            <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>{searchQuery ? '🔍' : '💬'}</div>
+            <p style={{ color: theme.gray }}>
+              {searchQuery ? `"${searchQuery}" 검색 결과가 없습니다` : '아직 글이 없습니다. 첫 번째 글을 작성해보세요!'}
+            </p>
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-            {posts.map((post, index) => {
+            {filteredPosts.map((post, index) => {
               const liked = isLikedByMe(post);
               const isFirst = index === 0;
-              const isLast = index === posts.length - 1;
+              const isLast = index === filteredPosts.length - 1;
               
               return (
                 <div
