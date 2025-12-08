@@ -2,9 +2,11 @@
 
 // Azure Table Storage SAS URLs 설정
 const AZURE_SAS_URLS = {
-  users: 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-08-13T02:04:25Z&se=2030-10-13T10:19:00Z&spr=https&sv=2024-11-04&sig=ulo8yMTJqBhKB%2FeeIKycUxl8knzpbDkClU6NTaPrHYw%3D&tn=users',
+  users: 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-12-07T14:26:24Z&se=2029-10-15T22:41:00Z&sv=2024-11-04&sig=5KPeZHVwROPfNh1KBESKRJrnE12hTd2fTtESe3x5YSU%3D&tn=users',
   sessions: 'https://clathonstorage.table.core.windows.net/mentoringssessions?sp=raud&st=2025-08-13T02:04:25Z&se=2030-10-13T10:19:00Z&spr=https&sv=2024-11-04&sig=ulo8yMTJqBhKB%2FeeIKycUxl8knzpbDkClU6NTaPrHYw%3D&tn=mentoringssessions',
-  packages: 'https://clathonstorage.table.core.windows.net/studentpackages?sp=raud&st=2025-08-13T02:04:25Z&se=2030-10-13T10:19:00Z&spr=https&sv=2024-11-04&sig=ulo8yMTJqBhKB%2FeeIKycUxl8knzpbDkClU6NTaPrHYw%3D&tn=studentpackages'
+  packages: 'https://clathonstorage.table.core.windows.net/studentpackages?sp=raud&st=2025-08-13T02:04:25Z&se=2030-10-13T10:19:00Z&spr=https&sv=2024-11-04&sig=ulo8yMTJqBhKB%2FeeIKycUxl8knzpbDkClU6NTaPrHYw%3D&tn=studentpackages',
+  posts: 'https://clathonstorage.table.core.windows.net/posts?sp=raud&st=2025-12-07T14:30:16Z&se=2029-10-07T22:45:00Z&sv=2024-11-04&sig=WViAUr86LkEJ0Vk%2FKvdh6RhJNHoTW0DRhFCHZRybjvM%3D&tn=posts',
+  comments: 'https://clathonstorage.table.core.windows.net/comments?sp=raud&st=2025-12-07T14:28:11Z&se=2028-10-18T01:43:00Z&sv=2024-11-04&sig=IVvic6vtJ9RompjpJc7cOOmKNzowJ6s4ZR5hHqFsrco%3D&tn=comments'
 };
 
 
@@ -2633,6 +2635,361 @@ export class AzureTableService {
       return true;
     } catch (error: any) {
       console.error(`❌ AI 추천 사용 횟수 증가 실패:`, error.message);
+      return false;
+    }
+  }
+
+  // ==================== 커뮤니티 게시판 메서드 ====================
+
+  // 게시글 인터페이스
+  static PostInterface = {
+    PartitionKey: '', // courseId (step1, step2, step3, step4)
+    RowKey: '',       // postId (UUID)
+    title: '',
+    content: '',
+    authorEmail: '',
+    authorName: '',
+    category: '',     // question, share, tips, intro
+    createdAt: '',
+    updatedAt: '',
+    likes: 0,
+    commentCount: 0,
+    likedBy: ''       // JSON array of emails
+  };
+
+  // 강의별 게시글 목록 조회
+  static async getPostsByCourse(courseId: string): Promise<any[]> {
+    try {
+      console.log(`📋 ${courseId} 게시글 조회 중...`);
+      
+      const baseUrl = AZURE_SAS_URLS.posts.split('?')[0];
+      const sasToken = AZURE_SAS_URLS.posts.split('?')[1];
+      const filter = `PartitionKey eq '${courseId}'`;
+      const url = `${baseUrl}?${sasToken}&$filter=${encodeURIComponent(filter)}`;
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json;odata=nometadata',
+          'x-ms-version': '2020-04-08'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      const posts = data.value || [];
+      
+      // 최신순 정렬
+      posts.sort((a: any, b: any) => 
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+      
+      console.log(`✅ ${posts.length}개 게시글 조회 완료`);
+      return posts;
+    } catch (error: any) {
+      console.error(`❌ 게시글 조회 실패:`, error.message);
+      return [];
+    }
+  }
+
+  // 게시글 작성
+  static async createPost(post: {
+    courseId: string;
+    title: string;
+    content: string;
+    authorEmail: string;
+    authorName: string;
+    category: string;
+  }): Promise<{ success: boolean; postId?: string; error?: string }> {
+    try {
+      console.log(`📝 게시글 작성 중...`);
+      
+      const postId = `post_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+      const now = new Date().toISOString();
+
+      const newPost = {
+        PartitionKey: post.courseId,
+        RowKey: postId,
+        title: post.title,
+        content: post.content,
+        authorEmail: post.authorEmail,
+        authorName: post.authorName,
+        category: post.category,
+        createdAt: now,
+        updatedAt: now,
+        likes: 0,
+        commentCount: 0,
+        likedBy: '[]'
+      };
+
+      const baseUrl = AZURE_SAS_URLS.posts.split('?')[0];
+      const sasToken = AZURE_SAS_URLS.posts.split('?')[1];
+      const url = `${baseUrl}?${sasToken}`;
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json;odata=nometadata',
+          'x-ms-version': '2020-04-08'
+        },
+        body: JSON.stringify(newPost)
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      }
+
+      console.log(`✅ 게시글 작성 완료: ${postId}`);
+      return { success: true, postId };
+    } catch (error: any) {
+      console.error(`❌ 게시글 작성 실패:`, error.message);
+      return { success: false, error: error.message };
+    }
+  }
+
+  // 게시글 좋아요
+  static async likePost(courseId: string, postId: string, userEmail: string): Promise<boolean> {
+    try {
+      // 먼저 현재 게시글 조회
+      const baseUrl = AZURE_SAS_URLS.posts.split('?')[0];
+      const sasToken = AZURE_SAS_URLS.posts.split('?')[1];
+      const getUrl = `${baseUrl}(PartitionKey='${courseId}',RowKey='${postId}')?${sasToken}`;
+
+      const getResponse = await fetch(getUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json;odata=nometadata',
+          'x-ms-version': '2020-04-08'
+        }
+      });
+
+      if (!getResponse.ok) {
+        throw new Error('게시글을 찾을 수 없습니다');
+      }
+
+      const post = await getResponse.json();
+      let likedBy: string[] = [];
+      try {
+        likedBy = JSON.parse(post.likedBy || '[]');
+      } catch (e) {
+        likedBy = [];
+      }
+
+      // 이미 좋아요 했는지 확인
+      const alreadyLiked = likedBy.includes(userEmail);
+      
+      if (alreadyLiked) {
+        // 좋아요 취소
+        likedBy = likedBy.filter(email => email !== userEmail);
+      } else {
+        // 좋아요 추가
+        likedBy.push(userEmail);
+      }
+
+      // 업데이트
+      const updateUrl = `${baseUrl}(PartitionKey='${courseId}',RowKey='${postId}')?${sasToken}`;
+      const updateResponse = await fetch(updateUrl, {
+        method: 'MERGE',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-ms-version': '2020-04-08',
+          'If-Match': '*'
+        },
+        body: JSON.stringify({
+          likes: likedBy.length,
+          likedBy: JSON.stringify(likedBy)
+        })
+      });
+
+      if (!updateResponse.ok) {
+        throw new Error('좋아요 업데이트 실패');
+      }
+
+      console.log(`✅ 좋아요 ${alreadyLiked ? '취소' : '추가'} 완료`);
+      return true;
+    } catch (error: any) {
+      console.error(`❌ 좋아요 실패:`, error.message);
+      return false;
+    }
+  }
+
+  // 댓글 목록 조회
+  static async getCommentsByPost(postId: string): Promise<any[]> {
+    try {
+      console.log(`💬 ${postId} 댓글 조회 중...`);
+      
+      const baseUrl = AZURE_SAS_URLS.comments.split('?')[0];
+      const sasToken = AZURE_SAS_URLS.comments.split('?')[1];
+      const filter = `PartitionKey eq '${postId}'`;
+      const url = `${baseUrl}?${sasToken}&$filter=${encodeURIComponent(filter)}`;
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json;odata=nometadata',
+          'x-ms-version': '2020-04-08'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      const comments = data.value || [];
+      
+      // 시간순 정렬
+      comments.sort((a: any, b: any) => 
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      );
+      
+      console.log(`✅ ${comments.length}개 댓글 조회 완료`);
+      return comments;
+    } catch (error: any) {
+      console.error(`❌ 댓글 조회 실패:`, error.message);
+      return [];
+    }
+  }
+
+  // 댓글 작성
+  static async createComment(comment: {
+    postId: string;
+    courseId: string;
+    content: string;
+    authorEmail: string;
+    authorName: string;
+  }): Promise<{ success: boolean; commentId?: string; error?: string }> {
+    try {
+      console.log(`💬 댓글 작성 중...`);
+      
+      const commentId = `comment_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+      const now = new Date().toISOString();
+
+      const newComment = {
+        PartitionKey: comment.postId,
+        RowKey: commentId,
+        courseId: comment.courseId,
+        content: comment.content,
+        authorEmail: comment.authorEmail,
+        authorName: comment.authorName,
+        createdAt: now
+      };
+
+      const baseUrl = AZURE_SAS_URLS.comments.split('?')[0];
+      const sasToken = AZURE_SAS_URLS.comments.split('?')[1];
+      const url = `${baseUrl}?${sasToken}`;
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json;odata=nometadata',
+          'x-ms-version': '2020-04-08'
+        },
+        body: JSON.stringify(newComment)
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      }
+
+      // 게시글의 댓글 수 업데이트
+      await this.updatePostCommentCount(comment.courseId, comment.postId, 1);
+
+      console.log(`✅ 댓글 작성 완료: ${commentId}`);
+      return { success: true, commentId };
+    } catch (error: any) {
+      console.error(`❌ 댓글 작성 실패:`, error.message);
+      return { success: false, error: error.message };
+    }
+  }
+
+  // 게시글 댓글 수 업데이트 (내부 헬퍼)
+  private static async updatePostCommentCount(courseId: string, postId: string, delta: number): Promise<void> {
+    try {
+      const baseUrl = AZURE_SAS_URLS.posts.split('?')[0];
+      const sasToken = AZURE_SAS_URLS.posts.split('?')[1];
+      
+      // 현재 게시글 조회
+      const getUrl = `${baseUrl}(PartitionKey='${courseId}',RowKey='${postId}')?${sasToken}`;
+      const getResponse = await fetch(getUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json;odata=nometadata',
+          'x-ms-version': '2020-04-08'
+        }
+      });
+
+      if (!getResponse.ok) return;
+
+      const post = await getResponse.json();
+      const newCount = Math.max(0, (post.commentCount || 0) + delta);
+
+      // 업데이트
+      const updateUrl = `${baseUrl}(PartitionKey='${courseId}',RowKey='${postId}')?${sasToken}`;
+      await fetch(updateUrl, {
+        method: 'MERGE',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-ms-version': '2020-04-08',
+          'If-Match': '*'
+        },
+        body: JSON.stringify({ commentCount: newCount })
+      });
+    } catch (error) {
+      console.error('댓글 수 업데이트 실패:', error);
+    }
+  }
+
+  // 게시글 삭제
+  static async deletePost(courseId: string, postId: string, userEmail: string): Promise<boolean> {
+    try {
+      // 먼저 게시글 작성자 확인
+      const baseUrl = AZURE_SAS_URLS.posts.split('?')[0];
+      const sasToken = AZURE_SAS_URLS.posts.split('?')[1];
+      const getUrl = `${baseUrl}(PartitionKey='${courseId}',RowKey='${postId}')?${sasToken}`;
+
+      const getResponse = await fetch(getUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json;odata=nometadata',
+          'x-ms-version': '2020-04-08'
+        }
+      });
+
+      if (!getResponse.ok) {
+        throw new Error('게시글을 찾을 수 없습니다');
+      }
+
+      const post = await getResponse.json();
+      if (post.authorEmail !== userEmail) {
+        throw new Error('삭제 권한이 없습니다');
+      }
+
+      // 삭제
+      const deleteUrl = `${baseUrl}(PartitionKey='${courseId}',RowKey='${postId}')?${sasToken}`;
+      const deleteResponse = await fetch(deleteUrl, {
+        method: 'DELETE',
+        headers: {
+          'x-ms-version': '2020-04-08',
+          'If-Match': '*'
+        }
+      });
+
+      if (!deleteResponse.ok) {
+        throw new Error('삭제 실패');
+      }
+
+      console.log(`✅ 게시글 삭제 완료: ${postId}`);
+      return true;
+    } catch (error: any) {
+      console.error(`❌ 게시글 삭제 실패:`, error.message);
       return false;
     }
   }

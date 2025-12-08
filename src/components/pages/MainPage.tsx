@@ -256,7 +256,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
                 backgroundClip: 'text',
                 fontWeight: '800'
               }}>
-                Free Classes
+                인공지능 기초 무료 강의
               </span>
             </h2>
             <div className="section-nav">
@@ -292,10 +292,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
                 fontWeight: '800'
-              }}>💰 인공지능 수익화 무료 강의클래스</span>
-              <div style={{ fontSize: '0.8em', marginTop: '8px', fontWeight: 'normal', color: '#1e40af' }}>
-                AI로 돈 버는 실전 프롬프트 가이드
-              </div>
+              }}>인공지능 수익화 무료 강의클래스</span>
             </h2>
             <div className="section-nav">
               <button className="nav-arrow" aria-label="Previous Money courses" onClick={() => handleGridScroll(1, 'left')}><ChevronLeft size={24} /></button>
@@ -335,10 +332,10 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
                 backgroundClip: 'text',
                 fontWeight: '800'
               }}>
-                AI CITY BUILDER
+                프리미엄 강의
               </span>
               <div style={{ fontSize: '0.8em', marginTop: '8px', fontWeight: '600', color: '#fbbf24' }}>
-                나만의 AI 도시 세우기로 월수입 얻기
+                인공지능 자동화 에이전트로 컨텐츠 비즈니스 월세
               </div>
             </h2>
             <div className="section-nav">

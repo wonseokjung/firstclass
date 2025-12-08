@@ -52,18 +52,23 @@ async function fetchAllAzureUsers() {
 async function main() {
   console.log("📊 토스 vs Azure 결제 대사 시작...\n");
   
-  // 토스 결제 데이터 로드 (최근 4일 필터링: 12월 4일 ~ 12월 7일)
-  const filterStart = new Date('2025-12-04T00:00:00+09:00');
+  // 토스 결제 데이터 로드 (최근 3일 필터링: 12월 5일 ~ 12월 7일)
+  const filterStart = new Date('2025-12-05T00:00:00+09:00');
   const filterEnd = new Date('2025-12-07T23:59:59+09:00');
   
   const tossData = JSON.parse(fs.readFileSync('/tmp/toss_transactions.json', 'utf8'));
   const allDoneTransactions = tossData.filter(t => t.status === 'DONE');
+  
+  // 가상계좌, 계좌이체만 필터링
+  const virtualAndTransferMethods = ['가상계좌', '계좌이체'];
   const doneTransactions = allDoneTransactions.filter(t => {
     const txDate = new Date(t.transactionAt);
-    return txDate >= filterStart && txDate <= filterEnd;
+    const isInRange = txDate >= filterStart && txDate <= filterEnd;
+    const isVirtualOrTransfer = virtualAndTransferMethods.includes(t.method);
+    return isInRange && isVirtualOrTransfer;
   });
   
-  console.log(`📅 조회 기간: 2025-12-04 ~ 2025-12-07 (최근 4일)`);
+  console.log(`📅 조회 기간: 2025-12-05 ~ 2025-12-07 (최근 3일)`);
   console.log(`✅ 토스 결제 완료(DONE): ${doneTransactions.length}건 (전체: ${allDoneTransactions.length}건)`);
   
   // Azure 사용자 조회 (전체 페이지)
@@ -116,8 +121,8 @@ async function main() {
   
   // Azure에 있지만 토스에 없는 것 (조회 기간 내)
   const tossOrderIds = new Set(doneTransactions.map(t => t.orderId));
-  // 최근 4일 (12월 4일 ~ 12월 7일)
-  const startDate = new Date('2025-12-04');
+  // 최근 3일 (12월 5일 ~ 12월 7일)
+  const startDate = new Date('2025-12-05');
   const endDate = new Date('2025-12-07');
   endDate.setHours(23, 59, 59);
   

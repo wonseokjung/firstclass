@@ -33,6 +33,17 @@ const CEOPage = React.lazy(() => import('./components/pages/CEOPage'));
 const ContactPage = React.lazy(() => import('./components/pages/ContactPage'));
 const ClubsPage = React.lazy(() => import('./components/pages/ClubsPage'));
 
+// 라이브 페이지
+const LiveHubPage = React.lazy(() => import('./components/pages/live/LiveHubPage'));
+const LiveStep1Page = React.lazy(() => import('./components/pages/live/LiveStep1Page'));
+const LiveStep2Page = React.lazy(() => import('./components/pages/live/LiveStep2Page'));
+const LiveStep3Page = React.lazy(() => import('./components/pages/live/LiveStep3Page'));
+const LiveStep4Page = React.lazy(() => import('./components/pages/live/LiveStep4Page'));
+
+// 커뮤니티 페이지
+const CommunityHubPage = React.lazy(() => import('./components/pages/community/CommunityHubPage'));
+const CommunityStepPage = React.lazy(() => import('./components/pages/community/CommunityStepPage'));
+
 // 강의 페이지
 const ChatGPTCoursePage = React.lazy(() => import('./components/pages/courses/ChatGPTCoursePage'));
 const GoogleAICoursePage = React.lazy(() => import('./components/pages/courses/GoogleAICoursePage'));
@@ -682,6 +693,15 @@ const ChatGPTCoursePageWrapper = () => {
               <Route path="/contact" element={<ContactPageWrapper />} />
               <Route path="/clubs" element={<ClubsPageWrapper />} />
               <Route path="/roadmap" element={<RoadmapPageWrapper />} />
+              {/* 라이브 페이지 */}
+              <Route path="/live" element={<Suspense fallback={<LoadingSpinner />}><LiveHubPage /></Suspense>} />
+              <Route path="/live/step1" element={<Suspense fallback={<LoadingSpinner />}><LiveStep1Page /></Suspense>} />
+              <Route path="/live/step2" element={<Suspense fallback={<LoadingSpinner />}><LiveStep2Page /></Suspense>} />
+              <Route path="/live/step3" element={<Suspense fallback={<LoadingSpinner />}><LiveStep3Page /></Suspense>} />
+              <Route path="/live/step4" element={<Suspense fallback={<LoadingSpinner />}><LiveStep4Page /></Suspense>} />
+              {/* 커뮤니티 */}
+              <Route path="/community" element={<Suspense fallback={<LoadingSpinner />}><CommunityHubPage /></Suspense>} />
+              <Route path="/community/:stepId" element={<Suspense fallback={<LoadingSpinner />}><CommunityStepPage /></Suspense>} />
               <Route path="/ai-construction-site" element={<AIConstructionSitePageWrapper />} />
               <Route path="/ai-construction-site/step1" element={<AIConstructionSiteStep1PageWrapper />} />
               <Route path="/ai-construction-site/step2" element={<AIConstructionSiteStep2PageWrapper />} />

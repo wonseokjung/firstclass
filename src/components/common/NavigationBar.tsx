@@ -2,6 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
+// 브랜드 테마: 네이비 + 골드
+const brandTheme = {
+  navy: '#0f2744',
+  navyLight: '#1e3a5f',
+  gold: '#fbbf24',
+  goldDark: '#f59e0b',
+  white: '#ffffff'
+};
+
 interface NavigationBarProps {
   onBack?: () => void;
   onFAQClick?: () => void;
@@ -75,6 +84,32 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
     setIsMobileMenuOpen(false);
   };
 
+  // 공통 버튼 스타일
+  const navButtonStyle = {
+    background: brandTheme.navy,
+    color: brandTheme.gold,
+    padding: '8px 14px',
+    borderRadius: '8px',
+    fontWeight: '700' as const,
+    fontSize: '0.85rem',
+    border: 'none',
+    cursor: 'pointer',
+    transition: 'all 0.2s'
+  };
+
+  const goldButtonStyle = {
+    background: brandTheme.gold,
+    color: brandTheme.navy,
+    padding: '8px 14px',
+    borderRadius: '8px',
+    fontWeight: '800' as const,
+    fontSize: '0.85rem',
+    border: 'none',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    boxShadow: '0 2px 10px rgba(251, 191, 36, 0.3)'
+  };
+
   const renderAuthButtons = () => {
     if (isLoggedIn) {
       // 관리자 계정 확인 (test10@gmail.com만)
@@ -92,14 +127,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
             <button 
               className="nav-link" 
               onClick={() => navigate('/admin/fix-enrollments')}
-              style={{ 
-                background: 'linear-gradient(135deg, #ef4444, #dc2626)',
-                color: 'white',
-                padding: '8px 14px',
-                borderRadius: '8px',
-                fontWeight: '700',
-                fontSize: '0.85rem'
-              }}
+              style={navButtonStyle}
             >
               🔧
             </button>
@@ -134,67 +162,70 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
         </div>
         
         {/* 데스크탑 네비게이션 */}
-                    <div className="header-right desktop-nav">
-              <button className="nav-link" onClick={() => navigate('/ceo')}>소개</button>
-              <button className="nav-link" onClick={() => navigate('/ai-construction-site')}>🏗️ AI 건물 공사장</button>
-              {/* <button 
-                className="nav-link" 
-                onClick={() => navigate('/clubs')}
-                style={{ 
-                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                  color: 'white',
-                  padding: '8px 16px',
-                  borderRadius: '8px',
-                  fontWeight: '700'
-                }}
-              >
-                🏆 건물주 클럽
-              </button> */}
-              {/* <button className="nav-link" onClick={() => navigate('/ai-city-map')}>🏙️ AI CITY</button> */}
-              <button className="nav-link" onClick={onFAQClick || (() => navigate('/faq'))}>FAQ</button>
-              {hasEnrolledCourses && (
-              <button
-                className="nav-link"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const confirmed = window.confirm(
-                    '⚠️ 안내사항\n\n' +
-                    'AI City Builders 강의에 관련된 내용만 문의 가능합니다.\n\n' +
-                    '기타 문의는 받지 않으니 양해 부탁드립니다.\n\n' +
-                    '카카오톡 오픈채팅으로 이동하시겠습니까?'
-                  );
-                  if (confirmed) {
-                    window.open('https://open.kakao.com/o/s2NzW41h', '_blank', 'noopener,noreferrer');
-                  }
-                }}
-                style={{ 
-                  background: '#FFE812',
-                  color: '#1e293b',
-                  padding: '8px 14px',
-                  borderRadius: '8px',
-                  fontWeight: '800',
-                  textDecoration: 'none',
-                  display: 'inline-block',
-                  transition: 'all 0.2s',
-                  fontSize: '0.85rem',
-                  boxShadow: '0 2px 10px rgba(255, 232, 18, 0.3)',
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.background = '#FDD700';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.background = '#FFE812';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
-              >
-                💬 문의
-              </button>
-              )}
-              {renderAuthButtons()}
-            </div>
+        <div className="header-right desktop-nav">
+          <button className="nav-link" onClick={() => navigate('/ceo')}>소개</button>
+          <button className="nav-link" onClick={() => navigate('/ai-construction-site')}>🏗️ AI 건물 공사장</button>
+          <button 
+            className="nav-link" 
+            onClick={() => navigate('/live')}
+            style={navButtonStyle}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = brandTheme.navyLight;
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = brandTheme.navy;
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
+          >
+            📺 라이브
+          </button>
+          <button 
+            className="nav-link" 
+            onClick={() => navigate('/community')}
+            style={navButtonStyle}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = brandTheme.navyLight;
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = brandTheme.navy;
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
+          >
+            💬 커뮤니티
+          </button>
+          <button className="nav-link" onClick={onFAQClick || (() => navigate('/faq'))}>FAQ</button>
+          {hasEnrolledCourses && (
+            <button
+              className="nav-link"
+              onClick={(e) => {
+                e.preventDefault();
+                const confirmed = window.confirm(
+                  '⚠️ 안내사항\n\n' +
+                  'AI City Builders 강의에 관련된 내용만 문의 가능합니다.\n\n' +
+                  '기타 문의는 받지 않으니 양해 부탁드립니다.\n\n' +
+                  '카카오톡 오픈채팅으로 이동하시겠습니까?'
+                );
+                if (confirmed) {
+                  window.open('https://open.kakao.com/o/s2NzW41h', '_blank', 'noopener,noreferrer');
+                }
+              }}
+              style={goldButtonStyle}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = brandTheme.goldDark;
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = brandTheme.gold;
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+            >
+              💬 문의
+            </button>
+          )}
+          {renderAuthButtons()}
+        </div>
 
         {/* 모바일 햄버거 메뉴 버튼 */}
         <button 
@@ -224,24 +255,28 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               🏗️ AI 건물 공사장
             </button>
 
-            {/* <button 
+            <button 
               className="mobile-nav-link" 
-              onClick={() => handleMobileNavClick(() => navigate('/clubs'))}
+              onClick={() => handleMobileNavClick(() => navigate('/live'))}
               style={{ 
-                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                color: 'white',
+                background: brandTheme.navy,
+                color: brandTheme.gold,
                 fontWeight: '700'
               }}
             >
-              🏆 건물주 클럽
-            </button> */}
-
-            {/* <button 
+              📺 라이브
+            </button>
+            <button 
               className="mobile-nav-link" 
-              onClick={() => handleMobileNavClick(() => navigate('/ai-city-map'))}
+              onClick={() => handleMobileNavClick(() => navigate('/community'))}
+              style={{ 
+                background: brandTheme.navy,
+                color: brandTheme.gold,
+                fontWeight: '700'
+              }}
             >
-              🏙️ AI CITY
-            </button> */}
+              💬 커뮤니티
+            </button>
 
             <button 
               className="mobile-nav-link" 
@@ -251,35 +286,35 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
             </button>
 
             {hasEnrolledCourses && (
-            <button
-              className="mobile-nav-link"
-              onClick={(e) => {
-                e.preventDefault();
-                const confirmed = window.confirm(
-                  '⚠️ 안내사항\n\n' +
-                  'AI City Builders 강의에 관련된 내용만 문의 가능합니다.\n\n' +
-                  '기타 문의는 받지 않으니 양해 부탁드립니다.\n\n' +
-                  '카카오톡 오픈채팅으로 이동하시겠습니까?'
-                );
-                if (confirmed) {
-                  window.open('https://open.kakao.com/o/s2NzW41h', '_blank', 'noopener,noreferrer');
-                }
-                setIsMobileMenuOpen(false);
-              }}
-              style={{ 
-                background: '#FFE812',
-                color: '#1e293b',
-                fontWeight: '800',
-                textDecoration: 'none',
-                display: 'block',
-                textAlign: 'left',
-                boxShadow: '0 2px 10px rgba(255, 232, 18, 0.3)',
-                border: 'none',
-                cursor: 'pointer'
-              }}
-            >
-              💬 실시간 문의
-            </button>
+              <button
+                className="mobile-nav-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const confirmed = window.confirm(
+                    '⚠️ 안내사항\n\n' +
+                    'AI City Builders 강의에 관련된 내용만 문의 가능합니다.\n\n' +
+                    '기타 문의는 받지 않으니 양해 부탁드립니다.\n\n' +
+                    '카카오톡 오픈채팅으로 이동하시겠습니까?'
+                  );
+                  if (confirmed) {
+                    window.open('https://open.kakao.com/o/s2NzW41h', '_blank', 'noopener,noreferrer');
+                  }
+                  setIsMobileMenuOpen(false);
+                }}
+                style={{ 
+                  background: brandTheme.gold,
+                  color: brandTheme.navy,
+                  fontWeight: '800',
+                  textDecoration: 'none',
+                  display: 'block',
+                  textAlign: 'left',
+                  boxShadow: '0 2px 10px rgba(251, 191, 36, 0.3)',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                💬 실시간 문의
+              </button>
             )}
             
             {isLoggedIn ? (
@@ -295,8 +330,8 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                     className="mobile-nav-link" 
                     onClick={() => handleMobileNavClick(() => navigate('/admin/fix-enrollments'))}
                     style={{ 
-                      background: 'linear-gradient(135deg, #ef4444, #dc2626)',
-                      color: 'white',
+                      background: brandTheme.navy,
+                      color: brandTheme.gold,
                       fontWeight: '700'
                     }}
                   >
