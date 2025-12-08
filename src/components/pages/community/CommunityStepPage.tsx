@@ -122,7 +122,7 @@ const renderContent = (content: string) => {
 const CommunityStepPage: React.FC = () => {
   const navigate = useNavigate();
   const { stepId } = useParams<{ stepId: string }>();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [posts, setPosts] = useState<Post[]>([]);
