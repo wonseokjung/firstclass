@@ -24,8 +24,6 @@ interface CourseInfo {
   icon: string;
   path: string;
   courseIds: string[];
-  memberCount: number;
-  postCount: number;
 }
 
 const CommunityHubPage: React.FC = () => {
@@ -42,9 +40,7 @@ const CommunityHubPage: React.FC = () => {
       subtitle: 'AI로 콘텐츠 만들기 & 비즈니스 마인드',
       icon: '🏠',
       path: '/community/step1',
-      courseIds: ['ai-building-course', 'ai-building', '999'],
-      memberCount: 1247,
-      postCount: 89
+      courseIds: ['ai-building-course', 'ai-building', '999']
     },
     {
       step: 2,
@@ -52,9 +48,7 @@ const CommunityHubPage: React.FC = () => {
       subtitle: '여러 AI를 하나의 회사처럼',
       icon: '🤖',
       path: '/community/step2',
-      courseIds: ['chatgpt-agent-beginner', 'ai-agent-beginner', '1002'],
-      memberCount: 856,
-      postCount: 124
+      courseIds: ['chatgpt-agent-beginner', 'ai-agent-beginner', '1002']
     },
     {
       step: 3,
@@ -62,9 +56,7 @@ const CommunityHubPage: React.FC = () => {
       subtitle: 'AI 수익화 전문 자동화 에이전트',
       icon: '⚡',
       path: '/community/step3',
-      courseIds: ['connexionai'],
-      memberCount: 0,
-      postCount: 0
+      courseIds: ['connexionai']
     },
     {
       step: 4,
@@ -72,9 +64,7 @@ const CommunityHubPage: React.FC = () => {
       subtitle: '바이브코딩으로 서비스 개발',
       icon: '🚀',
       path: '/community/step4',
-      courseIds: ['content-business'],
-      memberCount: 0,
-      postCount: 0
+      courseIds: ['content-business']
     }
   ];
 
@@ -313,17 +303,6 @@ const CommunityHubPage: React.FC = () => {
                 }}>
                   {course.subtitle}
                 </p>
-
-                {/* 통계 */}
-                {!isComingSoon && (
-                  <div style={{
-                    display: 'flex', gap: '18px', marginBottom: '12px',
-                    color: theme.gray, fontSize: '0.85rem'
-                  }}>
-                    <span>👥 {course.memberCount.toLocaleString()}명</span>
-                    <span>📝 {course.postCount}개 글</span>
-                  </div>
-                )}
 
                 {/* 입장 버튼 */}
                 <div style={{
