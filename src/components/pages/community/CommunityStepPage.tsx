@@ -64,7 +64,7 @@ const extractYouTubeId = (url: string): string | null => {
   return null;
 };
 
-// URL을 링크로 변환 + YouTube 임베딩
+// URL을 링크로 변환 + YouTube 썸네일 프리뷰
 const renderContent = (content: string) => {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const parts = content.split(urlRegex);
@@ -73,32 +73,66 @@ const renderContent = (content: string) => {
     if (urlRegex.test(part)) {
       const youtubeId = extractYouTubeId(part);
       if (youtubeId) {
+        // YouTube 썸네일 + 클릭시 YouTube 이동
         return (
-          <div key={index} style={{ margin: '12px 0' }}>
+          <a
+            key={index}
+            href={`https://www.youtube.com/watch?v=${youtubeId}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            style={{ display: 'block', margin: '12px 0', textDecoration: 'none' }}
+          >
             <div style={{
               position: 'relative',
-              paddingBottom: '56.25%',
-              height: 0,
               borderRadius: '12px',
               overflow: 'hidden',
               background: '#000'
             }}>
-              <iframe
-                src={`https://www.youtube.com/embed/${youtubeId}`}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  border: 'none'
+              <img
+                src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+                alt="YouTube video"
+                style={{ width: '100%', display: 'block' }}
+                onError={(e) => {
+                  // maxresdefault 없으면 hqdefault로 대체
+                  (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
                 }}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                title="YouTube video"
               />
+              {/* 재생 버튼 오버레이 */}
+              <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '68px',
+                height: '48px',
+                background: 'rgba(255,0,0,0.9)',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <div style={{
+                  width: 0,
+                  height: 0,
+                  borderTop: '10px solid transparent',
+                  borderBottom: '10px solid transparent',
+                  borderLeft: '18px solid white',
+                  marginLeft: '4px'
+                }}></div>
+              </div>
             </div>
-          </div>
+            <div style={{
+              padding: '8px 0',
+              color: theme.gray,
+              fontSize: '0.85rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              ▶️ YouTube에서 보기
+            </div>
+          </a>
         );
       }
       // 일반 링크
