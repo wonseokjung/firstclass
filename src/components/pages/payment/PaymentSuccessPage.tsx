@@ -3,6 +3,7 @@ import { CheckCircle, Star, Clock, ArrowRight, Sparkles, Award, Play } from 'luc
 import { useLocation } from 'react-router-dom';
 import AzureTableService from '../../../services/azureTableService';
 import NavigationBar from '../../common/NavigationBar';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { COURSE_ID_TO_NAME, COURSE_ID_TO_PRICE } from '../../../hooks/useReferralTracking';
 
 /**

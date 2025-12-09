@@ -78,6 +78,7 @@ const AdminDashboardPage: React.FC = () => {
     };
 
     checkAdmin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
 
   // 모든 유저 데이터 로드

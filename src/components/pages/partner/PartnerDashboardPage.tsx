@@ -60,11 +60,13 @@ const PartnerDashboardPage: React.FC = () => {
   // Azure 데이터
   const [totalBricks, setTotalBricks] = useState(0);
   const [pendingBricks, setPendingBricks] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [withdrawnBricks, setWithdrawnBricks] = useState(0);
   const [totalReferrals, setTotalReferrals] = useState(0);
   const [referralHistory, setReferralHistory] = useState<ReferralRecord[]>([]);
   const [withdrawalHistory, setWithdrawalHistory] = useState<WithdrawalRecord[]>([]);
   const [hasPurchasedCourse, setHasPurchasedCourse] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [purchasedCourseCount, setPurchasedCourseCount] = useState(0);
 
   // 파트너 데이터 로드
