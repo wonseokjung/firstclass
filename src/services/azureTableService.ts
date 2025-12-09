@@ -16,6 +16,7 @@ const AZURE_SAS_URLS = {
   packages: process.env.REACT_APP_AZURE_SAS_URL_PACKAGES || 'https://clathonstorage.table.core.windows.net/studentpackages?sp=raud&st=2025-08-13T02:04:25Z&se=2030-10-13T10:19:00Z&spr=https&sv=2024-11-04&sig=ulo8yMTJqBhKB%2FeeIKycUxl8knzpbDkClU6NTaPrHYw%3D&tn=studentpackages',
   posts: process.env.REACT_APP_AZURE_SAS_URL_POSTS || 'https://clathonstorage.table.core.windows.net/posts?sp=raud&st=2025-12-07T14:30:16Z&se=2029-10-07T22:45:00Z&sv=2024-11-04&sig=WViAUr86LkEJ0Vk%2FKvdh6RhJNHoTW0DRhFCHZRybjvM%3D&tn=posts',
   comments: process.env.REACT_APP_AZURE_SAS_URL_COMMENTS || 'https://clathonstorage.table.core.windows.net/comments?sp=raud&st=2025-12-07T14:28:11Z&se=2028-10-18T01:43:00Z&sv=2024-11-04&sig=IVvic6vtJ9RompjpJc7cOOmKNzowJ6s4ZR5hHqFsrco%3D&tn=comments'
+  // 🧱 파트너 프로그램: users 테이블의 JSON 필드 사용 (별도 테이블 불필요)
 };
 
 // 환경변수 설정 여부 확인 (개발 중 디버깅용)
@@ -112,6 +113,50 @@ export interface ReferralStats {
   topReferralMonth: string; // 최고 실적 월
 }
 
+// 🧱 파트너 프로그램 인터페이스
+export interface Partner {
+  partitionKey: string; // 'partner'
+  rowKey: string; // 사용자 이메일
+  email: string;
+  name: string;
+  referralCode: string; // 고유 추천 코드
+  totalBricks: number; // 총 적립 브릭
+  availableBricks: number; // 출금 가능 브릭
+  pendingBricks: number; // 정산 대기 브릭
+  withdrawnBricks: number; // 출금 완료 브릭
+  totalReferrals: number; // 총 추천 수
+  partnerTier: 'bronze' | 'silver' | 'gold' | 'platinum'; // 파트너 등급
+  commissionRate: number; // 커미션 비율 (10, 12, 15%)
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PartnerReferral {
+  partitionKey: string; // 파트너 이메일
+  rowKey: string; // 고유 ID (타임스탬프_랜덤)
+  referralDate: string;
+  buyerEmail: string; // 구매자 이메일 (마스킹)
+  courseId: string;
+  courseName: string;
+  coursePrice: number;
+  earnedBricks: number;
+  status: 'pending' | 'confirmed' | 'cancelled';
+  confirmedAt?: string;
+}
+
+export interface PartnerWithdrawal {
+  partitionKey: string; // 파트너 이메일
+  rowKey: string; // 고유 ID (타임스탬프_랜덤)
+  requestDate: string;
+  amount: number;
+  bankName: string;
+  accountNumber: string; // 마스킹됨
+  accountHolder: string;
+  status: 'pending' | 'processing' | 'completed' | 'rejected';
+  processedAt?: string;
+  rejectedReason?: string;
+}
+
 export interface User {
   partitionKey: string;
   rowKey: string;
@@ -138,6 +183,15 @@ export interface User {
   rewardHistory?: string; // 리워드 내역 JSON 문자열
   referralCount?: number; // 추천한 사용자 수
   referralStats?: string; // 추천 통계 JSON 문자열
+  // 🧱 브릭 파트너 프로그램 필드
+  totalBricks?: number; // 총 적립 브릭 (1브릭 = 1원)
+  availableBricks?: number; // 출금 가능 브릭
+  pendingBricks?: number; // 정산 대기 브릭
+  withdrawnBricks?: number; // 출금 완료 브릭
+  partnerTier?: 'bronze' | 'silver' | 'gold' | 'platinum'; // 파트너 등급
+  commissionRate?: number; // 커미션 비율 (기본 10%)
+  referralHistory?: string; // 추천 내역 JSON 문자열
+  withdrawalHistory?: string; // 출금 내역 JSON 문자열
   // 비밀번호 재설정 필드 추가
   passwordResetToken?: string; // 재설정 토큰 (6자리 숫자)
   passwordResetTokenExpiry?: string; // 토큰 만료 시간
@@ -3008,6 +3062,443 @@ export class AzureTableService {
       return true;
     } catch (error: any) {
       console.error(`❌ 게시글 삭제 실패:`, error.message);
+      return false;
+    }
+  }
+
+  // ========================================
+  // 🧱 파트너 프로그램 관련 메서드 (users 테이블 사용)
+  // ========================================
+
+  // 파트너 정보 조회 (users 테이블에서)
+  static async getOrCreatePartner(email: string, name: string): Promise<Partner | null> {
+    try {
+      // users 테이블에서 사용자 조회
+      const user = await this.getUserByEmail(email);
+      
+      if (!user) {
+        console.warn(`⚠️ 사용자를 찾을 수 없습니다: ${email}`);
+        return null;
+      }
+
+      // 추천 코드가 없으면 생성
+      if (!user.referralCode) {
+        const newReferralCode = RewardUtils.generateReferralCode();
+        await this.updateUserField(email, 'referralCode', newReferralCode);
+        user.referralCode = newReferralCode;
+      }
+
+      // User 정보를 Partner 형태로 변환
+      const partner: Partner = {
+        partitionKey: 'users',
+        rowKey: email,
+        email: user.email,
+        name: user.name || name,
+        referralCode: user.referralCode || '',
+        totalBricks: user.totalBricks || 0,
+        availableBricks: user.availableBricks || 0,
+        pendingBricks: user.pendingBricks || 0,
+        withdrawnBricks: user.withdrawnBricks || 0,
+        totalReferrals: user.referralCount || 0,
+        partnerTier: user.partnerTier || 'bronze',
+        commissionRate: user.commissionRate || 10,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
+      };
+
+      return partner;
+    } catch (error: any) {
+      console.error(`❌ 파트너 조회 실패:`, error.message);
+      return null;
+    }
+  }
+
+  // 파트너 브릭 정보 업데이트 (users 테이블)
+  static async updatePartnerBricks(email: string, updates: {
+    totalBricks?: number;
+    availableBricks?: number;
+    pendingBricks?: number;
+    withdrawnBricks?: number;
+    referralCount?: number;
+    partnerTier?: 'bronze' | 'silver' | 'gold' | 'platinum';
+    commissionRate?: number;
+    referralHistory?: string;
+    withdrawalHistory?: string;
+  }): Promise<boolean> {
+    try {
+      // 각 필드별로 updateUserField 호출
+      for (const [key, value] of Object.entries(updates)) {
+        if (value !== undefined) {
+          const success = await this.updateUserField(email, key, value);
+          if (!success) {
+            console.error(`❌ 필드 업데이트 실패: ${key}`);
+            return false;
+          }
+        }
+      }
+      return true;
+    } catch (error: any) {
+      console.error(`❌ 파트너 브릭 업데이트 실패:`, error.message);
+      return false;
+    }
+  }
+
+  // 이메일 마스킹
+  private static maskEmailForPartner(email: string): string {
+    const [local, domain] = email.split('@');
+    const maskedLocal = local.slice(0, 2) + '***';
+    return `${maskedLocal}@${domain}`;
+  }
+
+  // 추천 내역 추가 (결제 성공 시 호출) - users 테이블의 JSON 필드 사용
+  static async addReferral(
+    partnerEmail: string,
+    buyerEmail: string,
+    courseId: string,
+    courseName: string,
+    coursePrice: number
+  ): Promise<boolean> {
+    try {
+      const user = await this.getUserByEmail(partnerEmail);
+      if (!user) return false;
+
+      const earnedBricks = Math.floor(coursePrice * ((user.commissionRate || 10) / 100));
+      
+      // 새 추천 내역
+      const newReferral: PartnerReferral = {
+        partitionKey: partnerEmail,
+        rowKey: `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        referralDate: new Date().toISOString(),
+        buyerEmail: this.maskEmailForPartner(buyerEmail),
+        courseId,
+        courseName,
+        coursePrice,
+        earnedBricks,
+        status: 'pending'
+      };
+
+      // 기존 추천 내역 가져오기
+      let referralHistory: PartnerReferral[] = [];
+      try {
+        referralHistory = user.referralHistory ? JSON.parse(user.referralHistory) : [];
+      } catch { referralHistory = []; }
+
+      // 새 추천 추가
+      referralHistory.unshift(newReferral);
+
+      // 브릭 업데이트
+      await this.updatePartnerBricks(partnerEmail, {
+        totalBricks: (user.totalBricks || 0) + earnedBricks,
+        pendingBricks: (user.pendingBricks || 0) + earnedBricks,
+        referralCount: (user.referralCount || 0) + 1,
+        referralHistory: JSON.stringify(referralHistory)
+      });
+
+      console.log(`✅ 추천 내역 추가: ${partnerEmail} +${earnedBricks} 브릭`);
+      return true;
+    } catch (error: any) {
+      console.error(`❌ 추천 내역 추가 실패:`, error.message);
+      return false;
+    }
+  }
+
+  // 추천 내역 조회 (users 테이블의 JSON 필드에서)
+  static async getReferrals(partnerEmail: string): Promise<PartnerReferral[]> {
+    try {
+      const user = await this.getUserByEmail(partnerEmail);
+      if (!user || !user.referralHistory) return [];
+
+      const referrals: PartnerReferral[] = JSON.parse(user.referralHistory);
+      return referrals.sort((a, b) => 
+        new Date(b.referralDate).getTime() - new Date(a.referralDate).getTime()
+      );
+    } catch (error: any) {
+      console.error(`❌ 추천 내역 조회 실패:`, error.message);
+      return [];
+    }
+  }
+
+  // 출금 신청 (users 테이블 사용)
+  static async requestWithdrawal(
+    partnerEmail: string,
+    amount: number,
+    bankName: string,
+    accountNumber: string,
+    accountHolder: string
+  ): Promise<{ success: boolean; message: string }> {
+    try {
+      // 최소 출금액 확인
+      if (amount < 100000) {
+        return { success: false, message: '최소 출금 금액은 100,000 브릭입니다.' };
+      }
+
+      const user = await this.getUserByEmail(partnerEmail);
+      if (!user) {
+        return { success: false, message: '사용자 정보를 찾을 수 없습니다.' };
+      }
+
+      // 출금 가능 금액 확인
+      const availableBricks = user.availableBricks || 0;
+      if (availableBricks < amount) {
+        return { success: false, message: '출금 가능한 브릭이 부족합니다.' };
+      }
+
+      const maskedAccount = accountNumber.slice(0, 4) + '****' + accountNumber.slice(-4);
+
+      // 새 출금 내역
+      const newWithdrawal: PartnerWithdrawal = {
+        partitionKey: partnerEmail,
+        rowKey: `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        requestDate: new Date().toISOString(),
+        amount,
+        bankName,
+        accountNumber: maskedAccount,
+        accountHolder,
+        status: 'pending'
+      };
+
+      // 기존 출금 내역 가져오기
+      let withdrawalHistory: PartnerWithdrawal[] = [];
+      try {
+        withdrawalHistory = user.withdrawalHistory ? JSON.parse(user.withdrawalHistory) : [];
+      } catch { withdrawalHistory = []; }
+
+      // 새 출금 추가
+      withdrawalHistory.unshift(newWithdrawal);
+
+      // 브릭 업데이트
+      await this.updatePartnerBricks(partnerEmail, {
+        availableBricks: availableBricks - amount,
+        withdrawalHistory: JSON.stringify(withdrawalHistory)
+      });
+
+      console.log(`✅ 출금 신청 완료: ${partnerEmail} ${amount} 브릭`);
+      return { success: true, message: '출금 신청이 완료되었습니다. 월말에 정산됩니다.' };
+    } catch (error: any) {
+      console.error(`❌ 출금 신청 실패:`, error.message);
+      return { success: false, message: error.message };
+    }
+  }
+
+  // 출금 내역 조회 (users 테이블의 JSON 필드에서)
+  static async getWithdrawals(partnerEmail: string): Promise<PartnerWithdrawal[]> {
+    try {
+      const user = await this.getUserByEmail(partnerEmail);
+      if (!user || !user.withdrawalHistory) return [];
+
+      const withdrawals: PartnerWithdrawal[] = JSON.parse(user.withdrawalHistory);
+      return withdrawals.sort((a, b) => 
+        new Date(b.requestDate).getTime() - new Date(a.requestDate).getTime()
+      );
+    } catch (error: any) {
+      console.error(`❌ 출금 내역 조회 실패:`, error.message);
+      return [];
+    }
+  }
+
+  // 월말 정산 (대기 브릭 → 출금 가능 브릭으로 전환)
+  static async processMonthlySettlement(partnerEmail: string): Promise<boolean> {
+    try {
+      const user = await this.getUserByEmail(partnerEmail);
+      if (!user || !user.pendingBricks || user.pendingBricks === 0) return false;
+
+      // 대기 브릭을 출금 가능 브릭으로 이전
+      await this.updatePartnerBricks(partnerEmail, {
+        availableBricks: (user.availableBricks || 0) + user.pendingBricks,
+        pendingBricks: 0
+      });
+
+      // 추천 내역 상태 업데이트 (pending → confirmed)
+      if (user.referralHistory) {
+        try {
+          const referrals: PartnerReferral[] = JSON.parse(user.referralHistory);
+          const updatedReferrals = referrals.map(r => ({
+            ...r,
+            status: r.status === 'pending' ? 'confirmed' as const : r.status,
+            confirmedAt: r.status === 'pending' ? new Date().toISOString() : r.confirmedAt
+          }));
+          await this.updatePartnerBricks(partnerEmail, {
+            referralHistory: JSON.stringify(updatedReferrals)
+          });
+        } catch { /* ignore */ }
+      }
+      
+      console.log(`✅ 월말 정산 완료: ${partnerEmail}`);
+      return true;
+    } catch (error: any) {
+      console.error(`❌ 월말 정산 실패:`, error.message);
+      return false;
+    }
+  }
+
+  // 추천 코드로 사용자 찾기
+  static async getPartnerByReferralCode(referralCode: string): Promise<Partner | null> {
+    try {
+      const baseUrl = AZURE_SAS_URLS.users.split('?')[0];
+      const sasToken = AZURE_SAS_URLS.users.split('?')[1];
+      const filter = encodeURIComponent(`referralCode eq '${referralCode}'`);
+      const url = `${baseUrl}?${sasToken}&$filter=${filter}`;
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json;odata=nometadata',
+          'x-ms-version': '2020-04-08'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.value && data.value.length > 0) {
+          const user = data.value[0] as User;
+          return await this.getOrCreatePartner(user.email, user.name);
+        }
+      }
+
+      return null;
+    } catch (error: any) {
+      console.error(`❌ 추천 코드로 파트너 검색 실패:`, error.message);
+      return null;
+    }
+  }
+
+  // 추천 코드로 파트너 이메일 찾기
+  static async getEmailByReferralCode(referralCode: string): Promise<string | null> {
+    try {
+      console.log(`🔍 추천 코드로 이메일 검색: ${referralCode}`);
+      
+      // users 테이블에서 referralCode로 검색
+      const baseUrl = AZURE_SAS_URLS.users.split('?')[0];
+      const sasToken = '?' + AZURE_SAS_URLS.users.split('?')[1];
+      const filter = `referralCode eq '${referralCode}'`;
+      const url = `${baseUrl}()${sasToken}&$filter=${encodeURIComponent(filter)}`;
+
+      const response = await this.retryRequest(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json;odata=nometadata',
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.value && data.value.length > 0) {
+          const user = data.value[0] as User;
+          console.log(`✅ 추천 코드 ${referralCode} → 이메일 ${user.email}`);
+          return user.email;
+        }
+      }
+
+      console.log(`⚠️ 추천 코드 ${referralCode}에 해당하는 사용자 없음`);
+      return null;
+    } catch (error: any) {
+      console.error(`❌ 추천 코드로 이메일 검색 실패:`, error.message);
+      return null;
+    }
+  }
+
+  // 모든 대기 중인 출금 요청 조회 (관리자용)
+  static async getAllPendingWithdrawals(): Promise<(PartnerWithdrawal & { partnerEmail: string; partnerName: string })[]> {
+    try {
+      console.log('🔍 대기 중인 출금 요청 조회...');
+      
+      // 모든 사용자 조회
+      const baseUrl = AZURE_SAS_URLS.users.split('?')[0];
+      const sasToken = '?' + AZURE_SAS_URLS.users.split('?')[1];
+      const url = `${baseUrl}()${sasToken}`;
+
+      const response = await this.retryRequest(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json;odata=nometadata',
+        }
+      });
+
+      if (!response.ok) return [];
+
+      const data = await response.json();
+      const allWithdrawals: (PartnerWithdrawal & { partnerEmail: string; partnerName: string })[] = [];
+
+      for (const user of data.value || []) {
+        if (user.withdrawalHistory) {
+          try {
+            const withdrawals: PartnerWithdrawal[] = JSON.parse(user.withdrawalHistory);
+            const pendingOnes = withdrawals
+              .filter(w => w.status === 'pending')
+              .map(w => ({
+                ...w,
+                partnerEmail: user.email,
+                partnerName: user.name || user.email
+              }));
+            allWithdrawals.push(...pendingOnes);
+          } catch { /* ignore parse errors */ }
+        }
+      }
+
+      // 최신순 정렬
+      allWithdrawals.sort((a, b) => 
+        new Date(b.requestDate).getTime() - new Date(a.requestDate).getTime()
+      );
+
+      console.log(`✅ 대기 중인 출금 요청 ${allWithdrawals.length}건`);
+      return allWithdrawals;
+    } catch (error: any) {
+      console.error(`❌ 출금 요청 조회 실패:`, error.message);
+      return [];
+    }
+  }
+
+  // 출금 상태 업데이트 (관리자용)
+  static async updateWithdrawalStatus(
+    partnerEmail: string, 
+    withdrawalRowKey: string, 
+    status: 'completed' | 'rejected',
+    rejectReason?: string
+  ): Promise<boolean> {
+    try {
+      console.log(`🔄 출금 상태 업데이트: ${partnerEmail} → ${status}`);
+      
+      const user = await this.getUserByEmail(partnerEmail);
+      if (!user || !user.withdrawalHistory) return false;
+
+      const withdrawals: PartnerWithdrawal[] = JSON.parse(user.withdrawalHistory);
+      const targetIndex = withdrawals.findIndex(w => w.rowKey === withdrawalRowKey);
+      
+      if (targetIndex === -1) {
+        console.error('❌ 출금 요청을 찾을 수 없음');
+        return false;
+      }
+
+      const withdrawal = withdrawals[targetIndex];
+      
+      // 상태 업데이트
+      withdrawals[targetIndex] = {
+        ...withdrawal,
+        status,
+        processedAt: new Date().toISOString()
+      };
+
+      // 거절인 경우 브릭 환불
+      if (status === 'rejected') {
+        await this.updatePartnerBricks(partnerEmail, {
+          availableBricks: (user.availableBricks || 0) + withdrawal.amount
+        });
+      }
+
+      // 완료인 경우 출금 완료 브릭 증가
+      if (status === 'completed') {
+        await this.updatePartnerBricks(partnerEmail, {
+          withdrawnBricks: (user.withdrawnBricks || 0) + withdrawal.amount
+        });
+      }
+
+      // 출금 내역 저장
+      await this.updateUserField(partnerEmail, 'withdrawalHistory', JSON.stringify(withdrawals));
+
+      console.log(`✅ 출금 상태 업데이트 완료: ${status}`);
+      return true;
+    } catch (error: any) {
+      console.error(`❌ 출금 상태 업데이트 실패:`, error.message);
       return false;
     }
   }

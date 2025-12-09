@@ -753,108 +753,151 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               </p>
             </div>
 
-            {/* 🔴 라이브 혜택 섹션 */}
+            {/* 🎓 인공지능의 EBS - 왜 라이브가 필요한가 */}
             <div style={{
-              background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
-              padding: 'clamp(30px, 5vw, 40px)',
-              borderRadius: '20px',
+              background: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)',
+              padding: 'clamp(30px, 5vw, 45px)',
+              borderRadius: '25px',
               marginBottom: '30px',
               position: 'relative',
               overflow: 'hidden'
             }}>
-              {/* 배경 효과 */}
               <div style={{
                 position: 'absolute',
-                top: '-30%',
-                right: '-10%',
+                top: '-50px',
+                right: '-50px',
                 width: '200px',
                 height: '200px',
-                background: 'rgba(255, 255, 255, 0.1)',
+                background: 'rgba(251, 191, 36, 0.15)',
                 borderRadius: '50%'
               }}></div>
               
               <div style={{ position: 'relative', zIndex: 1 }}>
+                {/* 슬로건 */}
                 <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  marginBottom: '20px',
-                  flexWrap: 'wrap'
+                  display: 'inline-block',
+                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  padding: '10px 25px',
+                  borderRadius: '30px',
+                  marginBottom: '25px'
                 }}>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    background: 'rgba(255, 255, 255, 0.2)',
-                    padding: '8px 16px',
-                    borderRadius: '20px'
-                  }}>
-                    <span style={{
-                      width: '10px',
-                      height: '10px',
-                      background: '#fff',
-                      borderRadius: '50%',
-                      animation: 'blink 1s infinite'
-                    }}></span>
-                    <span style={{ color: 'white', fontWeight: '700', fontSize: '0.9rem' }}>LIVE 포함</span>
-                  </div>
+                  <span style={{ color: '#1e3a8a', fontWeight: '800', fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
+                    📺 인공지능의 EBS
+                  </span>
                 </div>
                 
                 <h4 style={{ 
                   color: 'white', 
-                  fontSize: 'clamp(1.3rem, 3vw, 1.5rem)', 
+                  fontSize: 'clamp(1.4rem, 4vw, 1.8rem)', 
                   fontWeight: '800', 
-                  marginBottom: '15px',
+                  marginBottom: '20px',
                   lineHeight: '1.4'
                 }}>
-                  📺 매주 1회 실시간 라이브 세션
+                  🤔 인공지능이 계속 업그레이드 되는데<br/>어떻게 해야 하나요?
                 </h4>
                 
                 <p style={{ 
-                  color: 'rgba(255, 255, 255, 0.9)', 
-                  fontSize: 'clamp(0.9rem, 2vw, 1rem)',
-                  lineHeight: '1.7',
+                  color: 'rgba(255, 255, 255, 0.95)', 
+                  fontSize: 'clamp(0.95rem, 2.5vw, 1.1rem)',
+                  lineHeight: '1.8',
+                  marginBottom: '25px'
+                }}>
+                  Google OPAL, Claude, ChatGPT... <strong style={{ color: '#fbbf24' }}>매주 새로운 기능</strong>이 쏟아집니다.<br/>
+                  녹화 강의만으로는 <strong style={{ color: '#fbbf24' }}>최신 AI를 따라갈 수 없습니다.</strong><br/><br/>
+                  그래서 준비했습니다! 👇
+                </p>
+
+                {/* 구성 설명 */}
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  borderRadius: '20px',
+                  padding: 'clamp(20px, 4vw, 30px)',
+                  marginBottom: '25px',
+                  border: '2px solid rgba(251, 191, 36, 0.3)'
+                }}>
+                  <h5 style={{ color: '#fbbf24', fontSize: 'clamp(1.1rem, 3vw, 1.3rem)', fontWeight: '700', marginBottom: '20px', textAlign: 'center' }}>
+                    ✨ Step 2 구성
+                  </h5>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+                    gap: '15px'
+                  }}>
+                    <div style={{ textAlign: 'center', padding: '20px 15px', background: 'rgba(255,255,255,0.08)', borderRadius: '15px' }}>
+                      <div style={{ fontSize: '2.2rem', marginBottom: '10px' }}>📚</div>
+                      <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', marginBottom: '5px' }}>기본 코어 강의</div>
+                      <div style={{ color: '#fbbf24', fontWeight: '800', fontSize: 'clamp(1.3rem, 3vw, 1.5rem)' }}>10개</div>
+                      <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>10일 완성 커리큘럼</div>
+                    </div>
+                    <div style={{ textAlign: 'center', padding: '20px 15px', background: 'rgba(251,191,36,0.15)', borderRadius: '15px', border: '2px solid rgba(251,191,36,0.4)' }}>
+                      <div style={{ fontSize: '2.2rem', marginBottom: '10px' }}>🔴</div>
+                      <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', marginBottom: '5px' }}>주간 라이브</div>
+                      <div style={{ color: '#fbbf24', fontWeight: '800', fontSize: 'clamp(1.3rem, 3vw, 1.5rem)' }}>52회/년</div>
+                      <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>1년간 무제한 참여</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 가성비 계산 */}
+                <div style={{
+                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  borderRadius: '20px',
+                  padding: 'clamp(20px, 4vw, 25px) clamp(20px, 4vw, 30px)',
                   marginBottom: '20px'
                 }}>
-                  AI는 빠르게 변합니다. 녹화 강의만으로는 최신 트렌드를 따라갈 수 없어요.<br/>
-                  <strong>매주 라이브</strong>로 새로운 도구, 업데이트, 실전 팁을 실시간으로 배우세요!
-                </p>
+                  <h5 style={{ color: '#1e3a8a', fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', fontWeight: '800', marginBottom: '15px', textAlign: 'center' }}>
+                    💰 이 가격 실화? 가성비 계산
+                  </h5>
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '10px',
+                    flexWrap: 'wrap',
+                    marginBottom: '15px'
+                  }}>
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ color: '#1e3a8a', fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)' }}>기본 강의 10개</div>
+                      <div style={{ color: '#1e3a8a', fontWeight: '800', fontSize: '1.2rem' }}>+</div>
+                    </div>
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ color: '#1e3a8a', fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)' }}>라이브 52회</div>
+                      <div style={{ color: '#1e3a8a', fontWeight: '800', fontSize: '1.2rem' }}>=</div>
+                    </div>
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ color: '#1e3a8a', fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)' }}>총 62개 콘텐츠</div>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'center', background: 'rgba(30, 58, 138, 0.15)', padding: '15px', borderRadius: '12px' }}>
+                    <span style={{ color: '#1e3a8a', fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>95,000원 ÷ 62개 = </span>
+                    <span style={{ color: '#dc2626', fontWeight: '900', fontSize: 'clamp(1.5rem, 4vw, 1.8rem)' }}>1,532원</span>
+                    <span style={{ color: '#1e3a8a', fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>/개</span>
+                    <div style={{ color: '#1e3a8a', fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)', marginTop: '8px', fontWeight: '600' }}>
+                      ☕ 커피 한 잔도 안 되는 가격으로 전문 강의!
+                    </div>
+                  </div>
+                </div>
                 
+                {/* 라이브 혜택 */}
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
                   gap: '10px'
                 }}>
-                  {['🎯 실시간 Q&A', '🔥 최신 AI 트렌드', '💻 라이브 코딩', '📁 아카이브 제공'].map((item) => (
+                  {['🎯 실시간 Q&A', '🔥 최신 AI 업데이트', '💻 라이브 코딩', '📁 다시보기 무제한'].map((item) => (
                     <div key={item} style={{
-                      background: 'rgba(255, 255, 255, 0.15)',
-                      padding: '10px 12px',
-                      borderRadius: '10px',
+                      background: 'rgba(255, 255, 255, 0.12)',
+                      padding: '12px 12px',
+                      borderRadius: '12px',
                       color: 'white',
                       fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
                       fontWeight: '600',
-                      textAlign: 'center'
+                      textAlign: 'center',
+                      border: '1px solid rgba(255,255,255,0.1)'
                     }}>
                       {item}
                     </div>
                   ))}
-                </div>
-                
-                <div style={{
-                  marginTop: '20px',
-                  padding: '15px',
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '12px',
-                  border: '1px solid rgba(255, 255, 255, 0.2)'
-                }}>
-                  <p style={{ 
-                    color: 'white', 
-                    fontSize: 'clamp(0.85rem, 2vw, 0.95rem)', 
-                    margin: 0,
-                    fontWeight: '600'
-                  }}>
-                    ⏰ <strong>1년간 무제한 참여</strong> | 놓친 라이브는 다시보기로!
-                  </p>
                 </div>
               </div>
             </div>

@@ -238,28 +238,13 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
       };
       const newUser = await AzureTableService.createUser(userData);
 
-      // 추천 코드가 있으면 가입 리워드 처리
-      let signupRewardMessage = '';
+      // 회원가입 완료 후 세션에서 추천 코드 제거 (브릭 적립용 referralInfo는 유지)
       if (storedReferralCode) {
-        try {
-          const rewardProcessed = await AzureTableService.processSignupReward(
-            formData.email,
-            storedReferralCode
-          );
-          
-          if (rewardProcessed) {
-            signupRewardMessage = '\n🎁 추천인과 함께 각각 5,000원 리워드를 받으셨습니다!';
-          }
-        } catch (error) {
-          console.error('가입 리워드 처리 실패:', error);
-        }
-        
-        // 회원가입 완료 후 세션에서 추천 코드 제거
         clearReferralCode();
       }
 
       console.log('✅ 회원가입 성공:', newUser);
-      alert(`${newUser.name}님, 회원가입이 완료되었습니다!${signupRewardMessage}\n로그인해주세요.`);
+      alert(`${newUser.name}님, 회원가입이 완료되었습니다!\n로그인해주세요.`);
       navigate('/login');
       
     } catch (error) {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import AzureTableService from '../../services/azureTableService';
 
 // 브랜드 테마: 네이비 + 골드
 const brandTheme = {
@@ -30,6 +31,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [totalBricks, setTotalBricks] = useState<number>(0);
 
   useEffect(() => {
     // 로그인 상태 확인
@@ -39,6 +41,15 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
         const parsedUserInfo = JSON.parse(storedUserInfo);
         setIsLoggedIn(true);
         setUserInfo(parsedUserInfo);
+        
+        // 브릭 잔액 로드
+        if (parsedUserInfo?.email) {
+          AzureTableService.getUserByEmail(parsedUserInfo.email).then(user => {
+            if (user) {
+              setTotalBricks(user.totalBricks || 0);
+            }
+          });
+        }
       } catch (error) {
         console.error('사용자 정보 파싱 오류:', error);
         sessionStorage.removeItem('aicitybuilders_user_session');
@@ -110,6 +121,39 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               🔧
             </button>
           )}
+          {/* 브릭 잔액 표시 */}
+          <div 
+            onClick={() => navigate('/partner')}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              background: 'linear-gradient(135deg, #f97316, #ea580c)',
+              padding: '8px 14px',
+              borderRadius: '20px',
+              cursor: 'pointer',
+              boxShadow: '0 2px 10px rgba(249, 115, 22, 0.3)',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.boxShadow = '0 4px 15px rgba(249, 115, 22, 0.4)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow = '0 2px 10px rgba(249, 115, 22, 0.3)';
+            }}
+          >
+            <span style={{ fontSize: '1rem' }}>🧱</span>
+            <span style={{ 
+              color: '#fff', 
+              fontWeight: '800', 
+              fontSize: '0.9rem',
+              textShadow: '0 1px 2px rgba(0,0,0,0.2)'
+            }}>
+              {totalBricks.toLocaleString()}
+            </span>
+          </div>
           <span className="user-welcome">안녕하세요, {userInfo?.name || userInfo?.email}님!</span>
           <button 
             className="nav-link" 
@@ -142,7 +186,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
         {/* 데스크탑 네비게이션 */}
         <div className="header-right desktop-nav">
           <button className="nav-link" onClick={() => navigate('/ceo')}>소개</button>
-          <button className="nav-link" onClick={() => navigate('/ai-construction-site')}>🏗️ AI 건물 공사장</button>
           <button 
             className="nav-link" 
             onClick={() => navigate('/live')}
@@ -173,6 +216,25 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
           >
             💬 커뮤니티
           </button>
+          <button 
+            className="nav-link" 
+            onClick={() => navigate('/partner')}
+            style={{
+              ...navButtonStyle,
+              background: '#c45c26',
+              color: '#ffffff'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = '#e07b3c';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = '#c45c26';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
+          >
+            🧱 파트너
+          </button>
           <button className="nav-link" onClick={onFAQClick || (() => navigate('/faq'))}>FAQ</button>
           {renderAuthButtons()}
         </div>
@@ -200,13 +262,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
 
             <button 
               className="mobile-nav-link" 
-              onClick={() => handleMobileNavClick(() => navigate('/ai-construction-site'))}
-            >
-              🏗️ AI 건물 공사장
-            </button>
-
-            <button 
-              className="mobile-nav-link" 
               onClick={() => handleMobileNavClick(() => navigate('/live'))}
               style={{ 
                 background: brandTheme.navy,
@@ -226,6 +281,18 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               }}
             >
               💬 커뮤니티
+            </button>
+
+            <button 
+              className="mobile-nav-link" 
+              onClick={() => handleMobileNavClick(() => navigate('/partner'))}
+              style={{ 
+                background: '#c45c26',
+                color: '#ffffff',
+                fontWeight: '700'
+              }}
+            >
+              🧱 파트너
             </button>
 
             <button 
@@ -256,6 +323,31 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                     🔧 관리자
                   </button>
                 )}
+                {/* 모바일 브릭 잔액 */}
+                <div 
+                  onClick={() => handleMobileNavClick(() => navigate('/partner'))}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    background: 'linear-gradient(135deg, #f97316, #ea580c)',
+                    padding: '12px 20px',
+                    borderRadius: '25px',
+                    margin: '10px 0',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 15px rgba(249, 115, 22, 0.3)'
+                  }}
+                >
+                  <span style={{ fontSize: '1.2rem' }}>🧱</span>
+                  <span style={{ 
+                    color: '#fff', 
+                    fontWeight: '800', 
+                    fontSize: '1.1rem'
+                  }}>
+                    {totalBricks.toLocaleString()} 브릭
+                  </span>
+                </div>
                 <div className="mobile-user-info">
                   안녕하세요, {userInfo?.name || userInfo?.email}님!
                 </div>

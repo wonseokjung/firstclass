@@ -3,6 +3,7 @@ import { CheckCircle, Star, Clock, ArrowRight, Sparkles, Award, Play } from 'luc
 import { useLocation } from 'react-router-dom';
 import AzureTableService from '../../../services/azureTableService';
 import NavigationBar from '../../common/NavigationBar';
+import { COURSE_ID_TO_NAME, COURSE_ID_TO_PRICE } from '../../../hooks/useReferralTracking';
 
 /**
  * 🔐 보안 개선: 토스페이먼츠 결제 승인 API 호출
@@ -281,6 +282,78 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 console.log('🎁 추천 리워드 지급 완료!');
               } else {
                 console.log('ℹ️ 추천인이 없어 리워드 처리를 건너뜀');
+              }
+              
+              // 🧱 파트너 브릭 적립 처리 (추천 링크로 구매한 경우)
+              try {
+                const referralInfoStr = sessionStorage.getItem('referralInfo');
+                if (referralInfoStr) {
+                  const referralInfo = JSON.parse(referralInfoStr);
+                  const referralCode = referralInfo.referralCode;
+                  const referralTimestamp = referralInfo.timestamp;
+                  
+                  // 24시간 이내인지 확인
+                  const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+                  const isWithinTime = Date.now() - referralTimestamp < TWENTY_FOUR_HOURS;
+                  
+                  // 이미 적립된 강의인지 확인 (중복 적립 방지)
+                  const purchasedCoursesStr = sessionStorage.getItem('referralPurchasedCourses') || '[]';
+                  const purchasedCourses = JSON.parse(purchasedCoursesStr) as string[];
+                  const alreadyPurchased = purchasedCourses.includes(courseData.id);
+                  
+                  console.log('🔗 추천 정보 확인:', {
+                    referralCode,
+                    purchasedCourseId: courseData.id,
+                    isWithinTime,
+                    alreadyPurchased,
+                    previousPurchases: purchasedCourses
+                  });
+                  
+                  if (referralCode && isWithinTime && !alreadyPurchased) {
+                    // 추천 코드로 파트너 이메일 찾기
+                    const partnerEmail = await AzureTableService.getEmailByReferralCode(referralCode);
+                    
+                    if (partnerEmail && partnerEmail !== user.email) {
+                      // 추천인에게 브릭 적립
+                      const brickResult = await AzureTableService.addReferral(
+                        partnerEmail,
+                        user.email,
+                        courseData.id,
+                        courseData.title,
+                        courseData.price
+                      );
+                      
+                      if (brickResult) {
+                        console.log('🧱✅ 파트너 브릭 적립 완료!', {
+                          partner: partnerEmail,
+                          buyer: user.email,
+                          course: courseData.title,
+                          bricks: Math.floor(courseData.price * 0.1)
+                        });
+                        
+                        // 적립된 강의 목록에 추가 (중복 방지)
+                        purchasedCourses.push(courseData.id);
+                        sessionStorage.setItem('referralPurchasedCourses', JSON.stringify(purchasedCourses));
+                      } else {
+                        console.log('🧱❌ 파트너 브릭 적립 실패');
+                      }
+                    } else if (partnerEmail === user.email) {
+                      console.log('🧱⚠️ 자기 추천 불가');
+                    } else {
+                      console.log('🧱⚠️ 추천 코드에 해당하는 파트너 없음:', referralCode);
+                    }
+                  } else if (alreadyPurchased) {
+                    console.log('🧱⚠️ 이미 적립된 강의 (중복 적립 방지):', courseData.id);
+                  } else if (!isWithinTime) {
+                    console.log('🧱⏰ 24시간 초과로 추천 만료');
+                    // 24시간 지나면 세션 정리
+                    sessionStorage.removeItem('referralInfo');
+                    sessionStorage.removeItem('referralCode');
+                    sessionStorage.removeItem('referralPurchasedCourses');
+                  }
+                }
+              } catch (brickError) {
+                console.error('🧱❌ 브릭 적립 처리 오류:', brickError);
               }
               
               // 성공 여부 확인

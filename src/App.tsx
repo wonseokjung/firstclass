@@ -128,6 +128,9 @@ const N8nAutomationAdvancedPage = React.lazy(() => import('./components/pages/co
 const LoginPage = React.lazy(() => import('./components/pages/auth/LoginPage'));
 const SignUpPage = React.lazy(() => import('./components/pages/auth/SignUpPage'));
 const ForgotPasswordPage = React.lazy(() => import('./components/pages/ForgotPasswordPage'));
+
+// 파트너 프로그램
+const PartnerDashboardPage = React.lazy(() => import('./components/pages/partner/PartnerDashboardPage'));
 const UserDashboardPage = React.lazy(() => import('./components/pages/auth/UserDashboardPage'));
 
 // 결제 페이지
@@ -213,7 +216,7 @@ const Day10PageWrapped = withDayPageWrapper(Day10Page, 10);
 // 메인 페이지 래퍼 (특수 로직 포함)
 const MainPageWrapper = () => {
   const navigate = useNavigate();
-  useReferralTracking();
+  // 추천 추적은 GlobalReferralTracker에서 전역 처리
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -319,6 +322,12 @@ const PaymentDetailsViewPageWrapper = () => (
   </Suspense>
 );
 
+// 🔗 전역 추천 코드 추적 컴포넌트 (모든 페이지에서 작동)
+const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  useReferralTracking();
+  return <>{children}</>;
+};
+
 // ============================================
 // 메인 App 컴포넌트
 // ============================================
@@ -329,9 +338,10 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
-        <Suspense fallback={<LoadingSpinner />}>
-          <Routes>
+      <GlobalReferralTracker>
+        <div className="App">
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
             {/* 메인 */}
             <Route path="/" element={<MainPageWrapper />} />
             
@@ -372,6 +382,13 @@ function App() {
             <Route path="/faq" element={<FAQPageWrapped />} />
             <Route path="/ceo" element={<CEOPageWrapped />} />
             <Route path="/contact" element={<ContactPageWrapped />} />
+            
+            {/* 파트너 프로그램 */}
+            <Route path="/partner" element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <PartnerDashboardPage />
+              </Suspense>
+            } />
             <Route path="/clubs" element={<ClubsPageWrapped />} />
             <Route path="/roadmap" element={<RoadmapPageWrapped />} />
             <Route path="/chatgpt-prompts-40plus" element={<ChatGPTPrompts40PageWrapped />} />
@@ -413,7 +430,8 @@ function App() {
             <Route path="/admin/payment-details" element={<PaymentDetailsViewPageWrapper />} />
           </Routes>
         </Suspense>
-      </div>
+        </div>
+      </GlobalReferralTracker>
     </Router>
   );
 }

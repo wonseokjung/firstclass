@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Users, BookOpen, DollarSign, TrendingUp, Search, Download, RefreshCw } from 'lucide-react';
+import { Users, BookOpen, DollarSign, TrendingUp, Search, Download, RefreshCw, Banknote, CheckCircle, XCircle } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
-import AzureTableService from '../../../services/azureTableService';
+import AzureTableService, { PartnerWithdrawal } from '../../../services/azureTableService';
 
 interface UserData {
   email: string;
@@ -46,6 +46,11 @@ const AdminDashboardPage: React.FC = () => {
   const [enrollmentUserData, setEnrollmentUserData] = useState<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [enrollmentLoading, setEnrollmentLoading] = useState(false);
+  
+  // 출금 관리
+  const [pendingWithdrawals, setPendingWithdrawals] = useState<(PartnerWithdrawal & { partnerEmail: string; partnerName: string })[]>([]);
+  const [withdrawalLoading, setWithdrawalLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<'users' | 'withdrawals'>('users');
 
   // 관리자 권한 확인
   useEffect(() => {
@@ -128,10 +133,63 @@ const AdminDashboardPage: React.FC = () => {
       });
 
       setIsLoading(false);
+      
+      // 출금 요청도 함께 로드
+      await loadPendingWithdrawals();
     } catch (error) {
       console.error('유저 로드 실패:', error);
       alert('유저 데이터를 불러올 수 없습니다.');
       setIsLoading(false);
+    }
+  };
+
+  // 출금 요청 로드
+  const loadPendingWithdrawals = async () => {
+    try {
+      setWithdrawalLoading(true);
+      const withdrawals = await AzureTableService.getAllPendingWithdrawals();
+      setPendingWithdrawals(withdrawals);
+    } catch (error) {
+      console.error('출금 요청 로드 실패:', error);
+    } finally {
+      setWithdrawalLoading(false);
+    }
+  };
+
+  // 출금 승인
+  const handleApproveWithdrawal = async (partnerEmail: string, withdrawalRowKey: string) => {
+    if (!window.confirm('출금을 승인하시겠습니까? 실제 계좌 이체 후 승인해주세요.')) return;
+    
+    try {
+      const success = await AzureTableService.updateWithdrawalStatus(partnerEmail, withdrawalRowKey, 'completed');
+      if (success) {
+        alert('출금이 승인되었습니다.');
+        await loadPendingWithdrawals();
+      } else {
+        alert('출금 승인에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('출금 승인 실패:', error);
+      alert('출금 승인 중 오류가 발생했습니다.');
+    }
+  };
+
+  // 출금 거절
+  const handleRejectWithdrawal = async (partnerEmail: string, withdrawalRowKey: string) => {
+    const reason = window.prompt('거절 사유를 입력하세요:');
+    if (!reason) return;
+    
+    try {
+      const success = await AzureTableService.updateWithdrawalStatus(partnerEmail, withdrawalRowKey, 'rejected', reason);
+      if (success) {
+        alert('출금이 거절되었습니다. 브릭이 사용자에게 환불됩니다.');
+        await loadPendingWithdrawals();
+      } else {
+        alert('출금 거절에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('출금 거절 실패:', error);
+      alert('출금 거절 중 오류가 발생했습니다.');
     }
   };
 
@@ -487,35 +545,116 @@ const AdminDashboardPage: React.FC = () => {
           </div>
         </div>
 
-        {/* 필터 & 검색 */}
+        {/* 탭 네비게이션 */}
         <div style={{
-          background: 'white',
-          borderRadius: '15px',
-          padding: '25px',
-          marginBottom: '30px',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+          display: 'flex',
+          gap: '10px',
+          marginBottom: '25px'
         }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '15px'
-          }}>
-            <div style={{ position: 'relative' }}>
-              <Search size={20} style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
-              <input
-                type="text"
-                placeholder="이메일 또는 이름 검색..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '12px 12px 12px 45px',
-                  borderRadius: '10px',
-                  border: '2px solid #e2e8f0',
-                  fontSize: '1rem',
-                  outline: 'none'
-                }}
-              />
+          <button
+            onClick={() => setActiveTab('users')}
+            style={{
+              padding: '14px 28px',
+              borderRadius: '12px',
+              border: 'none',
+              background: activeTab === 'users' 
+                ? 'linear-gradient(135deg, #3b82f6, #2563eb)' 
+                : 'white',
+              color: activeTab === 'users' ? 'white' : '#64748b',
+              fontSize: '1rem',
+              fontWeight: '700',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              boxShadow: activeTab === 'users' 
+                ? '0 4px 15px rgba(59, 130, 246, 0.4)' 
+                : '0 2px 8px rgba(0,0,0,0.1)',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            <Users size={20} />
+            사용자 관리
+          </button>
+          <button
+            onClick={() => setActiveTab('withdrawals')}
+            style={{
+              padding: '14px 28px',
+              borderRadius: '12px',
+              border: 'none',
+              background: activeTab === 'withdrawals' 
+                ? 'linear-gradient(135deg, #f97316, #ea580c)' 
+                : 'white',
+              color: activeTab === 'withdrawals' ? 'white' : '#64748b',
+              fontSize: '1rem',
+              fontWeight: '700',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              boxShadow: activeTab === 'withdrawals' 
+                ? '0 4px 15px rgba(249, 115, 22, 0.4)' 
+                : '0 2px 8px rgba(0,0,0,0.1)',
+              transition: 'all 0.2s ease',
+              position: 'relative'
+            }}
+          >
+            <Banknote size={20} />
+            출금 관리
+            {pendingWithdrawals.length > 0 && (
+              <span style={{
+                position: 'absolute',
+                top: '-8px',
+                right: '-8px',
+                background: '#ef4444',
+                color: 'white',
+                borderRadius: '50%',
+                width: '24px',
+                height: '24px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.8rem',
+                fontWeight: '800'
+              }}>
+                {pendingWithdrawals.length}
+              </span>
+            )}
+          </button>
+        </div>
+
+        {/* 사용자 관리 탭 */}
+        {activeTab === 'users' && (
+          <>
+            {/* 필터 & 검색 */}
+            <div style={{
+              background: 'white',
+              borderRadius: '15px',
+              padding: '25px',
+              marginBottom: '30px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+            }}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                gap: '15px'
+              }}>
+                <div style={{ position: 'relative' }}>
+                  <Search size={20} style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                  <input
+                    type="text"
+                    placeholder="이메일 또는 이름 검색..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '12px 12px 12px 45px',
+                      borderRadius: '10px',
+                      border: '2px solid #e2e8f0',
+                      fontSize: '1rem',
+                      outline: 'none'
+                    }}
+                  />
             </div>
 
             <select
@@ -797,6 +936,147 @@ const AdminDashboardPage: React.FC = () => {
             </div>
           )}
         </div>
+          </>
+        )}
+
+        {/* 출금 관리 탭 */}
+        {activeTab === 'withdrawals' && (
+          <div style={{
+            background: 'white',
+            borderRadius: '15px',
+            padding: '30px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+          }}>
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center',
+              marginBottom: '25px'
+            }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Banknote size={28} color="#f97316" />
+                대기 중인 출금 요청
+              </h2>
+              <button
+                onClick={loadPendingWithdrawals}
+                disabled={withdrawalLoading}
+                style={{
+                  padding: '10px 20px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: '#0ea5e9',
+                  color: 'white',
+                  fontSize: '0.95rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+              >
+                <RefreshCw size={18} className={withdrawalLoading ? 'animate-spin' : ''} />
+                새로고침
+              </button>
+            </div>
+
+            {pendingWithdrawals.length > 0 ? (
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
+                    <th style={{ padding: '15px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>신청일</th>
+                    <th style={{ padding: '15px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>파트너</th>
+                    <th style={{ padding: '15px', textAlign: 'right', color: '#64748b', fontWeight: '600' }}>출금 금액</th>
+                    <th style={{ padding: '15px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>은행</th>
+                    <th style={{ padding: '15px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>계좌번호</th>
+                    <th style={{ padding: '15px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>예금주</th>
+                    <th style={{ padding: '15px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>처리</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pendingWithdrawals.map((withdrawal) => (
+                    <tr key={withdrawal.rowKey} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                      <td style={{ padding: '15px', color: '#374151' }}>
+                        {new Date(withdrawal.requestDate).toLocaleDateString('ko-KR')}
+                      </td>
+                      <td style={{ padding: '15px' }}>
+                        <div style={{ fontWeight: '600', color: '#1f2937' }}>{withdrawal.partnerName}</div>
+                        <div style={{ fontSize: '0.85rem', color: '#64748b' }}>{withdrawal.partnerEmail}</div>
+                      </td>
+                      <td style={{ padding: '15px', textAlign: 'right' }}>
+                        <span style={{ 
+                          fontWeight: '700', 
+                          color: '#f97316',
+                          fontSize: '1.1rem'
+                        }}>
+                          ₩{withdrawal.amount.toLocaleString()}
+                        </span>
+                      </td>
+                      <td style={{ padding: '15px', color: '#374151' }}>{withdrawal.bankName}</td>
+                      <td style={{ padding: '15px', color: '#374151', fontFamily: 'monospace' }}>{withdrawal.accountNumber}</td>
+                      <td style={{ padding: '15px', color: '#374151' }}>{withdrawal.accountHolder}</td>
+                      <td style={{ padding: '15px', textAlign: 'center' }}>
+                        <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+                          <button
+                            onClick={() => handleApproveWithdrawal(withdrawal.partnerEmail, withdrawal.rowKey)}
+                            style={{
+                              padding: '8px 16px',
+                              borderRadius: '8px',
+                              border: 'none',
+                              background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                              color: 'white',
+                              fontSize: '0.9rem',
+                              fontWeight: '600',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '5px'
+                            }}
+                          >
+                            <CheckCircle size={16} />
+                            승인
+                          </button>
+                          <button
+                            onClick={() => handleRejectWithdrawal(withdrawal.partnerEmail, withdrawal.rowKey)}
+                            style={{
+                              padding: '8px 16px',
+                              borderRadius: '8px',
+                              border: 'none',
+                              background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                              color: 'white',
+                              fontSize: '0.9rem',
+                              fontWeight: '600',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '5px'
+                            }}
+                          >
+                            <XCircle size={16} />
+                            거절
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div style={{
+                textAlign: 'center',
+                padding: '80px 20px',
+                color: '#94a3b8'
+              }}>
+                <Banknote size={64} style={{ marginBottom: '20px', opacity: 0.3 }} />
+                <p style={{ fontSize: '1.2rem', fontWeight: '600', marginBottom: '10px' }}>
+                  대기 중인 출금 요청이 없습니다
+                </p>
+                <p style={{ fontSize: '0.95rem' }}>
+                  파트너가 출금을 신청하면 여기에 표시됩니다
+                </p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* 비밀번호 변경 모달 */}
