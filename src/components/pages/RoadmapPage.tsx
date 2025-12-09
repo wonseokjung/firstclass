@@ -25,7 +25,7 @@ const RoadmapPage: React.FC = () => {
       ],
       status: 'available',
       path: '/courses/ai-building',
-      showcaseImage: '/images/첫번째강의스텝1/dog.jpeg'
+      showcaseImage: '/images/step1/dog.jpeg'
     },
     {
       step: 2,

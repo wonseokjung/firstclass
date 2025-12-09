@@ -1006,7 +1006,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)'
               }}>
                 <img 
-                  src="/images/첫번째강의스텝1/dog.jpeg"
+                  src="/images/step1/dog.jpeg"
                   alt="압도적인 비주얼 예시 - 센트럴파크 거대 강아지"
                   style={{
                     width: '100%',
