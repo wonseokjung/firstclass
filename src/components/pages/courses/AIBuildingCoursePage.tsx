@@ -1218,6 +1218,111 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
               {/* 제공 혜택 */}
             </div>
 
+            {/* 🔴 라이브 혜택 섹션 */}
+            <div style={{
+              background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
+              padding: '35px',
+              borderRadius: '20px',
+              marginBottom: '25px',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              {/* 배경 효과 */}
+              <div style={{
+                position: 'absolute',
+                top: '-30%',
+                right: '-10%',
+                width: '200px',
+                height: '200px',
+                background: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: '50%'
+              }}></div>
+              
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  marginBottom: '20px'
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    padding: '8px 16px',
+                    borderRadius: '20px'
+                  }}>
+                    <span style={{
+                      width: '10px',
+                      height: '10px',
+                      background: '#fff',
+                      borderRadius: '50%',
+                      animation: 'blink 1s infinite'
+                    }}></span>
+                    <span style={{ color: 'white', fontWeight: '700', fontSize: '0.9rem' }}>LIVE 포함</span>
+                  </div>
+                </div>
+                
+                <h4 style={{ 
+                  color: 'white', 
+                  fontSize: '1.5rem', 
+                  fontWeight: '800', 
+                  marginBottom: '15px',
+                  lineHeight: '1.4'
+                }}>
+                  📺 매주 1회 실시간 라이브 세션
+                </h4>
+                
+                <p style={{ 
+                  color: 'rgba(255, 255, 255, 0.9)', 
+                  fontSize: '1rem',
+                  lineHeight: '1.7',
+                  marginBottom: '20px'
+                }}>
+                  AI는 빠르게 변합니다. 녹화 강의만으로는 최신 트렌드를 따라갈 수 없어요.<br/>
+                  <strong>매주 라이브</strong>로 새로운 도구, 업데이트, 실전 팁을 실시간으로 배우세요!
+                </p>
+                
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+                  gap: '12px'
+                }}>
+                  {['🎯 실시간 Q&A', '🔥 최신 AI 트렌드', '💻 라이브 코딩', '📁 아카이브 제공'].map((item) => (
+                    <div key={item} style={{
+                      background: 'rgba(255, 255, 255, 0.15)',
+                      padding: '12px 15px',
+                      borderRadius: '10px',
+                      color: 'white',
+                      fontSize: '0.9rem',
+                      fontWeight: '600',
+                      textAlign: 'center'
+                    }}>
+                      {item}
+                    </div>
+                  ))}
+                </div>
+                
+                <div style={{
+                  marginTop: '20px',
+                  padding: '15px',
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  borderRadius: '12px',
+                  border: '1px solid rgba(255, 255, 255, 0.2)'
+                }}>
+                  <p style={{ 
+                    color: 'white', 
+                    fontSize: '0.95rem', 
+                    margin: 0,
+                    fontWeight: '600'
+                  }}>
+                    ⏰ <strong>1년간 무제한 참여</strong> | 놓친 라이브는 다시보기로!
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* 강의 방식 */}
             <div style={{
               background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
@@ -1235,19 +1340,19 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
               }}>
                 <div style={{ textAlign: 'center' }}>
                   <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '5px' }}>HD 동영상</div>
-                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>1080p 고화질</div>
+                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>기본 콘텐츠 5개</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '5px' }}>모바일 최적화</div>
-                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>언제 어디서나</div>
+                  <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '5px' }}>주간 라이브</div>
+                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>매주 1회 진행</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '5px' }}>배속 조절</div>
-                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>0.5x ~ 2x</div>
+                  <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '5px' }}>다시보기</div>
+                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>아카이브 무제한</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '5px' }}>실습 자료</div>
-                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>다운로드 제공</div>
+                  <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '5px' }}>수강 기간</div>
+                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>1년간 접근</div>
                 </div>
               </div>
             </div>

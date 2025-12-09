@@ -753,6 +753,112 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               </p>
             </div>
 
+            {/* 🔴 라이브 혜택 섹션 */}
+            <div style={{
+              background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
+              padding: 'clamp(30px, 5vw, 40px)',
+              borderRadius: '20px',
+              marginBottom: '30px',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              {/* 배경 효과 */}
+              <div style={{
+                position: 'absolute',
+                top: '-30%',
+                right: '-10%',
+                width: '200px',
+                height: '200px',
+                background: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: '50%'
+              }}></div>
+              
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  marginBottom: '20px',
+                  flexWrap: 'wrap'
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    padding: '8px 16px',
+                    borderRadius: '20px'
+                  }}>
+                    <span style={{
+                      width: '10px',
+                      height: '10px',
+                      background: '#fff',
+                      borderRadius: '50%',
+                      animation: 'blink 1s infinite'
+                    }}></span>
+                    <span style={{ color: 'white', fontWeight: '700', fontSize: '0.9rem' }}>LIVE 포함</span>
+                  </div>
+                </div>
+                
+                <h4 style={{ 
+                  color: 'white', 
+                  fontSize: 'clamp(1.3rem, 3vw, 1.5rem)', 
+                  fontWeight: '800', 
+                  marginBottom: '15px',
+                  lineHeight: '1.4'
+                }}>
+                  📺 매주 1회 실시간 라이브 세션
+                </h4>
+                
+                <p style={{ 
+                  color: 'rgba(255, 255, 255, 0.9)', 
+                  fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                  lineHeight: '1.7',
+                  marginBottom: '20px'
+                }}>
+                  AI는 빠르게 변합니다. 녹화 강의만으로는 최신 트렌드를 따라갈 수 없어요.<br/>
+                  <strong>매주 라이브</strong>로 새로운 도구, 업데이트, 실전 팁을 실시간으로 배우세요!
+                </p>
+                
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
+                  gap: '10px'
+                }}>
+                  {['🎯 실시간 Q&A', '🔥 최신 AI 트렌드', '💻 라이브 코딩', '📁 아카이브 제공'].map((item) => (
+                    <div key={item} style={{
+                      background: 'rgba(255, 255, 255, 0.15)',
+                      padding: '10px 12px',
+                      borderRadius: '10px',
+                      color: 'white',
+                      fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
+                      fontWeight: '600',
+                      textAlign: 'center'
+                    }}>
+                      {item}
+                    </div>
+                  ))}
+                </div>
+                
+                <div style={{
+                  marginTop: '20px',
+                  padding: '15px',
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  borderRadius: '12px',
+                  border: '1px solid rgba(255, 255, 255, 0.2)'
+                }}>
+                  <p style={{ 
+                    color: 'white', 
+                    fontSize: 'clamp(0.85rem, 2vw, 0.95rem)', 
+                    margin: 0,
+                    fontWeight: '600'
+                  }}>
+                    ⏰ <strong>1년간 무제한 참여</strong> | 놓친 라이브는 다시보기로!
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* 가격 & CTA 박스 - 강력한 시각적 강조 */}
             <div style={{
               background: 'linear-gradient(135deg, #1e40af, #1e40af)',
