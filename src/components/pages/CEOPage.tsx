@@ -519,7 +519,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
         borderTop: '1px solid rgba(255,255,255,0.1)'
       }}>
         <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
-          © 2024 AI City Builders. All rights reserved.
+          © 2025 AI City Builders. All rights reserved.
         </p>
       </footer>
 

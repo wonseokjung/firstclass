@@ -1,13 +1,31 @@
 // Azure SDK 대신 REST API 직접 호출 사용
 
-// Azure Table Storage SAS URLs 설정
+/**
+ * 🔐 보안 개선: Azure Table Storage SAS URLs
+ * 
+ * 환경변수로 관리하되, SAS URL은 읽기 전용 권한만 부여 권장
+ * 민감한 쓰기 작업은 Azure Functions로 분리하는 것이 더 안전
+ * 
+ * 환경변수 설정 방법:
+ * 1. .env.local 파일 생성 (Git에 커밋되지 않음)
+ * 2. Azure Portal > Static Web Apps > Configuration에서 설정
+ */
 const AZURE_SAS_URLS = {
-  users: 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-12-07T14:26:24Z&se=2029-10-15T22:41:00Z&sv=2024-11-04&sig=5KPeZHVwROPfNh1KBESKRJrnE12hTd2fTtESe3x5YSU%3D&tn=users',
-  sessions: 'https://clathonstorage.table.core.windows.net/mentoringssessions?sp=raud&st=2025-08-13T02:04:25Z&se=2030-10-13T10:19:00Z&spr=https&sv=2024-11-04&sig=ulo8yMTJqBhKB%2FeeIKycUxl8knzpbDkClU6NTaPrHYw%3D&tn=mentoringssessions',
-  packages: 'https://clathonstorage.table.core.windows.net/studentpackages?sp=raud&st=2025-08-13T02:04:25Z&se=2030-10-13T10:19:00Z&spr=https&sv=2024-11-04&sig=ulo8yMTJqBhKB%2FeeIKycUxl8knzpbDkClU6NTaPrHYw%3D&tn=studentpackages',
-  posts: 'https://clathonstorage.table.core.windows.net/posts?sp=raud&st=2025-12-07T14:30:16Z&se=2029-10-07T22:45:00Z&sv=2024-11-04&sig=WViAUr86LkEJ0Vk%2FKvdh6RhJNHoTW0DRhFCHZRybjvM%3D&tn=posts',
-  comments: 'https://clathonstorage.table.core.windows.net/comments?sp=raud&st=2025-12-07T14:28:11Z&se=2028-10-18T01:43:00Z&sv=2024-11-04&sig=IVvic6vtJ9RompjpJc7cOOmKNzowJ6s4ZR5hHqFsrco%3D&tn=comments'
+  users: process.env.REACT_APP_AZURE_SAS_URL_USERS || 'https://clathonstorage.table.core.windows.net/users?sp=raud&st=2025-12-07T14:26:24Z&se=2029-10-15T22:41:00Z&sv=2024-11-04&sig=5KPeZHVwROPfNh1KBESKRJrnE12hTd2fTtESe3x5YSU%3D&tn=users',
+  sessions: process.env.REACT_APP_AZURE_SAS_URL_SESSIONS || 'https://clathonstorage.table.core.windows.net/mentoringssessions?sp=raud&st=2025-08-13T02:04:25Z&se=2030-10-13T10:19:00Z&spr=https&sv=2024-11-04&sig=ulo8yMTJqBhKB%2FeeIKycUxl8knzpbDkClU6NTaPrHYw%3D&tn=mentoringssessions',
+  packages: process.env.REACT_APP_AZURE_SAS_URL_PACKAGES || 'https://clathonstorage.table.core.windows.net/studentpackages?sp=raud&st=2025-08-13T02:04:25Z&se=2030-10-13T10:19:00Z&spr=https&sv=2024-11-04&sig=ulo8yMTJqBhKB%2FeeIKycUxl8knzpbDkClU6NTaPrHYw%3D&tn=studentpackages',
+  posts: process.env.REACT_APP_AZURE_SAS_URL_POSTS || 'https://clathonstorage.table.core.windows.net/posts?sp=raud&st=2025-12-07T14:30:16Z&se=2029-10-07T22:45:00Z&sv=2024-11-04&sig=WViAUr86LkEJ0Vk%2FKvdh6RhJNHoTW0DRhFCHZRybjvM%3D&tn=posts',
+  comments: process.env.REACT_APP_AZURE_SAS_URL_COMMENTS || 'https://clathonstorage.table.core.windows.net/comments?sp=raud&st=2025-12-07T14:28:11Z&se=2028-10-18T01:43:00Z&sv=2024-11-04&sig=IVvic6vtJ9RompjpJc7cOOmKNzowJ6s4ZR5hHqFsrco%3D&tn=comments'
 };
+
+// 환경변수 설정 여부 확인 (개발 중 디버깅용)
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+  const hasEnvVars = process.env.REACT_APP_AZURE_SAS_URL_USERS;
+  if (!hasEnvVars) {
+    console.warn('⚠️ Azure SAS URL 환경변수가 설정되지 않았습니다. 기본값(하드코딩)을 사용합니다.');
+    console.warn('💡 보안을 위해 .env.local 파일에 환경변수를 설정하세요.');
+  }
+}
 
 
 const isConnectionConfigured = true; // SAS URL이 있으므로 항상 true

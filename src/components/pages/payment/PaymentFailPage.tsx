@@ -411,7 +411,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; 2024 AI City Builders. All rights reserved.</p>
+          <p>&copy; 2025 AI City Builders. All rights reserved.</p>
         </div>
       </footer>
     </div>

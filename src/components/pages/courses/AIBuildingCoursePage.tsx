@@ -953,6 +953,82 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 }}
               />
             </div>
+
+            {/* 🔥 핵심 차별점 - 압도적 비주얼 */}
+            <div style={{
+              background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
+              padding: '50px 40px',
+              borderRadius: '25px',
+              marginBottom: '40px',
+              border: '3px solid #fbbf24',
+              boxShadow: '0 15px 50px rgba(251, 191, 36, 0.2)'
+            }}>
+              <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+                <div style={{
+                  display: 'inline-block',
+                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  padding: '10px 25px',
+                  borderRadius: '30px',
+                  marginBottom: '20px'
+                }}>
+                  <span style={{ color: '#000', fontWeight: '800', fontSize: '1rem' }}>
+                    ⚡ 핵심 차별점
+                  </span>
+                </div>
+                <h3 style={{
+                  color: '#ffffff',
+                  fontSize: 'clamp(1.5rem, 4vw, 2.2rem)',
+                  fontWeight: '900',
+                  marginBottom: '15px',
+                  lineHeight: '1.4'
+                }}>
+                  콘텐츠를 "생성"하는 게 아닙니다.<br/>
+                  <span style={{ color: '#fbbf24' }}>압도적으로 강한 주제를 "선택"</span>하는 겁니다.
+                </h3>
+                <p style={{
+                  color: '#94a3b8',
+                  fontSize: '1.1rem',
+                  lineHeight: '1.7',
+                  maxWidth: '700px',
+                  margin: '0 auto'
+                }}>
+                  누구나 AI로 이미지를 만들 수 있습니다.<br/>
+                  하지만 <strong style={{ color: '#fff' }}>"무엇을 만들어야 팔리는지"</strong> 아는 사람은 드뭅니다.<br/>
+                  처음부터 비주얼적으로 강한 주제를 선택해야 수익화가 됩니다.
+                </p>
+              </div>
+
+              {/* 예시 이미지 */}
+              <div style={{
+                borderRadius: '20px',
+                overflow: 'hidden',
+                border: '4px solid #fbbf24',
+                boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)'
+              }}>
+                <img 
+                  src="/images/첫번째강의스텝1/dog.jpeg"
+                  alt="압도적인 비주얼 예시 - 센트럴파크 거대 강아지"
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block'
+                  }}
+                />
+                <div style={{
+                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  padding: '20px',
+                  textAlign: 'center'
+                }}>
+                  <span style={{ 
+                    color: '#000', 
+                    fontSize: '1.1rem', 
+                    fontWeight: '800' 
+                  }}>
+                    🎨 이런 압도적인 비주얼을 AI로 만드는 법을 배웁니다
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* 강의 차별화 포인트 */}

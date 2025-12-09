@@ -12,27 +12,28 @@ const RoadmapPage: React.FC = () => {
       title: 'AI 건물주 되기',
       subtitle: '배우기',
       icon: <Sparkles size={32} />,
-      description: '다양한 AI 모델로 콘텐츠 생성 + 비즈니스 마인드',
-      details: '취미가 아닌 사업화를 위한 콘텐츠를 만듭니다. 다양한 AI 모델, 서비스, 프롬프트 기법을 배우고 비즈니스 마인드를 갖춥니다.',
+      description: '"무엇을 만들어야 팔리는지" + 압도적인 비주얼',
+      details: '그냥 AI 이미지 생성이 아닙니다. 무엇을 만들어야 팔리는지 알고, 압도적인 비주얼로 차별화하는 콘텐츠 비즈니스의 시작점입니다. 처음부터 수익화를 설계하세요.',
       price: '₩45,000',
       priceType: '일회성',
       color: '#3b82f6',
       gradient: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)',
       features: [
-        '다양한 AI 모델 활용법',
-        '효과적인 프롬프트 기법',
-        '수익화 비즈니스 마인드'
+        '팔리는 콘텐츠가 무엇인지 이해',
+        '압도적인 비주얼 제작 기법',
+        '수익화 파이프라인 설계'
       ],
       status: 'available',
-      path: '/courses/ai-building'
+      path: '/courses/ai-building',
+      showcaseImage: '/images/첫번째강의스텝1/dog.jpeg'
     },
     {
       step: 2,
       title: 'AI 에이전트 비기너',
-      subtitle: '훈련하기',
+      subtitle: '시스템화',
       icon: <Bot size={32} />,
-      description: '여러 AI를 하나의 회사처럼 구현하는 훈련',
-      details: '구글 OPAL로 AI 에이전트 기반 워크플로우와 자동화를 배웁니다. 단순히 1개 AI가 아닌, 여러 AI 모델을 하나의 회사처럼 연결하는 훈련입니다.',
+      description: '반복 작업을 시스템으로 만들기',
+      details: '콘텐츠를 매번 수동으로 만들 순 없습니다. 여러 AI를 하나의 팀처럼 연결해서 반복 작업을 자동화하는 시스템을 구축합니다.',
       price: '₩95,000',
       priceType: '일회성',
       color: '#10b981',
@@ -40,51 +41,51 @@ const RoadmapPage: React.FC = () => {
       features: [
         '구글 OPAL 완전 정복',
         'AI 에이전트 워크플로우',
-        '멀티 AI 자동화 시스템'
+        '콘텐츠 생산 자동화 시스템'
       ],
       status: 'available',
       path: '/courses/chatgpt-agent-beginner'
     },
     {
       step: 3,
-      title: 'connexionai',
-      subtitle: '만들기',
+      title: 'AI 에이전트 파견소',
+      subtitle: '실전',
       icon: <Zap size={32} />,
-      description: 'AI 수익화에만 집중한 전문 자동화 에이전트',
-      details: '1, 2단계에서 배운 것을 실전에 적용합니다. connexionai는 오직 AI 수익화에만 집중하여 개발된 전문 에이전트입니다. 고퀄리티 콘텐츠를 자동으로 생성하세요.',
-      price: '₩79,000',
-      priceType: '월',
+      description: '교육 + 도구: AI 직원을 파견받아 콘텐츠 사업 시작',
+      details: '혼자 다 할 필요 없습니다. AI 에이전트를 파견받아 콘텐츠 제작부터 자동화까지 맡기세요. 대본, 이미지, 음성, 영상 - 각 분야 전문 에이전트가 일합니다.',
+      price: '준비중',
+      priceType: '',
       color: '#f59e0b',
       gradient: 'linear-gradient(135deg, #d4af37 0%, #f59e0b 50%, #fbbf24 100%)',
       features: [
-        '🔧 AI 자동화 도구 무제한',
+        '🤖 콘텐츠 전문 AI 에이전트 제공',
         '📚 매주 업데이트 강의',
         '🔴 주간 라이브 (월 4회)',
-        '🎥 영상 자동화 (곧 출시)',
+        '🎥 영상 자동화 에이전트',
       ],
       highlights: [
-        '대본 → 이미지 → 음성 → 영상 자동 생성',
-        'AI 수익화 전문 에이전트',
-        '1,2단계 훈련 → connexionai로 실전!'
+        '대본 에이전트 → 이미지 에이전트 → 음성 에이전트',
+        'AI 직원들이 당신 대신 일합니다',
+        '1,2단계 훈련 → 에이전트 파견소에서 실전!'
       ],
-      status: 'available',
-      path: '/courses/connexionai'
+      status: 'coming_soon',
+      path: '#'
     },
     {
       step: 4,
       title: '1인 콘텐츠 기업 만들기',
-      subtitle: '키우기',
+      subtitle: '사업화',
       icon: <Building2 size={32} />,
-      description: '바이브코딩으로 나만의 서비스 만들기',
-      details: '3단계까지 완료하면 이제 진짜 사업가가 됩니다. 바이브코딩으로 나만의 서비스를 직접 만들고, 개인사업자/법인 설립, 세금, 정부 지원 패키지를 활용해 1인 기업으로 성장합니다.',
+      description: '콘텐츠 크리에이터 → 사업가로 전환',
+      details: '콘텐츠를 만드는 사람에서 사업을 운영하는 사람이 됩니다. 사업자등록, 세금, 정부지원금 활용까지. 취미가 아닌 진짜 비즈니스로 만듭니다.',
       price: 'Coming Soon',
       priceType: '',
       color: '#8b5cf6',
       gradient: 'linear-gradient(135deg, #5b21b6 0%, #8b5cf6 100%)',
       features: [
-        '🔥 바이브코딩으로 서비스 개발',
-        '개인사업자 & 법인 설립',
-        '예비/초기 창업패키지 활용'
+        '🏢 개인사업자 & 법인 설립',
+        '💰 세금 & 정부지원금 활용',
+        '🔥 바이브코딩으로 서비스 개발'
       ],
       status: 'coming_soon',
       path: '#'
@@ -124,8 +125,8 @@ const RoadmapPage: React.FC = () => {
           marginBottom: '20px',
           lineHeight: '1.2'
         }}>
-          AI를 배우고, 훈련하고,<br />
-          <span style={{ color: '#f59e0b' }}>도구로 만들고</span>, 사업화하기
+          콘텐츠 제작부터 사업화까지<br />
+          <span style={{ color: '#f59e0b' }}>파이프라인을 설계하세요</span>
         </h1>
         
         <p style={{
@@ -135,8 +136,8 @@ const RoadmapPage: React.FC = () => {
           margin: '0 auto 40px',
           lineHeight: '1.7'
         }}>
-          AI 수익화의 처음부터 끝까지.<br />
-          단계별로 따라오시면 됩니다.
+          그냥 만들면 다음이 없습니다.<br />
+          <strong style={{ color: '#fff' }}>처음부터 수익화를 설계</strong>하고 시작하세요.
         </p>
 
         {/* Progress Bar */}
@@ -307,6 +308,40 @@ const RoadmapPage: React.FC = () => {
                   {step.details}
                 </p>
 
+                {/* Showcase Image for Step 1 */}
+                {(step as any).showcaseImage && (
+                  <div style={{
+                    marginBottom: '20px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    border: '2px solid rgba(59, 130, 246, 0.3)',
+                    position: 'relative'
+                  }}>
+                    <img 
+                      src={(step as any).showcaseImage} 
+                      alt="압도적인 비주얼 예시"
+                      style={{
+                        width: '100%',
+                        height: '180px',
+                        objectFit: 'cover'
+                      }}
+                    />
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '8px',
+                      left: '8px',
+                      background: 'rgba(0,0,0,0.7)',
+                      padding: '4px 10px',
+                      borderRadius: '6px',
+                      fontSize: '0.75rem',
+                      color: '#3b82f6',
+                      fontWeight: '600'
+                    }}>
+                      ✨ 이런 비주얼을 만듭니다
+                    </div>
+                  </div>
+                )}
+
                 {/* Highlights for Featured */}
                 {step.status === 'featured' && step.highlights && (
                   <div style={{
@@ -427,14 +462,14 @@ const RoadmapPage: React.FC = () => {
           fontSize: '1.1rem',
           marginBottom: '32px'
         }}>
-          AI가 처음이라면 <strong style={{ color: '#3b82f6' }}>Step 1</strong>부터,<br />
-          이미 기초가 있다면 <strong style={{ color: '#f59e0b' }}>connexionai</strong>로 바로 시작하세요.
+          AI 수익화의 첫 걸음,<br />
+          <strong style={{ color: '#3b82f6' }}>Step 1: AI 건물주 되기</strong>부터 시작하세요!
         </p>
         <button
-          onClick={() => navigate('/courses/connexionai')}
+          onClick={() => navigate('/courses/ai-building')}
           style={{
-            background: 'linear-gradient(135deg, #d4af37 0%, #f59e0b 100%)',
-            color: '#000',
+            background: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)',
+            color: '#fff',
             border: 'none',
             padding: '18px 48px',
             borderRadius: '16px',
@@ -444,10 +479,10 @@ const RoadmapPage: React.FC = () => {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '12px',
-            boxShadow: '0 10px 40px rgba(245, 158, 11, 0.3)'
+            boxShadow: '0 10px 40px rgba(59, 130, 246, 0.3)'
           }}
         >
-          connexionai 시작하기
+          🏗️ Step 1 시작하기
           <ArrowRight size={22} />
         </button>
       </section>
@@ -459,7 +494,7 @@ const RoadmapPage: React.FC = () => {
         borderTop: '1px solid rgba(255,255,255,0.1)'
       }}>
         <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
-          © 2024 AI City Builders. All rights reserved.
+          © 2025 AI City Builders. All rights reserved.
         </p>
       </footer>
     </div>

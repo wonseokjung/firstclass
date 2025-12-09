@@ -14,14 +14,29 @@
   }
 }                                                    
 
-/* CSS 변수로 테마 관리 */
+/* CSS 변수로 테마 관리 - 다크 테마 기준 */
 :root {
+  /* 브랜드 컬러 */
   --color-primary: #1e40af;
   --color-primary-hover: #1e3a8a;
   --color-accent: #fbbf24;
   --color-accent-hover: #f59e0b;
-  --color-black: #ffffff;
-  --color-white: #1f2937;
+  --color-success: #10b981;
+  --color-success-hover: #059669;
+  
+  /* 시맨틱 컬러 (다크 테마) */
+  --color-background: #ffffff;
+  --color-background-secondary: #f8fafc;
+  --color-text: #1f2937;
+  --color-text-secondary: #6b7280;
+  --color-text-muted: #9ca3af;
+  --color-border: #e5e7eb;
+  
+  /* 다크 서페이스 (카드, 섹션 배경 등) */
+  --color-surface-dark: #0a0a0a;
+  --color-surface-darker: #1a1a1a;
+  
+  /* 그레이스케일 (다크 테마 기준) */
   --color-gray-100: #666666;
   --color-gray-200: #333;
   --color-gray-300: #222;
@@ -29,8 +44,10 @@
   --color-gray-500: #333;
   --color-gray-600: #1a1a1a;
   --color-gray-700: #0a0a0a;
-  --color-success: #10b981;
-  --color-success-hover: #059669;
+  
+  /* 레거시 호환성 - 기존 변수명 유지 (추후 제거 예정) */
+  --color-black: var(--color-background);
+  --color-white: var(--color-text);
   
   --font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --border-radius: 8px;

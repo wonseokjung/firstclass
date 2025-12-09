@@ -4,26 +4,23 @@ import { useLocation } from 'react-router-dom';
 import AzureTableService from '../../../services/azureTableService';
 import NavigationBar from '../../common/NavigationBar';
 
-// 토스페이먼츠 결제 승인 API 호출 함수
+/**
+ * 🔐 보안 개선: 토스페이먼츠 결제 승인 API 호출
+ * 
+ * 시크릿 키를 프론트엔드에서 노출하지 않고, Azure Functions API를 통해 서버에서 처리
+ * Azure Portal > Static Web Apps > Configuration에서 환경변수 설정 필요:
+ * - TOSS_LIVE_SECRET_KEY
+ * - TOSS_TEST_SECRET_KEY
+ */
 const confirmPayment = async (paymentKey: string, orderId: string, amount: number) => {
-  // paymentKey 기반으로 라이브/테스트 환경 감지 (더 정확함!)
-  // tviva로 시작하면 테스트, 그 외는 라이브
   const isTestPayment = paymentKey.startsWith('tviva') || paymentKey.startsWith('test_');
-  const isLiveMode = !isTestPayment;
-  
-  const secretKey = isLiveMode
-    ? 'live_sk_AQ92ymxN34P4R5EKxBkO3ajRKXvd'  // 🔴 라이브 시크릿 키
-    : 'test_sk_vZnjEJeQVxG1oQy91vqq3PmOoBN0';   // 🟡 테스트 시크릿 키
-  
-  console.log(`💳 결제 승인 API 모드: ${isLiveMode ? '🔴 LIVE' : '🟡 TEST'} (paymentKey: ${paymentKey.substring(0, 10)}...)`);
-  
-  const basicAuth = btoa(`${secretKey}:`);
+  console.log(`💳 결제 승인 요청: ${isTestPayment ? '🟡 TEST' : '🔴 LIVE'} (paymentKey: ${paymentKey.substring(0, 10)}...)`);
   
   try {
-    const response = await fetch('https://api.tosspayments.com/v1/payments/confirm', {
+    // Azure Functions API 호출 (시크릿 키는 서버에서 처리)
+    const response = await fetch('/api/confirm-payment', {
       method: 'POST',
       headers: {
-        'Authorization': `Basic ${basicAuth}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -33,14 +30,14 @@ const confirmPayment = async (paymentKey: string, orderId: string, amount: numbe
       }),
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || '결제 승인 실패');
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.error || '결제 승인 실패');
     }
 
-    const paymentData = await response.json();
-    console.log('✅ 결제 승인 완료:', paymentData);
-    return paymentData;
+    console.log('✅ 결제 승인 완료:', result.data);
+    return result.data;
   } catch (error) {
     console.error('❌ 결제 승인 실패:', error);
     throw error;
@@ -783,7 +780,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; 2024 AI City Builders. All rights reserved.</p>
+          <p>&copy; 2025 AI City Builders. All rights reserved.</p>
       </div>
       </footer>
     </div>
