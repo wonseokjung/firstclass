@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Clock, Award, Play, Calendar, Zap, Edit2, Check, X, User } from 'lucide-react';
+import { BookOpen, Clock, Award, Play, Calendar, Zap, Edit2, Check, X } from 'lucide-react';
 import AzureTableService from '../../../services/azureTableService';
 import NavigationBar from '../../common/NavigationBar';
 import { SkeletonCourseCard, SkeletonUserStats } from '../../common/SkeletonLoader';
