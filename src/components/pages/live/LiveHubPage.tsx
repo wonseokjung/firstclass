@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../../common/NavigationBar';
+import AzureTableService from '../../../services/azureTableService';
 
 // 브랜드 컬러 (밝은 버전)
 const COLORS = {
@@ -141,18 +142,56 @@ const LiveHubPage: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<'all' | 'free' | 'premium'>('all');
 
   useEffect(() => {
-    const userSession = sessionStorage.getItem('aicitybuilders_user_session');
-    if (userSession) {
-      try {
-        const user = JSON.parse(userSession);
-        setIsLoggedIn(true);
-        setUserName(user?.name || user?.email || '');
-        const purchased = user?.purchasedCourses || [];
-        setPurchasedCourses(purchased);
-      } catch (e) {
-        console.error('사용자 정보 파싱 오류:', e);
+    const checkUserAndCourses = async () => {
+      const userSession = sessionStorage.getItem('aicitybuilders_user_session');
+      if (userSession) {
+        try {
+          const user = JSON.parse(userSession);
+          setIsLoggedIn(true);
+          setUserName(user?.name || user?.email || '');
+          
+          // Azure 테이블에서 구매한 강의 확인
+          const purchasedCourseIds: number[] = [];
+          
+          // Step 1: AI 건물주 되기 (courseId: 999)
+          try {
+            const step1Status = await AzureTableService.checkCoursePayment(user.email, 'ai-building-course');
+            if (step1Status?.isPaid) {
+              purchasedCourseIds.push(999);
+              console.log('✅ Step 1 (AI 건물주) 구매 확인됨');
+            }
+          } catch (e) {
+            console.error('Step 1 확인 오류:', e);
+          }
+          
+          // Step 2: AI Agent Maker (courseId: 1002)
+          try {
+            const step2Status = await AzureTableService.checkCoursePayment(user.email, 'chatgpt-agent-beginner');
+            if (step2Status?.isPaid) {
+              purchasedCourseIds.push(1002);
+              console.log('✅ Step 2 (AI Agent) 구매 확인됨');
+            }
+          } catch (e) {
+            console.error('Step 2 확인 오류:', e);
+          }
+          
+          // 테스트 계정은 모든 강의 접근 가능
+          const testAccounts = ['test10@gmail.com'];
+          if (testAccounts.includes(user.email)) {
+            purchasedCourseIds.push(999, 1002, 1003, 1004);
+            console.log('✅ 테스트 계정 - 모든 강의 접근 가능');
+          }
+          
+          setPurchasedCourses(purchasedCourseIds);
+          console.log('📋 구매한 강의:', purchasedCourseIds);
+          
+        } catch (e) {
+          console.error('사용자 정보 파싱 오류:', e);
+        }
       }
-    }
+    };
+    
+    checkUserAndCourses();
   }, []);
 
   const canAccessLive = (schedule: LiveSchedule) => {
