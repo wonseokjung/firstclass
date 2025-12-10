@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Clock, Play } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
 import AzureTableService from '../../../services/azureTableService';
@@ -9,6 +10,7 @@ interface AIBuildingCoursePlayerPageProps {
 }
 
 const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({ onBack }) => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
   // const [expandedChapters, setExpandedChapters] = useState<Set<number>>(new Set());
@@ -395,6 +397,77 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
               ? '환영합니다! 이제 실제 강의를 시청하고 나만의 수익형 디지털 건물을 완성해보세요.'
               : '얼리버드로 등록해주셔서 감사합니다! 강의는 2026년 1월 1일에 공개됩니다.'}
           </p>
+        </div>
+
+        {/* 라이브 입장 버튼 */}
+        <div 
+          onClick={() => navigate('/live')}
+          style={{
+            background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+            border: 'none',
+            borderRadius: '15px',
+            padding: '20px 25px',
+            marginBottom: '30px',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '15px',
+            boxShadow: '0 4px 20px rgba(239, 68, 68, 0.3)'
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.transform = 'scale(1.02)';
+            e.currentTarget.style.boxShadow = '0 8px 30px rgba(239, 68, 68, 0.4)';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
+            e.currentTarget.style.boxShadow = '0 4px 20px rgba(239, 68, 68, 0.3)';
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+            <div style={{
+              width: '50px',
+              height: '50px',
+              background: 'rgba(255, 255, 255, 0.2)',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'relative'
+            }}>
+              <span style={{ fontSize: '1.8rem' }}>🔴</span>
+              <div style={{
+                position: 'absolute',
+                top: '5px',
+                right: '5px',
+                width: '12px',
+                height: '12px',
+                background: '#22c55e',
+                borderRadius: '50%',
+                border: '2px solid white',
+                animation: 'pulse 2s infinite'
+              }}></div>
+            </div>
+            <div>
+              <div style={{ fontSize: '1.3rem', fontWeight: '800', color: 'white' }}>
+                🔴 주간 라이브 강의 입장
+              </div>
+              <div style={{ fontSize: '0.95rem', opacity: '0.9', color: 'white' }}>
+                매주 화요일 8PM | AI 이미지 수익화 실습
+              </div>
+            </div>
+          </div>
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.2)',
+            padding: '10px 20px',
+            borderRadius: '25px',
+            fontSize: '1rem',
+            fontWeight: '700',
+            color: 'white'
+          }}>
+            입장하기 →
+          </div>
         </div>
 
         {/* 🔒 강의 잠금 상태 또는 비디오 플레이어 */}

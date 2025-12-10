@@ -264,6 +264,77 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
             </div>
           </div>
 
+          {/* 라이브 입장 버튼 */}
+          <div 
+            onClick={() => navigate('/live')}
+            style={{
+              background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.9))',
+              border: '2px solid rgba(255, 255, 255, 0.3)',
+              borderRadius: '15px',
+              padding: '20px 25px',
+              marginBottom: '20px',
+              backdropFilter: 'blur(10px)',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '15px'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'scale(1.02)';
+              e.currentTarget.style.boxShadow = '0 8px 30px rgba(239, 68, 68, 0.4)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <div style={{
+                width: '50px',
+                height: '50px',
+                background: 'rgba(255, 255, 255, 0.2)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative'
+              }}>
+                <span style={{ fontSize: '1.8rem' }}>🔴</span>
+                <div style={{
+                  position: 'absolute',
+                  top: '5px',
+                  right: '5px',
+                  width: '12px',
+                  height: '12px',
+                  background: '#22c55e',
+                  borderRadius: '50%',
+                  border: '2px solid white',
+                  animation: 'pulse 2s infinite'
+                }}></div>
+              </div>
+              <div>
+                <div style={{ fontSize: '1.3rem', fontWeight: '800', color: 'white' }}>
+                  주간 라이브 강의 입장
+                </div>
+                <div style={{ fontSize: '0.95rem', opacity: '0.9', color: 'white' }}>
+                  매주 화요일 8PM | AI 최신 트렌드 & 실습
+                </div>
+              </div>
+            </div>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.2)',
+              padding: '10px 20px',
+              borderRadius: '25px',
+              fontSize: '1rem',
+              fontWeight: '700',
+              color: 'white'
+            }}>
+              입장하기 →
+            </div>
+          </div>
+
           {/* 업데이트 공지 */}
           <div style={{
             background: 'rgba(34, 197, 94, 0.15)',
