@@ -177,8 +177,19 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
     <header className="masterclass-header-original">
       <div className="header-content">
         <div className="header-left">
-          <div className="logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
-            <span className="logo-icon">C</span>
+          <div className="logo" onClick={handleLogoClick} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <img 
+              src={`${process.env.PUBLIC_URL}/images/logo.jpeg`}
+              alt="AI City Builders Logo"
+              style={{
+                width: '45px',
+                height: '45px',
+                borderRadius: '50%',
+                objectFit: 'cover',
+                border: '2px solid #fbbf24',
+                boxShadow: '0 2px 10px rgba(251, 191, 36, 0.3)'
+              }}
+            />
             <span className="logo-text">AI City Builders</span>
           </div>
         </div>

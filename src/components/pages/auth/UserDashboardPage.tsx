@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Clock, Award, Play, Calendar, Zap } from 'lucide-react';
+import { BookOpen, Clock, Award, Play, Calendar, Zap, Edit2, Check, X, User } from 'lucide-react';
 import AzureTableService from '../../../services/azureTableService';
 import NavigationBar from '../../common/NavigationBar';
 import { SkeletonCourseCard, SkeletonUserStats } from '../../common/SkeletonLoader';
+
+// 브랜드 컬러 정의
+const COLORS = {
+  navy: '#1e3a5f',
+  navyLight: '#2a4a70',
+  navyDark: '#0f2847',
+  gold: '#d4a439',
+  goldLight: '#f5d77a',
+  goldDark: '#b8860b',
+  white: '#ffffff',
+  grayLight: '#f8fafc',
+  grayMedium: '#64748b',
+  grayDark: '#1f2937',
+};
 
 interface UserDashboardPageProps {
   onBack: () => void;
@@ -40,6 +54,10 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
   });
   const [, setRewardData] = useState<RewardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  
+  // 닉네임 편집
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [newName, setNewName] = useState('');
 
   useEffect(() => {
     const loadUserData = async () => {
@@ -114,6 +132,41 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
     loadUserData();
   }, [navigate]);
 
+  // 닉네임 저장
+  const handleSaveName = async () => {
+    if (!newName.trim() || !userInfo?.email) {
+      alert('닉네임을 입력해주세요.');
+      return;
+    }
+
+    try {
+      const success = await AzureTableService.updateUserField(userInfo.email, 'name', newName.trim());
+      
+      if (success) {
+        // 업데이트 성공
+        setUserInfo({ ...userInfo, name: newName.trim() });
+        
+        // 세션 스토리지도 업데이트
+        const updatedSession = { ...userInfo, name: newName.trim() };
+        sessionStorage.setItem('aicitybuilders_user_session', JSON.stringify(updatedSession));
+        
+        setIsEditingName(false);
+        alert('닉네임이 변경되었습니다! ✨');
+      } else {
+        alert('닉네임 변경에 실패했습니다. 다시 시도해주세요.');
+      }
+    } catch (error) {
+      console.error('닉네임 변경 오류:', error);
+      alert('닉네임 변경 중 오류가 발생했습니다.');
+    }
+  };
+
+  // 닉네임 편집 취소
+  const handleCancelEdit = () => {
+    setIsEditingName(false);
+    setNewName('');
+  };
+
   const formatTime = (minutes: number) => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
@@ -171,36 +224,21 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
   if (isLoading) {
     return (
-      <div className="masterclass-container">
-        {/* 네비게이션바 */}
+      <div className="masterclass-container" style={{ background: COLORS.white, minHeight: '100vh' }}>
         <NavigationBar 
           onBack={onBack}
           breadcrumbText="내 학습 현황"
         />
-
-        {/* 스켈레톤 로딩 UI */}
         <section style={{ 
-          background: 'linear-gradient(135deg, #ffffff, #f8fafc, #f1f5f9)',
+          background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
           padding: '60px 0',
-          borderBottom: '1px solid #e2e8f0'
         }}>
-          <div style={{
-            maxWidth: '1400px',
-            margin: '0 auto',
-            padding: '0 40px'
-          }}>
-            {/* 스켈레톤 사용자 통계 */}
+          <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px' }}>
             <SkeletonUserStats />
           </div>
         </section>
-
-        {/* 스켈레톤 강의 목록 */}
-        <section style={{ padding: '80px 0', background: '#ffffff' }}>
-          <div style={{
-            maxWidth: '1400px',
-            margin: '0 auto',
-            padding: '0 40px'
-          }}>
+        <section style={{ padding: '80px 0', background: COLORS.white }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px' }}>
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
@@ -226,23 +264,23 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
         breadcrumbText="내 학습 현황"
       />
 
-      {/* 대시보드 히어로 섹션 */}
+      {/* 대시보드 히어로 섹션 - 브랜드 컬러 */}
       <section style={{ 
-        background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
+        background: `linear-gradient(135deg, ${COLORS.navy} 0%, ${COLORS.navyDark} 100%)`,
         padding: 'clamp(40px, 8vw, 80px) 0',
         position: 'relative',
         overflow: 'hidden'
       }}>
-        {/* 배경 장식 */}
+        {/* 배경 장식 - 골드 액센트 */}
         <div style={{
           position: 'absolute',
           top: '-50px',
           right: '-50px',
           width: '200px',
           height: '200px',
-          background: 'rgba(255, 255, 255, 0.1)',
+          background: `radial-gradient(circle, ${COLORS.gold}20 0%, transparent 70%)`,
           borderRadius: '50%',
-          opacity: 0.5
+          opacity: 0.8
         }}></div>
         <div style={{
           position: 'absolute',
@@ -250,9 +288,20 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
           left: '-30px',
           width: '150px',
           height: '150px',
-          background: 'rgba(255, 255, 255, 0.08)',
+          background: `radial-gradient(circle, ${COLORS.goldLight}15 0%, transparent 70%)`,
           borderRadius: '50%',
-          opacity: 0.6
+          opacity: 0.7
+        }}></div>
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '600px',
+          height: '600px',
+          background: `radial-gradient(circle, ${COLORS.gold}08 0%, transparent 50%)`,
+          borderRadius: '50%',
+          opacity: 0.5
         }}></div>
 
         <div style={{
@@ -267,15 +316,130 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
             textAlign: 'center',
             marginBottom: 'clamp(30px, 5vw, 50px)'
           }}>
-            <h1 style={{ 
-              fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
-              fontWeight: '900',
-              color: 'white',
-              marginBottom: '15px',
-              textShadow: '0 2px 10px rgba(0, 0, 0, 0.2)'
-            }}>
-              안녕하세요, {userInfo?.name || '사용자'}님! 👋
-            </h1>
+            {/* 닉네임 편집 모드 */}
+            {isEditingName ? (
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                gap: '12px',
+                marginBottom: '15px',
+                flexWrap: 'wrap'
+              }}>
+                <input
+                  type="text"
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  placeholder="새 닉네임 입력"
+                  autoFocus
+                  style={{
+                    padding: '14px 20px',
+                    borderRadius: '14px',
+                    border: '2px solid #fbbf24',
+                    fontSize: '1.2rem',
+                    fontWeight: '700',
+                    outline: 'none',
+                    background: 'white',
+                    color: '#1f2937',
+                    minWidth: '220px',
+                    boxShadow: '0 4px 15px rgba(251, 191, 36, 0.3)'
+                  }}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') handleSaveName();
+                    if (e.key === 'Escape') handleCancelEdit();
+                  }}
+                />
+                <button
+                  onClick={handleSaveName}
+                  style={{
+                    background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                    color: 'white',
+                    border: 'none',
+                    padding: '14px 24px',
+                    borderRadius: '14px',
+                    fontSize: '1rem',
+                    fontWeight: '700',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    boxShadow: '0 4px 15px rgba(34, 197, 94, 0.4)',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  <Check size={20} /> 저장
+                </button>
+                <button
+                  onClick={handleCancelEdit}
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.15)',
+                    color: 'white',
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    padding: '14px 24px',
+                    borderRadius: '14px',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  <X size={20} /> 취소
+                </button>
+              </div>
+            ) : (
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                gap: '15px',
+                marginBottom: '15px',
+                flexWrap: 'wrap'
+              }}>
+                <h1 style={{ 
+                  fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
+                  fontWeight: '900',
+                  color: 'white',
+                  margin: 0,
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.2)'
+                }}>
+                  안녕하세요, {userInfo?.name || '사용자'}님! 👋
+                </h1>
+                <button
+                  onClick={() => {
+                    setIsEditingName(true);
+                    setNewName(userInfo?.name || '');
+                  }}
+                  style={{
+                    background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldDark})`,
+                    border: 'none',
+                    color: COLORS.navyDark,
+                    padding: '10px 20px',
+                    borderRadius: '25px',
+                    fontSize: '0.9rem',
+                    fontWeight: '700',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    transition: 'all 0.2s',
+                    boxShadow: `0 4px 15px ${COLORS.gold}40`
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.05) translateY(-2px)';
+                    e.currentTarget.style.boxShadow = `0 6px 20px ${COLORS.gold}60`;
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.transform = 'scale(1) translateY(0)';
+                    e.currentTarget.style.boxShadow = `0 4px 15px ${COLORS.gold}40`;
+                  }}
+                >
+                  <Edit2 size={16} /> 닉네임 변경
+                </button>
+              </div>
+            )}
             <p style={{ 
               fontSize: 'clamp(1rem, 2vw, 1.2rem)',
               color: 'rgba(255, 255, 255, 0.95)',
@@ -296,25 +460,27 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
           }}>
             {/* 총 수강 강의 카드 */}
             <div style={{
-              background: 'white',
-              border: 'none',
+              background: COLORS.white,
+              border: `2px solid ${COLORS.gold}30`,
               borderRadius: '20px',
               padding: 'clamp(24px, 4vw, 32px)',
               textAlign: 'center',
               transition: 'all 0.3s ease',
-              boxShadow: '0 10px 30px rgba(14, 165, 233, 0.15)',
+              boxShadow: `0 10px 30px ${COLORS.navy}15`,
               cursor: 'pointer'
             }}
             onMouseOver={(e) => {
               e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 15px 40px rgba(14, 165, 233, 0.25)';
+              e.currentTarget.style.boxShadow = `0 15px 40px ${COLORS.navy}25`;
+              e.currentTarget.style.borderColor = COLORS.gold;
             }}
             onMouseOut={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 10px 30px rgba(14, 165, 233, 0.15)';
+              e.currentTarget.style.boxShadow = `0 10px 30px ${COLORS.navy}15`;
+              e.currentTarget.style.borderColor = `${COLORS.gold}30`;
             }}>
               <div style={{ 
-                background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
                 borderRadius: '50%',
                 width: 'clamp(56px, 10vw, 72px)',
                 height: 'clamp(56px, 10vw, 72px)',
@@ -322,12 +488,12 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 margin: '0 auto 20px',
-                boxShadow: '0 8px 20px rgba(14, 165, 233, 0.3)'
+                boxShadow: `0 8px 20px ${COLORS.navy}40`
               }}>
-                <BookOpen size={28} color="white" />
+                <BookOpen size={28} color={COLORS.gold} />
               </div>
               <h3 style={{ 
-                color: '#64748b', 
+                color: COLORS.grayMedium, 
                 fontSize: 'clamp(0.85rem, 1.5vw, 1rem)', 
                 marginBottom: '10px',
                 fontWeight: '600',
@@ -336,7 +502,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 총 수강 강의
               </h3>
               <p style={{ 
-                color: '#0ea5e9',
+                color: COLORS.navy,
                 fontSize: 'clamp(2rem, 5vw, 2.8rem)',
                 fontWeight: '900',
                 margin: '0 0 5px 0'
@@ -344,7 +510,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 {userStats.totalCourses}
               </p>
               <p style={{ 
-                color: '#94a3b8', 
+                color: COLORS.grayMedium, 
                 fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)', 
                 margin: 0,
                 fontWeight: '500'
@@ -355,25 +521,27 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
             {/* 수강 중 카드 */}
             <div style={{
-              background: 'white',
-              border: 'none',
+              background: COLORS.white,
+              border: `2px solid ${COLORS.gold}30`,
               borderRadius: '20px',
               padding: 'clamp(24px, 4vw, 32px)',
               textAlign: 'center',
               transition: 'all 0.3s ease',
-              boxShadow: '0 10px 30px rgba(16, 185, 129, 0.15)',
+              boxShadow: `0 10px 30px ${COLORS.navy}15`,
               cursor: 'pointer'
             }}
             onMouseOver={(e) => {
               e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 15px 40px rgba(16, 185, 129, 0.25)';
+              e.currentTarget.style.boxShadow = `0 15px 40px ${COLORS.navy}25`;
+              e.currentTarget.style.borderColor = COLORS.gold;
             }}
             onMouseOut={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 10px 30px rgba(16, 185, 129, 0.15)';
+              e.currentTarget.style.boxShadow = `0 10px 30px ${COLORS.navy}15`;
+              e.currentTarget.style.borderColor = `${COLORS.gold}30`;
             }}>
               <div style={{ 
-                background: 'linear-gradient(135deg, #10b981, #059669)',
+                background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldDark})`,
                 borderRadius: '50%',
                 width: 'clamp(56px, 10vw, 72px)',
                 height: 'clamp(56px, 10vw, 72px)',
@@ -381,12 +549,12 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 margin: '0 auto 20px',
-                boxShadow: '0 8px 20px rgba(16, 185, 129, 0.3)'
+                boxShadow: `0 8px 20px ${COLORS.gold}40`
               }}>
-                <Play size={28} color="white" />
+                <Play size={28} color={COLORS.navyDark} />
               </div>
               <h3 style={{ 
-                color: '#64748b', 
+                color: COLORS.grayMedium, 
                 fontSize: 'clamp(0.85rem, 1.5vw, 1rem)', 
                 marginBottom: '10px',
                 fontWeight: '600',
@@ -395,7 +563,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 수강 중
               </h3>
               <p style={{ 
-                color: '#10b981',
+                color: COLORS.gold,
                 fontSize: 'clamp(2rem, 5vw, 2.8rem)',
                 fontWeight: '900',
                 margin: '0 0 5px 0'
@@ -403,7 +571,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 {userStats.inProgressCourses}
               </p>
               <p style={{ 
-                color: '#94a3b8', 
+                color: COLORS.grayMedium, 
                 fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)', 
                 margin: 0,
                 fontWeight: '500'
@@ -414,25 +582,27 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
             {/* 완료한 강의 카드 */}
             <div style={{
-              background: 'white',
-              border: 'none',
+              background: COLORS.white,
+              border: `2px solid ${COLORS.gold}30`,
               borderRadius: '20px',
               padding: 'clamp(24px, 4vw, 32px)',
               textAlign: 'center',
               transition: 'all 0.3s ease',
-              boxShadow: '0 10px 30px rgba(245, 158, 11, 0.15)',
+              boxShadow: `0 10px 30px ${COLORS.navy}15`,
               cursor: 'pointer'
             }}
             onMouseOver={(e) => {
               e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 15px 40px rgba(245, 158, 11, 0.25)';
+              e.currentTarget.style.boxShadow = `0 15px 40px ${COLORS.navy}25`;
+              e.currentTarget.style.borderColor = COLORS.gold;
             }}
             onMouseOut={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 10px 30px rgba(245, 158, 11, 0.15)';
+              e.currentTarget.style.boxShadow = `0 10px 30px ${COLORS.navy}15`;
+              e.currentTarget.style.borderColor = `${COLORS.gold}30`;
             }}>
               <div style={{ 
-                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                background: `linear-gradient(135deg, ${COLORS.navyLight}, ${COLORS.navy})`,
                 borderRadius: '50%',
                 width: 'clamp(56px, 10vw, 72px)',
                 height: 'clamp(56px, 10vw, 72px)',
@@ -440,12 +610,12 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 margin: '0 auto 20px',
-                boxShadow: '0 8px 20px rgba(245, 158, 11, 0.3)'
+                boxShadow: `0 8px 20px ${COLORS.navy}40`
               }}>
-                <Award size={28} color="white" />
+                <Award size={28} color={COLORS.goldLight} />
               </div>
               <h3 style={{ 
-                color: '#64748b', 
+                color: COLORS.grayMedium, 
                 fontSize: 'clamp(0.85rem, 1.5vw, 1rem)', 
                 marginBottom: '10px',
                 fontWeight: '600',
@@ -454,7 +624,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 완료한 강의
               </h3>
               <p style={{ 
-                color: '#f59e0b',
+                color: COLORS.navyLight,
                 fontSize: 'clamp(2rem, 5vw, 2.8rem)',
                 fontWeight: '900',
                 margin: '0 0 5px 0'
@@ -462,7 +632,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 {userStats.completedCourses}
               </p>
               <p style={{ 
-                color: '#94a3b8', 
+                color: COLORS.grayMedium, 
                 fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)', 
                 margin: 0,
                 fontWeight: '500'
@@ -473,25 +643,25 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
             {/* 총 학습 시간 카드 */}
             <div style={{
-              background: 'white',
-              border: 'none',
+              background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
+              border: `2px solid ${COLORS.gold}50`,
               borderRadius: '20px',
               padding: 'clamp(24px, 4vw, 32px)',
               textAlign: 'center',
               transition: 'all 0.3s ease',
-              boxShadow: '0 10px 30px rgba(139, 92, 246, 0.15)',
+              boxShadow: `0 10px 30px ${COLORS.navy}30`,
               cursor: 'pointer'
             }}
             onMouseOver={(e) => {
               e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 15px 40px rgba(139, 92, 246, 0.25)';
+              e.currentTarget.style.boxShadow = `0 15px 40px ${COLORS.navy}50`;
             }}
             onMouseOut={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 10px 30px rgba(139, 92, 246, 0.15)';
+              e.currentTarget.style.boxShadow = `0 10px 30px ${COLORS.navy}30`;
             }}>
               <div style={{ 
-                background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldDark})`,
                 borderRadius: '50%',
                 width: 'clamp(56px, 10vw, 72px)',
                 height: 'clamp(56px, 10vw, 72px)',
@@ -499,12 +669,12 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 margin: '0 auto 20px',
-                boxShadow: '0 8px 20px rgba(139, 92, 246, 0.3)'
+                boxShadow: `0 8px 20px ${COLORS.gold}50`
               }}>
-                <Clock size={28} color="white" />
+                <Clock size={28} color={COLORS.navyDark} />
               </div>
               <h3 style={{ 
-                color: '#64748b', 
+                color: 'rgba(255, 255, 255, 0.8)', 
                 fontSize: 'clamp(0.85rem, 1.5vw, 1rem)', 
                 marginBottom: '10px',
                 fontWeight: '600',
@@ -513,7 +683,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 총 학습 시간
               </h3>
               <p style={{ 
-                color: '#8b5cf6',
+                color: COLORS.goldLight,
                 fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                 fontWeight: '900',
                 margin: '0 0 5px 0'
@@ -521,7 +691,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 {formatTime(userStats.totalLearningTime)}
               </p>
               <p style={{ 
-                color: '#94a3b8', 
+                color: 'rgba(255, 255, 255, 0.7)', 
                 fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)', 
                 margin: 0,
                 fontWeight: '500'
@@ -538,7 +708,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
       {/* 수강 중인 강의 섹션 */}
       <section style={{ 
         padding: 'clamp(60px, 10vw, 100px) 0', 
-        background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)'
+        background: COLORS.white
       }}>
         <div style={{
           maxWidth: '1400px',
@@ -548,15 +718,15 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
           <div style={{ textAlign: 'center', marginBottom: 'clamp(40px, 6vw, 60px)' }}>
             <div style={{
               display: 'inline-block',
-              background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+              background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
               padding: '8px 20px',
               borderRadius: '50px',
               marginBottom: '20px',
-              boxShadow: '0 4px 15px rgba(14, 165, 233, 0.3)'
+              boxShadow: `0 4px 15px ${COLORS.navy}40`
             }}>
               <span style={{ 
                 fontSize: '0.9rem', 
-                color: 'white',
+                color: COLORS.goldLight,
                 fontWeight: '700',
                 letterSpacing: '0.5px'
               }}>
@@ -567,13 +737,13 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
               fontWeight: '900',
               marginBottom: '15px',
-              color: '#1f2937'
+              color: COLORS.navy
             }}>
               📚 나의 학습 여정
             </h2>
             <p style={{ 
               fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-              color: '#64748b',
+              color: COLORS.grayMedium,
               maxWidth: '600px',
               margin: '0 auto',
               lineHeight: '1.6'
@@ -601,23 +771,25 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
                 return (
                 <div key={index} style={{
-                  background: 'white',
-                  border: 'none',
+                  background: COLORS.white,
+                  border: `2px solid ${COLORS.gold}20`,
                   borderRadius: '20px',
                   padding: 'clamp(24px, 4vw, 32px)',
                   transition: 'all 0.3s ease',
                   cursor: 'pointer',
-                  boxShadow: '0 8px 25px rgba(14, 165, 233, 0.12)',
+                  boxShadow: `0 8px 25px ${COLORS.navy}10`,
                   position: 'relative',
                   overflow: 'hidden'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-8px)';
-                  e.currentTarget.style.boxShadow = '0 15px 40px rgba(14, 165, 233, 0.2)';
+                  e.currentTarget.style.boxShadow = `0 15px 40px ${COLORS.navy}20`;
+                  e.currentTarget.style.borderColor = COLORS.gold;
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(14, 165, 233, 0.12)';
+                  e.currentTarget.style.boxShadow = `0 8px 25px ${COLORS.navy}10`;
+                  e.currentTarget.style.borderColor = `${COLORS.gold}20`;
                 }}
                 >
                   <div style={{ marginBottom: '20px' }}>

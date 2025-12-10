@@ -11,6 +11,7 @@ interface Payment {
   amount: number;
   date: string;
   realEmail?: string;
+  referrerCode?: string; // 추천인 코드 (브릭 적립용)
   status?: 'pending' | 'processing' | 'success' | 'error' | 'skip';
   message?: string;
 }
@@ -672,10 +673,27 @@ const AdminEnrollmentFixPage: React.FC = () => {
     }
   };
 
-  const handleEmailChange = (index: number, email: string) => {
+  const handleEmailChange = async (index: number, email: string) => {
     const newPayments = [...payments];
     newPayments[index].realEmail = email;
     setPayments(newPayments);
+    
+    // 이메일 입력이 완료되면 해당 사용자의 referredBy 조회
+    if (email && email.includes('@')) {
+      try {
+        const user = await AzureTableService.getUserByEmail(email);
+        if (user && user.referredBy) {
+          const updatedPayments = [...payments];
+          updatedPayments[index].realEmail = email;
+          updatedPayments[index].referrerCode = user.referredBy;
+          setPayments(updatedPayments);
+          console.log(`🔍 추천인 코드 자동 발견: ${user.referredBy} (사용자: ${email})`);
+        }
+      } catch (error) {
+        // 조회 실패해도 무시
+        console.log('사용자 조회 중 오류 (무시됨):', error);
+      }
+    }
   };
 
   const handleAddEnrollment = async (index: number) => {
@@ -737,8 +755,37 @@ const AdminEnrollmentFixPage: React.FC = () => {
         orderName: courseTitle
       });
 
+      // 🧱 추천인 브릭 적립 처리
+      let brickMessage = '';
+      if (payment.referrerCode) {
+        try {
+          const partnerEmail = await AzureTableService.getEmailByReferralCode(payment.referrerCode);
+          if (partnerEmail && partnerEmail !== payment.realEmail) {
+            const addReferralResult = await AzureTableService.addReferral(
+              partnerEmail,
+              payment.realEmail,
+              courseId,
+              courseTitle,
+              payment.amount
+            );
+            if (addReferralResult) {
+              const brickAmount = Math.floor(payment.amount * 0.1);
+              brickMessage = ` 🧱 +${brickAmount.toLocaleString()}원 브릭 적립됨!`;
+              console.log(`🧱 관리자 수동 등록: 파트너 ${partnerEmail}에게 ${brickAmount}원 브릭 적립`);
+            }
+          } else if (partnerEmail === payment.realEmail) {
+            brickMessage = ' (자기 추천은 불가)';
+          } else {
+            brickMessage = ' (추천인 코드 없음)';
+          }
+        } catch (brickError) {
+          console.error('🧱 브릭 적립 실패:', brickError);
+          brickMessage = ' (브릭 적립 실패)';
+        }
+      }
+
       newPayments[index].status = 'success';
-      newPayments[index].message = '✅ 등록 완료!';
+      newPayments[index].message = `✅ 등록 완료!${brickMessage}`;
       setPayments(newPayments);
 
     } catch (error: any) {
@@ -946,6 +993,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
                   <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>이름</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>이메일</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>🔗 추천인 코드</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>가입일</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>수강 강의</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>작업</th>
@@ -972,6 +1020,25 @@ const AdminEnrollmentFixPage: React.FC = () => {
                           <td style={{ padding: '12px' }}>{user.name || '-'}</td>
                           <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.9rem' }}>
                             {user.email}
+                          </td>
+                          <td style={{ padding: '12px' }}>
+                            {user.referredBy ? (
+                              <span style={{
+                                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                                color: '#1f2937',
+                                padding: '4px 10px',
+                                borderRadius: '8px',
+                                fontSize: '0.8rem',
+                                fontWeight: '700',
+                                fontFamily: 'monospace',
+                                display: 'inline-block',
+                                boxShadow: '0 2px 4px rgba(251, 191, 36, 0.3)'
+                              }}>
+                                🧱 {user.referredBy}
+                              </span>
+                            ) : (
+                              <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>-</span>
+                            )}
                           </td>
                           <td style={{ padding: '12px', fontSize: '0.85rem', color: '#64748b' }}>
                             {user.createdAt ? new Date(user.createdAt).toLocaleDateString('ko-KR') : '-'}
@@ -1269,6 +1336,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>이름</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>마스킹 이메일</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>실제 이메일</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>🧱 추천인 코드</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>날짜</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>상태</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>작업</th>
@@ -1296,6 +1364,29 @@ const AdminEnrollmentFixPage: React.FC = () => {
                               width: '100%',
                               maxWidth: '300px',
                               background: payment.status ? '#f8fafc' : 'white'
+                            }}
+                          />
+                        </td>
+                        <td style={{ padding: '12px' }}>
+                          <input
+                            type="text"
+                            value={payment.referrerCode || ''}
+                            onChange={(e) => {
+                              const newPayments = [...payments];
+                              newPayments[index].referrerCode = e.target.value.toUpperCase();
+                              setPayments(newPayments);
+                            }}
+                            placeholder="추천인 코드"
+                            disabled={!!payment.status}
+                            style={{
+                              padding: '8px 12px',
+                              borderRadius: '6px',
+                              border: '1px solid #fbbf24',
+                              fontSize: '0.85rem',
+                              width: '100px',
+                              background: payment.status ? '#f8fafc' : '#fffbeb',
+                              textAlign: 'center',
+                              fontWeight: '600'
                             }}
                           />
                         </td>

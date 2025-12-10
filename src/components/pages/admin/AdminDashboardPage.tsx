@@ -13,6 +13,7 @@ interface UserData {
   totalSpent: number;
   completedDays: number;
   lastAccessedAt?: string;
+  referredBy?: string; // 추천인 코드
 }
 
 const AdminDashboardPage: React.FC = () => {
@@ -125,7 +126,8 @@ const AdminDashboardPage: React.FC = () => {
           purchases,
           totalSpent,
           completedDays,
-          lastAccessedAt: user.lastLoginAt || user.updatedAt
+          lastAccessedAt: user.lastLoginAt || user.updatedAt,
+          referredBy: user.referredBy || '' // 추천인 코드
         };
       });
 
@@ -889,6 +891,7 @@ const AdminDashboardPage: React.FC = () => {
                 </th>
                 <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>이메일</th>
                 <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>이름</th>
+                <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>🔗 추천인</th>
                 <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>가입일</th>
                 <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>수강 강의</th>
                 <th style={{ padding: '12px', textAlign: 'right', color: '#64748b', fontWeight: '600' }}>총 결제액</th>
@@ -933,6 +936,25 @@ const AdminDashboardPage: React.FC = () => {
                     {user.email}
                   </td>
                   <td style={{ padding: '12px' }}>{user.name}</td>
+                  <td style={{ padding: '12px', textAlign: 'center' }}>
+                    {user.referredBy ? (
+                      <span style={{
+                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        color: '#1f2937',
+                        padding: '4px 10px',
+                        borderRadius: '8px',
+                        fontSize: '0.75rem',
+                        fontWeight: '700',
+                        fontFamily: 'monospace',
+                        display: 'inline-block',
+                        boxShadow: '0 2px 4px rgba(251, 191, 36, 0.3)'
+                      }}>
+                        🧱 {user.referredBy}
+                      </span>
+                    ) : (
+                      <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>-</span>
+                    )}
+                  </td>
                   <td style={{ padding: '12px', fontSize: '0.9rem', color: '#64748b' }}>
                     {new Date(user.createdAt).toLocaleDateString('ko-KR')}
                   </td>
@@ -1273,17 +1295,28 @@ const AdminDashboardPage: React.FC = () => {
               padding: '30px',
               boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
             }}>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '25px' }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '25px', display: 'flex', alignItems: 'center', gap: '12px' }}>
                 🧱 전체 파트너 목록 ({allPartners.length}명)
+                <span style={{
+                  fontSize: '0.85rem',
+                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                  color: 'white',
+                  padding: '4px 12px',
+                  borderRadius: '20px',
+                  fontWeight: '600'
+                }}>
+                  ↓ 브릭 많은 순
+                </span>
               </h2>
 
               {allPartners.length > 0 ? (
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                   <thead>
                     <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
+                      <th style={{ padding: '15px', textAlign: 'center', color: '#64748b', fontWeight: '600', width: '60px' }}>순위</th>
                       <th style={{ padding: '15px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>파트너</th>
                       <th style={{ padding: '15px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>추천코드</th>
-                      <th style={{ padding: '15px', textAlign: 'right', color: '#64748b', fontWeight: '600' }}>총 브릭</th>
+                      <th style={{ padding: '15px', textAlign: 'right', color: '#f59e0b', fontWeight: '700' }}>🧱 총 브릭 ↓</th>
                       <th style={{ padding: '15px', textAlign: 'right', color: '#64748b', fontWeight: '600' }}>출금가능</th>
                       <th style={{ padding: '15px', textAlign: 'right', color: '#64748b', fontWeight: '600' }}>대기중</th>
                       <th style={{ padding: '15px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>추천수</th>
@@ -1291,8 +1324,28 @@ const AdminDashboardPage: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {allPartners.map((partner) => (
-                      <tr key={partner.email} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                    {allPartners.map((partner, index) => (
+                      <tr key={partner.email} style={{ 
+                        borderBottom: '1px solid #f1f5f9',
+                        background: index < 3 ? `rgba(251, 191, 36, ${0.15 - index * 0.04})` : 'transparent'
+                      }}>
+                        <td style={{ padding: '15px', textAlign: 'center' }}>
+                          {index === 0 ? (
+                            <span style={{ fontSize: '1.5rem' }}>🥇</span>
+                          ) : index === 1 ? (
+                            <span style={{ fontSize: '1.5rem' }}>🥈</span>
+                          ) : index === 2 ? (
+                            <span style={{ fontSize: '1.5rem' }}>🥉</span>
+                          ) : (
+                            <span style={{ 
+                              fontWeight: '700', 
+                              color: '#64748b',
+                              fontSize: '1rem'
+                            }}>
+                              {index + 1}
+                            </span>
+                          )}
+                        </td>
                         <td style={{ padding: '15px' }}>
                           <div style={{ fontWeight: '600', color: '#1f2937' }}>{partner.name}</div>
                           <div style={{ fontSize: '0.85rem', color: '#64748b' }}>{partner.email}</div>
@@ -1310,8 +1363,15 @@ const AdminDashboardPage: React.FC = () => {
                           </span>
                         </td>
                         <td style={{ padding: '15px', textAlign: 'right' }}>
-                          <span style={{ fontWeight: '700', color: '#f97316' }}>
-                            {partner.totalBricks.toLocaleString()}
+                          <span style={{ 
+                            fontWeight: '800', 
+                            color: '#f59e0b',
+                            fontSize: '1.1rem',
+                            background: partner.totalBricks > 0 ? 'linear-gradient(135deg, #fffbeb, #fef3c7)' : 'transparent',
+                            padding: partner.totalBricks > 0 ? '4px 10px' : '0',
+                            borderRadius: '8px'
+                          }}>
+                            {partner.totalBricks > 0 ? `₩${partner.totalBricks.toLocaleString()}` : '-'}
                           </span>
                         </td>
                         <td style={{ padding: '15px', textAlign: 'right' }}>
