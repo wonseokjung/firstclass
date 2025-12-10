@@ -50,7 +50,18 @@ const AdminDashboardPage: React.FC = () => {
   // 출금 관리
   const [pendingWithdrawals, setPendingWithdrawals] = useState<(PartnerWithdrawal & { partnerEmail: string; partnerName: string })[]>([]);
   const [withdrawalLoading, setWithdrawalLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<'users' | 'withdrawals'>('users');
+  const [activeTab, setActiveTab] = useState<'users' | 'withdrawals' | 'partners'>('users');
+  
+  // 파트너 통계
+  const [partnerStats, setPartnerStats] = useState({
+    totalPartners: 0,
+    activePartners: 0,
+    totalBricksIssued: 0,
+    totalBricksPending: 0,
+    totalBricksWithdrawn: 0,
+    totalReferrals: 0
+  });
+  const [allPartners, setAllPartners] = useState<any[]>([]);
 
   // 관리자 권한 확인
   useEffect(() => {
@@ -137,6 +148,9 @@ const AdminDashboardPage: React.FC = () => {
       
       // 출금 요청도 함께 로드
       await loadPendingWithdrawals();
+      
+      // 파트너 통계도 함께 로드
+      await loadPartnerStats();
     } catch (error) {
       console.error('유저 로드 실패:', error);
       alert('유저 데이터를 불러올 수 없습니다.');
@@ -154,6 +168,54 @@ const AdminDashboardPage: React.FC = () => {
       console.error('출금 요청 로드 실패:', error);
     } finally {
       setWithdrawalLoading(false);
+    }
+  };
+
+  // 파트너 통계 로드
+  const loadPartnerStats = async () => {
+    try {
+      const users = await AzureTableService.getAllUsers();
+      
+      // 파트너 데이터가 있는 사용자 필터링
+      const partners = users.filter(user => 
+        user.referralCode || (user.totalBricks && user.totalBricks > 0)
+      );
+      
+      // 활동 중인 파트너 (추천 1건 이상)
+      const activePartners = partners.filter(p => (p.referralCount || 0) > 0);
+      
+      // 통계 계산
+      const stats = {
+        totalPartners: partners.length,
+        activePartners: activePartners.length,
+        totalBricksIssued: partners.reduce((sum, p) => sum + (p.totalBricks || 0), 0),
+        totalBricksPending: partners.reduce((sum, p) => sum + (p.pendingBricks || 0), 0),
+        totalBricksWithdrawn: partners.reduce((sum, p) => sum + (p.withdrawnBricks || 0), 0),
+        totalReferrals: partners.reduce((sum, p) => sum + (p.referralCount || 0), 0)
+      };
+      
+      setPartnerStats(stats);
+      
+      // 파트너 목록 (브릭 많은 순)
+      const partnerList = partners
+        .map(p => ({
+          email: p.email,
+          name: p.name,
+          referralCode: p.referralCode,
+          totalBricks: p.totalBricks || 0,
+          availableBricks: p.availableBricks || 0,
+          pendingBricks: p.pendingBricks || 0,
+          withdrawnBricks: p.withdrawnBricks || 0,
+          referralCount: p.referralCount || 0,
+          createdAt: p.createdAt
+        }))
+        .sort((a, b) => b.totalBricks - a.totalBricks);
+      
+      setAllPartners(partnerList);
+      
+      console.log('✅ 파트너 통계 로드 완료:', stats);
+    } catch (error) {
+      console.error('파트너 통계 로드 실패:', error);
     }
   };
 
@@ -578,6 +640,30 @@ const AdminDashboardPage: React.FC = () => {
             사용자 관리
           </button>
           <button
+            onClick={() => setActiveTab('partners')}
+            style={{
+              padding: '14px 28px',
+              borderRadius: '12px',
+              border: 'none',
+              background: activeTab === 'partners' 
+                ? 'linear-gradient(135deg, #8b5cf6, #7c3aed)' 
+                : 'white',
+              color: activeTab === 'partners' ? 'white' : '#64748b',
+              fontSize: '1rem',
+              fontWeight: '700',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              boxShadow: activeTab === 'partners' 
+                ? '0 4px 15px rgba(139, 92, 246, 0.4)' 
+                : '0 2px 8px rgba(0,0,0,0.1)',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            🧱 파트너 통계
+          </button>
+          <button
             onClick={() => setActiveTab('withdrawals')}
             style={{
               padding: '14px 28px',
@@ -627,35 +713,35 @@ const AdminDashboardPage: React.FC = () => {
         {/* 사용자 관리 탭 */}
         {activeTab === 'users' && (
           <>
-            {/* 필터 & 검색 */}
-            <div style={{
-              background: 'white',
-              borderRadius: '15px',
-              padding: '25px',
-              marginBottom: '30px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-            }}>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                gap: '15px'
-              }}>
-                <div style={{ position: 'relative' }}>
-                  <Search size={20} style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
-                  <input
-                    type="text"
-                    placeholder="이메일 또는 이름 검색..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '12px 12px 12px 45px',
-                      borderRadius: '10px',
-                      border: '2px solid #e2e8f0',
-                      fontSize: '1rem',
-                      outline: 'none'
-                    }}
-                  />
+        {/* 필터 & 검색 */}
+        <div style={{
+          background: 'white',
+          borderRadius: '15px',
+          padding: '25px',
+          marginBottom: '30px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+        }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '15px'
+          }}>
+            <div style={{ position: 'relative' }}>
+              <Search size={20} style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+              <input
+                type="text"
+                placeholder="이메일 또는 이름 검색..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '12px 12px 12px 45px',
+                  borderRadius: '10px',
+                  border: '2px solid #e2e8f0',
+                  fontSize: '1rem',
+                  outline: 'none'
+                }}
+              />
             </div>
 
             <select
@@ -1076,6 +1162,203 @@ const AdminDashboardPage: React.FC = () => {
                 </p>
               </div>
             )}
+          </div>
+        )}
+
+        {/* 파트너 통계 탭 */}
+        {activeTab === 'partners' && (
+          <div>
+            {/* 파트너 통계 카드 */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gap: '20px',
+              marginBottom: '30px'
+            }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                borderRadius: '15px',
+                padding: '25px',
+                color: 'white',
+                boxShadow: '0 4px 20px rgba(139, 92, 246, 0.3)'
+              }}>
+                <div style={{ fontSize: '0.9rem', opacity: 0.9, marginBottom: '8px' }}>총 파트너 수</div>
+                <div style={{ fontSize: '2.5rem', fontWeight: '800' }}>{partnerStats.totalPartners}명</div>
+                <div style={{ fontSize: '0.85rem', opacity: 0.8, marginTop: '5px' }}>
+                  추천 코드 보유자
+                </div>
+              </div>
+
+              <div style={{
+                background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                borderRadius: '15px',
+                padding: '25px',
+                color: 'white',
+                boxShadow: '0 4px 20px rgba(34, 197, 94, 0.3)'
+              }}>
+                <div style={{ fontSize: '0.9rem', opacity: 0.9, marginBottom: '8px' }}>활동 파트너</div>
+                <div style={{ fontSize: '2.5rem', fontWeight: '800' }}>{partnerStats.activePartners}명</div>
+                <div style={{ fontSize: '0.85rem', opacity: 0.8, marginTop: '5px' }}>
+                  추천 실적 1건 이상
+                </div>
+              </div>
+
+              <div style={{
+                background: 'linear-gradient(135deg, #f97316, #ea580c)',
+                borderRadius: '15px',
+                padding: '25px',
+                color: 'white',
+                boxShadow: '0 4px 20px rgba(249, 115, 22, 0.3)'
+              }}>
+                <div style={{ fontSize: '0.9rem', opacity: 0.9, marginBottom: '8px' }}>총 발행 브릭</div>
+                <div style={{ fontSize: '2.5rem', fontWeight: '800' }}>
+                  {partnerStats.totalBricksIssued.toLocaleString()}
+                </div>
+                <div style={{ fontSize: '0.85rem', opacity: 0.8, marginTop: '5px' }}>
+                  = ₩{partnerStats.totalBricksIssued.toLocaleString()}
+                </div>
+              </div>
+
+              <div style={{
+                background: 'linear-gradient(135deg, #eab308, #ca8a04)',
+                borderRadius: '15px',
+                padding: '25px',
+                color: 'white',
+                boxShadow: '0 4px 20px rgba(234, 179, 8, 0.3)'
+              }}>
+                <div style={{ fontSize: '0.9rem', opacity: 0.9, marginBottom: '8px' }}>총 추천 수</div>
+                <div style={{ fontSize: '2.5rem', fontWeight: '800' }}>{partnerStats.totalReferrals}건</div>
+                <div style={{ fontSize: '0.85rem', opacity: 0.8, marginTop: '5px' }}>
+                  성공한 추천
+                </div>
+              </div>
+
+              <div style={{
+                background: 'linear-gradient(135deg, #06b6d4, #0891b2)',
+                borderRadius: '15px',
+                padding: '25px',
+                color: 'white',
+                boxShadow: '0 4px 20px rgba(6, 182, 212, 0.3)'
+              }}>
+                <div style={{ fontSize: '0.9rem', opacity: 0.9, marginBottom: '8px' }}>정산 대기</div>
+                <div style={{ fontSize: '2.5rem', fontWeight: '800' }}>
+                  {partnerStats.totalBricksPending.toLocaleString()}
+                </div>
+                <div style={{ fontSize: '0.85rem', opacity: 0.8, marginTop: '5px' }}>
+                  월말 지급 예정
+                </div>
+              </div>
+
+              <div style={{
+                background: 'linear-gradient(135deg, #10b981, #059669)',
+                borderRadius: '15px',
+                padding: '25px',
+                color: 'white',
+                boxShadow: '0 4px 20px rgba(16, 185, 129, 0.3)'
+              }}>
+                <div style={{ fontSize: '0.9rem', opacity: 0.9, marginBottom: '8px' }}>출금 완료</div>
+                <div style={{ fontSize: '2.5rem', fontWeight: '800' }}>
+                  ₩{partnerStats.totalBricksWithdrawn.toLocaleString()}
+                </div>
+                <div style={{ fontSize: '0.85rem', opacity: 0.8, marginTop: '5px' }}>
+                  실제 지급액
+                </div>
+              </div>
+            </div>
+
+            {/* 파트너 목록 */}
+            <div style={{
+              background: 'white',
+              borderRadius: '15px',
+              padding: '30px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+            }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '25px' }}>
+                🧱 전체 파트너 목록 ({allPartners.length}명)
+              </h2>
+
+              {allPartners.length > 0 ? (
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
+                      <th style={{ padding: '15px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>파트너</th>
+                      <th style={{ padding: '15px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>추천코드</th>
+                      <th style={{ padding: '15px', textAlign: 'right', color: '#64748b', fontWeight: '600' }}>총 브릭</th>
+                      <th style={{ padding: '15px', textAlign: 'right', color: '#64748b', fontWeight: '600' }}>출금가능</th>
+                      <th style={{ padding: '15px', textAlign: 'right', color: '#64748b', fontWeight: '600' }}>대기중</th>
+                      <th style={{ padding: '15px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>추천수</th>
+                      <th style={{ padding: '15px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>가입일</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {allPartners.map((partner) => (
+                      <tr key={partner.email} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                        <td style={{ padding: '15px' }}>
+                          <div style={{ fontWeight: '600', color: '#1f2937' }}>{partner.name}</div>
+                          <div style={{ fontSize: '0.85rem', color: '#64748b' }}>{partner.email}</div>
+                        </td>
+                        <td style={{ padding: '15px' }}>
+                          <span style={{ 
+                            fontFamily: 'monospace', 
+                            background: '#f1f5f9', 
+                            padding: '4px 8px', 
+                            borderRadius: '6px',
+                            color: '#1f2937',
+                            fontWeight: '600'
+                          }}>
+                            {partner.referralCode || '-'}
+                          </span>
+                        </td>
+                        <td style={{ padding: '15px', textAlign: 'right' }}>
+                          <span style={{ fontWeight: '700', color: '#f97316' }}>
+                            {partner.totalBricks.toLocaleString()}
+                          </span>
+                        </td>
+                        <td style={{ padding: '15px', textAlign: 'right' }}>
+                          <span style={{ fontWeight: '600', color: '#22c55e' }}>
+                            {partner.availableBricks.toLocaleString()}
+                          </span>
+                        </td>
+                        <td style={{ padding: '15px', textAlign: 'right' }}>
+                          <span style={{ fontWeight: '600', color: '#eab308' }}>
+                            {partner.pendingBricks.toLocaleString()}
+                          </span>
+                        </td>
+                        <td style={{ padding: '15px', textAlign: 'center' }}>
+                          <span style={{ 
+                            background: partner.referralCount > 0 ? '#dbeafe' : '#f1f5f9',
+                            color: partner.referralCount > 0 ? '#1e40af' : '#64748b',
+                            padding: '6px 12px',
+                            borderRadius: '15px',
+                            fontSize: '0.85rem',
+                            fontWeight: '600'
+                          }}>
+                            {partner.referralCount}건
+                          </span>
+                        </td>
+                        <td style={{ padding: '15px', color: '#64748b', fontSize: '0.9rem' }}>
+                          {new Date(partner.createdAt).toLocaleDateString('ko-KR')}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div style={{
+                  textAlign: 'center',
+                  padding: '80px 20px',
+                  color: '#94a3b8'
+                }}>
+                  <div style={{ fontSize: '4rem', marginBottom: '20px', opacity: 0.3 }}>🧱</div>
+                  <p style={{ fontSize: '1.2rem', fontWeight: '600', marginBottom: '10px' }}>
+                    아직 파트너가 없습니다
+                  </p>
+                  <p style={{ fontSize: '0.95rem' }}>
+                    강의를 구매한 사용자가 파트너가 될 수 있습니다
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>

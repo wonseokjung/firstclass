@@ -262,6 +262,45 @@ const PartnerDashboardPage: React.FC = () => {
             </span>
           </p>
 
+          {/* 파트너 미션 */}
+          <div style={{
+            background: `linear-gradient(135deg, ${COLORS.gold}15, ${COLORS.brick}10)`,
+            borderRadius: '20px',
+            padding: '30px',
+            marginBottom: '30px',
+            border: `1px solid ${COLORS.gold}30`,
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '2rem', marginBottom: '15px' }}>🌟</div>
+            <h3 style={{ 
+              color: COLORS.gold, 
+              fontSize: '1.3rem', 
+              fontWeight: '700',
+              marginBottom: '12px'
+            }}>
+              We are the Messengers of Hope
+            </h3>
+            <p style={{ 
+              color: COLORS.textPrimary, 
+              fontSize: '1.05rem', 
+              fontWeight: '600',
+              marginBottom: '18px',
+              lineHeight: '1.7'
+            }}>
+              우리는 희망을 전달하는 사람들입니다
+            </p>
+            <p style={{ 
+              color: COLORS.textSecondary, 
+              fontSize: '0.95rem', 
+              lineHeight: '1.8'
+            }}>
+              인공지능 시대, 길을 잃지 않도록 <strong style={{ color: COLORS.gold }}>꿈의 좌표</strong>를 제시합니다.<br/>
+              양질의 AI 교육을 전달하고, 빠르게 변하는 세상 속에서<br/>
+              <strong style={{ color: COLORS.brickLight }}>올바른 지식</strong>을 전파하여<br/>
+              사람들이 꿈과 희망을 잃지 않도록 돕습니다. 💫
+            </p>
+          </div>
+
           {/* 작동 방식 */}
           <div style={{
             background: COLORS.bgCard,
@@ -715,6 +754,97 @@ const PartnerDashboardPage: React.FC = () => {
           >
             💸 출금 신청
           </button>
+        </div>
+
+        {/* 파트너 미션 메시지 */}
+        <div style={{
+          background: `linear-gradient(135deg, ${COLORS.bgCard}, ${COLORS.bgDark})`,
+          borderRadius: '24px',
+          padding: '35px',
+          marginBottom: '35px',
+          border: `2px solid ${COLORS.gold}50`,
+          textAlign: 'center',
+          boxShadow: `0 10px 40px ${COLORS.gold}15`,
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          {/* 배경 장식 */}
+          <div style={{
+            position: 'absolute',
+            top: '-50px',
+            right: '-50px',
+            fontSize: '12rem',
+            opacity: 0.05
+          }}>✨</div>
+          
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <div style={{ fontSize: '2.5rem', marginBottom: '20px' }}>🌟</div>
+            <h2 style={{ 
+              color: COLORS.gold, 
+              fontSize: '1.8rem', 
+              fontWeight: '800',
+              marginBottom: '15px',
+              textShadow: '0 2px 10px rgba(251, 191, 36, 0.3)'
+            }}>
+              We are the Messengers of Hope
+            </h2>
+            <p style={{ 
+              color: COLORS.white, 
+              fontSize: '1.2rem', 
+              fontWeight: '600',
+              marginBottom: '25px',
+              lineHeight: '1.7'
+            }}>
+              우리는 희망을 전달하는 사람들입니다
+            </p>
+            
+            <div style={{
+              background: `${COLORS.bgDark}80`,
+              borderRadius: '16px',
+              padding: '25px 30px',
+              marginBottom: '20px',
+              backdropFilter: 'blur(10px)'
+            }}>
+              <p style={{ 
+                color: COLORS.textPrimary, 
+                fontSize: '1.05rem', 
+                lineHeight: '1.9',
+                marginBottom: '18px'
+              }}>
+                인공지능 시대, 길을 잃지 않도록<br/>
+                <strong style={{ color: COLORS.gold }}>꿈의 좌표</strong>를 제시합니다.
+              </p>
+              <p style={{ 
+                color: COLORS.textSecondary, 
+                fontSize: '1rem', 
+                lineHeight: '1.9'
+              }}>
+                단순히 수익만을 추구하는 것이 아닙니다.<br/>
+                양질의 인공지능 교육을 세상에 전달하고,<br/>
+                너무나도 빠르게 변하는 세상 속에서<br/>
+                사람들에게 <strong style={{ color: COLORS.brickLight }}>올바른 지식</strong>을 전파합니다.
+              </p>
+            </div>
+
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '10px',
+              background: `linear-gradient(135deg, ${COLORS.gold}20, ${COLORS.brick}20)`,
+              padding: '15px 25px',
+              borderRadius: '50px',
+              border: `1px solid ${COLORS.gold}40`
+            }}>
+              <span style={{ fontSize: '1.2rem' }}>💫</span>
+              <span style={{ 
+                color: COLORS.gold, 
+                fontWeight: '700',
+                fontSize: '1.05rem'
+              }}>
+                그래서 그들이 이 세상을 더 잘 살고, 꿈과 희망을 잃지 않도록 합니다
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* 통계 카드 4개 */}

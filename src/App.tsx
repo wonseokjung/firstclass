@@ -217,7 +217,7 @@ const Day10PageWrapped = withDayPageWrapper(Day10Page, 10);
 const MainPageWrapper = () => {
   const navigate = useNavigate();
   // 추천 추적은 GlobalReferralTracker에서 전역 처리
-
+  
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const redirectPath = urlParams.get('redirect');
@@ -236,114 +236,114 @@ const MainPageWrapper = () => {
 };
 
 // 리다이렉트 컴포넌트들
-const RedirectToNewPlayerUrl = () => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    navigate('/chatgpt-agent-beginner/player', { replace: true });
-  }, [navigate]);
-  return <LoadingSpinner />;
-};
+  const RedirectToNewPlayerUrl = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+      navigate('/chatgpt-agent-beginner/player', { replace: true });
+    }, [navigate]);
+    return <LoadingSpinner />;
+  };
 
-const RedirectToNewAIBuildingPlayerUrl = () => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    navigate('/ai-building-course/player', { replace: true });
-  }, [navigate]);
-  return <LoadingSpinner />;
-};
-
-// Coming Soon 안내 페이지
-const ComingSoonNotice = () => {
-  const navigate = useNavigate();
+  const RedirectToNewAIBuildingPlayerUrl = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+      navigate('/ai-building-course/player', { replace: true });
+    }, [navigate]);
+    return <LoadingSpinner />;
+  };
   
-  return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '20px'
-    }}>
+// Coming Soon 안내 페이지
+  const ComingSoonNotice = () => {
+    const navigate = useNavigate();
+    
+    return (
       <div style={{
-        background: 'white',
-        borderRadius: '20px',
-        padding: '60px 40px',
-        textAlign: 'center',
-        maxWidth: '600px',
-        width: '100%',
-        boxShadow: '0 20px 50px rgba(0, 0, 0, 0.2)'
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px'
       }}>
-        <div style={{ fontSize: '4rem', marginBottom: '20px' }}>🏗️</div>
+        <div style={{
+          background: 'white',
+          borderRadius: '20px',
+          padding: '60px 40px',
+          textAlign: 'center',
+          maxWidth: '600px',
+          width: '100%',
+          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.2)'
+        }}>
+          <div style={{ fontSize: '4rem', marginBottom: '20px' }}>🏗️</div>
         <h1 style={{ fontSize: '2.5rem', fontWeight: '700', color: '#1f2937', marginBottom: '20px' }}>
-          AI 건물 짓기 강의
-        </h1>
+            AI 건물 짓기 강의
+          </h1>
         <h2 style={{ fontSize: '1.8rem', color: '#0ea5e9', marginBottom: '30px', fontWeight: '600' }}>
           🗓️ Coming Soon
-        </h2>
+          </h2>
         <p style={{ fontSize: '1.2rem', color: '#4b5563', lineHeight: '1.6', marginBottom: '30px' }}>
           더 완성도 높은 강의와 혁신적인 교육 경험을 위해<br/>열심히 준비하고 있습니다! 💪
-        </p>
+          </p>
         <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '15px', marginBottom: '30px' }}>
           <p style={{ color: '#0ea5e9', fontSize: '1.1rem', fontWeight: '600', marginBottom: '10px' }}>
-            ⏰ 기다리는 동안
-          </p>
+              ⏰ 기다리는 동안
+            </p>
           <p style={{ color: '#6b7280', fontSize: '1rem' }}>
-            다른 무료 강의들로 AI 실력을 미리 쌓아보세요!
-          </p>
-        </div>
-        <button
-          onClick={() => navigate('/')}
-          style={{
-            background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
-            color: 'white',
-            border: 'none',
-            padding: '15px 30px',
-            fontSize: '1.1rem',
-            fontWeight: '600',
-            borderRadius: '10px',
-            cursor: 'pointer',
-            transition: 'transform 0.3s ease'
-          }}
+              다른 무료 강의들로 AI 실력을 미리 쌓아보세요!
+            </p>
+          </div>
+          <button
+            onClick={() => navigate('/')}
+            style={{
+              background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
+              color: 'white',
+              border: 'none',
+              padding: '15px 30px',
+              fontSize: '1.1rem',
+              fontWeight: '600',
+              borderRadius: '10px',
+              cursor: 'pointer',
+              transition: 'transform 0.3s ease'
+            }}
           onMouseEnter={(e) => { (e.target as HTMLElement).style.transform = 'scale(1.05)'; }}
           onMouseLeave={(e) => { (e.target as HTMLElement).style.transform = 'scale(1)'; }}
-        >
-          다른 강의 보러가기 🚀
-        </button>
+          >
+            다른 강의 보러가기 🚀
+          </button>
+        </div>
       </div>
-    </div>
-  );
-};
-
+    );
+  };
+  
 // 관리자 결제 상세 페이지 래퍼
 const PaymentDetailsViewPageWrapper = () => (
-  <Suspense fallback={<LoadingSpinner />}>
+      <Suspense fallback={<LoadingSpinner />}>
     <PaymentDetailsViewPage onBack={() => window.location.href = '/admin'} />
-  </Suspense>
-);
+      </Suspense>
+    );
 
 // 🔗 전역 추천 코드 추적 컴포넌트 (모든 페이지에서 작동)
 const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useReferralTracking();
   return <>{children}</>;
-};
+  };
 
 // ============================================
 // 메인 App 컴포넌트
 // ============================================
-function App() {
-  useEffect(() => {
-    AzureTableService.initializeTables();
-  }, []);
-
-  return (
-    <Router>
+  function App() {
+    useEffect(() => {
+      AzureTableService.initializeTables();
+    }, []);
+  
+    return (
+      <Router>
       <GlobalReferralTracker>
         <div className="App">
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
             {/* 메인 */}
-            <Route path="/" element={<MainPageWrapper />} />
+              <Route path="/" element={<MainPageWrapper />} />
             
             {/* 강의 페이지 */}
             <Route path="/chatgpt-course" element={<ChatGPTCoursePageWrapped />} />
@@ -374,9 +374,9 @@ function App() {
             <Route path="/chatgpt-agent-beginner/day10" element={<Day10PageWrapped />} />
             
             {/* 리다이렉트 */}
-            <Route path="/chatgpt-agent-beginner-player" element={<RedirectToNewPlayerUrl />} />
-            <Route path="/ai-building-course-player" element={<RedirectToNewAIBuildingPlayerUrl />} />
-            <Route path="/workflow-automation-master" element={<ComingSoonNotice />} />
+              <Route path="/chatgpt-agent-beginner-player" element={<RedirectToNewPlayerUrl />} />
+              <Route path="/ai-building-course-player" element={<RedirectToNewAIBuildingPlayerUrl />} />
+              <Route path="/workflow-automation-master" element={<ComingSoonNotice />} />
             
             {/* 일반 페이지 */}
             <Route path="/faq" element={<FAQPageWrapped />} />
@@ -403,14 +403,14 @@ function App() {
             <Route path="/ai-construction-site/step3" element={<AIConstructionSiteStep3PageWrapped />} />
             <Route path="/ai-workflow-editor" element={<AIWorkflowEditorPageWrapped />} />
             
-            {/* 라이브 페이지 */}
+              {/* 라이브 페이지 */}
             <Route path="/live" element={<LiveHubPageWrapped />} />
             <Route path="/live/step1" element={<LiveStep1PageWrapped />} />
             <Route path="/live/step2" element={<LiveStep2PageWrapped />} />
             <Route path="/live/step3" element={<LiveStep3PageWrapped />} />
             <Route path="/live/step4" element={<LiveStep4PageWrapped />} />
             
-            {/* 커뮤니티 */}
+              {/* 커뮤니티 */}
             <Route path="/community" element={<CommunityHubPageWrapped />} />
             <Route path="/community/:stepId" element={<CommunityStepPageWrapped />} />
             
@@ -425,15 +425,15 @@ function App() {
             <Route path="/payment/fail" element={<PaymentFailPageWrapped />} />
             
             {/* 관리자 */}
-            <Route path="/admin" element={<AdminDashboardPage />} />
-            <Route path="/admin/fix-enrollments" element={<AdminEnrollmentFixPage />} />
+              <Route path="/admin" element={<AdminDashboardPage />} />
+              <Route path="/admin/fix-enrollments" element={<AdminEnrollmentFixPage />} />
             <Route path="/admin/payment-details" element={<PaymentDetailsViewPageWrapper />} />
-          </Routes>
-        </Suspense>
+            </Routes>
+          </Suspense>
         </div>
       </GlobalReferralTracker>
-    </Router>
-  );
-}
-
-export default App;
+      </Router>
+    );
+  }
+  
+  export default App;

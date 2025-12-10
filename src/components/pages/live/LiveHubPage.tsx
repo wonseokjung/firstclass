@@ -237,8 +237,8 @@ const LiveHubPage: React.FC = () => {
             marginBottom: '25px',
             flexWrap: 'wrap'
           }}>
-            <div style={{
-              display: 'inline-flex',
+        <div style={{ 
+          display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
               background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldDark})`,
@@ -371,8 +371,8 @@ const LiveHubPage: React.FC = () => {
                 ].map((text, i) => (
                   <li key={i} style={{ 
                     display: 'flex', 
-                    alignItems: 'center', 
-                    gap: '10px',
+          alignItems: 'center',
+          gap: '10px',
                     marginBottom: '8px'
                   }}>
                     <span style={{ color: COLORS.gold }}>✦</span>
@@ -393,38 +393,38 @@ const LiveHubPage: React.FC = () => {
               gap: '12px',
               background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldDark})`,
               padding: '12px 30px',
-              borderRadius: '30px',
+          borderRadius: '30px',
               marginBottom: '25px',
               boxShadow: `0 8px 25px ${COLORS.gold}35`
-            }}>
-              <span style={{ 
-                width: '12px', 
-                height: '12px', 
+        }}>
+          <span style={{ 
+            width: '12px', 
+            height: '12px', 
                 background: COLORS.white, 
-                borderRadius: '50%',
+            borderRadius: '50%',
                 animation: 'blink 1s infinite',
                 boxShadow: `0 0 10px ${COLORS.white}`
-              }}></span>
+          }}></span>
               <span style={{ 
                 color: COLORS.navyDark, 
                 fontWeight: '800', 
                 fontSize: '1.1rem',
                 letterSpacing: '0.5px'
               }}>LIVE</span>
-            </div>
+        </div>
 
-            <h1 style={{ 
+        <h1 style={{ 
               color: COLORS.white, 
               fontSize: 'clamp(2rem, 5vw, 3rem)', 
-              fontWeight: '800',
+          fontWeight: '800',
               marginBottom: '15px',
               lineHeight: '1.3',
               textShadow: `0 4px 20px rgba(0,0,0,0.3)`
-            }}>
+        }}>
               주간 라이브 스케줄
-            </h1>
-            
-            <p style={{ 
+        </h1>
+        
+        <p style={{ 
               color: COLORS.gray, 
               fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
               lineHeight: '1.7',
@@ -483,7 +483,7 @@ const LiveHubPage: React.FC = () => {
           </div>
 
           {/* 주간 스케줄 그리드 */}
-          <div style={{ 
+        <div style={{
             display: 'grid', 
             gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
             gap: '22px',
@@ -504,7 +504,7 @@ const LiveHubPage: React.FC = () => {
                     cursor: 'pointer',
                     transition: 'all 0.3s ease',
                     opacity: hasAccess ? 1 : 0.85,
-                    position: 'relative',
+          position: 'relative',
                     boxShadow: hasAccess 
                       ? `0 10px 30px rgba(0,0,0,0.25), inset 0 1px 0 ${COLORS.gold}25` 
                       : '0 5px 20px rgba(0,0,0,0.15)'
@@ -687,7 +687,7 @@ const LiveHubPage: React.FC = () => {
                   (95,000원 ÷ 52회)
                 </div>
               </div>
-              
+          
               <div style={{
                 background: `${COLORS.navyDark}90`,
                 padding: '25px 20px',
@@ -783,18 +783,18 @@ const LiveHubPage: React.FC = () => {
                   }}>{item.desc}</p>
                 </div>
               ))}
-            </div>
           </div>
+        </div>
 
           {/* 로그인 / 구매 안내 */}
-          {!isLoggedIn ? (
-            <div style={{
+        {!isLoggedIn ? (
+          <div style={{
               background: `linear-gradient(135deg, ${COLORS.gold}15, ${COLORS.goldDark}10)`,
               border: `2px solid ${COLORS.gold}50`,
               borderRadius: '18px',
               padding: '35px',
               textAlign: 'center'
-            }}>
+          }}>
               <p style={{ 
                 color: COLORS.white, 
                 marginBottom: '22px', 
@@ -802,17 +802,17 @@ const LiveHubPage: React.FC = () => {
                 fontWeight: '500'
               }}>
                 🔒 프리미엄 라이브는 <span style={{ color: COLORS.gold, fontWeight: '700' }}>로그인 후</span> 이용 가능합니다
-              </p>
+            </p>
               <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <button
-                  onClick={() => navigate('/login')}
-                  style={{
+              <button
+                onClick={() => navigate('/login')}
+                style={{
                     background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldDark})`,
                     color: COLORS.navyDark,
-                    border: 'none',
+                  border: 'none',
                     padding: '15px 40px',
                     borderRadius: '12px',
-                    fontWeight: '700',
+                  fontWeight: '700',
                     cursor: 'pointer',
                     fontSize: '1rem',
                     boxShadow: `0 8px 25px ${COLORS.gold}40`,
@@ -825,19 +825,19 @@ const LiveHubPage: React.FC = () => {
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
                     e.currentTarget.style.boxShadow = `0 8px 25px ${COLORS.gold}40`;
-                  }}
-                >
-                  로그인
-                </button>
-                <button
-                  onClick={() => navigate('/signup')}
-                  style={{
-                    background: 'transparent',
+                }}
+              >
+                로그인
+              </button>
+              <button
+                onClick={() => navigate('/signup')}
+                style={{
+                  background: 'transparent',
                     color: COLORS.gold,
                     border: `2px solid ${COLORS.gold}`,
                     padding: '15px 40px',
                     borderRadius: '12px',
-                    fontWeight: '700',
+                  fontWeight: '700',
                     cursor: 'pointer',
                     fontSize: '1rem',
                     transition: 'all 0.3s'
@@ -847,37 +847,37 @@ const LiveHubPage: React.FC = () => {
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = 'transparent';
-                  }}
-                >
-                  회원가입
-                </button>
-              </div>
+                }}
+              >
+                회원가입
+              </button>
             </div>
-          ) : (
-            <div style={{
+          </div>
+        ) : (
+          <div style={{
               background: `linear-gradient(135deg, ${COLORS.gold}20, ${COLORS.goldDark}15)`,
               border: `1px solid ${COLORS.gold}50`,
-              borderRadius: '16px',
+            borderRadius: '16px',
               padding: '28px',
               textAlign: 'center'
-            }}>
+          }}>
               <p style={{ color: COLORS.goldLight, fontSize: '1.15rem', margin: 0, fontWeight: '500' }}>
                 ✓ <span style={{ fontWeight: '700' }}>{userName}</span>님, 구매한 강의의 라이브에 입장할 수 있습니다!
-              </p>
-            </div>
-          )}
+            </p>
+          </div>
+        )}
 
           {/* 메인으로 */}
           <div style={{ textAlign: 'center', marginTop: '35px' }}>
-            <button
-              onClick={() => navigate('/')}
-              style={{
-                background: 'transparent',
+        <button
+          onClick={() => navigate('/')}
+          style={{
+            background: 'transparent',
                 color: COLORS.grayDark,
                 border: `1px solid ${COLORS.gold}30`,
                 padding: '14px 35px',
                 borderRadius: '12px',
-                cursor: 'pointer',
+            cursor: 'pointer',
                 fontSize: '0.95rem',
                 transition: 'all 0.3s'
               }}
@@ -888,11 +888,11 @@ const LiveHubPage: React.FC = () => {
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = `${COLORS.gold}30`;
                 e.currentTarget.style.color = COLORS.grayDark;
-              }}
-            >
-              ← 메인으로 돌아가기
-            </button>
-          </div>
+          }}
+        >
+          ← 메인으로 돌아가기
+        </button>
+      </div>
         </div>
       )}
 
