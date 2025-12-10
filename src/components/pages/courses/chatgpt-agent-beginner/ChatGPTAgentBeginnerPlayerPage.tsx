@@ -4,6 +4,19 @@ import { PlayCircle, Lock, CheckCircle } from 'lucide-react';
 import NavigationBar from '../../../common/NavigationBar';
 import AzureTableService from '../../../../services/azureTableService';
 
+// 브랜드 컬러 정의
+const COLORS = {
+  navy: '#1e3a5f',
+  navyLight: '#2a4a70',
+  navyDark: '#0f2847',
+  gold: '#d4a439',
+  goldLight: '#f5d77a',
+  goldDark: '#b8860b',
+  white: '#ffffff',
+  grayLight: '#f8fafc',
+  grayMedium: '#64748b',
+};
+
 interface ChatGPTAgentBeginnerPlayerPageProps {
   onBack: () => void;
 }
@@ -193,17 +206,18 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
         alignItems: 'center',
         minHeight: '100vh',
         flexDirection: 'column',
-        gap: '20px'
+        gap: '20px',
+        background: `linear-gradient(135deg, ${COLORS.navy}10, ${COLORS.grayLight})`
       }}>
         <div style={{
-          width: '40px',
-          height: '40px',
-          border: '4px solid #e2e8f0',
-          borderTop: '4px solid #0ea5e9',
+          width: '50px',
+          height: '50px',
+          border: `4px solid ${COLORS.navy}20`,
+          borderTop: `4px solid ${COLORS.gold}`,
           borderRadius: '50%',
           animation: 'spin 1s linear infinite'
         }}></div>
-        <p style={{ color: '#64748b', fontSize: '16px' }}>
+        <p style={{ color: COLORS.navy, fontSize: '16px', fontWeight: '600' }}>
           결제 정보 확인 중...
         </p>
       </div>
@@ -211,38 +225,63 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(to bottom, #f8fafc, #ffffff)' }}>
+    <div style={{ minHeight: '100vh', background: COLORS.white }}>
       <NavigationBar
         onBack={onBack}
-        breadcrumbText="ChatGPT AI AGENT 비기너편"
+        breadcrumbText="AI Agent Maker"
       />
 
-      {/* 헤더 & 진행률 */}
+      {/* 헤더 & 진행률 - 브랜드 컬러 */}
       <div style={{
-        background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+        background: `linear-gradient(135deg, ${COLORS.navy} 0%, ${COLORS.navyDark} 100%)`,
         color: 'white',
         padding: '40px 20px',
-        boxShadow: '0 4px 20px rgba(14, 165, 233, 0.3)'
+        boxShadow: `0 4px 20px ${COLORS.navy}40`,
+        position: 'relative',
+        overflow: 'hidden'
       }}>
+        {/* 배경 장식 */}
+        <div style={{
+          position: 'absolute',
+          top: '-50px',
+          right: '-50px',
+          width: '200px',
+          height: '200px',
+          background: `radial-gradient(circle, ${COLORS.gold}20 0%, transparent 70%)`,
+          borderRadius: '50%'
+        }}></div>
+        <div style={{
+          position: 'absolute',
+          bottom: '-30px',
+          left: '20%',
+          width: '150px',
+          height: '150px',
+          background: `radial-gradient(circle, ${COLORS.goldLight}10 0%, transparent 60%)`,
+          borderRadius: '50%'
+        }}></div>
+
         <div style={{
           maxWidth: '1200px',
-          margin: '0 auto'
+          margin: '0 auto',
+          position: 'relative',
+          zIndex: 1
         }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '15px',
-            marginBottom: '20px'
+            gap: '20px',
+            marginBottom: '25px'
           }}>
             <div style={{
-              width: '60px',
-              height: '60px',
-              background: 'rgba(255, 255, 255, 0.2)',
-              borderRadius: '50%',
+              width: '70px',
+              height: '70px',
+              background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldDark})`,
+              borderRadius: '20px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '2rem'
+              fontSize: '2.2rem',
+              boxShadow: `0 8px 20px ${COLORS.gold}40`
             }}>
               🤖
             </div>
@@ -250,17 +289,19 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
               <h1 style={{
                 fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
                 fontWeight: '800',
-                marginBottom: '5px'
+                marginBottom: '5px',
+                color: COLORS.white
               }}>
                 AI Agent Maker
-          </h1>
-          <p style={{
-            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-                opacity: '0.95',
-                margin: 0
-          }}>
+              </h1>
+              <p style={{
+                fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+                color: COLORS.goldLight,
+                margin: 0,
+                fontWeight: '500'
+              }}>
                 10일 완성, 수익화하는 인공지능 에이전트 만들기
-          </p>
+              </p>
             </div>
           </div>
 
@@ -337,12 +378,11 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
 
           {/* 업데이트 공지 */}
           <div style={{
-            background: 'rgba(34, 197, 94, 0.15)',
-            border: '2px solid rgba(34, 197, 94, 0.3)',
+            background: `linear-gradient(135deg, ${COLORS.gold}20, ${COLORS.goldLight}15)`,
+            border: `2px solid ${COLORS.gold}50`,
             borderRadius: '15px',
             padding: '20px',
-            marginBottom: '20px',
-            backdropFilter: 'blur(10px)'
+            marginBottom: '20px'
           }}>
             <div style={{
               display: 'flex',
@@ -351,26 +391,26 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
               marginBottom: '10px'
             }}>
               <span style={{ fontSize: '1.8rem' }}>🎉</span>
-              <span style={{ fontSize: '1.2rem', fontWeight: '800', color: 'white' }}>
+              <span style={{ fontSize: '1.2rem', fontWeight: '800', color: COLORS.goldLight }}>
                 Day 1-10 전체 강의 업로드 완료!
               </span>
             </div>
             <p style={{
               fontSize: '1rem',
               margin: 0,
-              opacity: '0.95',
+              color: 'rgba(255, 255, 255, 0.9)',
               lineHeight: '1.6'
             }}>
               지금 바로 학습을 시작하세요! 🚀
             </p>
           </div>
 
-          {/* 진행률 */}
+          {/* 진행률 - 골드 테마 */}
           <div style={{
-            background: 'rgba(255, 255, 255, 0.2)',
+            background: `linear-gradient(135deg, ${COLORS.navyLight}80, ${COLORS.navy}90)`,
+            border: `2px solid ${COLORS.gold}40`,
             borderRadius: '15px',
-            padding: '20px',
-            backdropFilter: 'blur(10px)'
+            padding: '20px'
           }}>
             <div style={{
               display: 'flex',
@@ -378,25 +418,25 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
               alignItems: 'center',
               marginBottom: '12px'
             }}>
-              <span style={{ fontSize: '1.1rem', fontWeight: '700' }}>전체 학습 진행률</span>
-              <span style={{ fontSize: '1.5rem', fontWeight: '800' }}>
+              <span style={{ fontSize: '1.1rem', fontWeight: '700', color: COLORS.white }}>전체 학습 진행률</span>
+              <span style={{ fontSize: '1.5rem', fontWeight: '800', color: COLORS.goldLight }}>
                 {completedDays.size}/{totalDays} 완료 ({Math.round(progressPercentage)}%)
               </span>
             </div>
             <div style={{
               width: '100%',
-              height: '12px',
-              background: 'rgba(255, 255, 255, 0.3)',
+              height: '14px',
+              background: 'rgba(255, 255, 255, 0.15)',
               borderRadius: '10px',
               overflow: 'hidden'
             }}>
               <div style={{
                 width: `${progressPercentage}%`,
                 height: '100%',
-                background: 'white',
+                background: `linear-gradient(90deg, ${COLORS.gold}, ${COLORS.goldLight})`,
                 borderRadius: '10px',
                 transition: 'width 0.5s ease',
-                boxShadow: '0 2px 8px rgba(255, 255, 255, 0.3)'
+                boxShadow: `0 2px 10px ${COLORS.gold}50`
               }}></div>
             </div>
           </div>
@@ -407,17 +447,18 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '40px 20px'
+        padding: '40px 20px',
+        background: COLORS.grayLight
       }}>
         {courseData.weeks.map((week, weekIndex) => {
-          // Part 1: 파란색, Part 2: 노란색
+          // Part 1: 네이비, Part 2: 골드
           const isPart1 = weekIndex === 0;
           const headerBg = isPart1 
-            ? 'linear-gradient(135deg, #eff6ff, #dbeafe, #bfdbfe)' 
-            : 'linear-gradient(135deg, #fefce8, #fef3c7, #fde68a)';
-          const borderColor = isPart1 ? '#0ea5e9' : '#f59e0b';
-          const titleColor = isPart1 ? '#0369a1' : '#92400e';
-          const subtitleColor = isPart1 ? '#0c4a6e' : '#78350f';
+            ? `linear-gradient(135deg, ${COLORS.navy} 0%, ${COLORS.navyLight} 100%)` 
+            : `linear-gradient(135deg, ${COLORS.gold} 0%, ${COLORS.goldDark} 100%)`;
+          const borderColor = isPart1 ? COLORS.gold : COLORS.navy;
+          const titleColor = COLORS.white;
+          const subtitleColor = isPart1 ? COLORS.goldLight : 'rgba(255,255,255,0.9)';
           const icon = isPart1 ? '📚' : '🚀';
 
           return (
@@ -432,8 +473,8 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                 marginBottom: '30px',
                 border: `3px solid ${borderColor}`,
                 boxShadow: isPart1 
-                  ? '0 8px 30px rgba(14, 165, 233, 0.15)' 
-                  : '0 8px 30px rgba(245, 158, 11, 0.15)',
+                  ? `0 8px 30px ${COLORS.navy}30` 
+                  : `0 8px 30px ${COLORS.gold}40`,
                 position: 'relative',
                 overflow: 'hidden'
               }}>
@@ -445,8 +486,8 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                   width: '200px',
                   height: '200px',
                   background: isPart1 
-                    ? 'radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%)' 
-                    : 'radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%)',
+                    ? `radial-gradient(circle, ${COLORS.gold}20 0%, transparent 70%)` 
+                    : `radial-gradient(circle, ${COLORS.navy}30 0%, transparent 70%)`,
                   borderRadius: '50%'
                 }}></div>
                 
@@ -490,27 +531,29 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                     key={lesson.day}
                     onClick={() => isAvailable && handleDayClick(lesson.day)}
                     style={{
-                      background: 'white',
-            borderRadius: '15px',
-            padding: '25px',
-                      border: isCompleted ? '2px solid #10b981' : '2px solid #e2e8f0',
+                      background: COLORS.white,
+                      borderRadius: '15px',
+                      padding: '25px',
+                      border: isCompleted ? `2px solid ${COLORS.gold}` : `2px solid ${COLORS.navy}20`,
                       cursor: isAvailable ? 'pointer' : 'not-allowed',
                       transition: 'all 0.3s ease',
                       opacity: isAvailable ? 1 : 0.6,
-                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
+                      boxShadow: `0 4px 15px ${COLORS.navy}10`,
                       position: 'relative',
                       overflow: 'hidden'
                     }}
                     onMouseOver={(e) => {
                       if (isAvailable) {
                         e.currentTarget.style.transform = 'translateY(-4px)';
-                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(14, 165, 233, 0.2)';
+                        e.currentTarget.style.boxShadow = `0 8px 25px ${COLORS.navy}20`;
+                        e.currentTarget.style.borderColor = COLORS.gold;
                       }
                     }}
                     onMouseOut={(e) => {
                       if (isAvailable) {
                         e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.08)';
+                        e.currentTarget.style.boxShadow = `0 4px 15px ${COLORS.navy}10`;
+                        e.currentTarget.style.borderColor = isCompleted ? COLORS.gold : `${COLORS.navy}20`;
                       }
                     }}
                   >
@@ -520,15 +563,16 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                         position: 'absolute',
                         top: '15px',
                         right: '15px',
-                        background: '#10b981',
-                        color: 'white',
+                        background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldDark})`,
+                        color: COLORS.white,
                         padding: '6px 12px',
                         borderRadius: '20px',
                         fontSize: '0.85rem',
                         fontWeight: '700',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '5px'
+                        gap: '5px',
+                        boxShadow: `0 4px 12px ${COLORS.gold}40`
                       }}>
                         <CheckCircle size={16} />
                         완료
@@ -545,7 +589,9 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                       <div style={{
                         width: '50px',
                         height: '50px',
-                        background: isCompleted ? '#10b981' : (isAvailable ? '#0ea5e9' : '#94a3b8'),
+                        background: isCompleted 
+                          ? `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldDark})` 
+                          : (isAvailable ? `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyLight})` : COLORS.grayMedium),
                         borderRadius: '12px',
                         display: 'flex',
                         alignItems: 'center',
@@ -553,22 +599,23 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                         color: 'white',
                         fontSize: '1.2rem',
                         fontWeight: '800',
-                        flexShrink: 0
+                        flexShrink: 0,
+                        boxShadow: isCompleted ? `0 4px 12px ${COLORS.gold}30` : `0 4px 12px ${COLORS.navy}20`
                       }}>
                         {isAvailable ? (isCompleted ? <CheckCircle size={28} /> : lesson.day) : <Lock size={24} />}
                       </div>
                       <div style={{ flex: 1 }}>
                         <div style={{
                           fontSize: '0.9rem',
-                          color: '#64748b',
-                          fontWeight: '600',
+                          color: COLORS.navy,
+                          fontWeight: '700',
                           marginBottom: '4px'
                         }}>
                           Day {lesson.day}
                         </div>
                         <div style={{
                           fontSize: '0.85rem',
-                          color: '#94a3b8',
+                          color: COLORS.grayMedium,
                           display: 'flex',
                           alignItems: 'center',
                           gap: '8px'
@@ -582,7 +629,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                     <h3 style={{
                       fontSize: '1.1rem',
                       fontWeight: '700',
-                      color: '#1f2937',
+                      color: COLORS.navyDark,
                       marginBottom: '8px',
                       lineHeight: '1.4'
                     }}>
@@ -593,7 +640,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                     {lesson.subtitle && (
                       <p style={{
                         fontSize: '0.85rem',
-                        color: '#64748b',
+                        color: COLORS.grayMedium,
                         marginBottom: '15px',
                         lineHeight: '1.5'
                       }}>
@@ -608,27 +655,27 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         paddingTop: '15px',
-                        borderTop: '1px solid #e2e8f0'
+                        borderTop: `1px solid ${COLORS.navy}15`
                       }}>
                         <span style={{
-                          color: '#0ea5e9',
+                          color: COLORS.navy,
                           fontSize: '0.95rem',
-                          fontWeight: '600'
+                          fontWeight: '700'
                         }}>
                           {isCompleted ? '다시 학습하기' : '학습 시작하기'}
                         </span>
-                        <PlayCircle size={24} color="#0ea5e9" />
+                        <PlayCircle size={24} color={COLORS.gold} />
                       </div>
                     ) : (
                       <div style={{
                         paddingTop: '15px',
-                        borderTop: '1px solid #e2e8f0'
+                        borderTop: `1px solid ${COLORS.navy}15`
                       }}>
                       <div style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        color: '#94a3b8',
+                        color: COLORS.grayMedium,
                           fontSize: '0.85rem',
                           fontWeight: '600',
                           marginBottom: '10px'
@@ -644,8 +691,8 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                             gap: '4px'
                           }}>
                             <div style={{
-                              background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-                              color: '#92400e',
+                              background: `linear-gradient(135deg, ${COLORS.goldLight}30, ${COLORS.gold}20)`,
+                              color: COLORS.goldDark,
                               padding: '8px 16px',
                               borderRadius: '8px',
                               fontSize: '0.9rem',
@@ -653,7 +700,7 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
                               display: 'flex',
                               alignItems: 'center',
                               gap: '6px',
-                              border: '1px solid #fbbf24'
+                              border: `1px solid ${COLORS.gold}`
                             }}>
                               📅 {(lesson as any).launchDate}
                             </div>
@@ -679,25 +726,26 @@ const ChatGPTAgentBeginnerPlayerPage: React.FC<ChatGPTAgentBeginnerPlayerPagePro
         {/* 학습 완료 시 축하 메시지 */}
         {completedDays.size === totalDays && (
           <div style={{
-            background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+            background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
             borderRadius: '20px',
             padding: '40px',
             textAlign: 'center',
-            border: '2px solid #fbbf24',
-            marginTop: '40px'
+            border: `3px solid ${COLORS.gold}`,
+            marginTop: '40px',
+            boxShadow: `0 10px 40px ${COLORS.navy}40`
           }}>
             <div style={{ fontSize: '4rem', marginBottom: '20px' }}>🎉</div>
             <h2 style={{
               fontSize: 'clamp(1.8rem, 3vw, 2.2rem)',
               fontWeight: '800',
-              color: '#92400e',
+              color: COLORS.goldLight,
               marginBottom: '15px'
             }}>
               축하합니다! 모든 강의를 완료하셨습니다!
             </h2>
             <p style={{
               fontSize: '1.1rem',
-              color: '#78350f',
+              color: COLORS.white,
               lineHeight: '1.8'
             }}>
               이제 여러분은 수익화 AI 에이전트 메이커입니다! 🚀<br />

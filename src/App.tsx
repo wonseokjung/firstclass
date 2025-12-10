@@ -89,10 +89,8 @@ const ClubsPage = React.lazy(() => import('./components/pages/ClubsPage'));
 
 // 라이브 페이지
 const LiveHubPage = React.lazy(() => import('./components/pages/live/LiveHubPage'));
-const LiveStep1Page = React.lazy(() => import('./components/pages/live/LiveStep1Page'));
-const LiveStep2Page = React.lazy(() => import('./components/pages/live/LiveStep2Page'));
-const LiveStep3Page = React.lazy(() => import('./components/pages/live/LiveStep3Page'));
-const LiveStep4Page = React.lazy(() => import('./components/pages/live/LiveStep4Page'));
+const StepLivePage = React.lazy(() => import('./components/pages/live/StepLivePage'));
+const FreeLivePage = React.lazy(() => import('./components/pages/live/FreeLivePage'));
 
 // 커뮤니티 페이지
 const CommunityHubPage = React.lazy(() => import('./components/pages/community/CommunityHubPage'));
@@ -188,11 +186,9 @@ const AIConstructionSiteStep2PageWrapped = withSuspense(AIConstructionSiteStep2P
 const AIConstructionSiteStep3PageWrapped = withSuspense(AIConstructionSiteStep3Page);
 const RoadmapPageWrapped = withSuspense(RoadmapPage);
 const AIWorkflowEditorPageWrapped = withSuspense(AIWorkflowEditorPage);
-const LiveHubPageWrapped = withSuspense(LiveHubPage);
-const LiveStep1PageWrapped = withSuspense(LiveStep1Page);
-const LiveStep2PageWrapped = withSuspense(LiveStep2Page);
-const LiveStep3PageWrapped = withSuspense(LiveStep3Page);
-const LiveStep4PageWrapped = withSuspense(LiveStep4Page);
+const LiveHubPageWrapped = withPageWrapper(LiveHubPage, '/');
+const StepLivePageWrapped = withPageWrapper(StepLivePage, '/live');
+const FreeLivePageWrapped = withPageWrapper(FreeLivePage, '/live');
 const CommunityHubPageWrapped = withSuspense(CommunityHubPage);
 const CommunityStepPageWrapped = withSuspense(CommunityStepPage);
 const ForgotPasswordPageWrapped = withSuspense(ForgotPasswordPage);
@@ -405,10 +401,8 @@ const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ childr
             
               {/* 라이브 페이지 */}
             <Route path="/live" element={<LiveHubPageWrapped />} />
-            <Route path="/live/step1" element={<LiveStep1PageWrapped />} />
-            <Route path="/live/step2" element={<LiveStep2PageWrapped />} />
-            <Route path="/live/step3" element={<LiveStep3PageWrapped />} />
-            <Route path="/live/step4" element={<LiveStep4PageWrapped />} />
+            <Route path="/live/free" element={<FreeLivePageWrapped />} />
+            <Route path="/live/:stepId" element={<StepLivePageWrapped />} />
             
               {/* 커뮤니티 */}
             <Route path="/community" element={<CommunityHubPageWrapped />} />
