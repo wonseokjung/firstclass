@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Award, Building, GraduationCap, Briefcase, Users, Globe, Trophy, Youtube, Instagram, X, Sparkles, Bot, Zap, Building2, ArrowRight, Play, Wrench, TrendingUp } from 'lucide-react';
+import { GraduationCap, Globe, Youtube, Instagram, X, Sparkles, Bot, Zap, Building2, ArrowRight, Play, Wrench, TrendingUp } from 'lucide-react';
 import NavigationBar from '../common/NavigationBar';
 
 interface CEOPageProps {

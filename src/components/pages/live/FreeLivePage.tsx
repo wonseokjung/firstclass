@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Play, Youtube, Calendar, Clock, User, ExternalLink } from 'lucide-react';
+import { Play, Youtube, Calendar, ExternalLink } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
 
 // 브랜드 컬러

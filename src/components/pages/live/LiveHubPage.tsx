@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Play, Lock, Calendar, Clock, Youtube, ChevronRight, Tv, Archive, Users, Zap } from 'lucide-react';
+import { Lock, Calendar, Clock, Youtube, ChevronRight, Tv, Zap } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
 import AzureTableService from '../../../services/azureTableService';
 
@@ -122,7 +122,7 @@ interface LiveHubPageProps {
 
 const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [, setIsLoggedIn] = useState(false);
   const [purchasedCourses, setPurchasedCourses] = useState<number[]>([]);
   const [nextLive, setNextLive] = useState<LiveCategory | null>(null);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
