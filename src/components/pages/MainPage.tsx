@@ -7,20 +7,20 @@ import ComingSoonModal from '../modals/ComingSoonModal';
 import AzureTableService from '../../services/azureTableService';
 import NavigationBar from '../common/NavigationBar';
 
-// SEO 메타 태그 업데이트 함수 (기존과 동일)
+// SEO 메타 태그 업데이트 함수
 const updateMetaTags = () => {
-  document.title = '🏗️ AI 시티 빌더 - 나만의 수익형 디지털 건물 짓기 | AI City Builders';
+  document.title = '🚀 AI City Builders - AI 크리에이터 양성 플랫폼 | 교육 + 도구';
   const metaDescription = document.querySelector('meta[name="description"]');
   if (metaDescription) {
-    metaDescription.setAttribute('content', 'AI City Builders - AI 시티 빌더 시리즈로 나만의 수익형 디지털 건물 짓기! ChatGPT, AI 코딩, Google AI까지 실전 AI 교육 플랫폼');
+    metaDescription.setAttribute('content', 'AI City Builders - 기술이 없어도 AI로 콘텐츠를 만들고 수익화하세요! New Class of AI Creators 양성 플랫폼. 교육과 도구를 제공합니다.');
   }
   const ogTitle = document.querySelector('meta[property="og:title"]');
   if (ogTitle) {
-    ogTitle.setAttribute('content', '🏗️ AI 시티 빌더 - 나만의 수익형 디지털 건물 짓기 | AI City Builders');
+    ogTitle.setAttribute('content', '🚀 AI City Builders - AI 크리에이터 양성 플랫폼');
   }
   const ogDescription = document.querySelector('meta[property="og:description"]');
   if (ogDescription) {
-    ogDescription.setAttribute('content', 'AI로 월세 받는 첫 번째 디지털 건물을 완성하세요! ChatGPT부터 유튜브 수익화까지, AI 멘토 제이와 함께하는 실전 강의');
+    ogDescription.setAttribute('content', '기술과 장비가 없어도 AI로 콘텐츠를 만들고 수익화하세요! AI 멘토 제이와 함께하는 AI 크리에이터 양성 교육 + 도구 플랫폼');
   }
 };
 
@@ -335,7 +335,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
                 프리미엄 강의
               </span>
               <div style={{ fontSize: '0.8em', marginTop: '8px', fontWeight: '600', color: '#fbbf24' }}>
-                인공지능 자동화 에이전트로 컨텐츠 비즈니스 월세
+                AI 크리에이터가 되어 콘텐츠로 수익을 창출하세요
               </div>
             </h2>
             <div className="section-nav">

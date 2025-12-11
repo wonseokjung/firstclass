@@ -44,7 +44,7 @@ const LIVE_CATEGORIES: LiveCategory[] = [
     name: '무료 라이브',
     title: 'AI 수익화 토크',
     description: 'AI로 돈 버는 현실적인 방법! 수익화 전략, 성공 사례를 무료로 공개합니다.',
-    dayOfWeek: '월/토',
+    dayOfWeek: '월요일',
     time: '오후 8:00',
     icon: '🆓',
     color: COLORS.youtube,
@@ -73,7 +73,7 @@ const LIVE_CATEGORIES: LiveCategory[] = [
     id: 'step2',
     name: 'Step 2',
     title: 'AI 에이전트 비기너',
-    description: 'Google OPAL 워크플로우, 에이전트 제작 실습. 최신 업데이트 반영.',
+    description: '이미지/영상 생성, 유튜브 채널, 나레이션 에이전트 제작. 수익화 자동화!',
     dayOfWeek: '수요일',
     time: '오후 8:00',
     icon: '🤖',
@@ -130,11 +130,11 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
   // 사용자 및 구매 정보 체크
   useEffect(() => {
     const checkUser = async () => {
-      const userSession = sessionStorage.getItem('aicitybuilders_user_session');
-      if (userSession) {
-        try {
-          const user = JSON.parse(userSession);
-          setIsLoggedIn(true);
+    const userSession = sessionStorage.getItem('aicitybuilders_user_session');
+    if (userSession) {
+      try {
+        const user = JSON.parse(userSession);
+        setIsLoggedIn(true);
 
           // 테스트 계정
           if (user.email === 'test10@gmail.com') {
@@ -172,31 +172,16 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
     let closestDate: Date | null = null;
 
     LIVE_CATEGORIES.forEach(cat => {
-      if (cat.id === 'free') {
-        // 무료는 월/토 (둘 다 저녁 8시)
-        [1, 6].forEach(targetDay => {
-          const daysUntil = (targetDay - currentDay + 7) % 7 || 7;
-          const nextDate = new Date(now);
-          nextDate.setDate(now.getDate() + daysUntil);
-          nextDate.setHours(20, 0, 0, 0);
+      const targetDay = dayMap[cat.dayOfWeek];
+      if (targetDay !== undefined) {
+        const daysUntil = (targetDay - currentDay + 7) % 7 || 7;
+        const nextDate = new Date(now);
+        nextDate.setDate(now.getDate() + daysUntil);
+        nextDate.setHours(20, 0, 0, 0);
 
-          if (!closestDate || nextDate < closestDate) {
-            closestCategory = cat;
-            closestDate = nextDate;
-          }
-        });
-      } else {
-        const targetDay = dayMap[cat.dayOfWeek];
-        if (targetDay !== undefined) {
-          const daysUntil = (targetDay - currentDay + 7) % 7 || 7;
-          const nextDate = new Date(now);
-          nextDate.setDate(now.getDate() + daysUntil);
-          nextDate.setHours(20, 0, 0, 0);
-
-          if (!closestDate || nextDate < closestDate) {
-            closestCategory = cat;
-            closestDate = nextDate;
-          }
+        if (!closestDate || nextDate < closestDate) {
+          closestCategory = cat;
+          closestDate = nextDate;
         }
       }
     });
@@ -235,19 +220,19 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
       <NavigationBar onBack={onBack} breadcrumbText="라이브 허브" />
 
       {/* 헤더 */}
-      <div style={{
+        <div style={{ 
         background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
         padding: '50px 20px',
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
         {/* 배경 장식 */}
-        <div style={{
-          position: 'absolute',
+          <div style={{
+            position: 'absolute',
           top: '-80px',
           right: '-80px',
-          width: '300px',
-          height: '300px',
+            width: '300px',
+            height: '300px',
           background: `radial-gradient(circle, ${COLORS.gold}15 0%, transparent 70%)`,
           borderRadius: '50%'
         }}></div>
@@ -258,9 +243,9 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
           width: '200px',
           height: '200px',
           background: `radial-gradient(circle, ${COLORS.goldLight}10 0%, transparent 60%)`,
-          borderRadius: '50%'
-        }}></div>
-
+            borderRadius: '50%'
+          }}></div>
+          
         <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
             <div style={{
@@ -320,10 +305,10 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
                       </div>
                       <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.7rem' }}>{item.label}</div>
                     </div>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
+          </div>
+        </div>
           )}
         </div>
       </div>
@@ -344,14 +329,13 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
             flexWrap: 'wrap',
             marginBottom: '20px'
           }}>
-            {['월', '화', '수', '목', '금', '토'].map((day, idx) => {
+            {['월', '화', '수', '목', '금'].map((day, idx) => {
               const dayInfo = [
                 { day: '월', type: 'free', icon: '🆓', color: COLORS.youtube },
                 { day: '화', type: 'step1', icon: '🏗️', color: COLORS.navy },
                 { day: '수', type: 'step2', icon: '🤖', color: COLORS.gold },
                 { day: '목', type: 'step3', icon: '🚀', color: '#10b981' },
-                { day: '금', type: 'step4', icon: '💼', color: '#8b5cf6' },
-                { day: '토', type: 'free', icon: '🎯', color: COLORS.youtube }
+                { day: '금', type: 'step4', icon: '🎸', color: '#8b5cf6' }
               ][idx];
 
               return (
@@ -373,7 +357,7 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
           </div>
           
           <p style={{ textAlign: 'center', color: COLORS.grayMedium, fontSize: '0.95rem' }}>
-            연간 총 <strong style={{ color: COLORS.gold }}>312회</strong> 라이브 (각 Step 52회 × 4 + 무료 104회)
+            연간 총 <strong style={{ color: COLORS.gold }}>260회</strong> 라이브 (각 Step 52회 × 4 + 무료 52회)
           </p>
         </div>
 
@@ -536,7 +520,7 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
                     border: 'none',
                     borderRadius: '12px',
                     fontSize: '1rem',
-                    fontWeight: '700',
+                  fontWeight: '700',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
@@ -561,9 +545,9 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
                       </>
                     )}
                     <ChevronRight size={18} />
-                  </button>
-                </div>
-              </div>
+              </button>
+            </div>
+          </div>
             );
           })}
         </div>

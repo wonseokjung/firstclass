@@ -1,5 +1,5 @@
 {
-  "name": "clathon-api",
+  "name": "aicitybuilders-api",
   "version": "1.0.0",
   "description": "Azure Functions API for AI City Builders",
   "scripts": {

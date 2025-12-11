@@ -19,33 +19,33 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
 
   const faqData = [
     {
-      category: "AI CITY BUILDER 교육 시스템",
+      category: "AI City Builders 교육 시스템",
       items: [
         {
-          question: "AI CITY BUILDER는 다른 AI 교육과 어떻게 다른가요?",
+          question: "AI City Builders는 다른 AI 교육과 어떻게 다른가요?",
           answer: `
             <div>
-              <h4>🏙️ AI CITY BUILDER의 혁신적인 디지털 건물주 양성 시스템</h4>
+              <h4>🚀 AI City Builders - New Class of AI Creators 양성</h4>
               
-              <h5>🔸 수익 중심 교육</h5>
+              <h5>🔸 누구나 AI 크리에이터가 될 수 있습니다</h5>
               <ul>
-                <li><strong>디지털 건물 구축:</strong> AI를 활용해 실제 월 수익이 나오는 디지털 자산 건설</li>
-                <li><strong>월세 수익 창출:</strong> 유튜브, 블로그, 온라인 쇼핑몰 등을 통한 지속적인 수익 구조 구축</li>
-                <li><strong>실전 수익화 전략:</strong> 이론이 아닌 실제 돈을 버는 방법론 전수</li>
+                <li><strong>기술 장벽 제거:</strong> 코딩, 장비, 기술이 없어도 AI로 콘텐츠 제작 가능</li>
+                <li><strong>교육 + 도구 제공:</strong> 배우는 것에서 끝나지 않고, 실제 도구까지 제공</li>
+                <li><strong>실전 수익화:</strong> 콘텐츠를 만들고 실제 수익을 창출하는 방법 전수</li>
               </ul>
 
-              <h5>🔸 네트워크 기반 성장</h5>
+              <h5>🔸 AI 크리에이터 네트워크</h5>
               <ul>
-                <li><strong>디지털 건물주 네트워크:</strong> 개별 건물주들이 모여 시너지 창출</li>
-                <li><strong>협력 생태계:</strong> 서로의 디지털 건물을 연결하여 상호 발전</li>
-                <li><strong>AI 도시 구축:</strong> 개인의 성공을 넘어 함께 성장하는 도시 생태계</li>
+                <li><strong>크리에이터 커뮤니티:</strong> AI 크리에이터들이 모여 협력하고 성장</li>
+                <li><strong>협력 생태계:</strong> 서로의 콘텐츠와 경험을 공유하며 함께 발전</li>
+                <li><strong>AI 도시 구축:</strong> 크리에이터들이 함께 만들어가는 디지털 생태계</li>
               </ul>
 
-              <h5>🔸 지속 가능한 자산 구축</h5>
+              <h5>🔸 지속 가능한 수익 구조</h5>
               <ul>
-                <li><strong>지속 가능한 수익:</strong> 한 번 구축하면 계속 수익을 창출하는 디지털 자산</li>
-                <li><strong>확장 가능한 모델:</strong> 하나의 건물에서 시작해 다수의 건물로 확장</li>
-                <li><strong>AI 자동화:</strong> 인공지능으로 운영을 자동화하여 효율성 극대화</li>
+                <li><strong>디지털 건물:</strong> 유튜브, 블로그 등 월 수익이 나오는 콘텐츠 자산</li>
+                <li><strong>자동화 시스템:</strong> AI 에이전트로 콘텐츠 제작 자동화</li>
+                <li><strong>확장 가능:</strong> 하나의 채널에서 시작해 다수의 수익원으로 확장</li>
               </ul>
             </div>
           `
@@ -75,7 +75,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
               <ul>
                 <li><strong>멀티 플랫폼:</strong> 하나의 콘텐츠로 여러 플랫폼에서 수익 창출</li>
                 <li><strong>자동화 시스템:</strong> AI가 운영하므로 24시간 지속적인 수익 가능</li>
-                <li><strong>네트워크 효과:</strong> 다른 건물주들과 연결되어 시너지 극대화</li>
+                <li><strong>네트워크 효과:</strong> 다른 크리에이터들과 연결되어 시너지 극대화</li>
               </ul>
             </div>
           `
@@ -176,30 +176,30 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
           `
         },
         {
-          question: "디지털 건물주 네트워크는 어떻게 작동하나요?",
+          question: "AI 크리에이터 네트워크는 어떻게 작동하나요?",
           answer: `
             <div>
-              <h4>🌐 디지털 건물주 네트워크 시스템</h4>
+              <h4>🌐 AI 크리에이터 네트워크 시스템</h4>
               
               <h5>🔸 네트워크 구조</h5>
               <ul>
-                <li><strong>상호 협력:</strong> 각자의 디지털 건물을 서로 홍보하고 추천</li>
-                <li><strong>크로스 마케팅:</strong> 다른 건물주의 고객을 자신의 건물로 유도</li>
-                <li><strong>공동 프로젝트:</strong> 여러 건물주가 협력하여 대형 프로젝트 진행</li>
+                <li><strong>상호 협력:</strong> AI 크리에이터들이 서로의 콘텐츠를 홍보하고 추천</li>
+                <li><strong>크로스 마케팅:</strong> 서로의 구독자를 공유하며 함께 성장</li>
+                <li><strong>공동 프로젝트:</strong> 여러 크리에이터가 협력하여 대형 프로젝트 진행</li>
               </ul>
 
               <h5>🔸 네트워크 혜택</h5>
               <ul>
-                <li><strong>트래픽 공유:</strong> 네트워크 내에서 고객 트래픽 상호 교환</li>
-                <li><strong>지식 공유:</strong> 성공 노하우와 실패 경험을 서로 공유</li>
-                <li><strong>리소스 공유:</strong> 콘텐츠, 도구, 기술 등을 함께 활용</li>
+                <li><strong>트래픽 공유:</strong> 네트워크 내에서 시청자 상호 교환</li>
+                <li><strong>지식 공유:</strong> AI 도구 활용법과 수익화 노하우 공유</li>
+                <li><strong>리소스 공유:</strong> 프롬프트, 워크플로우, 템플릿 등 함께 활용</li>
               </ul>
 
-              <h5>🔸 도시화 프로세스</h5>
+              <h5>🔸 AI 도시 프로세스</h5>
               <ul>
-                <li><strong>개별 건물 구축:</strong> 각자의 전문 분야에서 디지털 건물 완성</li>
-                <li><strong>네트워크 연결:</strong> 비슷한 타겟이나 보완적인 서비스끼리 연결</li>
-                <li><strong>생태계 완성:</strong> 하나의 AI 도시로 발전하여 더 큰 가치 창출</li>
+                <li><strong>개별 채널 구축:</strong> 각자의 전문 분야에서 디지털 건물 완성</li>
+                <li><strong>네트워크 연결:</strong> 비슷한 타겟이나 보완적인 콘텐츠끼리 연결</li>
+                <li><strong>생태계 완성:</strong> AI 크리에이터들이 함께 만드는 AI 도시</li>
               </ul>
             </div>
           `
@@ -234,7 +234,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
               <ul>
                 <li><strong>일관성:</strong> 꾸준한 콘텐츠 업로드와 관리</li>
                 <li><strong>품질:</strong> AI를 활용한 고품질 콘텐츠 제작</li>
-                <li><strong>네트워킹:</strong> 다른 건물주들과의 협력</li>
+                <li><strong>네트워킹:</strong> 다른 크리에이터들과의 협력</li>
               </ul>
             </div>
           `
@@ -273,21 +273,21 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
           question: "성공한 디지털 건물 인증은 어떻게 받나요?",
           answer: `
             <div>
-              <h4>🏅 디지털 건물주 인증 시스템</h4>
+              <h4>🏅 AI 크리에이터 인증 시스템</h4>
               
               <h5>🔸 인증 조건</h5>
               <ul>
                 <li><strong>수익 실현:</strong> 실제 월 수익 ₩10만원 이상 달성</li>
                 <li><strong>지속성 증명:</strong> 3개월 연속 안정적 수익 유지</li>
                 <li><strong>성장성 입증:</strong> 전월 대비 수익 증가 또는 유지</li>
-                <li><strong>건물 완성도:</strong> AI 자동화 시스템 구축 완료</li>
+                <li><strong>채널 완성도:</strong> AI 자동화 시스템 구축 완료</li>
               </ul>
 
               <h5>🔸 인증 혜택</h5>
               <ul>
-                <li><strong>디지털 건물주 배지:</strong> 프로필에 표시되는 공식 인증</li>
-                <li><strong>네트워크 우선 참여:</strong> 상위 건물주들과의 협력 기회</li>
-                <li><strong>멘토 자격:</strong> 신규 건물주들을 돕는 멘토 활동 가능</li>
+                <li><strong>AI 크리에이터 배지:</strong> 프로필에 표시되는 공식 인증</li>
+                <li><strong>네트워크 우선 참여:</strong> 상위 크리에이터들과의 협력 기회</li>
+                <li><strong>멘토 자격:</strong> 신규 크리에이터들을 돕는 멘토 활동 가능</li>
                 <li><strong>수익 공유:</strong> 멘토링을 통한 추가 수익 창출</li>
               </ul>
 
@@ -296,7 +296,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
                 <li><strong>브론즈:</strong> 월 ₩10-50만원 수익</li>
                 <li><strong>실버:</strong> 월 ₩50-200만원 수익</li>
                 <li><strong>골드:</strong> 월 ₩200만원 이상 수익</li>
-                <li><strong>플래티넘:</strong> 멀티 건물 운영 + 네트워크 리더</li>
+                <li><strong>플래티넘:</strong> 멀티 채널 운영 + 네트워크 리더</li>
               </ul>
             </div>
           `

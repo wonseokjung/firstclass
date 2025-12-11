@@ -114,7 +114,7 @@ const RoadmapPage: React.FC = () => {
           marginBottom: '24px'
         }}>
           <span style={{ color: '#000', fontWeight: '700', fontSize: '0.9rem' }}>
-            🚀 AI 수익화 로드맵
+            🚀 AI 크리에이터 로드맵
           </span>
         </div>
         
@@ -125,8 +125,8 @@ const RoadmapPage: React.FC = () => {
           marginBottom: '20px',
           lineHeight: '1.2'
         }}>
-          콘텐츠 제작부터 사업화까지<br />
-          <span style={{ color: '#f59e0b' }}>파이프라인을 설계하세요</span>
+          AI 크리에이터가 되는 여정<br />
+          <span style={{ color: '#f59e0b' }}>교육 + 도구로 함께합니다</span>
         </h1>
         
         <p style={{
@@ -136,8 +136,8 @@ const RoadmapPage: React.FC = () => {
           margin: '0 auto 40px',
           lineHeight: '1.7'
         }}>
-          그냥 만들면 다음이 없습니다.<br />
-          <strong style={{ color: '#fff' }}>처음부터 수익화를 설계</strong>하고 시작하세요.
+          기술과 장비가 없어도 괜찮습니다.<br />
+          <strong style={{ color: '#fff' }}>AI와 함께라면 누구나 크리에이터</strong>가 될 수 있습니다.
         </p>
 
         {/* Progress Bar */}
@@ -455,15 +455,15 @@ const RoadmapPage: React.FC = () => {
           fontWeight: '800',
           marginBottom: '16px'
         }}>
-          어디서부터 시작해야 할지 모르겠다면?
+          AI 크리에이터가 되고 싶다면?
         </h2>
         <p style={{
           color: '#94a3b8',
           fontSize: '1.1rem',
           marginBottom: '32px'
         }}>
-          AI 수익화의 첫 걸음,<br />
-          <strong style={{ color: '#3b82f6' }}>Step 1: AI 건물주 되기</strong>부터 시작하세요!
+          기술과 장비가 없어도 괜찮습니다.<br />
+          <strong style={{ color: '#3b82f6' }}>Step 1</strong>부터 차근차근 시작하세요!
         </p>
         <button
           onClick={() => navigate('/courses/ai-building')}
@@ -482,7 +482,7 @@ const RoadmapPage: React.FC = () => {
             boxShadow: '0 10px 40px rgba(59, 130, 246, 0.3)'
           }}
         >
-          🏗️ Step 1 시작하기
+          🚀 AI 크리에이터 시작하기
           <ArrowRight size={22} />
         </button>
       </section>

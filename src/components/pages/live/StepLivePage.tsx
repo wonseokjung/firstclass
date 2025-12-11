@@ -55,7 +55,7 @@ const STEP_INFO: { [key: string]: StepInfo } = {
     id: 'step2',
     name: 'Step 2',
     title: 'AI 에이전트 비기너',
-    description: 'Google OPAL 워크플로우, 에이전트 제작 실습. 최신 업데이트 반영.',
+    description: '이미지/영상 생성, 유튜브 채널, 나레이션 에이전트 제작 실습. 수익화 자동화!',
     dayOfWeek: '수요일',
     time: '오후 8:00',
     courseId: 1002,

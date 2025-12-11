@@ -145,7 +145,7 @@ const FreeLivePage: React.FC<FreeLivePageProps> = ({ onBack }) => {
                 🆓 무료 AI 수익화 라이브
               </h1>
               <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '1.1rem' }}>
-                매주 월요일 & 토요일 저녁 8시 YouTube 라이브
+                매주 월요일 저녁 8시 YouTube 라이브
               </p>
             </div>
           </div>
@@ -165,18 +165,7 @@ const FreeLivePage: React.FC<FreeLivePageProps> = ({ onBack }) => {
               gap: '10px'
             }}>
               <Calendar size={20} color={COLORS.white} />
-              <span style={{ color: COLORS.white, fontWeight: '600' }}>월요일 오후 8:00</span>
-            </div>
-            <div style={{
-              background: 'rgba(255,255,255,0.15)',
-              borderRadius: '12px',
-              padding: '15px 20px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px'
-            }}>
-              <Calendar size={20} color={COLORS.white} />
-              <span style={{ color: COLORS.white, fontWeight: '600' }}>토요일 오후 8:00</span>
+              <span style={{ color: COLORS.white, fontWeight: '600' }}>매주 월요일 오후 8:00</span>
             </div>
           </div>
           

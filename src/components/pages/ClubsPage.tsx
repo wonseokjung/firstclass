@@ -123,7 +123,7 @@ const ClubsPage: React.FC<ClubsPageProps> = ({ onBack }) => {
 
   return (
     <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
-      <NavigationBar onBack={onBack} breadcrumbText="건물주 클럽" />
+      <NavigationBar onBack={onBack} breadcrumbText="AI 크리에이터 클럽" />
 
       {/* 히어로 섹션 */}
       <div style={{
@@ -156,7 +156,7 @@ const ClubsPage: React.FC<ClubsPageProps> = ({ onBack }) => {
             fontWeight: '700',
             color: '#fbbf24'
           }}>
-            🏆 AI CITY 건물주 클럽
+            🏆 AI 크리에이터 클럽
           </div>
           
           <h1 style={{
