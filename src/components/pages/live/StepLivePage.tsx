@@ -409,7 +409,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
       {/* 헤더 */}
       <div style={{
         background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
-        padding: '40px 20px',
+        padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)',
         position: 'relative',
         overflow: 'hidden'
       }}>
@@ -518,7 +518,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
       </div>
       
       {/* 메인 컨텐츠 */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)' }}>
         
         {/* 현재 선택된 영상 또는 라이브 플레이어 */}
         <div style={{ marginBottom: '50px' }}>

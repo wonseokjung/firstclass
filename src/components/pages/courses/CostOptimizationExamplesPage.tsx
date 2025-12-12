@@ -340,9 +340,9 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
     }}>
       <NavigationBar />
       
-      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '40px 20px' }}>
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)' }}>
         {/* Header with Mode Toggle */}
-        <div style={{ marginBottom: '40px' }}>
+        <div style={{ marginBottom: 'clamp(20px, 4vw, 40px)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
             <button
               onClick={onBack}
@@ -450,7 +450,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
           <div style={{
             background: '#ffffff',
               borderRadius: '24px',
-              padding: '40px',
+              padding: 'clamp(20px, 4vw, 40px)',
               boxShadow: '0 4px 20px rgba(14, 165, 233, 0.1)',
               marginBottom: '30px',
             }}>
@@ -473,7 +473,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
 
         <div style={{
           display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
                 gap: '20px',
               }}>
                 {usePurposes.map((purpose) => (
@@ -551,7 +551,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
               <div style={{
                 background: '#ffffff',
                 borderRadius: '24px',
-                padding: '40px',
+                padding: 'clamp(20px, 4vw, 40px)',
                 boxShadow: '0 4px 20px rgba(14, 165, 233, 0.1)',
               }}>
                 <div style={{
@@ -669,7 +669,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
                 <div style={{
                 background: '#ffffff',
                 borderRadius: '24px',
-                padding: '40px',
+                padding: 'clamp(20px, 4vw, 40px)',
                 boxShadow: '0 4px 20px rgba(14, 165, 233, 0.1)',
               }}>
                 <div style={{
@@ -977,9 +977,9 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
         <div style={{
           background: '#ffffff',
               borderRadius: '24px',
-          padding: '40px',
+          padding: 'clamp(20px, 4vw, 40px)',
               boxShadow: '0 4px 20px rgba(14, 165, 233, 0.1)',
-              marginBottom: '40px',
+              marginBottom: 'clamp(20px, 4vw, 40px)',
             }}>
               {apiType === 'text' && (
                 <TextCalculator 
@@ -1048,7 +1048,7 @@ const TextCalculator: React.FC<any> = ({ calc, setCalc, cost, models }) => {
         <label style={{ fontSize: '16px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '12px' }}>
           처리 티어 선택
         </label>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))', gap: '10px' }}>
           {tiers.map((tier) => (
             <button
               key={tier.id}
@@ -1313,7 +1313,7 @@ const TextCalculator: React.FC<any> = ({ calc, setCalc, cost, models }) => {
         <h3 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '20px' }}>
           💰 1회 요청당 예상 비용
         </h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))', gap: '20px' }}>
           <div>
             <p style={{ fontSize: '14px', opacity: 0.9, marginBottom: '8px' }}>입력 비용</p>
             <p style={{ fontSize: '28px', fontWeight: '700' }}>${cost.inputCost?.toFixed(4) || '0.0000'}</p>
@@ -1477,7 +1477,7 @@ const ImageCalculator: React.FC<any> = ({ calc, setCalc, cost }) => {
         <h3 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '20px' }}>
           💰 예상 비용
         </h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))', gap: '20px' }}>
           <div>
             <p style={{ fontSize: '14px', opacity: 0.9, marginBottom: '8px' }}>이미지당 비용</p>
             <p style={{ fontSize: '28px', fontWeight: '700' }}>${cost.perRequest?.toFixed(4) || '0.0000'}</p>
@@ -1613,7 +1613,7 @@ const AudioCalculator: React.FC<any> = ({ calc, setCalc }) => {
         <h3 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '20px' }}>
           💰 1회 요청당 예상 비용
         </h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))', gap: '20px' }}>
           <div>
             <p style={{ fontSize: '14px', opacity: 0.9, marginBottom: '8px' }}>입력 비용</p>
             <p style={{ fontSize: '28px', fontWeight: '700' }}>${audioCost.inputCost?.toFixed(4) || '0.0000'}</p>
@@ -1721,7 +1721,7 @@ const VideoCalculator: React.FC<any> = ({ calc, setCalc }) => {
         <h3 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '20px' }}>
           💰 예상 비용
         </h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))', gap: '20px' }}>
           <div>
             <p style={{ fontSize: '14px', opacity: 0.9, marginBottom: '8px' }}>초당 비용</p>
             <p style={{ fontSize: '28px', fontWeight: '700' }}>${videoCost.perRequest?.toFixed(4) || '0.0000'}</p>
@@ -1979,7 +1979,7 @@ const TranscriptionCalculator: React.FC<any> = ({ calc, setCalc }) => {
         <h3 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '20px' }}>
           💰 예상 비용
         </h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))', gap: '20px' }}>
           <div>
             <p style={{ fontSize: '14px', opacity: 0.9, marginBottom: '8px' }}>분당 비용</p>
             <p style={{ fontSize: '28px', fontWeight: '700' }}>${transcriptionCost.perRequest?.toFixed(4) || '0.0000'}</p>

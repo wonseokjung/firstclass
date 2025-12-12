@@ -268,7 +268,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
       <main style={{
         maxWidth: '900px',
         margin: '0 auto',
-        padding: '40px 20px'
+        padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)'
       }}>
         {/* 강의 정보 카드 */}
         <div style={{

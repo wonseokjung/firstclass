@@ -9,7 +9,7 @@ const LiveStep3Page: React.FC = () => {
     <div style={{ minHeight: '100vh', background: '#0f172a' }}>
       <NavigationBar />
       
-      <div style={{ maxWidth: '600px', margin: '0 auto', padding: '100px 20px', textAlign: 'center' }}>
+      <div style={{ maxWidth: '600px', margin: '0 auto', padding: 'clamp(50px, 10vw, 100px) clamp(15px, 3vw, 20px)', textAlign: 'center' }}>
         {/* 헤더 */}
         <div style={{ 
           display: 'inline-block',

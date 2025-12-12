@@ -231,18 +231,18 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
         />
         <section style={{ 
           background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
-          padding: '60px 0',
+          padding: 'clamp(30px, 6vw, 60px) 0',
         }}>
-          <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px' }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(15px, 4vw, 40px)' }}>
             <SkeletonUserStats />
           </div>
         </section>
         <section style={{ padding: '80px 0', background: COLORS.white }}>
-          <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px' }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(15px, 4vw, 40px)' }}>
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-              gap: '30px',
+              gap: 'clamp(15px, 3vw, 30px)',
               maxWidth: '1200px',
               margin: '0 auto'
             }}>
@@ -976,7 +976,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               <p style={{ 
                 color: '#666666',
                 fontSize: '1rem',
-                marginBottom: '30px',
+                marginBottom: 'clamp(15px, 3vw, 30px)',
                 lineHeight: 1.6
               }}>
                 새로운 강의를 시작해서 AI 마스터의 길을 걸어보세요!
@@ -1275,13 +1275,13 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
       {userStats.enrolledCourses.length > 0 && (
         <section style={{ 
           background: 'linear-gradient(135deg, #f8fafc, #e2e8f0)', 
-          padding: '60px 0',
+          padding: 'clamp(30px, 6vw, 60px) 0',
           borderTop: '1px solid #e2e8f0'
         }}>
           <div style={{
             maxWidth: '1400px',
             margin: '0 auto',
-            padding: '0 40px'
+            padding: '0 clamp(15px, 4vw, 40px)'
           }}>
             <div style={{
               maxWidth: '600px',
@@ -1295,7 +1295,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               <h3 style={{ 
                 fontSize: '1.6rem',
                 fontWeight: '600',
-                marginBottom: '30px',
+                marginBottom: 'clamp(15px, 3vw, 30px)',
                 color: '#1f2937'
               }}>
                 🎯 학습 진행률

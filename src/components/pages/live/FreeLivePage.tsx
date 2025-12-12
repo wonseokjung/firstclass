@@ -111,7 +111,7 @@ const FreeLivePage: React.FC<FreeLivePageProps> = ({ onBack }) => {
       {/* 헤더 */}
       <div style={{
         background: `linear-gradient(135deg, ${COLORS.youtube}, #cc0000)`,
-        padding: '40px 20px',
+        padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)',
         position: 'relative',
         overflow: 'hidden'
       }}>
@@ -198,7 +198,7 @@ const FreeLivePage: React.FC<FreeLivePageProps> = ({ onBack }) => {
       </div>
       
       {/* 메인 컨텐츠 */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)' }}>
         
         {/* 선택된 영상 플레이어 */}
         {selectedVideo && (

@@ -135,6 +135,9 @@ const UserDashboardPage = React.lazy(() => import('./components/pages/auth/UserD
 const PaymentSuccessPage = React.lazy(() => import('./components/pages/payment/PaymentSuccessPage'));
 const PaymentFailPage = React.lazy(() => import('./components/pages/payment/PaymentFailPage'));
 
+// 환불 정책 페이지
+const RefundPolicyPage = React.lazy(() => import('./components/pages/RefundPolicyPage'));
+
 // 관리자 페이지
 const AdminEnrollmentFixPage = React.lazy(() => import('./components/pages/admin/AdminEnrollmentFixPage'));
 const AdminDashboardPage = React.lazy(() => import('./components/pages/admin/AdminDashboardPage'));
@@ -179,6 +182,7 @@ const SignUpPageWrapped = withPageWrapper(SignUpPage);
 const UserDashboardPageWrapped = withPageWrapper(UserDashboardPage);
 const PaymentSuccessPageWrapped = withPageWrapper(PaymentSuccessPage);
 const PaymentFailPageWrapped = withPageWrapper(PaymentFailPage);
+const RefundPolicyPageWrapped = withPageWrapper(RefundPolicyPage);
 
 // Suspense만 적용 (onBack 없음)
 const AIConstructionSiteStep1PageWrapped = withSuspense(AIConstructionSiteStep1Page);
@@ -417,6 +421,9 @@ const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ childr
             {/* 결제 */}
             <Route path="/payment/success" element={<PaymentSuccessPageWrapped />} />
             <Route path="/payment/fail" element={<PaymentFailPageWrapped />} />
+            
+            {/* 환불 정책 */}
+            <Route path="/refund-policy" element={<RefundPolicyPageWrapped />} />
             
             {/* 관리자 */}
               <Route path="/admin" element={<AdminDashboardPage />} />

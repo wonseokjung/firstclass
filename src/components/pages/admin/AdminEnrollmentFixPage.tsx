@@ -846,7 +846,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
     <div className="masterclass-container" style={{ minHeight: '100vh', background: '#f8fafc' }}>
       <NavigationBar onBack={() => navigate('/')} breadcrumbText="관리자 - 수강 정보 수정" />
 
-      <div style={{ maxWidth: '1600px', margin: '0 auto', padding: '40px 20px' }}>
+      <div style={{ maxWidth: '1600px', margin: '0 auto', padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)' }}>
         {/* 헤더 */}
         <div style={{
           background: 'linear-gradient(135deg, #ef4444, #dc2626)',

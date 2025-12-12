@@ -1046,7 +1046,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
           </h2>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 250px), 1fr))',
             gap: '15px'
           }}>
             {lessonData.resources.map((resource, index) => (

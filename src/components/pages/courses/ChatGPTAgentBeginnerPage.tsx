@@ -1099,7 +1099,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
             borderRadius: '20px',
             padding: 'clamp(40px, 6vw, 60px) clamp(30px, 5vw, 50px)',
-            marginBottom: '60px',
+            marginBottom: 'clamp(30px, 6vw, 60px)',
             boxShadow: '0 20px 60px rgba(30, 41, 59, 0.4)',
             border: '3px solid #fbbf24',
             position: 'relative',
@@ -1170,14 +1170,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               position: 'relative',
               zIndex: 1,
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-              gap: '25px',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
+              gap: 'clamp(15px, 3vw, 25px)',
               marginTop: '50px'
             }}>
               <div style={{
                 background: 'rgba(255, 255, 255, 0.95)',
                 borderRadius: '20px',
-                padding: '35px 25px',
+                padding: 'clamp(20px, 4vw, 35px) clamp(15px, 3vw, 25px)',
                 textAlign: 'center',
                 boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
                 border: '2px solid #fbbf24',
@@ -1191,7 +1191,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   marginBottom: '20px',
                   filter: 'drop-shadow(0 4px 8px rgba(251, 191, 36, 0.3))'
                 }}>🎯</div>
-                <h3 style={{ fontSize: '1.3rem', fontWeight: '800', color: '#1e40af', marginBottom: '12px' }}>
+                <h3 style={{ fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)', fontWeight: '800', color: '#1e40af', marginBottom: '12px' }}>
                   합리적인 가격
                 </h3>
                 <p style={{ fontSize: '1rem', color: '#64748b', lineHeight: '1.7', margin: '0', fontWeight: '500' }}>
@@ -1202,7 +1202,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               <div style={{
                 background: 'rgba(255, 255, 255, 0.95)',
                 borderRadius: '20px',
-                padding: '35px 25px',
+                padding: 'clamp(20px, 4vw, 35px) clamp(15px, 3vw, 25px)',
                 textAlign: 'center',
                 boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
                 border: '2px solid #fbbf24',
@@ -1216,7 +1216,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   marginBottom: '20px',
                   filter: 'drop-shadow(0 4px 8px rgba(251, 191, 36, 0.3))'
                 }}>👨‍🏫</div>
-                <h3 style={{ fontSize: '1.3rem', fontWeight: '800', color: '#1e40af', marginBottom: '12px' }}>
+                <h3 style={{ fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)', fontWeight: '800', color: '#1e40af', marginBottom: '12px' }}>
                   실전 경험
                 </h3>
                 <p style={{ fontSize: '1rem', color: '#64748b', lineHeight: '1.7', margin: '0', fontWeight: '500' }}>
@@ -1227,7 +1227,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               <div style={{
                 background: 'rgba(255, 255, 255, 0.95)',
                 borderRadius: '20px',
-                padding: '35px 25px',
+                padding: 'clamp(20px, 4vw, 35px) clamp(15px, 3vw, 25px)',
                 textAlign: 'center',
                 boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
                 border: '2px solid #fbbf24',
@@ -1241,7 +1241,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   marginBottom: '20px',
                   filter: 'drop-shadow(0 4px 8px rgba(251, 191, 36, 0.3))'
                 }}>🌱</div>
-                <h3 style={{ fontSize: '1.3rem', fontWeight: '800', color: '#1e40af', marginBottom: '12px' }}>
+                <h3 style={{ fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)', fontWeight: '800', color: '#1e40af', marginBottom: '12px' }}>
                   지속 성장
                 </h3>
                 <p style={{ fontSize: '1rem', color: '#64748b', lineHeight: '1.7', margin: '0', fontWeight: '500' }}>
@@ -1268,7 +1268,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
               padding: 'clamp(30px, 5vw, 40px)',
                 borderRadius: '15px',
-              marginBottom: '50px',
+              marginBottom: 'clamp(25px, 5vw, 50px)',
                 border: '2px solid #1e40af',
                 textAlign: 'center'
               }}>
@@ -1560,7 +1560,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               padding: 'clamp(40px, 6vw, 60px) clamp(30px, 5vw, 50px)',
               borderRadius: '20px',
                 border: '3px solid #fbbf24',
-              marginBottom: '60px',
+              marginBottom: 'clamp(30px, 6vw, 60px)',
                 boxShadow: '0 20px 60px rgba(30, 41, 59, 0.4)',
                 position: 'relative',
                 overflow: 'hidden'
@@ -1585,7 +1585,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     color: 'white',
                   fontSize: 'clamp(2rem, 4vw, 2.5rem)',
                     fontWeight: '900',
-                    marginBottom: '50px',
+                    marginBottom: 'clamp(25px, 5vw, 50px)',
                   textAlign: 'center',
                     textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
               }}>

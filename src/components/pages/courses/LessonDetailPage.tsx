@@ -364,13 +364,13 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
       <div style={{ 
         maxWidth: '1000px', 
         margin: '0 auto', 
-        padding: '40px 20px',
+        padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)',
         background: '#ffffff'
       }}>
         {/* 강의 헤더 */}
         <div style={{ 
-          marginBottom: '40px',
-          padding: '30px',
+          marginBottom: 'clamp(20px, 4vw, 40px)',
+          padding: 'clamp(15px, 3vw, 30px)',
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           borderRadius: '20px',
           color: 'white',
@@ -419,7 +419,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
             <h3 style={{ marginBottom: '15px', fontSize: '1.1rem' }}>🎯 학습 목표</h3>
             <div style={{ 
               display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))',
               gap: '10px'
             }}>
               {lessonData.objectives.map((objective, index) => (
@@ -446,7 +446,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
                 background: '#ffffff',
                 border: '1px solid #e2e8f0',
                 borderRadius: '16px',
-                padding: '30px',
+                padding: 'clamp(15px, 3vw, 30px)',
                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)'
               }}
             >
@@ -540,7 +540,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
         {/* 강의 완료 및 네비게이션 */}
         <div style={{ 
           marginTop: '50px',
-          padding: '30px',
+          padding: 'clamp(15px, 3vw, 30px)',
           background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
           borderRadius: '16px',
           border: '1px solid #e2e8f0'

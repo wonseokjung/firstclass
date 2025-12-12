@@ -226,7 +226,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
           alignItems: 'center',
           minHeight: '400px',
           flexDirection: 'column',
-          gap: '20px'
+          gap: 'clamp(12px, 3vw, 20px)'
         }}>
           <div style={{
             width: '40px',
@@ -245,7 +245,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '40px 20px'
+          padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)'
         }}>
 
           {/* 강의 소개 영상 */}
@@ -555,7 +555,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
           }}>
             <div style={{
               textAlign: 'center',
-              marginBottom: '40px'
+              marginBottom: 'clamp(20px, 4vw, 40px)'
             }}>
               <div style={{
                 fontSize: '2.5rem',
@@ -594,14 +594,14 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '20px',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))',
+              gap: 'clamp(12px, 3vw, 20px)',
               marginTop: '40px'
             }}>
               <div style={{
                 background: 'white',
                 borderRadius: '15px',
-                padding: '30px',
+                padding: 'clamp(15px, 3vw, 30px)',
                 textAlign: 'center',
                 boxShadow: '0 4px 15px rgba(14, 165, 233, 0.1)',
                 border: '1px solid #bae6fd'
@@ -618,7 +618,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
               <div style={{
                 background: 'white',
                 borderRadius: '15px',
-                padding: '30px',
+                padding: 'clamp(15px, 3vw, 30px)',
                 textAlign: 'center',
                 boxShadow: '0 4px 15px rgba(14, 165, 233, 0.1)',
                 border: '1px solid #bae6fd'
@@ -635,7 +635,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
               <div style={{
                 background: 'white',
                 borderRadius: '15px',
-                padding: '30px',
+                padding: 'clamp(15px, 3vw, 30px)',
                 textAlign: 'center',
                 boxShadow: '0 4px 15px rgba(14, 165, 233, 0.1)',
                 border: '1px solid #bae6fd'
@@ -652,12 +652,12 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
           </div>
 
           {/* 멘토 소개 - Jay 멘토 이력 */}
-          <div style={{ marginBottom: '60px' }}>
+          <div style={{ marginBottom: 'clamp(30px, 6vw, 60px)' }}>
               <h2 style={{
               fontSize: 'clamp(2rem, 4vw, 2.5rem)',
                 fontWeight: '800',
                 color: '#1f2937',
-              marginBottom: '40px',
+              marginBottom: 'clamp(20px, 4vw, 40px)',
               textAlign: 'center'
             }}>
               👨‍💼 멘토 소개: 정원석 (Jay)
@@ -731,7 +731,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   color: '#1f2937',
                 fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                   fontWeight: '800',
-                marginBottom: '40px',
+                marginBottom: 'clamp(20px, 4vw, 40px)',
                 textAlign: 'center'
                 }}>
                   🎓 학력
@@ -747,7 +747,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   {/* 일리노이공대 석사 */}
                   <div style={{
                     background: '#ffffff',
-                  padding: '30px',
+                  padding: 'clamp(15px, 3vw, 30px)',
                     borderRadius: '15px',
                     border: '2px solid #0ea5e9',
                     textAlign: 'center',
@@ -851,7 +851,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   {/* 바루크 컬리지 학사 */}
                   <div style={{
                     background: '#ffffff',
-                  padding: '30px',
+                  padding: 'clamp(15px, 3vw, 30px)',
                     borderRadius: '15px',
                     border: '2px solid #0ea5e9',
                     textAlign: 'center',
@@ -1005,12 +1005,12 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
           </div>
 
           {/* 강의 소개 - 깔끔한 디자인 */}
-          <div style={{ marginBottom: '60px' }}>
+          <div style={{ marginBottom: 'clamp(30px, 6vw, 60px)' }}>
             <div style={{
               background: '#ffffff',
               padding: '50px 40px',
               borderRadius: '20px',
-              marginBottom: '40px',
+              marginBottom: 'clamp(20px, 4vw, 40px)',
               textAlign: 'center',
               border: '2px solid #e2e8f0',
               boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)'
@@ -1049,7 +1049,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
 
               <div style={{
                 background: '#f8fafc',
-                padding: '30px',
+                padding: 'clamp(15px, 3vw, 30px)',
                 borderRadius: '15px',
                 maxWidth: '800px',
                 margin: '0 auto',
@@ -1087,7 +1087,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
             <p style={{
               color: '#64748b',
               fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-              marginBottom: '60px',
+              marginBottom: 'clamp(30px, 6vw, 60px)',
               textAlign: 'center',
               fontWeight: '600'
             }}>
@@ -1095,7 +1095,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
             </p>
 
             {/* CORE: 1강-3강 */}
-            <div style={{ marginBottom: '60px' }}>
+            <div style={{ marginBottom: 'clamp(30px, 6vw, 60px)' }}>
               <div style={{
                 background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                 color: 'white',
@@ -1165,7 +1165,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
             </div>
 
             {/* Part 2: 6강-10강 */}
-            <div style={{ marginBottom: '60px' }}>
+            <div style={{ marginBottom: 'clamp(30px, 6vw, 60px)' }}>
               <div style={{
                 background: 'linear-gradient(135deg, #10b981, #059669)',
                 color: 'white',

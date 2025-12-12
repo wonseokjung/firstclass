@@ -363,12 +363,12 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '40px 20px'
+        padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)'
       }}>
         {/* 강의 헤더 */}
         <div style={{
           textAlign: 'center',
-          marginBottom: '40px'
+          marginBottom: 'clamp(20px, 4vw, 40px)'
         }}>
           <h1 style={{
             color: '#1f2937',
@@ -407,7 +407,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
             border: 'none',
             borderRadius: '15px',
             padding: '20px 25px',
-            marginBottom: '30px',
+            marginBottom: 'clamp(15px, 3vw, 30px)',
             cursor: 'pointer',
             transition: 'all 0.3s ease',
             display: 'flex',
@@ -524,7 +524,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
               <div style={{
                 background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
                 borderRadius: '20px',
-                padding: '30px',
+                padding: 'clamp(15px, 3vw, 30px)',
                 textAlign: 'center'
               }}>
                 <h3 style={{
@@ -574,7 +574,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
         }}>
           <h3 style={{
             color: '#1f2937',
-            marginBottom: '30px',
+            marginBottom: 'clamp(15px, 3vw, 30px)',
             fontSize: '1.5rem',
             fontWeight: '700',
             textAlign: 'center'

@@ -1105,7 +1105,7 @@ ESG 현황: [환경/사회/지배구조 수준]
       {/* 히어로 섹션 */}
       <div className="course-hero" style={{ 
         background: 'linear-gradient(135deg, #1f2937 0%, #0ea5e9 100%)',
-        padding: '60px 20px',
+        padding: 'clamp(30px, 6vw, 60px) clamp(15px, 3vw, 20px)',
         textAlign: 'center',
         color: 'white'
       }}>
@@ -1165,7 +1165,7 @@ ESG 현황: [환경/사회/지배구조 수준]
           
           <div style={{ 
             display: 'flex', 
-            gap: '20px', 
+            gap: 'clamp(12px, 3vw, 20px)', 
             justifyContent: 'center',
             flexWrap: 'wrap',
             marginTop: '40px'
@@ -1176,7 +1176,7 @@ ESG 현황: [환경/사회/지배구조 수준]
 
       {/* 통계 섹션 */}
       <div style={{ 
-        padding: '60px 20px',
+        padding: 'clamp(30px, 6vw, 60px) clamp(15px, 3vw, 20px)',
         background: 'rgba(255, 255, 255, 0.05)'
       }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
@@ -1208,10 +1208,10 @@ ESG 현황: [환경/사회/지배구조 수준]
 
 
       {/* 카테고리별 프롬프트 섹션 */}
-      <div style={{ padding: '60px 20px', background: 'rgba(255, 255, 255, 0.05)' }}>
+      <div style={{ padding: 'clamp(30px, 6vw, 60px) clamp(15px, 3vw, 20px)', background: 'rgba(255, 255, 255, 0.05)' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(12px, 3vw, 20px)' }}>
             {categories.map((category) => (
               <div key={category.id} style={{
                 border: '2px solid rgba(255, 255, 255, 0.1)',

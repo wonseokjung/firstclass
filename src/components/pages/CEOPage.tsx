@@ -67,7 +67,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
 
       {/* Hero Section - New Class of AI Creators */}
       <section style={{
-        padding: '60px 20px 40px',
+        padding: 'clamp(30px, 6vw, 60px) clamp(15px, 3vw, 20px) clamp(20px, 4vw, 40px)',
         maxWidth: '1200px',
         margin: '0 auto',
         position: 'relative',
@@ -193,7 +193,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
 
       {/* YouTube CEO 인용 섹션 */}
       <section style={{
-        padding: '40px 20px',
+        padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)',
         maxWidth: '900px',
         margin: '0 auto'
       }}>
@@ -294,7 +294,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           fontSize: 'clamp(1.5rem, 4vw, 2rem)',
           fontWeight: '800',
           textAlign: 'center',
-          marginBottom: '40px'
+          marginBottom: 'clamp(20px, 4vw, 40px)'
         }}>
           🎪 우리가 하는 일
         </h2>
@@ -469,7 +469,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           <p style={{
             color: '#94a3b8',
             textAlign: 'center',
-            marginBottom: '40px',
+            marginBottom: 'clamp(20px, 4vw, 40px)',
             fontSize: '1rem'
           }}>
             단계별로 AI 크리에이터가 되는 여정
@@ -600,7 +600,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
         <p style={{
           color: '#94a3b8',
           textAlign: 'center',
-          marginBottom: '40px',
+          marginBottom: 'clamp(20px, 4vw, 40px)',
           fontSize: '1rem'
         }}>
           기술이 없어도 → AI로 콘텐츠 생성 → 수익화 → AI 도시의 일원
@@ -715,7 +715,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             fontSize: 'clamp(1.5rem, 4vw, 2rem)',
             fontWeight: '800',
             textAlign: 'center',
-            marginBottom: '40px'
+            marginBottom: 'clamp(20px, 4vw, 40px)'
           }}>
             👨‍🏫 대표 멘토 - 정원석 (Jay)
           </h2>
@@ -948,7 +948,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
 
       {/* Footer */}
       <footer style={{
-        padding: '40px 20px',
+        padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)',
         textAlign: 'center',
         borderTop: '1px solid rgba(255,255,255,0.1)'
       }}>

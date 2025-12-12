@@ -266,7 +266,7 @@ const PartnerDashboardPage: React.FC = () => {
           <div style={{
             background: `linear-gradient(135deg, ${COLORS.gold}15, ${COLORS.brick}10)`,
             borderRadius: '20px',
-            padding: '30px',
+            padding: 'clamp(15px, 3vw, 30px)',
             marginBottom: '30px',
             border: `1px solid ${COLORS.gold}30`,
             textAlign: 'center'
@@ -695,14 +695,14 @@ const PartnerDashboardPage: React.FC = () => {
     }}>
       <NavigationBar />
       
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)' }}>
         
         {/* 헤더 */}
         <div style={{ 
           display: 'flex', 
           justifyContent: 'space-between', 
           alignItems: 'center',
-          marginBottom: '40px',
+          marginBottom: 'clamp(20px, 4vw, 40px)',
           flexWrap: 'wrap',
           gap: '20px'
         }}>
@@ -859,7 +859,7 @@ const PartnerDashboardPage: React.FC = () => {
           <div style={{
             background: `linear-gradient(135deg, ${COLORS.brick}, #ea580c)`,
             borderRadius: '24px',
-            padding: '30px',
+            padding: 'clamp(15px, 3vw, 30px)',
             position: 'relative',
             overflow: 'hidden',
             boxShadow: `0 10px 40px rgba(249, 115, 22, 0.3)`
@@ -905,7 +905,7 @@ const PartnerDashboardPage: React.FC = () => {
           <div style={{
             background: COLORS.bgCard,
             borderRadius: '24px',
-            padding: '30px',
+            padding: 'clamp(15px, 3vw, 30px)',
             border: `2px solid ${COLORS.success}40`,
             boxShadow: `0 0 30px ${COLORS.success}10`
           }}>
@@ -939,7 +939,7 @@ const PartnerDashboardPage: React.FC = () => {
           <div style={{
             background: COLORS.bgCard,
             borderRadius: '24px',
-            padding: '30px',
+            padding: 'clamp(15px, 3vw, 30px)',
             border: `2px solid ${COLORS.warning}40`,
             boxShadow: `0 0 30px ${COLORS.warning}10`
           }}>
@@ -973,7 +973,7 @@ const PartnerDashboardPage: React.FC = () => {
           <div style={{
             background: COLORS.bgCard,
             borderRadius: '24px',
-            padding: '30px',
+            padding: 'clamp(15px, 3vw, 30px)',
             border: `2px solid ${COLORS.gold}40`,
             boxShadow: `0 0 30px ${COLORS.gold}10`
           }}>
@@ -1008,7 +1008,7 @@ const PartnerDashboardPage: React.FC = () => {
         <div style={{
           background: COLORS.bgCard,
           borderRadius: '24px',
-          padding: '30px',
+          padding: 'clamp(15px, 3vw, 30px)',
           marginBottom: '35px',
           border: `2px solid ${COLORS.gold}30`,
           boxShadow: `0 0 40px ${COLORS.gold}08`
@@ -1139,7 +1139,7 @@ const PartnerDashboardPage: React.FC = () => {
               <div style={{
                 background: COLORS.bgDark,
                 borderRadius: '20px',
-                padding: '30px',
+                padding: 'clamp(15px, 3vw, 30px)',
                 border: `1px solid ${COLORS.borderLight}`
               }}>
                 <div style={{ 

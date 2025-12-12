@@ -128,7 +128,7 @@ const LiveStep2Page: React.FC = () => {
     <div style={{ minHeight: '100vh', background: '#0f172a' }}>
       <NavigationBar />
       
-      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '40px 20px' }}>
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)' }}>
         {/* 헤더 */}
         <div style={{ textAlign: 'center', marginBottom: '50px' }}>
           <div style={{ 

@@ -188,12 +188,12 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
       <div style={{
         maxWidth: '800px',
         margin: '0 auto',
-        padding: '40px 20px'
+        padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)'
       }}>
         {/* 헤더 */}
         <div style={{
           textAlign: 'center',
-          marginBottom: '40px'
+          marginBottom: 'clamp(20px, 4vw, 40px)'
         }}>
           <div style={{
             display: 'inline-flex',
@@ -203,7 +203,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             height: '80px',
             background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
             borderRadius: '50%',
-            marginBottom: '20px',
+            marginBottom: 'clamp(12px, 3vw, 20px)',
             boxShadow: '0 10px 30px rgba(14, 165, 233, 0.3)'
           }}>
             <span style={{ fontSize: '2.5rem' }}>💳</span>
@@ -230,7 +230,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           background: 'white',
           borderRadius: '20px',
           padding: 'clamp(20px, 5vw, 40px)',
-          marginBottom: '30px',
+          marginBottom: 'clamp(15px, 3vw, 30px)',
           boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)',
           border: '2px solid #e2e8f0'
         }}>
@@ -238,7 +238,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             display: 'flex',
             alignItems: 'center',
             gap: '15px',
-            marginBottom: '20px',
+            marginBottom: 'clamp(12px, 3vw, 20px)',
             paddingBottom: '20px',
             borderBottom: '2px solid #f1f5f9'
           }}>
@@ -279,8 +279,8 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           <div style={{
             background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
             borderRadius: '15px',
-            padding: '30px',
-            marginBottom: '25px',
+            padding: 'clamp(15px, 3vw, 30px)',
+            marginBottom: 'clamp(15px, 3vw, 25px)',
             border: '2px solid #bae6fd'
           }}>
             <div style={{
@@ -289,7 +289,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
               alignItems: 'center'
             }}>
               <span style={{
-                fontSize: '1.3rem',
+                fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)',
                 color: '#1f2937',
                 fontWeight: '700'
               }}>
@@ -310,8 +310,8 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           <div style={{
             background: '#fff7ed',
             borderRadius: '12px',
-            padding: '20px',
-            marginBottom: '25px',
+            padding: 'clamp(12px, 3vw, 20px)',
+            marginBottom: 'clamp(15px, 3vw, 25px)',
             border: '2px solid #fed7aa'
           }}>
             <h3 style={{
@@ -344,8 +344,8 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           <div style={{
             background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
             borderRadius: '12px',
-            padding: '20px',
-            marginBottom: '20px',
+            padding: 'clamp(12px, 3vw, 20px)',
+            marginBottom: 'clamp(12px, 3vw, 20px)',
             border: '2px solid #fbbf24'
           }}>
             <p style={{
@@ -366,8 +366,8 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           <div style={{
             background: '#f8fafc',
             borderRadius: '12px',
-            padding: '20px',
-            marginBottom: '30px',
+            padding: 'clamp(12px, 3vw, 20px)',
+            marginBottom: 'clamp(15px, 3vw, 30px)',
             border: '1px solid #e2e8f0'
           }}>
             <p style={{
@@ -387,7 +387,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           <div style={{ marginBottom: '20px' }}>
             <div style={{
               display: 'flex',
-              marginBottom: '20px',
+              marginBottom: 'clamp(12px, 3vw, 20px)',
               borderRadius: '12px',
               overflow: 'hidden',
               border: '2px solid #e2e8f0'
@@ -531,7 +531,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                   background: '#fef3c7',
                   border: '2px solid #f59e0b',
                   borderRadius: '15px',
-                  padding: '20px',
+                  padding: 'clamp(12px, 3vw, 20px)',
                   marginBottom: '20px'
                 }}>
                   <p style={{
@@ -542,7 +542,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                     margin: 0
                   }}>
                     🌍 해외에서 결제하시는 분들을 위한 PayPal 결제<br />
-                    <span style={{ fontSize: '1.3rem', fontWeight: '800' }}>
+                    <span style={{ fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)', fontWeight: '800' }}>
                       ${usdPrice.toFixed(2)} USD
                     </span>
                   </p>

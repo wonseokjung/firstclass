@@ -1,205 +1,97 @@
 import React, { useState } from 'react';
-import { ChevronDown, Mail, Clock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { ChevronDown, Mail, Clock, HelpCircle, BookOpen, Shield, Wrench, User, ArrowRight } from 'lucide-react';
 import NavigationBar from '../common/NavigationBar';
 
 interface FAQPageProps {
   onBack: () => void;
 }
 
+// 브랜드 컬러: 네이비 + 골드
+const brandColors = {
+  navy: '#0a1628',
+  navyLight: '#142238',
+  navyMid: '#1e3a5f',
+  gold: '#d4af37',
+  goldLight: '#f4d03f',
+  goldDark: '#b8960c',
+  cream: '#faf8f0',
+};
+
 const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
+  const navigate = useNavigate();
   const [openItems, setOpenItems] = useState<number[]>([]);
 
   const toggleItem = (index: number) => {
     setOpenItems(prev => 
-      prev.includes(index) 
-        ? prev.filter(item => item !== index)
-        : [...prev, index]
+      prev.includes(index) ? prev.filter(item => item !== index) : [...prev, index]
     );
   };
 
   const faqData = [
     {
-      category: "AI City Builders 교육 시스템",
+      category: "AI City Builders 교육",
+      icon: <BookOpen size={20} color={brandColors.navy} />,
+      color: brandColors.gold,
       items: [
         {
           question: "AI City Builders는 다른 AI 교육과 어떻게 다른가요?",
           answer: `
-            <div>
-              <h4>🚀 AI City Builders - New Class of AI Creators 양성</h4>
-              
-              <h5>🔸 누구나 AI 크리에이터가 될 수 있습니다</h5>
-              <ul>
-                <li><strong>기술 장벽 제거:</strong> 코딩, 장비, 기술이 없어도 AI로 콘텐츠 제작 가능</li>
-                <li><strong>교육 + 도구 제공:</strong> 배우는 것에서 끝나지 않고, 실제 도구까지 제공</li>
-                <li><strong>실전 수익화:</strong> 콘텐츠를 만들고 실제 수익을 창출하는 방법 전수</li>
-              </ul>
+            <h4 style="color: #60a5fa; margin-bottom: 15px;">🚀 New Class of AI Creators 양성</h4>
+            
+            <p style="margin-bottom: 12px;"><strong style="color: #4ade80;">✓ 누구나 AI 크리에이터가 될 수 있습니다</strong></p>
+            <ul style="margin-left: 20px; margin-bottom: 15px; line-height: 1.8;">
+              <li>코딩, 장비, 기술 없이 AI로 콘텐츠 제작 가능</li>
+              <li>교육 + 실제 도구 제공</li>
+              <li>실전 수익화 방법 전수</li>
+            </ul>
 
-              <h5>🔸 AI 크리에이터 네트워크</h5>
-              <ul>
-                <li><strong>크리에이터 커뮤니티:</strong> AI 크리에이터들이 모여 협력하고 성장</li>
-                <li><strong>협력 생태계:</strong> 서로의 콘텐츠와 경험을 공유하며 함께 발전</li>
-                <li><strong>AI 도시 구축:</strong> 크리에이터들이 함께 만들어가는 디지털 생태계</li>
-              </ul>
+            <p style="margin-bottom: 12px;"><strong style="color: #a78bfa;">✓ AI 크리에이터 네트워크</strong></p>
+            <ul style="margin-left: 20px; margin-bottom: 15px; line-height: 1.8;">
+              <li>크리에이터 커뮤니티에서 협력하고 성장</li>
+              <li>서로의 콘텐츠와 경험 공유</li>
+              <li>함께 만들어가는 AI 도시</li>
+            </ul>
 
-              <h5>🔸 지속 가능한 수익 구조</h5>
-              <ul>
-                <li><strong>디지털 건물:</strong> 유튜브, 블로그 등 월 수익이 나오는 콘텐츠 자산</li>
-                <li><strong>자동화 시스템:</strong> AI 에이전트로 콘텐츠 제작 자동화</li>
-                <li><strong>확장 가능:</strong> 하나의 채널에서 시작해 다수의 수익원으로 확장</li>
-              </ul>
-            </div>
+            <p style="margin-bottom: 12px;"><strong style="color: #f472b6;">✓ 지속 가능한 수익 구조</strong></p>
+            <ul style="margin-left: 20px; line-height: 1.8;">
+              <li>유튜브, 블로그 등 월 수익이 나오는 디지털 건물</li>
+              <li>AI 에이전트로 콘텐츠 제작 자동화</li>
+              <li>하나의 채널에서 다수의 수익원으로 확장</li>
+            </ul>
           `
         },
         {
           question: "디지털 건물이란 무엇인가요?",
           answer: `
-            <div>
-              <h4>🏢 디지털 건물의 개념</h4>
-              
-              <h5>🔸 디지털 건물의 정의</h5>
-              <ul>
-                <li><strong>수익 창출 채널:</strong> 월세와 같이 지속적인 수익을 만들어내는 하나의 디지털 자산</li>
-                <li><strong>다양한 형태:</strong> 유튜브 채널, 블로그, 온라인 쇼핑몰, 앱, 웹사이트 등</li>
-                <li><strong>AI 기반 운영:</strong> 인공지능을 활용해 콘텐츠 생성부터 운영까지 자동화</li>
-              </ul>
-
-              <h5>🔸 수익화 방법</h5>
-              <ul>
-                <li><strong>광고 수익:</strong> 콘텐츠를 통한 광고 수익 창출</li>
-                <li><strong>제품/서비스 판매:</strong> 디지털 상품이나 서비스를 통한 직접 판매</li>
-                <li><strong>구독 모델:</strong> 멤버십이나 구독 서비스를 통한 정기 수익</li>
-                <li><strong>제휴 마케팅:</strong> 다른 제품/서비스 추천을 통한 커미션 수익</li>
-              </ul>
-
-              <h5>🔸 확장 가능성</h5>
-              <ul>
-                <li><strong>멀티 플랫폼:</strong> 하나의 콘텐츠로 여러 플랫폼에서 수익 창출</li>
-                <li><strong>자동화 시스템:</strong> AI가 운영하므로 24시간 지속적인 수익 가능</li>
-                <li><strong>네트워크 효과:</strong> 다른 크리에이터들과 연결되어 시너지 극대화</li>
-              </ul>
+            <h4 style="color: #60a5fa; margin-bottom: 15px;">🏢 디지털 건물의 개념</h4>
+            
+            <p style="margin-bottom: 12px;"><strong>월세처럼 지속적인 수익을 만들어내는 디지털 자산</strong></p>
+            
+            <div style="background: rgba(96, 165, 250, 0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
+              <p style="margin-bottom: 8px;">📺 <strong>유튜브 채널</strong> - 광고 수익</p>
+              <p style="margin-bottom: 8px;">📝 <strong>블로그</strong> - SEO + 제휴 마케팅</p>
+              <p style="margin-bottom: 8px;">🛒 <strong>온라인 쇼핑몰</strong> - 제품 판매</p>
+              <p>📱 <strong>앱/웹 서비스</strong> - 구독 모델</p>
             </div>
+
+            <p style="margin-top: 15px;"><strong style="color: #4ade80;">AI 기반 운영:</strong> 인공지능을 활용해 콘텐츠 생성부터 운영까지 자동화</p>
           `
         },
         {
-          question: "강의 환불 정책이 어떻게 되나요?",
+          question: "AI 도구 사용 경험이 없어도 가능한가요?",
           answer: `
-            <div>
-              <h4>📋 환불 정책 (전자상거래법 준수)</h4>
-              
-              <h5>🔸 수강 시작 전 환불</h5>
-              <ul>
-                <li><strong>수강 시작 전까지:</strong> 100% 전액 환불 가능</li>
-                <li><strong>신청일로부터 7일 이내:</strong> 무조건 전액 환불</li>
-              </ul>
+            <h4 style="color: #60a5fa; margin-bottom: 15px;">🤖 초보자도 OK!</h4>
+            
+            <p style="margin-bottom: 15px;">코딩이나 AI 경험이 전혀 없어도 시작할 수 있습니다.</p>
 
-              <h5>🔸 수강 시작 후 환불</h5>
-              <ul>
-                <li><strong>수강률 10% 이하:</strong> 90% 환불</li>
-                <li><strong>수강률 10% 초과 ~ 25% 이하:</strong> 75% 환불</li>
-                <li><strong>수강률 25% 초과 ~ 50% 이하:</strong> 50% 환불</li>
-                <li><strong>수강률 50% 초과:</strong> 환불 불가</li>
-              </ul>
-
-              <h5>🔸 환불 처리 기간</h5>
-              <ul>
-                <li><strong>신용카드:</strong> 승인 취소 (2-3일 소요)</li>
-                <li><strong>계좌이체:</strong> 영업일 기준 3-5일 이내</li>
-                <li><strong>가상계좌:</strong> 영업일 기준 3-5일 이내</li>
-              </ul>
-
-                             <h5>🔸 환불 불가 사유</h5>
-               <ul>
-                 <li>수강률이 50%를 초과한 경우</li>
-                 <li>강의 완주 후 수료증 발급을 받은 경우</li>
-                 <li>수강 기간이 2개월을 초과한 경우</li>
-                 <li>무료 강의 또는 이벤트성 강의</li>
-                 <li>할인 쿠폰 사용 시 쿠폰 적용분은 환불 불가</li>
-               </ul>
-
-              <p><strong>※ 본 환불 정책은 전자상거래법 제17조에 따라 시행됩니다.</strong></p>
-            </div>
-          `
-        },
-        {
-          question: "환불 신청은 어떻게 하나요?",
-          answer: `
-            <div>
-              <h4>📞 환불 신청 방법</h4>
-              
-              <h5>🔸 온라인 신청</h5>
-              <ul>
-                <li>마이페이지 → 수강 중인 강의 → 환불 신청</li>
-                <li>환불 사유 작성 후 신청 완료</li>
-              </ul>
-
-              <h5>🔸 고객센터 연락</h5>
-              <ul>
-                <li><strong>이메일:</strong> jay@connexionai.kr</li>
-              </ul>
-
-              <h5>🔸 필요 정보</h5>
-              <ul>
-                <li>주문번호 또는 결제 정보</li>
-                <li>환불 사유</li>
-                <li>환불 받을 계좌 정보 (카드 결제 외)</li>
-              </ul>
-            </div>
-          `
-        },
-        {
-          question: "어떤 디지털 건물부터 시작해야 할까요?",
-          answer: `
-            <div>
-              <h4>🏗️ 첫 번째 디지털 건물 선택 가이드</h4>
-              
-              <h5>🔸 초보자 추천 건물</h5>
-              <ul>
-                <li><strong>유튜브 채널:</strong> 가장 접근하기 쉽고 AI 도구 활용이 용이</li>
-                <li><strong>블로그/웹사이트:</strong> SEO를 통한 장기적 수익 구조 구축</li>
-                <li><strong>인스타그램 계정:</strong> 시각적 콘텐츠로 빠른 팔로워 증가 가능</li>
-              </ul>
-
-              <h5>🔸 중급자 추천 건물</h5>
-              <ul>
-                <li><strong>온라인 쇼핑몰:</strong> 제품 판매를 통한 직접적인 수익 창출</li>
-                <li><strong>온라인 강의 플랫폼:</strong> 전문 지식을 활용한 교육 사업</li>
-                <li><strong>앱/웹 서비스:</strong> 구독 모델을 통한 정기 수익</li>
-              </ul>
-
-              <h5>🔸 고급자 추천 건물</h5>
-              <ul>
-                <li><strong>멀티 플랫폼 네트워크:</strong> 여러 채널을 연결한 생태계</li>
-                <li><strong>AI 자동화 시스템:</strong> 완전 자동화된 수익 구조</li>
-                <li><strong>B2B 솔루션:</strong> 기업 대상 서비스로 고수익 창출</li>
-              </ul>
-            </div>
-          `
-        },
-        {
-          question: "AI 크리에이터 네트워크는 어떻게 작동하나요?",
-          answer: `
-            <div>
-              <h4>🌐 AI 크리에이터 네트워크 시스템</h4>
-              
-              <h5>🔸 네트워크 구조</h5>
-              <ul>
-                <li><strong>상호 협력:</strong> AI 크리에이터들이 서로의 콘텐츠를 홍보하고 추천</li>
-                <li><strong>크로스 마케팅:</strong> 서로의 구독자를 공유하며 함께 성장</li>
-                <li><strong>공동 프로젝트:</strong> 여러 크리에이터가 협력하여 대형 프로젝트 진행</li>
-              </ul>
-
-              <h5>🔸 네트워크 혜택</h5>
-              <ul>
-                <li><strong>트래픽 공유:</strong> 네트워크 내에서 시청자 상호 교환</li>
-                <li><strong>지식 공유:</strong> AI 도구 활용법과 수익화 노하우 공유</li>
-                <li><strong>리소스 공유:</strong> 프롬프트, 워크플로우, 템플릿 등 함께 활용</li>
-              </ul>
-
-              <h5>🔸 AI 도시 프로세스</h5>
-              <ul>
-                <li><strong>개별 채널 구축:</strong> 각자의 전문 분야에서 디지털 건물 완성</li>
-                <li><strong>네트워크 연결:</strong> 비슷한 타겟이나 보완적인 콘텐츠끼리 연결</li>
-                <li><strong>생태계 완성:</strong> AI 크리에이터들이 함께 만드는 AI 도시</li>
+            <div style="background: rgba(74, 222, 128, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+              <p style="color: #4ade80; font-weight: 600; margin-bottom: 10px;">제공되는 학습 지원:</p>
+              <ul style="margin-left: 20px; line-height: 1.8;">
+                <li>단계별 학습 - 기초부터 고급까지</li>
+                <li>실습 중심 - 실제 프로젝트로 도구 습득</li>
+                <li>템플릿 제공 - 바로 사용 가능한 프롬프트</li>
+                <li>커뮤니티 Q&A - 동료들과 경험 공유</li>
               </ul>
             </div>
           `
@@ -207,195 +99,130 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
       ]
     },
     {
-      category: "디지털 건물 구축 과정",
+      category: "환불 정책",
+      icon: <Shield size={20} color={brandColors.navy} />,
+      color: brandColors.goldLight,
       items: [
         {
-          question: "디지털 건물은 어떻게 시작하나요?",
+          question: "강의 환불 정책이 어떻게 되나요?",
           answer: `
-            <div>
-              <h4>🚀 디지털 건물 시작하기</h4>
-              
-              <h5>🔸 기본 원리</h5>
-              <ul>
-                <li><strong>AI 도구 활용:</strong> ChatGPT, Midjourney 등을 이용한 콘텐츠 자동 생성</li>
-                <li><strong>플랫폼 선택:</strong> 본인의 관심사와 강점에 맞는 플랫폼 결정</li>
-                <li><strong>수익 구조 설계:</strong> 광고, 판매, 구독 등 다양한 수익 모델 조합</li>
-              </ul>
-
-              <h5>🔸 단계별 접근</h5>
-              <ul>
-                <li><strong>1단계:</strong> AI 도구 숙련도 향상</li>
-                <li><strong>2단계:</strong> 콘텐츠 생성 및 플랫폼 운영</li>
-                <li><strong>3단계:</strong> 수익화 시스템 구축</li>
-                <li><strong>4단계:</strong> 자동화 및 확장</li>
-              </ul>
-
-              <h5>🔸 성공 요소</h5>
-              <ul>
-                <li><strong>일관성:</strong> 꾸준한 콘텐츠 업로드와 관리</li>
-                <li><strong>품질:</strong> AI를 활용한 고품질 콘텐츠 제작</li>
-                <li><strong>네트워킹:</strong> 다른 크리에이터들과의 협력</li>
-              </ul>
+            <h4 style="color: #ef4444; margin-bottom: 15px;">📋 환불 정책 (평생교육법 시행령 제23조)</h4>
+            
+            <div style="background: rgba(59, 130, 246, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 3px solid #3b82f6;">
+              <p>"원격교육의 형태로 이루어지는 학습에 대한 학습비 반환금액은 <strong style="color: #60a5fa;">이미 낸 학습비에서 실제 학습한 부분에 해당하는 학습비를 뺀 금액</strong>으로 한다."</p>
             </div>
+
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+              <tr style="background: rgba(148, 163, 184, 0.1);">
+                <td style="padding: 12px; border-bottom: 1px solid rgba(148, 163, 184, 0.2);"><strong>수업 시작 전</strong></td>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(148, 163, 184, 0.2); color: #4ade80; font-weight: 600;">전액 환불 💯</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(148, 163, 184, 0.2);"><strong>수업 시작 후</strong></td>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(148, 163, 184, 0.2);">결제금액 − (1일 학습비 × 학습 일수)</td>
+              </tr>
+            </table>
+
+            <p style="margin-bottom: 10px;"><strong>환불 예시:</strong></p>
+            <ul style="margin-left: 20px; line-height: 1.8;">
+              <li>Step 1 (45,000원) 3일차 수강 → <strong style="color: #4ade80;">31,500원</strong> 환불</li>
+              <li>Step 2 (95,000원) 5일차 수강 → <strong style="color: #4ade80;">47,500원</strong> 환불</li>
+            </ul>
           `
         },
         {
-          question: "AI 도구 사용 경험이 없어도 가능한가요?",
+          question: "환불 신청은 어떻게 하나요?",
           answer: `
-            <div>
-              <h4>🤖 AI 도구 활용 가이드</h4>
-              
-              <h5>🔸 초보자도 가능</h5>
-              <ul>
-                <li><strong>단계별 학습:</strong> 기초 AI 도구부터 고급 기능까지 체계적 교육</li>
-                <li><strong>실습 중심:</strong> 실제 프로젝트를 통해 자연스럽게 도구 습득</li>
-                <li><strong>템플릿 제공:</strong> 바로 사용할 수 있는 프롬프트와 워크플로우</li>
-              </ul>
-
-              <h5>🔸 주요 AI 도구</h5>
-              <ul>
-                <li><strong>콘텐츠 생성:</strong> ChatGPT, Claude, Gemini 활용법</li>
-                <li><strong>이미지/영상:</strong> Midjourney, DALL-E, RunwayML 등</li>
-                <li><strong>자동화:</strong> Zapier, Make.com을 통한 워크플로우 구축</li>
-                <li><strong>분석:</strong> 데이터 분석 및 인사이트 도출 도구</li>
-              </ul>
-
-              <h5>🔸 학습 지원</h5>
-              <ul>
-                <li><strong>실시간 Q&A:</strong> 막히는 부분 즉시 해결</li>
-                <li><strong>커뮤니티:</strong> 동료들과 경험 공유</li>
-                <li><strong>지속 업데이트:</strong> 새로운 AI 도구 정보 지속 제공</li>
-              </ul>
+            <h4 style="color: #ef4444; margin-bottom: 15px;">📞 환불 신청 방법</h4>
+            
+            <div style="background: rgba(239, 68, 68, 0.1); padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+              <p style="margin-bottom: 15px; font-weight: 600;">가장 쉬운 방법!</p>
+              <a href="/refund-policy" style="display: inline-block; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 700;">
+                📋 환불 정책 페이지로 이동
+              </a>
             </div>
-          `
-        },
-        {
-          question: "성공한 디지털 건물 인증은 어떻게 받나요?",
-          answer: `
-            <div>
-              <h4>🏅 AI 크리에이터 인증 시스템</h4>
-              
-              <h5>🔸 인증 조건</h5>
-              <ul>
-                <li><strong>수익 실현:</strong> 실제 월 수익 ₩10만원 이상 달성</li>
-                <li><strong>지속성 증명:</strong> 3개월 연속 안정적 수익 유지</li>
-                <li><strong>성장성 입증:</strong> 전월 대비 수익 증가 또는 유지</li>
-                <li><strong>채널 완성도:</strong> AI 자동화 시스템 구축 완료</li>
-              </ul>
 
-              <h5>🔸 인증 혜택</h5>
-              <ul>
-                <li><strong>AI 크리에이터 배지:</strong> 프로필에 표시되는 공식 인증</li>
-                <li><strong>네트워크 우선 참여:</strong> 상위 크리에이터들과의 협력 기회</li>
-                <li><strong>멘토 자격:</strong> 신규 크리에이터들을 돕는 멘토 활동 가능</li>
-                <li><strong>수익 공유:</strong> 멘토링을 통한 추가 수익 창출</li>
-              </ul>
+            <p style="margin-bottom: 12px;"><strong>온라인 신청 (권장)</strong></p>
+            <ul style="margin-left: 20px; margin-bottom: 15px; line-height: 1.8;">
+              <li>로그인 → 환불 정책 페이지</li>
+              <li>수강 중인 강의 자동 표시</li>
+              <li>학습 현황 & 환불 금액 자동 계산</li>
+              <li>환불 신청 버튼 클릭!</li>
+            </ul>
 
-              <h5>🔸 인증 레벨</h5>
-              <ul>
-                <li><strong>브론즈:</strong> 월 ₩10-50만원 수익</li>
-                <li><strong>실버:</strong> 월 ₩50-200만원 수익</li>
-                <li><strong>골드:</strong> 월 ₩200만원 이상 수익</li>
-                <li><strong>플래티넘:</strong> 멀티 채널 운영 + 네트워크 리더</li>
-              </ul>
-            </div>
+            <p style="margin-bottom: 8px;"><strong>이메일 문의</strong></p>
+            <p style="color: #a78bfa;">📧 jay@connexionai.kr (평일 09:00-18:00)</p>
           `
         }
       ]
     },
     {
       category: "기술 지원",
+      icon: <Wrench size={20} color={brandColors.navy} />,
+      color: brandColors.gold,
       items: [
         {
           question: "동영상이 재생되지 않아요.",
           answer: `
-            <div>
-              <h4>🔧 동영상 재생 문제 해결</h4>
-              
-              <h5>🔸 브라우저 확인</h5>
-              <ul>
-                <li>Chrome, Firefox, Safari, Edge 최신 버전 사용</li>
-                <li>브라우저 캐시 및 쿠키 삭제</li>
-                <li>확장 프로그램(광고 차단기 등) 일시 해제</li>
-              </ul>
+            <h4 style="color: #f59e0b; margin-bottom: 15px;">🔧 동영상 재생 문제 해결</h4>
+            
+            <p style="margin-bottom: 12px;"><strong>1. 브라우저 확인</strong></p>
+            <ul style="margin-left: 20px; margin-bottom: 15px; line-height: 1.8;">
+              <li>Chrome, Safari, Edge 최신 버전 사용</li>
+              <li>브라우저 캐시 삭제 (Ctrl+Shift+Delete)</li>
+              <li>광고 차단기 일시 해제</li>
+            </ul>
 
-              <h5>🔸 네트워크 확인</h5>
-              <ul>
-                <li>안정적인 인터넷 연결 확인</li>
-                <li>방화벽 설정 확인</li>
-                <li>다른 디바이스에서 테스트</li>
-              </ul>
+            <p style="margin-bottom: 12px;"><strong>2. 네트워크 확인</strong></p>
+            <ul style="margin-left: 20px; margin-bottom: 15px; line-height: 1.8;">
+              <li>안정적인 인터넷 연결 확인</li>
+              <li>다른 디바이스에서 테스트</li>
+            </ul>
 
-              <h5>🔸 문제 지속 시</h5>
-              <ul>
-                <li>이메일: jay@connexionai.kr</li>
-                <li>원격 지원 서비스 제공</li>
-              </ul>
-            </div>
+            <p><strong>문제 지속 시:</strong> jay@connexionai.kr로 연락주세요</p>
           `
         },
         {
-          question: "퀴즈나 과제 제출에 문제가 있어요.",
+          question: "로그인이 안 돼요.",
           answer: `
-            <div>
-              <h4>📝 퀴즈/과제 문제 해결</h4>
-              
-              <h5>🔸 일반적인 해결법</h5>
-              <ul>
-                <li>페이지 새로고침 후 재시도</li>
-                <li>브라우저 변경 후 테스트</li>
-                <li>팝업 차단 해제</li>
-                <li>JavaScript 활성화 확인</li>
-              </ul>
+            <h4 style="color: #f59e0b; margin-bottom: 15px;">🔑 로그인 문제 해결</h4>
+            
+            <p style="margin-bottom: 12px;"><strong>비밀번호 분실 시</strong></p>
+            <ul style="margin-left: 20px; margin-bottom: 15px; line-height: 1.8;">
+              <li>로그인 페이지 → "비밀번호 찾기" 클릭</li>
+              <li>가입 이메일로 재설정 코드 발송</li>
+              <li>새 비밀번호 설정</li>
+            </ul>
 
-              <h5>🔸 제출 실패 시</h5>
-              <ul>
-                <li>답안 임시 저장 후 재제출</li>
-                <li>파일 용량 및 형식 확인</li>
-                <li>네트워크 상태 점검</li>
-              </ul>
-
-              <h5>🔸 추가 지원</h5>
-              <ul>
-                <li>이메일로 답안 직접 전송 가능</li>
-                <li>재시험 기회 제공</li>
-                <li>커뮤니티를 통한 동료 도움</li>
-              </ul>
-            </div>
+            <p style="margin-bottom: 12px;"><strong>계정 찾기</strong></p>
+            <p>가입 시 사용한 이메일이 기억나지 않으시면<br/>jay@connexionai.kr로 문의해주세요.</p>
           `
         }
       ]
     },
     {
       category: "계정 및 개인정보",
+      icon: <User size={20} color={brandColors.navy} />,
+      color: brandColors.goldLight,
       items: [
         {
           question: "회원가입은 어떻게 하나요?",
           answer: `
-            <div>
-              <h4>👤 회원가입 안내</h4>
-              
-              <h5>🔸 가입 방법</h5>
-              <ul>
-                <li>이메일 + 비밀번호</li>
-                <li>구글 계정 연동</li>
-                <li>네이버 계정 연동</li>
-                <li>카카오 계정 연동</li>
-              </ul>
+            <h4 style="color: #8b5cf6; margin-bottom: 15px;">👤 회원가입 안내</h4>
+            
+            <p style="margin-bottom: 12px;"><strong>가입 방법</strong></p>
+            <ol style="margin-left: 20px; margin-bottom: 15px; line-height: 1.8;">
+              <li>홈페이지 우측 상단 "회원가입" 클릭</li>
+              <li>이메일 + 비밀번호 입력</li>
+              <li>이름 입력 후 가입 완료!</li>
+            </ol>
 
-              <h5>🔸 필수 정보</h5>
-              <ul>
-                <li>이름 (실명)</li>
-                <li>이메일 주소</li>
-                <li>휴대폰 번호 (본인인증)</li>
-                <li>개인정보 처리방침 동의</li>
-              </ul>
-
-              <h5>🔸 회원 혜택</h5>
-              <ul>
+            <div style="background: rgba(139, 92, 246, 0.1); padding: 15px; border-radius: 10px;">
+              <p style="color: #a78bfa; font-weight: 600; margin-bottom: 10px;">🎁 회원 혜택</p>
+              <ul style="margin-left: 20px; line-height: 1.8;">
                 <li>수강 진도 자동 저장</li>
-                <li>맞춤형 강의 추천</li>
-                <li>이벤트 및 할인 정보 우선 제공</li>
+                <li>추천 코드 발급 (친구 추천 리워드)</li>
+                <li>파트너 프로그램 참여 가능</li>
                 <li>커뮤니티 참여</li>
               </ul>
             </div>
@@ -404,219 +231,247 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
         {
           question: "개인정보는 어떻게 보호되나요?",
           answer: `
-            <div>
-              <h4>🔒 개인정보 보호</h4>
-              
-              <h5>🔸 수집 정보</h5>
-              <ul>
-                <li><strong>필수:</strong> 이름, 이메일, 휴대폰 번호</li>
-                <li><strong>선택:</strong> 생년월일, 성별, 관심분야</li>
-                <li><strong>자동수집:</strong> 접속 로그, 쿠키, 서비스 이용 기록</li>
-              </ul>
+            <h4 style="color: #8b5cf6; margin-bottom: 15px;">🔒 개인정보 보호</h4>
+            
+            <p style="margin-bottom: 12px;"><strong>수집 정보</strong></p>
+            <ul style="margin-left: 20px; margin-bottom: 15px; line-height: 1.8;">
+              <li>필수: 이름, 이메일</li>
+              <li>선택: 추천인 코드</li>
+            </ul>
 
-              <h5>🔸 보호 조치</h5>
-              <ul>
-                <li>SSL 암호화 통신</li>
-                <li>개인정보 암호화 저장</li>
-                <li>접근권한 관리 시스템</li>
-                <li>정기적인 보안 점검</li>
-              </ul>
+            <p style="margin-bottom: 12px;"><strong>보호 조치</strong></p>
+            <ul style="margin-left: 20px; margin-bottom: 15px; line-height: 1.8;">
+              <li>SSL 암호화 통신</li>
+              <li>개인정보 암호화 저장</li>
+              <li>Azure 보안 인프라 사용</li>
+            </ul>
 
-              <h5>🔸 이용 목적</h5>
-              <ul>
-                <li>서비스 제공 및 운영</li>
-                <li>결제 및 환불 처리</li>
-                <li>고객 상담 및 불만 처리</li>
-                <li>마케팅 활용 (동의 시에만)</li>
-              </ul>
-
-              <p><strong>※ 자세한 내용은 개인정보처리방침을 참조해주세요.</strong></p>
-            </div>
+            <p style="color: #94a3b8; font-size: 0.9rem;">※ 자세한 내용은 개인정보처리방침을 참조해주세요.</p>
           `
         }
       ]
     }
   ];
 
-  return (
-    <div className="masterclass-container">
-      {/* 통일된 네비게이션바 */}
-      <NavigationBar 
-        onBack={onBack}
-        breadcrumbText="FAQ"
-      />
+  const styles = {
+    container: {
+      minHeight: '100vh',
+      background: `linear-gradient(135deg, ${brandColors.navy} 0%, ${brandColors.navyLight} 50%, ${brandColors.navy} 100%)`,
+      color: brandColors.cream,
+    },
+    content: {
+      maxWidth: '900px',
+      margin: '0 auto',
+      padding: '40px 20px 80px',
+    },
+    header: {
+      textAlign: 'center' as const,
+      marginBottom: '50px',
+    },
+    title: {
+      fontSize: 'clamp(2rem, 5vw, 3rem)',
+      fontWeight: '800',
+      background: `linear-gradient(135deg, ${brandColors.gold} 0%, ${brandColors.goldLight} 50%, ${brandColors.gold} 100%)`,
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text',
+      marginBottom: '15px',
+    },
+    subtitle: {
+      fontSize: '1.1rem',
+      color: '#8899aa',
+      marginBottom: 'clamp(20px, 4vw, 40px)',
+    },
+    contactBox: {
+      display: 'flex',
+      justifyContent: 'center',
+      gap: '40px',
+      flexWrap: 'wrap' as const,
+      background: `linear-gradient(135deg, ${brandColors.navyLight}ee, ${brandColors.navyMid}aa)`,
+      padding: '25px 30px',
+      borderRadius: '16px',
+      border: `1px solid ${brandColors.gold}30`,
+    },
+    categorySection: {
+      marginBottom: 'clamp(20px, 4vw, 40px)',
+    },
+    categoryTitle: {
+      fontSize: '1.4rem',
+      fontWeight: '700',
+      marginBottom: '20px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      paddingBottom: '15px',
+      borderBottom: `2px solid ${brandColors.gold}40`,
+      color: brandColors.gold,
+    },
+    faqItem: {
+      background: `${brandColors.navyLight}cc`,
+      borderRadius: '14px',
+      marginBottom: '12px',
+      border: `1px solid ${brandColors.gold}20`,
+      overflow: 'hidden',
+      transition: 'all 0.3s ease',
+    },
+    question: {
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '22px 25px',
+      background: 'none',
+      border: 'none',
+      color: brandColors.cream,
+      fontSize: '1.05rem',
+      fontWeight: '600',
+      cursor: 'pointer',
+      textAlign: 'left' as const,
+    },
+    answer: {
+      padding: '0 25px 25px',
+      borderTop: `1px solid ${brandColors.gold}20`,
+      color: '#c8d4e0',
+      lineHeight: '1.8',
+    },
+    supportSection: {
+      background: `linear-gradient(135deg, ${brandColors.navyMid}80, ${brandColors.navyLight}80)`,
+      border: `1px solid ${brandColors.gold}40`,
+      padding: '40px',
+      borderRadius: '20px',
+      textAlign: 'center' as const,
+      marginTop: '50px',
+    },
+    button: {
+      background: `linear-gradient(135deg, ${brandColors.gold}, ${brandColors.goldDark})`,
+      color: brandColors.navy,
+      border: 'none',
+      padding: '15px 30px',
+      borderRadius: '12px',
+      fontSize: '1rem',
+      fontWeight: '700',
+      cursor: 'pointer',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '10px',
+      transition: 'all 0.3s ease',
+      margin: '0 10px',
+      boxShadow: `0 4px 15px ${brandColors.gold}40`,
+    },
+    refundButton: {
+      background: `linear-gradient(135deg, ${brandColors.goldLight}, ${brandColors.gold})`,
+    },
+  };
 
-      {/* FAQ 메인 콘텐츠 */}
-      <div className="faq-container" style={{ 
-        maxWidth: '1200px', 
-        margin: '0 auto', 
-        padding: '40px 20px' 
-      }}>
-        {/* 헤더 섹션 */}
-        <div className="faq-header" style={{ 
-          textAlign: 'center', 
-          marginBottom: '60px' 
-        }}>
-          <h1 style={{ 
-            fontSize: '3rem', 
-            fontWeight: '700', 
-            marginBottom: '20px',
-            background: 'linear-gradient(135deg, #0ea5e9 0%, #ff4757 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
-          }}>
+  return (
+    <div style={styles.container}>
+      <NavigationBar onBack={onBack} breadcrumbText="FAQ" />
+
+      <div style={styles.content}>
+        {/* 헤더 */}
+        <div style={styles.header}>
+          <h1 style={styles.title}>
+            <HelpCircle style={{ display: 'inline', marginRight: '10px', verticalAlign: 'middle' }} size={40} />
             자주 묻는 질문
           </h1>
-          <p style={{ 
-            fontSize: '1.2rem', 
-            opacity: '0.8', 
-            marginBottom: '40px' 
-          }}>
-            궁금한 사항을 빠르게 찾아보세요. 추가 문의사항은 고객센터로 연락주세요.
+          <p style={styles.subtitle}>
+            궁금한 사항을 빠르게 찾아보세요
           </p>
 
-          {/* 연락처 정보 */}
-          <div className="contact-info" style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '40px',
-            flexWrap: 'wrap',
-            background: 'rgba(255, 255, 255, 0.05)',
-            padding: '30px',
-            borderRadius: '15px'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Mail size={20} color="#667eea" />
-              <div>
-                <div style={{ fontSize: '0.9rem', opacity: '0.7' }}>이메일</div>
-                <div style={{ fontWeight: '600' }}>jay@connexionai.kr</div>
+          <div style={styles.contactBox}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ background: `linear-gradient(135deg, ${brandColors.gold}, ${brandColors.goldDark})`, padding: '10px', borderRadius: '10px' }}>
+                <Mail size={20} color={brandColors.navy} />
+              </div>
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ fontSize: '0.85rem', color: '#6b7c8a' }}>이메일</div>
+                <div style={{ fontWeight: '600', color: brandColors.cream }}>jay@connexionai.kr</div>
               </div>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Clock size={20} color="#667eea" />
-              <div>
-                <div style={{ fontSize: '0.9rem', opacity: '0.7' }}>운영시간</div>
-                <div style={{ fontWeight: '600' }}>평일 09:00-18:00</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ background: `linear-gradient(135deg, ${brandColors.goldLight}, ${brandColors.gold})`, padding: '10px', borderRadius: '10px' }}>
+                <Clock size={20} color={brandColors.navy} />
+              </div>
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ fontSize: '0.85rem', color: '#6b7c8a' }}>운영시간</div>
+                <div style={{ fontWeight: '600', color: brandColors.cream }}>평일 09:00-18:00</div>
               </div>
             </div>
           </div>
         </div>
 
         {/* FAQ 콘텐츠 */}
-        <div className="faq-content">
-          {faqData.map((category, categoryIndex) => (
-            <div key={categoryIndex} className="faq-category" style={{ marginBottom: '50px' }}>
-              <h2 style={{ 
-                fontSize: '1.8rem', 
-                fontWeight: '600', 
-                marginBottom: '30px',
-                color: '#0ea5e9',
-                borderBottom: '2px solid rgba(14, 165, 233, 0.3)',
-                paddingBottom: '10px'
+        {faqData.map((category, categoryIndex) => (
+          <div key={categoryIndex} style={styles.categorySection}>
+            <h2 style={{ ...styles.categoryTitle }}>
+              <div style={{ 
+                background: `linear-gradient(135deg, ${brandColors.gold}, ${brandColors.goldDark})`,
+                padding: '10px',
+                borderRadius: '10px',
+                color: brandColors.navy,
               }}>
-                {category.category}
-              </h2>
-              
-              <div className="faq-items">
-                {category.items.map((item, itemIndex) => {
-                  const globalIndex = categoryIndex * 100 + itemIndex;
-                  const isOpen = openItems.includes(globalIndex);
-                  
-                  return (
-                    <div 
-                      key={itemIndex} 
-                      className="faq-item" 
-                      style={{
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        borderRadius: '15px',
-                        marginBottom: '15px',
-                        border: '1px solid rgba(255, 255, 255, 0.1)'
-                      }}
-                    >
-                      <button
-                        className="faq-question"
-                        onClick={() => toggleItem(globalIndex)}
-                        style={{
-                          width: '100%',
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          padding: '25px',
-                          background: 'none',
-                          border: 'none',
-                          color: 'inherit',
-                          fontSize: '1.1rem',
-                          fontWeight: '600',
-                          cursor: 'pointer',
-                          textAlign: 'left'
-                        }}
-                      >
-                        <span>{item.question}</span>
-                        <ChevronDown 
-                          size={20} 
-                          style={{
-                            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                            transition: 'transform 0.3s ease'
-                          }}
-                        />
-                      </button>
-                      
-                      {isOpen && (
-                        <div 
-                          className="faq-answer"
-                          style={{
-                            padding: '0 25px 25px',
-                            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-                            marginTop: '10px',
-                            paddingTop: '20px'
-                          }}
-                          dangerouslySetInnerHTML={{ __html: item.answer }}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
+                {category.icon}
               </div>
-            </div>
-          ))}
-        </div>
+              {category.category}
+            </h2>
+            
+            {category.items.map((item, itemIndex) => {
+              const globalIndex = categoryIndex * 100 + itemIndex;
+              const isOpen = openItems.includes(globalIndex);
+              
+              return (
+                <div 
+                  key={itemIndex} 
+                  style={{
+                    ...styles.faqItem,
+                    background: isOpen ? `${brandColors.navyMid}ee` : `${brandColors.navyLight}cc`,
+                    borderColor: isOpen ? `${brandColors.gold}50` : `${brandColors.gold}20`,
+                  }}
+                >
+                  <button style={styles.question} onClick={() => toggleItem(globalIndex)}>
+                    <span>{item.question}</span>
+                    <ChevronDown 
+                      size={20} 
+                      color={brandColors.gold}
+                      style={{
+                        transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                        transition: 'transform 0.3s ease',
+                        flexShrink: 0,
+                      }}
+                    />
+                  </button>
+                  
+                  {isOpen && (
+                    <div style={styles.answer} dangerouslySetInnerHTML={{ __html: item.answer }} />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        ))}
 
         {/* 추가 지원 섹션 */}
-        <div className="additional-support" style={{
-          background: 'rgba(14, 165, 233, 0.1)',
-          border: '1px solid rgba(14, 165, 233, 0.3)',
-          padding: '40px',
-          borderRadius: '20px',
-          textAlign: 'center',
-          marginTop: '60px'
-        }}>
-          <h3 style={{ fontSize: '1.5rem', marginBottom: '20px' }}>
+        <div style={styles.supportSection}>
+          <h3 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '15px', color: brandColors.cream }}>
             원하는 답변을 찾지 못하셨나요?
           </h3>
-          <p style={{ fontSize: '1.1rem', marginBottom: '30px', opacity: '0.9' }}>
-            전문 상담원이 친절하게 도와드리겠습니다.
+          <p style={{ fontSize: '1.1rem', marginBottom: '30px', color: '#8899aa' }}>
+            전문 상담원이 친절하게 도와드리겠습니다
           </p>
-          <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <button 
-              style={{
-                background: 'linear-gradient(135deg, #0ea5e9, #ff4757)',
-                color: 'white',
-                border: 'none',
-                padding: '15px 30px',
-                borderRadius: '50px',
-                fontSize: '1rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                transition: 'all 0.3s ease'
-              }}
+              style={styles.button}
               onClick={() => window.location.href = 'mailto:jay@connexionai.kr'}
             >
-              <Mail size={16} />
+              <Mail size={18} />
               이메일 문의
+            </button>
+            <button 
+              style={{ ...styles.button, ...styles.refundButton }}
+              onClick={() => navigate('/refund-policy')}
+            >
+              📋 환불 신청
+              <ArrowRight size={18} />
             </button>
           </div>
         </div>
@@ -625,4 +480,4 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
   );
 };
 
-export default FAQPage; 
+export default FAQPage;

@@ -597,7 +597,7 @@ const AIConstructionSitePage: React.FC<AIConstructionSitePageProps> = ({ onBack 
           display: 'flex',
           alignItems: 'center',
           gap: '15px',
-          marginBottom: '40px'
+          marginBottom: 'clamp(20px, 4vw, 40px)'
         }}>
           <div style={{
             width: '50px',

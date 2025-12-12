@@ -59,12 +59,12 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '80px 20px'
+        padding: 'clamp(40px, 8vw, 80px) clamp(15px, 3vw, 20px)'
       }}>
         {/* 헤더 */}
         <div style={{
           textAlign: 'center',
-          marginBottom: '60px'
+          marginBottom: 'clamp(30px, 6vw, 60px)'
         }}>
           <h1 style={{
             fontSize: 'clamp(2rem, 5vw, 3rem)',
@@ -94,7 +94,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
           gap: '40px',
-          marginBottom: '60px'
+          marginBottom: 'clamp(30px, 6vw, 60px)'
         }}>
           {/* 연락처 정보 카드들 */}
           <div style={{

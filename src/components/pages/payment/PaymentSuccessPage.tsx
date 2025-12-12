@@ -446,7 +446,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         <div style={{ 
           maxWidth: '600px', 
           margin: '0 auto', 
-          padding: '60px 20px',
+          padding: 'clamp(30px, 6vw, 60px) clamp(15px, 3vw, 20px)',
           textAlign: 'center'
         }}>
           {/* 아이콘 */}
@@ -476,7 +476,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           <p style={{
             fontSize: '1.1rem',
             color: '#e2e8f0',
-            marginBottom: '40px'
+            marginBottom: 'clamp(20px, 4vw, 40px)'
           }}>
             아래 계좌로 입금해주시면 <strong>강의가 자동 등록</strong>됩니다.
           </p>

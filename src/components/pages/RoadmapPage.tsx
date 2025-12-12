@@ -101,7 +101,7 @@ const RoadmapPage: React.FC = () => {
       
       {/* Hero Section */}
       <section style={{
-        padding: '80px 20px 60px',
+        padding: 'clamp(40px, 8vw, 80px) clamp(15px, 3vw, 20px) clamp(30px, 6vw, 60px)',
         textAlign: 'center',
         maxWidth: '1200px',
         margin: '0 auto'
@@ -489,7 +489,7 @@ const RoadmapPage: React.FC = () => {
 
       {/* Footer */}
       <footer style={{
-        padding: '40px 20px',
+        padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)',
         textAlign: 'center',
         borderTop: '1px solid rgba(255,255,255,0.1)'
       }}>

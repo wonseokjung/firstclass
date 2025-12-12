@@ -443,7 +443,7 @@ const AdminDashboardPage: React.FC = () => {
       {/* 헤더 */}
       <div style={{
         background: 'linear-gradient(135deg, #ef4444, #dc2626)',
-        padding: '40px 20px',
+        padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)',
         boxShadow: '0 4px 20px rgba(239, 68, 68, 0.3)'
       }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
@@ -461,7 +461,7 @@ const AdminDashboardPage: React.FC = () => {
         </div>
       </div>
 
-      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '40px 20px' }}>
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)' }}>
         {/* 관리 메뉴 버튼 */}
         <div style={{
           display: 'grid',
@@ -535,7 +535,7 @@ const AdminDashboardPage: React.FC = () => {
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
           gap: '20px',
-          marginBottom: '40px'
+          marginBottom: 'clamp(20px, 4vw, 40px)'
         }}>
           <div style={{
             background: 'white',

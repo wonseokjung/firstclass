@@ -195,7 +195,7 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '40px 20px'
+          padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)'
         }}>
           {/* 베타 테스트 배너 */}
           <div style={{
@@ -203,11 +203,11 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
             border: '2px solid #fbbf24',
             borderRadius: '15px',
             padding: '20px 30px',
-            marginBottom: '40px',
+            marginBottom: 'clamp(20px, 4vw, 40px)',
             textAlign: 'center'
           }}>
             <h3 style={{
-              fontSize: '1.3rem',
+              fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)',
               fontWeight: '800',
               color: '#92400e',
               marginBottom: '10px'
@@ -226,7 +226,7 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
           {/* 상단 메인 섹션 */}
           <div style={{
             textAlign: 'center',
-            marginBottom: '50px'
+            marginBottom: 'clamp(25px, 5vw, 50px)'
           }}>
             <div style={{
               display: 'inline-flex',
@@ -276,7 +276,7 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
             <div style={{
               background: 'linear-gradient(135deg, #10b981, #059669)',
               borderRadius: '25px',
-              padding: '40px 50px',
+              padding: 'clamp(20px, 4vw, 40px) clamp(20px, 5vw, 50px)',
               marginBottom: '30px',
               border: '3px solid #6ee7b7',
               boxShadow: '0 10px 40px rgba(16, 185, 129, 0.4)',
@@ -324,8 +324,8 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
             background: 'linear-gradient(135deg, #fee2e2, #fecaca)',
             border: '2px solid #ef4444',
             borderRadius: '20px',
-            padding: '40px',
-            marginBottom: '60px'
+            padding: 'clamp(20px, 4vw, 40px)',
+            marginBottom: 'clamp(30px, 6vw, 60px)'
           }}>
             <h2 style={{
               fontSize: 'clamp(1.8rem, 3vw, 2.2rem)',
@@ -340,11 +340,11 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
             <div style={{
               background: 'white',
               borderRadius: '15px',
-              padding: '30px',
+              padding: 'clamp(15px, 3vw, 30px)',
               marginBottom: '30px'
             }}>
               <h3 style={{
-                fontSize: '1.3rem',
+                fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)',
                 fontWeight: '700',
                 color: '#991b1b',
                 marginBottom: '15px'
@@ -375,7 +375,7 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
             <div style={{
               background: 'white',
               borderRadius: '15px',
-              padding: '30px',
+              padding: 'clamp(15px, 3vw, 30px)',
               marginBottom: '20px'
             }}>
               <h4 style={{
@@ -464,13 +464,13 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
 
           {/* 커리큘럼 */}
           <div style={{
-            marginBottom: '60px'
+            marginBottom: 'clamp(30px, 6vw, 60px)'
           }}>
             <h3 style={{
               fontSize: 'clamp(2rem, 4vw, 2.5rem)',
               fontWeight: '800',
               color: '#1f2937',
-              marginBottom: '40px',
+              marginBottom: 'clamp(20px, 4vw, 40px)',
               textAlign: 'center'
             }}>
               📚 10일 완성 커리큘럼
@@ -478,7 +478,7 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
 
             <div style={{
               background: '#ffffff',
-              padding: '40px',
+              padding: 'clamp(20px, 4vw, 40px)',
               borderRadius: '15px',
               border: '2px solid #e2e8f0'
             }}>

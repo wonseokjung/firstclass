@@ -195,6 +195,12 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
     const actionButton = (
       <button
         className="watch-trailer-btn"
+        style={{
+          background: 'linear-gradient(135deg, #ffd700, #ffb347)',
+          color: '#1a1a2e',
+          fontWeight: '700',
+          boxShadow: '0 4px 15px rgba(255, 215, 0, 0.4)'
+        }}
         onClick={(e) => {
           e.stopPropagation();
 
@@ -212,11 +218,25 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
     );
 
     return (
-      <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>
+      <div 
+        key={course.id} 
+        className="masterclass-card" 
+        onClick={() => handleCourseClick(course)}
+        style={{
+          border: '2px solid rgba(255, 215, 0, 0.5)',
+          boxShadow: '0 8px 25px rgba(255, 215, 0, 0.2), 0 4px 10px rgba(0,0,0,0.3)',
+          borderRadius: '16px',
+          overflow: 'hidden'
+        }}
+      >
         <div className="card-image-container">
-          {/* ⭐️ 에러 수정: placeholder={true} -> placeholder="true" */}
           <OptimizedImage src={course.image} alt={course.title} className="instructor-image" loading="lazy" placeholder="true" />
-          <div className="premium-badge">PREMIUM</div>
+          <div className="premium-badge" style={{
+            background: 'linear-gradient(135deg, #ffd700, #ffb347)',
+            color: '#0a1628',
+            fontWeight: '800',
+            boxShadow: '0 4px 15px rgba(255, 215, 0, 0.5)'
+          }}>PREMIUM</div>
           {course.isComingSoon ? (
             <div className="coming-soon-overlay" style={{
               position: 'absolute', bottom: 0, left: 0, width: '100%',
@@ -225,10 +245,10 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
               alignItems: 'center', justifyContent: 'flex-end'
             }}>
               <div style={{ 
-                background: 'linear-gradient(135deg, #f59e0b, #d97706)', 
+                background: 'linear-gradient(135deg, #ffd700, #ffb347)', 
                 padding: '8px 20px', borderRadius: '20px', 
-                fontSize: '0.9rem', fontWeight: 'bold', color: '#fff',
-                boxShadow: '0 4px 15px rgba(245, 158, 11, 0.4)',
+                fontSize: '0.9rem', fontWeight: 'bold', color: '#1a1a2e',
+                boxShadow: '0 4px 15px rgba(255, 215, 0, 0.4)',
                 marginBottom: '8px'
               }}>🚀 Coming Soon</div>
               <div style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.9)' }}>{course.launchDate}</div>
@@ -246,6 +266,34 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
       <NavigationBar onFAQClick={onFAQClick} onLoginClick={onLoginClick} onSignUpClick={onSignUpClick} />
 
       <main className="masterclass-main">
+        {/* 프리미엄 강의 - 최상단 */}
+        <section className="masterclass-section">
+          <div className="section-header-mc">
+            <h2 className="section-title-mc">
+              <span className="highlight-category" style={{
+                background: 'linear-gradient(135deg, #0a1628, #1e3a5f)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                fontWeight: '800'
+              }}>
+                프리미엄 강의
+              </span>
+              <div style={{ fontSize: '0.8em', marginTop: '8px', fontWeight: '600', color: '#0a1628' }}>
+                AI 크리에이터가 되어 콘텐츠로 수익을 창출하세요
+              </div>
+            </h2>
+            <div className="section-nav">
+              <button className="nav-arrow" aria-label="Previous Premium courses" onClick={() => handleGridScroll(0, 'left')}><ChevronLeft size={24} /></button>
+              <button className="nav-arrow" aria-label="Next Premium courses" onClick={() => handleGridScroll(0, 'right')}><ChevronRight size={24} /></button>
+            </div>
+          </div>
+          <div className="masterclass-grid" ref={(el) => { gridRefs.current[0] = el; }}>
+            {premiumClasses.map(renderPremiumCard)}
+          </div>
+        </section>
+
+        {/* 무료 강의 - AI 기초 */}
         <section className="masterclass-section">
           <div className="section-header-mc">
             <h2 className="section-title-mc">
@@ -260,15 +308,14 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
               </span>
             </h2>
             <div className="section-nav">
-              <button className="nav-arrow" aria-label="Previous courses" onClick={() => handleGridScroll(0, 'left')}><ChevronLeft size={24} /></button>
-              <button className="nav-arrow" aria-label="Next courses" onClick={() => handleGridScroll(0, 'right')}><ChevronRight size={24} /></button>
+              <button className="nav-arrow" aria-label="Previous courses" onClick={() => handleGridScroll(1, 'left')}><ChevronLeft size={24} /></button>
+              <button className="nav-arrow" aria-label="Next courses" onClick={() => handleGridScroll(1, 'right')}><ChevronRight size={24} /></button>
             </div>
           </div>
-          <div className="masterclass-grid" ref={(el) => { gridRefs.current[0] = el; }}>
+          <div className="masterclass-grid" ref={(el) => { gridRefs.current[1] = el; }}>
             {aiMasterClasses.map((course) => (
               <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>
                 <div className="card-image-container">
-                  {/* ⭐️ 에러 수정: placeholder={true} -> placeholder="true" */}
                   <OptimizedImage src={course.image} alt={course.title} className="instructor-image" loading="lazy" placeholder="true" />
                   <div className="free-badge-overlay">FREE</div>
                   <div className="card-overlay">
@@ -283,6 +330,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
           </div>
         </section>
 
+        {/* 무료 강의 - 수익화 */}
         <section className="masterclass-section">
           <div className="section-header-mc">
             <h2 className="section-title-mc">
@@ -295,11 +343,11 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
               }}>인공지능 수익화 무료 강의클래스</span>
             </h2>
             <div className="section-nav">
-              <button className="nav-arrow" aria-label="Previous Money courses" onClick={() => handleGridScroll(1, 'left')}><ChevronLeft size={24} /></button>
-              <button className="nav-arrow" aria-label="Next Money courses" onClick={() => handleGridScroll(1, 'right')}><ChevronRight size={24} /></button>
+              <button className="nav-arrow" aria-label="Previous Money courses" onClick={() => handleGridScroll(2, 'left')}><ChevronLeft size={24} /></button>
+              <button className="nav-arrow" aria-label="Next Money courses" onClick={() => handleGridScroll(2, 'right')}><ChevronRight size={24} /></button>
             </div>
           </div>
-          <div className="masterclass-grid" ref={(el) => { gridRefs.current[1] = el; }}>
+          <div className="masterclass-grid" ref={(el) => { gridRefs.current[2] = el; }}>
             {freeMoneyClasses.map((course) => (
               <div key={course.id} className="masterclass-card" onClick={() => handleCourseClick(course)}>
                 <div className="card-image-container">
@@ -321,32 +369,6 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
             ))}
           </div>
         </section>
-
-        <section className="masterclass-section">
-          <div className="section-header-mc">
-            <h2 className="section-title-mc">
-              <span className="highlight-category" style={{
-                background: 'linear-gradient(135deg, #1e40af, #1e3a8a)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                fontWeight: '800'
-              }}>
-                프리미엄 강의
-              </span>
-              <div style={{ fontSize: '0.8em', marginTop: '8px', fontWeight: '600', color: '#fbbf24' }}>
-                AI 크리에이터가 되어 콘텐츠로 수익을 창출하세요
-              </div>
-            </h2>
-            <div className="section-nav">
-              <button className="nav-arrow" aria-label="Previous Premium courses" onClick={() => handleGridScroll(2, 'left')}><ChevronLeft size={24} /></button>
-              <button className="nav-arrow" aria-label="Next Premium courses" onClick={() => handleGridScroll(2, 'right')}><ChevronRight size={24} /></button>
-            </div>
-          </div>
-          <div className="masterclass-grid" ref={(el) => { gridRefs.current[2] = el; }}>
-            {premiumClasses.map(renderPremiumCard)}
-          </div>
-        </section>
       </main>
 
       <footer className="footer">
@@ -360,6 +382,27 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
             </div>
             <div style={{ marginTop: '12px', fontSize: '0.85rem', color: '#aaa' }}>
               <p>커넥젼에이아이이 | 대표: 정원석 | 사업자번호: 887-55-00386</p>
+            </div>
+          </div>
+          <div className="footer-section">
+            <h4>정책</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <button 
+                onClick={() => navigate('/refund-policy')}
+                style={{ 
+                  background: 'none', 
+                  border: 'none', 
+                  color: '#9ca3af', 
+                  cursor: 'pointer', 
+                  fontSize: '0.9rem',
+                  textAlign: 'left',
+                  padding: 0
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = '#fbbf24'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = '#9ca3af'; }}
+              >
+                📋 환불 정책
+              </button>
             </div>
           </div>
         </div>
