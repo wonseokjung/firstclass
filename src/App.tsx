@@ -46,7 +46,7 @@ const withSuspense = <P extends object>(Component: React.ComponentType<P>) => {
   return WrappedComponent;
 };
 
-// Day 페이지 래퍼 (onBack + onNext 필요)
+// Day 페이지 래퍼 (onBack + onNext 필요) - ChatGPT Agent Beginner용
 const withDayPageWrapper = <P extends { onBack: () => void; onNext: () => void }>(
   Component: React.ComponentType<P>,
   dayNum: number
@@ -57,8 +57,28 @@ const withDayPageWrapper = <P extends { onBack: () => void; onNext: () => void }
       <Suspense fallback={<LoadingSpinner />}>
         <Component 
           {...(props as P)} 
-          onBack={() => navigate('/chatgpt-agent-beginner')} 
+          onBack={() => navigate('/chatgpt-agent-beginner/player')} 
           onNext={() => navigate(`/chatgpt-agent-beginner/day${dayNum + 1}`)}
+        />
+      </Suspense>
+    );
+  };
+  return WrappedComponent;
+};
+
+// AI Building Day 페이지 래퍼
+const withAIBuildingDayPageWrapper = <P extends { onBack: () => void; onNext?: () => void }>(
+  Component: React.ComponentType<P>,
+  dayNum: number
+) => {
+  const WrappedComponent: React.FC<Omit<P, 'onBack' | 'onNext'>> = (props) => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <Component 
+          {...(props as P)} 
+          onBack={() => navigate('/ai-building-course/player')} 
+          onNext={dayNum < 10 ? () => navigate(`/ai-building-course/day${dayNum + 1}`) : undefined}
         />
       </Suspense>
     );
@@ -118,6 +138,18 @@ const Day9Page = React.lazy(() => import('./components/pages/courses/chatgpt-age
 const Day10Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day10Page'));
 const ChatGPTAgentBeginnerPaymentPage = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/PaymentPage'));
 const AIBuildingPaymentPage = React.lazy(() => import('./components/pages/courses/ai-building/PaymentPage'));
+
+// AI Building Course Day 페이지들
+const AIBuildingDay1Page = React.lazy(() => import('./components/pages/courses/ai-building/Day1Page'));
+const AIBuildingDay2Page = React.lazy(() => import('./components/pages/courses/ai-building/Day2Page'));
+const AIBuildingDay3Page = React.lazy(() => import('./components/pages/courses/ai-building/Day3Page'));
+const AIBuildingDay4Page = React.lazy(() => import('./components/pages/courses/ai-building/Day4Page'));
+const AIBuildingDay5Page = React.lazy(() => import('./components/pages/courses/ai-building/Day5Page'));
+const AIBuildingDay6Page = React.lazy(() => import('./components/pages/courses/ai-building/Day6Page'));
+const AIBuildingDay7Page = React.lazy(() => import('./components/pages/courses/ai-building/Day7Page'));
+const AIBuildingDay8Page = React.lazy(() => import('./components/pages/courses/ai-building/Day8Page'));
+const AIBuildingDay9Page = React.lazy(() => import('./components/pages/courses/ai-building/Day9Page'));
+const AIBuildingDay10Page = React.lazy(() => import('./components/pages/courses/ai-building/Day10Page'));
 const CostOptimizationExamplesPage = React.lazy(() => import('./components/pages/courses/CostOptimizationExamplesPage'));
 const N8nAutomationIntermediatePage = React.lazy(() => import('./components/pages/courses/N8nAutomationIntermediatePage'));
 const N8nAutomationAdvancedPage = React.lazy(() => import('./components/pages/courses/N8nAutomationAdvancedPage'));
@@ -197,7 +229,7 @@ const CommunityHubPageWrapped = withSuspense(CommunityHubPage);
 const CommunityStepPageWrapped = withSuspense(CommunityStepPage);
 const ForgotPasswordPageWrapped = withSuspense(ForgotPasswordPage);
 
-// Day 페이지들
+// Day 페이지들 - ChatGPT Agent Beginner
 const Day1PageWrapped = withDayPageWrapper(Day1Page, 1);
 const Day2PageWrapped = withDayPageWrapper(Day2Page, 2);
 const Day3PageWrapped = withDayPageWrapper(Day3Page, 3);
@@ -208,6 +240,18 @@ const Day7PageWrapped = withDayPageWrapper(Day7Page, 7);
 const Day8PageWrapped = withDayPageWrapper(Day8Page, 8);
 const Day9PageWrapped = withDayPageWrapper(Day9Page, 9);
 const Day10PageWrapped = withDayPageWrapper(Day10Page, 10);
+
+// Day 페이지들 - AI Building Course
+const AIBuildingDay1PageWrapped = withAIBuildingDayPageWrapper(AIBuildingDay1Page, 1);
+const AIBuildingDay2PageWrapped = withAIBuildingDayPageWrapper(AIBuildingDay2Page, 2);
+const AIBuildingDay3PageWrapped = withAIBuildingDayPageWrapper(AIBuildingDay3Page, 3);
+const AIBuildingDay4PageWrapped = withAIBuildingDayPageWrapper(AIBuildingDay4Page, 4);
+const AIBuildingDay5PageWrapped = withAIBuildingDayPageWrapper(AIBuildingDay5Page, 5);
+const AIBuildingDay6PageWrapped = withAIBuildingDayPageWrapper(AIBuildingDay6Page, 6);
+const AIBuildingDay7PageWrapped = withAIBuildingDayPageWrapper(AIBuildingDay7Page, 7);
+const AIBuildingDay8PageWrapped = withAIBuildingDayPageWrapper(AIBuildingDay8Page, 8);
+const AIBuildingDay9PageWrapped = withAIBuildingDayPageWrapper(AIBuildingDay9Page, 9);
+const AIBuildingDay10PageWrapped = withAIBuildingDayPageWrapper(AIBuildingDay10Page, 10);
 
 // ============================================
 // 특수 컴포넌트들 (HOC로 처리 불가)
@@ -361,7 +405,7 @@ const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ childr
             <Route path="/n8n-automation-intermediate" element={<N8nAutomationIntermediatePageWrapped />} />
             <Route path="/n8n-automation-advanced" element={<N8nAutomationAdvancedPageWrapped />} />
             
-            {/* Day 페이지들 */}
+            {/* Day 페이지들 - ChatGPT Agent Beginner */}
             <Route path="/chatgpt-agent-beginner/day1" element={<Day1PageWrapped />} />
             <Route path="/chatgpt-agent-beginner/day2" element={<Day2PageWrapped />} />
             <Route path="/chatgpt-agent-beginner/day3" element={<Day3PageWrapped />} />
@@ -372,6 +416,18 @@ const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ childr
             <Route path="/chatgpt-agent-beginner/day8" element={<Day8PageWrapped />} />
             <Route path="/chatgpt-agent-beginner/day9" element={<Day9PageWrapped />} />
             <Route path="/chatgpt-agent-beginner/day10" element={<Day10PageWrapped />} />
+            
+            {/* Day 페이지들 - AI Building Course */}
+            <Route path="/ai-building-course/day1" element={<AIBuildingDay1PageWrapped />} />
+            <Route path="/ai-building-course/day2" element={<AIBuildingDay2PageWrapped />} />
+            <Route path="/ai-building-course/day3" element={<AIBuildingDay3PageWrapped />} />
+            <Route path="/ai-building-course/day4" element={<AIBuildingDay4PageWrapped />} />
+            <Route path="/ai-building-course/day5" element={<AIBuildingDay5PageWrapped />} />
+            <Route path="/ai-building-course/day6" element={<AIBuildingDay6PageWrapped />} />
+            <Route path="/ai-building-course/day7" element={<AIBuildingDay7PageWrapped />} />
+            <Route path="/ai-building-course/day8" element={<AIBuildingDay8PageWrapped />} />
+            <Route path="/ai-building-course/day9" element={<AIBuildingDay9PageWrapped />} />
+            <Route path="/ai-building-course/day10" element={<AIBuildingDay10PageWrapped />} />
             
             {/* 리다이렉트 */}
               <Route path="/chatgpt-agent-beginner-player" element={<RedirectToNewPlayerUrl />} />

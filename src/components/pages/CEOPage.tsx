@@ -416,7 +416,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           border: '1px solid rgba(255,255,255,0.1)'
         }}>
           <a 
-            href="https://www.youtube.com/@ConnectAILAB" 
+            href="https://www.youtube.com/@CONNECT-AI-LAB" 
             target="_blank" 
             rel="noopener noreferrer"
             style={{
@@ -429,10 +429,10 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             }}
           >
             <Youtube size={20} color="#ff0000" />
-            <span>Connect AI LAB</span>
+            <span>CONNECT AI LAB</span>
           </a>
           <a 
-            href="https://www.instagram.com/aimentorjay" 
+            href="https://www.instagram.com/aimentorjay/" 
             target="_blank" 
             rel="noopener noreferrer"
             style={{
