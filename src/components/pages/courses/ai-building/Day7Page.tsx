@@ -177,3 +177,4 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
 };
 
 export default Day7Page;
+

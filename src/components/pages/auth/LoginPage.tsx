@@ -11,6 +11,7 @@ interface LoginPageProps {
 
 const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: '',
     password: ''

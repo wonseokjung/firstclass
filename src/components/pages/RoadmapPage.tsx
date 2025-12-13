@@ -48,11 +48,35 @@ const RoadmapPage: React.FC = () => {
     },
     {
       step: 3,
+      title: '1인 콘텐츠 기업 만들기',
+      subtitle: '사업화',
+      icon: <Building2 size={32} />,
+      description: '바이브코딩으로 나만의 서비스/플랫폼 개발',
+      details: '콘텐츠를 만드는 사람에서 사업을 운영하는 사람이 됩니다. 바이브코딩으로 직접 서비스를 만들고, 사업자등록, 세금, 정부지원금 활용까지.',
+      price: 'Coming Soon',
+      priceType: '',
+      color: '#8b5cf6',
+      gradient: 'linear-gradient(135deg, #5b21b6 0%, #8b5cf6 100%)',
+      features: [
+        '🔥 바이브코딩으로 서비스 개발',
+        '🏢 개인사업자 & 법인 설립',
+        '💰 세금 & 정부지원금 활용'
+      ],
+      highlights: [
+        'AI에게 말로 설명하면 코드가 완성',
+        '개발자 없이 나만의 플랫폼 구축',
+        '유튜브 의존에서 벗어나 내 사업 만들기'
+      ],
+      status: 'coming_soon',
+      path: '/content-business'
+    },
+    {
+      step: 4,
       title: 'AI 에이전트 파견소',
-      subtitle: '실전',
+      subtitle: '도구',
       icon: <Zap size={32} />,
-      description: '교육 + 도구: AI 직원을 파견받아 콘텐츠 사업 시작',
-      details: '혼자 다 할 필요 없습니다. AI 에이전트를 파견받아 콘텐츠 제작부터 자동화까지 맡기세요. 대본, 이미지, 음성, 영상 - 각 분야 전문 에이전트가 일합니다.',
+      description: '직접 만들기 어려운 건 AI 도구로 해결',
+      details: '혼자 다 할 필요 없습니다. 직접 만들기 어려운 기능은 AI 에이전트 파견소에서 제공하는 도구를 활용하세요. 대본, 이미지, 음성, 영상 자동화.',
       price: '준비중',
       priceType: '',
       color: '#f59e0b',
@@ -66,26 +90,7 @@ const RoadmapPage: React.FC = () => {
       highlights: [
         '대본 에이전트 → 이미지 에이전트 → 음성 에이전트',
         'AI 직원들이 당신 대신 일합니다',
-        '1,2단계 훈련 → 에이전트 파견소에서 실전!'
-      ],
-      status: 'coming_soon',
-      path: '#'
-    },
-    {
-      step: 4,
-      title: '1인 콘텐츠 기업 만들기',
-      subtitle: '사업화',
-      icon: <Building2 size={32} />,
-      description: '콘텐츠 크리에이터 → 사업가로 전환',
-      details: '콘텐츠를 만드는 사람에서 사업을 운영하는 사람이 됩니다. 사업자등록, 세금, 정부지원금 활용까지. 취미가 아닌 진짜 비즈니스로 만듭니다.',
-      price: 'Coming Soon',
-      priceType: '',
-      color: '#8b5cf6',
-      gradient: 'linear-gradient(135deg, #5b21b6 0%, #8b5cf6 100%)',
-      features: [
-        '🏢 개인사업자 & 법인 설립',
-        '💰 세금 & 정부지원금 활용',
-        '🔥 바이브코딩으로 서비스 개발'
+        'Step 3에서 직접 못 만든 건 여기서 해결!'
       ],
       status: 'coming_soon',
       path: '#'

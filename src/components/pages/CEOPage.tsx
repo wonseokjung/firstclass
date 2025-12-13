@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GraduationCap, Globe, Youtube, Instagram, X, Sparkles, Bot, Zap, Building2, ArrowRight, Play, Wrench, TrendingUp } from 'lucide-react';
 import NavigationBar from '../common/NavigationBar';
+import ComingSoonModal from '../modals/ComingSoonModal';
 
 interface CEOPageProps {
   onBack: () => void;
@@ -10,9 +11,20 @@ interface CEOPageProps {
 const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
   const [selectedTranscript, setSelectedTranscript] = useState<string | null>(null);
+  const [showComingSoon, setShowComingSoon] = useState(false);
+  const [comingSoonTitle, setComingSoonTitle] = useState('');
 
   const closeTranscriptModal = () => {
     setSelectedTranscript(null);
+  };
+
+  const handleStepClick = (step: { path: string; title: string }) => {
+    if (step.path === '#') {
+      setComingSoonTitle(step.title);
+      setShowComingSoon(true);
+    } else {
+      navigate(step.path);
+    }
   };
 
   const roadmapSteps = [
@@ -38,23 +50,23 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
     },
     {
       step: 3,
-      title: 'AI 에이전트 파견소',
-      subtitle: '만들기',
-      icon: <Zap size={24} />,
-      description: 'AI 수익화 전문 자동화 에이전트',
-      price: 'Coming Soon',
-      color: '#f59e0b',
-      path: '#'
-    },
-    {
-      step: 4,
       title: '1인 콘텐츠 기업',
       subtitle: '키우기',
       icon: <Building2 size={24} />,
       description: '바이브코딩 + 사업 확장',
       price: 'Coming Soon',
+      color: '#f59e0b',
+      path: '/content-business'
+    },
+    {
+      step: 4,
+      title: 'AI 에이전트 파견소',
+      subtitle: '협업하기',
+      icon: <Zap size={24} />,
+      description: '우리가 만든 AI 도구를 함께 활용',
+      price: 'Coming Soon',
       color: '#8b5cf6',
-      path: '#'
+      path: '/agent-dispatch'
     }
   ];
 
@@ -483,7 +495,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             {roadmapSteps.map((step) => (
               <div
                 key={step.step}
-                onClick={() => step.path !== '#' && navigate(step.path)}
+                onClick={() => handleStepClick(step)}
                 style={{
                   background: 'rgba(255,255,255,0.03)',
                   border: step.path !== '#' ? `2px solid ${step.color}40` : '1px solid rgba(255,255,255,0.1)',
@@ -956,6 +968,13 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           © 2025 AI City Builders. All rights reserved.
         </p>
       </footer>
+
+      {/* Coming Soon Modal */}
+      <ComingSoonModal
+        isOpen={showComingSoon}
+        onClose={() => setShowComingSoon(false)}
+        courseTitle={comingSoonTitle}
+      />
 
       {/* Modal */}
       {selectedTranscript && (

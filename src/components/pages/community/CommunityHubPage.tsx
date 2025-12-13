@@ -52,19 +52,19 @@ const CommunityHubPage: React.FC = () => {
     },
     {
       step: 3,
-      title: 'connexionai',
-      subtitle: 'AI 수익화 전문 자동화 에이전트',
-      icon: '⚡',
-      path: '/community/step3',
-      courseIds: ['connexionai']
-    },
-    {
-      step: 4,
       title: '1인 콘텐츠 기업 만들기',
       subtitle: '바이브코딩으로 서비스 개발',
       icon: '🚀',
-      path: '/community/step4',
+      path: '/community/step3',
       courseIds: ['content-business']
+    },
+    {
+      step: 4,
+      title: 'connexionai',
+      subtitle: 'AI 수익화 전문 자동화 에이전트',
+      icon: '⚡',
+      path: '/community/step4',
+      courseIds: ['connexionai']
     }
   ];
 

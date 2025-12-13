@@ -125,6 +125,8 @@ const AIEducationDocumentaryPage = React.lazy(() => import('./components/pages/c
 const AIBuildingCoursePage = React.lazy(() => import('./components/pages/courses/AIBuildingCoursePage'));
 const AIBuildingCoursePlayerPage = React.lazy(() => import('./components/pages/courses/AIBuildingCoursePlayerPage'));
 const ChatGPTAgentBeginnerPage = React.lazy(() => import('./components/pages/courses/ChatGPTAgentBeginnerPage'));
+const ContentBusinessPage = React.lazy(() => import('./components/pages/courses/ContentBusinessPage'));
+const AgentDispatchPage = React.lazy(() => import('./components/pages/courses/AgentDispatchPage'));
 const ChatGPTAgentBeginnerPlayerPage = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/ChatGPTAgentBeginnerPlayerPage'));
 const Day1Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day1Page'));
 const Day2Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day2Page'));
@@ -188,6 +190,8 @@ const AIEducationDocumentaryPageWrapped = withPageWrapper(AIEducationDocumentary
 const AIBuildingCoursePageWrapped = withPageWrapper(AIBuildingCoursePage);
 const AIBuildingCoursePlayerPageWrapped = withPageWrapper(AIBuildingCoursePlayerPage);
 const ChatGPTAgentBeginnerPageWrapped = withPageWrapper(ChatGPTAgentBeginnerPage);
+const ContentBusinessPageWrapped = withPageWrapper(ContentBusinessPage);
+const AgentDispatchPageWrapped = withPageWrapper(AgentDispatchPage);
 const ChatGPTAgentBeginnerPlayerPageWrapped = withPageWrapper(ChatGPTAgentBeginnerPlayerPage);
 const N8nAutomationIntermediatePageWrapped = withPageWrapper(N8nAutomationIntermediatePage);
 const N8nAutomationAdvancedPageWrapped = withPageWrapper(N8nAutomationAdvancedPage);
@@ -399,6 +403,8 @@ const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ childr
             <Route path="/ai-building-course/payment" element={<AIBuildingPaymentPageWrapped />} />
             <Route path="/ai-building-course/player" element={<AIBuildingCoursePlayerPageWrapped />} />
             <Route path="/chatgpt-agent-beginner" element={<ChatGPTAgentBeginnerPageWrapped />} />
+            <Route path="/content-business" element={<ContentBusinessPageWrapped />} />
+            <Route path="/agent-dispatch" element={<AgentDispatchPageWrapped />} />
             <Route path="/chatgpt-agent-beginner/payment" element={<ChatGPTAgentBeginnerPaymentPageWrapped />} />
             <Route path="/chatgpt-agent-beginner/player" element={<ChatGPTAgentBeginnerPlayerPageWrapped />} />
             <Route path="/cost-optimization-examples" element={<CostOptimizationExamplesPageWrapped />} />

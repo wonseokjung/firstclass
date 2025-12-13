@@ -69,11 +69,11 @@ const premiumClasses: Course[] = [
   // Step 2: AI 에이전트 비기너 - Google OPAL로 여러 AI를 하나의 회사처럼
   { id: 1002, instructor: '정원석 (AI 멘토 제이)', title: 'Step 2: AI 에이전트 비기너', subtitle: '🤖 여러 AI를 하나의 회사처럼', description: '💎 Google OPAL로 콘텐츠 자동 생성 에이전트를 만들고 시스템화! 더 효율적인 수익 구조 완성', image: `${process.env.PUBLIC_URL}/images/main/2.jpeg`, isNew: true, category: 'Premium', path: '/chatgpt-agent-beginner', isPremium: true, launchDate: '지금 수강 가능', price: 95000, originalPrice: 95000, isComingSoon: false },
   
-  // Step 3: AI 에이전트 파견소 - 교육 + 도구 (준비중)
-  { id: 1003, instructor: '정원석 (AI 멘토 제이)', title: 'Step 3: AI 에이전트 파견소', subtitle: '🤖 교육 + 도구: AI 직원을 파견받아 실전!', description: '🚀 AI 에이전트를 파견받아 콘텐츠 사업을 시작하세요! 대본→이미지→음성→영상 자동화', image: `${process.env.PUBLIC_URL}/images/main/3.jpeg`, isNew: true, category: 'Premium', path: '#', isPremium: true, launchDate: '준비중', price: 0, originalPrice: 0, isComingSoon: true },
+  // Step 3: 1인 콘텐츠 기업 만들기 - 바이브코딩으로 서비스 개발 (먼저 직접 만들기)
+  { id: 1003, instructor: '정원석 (AI 멘토 제이)', title: 'Step 3: 1인 콘텐츠 기업 만들기', subtitle: '🚀 바이브코딩으로 서비스 개발', description: '🏆 바이브코딩을 활용해 나만의 서비스를 개발하고 1인 콘텐츠 기업을 완성하는 단계!', image: `${process.env.PUBLIC_URL}/images/main/3.jpg`, isNew: true, category: 'Premium', path: '/content-business', isPremium: true, launchDate: '오픈 예정', price: 150000, originalPrice: 150000, isComingSoon: false },
   
-  // Step 4: 1인 콘텐츠 기업 만들기 - 바이브코딩으로 서비스 개발
-  { id: 1004, instructor: '정원석 (AI 멘토 제이)', title: 'Step 4: 1인 콘텐츠 기업 만들기', subtitle: '🚀 바이브코딩으로 서비스 개발', description: '🏆 바이브코딩을 활용해 나만의 서비스를 개발하고 1인 콘텐츠 기업을 완성하는 단계!', image: `${process.env.PUBLIC_URL}/images/main/4.jpeg`, isNew: true, category: 'Premium', path: '/content-business', isPremium: true, launchDate: '오픈 예정', price: 150000, originalPrice: 150000, isComingSoon: true }
+  // Step 4: AI 에이전트 파견소 - 우리가 만든 AI 도구를 함께 사용
+  { id: 1004, instructor: '정원석 (AI 멘토 제이)', title: 'Step 4: AI 에이전트 파견소', subtitle: '🤝 협업하기: AI 도구를 함께 활용!', description: '🚀 우리가 만든 AI 에이전트 도구를 활용해 대본→이미지→음성→영상 자동화를 함께 실현', image: `${process.env.PUBLIC_URL}/images/main/4.jpg`, isNew: true, category: 'Premium', path: '/agent-dispatch', isPremium: true, launchDate: '준비중', price: 0, originalPrice: 0, isComingSoon: false }
 ];
 
 // ⭐️ onCourseSelect 속성 제거됨
@@ -90,6 +90,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [showComingSoonModal, setShowComingSoonModal] = useState(false);
+  const [comingSoonCourseTitle, setComingSoonCourseTitle] = useState('');
 
   const [userInfo, setUserInfo] = useState<any>(null);
   const [enrolledCourses, setEnrolledCourses] = useState<Set<number>>(new Set());
@@ -165,6 +166,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
 
   const handleCourseClick = (course: Course) => {
     if (course.isComingSoon) {
+      setComingSoonCourseTitle(course.title);
       setShowComingSoonModal(true);
       return;
     }
@@ -423,7 +425,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
       <ComingSoonModal
         isOpen={showComingSoonModal}
         onClose={() => setShowComingSoonModal(false)}
-        courseTitle={"해당 강의"}
+        courseTitle={comingSoonCourseTitle}
       />
     </div>
   );

@@ -46,7 +46,7 @@ const STEP_INFO: { [key: string]: StepInfo } = {
     time: '오후 8:00',
     courseId: 999,
     vimeoEventId: '1044498498',
-    price: 36556,
+    price: 45000,
     purchaseLink: '/ai-building-course',
     icon: '🏗️',
     color: COLORS.navy
@@ -68,30 +68,30 @@ const STEP_INFO: { [key: string]: StepInfo } = {
   step3: {
     id: 'step3',
     name: 'Step 3',
-    title: 'AI 에이전트 파견소',
-    description: 'AI 에이전트 실전 활용, 자동화 시스템 구축 라이브 코딩.',
+    title: '1인 콘텐츠 기업 (바이브코딩)',
+    description: '바이브코딩으로 나만의 서비스/앱 개발! AI와 함께 1인 기업 구축 프로젝트.',
     dayOfWeek: '목요일',
     time: '오후 8:00',
     courseId: 1003,
     vimeoEventId: '1044498498',
     price: null,
-    purchaseLink: '#',
-    icon: '🚀',
-    color: '#10b981'
+    purchaseLink: '/content-business',
+    icon: '🎸',
+    color: '#8b5cf6'
   },
   step4: {
     id: 'step4',
     name: 'Step 4',
-    title: '1인 콘텐츠 기업 (바이브코딩)',
-    description: '바이브코딩으로 나만의 서비스/앱 개발! AI와 함께 1인 기업 구축 프로젝트.',
+    title: 'AI 에이전트 파견소',
+    description: '직접 만들기 어려운 건 AI 에이전트 파견소에서! 자동화 도구 제공.',
     dayOfWeek: '금요일',
     time: '오후 8:00',
     courseId: 1004,
     vimeoEventId: '1044498498',
     price: null,
     purchaseLink: '#',
-    icon: '🎸',
-    color: '#8b5cf6'
+    icon: '🚀',
+    color: '#10b981'
   }
 };
 
