@@ -45,7 +45,7 @@ const LongformToShortsPage: React.FC = () => {
   // 상태
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [subtitleFile, setSubtitleFile] = useState<File | null>(null);
-  const [subtitleContent, setSubtitleContent] = useState<string>('');
+  const [, setSubtitleContent] = useState<string>('');
   const [parsedSubtitles, setParsedSubtitles] = useState<SubtitleSegment[]>([]);
   const [highlights, setHighlights] = useState<HighlightClip[]>([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -138,7 +138,7 @@ const LongformToShortsPage: React.FC = () => {
       
       usedRanges.push(startIdx);
       
-      const clipLength = 30 + Math.floor(Math.random() * 30); // 30-60초
+      // 30-60초 클립 길이 (현재 미사용)
       const startSeg = parsedSubtitles[startIdx];
       const endIdx = Math.min(startIdx + 10, parsedSubtitles.length - 1);
       const endSeg = parsedSubtitles[endIdx];

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, PlayCircle, Clock, BookOpen, Trophy } from 'lucide-react';
+import { ArrowLeft, PlayCircle, Clock, BookOpen, Trophy } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
 
 interface Day10PageProps {
@@ -206,4 +206,5 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack }) => {
 };
 
 export default Day10Page;
+
 
