@@ -127,6 +127,7 @@ const AIBuildingCoursePlayerPage = React.lazy(() => import('./components/pages/c
 const ChatGPTAgentBeginnerPage = React.lazy(() => import('./components/pages/courses/ChatGPTAgentBeginnerPage'));
 const ContentBusinessPage = React.lazy(() => import('./components/pages/courses/ContentBusinessPage'));
 const AgentDispatchPage = React.lazy(() => import('./components/pages/courses/AgentDispatchPage'));
+const LongformToShortsPage = React.lazy(() => import('./components/pages/tools/LongformToShortsPage'));
 const ChatGPTAgentBeginnerPlayerPage = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/ChatGPTAgentBeginnerPlayerPage'));
 const Day1Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day1Page'));
 const Day2Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day2Page'));
@@ -463,6 +464,11 @@ const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ childr
             <Route path="/ai-construction-site/step1" element={<AIConstructionSiteStep1PageWrapped />} />
             <Route path="/ai-construction-site/step2" element={<AIConstructionSiteStep2PageWrapped />} />
             <Route path="/ai-construction-site/step3" element={<AIConstructionSiteStep3PageWrapped />} />
+            <Route path="/tools/longform-to-shorts" element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <LongformToShortsPage />
+              </Suspense>
+            } />
             <Route path="/ai-workflow-editor" element={<AIWorkflowEditorPageWrapped />} />
             
               {/* 라이브 페이지 */}
