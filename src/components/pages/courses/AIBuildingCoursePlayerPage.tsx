@@ -105,35 +105,35 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
             title: '프롤로그: 맨해튼 부자 삼촌의 교훈', 
             subtitle: '맨해튼 부동산 거물 삼촌의 교훈과 AI 시대 재해석 | Google AI Studio 입문',
             hasQuiz: true,
-            releaseDate: '2024-12-13'  // 12월 13일 오픈
+            releaseDate: '2025-01-01'  // 1월 1일 오픈
           },
           { 
             day: 2, 
             title: '경제적 자유: 잠자는 동안에도 돈이 들어오는 구조', 
             subtitle: '부동산 vs 콘텐츠, 경제적 자유의 새로운 정의 | AI 기반 콘텐츠 청사진 만들기',
             hasQuiz: true,
-            releaseDate: '2024-12-14'  // 12월 14일 오픈
+            releaseDate: '2025-01-02'  // 1월 2일 오픈
           },
           { 
             day: 3, 
             title: '당신의 디지털 건물에는 어떤 사람이 거주하나?', 
             subtitle: '글로벌 CPM과 수익성 분석 | AI로 타겟 고객 심층 분석하기',
             hasQuiz: true,
-            releaseDate: '2024-12-15'  // 12월 15일 오픈
+            releaseDate: '2025-01-03'  // 1월 3일 오픈
           },
           { 
             day: 4, 
             title: '몇 층짜리 디지털 건물을 세울 것인가?', 
             subtitle: '대중형/니치형/혼합형 전략 | AI로 시장 분석 & 건물 콘셉트 설계',
             hasQuiz: false,
-            releaseDate: '2024-12-16'  // 12월 16일 오픈
+            releaseDate: '2025-01-04'  // 1월 4일 오픈
           },
           { 
             day: 5, 
             title: '최종 입지 선정 & 건물 계획서 작성', 
             subtitle: 'AI CITY BUILDER에 건물 계획서 넣기 | 나의 첫 디지털 건물 사업계획서 완성',
             hasQuiz: true,
-            releaseDate: '2024-12-17'  // 12월 17일 오픈
+            releaseDate: '2025-01-05'  // 1월 5일 오픈
           }
         ]
       },
@@ -146,35 +146,35 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
             title: '[재료학] 텍스트 & 이미지 생성 AI 마스터', 
             subtitle: 'ChatGPT 프롬프트 엔지니어링 | Nano Banana & ChatGPT 이미지 생성 실습',
             hasQuiz: true,
-            releaseDate: '2024-12-18'  // 12월 18일 오픈
+            releaseDate: '2025-01-06'  // 1월 6일 오픈
           },
           { 
             day: 7, 
             title: '[재료학] 사운드 & 영상 생성 AI 마스터', 
             subtitle: 'ElevenLabs 음성 클로닝 | Suno AI BGM | VEO 영상 생성 완전정복',
             hasQuiz: false,
-            releaseDate: '2024-12-19'  // 12월 19일 오픈
+            releaseDate: '2025-01-07'  // 1월 7일 오픈
           },
           { 
             day: 8, 
             title: '[시공] AI 4단계 건축 워크플로우', 
             subtitle: '바이럴 숏폼 & 고품질 롱폼 제작 | 멀티 플랫폼 동시 입점 전략',
             hasQuiz: true,
-            releaseDate: '2024-12-20'  // 12월 20일 오픈
+            releaseDate: '2025-01-08'  // 1월 8일 오픈
           },
           { 
             day: 9, 
             title: '[준공식] 콘텐츠 업로드 & 데이터 분석', 
             subtitle: '핵심 지표 읽는 법 | AI 감성 분석으로 건물 리모델링',
             hasQuiz: false,
-            releaseDate: '2024-12-21'  // 12월 21일 오픈
+            releaseDate: '2025-01-09'  // 1월 9일 오픈
           },
           { 
             day: 10, 
             title: '[첫 월세] 수익 시스템 구축 완성', 
             subtitle: '애드센스 + 제휴마케팅 + 멤버십 | 허브-앤-스포크 자동화 시스템',
             hasQuiz: true,
-            releaseDate: '2024-12-22'  // 12월 22일 오픈
+            releaseDate: '2025-01-10'  // 1월 10일 오픈
           }
         ]
       }
@@ -380,24 +380,13 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
             padding: '20px',
             marginBottom: '20px'
           }}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              marginBottom: '10px'
-            }}>
-              <span style={{ fontSize: '1.8rem' }}>🎉</span>
-              <span style={{ fontSize: '1.2rem', fontWeight: '800', color: COLORS.goldLight }}>
-                12월 13일부터 매일 강의 오픈!
-              </span>
-            </div>
             <p style={{
               fontSize: '1rem',
               margin: 0,
               color: 'rgba(255, 255, 255, 0.9)',
               lineHeight: '1.6'
             }}>
-              📅 Day 1~10 순차 오픈 중 → 2026년 1월 1일 전체 완성! 🔴 매주 일요일 라이브: 최신 AI로 콘텐츠 만들기 🚀
+              📅 2025년 1월 1일 오픈 예정 🔴 매주 화요일 저녁 8시 라이브 🚀
             </p>
           </div>
 
@@ -520,20 +509,8 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
             }}>
               {week.days.map((lesson) => {
                 const isCompleted = completedDays.has(lesson.day);
-                // 🔒 현재 강의 준비 중 - 모든 Day 잠금
-                const lessonReleaseDate = new Date(lesson.releaseDate + 'T00:00:00+09:00');
-                const now = new Date();
-                // const isReleased = now >= lessonReleaseDate;
-                const isAvailable = false; // 🔒 강의 준비 중이므로 모두 잠금
-                
-                // 오픈 예정일 포맷 (예: 12월 13일)
-                const releaseDateObj = new Date(lesson.releaseDate);
-                const releaseMonth = releaseDateObj.getMonth() + 1;
-                const releaseDay = releaseDateObj.getDate();
-                const releaseDateText = `${releaseMonth}월 ${releaseDay}일`;
-                
-                // D-day 계산
-                const daysUntilRelease = Math.ceil((lessonReleaseDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+                // 🔒 강의 준비 중
+                const isAvailable = false;
 
                 return (
                   <div
@@ -588,13 +565,13 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
                       </div>
                     )}
 
-                    {/* 오픈 예정일 배지 */}
+                    {/* 잠금 배지 */}
                     {!isAvailable && (
                       <div style={{
                         position: 'absolute',
                         top: '15px',
                         right: '15px',
-                        background: `linear-gradient(135deg, ${COLORS.blue}, ${COLORS.blueDark})`,
+                        background: `linear-gradient(135deg, ${COLORS.grayMedium}, #94a3b8)`,
                         color: COLORS.white,
                         padding: '6px 12px',
                         borderRadius: '20px',
@@ -604,7 +581,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
                         alignItems: 'center',
                         gap: '5px'
                       }}>
-                        📅 {releaseDateText}
+                        🔒 준비중
                       </div>
                     )}
 
@@ -698,41 +675,15 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
                     ) : (
                       <div style={{
                         paddingTop: '15px',
-                        borderTop: `1px solid ${COLORS.navy}15`
+                        borderTop: `1px solid ${COLORS.navy}15`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: COLORS.grayMedium,
+                        fontSize: '0.9rem',
+                        fontWeight: '600'
                       }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          color: COLORS.grayMedium,
-                          fontSize: '0.85rem',
-                          fontWeight: '600',
-                          marginBottom: '10px'
-                        }}>
-                          🔒 {releaseDateText} 오픈 예정
-                        </div>
-                        <div style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          gap: '4px'
-                        }}>
-                          <div style={{
-                            background: `linear-gradient(135deg, ${COLORS.blueLight}30, ${COLORS.blue}20)`,
-                            color: COLORS.blueDark,
-                            padding: '8px 16px',
-                            borderRadius: '8px',
-                            fontSize: '0.85rem',
-                            fontWeight: '700',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '6px',
-                            border: `1px solid ${COLORS.blue}`
-                          }}>
-                            📅 D-{daysUntilRelease > 0 ? daysUntilRelease : '준비중'}
-                          </div>
-                        </div>
+                        🔒 강의 준비중
                       </div>
                     )}
                   </div>

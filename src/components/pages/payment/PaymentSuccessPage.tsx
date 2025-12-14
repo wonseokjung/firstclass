@@ -82,21 +82,26 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         
         // 토스페이먼츠 결제 승인 처리 (중복 방지)
         if (paymentKey && orderId && amount) {
-          // 🔴🔴🔴 중복 등록 방지: localStorage + sessionStorage 둘 다 체크
-          const processedKey = `payment_processed_${paymentKey}`;
+          // 🔴 중복 등록 방지: orderId 기반으로만 체크 (각 결제 독립적 처리)
           const orderProcessedKey = `order_processed_${orderId}`;
           
-          // 이미 처리된 결제면 즉시 종료!
-          if (sessionStorage.getItem(processedKey) || localStorage.getItem(orderProcessedKey)) {
-            console.log('⚠️ 이미 처리된 결제입니다. 중복 등록 방지!');
-            alert('이미 처리된 결제입니다.');
-            window.location.href = '/my-courses';
+          // 이미 처리된 주문인지 확인
+          const existingOrder = localStorage.getItem(orderProcessedKey);
+          if (existingOrder) {
+            console.log('⚠️ 이미 처리된 주문입니다. 중복 등록 방지!', orderId);
+            // 바로 리다이렉트하지 않고 사용자에게 안내
+            setIsProcessing(false);
             return; // 🔴 여기서 종료! 더 이상 진행 안 함!
-          } else {
-            console.log('💳 토스페이먼츠 결제 승인 시작...');
-            
-            // 처리 중 표시 (중복 방지)
-            sessionStorage.setItem(processedKey, 'processing');
+          }
+          
+          console.log('💳 토스페이먼츠 결제 승인 시작... orderId:', orderId);
+          
+          // 처리 시작 즉시 기록 (동일 orderId 중복 방지)
+          localStorage.setItem(orderProcessedKey, JSON.stringify({
+            orderId,
+            status: 'processing',
+            startedAt: new Date().toISOString()
+          }));
             
             try {
               const paymentResult = await confirmPayment(paymentKey, orderId, parseInt(amount));
@@ -170,31 +175,36 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 // 🔴🔴🔴 가상계좌(입금 대기)인 경우 Azure 등록 건너뛰기!
                 if (paymentResult.status === 'WAITING_FOR_DEPOSIT') {
                   console.log('⏳ 가상계좌 입금 대기 중 - Azure 등록 건너뜀 (입금 확인 후 수동 등록 필요)');
-                  sessionStorage.setItem(processedKey, 'waiting_deposit');
+                  localStorage.setItem(orderProcessedKey, JSON.stringify({
+                    orderId,
+                    paymentKey,
+                    status: 'waiting_deposit',
+                    processedAt: new Date().toISOString()
+                  }));
                   setIsProcessing(false);
                   return; // 여기서 종료! Azure 등록 안 함!
                 }
               }
               
-              // 성공 시 완료 표시 (sessionStorage + localStorage 둘 다!)
-              sessionStorage.setItem(processedKey, 'completed');
+              // 성공 시 완료 표시 (orderId 기반 localStorage)
               localStorage.setItem(orderProcessedKey, JSON.stringify({
                 orderId,
                 paymentKey,
+                status: 'payment_confirmed',
                 processedAt: new Date().toISOString()
               }));
+              console.log('✅ 결제 승인 완료 기록:', orderId);
             } catch (error) {
               console.error('❌ 결제 승인 실패:', error);
               
               // 실패 시 처리 기록 삭제 (재시도 가능하도록)
-              sessionStorage.removeItem(processedKey);
+              localStorage.removeItem(orderProcessedKey);
               
               alert('결제 승인 중 오류가 발생했습니다. 고객센터로 문의해주세요.');
               // 실패 페이지로 리다이렉트
               window.location.href = '/payment/fail?error=payment_confirmation_failed';
               return;
             }
-          }
         } else {
           // 🔴🔴🔴 보안 수정: 결제 파라미터 없으면 등록 중단!
           console.error('🚨 결제 승인 파라미터 없음 - 무단 접근 차단!');
@@ -207,48 +217,94 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         // 사용자 정보는 location.state에서 가져오기
         const userInfo = location.state?.user;
         
-        // 사용자 정보 확인 (우선순위: sessionStorage > location.state)
+        // 🔐 사용자 정보 확인 (우선순위: sessionStorage > location.state > localStorage 백업)
         let user = null;
         
-        // 사용자 정보 가져오기 (sessionStorage 우선)
+        // 1. sessionStorage에서 가져오기 (가장 우선)
         const sessionUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
         if (sessionUserInfo) {
           user = JSON.parse(sessionUserInfo);
-        } else if (userInfo) {
+          console.log('✅ sessionStorage에서 사용자 정보 복구:', user?.email);
+        } 
+        // 2. location.state에서 가져오기
+        else if (userInfo) {
           user = userInfo;
+          console.log('✅ location.state에서 사용자 정보 복구:', user?.email);
+        }
+        // 3. localStorage 백업에서 복구 (결제 중 세션 손실 대비)
+        else {
+          const backupData = localStorage.getItem('payment_user_backup');
+          if (backupData) {
+            try {
+              const backup = JSON.parse(backupData);
+              // 백업이 1시간 이내인지 확인
+              const backupTime = new Date(backup.backupAt).getTime();
+              const oneHourAgo = Date.now() - (60 * 60 * 1000);
+              
+              if (backupTime > oneHourAgo) {
+                user = { email: backup.email, name: backup.name };
+                console.log('🔄 localStorage 백업에서 사용자 정보 복구:', user?.email);
+                
+                // sessionStorage에도 다시 저장
+                sessionStorage.setItem('aicitybuilders_user_session', JSON.stringify(user));
+              } else {
+                console.warn('⚠️ localStorage 백업이 1시간 초과 (만료됨)');
+              }
+            } catch (e) {
+              console.error('❌ localStorage 백업 파싱 실패:', e);
+            }
+          }
         }
         
         console.log('💳 결제 처리:', user?.email, '→', courseParam);
         
-        if (user && courseParam) {
+        // 🔐 courseParam이 없으면 localStorage 백업에서 복구 시도
+        let effectiveCourseParam = courseParam;
+        if (!effectiveCourseParam) {
+          const backupData = localStorage.getItem('payment_user_backup');
+          if (backupData) {
+            try {
+              const backup = JSON.parse(backupData);
+              effectiveCourseParam = backup.courseId;
+              console.log('🔄 localStorage 백업에서 courseId 복구:', effectiveCourseParam);
+            } catch (e) {
+              console.error('❌ courseId 백업 복구 실패:', e);
+            }
+          }
+        }
+        
+        if (user && effectiveCourseParam) {
           let courseData = {
             id: '',
             title: '',
             price: 0
           };
           
-          // 강의별 정보 설정
-          if (courseParam === 'prompt-engineering' || courseParam === 'ai-building') {
+          // 강의별 정보 설정 (더 많은 케이스 지원)
+          if (effectiveCourseParam === 'prompt-engineering' || effectiveCourseParam === 'ai-building') {
             courseData = {
               id: 'ai-building', 
               title: 'AI 건물 짓기 - 디지털 건축가 과정',
               price: 299000
             };
             setCourseName('AI 건물 짓기 - 디지털 건축가 과정');
-          } else if (courseParam === '999' || courseParam === 'ai-building-course') {
+          } else if (effectiveCourseParam === '999' || effectiveCourseParam === 'ai-building-course') {
             courseData = {
               id: '999',
               title: 'Step 1: AI 건물주 되기 기초',
               price: actualAmount || 45000  // 얼리버드 45,000원
             };
             setCourseName('Step 1: AI 건물주 되기 기초');
-          } else if (courseParam === '1002' || courseParam === 'chatgpt-agent-beginner') {
+          } else if (effectiveCourseParam === '1002' || effectiveCourseParam === 'chatgpt-agent-beginner') {
             courseData = {
               id: '1002',
               title: 'Google Opal 유튜브 수익화 에이전트 기초',
               price: actualAmount || 95000  // 실제 결제 금액 사용, 없으면 정가
             };
             setCourseName('Google Opal 유튜브 수익화 에이전트 기초');
+          } else {
+            // 알 수 없는 courseParam - 로그 기록
+            console.warn('⚠️ 알 수 없는 courseParam:', effectiveCourseParam);
           }
           
           if (courseData.id && user.email) {
@@ -360,6 +416,20 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               // 성공 여부 확인
               if (result && result.enrollment) {
                 console.log('✅✅✅ Azure 등록 100% 성공 확인!');
+                
+                // 🔐 성공 후 orderId 상태 업데이트
+                if (orderId) {
+                  localStorage.setItem(`order_processed_${orderId}`, JSON.stringify({
+                    orderId,
+                    courseId: courseData.id,
+                    status: 'azure_registered',
+                    completedAt: new Date().toISOString()
+                  }));
+                }
+                
+                // 🔐 결제 백업 정리 (성공했으므로 더 이상 필요 없음)
+                localStorage.removeItem('payment_user_backup');
+                console.log('🧹 결제 백업 정리 완료');
               } else {
                 console.error('⚠️⚠️⚠️ Azure 등록 결과가 이상합니다:', result);
               }
@@ -400,6 +470,54 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               courseData,
               user
             });
+            
+            // 🔴 courseData.id가 없으면 실패 기록
+            if (!courseData.id) {
+              console.error('❌ courseData.id가 없음 - 강의 정보를 찾을 수 없음');
+              try {
+                const failedPayments = localStorage.getItem('failed_azure_payments') || '[]';
+                const failedList = JSON.parse(failedPayments);
+                failedList.push({
+                  email: user?.email || 'unknown',
+                  courseId: effectiveCourseParam || 'unknown',
+                  orderId: orderId,
+                  error: 'courseData.id가 없음 - 강의 정보 매핑 실패',
+                  timestamp: new Date().toISOString()
+                });
+                localStorage.setItem('failed_azure_payments', JSON.stringify(failedList));
+              } catch (e) {
+                console.error('❌ 실패 기록 저장 오류:', e);
+              }
+            }
+          }
+        } else {
+          // user 또는 effectiveCourseParam이 없는 경우
+          console.error('❌ Azure 등록 불가:', {
+            hasUser: !!user,
+            hasCourseParam: !!effectiveCourseParam,
+            orderId
+          });
+          
+          // 실패 기록 저장
+          try {
+            const failedPayments = localStorage.getItem('failed_azure_payments') || '[]';
+            const failedList = JSON.parse(failedPayments);
+            failedList.push({
+              email: user?.email || 'unknown',
+              courseId: effectiveCourseParam || 'unknown',
+              orderId: orderId,
+              error: `user=${!!user}, courseParam=${!!effectiveCourseParam}`,
+              timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('failed_azure_payments', JSON.stringify(failedList));
+            console.log('💾 실패 정보 저장 완료');
+          } catch (e) {
+            console.error('❌ 실패 기록 저장 오류:', e);
+          }
+          
+          // 사용자에게 알림
+          if (orderId) {
+            alert('⚠️ 결제는 완료되었으나 등록 정보가 부족합니다.\n고객센터(jay@connexionai.kr)로 주문번호와 함께 문의해주세요.\n\n주문번호: ' + orderId);
           }
         }
       } catch (error) {

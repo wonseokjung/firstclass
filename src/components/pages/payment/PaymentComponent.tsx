@@ -82,6 +82,22 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
     console.log('✅ tossPayments 객체 확인:', tossPayments);
     console.log('🔍 tossPayments.payment 함수 존재 여부:', typeof tossPayments.payment);
 
+    // 🔐 결제 전 사용자 정보 백업 (결제 후 세션 복구용)
+    try {
+      const backupData = {
+        email: userInfo.email,
+        name: userInfo.name,
+        courseId: courseId,
+        courseTitle: courseTitle,
+        price: price,
+        backupAt: new Date().toISOString()
+      };
+      localStorage.setItem('payment_user_backup', JSON.stringify(backupData));
+      console.log('💾 결제 전 사용자 정보 백업 완료:', backupData.email);
+    } catch (backupError) {
+      console.warn('⚠️ 사용자 정보 백업 실패 (결제는 계속 진행):', backupError);
+    }
+
     setIsLoading(true);
 
     try {
@@ -150,6 +166,22 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
     }
 
     if (!tossPayments) return;
+
+    // 🔐 결제 전 사용자 정보 백업 (결제 후 세션 복구용)
+    try {
+      const backupData = {
+        email: userInfo.email,
+        name: userInfo.name,
+        courseId: courseId,
+        courseTitle: courseTitle,
+        price: price,
+        backupAt: new Date().toISOString()
+      };
+      localStorage.setItem('payment_user_backup', JSON.stringify(backupData));
+      console.log('💾 결제 전 사용자 정보 백업 완료:', backupData.email);
+    } catch (backupError) {
+      console.warn('⚠️ 사용자 정보 백업 실패 (결제는 계속 진행):', backupError);
+    }
 
     setIsLoading(true);
 
