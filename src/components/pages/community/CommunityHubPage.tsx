@@ -37,7 +37,7 @@ const CommunityHubPage: React.FC = () => {
     {
       step: 1,
       title: 'AI 건물주 되기',
-      subtitle: 'AI로 콘텐츠 만들기 & 비즈니스 마인드',
+      subtitle: '새로운 계급의 크리에이터가 되는 첫 시작',
       icon: '🏠',
       path: '/community/step1',
       courseIds: ['ai-building-course', 'ai-building', '999']
@@ -52,19 +52,19 @@ const CommunityHubPage: React.FC = () => {
     },
     {
       step: 3,
-      title: '1인 콘텐츠 기업 만들기',
-      subtitle: '바이브코딩으로 서비스 개발',
-      icon: '🚀',
+      title: '바이브코딩',
+      subtitle: '수익화 확장의 첫걸음',
+      icon: '💻',
       path: '/community/step3',
-      courseIds: ['content-business']
+      courseIds: ['vibe-coding']
     },
     {
       step: 4,
-      title: 'connexionai',
-      subtitle: 'AI 수익화 전문 자동화 에이전트',
-      icon: '⚡',
+      title: '1인 기업 만들기',
+      subtitle: '크리에이터에서 CEO로',
+      icon: '🏢',
       path: '/community/step4',
-      courseIds: ['connexionai']
+      courseIds: ['solo-business']
     }
   ];
 

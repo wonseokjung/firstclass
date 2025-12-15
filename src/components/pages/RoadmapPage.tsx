@@ -10,18 +10,18 @@ const RoadmapPage: React.FC = () => {
     {
       step: 1,
       title: 'AI 건물주 되기',
-      subtitle: '배우기',
+      subtitle: '새로운 계급의 크리에이터',
       icon: <Sparkles size={32} />,
-      description: '"무엇을 만들어야 팔리는지" + 압도적인 비주얼',
-      details: '그냥 AI 이미지 생성이 아닙니다. 무엇을 만들어야 팔리는지 알고, 압도적인 비주얼로 차별화하는 콘텐츠 비즈니스의 시작점입니다. 처음부터 수익화를 설계하세요.',
+      description: '1960년 맨해튼 기회가 지금 유튜브에',
+      details: '유튜브 CEO가 발표한 "새로운 계급의 크리에이터"가 되는 첫 시작입니다. 1960년대 맨해튼 부동산처럼, 지금 유튜브 채널이 디지털 건물입니다. 구글의 30개+ AI 도구로 수익화 콘텐츠를 만듭니다.',
       price: '₩45,000',
       priceType: '일회성',
       color: '#3b82f6',
       gradient: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)',
       features: [
-        '팔리는 콘텐츠가 무엇인지 이해',
-        '압도적인 비주얼 제작 기법',
-        '수익화 파이프라인 설계'
+        '🏙️ 맨해튼 부동산 비즈니스 철학',
+        '📺 유튜브 채널 = 디지털 건물',
+        '🔴 매주 라이브 + 최신 AI 업데이트'
       ],
       status: 'available',
       path: '/courses/ai-building',
@@ -48,52 +48,52 @@ const RoadmapPage: React.FC = () => {
     },
     {
       step: 3,
-      title: '1인 콘텐츠 기업 만들기',
-      subtitle: '사업화',
-      icon: <Building2 size={32} />,
-      description: '바이브코딩으로 나만의 서비스/플랫폼 개발',
-      details: '콘텐츠를 만드는 사람에서 사업을 운영하는 사람이 됩니다. 바이브코딩으로 직접 서비스를 만들고, 사업자등록, 세금, 정부지원금 활용까지.',
+      title: '바이브코딩',
+      subtitle: '수익화 확장',
+      icon: <Zap size={32} />,
+      description: '수익화 확장의 첫걸음',
+      details: '유튜브 광고 수익을 넘어서 내 사업 도구를 직접 만듭니다. 코딩 몰라도 OK! AI에게 말로 설명하면 됩니다.',
       price: 'Coming Soon',
       priceType: '',
       color: '#8b5cf6',
       gradient: 'linear-gradient(135deg, #5b21b6 0%, #8b5cf6 100%)',
       features: [
-        '🔥 바이브코딩으로 서비스 개발',
-        '🏢 개인사업자 & 법인 설립',
-        '💰 세금 & 정부지원금 활용'
+        '💻 내 사업 도구 직접 만들기',
+        '🚀 유튜브 의존에서 벗어나기',
+        '🛠️ 추가 수익 파이프라인 구축'
       ],
       highlights: [
-        'AI에게 말로 설명하면 코드가 완성',
-        '개발자 없이 나만의 플랫폼 구축',
-        '유튜브 의존에서 벗어나 내 사업 만들기'
+        '코딩 경험 없어도 서비스 개발 가능',
+        '아이디어만 있으면 바로 실현',
+        '광고 수익을 넘어선 사업 확장'
       ],
       status: 'coming_soon',
-      path: '/content-business'
+      path: '/vibe-coding'
     },
     {
       step: 4,
-      title: 'AI 에이전트 파견소',
-      subtitle: '도구',
-      icon: <Zap size={32} />,
-      description: '직접 만들기 어려운 건 AI 도구로 해결',
-      details: '혼자 다 할 필요 없습니다. 직접 만들기 어려운 기능은 AI 에이전트 파견소에서 제공하는 도구를 활용하세요. 대본, 이미지, 음성, 영상 자동화.',
+      title: '1인 기업 만들기',
+      subtitle: 'CEO 되기',
+      icon: <Building2 size={32} />,
+      description: '크리에이터에서 CEO로',
+      details: '콘텐츠를 만드는 사람에서 사업을 운영하는 사람이 됩니다. 사업자등록, 세금, 정부지원금 활용까지.',
       price: '준비중',
       priceType: '',
       color: '#f59e0b',
       gradient: 'linear-gradient(135deg, #d4af37 0%, #f59e0b 50%, #fbbf24 100%)',
       features: [
-        '🤖 콘텐츠 전문 AI 에이전트 제공',
-        '📚 매주 업데이트 강의',
-        '🔴 주간 라이브 (월 4회)',
-        '🎥 영상 자동화 에이전트',
+        '🏢 개인사업자 & 법인 설립',
+        '💰 세금 & 정부지원금 활용',
+        '📈 1인 기업 성장 전략',
+        '🤝 협업 네트워크 구축',
       ],
       highlights: [
-        '대본 에이전트 → 이미지 에이전트 → 음성 에이전트',
-        'AI 직원들이 당신 대신 일합니다',
-        'Step 3에서 직접 못 만든 건 여기서 해결!'
+        '콘텐츠 크리에이터에서 CEO로',
+        '안정적인 수익 구조 완성',
+        'Step 3에서 만든 서비스로 사업화!'
       ],
       status: 'coming_soon',
-      path: '#'
+      path: '/solo-business'
     }
   ];
 

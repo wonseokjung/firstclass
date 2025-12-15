@@ -89,6 +89,26 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
     setShowConfirmModal(true);
   };
 
+  // 결제 정보에서 paymentKey 찾기
+  const findPaymentKey = (userEmail: string, courseId: string): string => {
+    try {
+      const allPayments = localStorage.getItem('all_payment_details');
+      if (allPayments) {
+        const paymentsList = JSON.parse(allPayments);
+        // 해당 사용자의 결제 중 가장 최근 것 찾기
+        const userPayment = paymentsList.find((p: any) => 
+          p.customerEmail?.toLowerCase() === userEmail.toLowerCase()
+        );
+        if (userPayment?.paymentKey) {
+          return userPayment.paymentKey;
+        }
+      }
+    } catch (e) {
+      console.error('paymentKey 조회 실패:', e);
+    }
+    return '조회 불가 - 토스 대시보드에서 확인 필요';
+  };
+
   const handleRefundSubmit = async () => {
     if (!userInfo || !selectedCourse) return;
     setIsSubmitting(true);
@@ -96,6 +116,9 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
     try {
       const courseInfo = COURSE_INFO[selectedCourse.courseId];
       const { refundAmount, usedAmount, completedDays, totalDays, price } = calculateRefund(selectedCourse);
+      
+      // paymentKey 조회
+      const paymentKey = findPaymentKey(userInfo.email, selectedCourse.courseId);
       
       await emailjs.send('service_ca3frqd', 'template_refund', {
         to_email: 'jay@connexionai.kr',
@@ -109,6 +132,7 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
         refund_amount: refundAmount.toLocaleString(),
         refund_reason: refundReason || '사유 미입력',
         request_date: new Date().toLocaleString('ko-KR'),
+        payment_key: paymentKey,  // 🔑 환불용 paymentKey 추가
       }, 'McMYvMBYbK-cdZ8ba');
       
       setSubmitSuccess(true);

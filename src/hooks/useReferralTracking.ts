@@ -4,17 +4,17 @@ import { useLocation } from 'react-router-dom';
 // 강의 페이지 경로 → 강의 ID 매핑
 const COURSE_PATH_TO_ID: Record<string, string> = {
   '/ai-building-course': '999',      // Step 1: AI 건물주 되기
-  '/chatgpt-agent-beginner': '1000', // Step 2: ChatGPT 에이전트
-  '/ai-agent-dispatch': '1001',      // Step 3: AI 에이전트 파견소
-  '/ceo-course': '1002',             // Step 4: CEO 과정
+  '/chatgpt-agent-beginner': '1000', // Step 2: AI 에이전트 비기너
+  '/vibe-coding': '1001',            // Step 3: 바이브코딩
+  '/solo-business': '1002',          // Step 4: 1인 기업
 };
 
 // 강의 ID → 강의 이름 매핑
 export const COURSE_ID_TO_NAME: Record<string, string> = {
   '999': 'Step 1: AI 건물주 되기',
-  '1000': 'Step 2: ChatGPT 에이전트',
-  '1001': 'Step 3: AI 에이전트 파견소',
-  '1002': 'Step 4: CEO 과정',
+  '1000': 'Step 2: AI 에이전트 비기너',
+  '1001': 'Step 3: 바이브코딩',
+  '1002': 'Step 4: 1인 기업 만들기',
 };
 
 // 강의 ID → 가격 매핑

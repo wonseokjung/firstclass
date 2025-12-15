@@ -339,3 +339,4 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
 
 export default Day1Page;
 
+

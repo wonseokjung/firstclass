@@ -27,7 +27,7 @@ const LiveStep4Page: React.FC = () => {
           fontWeight: '800',
           marginBottom: '15px'
         }}>
-          🚀 1인 콘텐츠 기업 만들기 라이브
+          👑 1인 기업 만들기 라이브
         </h1>
         
         <div style={{ 
@@ -38,7 +38,7 @@ const LiveStep4Page: React.FC = () => {
         </div>
         
         <h2 style={{ 
-          color: '#a855f7', 
+          color: '#f59e0b', 
           fontSize: '1.8rem',
           marginBottom: '20px'
         }}>
@@ -51,11 +51,11 @@ const LiveStep4Page: React.FC = () => {
           lineHeight: '1.8',
           marginBottom: '40px'
         }}>
-          바이브코딩으로 서비스를 개발하고<br/>
-          1인 콘텐츠 기업을 만드는 방법을 배우는<br/>
-          강의가 곧 오픈됩니다!<br/><br/>
-          <span style={{ color: '#a855f7' }}>코딩 없이 서비스 만들기</span>부터<br/>
-          <span style={{ color: '#a855f7' }}>수익화</span>까지 모든 것을 다룹니다.
+          크리에이터에서 CEO로!<br/>
+          1인 기업 만들기 강의가<br/>
+          곧 오픈됩니다!<br/><br/>
+          <span style={{ color: '#f59e0b' }}>사업자등록, 세금</span>부터<br/>
+          <span style={{ color: '#f59e0b' }}>정부지원금</span>까지 모든 것을 다룹니다.
         </p>
         
         <button

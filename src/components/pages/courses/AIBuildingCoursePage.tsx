@@ -443,7 +443,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
                   color: '#fbbf24'
                 }}>
-                  🎥 AI로 유튜브 채널 만들고 첫 월수익 100만원!
+                  🏙️ 1960년 맨해튼 부동산 기회가 지금 유튜브에 왔다
                 </h2>
                 <p style={{
                   fontSize: 'clamp(1.05rem, 2.2vw, 1.2rem)',
@@ -452,7 +452,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   fontWeight: '500',
                   lineHeight: '1.7'
                 }}>
-                  인공지능을 활용해 유튜브 채널을 완성하고 월 100만원을 벌 때까지
+                  유튜브 CEO가 발표한 "새로운 계급의 크리에이터"가 되는 법을 배웁니다
                 </p>
               </div>
 
@@ -597,6 +597,69 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 
           </div>
 
+          {/* 🎬 강의 소개 영상 */}
+          <div style={{
+            background: 'linear-gradient(135deg, #1e293b, #0f172a)',
+            padding: 'clamp(30px, 6vw, 50px)',
+            borderRadius: '30px',
+            marginBottom: 'clamp(30px, 6vw, 60px)',
+            border: '3px solid #fbbf24',
+            boxShadow: '0 25px 60px rgba(251, 191, 36, 0.2)'
+          }}>
+            <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+              <div style={{
+                display: 'inline-block',
+                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                padding: '10px 25px',
+                borderRadius: '30px',
+                marginBottom: '15px'
+              }}>
+                <span style={{ color: '#000', fontWeight: '800', fontSize: '1rem' }}>
+                  🎬 강의 소개 영상
+                </span>
+              </div>
+              <h3 style={{
+                color: '#ffffff',
+                fontSize: 'clamp(1.3rem, 3vw, 1.8rem)',
+                fontWeight: '800',
+                marginBottom: '10px'
+              }}>
+                먼저 영상으로 확인하세요!
+              </h3>
+              <p style={{
+                color: '#94a3b8',
+                fontSize: 'clamp(0.95rem, 2vw, 1.1rem)'
+              }}>
+                AI 멘토 제이가 직접 설명하는 강의 소개
+              </p>
+            </div>
+
+            {/* Vimeo 영상 임베딩 */}
+            <div style={{
+              position: 'relative',
+              paddingTop: '56.25%',
+              borderRadius: '20px',
+              overflow: 'hidden',
+              boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
+              border: '4px solid rgba(255, 255, 255, 0.1)'
+            }}>
+              <iframe
+                src="https://player.vimeo.com/video/1146515545?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%'
+                }}
+                title="인공지능건물주되기_인트로"
+              />
+            </div>
+          </div>
+
           {/* 강의 소개 - CEOPage 스타일 적용 */}
           <div style={{ marginBottom: 'clamp(40px, 8vw, 80px)' }}>
             {/* 메인 히어로 섹션 */}
@@ -678,7 +741,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   marginBottom: '15px',
                   textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
                 }}>
-                  🚀 새로운 계급, AI 크리에이터가 되는 첫 시작
+                  🏙️ 유튜브 CEO가 예언한 "새로운 계급의 크리에이터"
                 </p>
 
                 <p style={{
@@ -687,245 +750,275 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   fontWeight: '600',
                   marginBottom: '30px'
                 }}>
-                  인공지능으로 유튜브 채널을 세우고 월 100만원을 벌 때까지
+                  비싼 카메라도, 인력도 필요 없다. AI 하나로 유튜브 채널을 짓는다.
                 </p>
 
+                {/* 맨해튼 스토리 박스 */}
                 <div style={{
-                  background: 'rgba(255, 255, 255, 0.8)',
-                  padding: '30px',
+                  background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
+                  padding: 'clamp(25px, 5vw, 40px)',
                   borderRadius: '20px',
                   maxWidth: '900px',
-                  margin: '0 auto',
+                  margin: '0 auto 30px',
+                  border: '3px solid #fbbf24',
+                  boxShadow: '0 15px 40px rgba(0, 0, 0, 0.2)'
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '10px',
+                    marginBottom: '20px'
+                  }}>
+                    <span style={{ fontSize: '2rem' }}>🗽</span>
+                    <h4 style={{
+                      color: '#fbbf24',
+                      fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+                      fontWeight: '900',
+                      margin: 0
+                    }}>맨해튼 부자 삼촌의 교훈</h4>
+                  </div>
+                  <p style={{
+                    color: '#e2e8f0',
+                    fontSize: 'clamp(1rem, 2.2vw, 1.15rem)',
+                    lineHeight: '1.9',
+                    margin: '0 0 20px 0',
+                    fontWeight: '500',
+                    textAlign: 'left'
+                  }}>
+                    1960년대, 무작정 미국으로 건너온 외삼촌은 세탁소에서 일하며 시작했습니다.<br/><br/>
+                    당시 맨해튼은 <strong style={{ color: '#fbbf24' }}>건물을 사면 은행에서 이자 없이 돈을 빌려주던 시대</strong>였죠.
+                    10억짜리 건물을 사면 11억을 빌려줬고, 남은 1억으로 인테리어해서 세입자만 채우면 건물이 내 것이 됐습니다.<br/><br/>
+                    그렇게 건물 하나, 두 개, 세 개... <strong style={{ color: '#fbbf24' }}>지금은 맨해튼에 수백 개의 빌딩을 가진 부동산 재벌</strong>이 되었습니다.
+                  </p>
+                </div>
+
+                {/* 지금 유튜브 상황 */}
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.95)',
+                  padding: 'clamp(25px, 5vw, 40px)',
+                  borderRadius: '20px',
+                  maxWidth: '900px',
+                  margin: '0 auto 30px',
                   backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  border: '3px solid #1e40af',
                   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
                 }}>
-                  <p style={{
-                    color: '#1f2937',
-                    fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
-                    lineHeight: '1.8',
-                    margin: '0',
-                    fontWeight: '500'
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '10px',
+                    marginBottom: '20px'
                   }}>
-                    무작정 미국으로 건너온 외삼촌이 세탁소에서 시작해 맨해튼 부동산 거물이 된 실화.<br />
-                    그가 가르쳐준 <strong style={{ color: '#1e40af' }}>'자산 구축의 4가지 원리'</strong>를 이제는 벽돌과 시멘트 대신<br />
-                    <strong style={{ color: '#1e40af', fontSize: '1.15rem' }}>AI 유튜브 채널</strong>로 실현합니다.<br /><br />
-                    <div style={{ 
-                      display: 'inline-block',
-                      background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
-                      padding: '20px 30px',
-                      borderRadius: '20px',
-                      border: '3px solid #1e40af',
-                      marginBottom: '20px'
-                    }}>
-                      <div style={{ 
-                        fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)', 
-                        fontWeight: '900', 
-                        color: '#1e40af',
-                        marginBottom: '10px'
-                      }}>
-                        🎯 강의 최종 목표
-                      </div>
-                      <div style={{ 
-                        fontSize: 'clamp(1rem, 2.2vw, 1.2rem)', 
-                        fontWeight: '700', 
-                        color: '#1f2937',
-                        lineHeight: '1.8'
-                      }}>
-                        새로운 계급의 크리에이터로서의 첫걸음
-                      </div>
-                    </div>
-                    <br />
-                    <span style={{ 
-                      fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', 
-                      fontWeight: '700', 
+                    <span style={{ fontSize: '2rem' }}>📺</span>
+                    <h4 style={{
                       color: '#1e40af',
+                      fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+                      fontWeight: '900',
+                      margin: 0
+                    }}>지금 유튜브가 딱 그때입니다</h4>
+                  </div>
+                  <p style={{
+                    color: '#334155',
+                    fontSize: 'clamp(1rem, 2.2vw, 1.15rem)',
+                    lineHeight: '1.9',
+                    margin: '0',
+                    fontWeight: '500',
+                    textAlign: 'left'
+                  }}>
+                    유튜브 CEO가 발표했습니다: <strong style={{ color: '#1e40af' }}>"새로운 계급의 크리에이터가 탄생할 것이다"</strong><br/><br/>
+                    예전에는 SBS, KBS 같은 대형 방송국들이 들어오면서 퀄리티 경쟁이 너무 치열해졌죠.
+                    비싼 카메라, 스튜디오, 전문 인력 없이는 경쟁이 불가능했습니다.<br/><br/>
+                    하지만 이제 <strong style={{ color: '#1e40af' }}>AI가 모든 것을 바꿨습니다.</strong><br/>
+                    구글이 <strong style={{ color: '#1e40af' }}>30가지가 넘는 AI 도구</strong>를 무료로 제공하고 있고,
+                    혼자서도 방송국 퀄리티의 콘텐츠를 만들 수 있는 시대가 열렸습니다.<br/><br/>
+                    <span style={{
                       background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-                      padding: '8px 18px',
-                      borderRadius: '12px',
-                      display: 'inline-block',
-                      border: '2px solid #fbbf24'
+                      padding: '8px 15px',
+                      borderRadius: '10px',
+                      fontWeight: '700',
+                      color: '#92400e'
                     }}>
-                      💡 커리큘럼은 변경될 수 있습니다
+                      🏗️ 유튜브 채널 1개 = 디지털 건물 1채
                     </span>
                   </p>
                 </div>
+
+                {/* 강의 목표 */}
+                <div style={{ 
+                  display: 'inline-block',
+                  background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
+                  padding: '25px 35px',
+                  borderRadius: '20px',
+                  border: '3px solid #1e40af',
+                  marginBottom: '20px'
+                }}>
+                  <div style={{ 
+                    fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)', 
+                    fontWeight: '900', 
+                    color: '#1e40af',
+                    marginBottom: '15px'
+                  }}>
+                    🎯 이 강의에서 배우는 것
+                  </div>
+                  <div style={{ 
+                    fontSize: 'clamp(1rem, 2.2vw, 1.15rem)', 
+                    fontWeight: '600', 
+                    color: '#1f2937',
+                    lineHeight: '2',
+                    textAlign: 'left'
+                  }}>
+                    ✅ Part 1: 콘텐츠 비즈니스 마인드와 지식<br/>
+                    ✅ Part 2: AI 도구 실습 (이미지, 영상, 글, 목소리 생성)<br/>
+                    ✅ 매주 수강생 전용 라이브 (새로운 AI 도구 업데이트)<br/>
+                    ✅ 수익화 목적의 콘텐츠 제작 전략
+                  </div>
+                </div>
+                <br />
+                <span style={{ 
+                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', 
+                  fontWeight: '700', 
+                  color: '#1e40af',
+                  background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                  padding: '8px 18px',
+                  borderRadius: '12px',
+                  display: 'inline-block',
+                  border: '2px solid #fbbf24'
+                }}>
+                  💡 커리큘럼은 변경될 수 있습니다
+                </span>
               </div>
             </div>
 
-            {/* 4가지 교훈 - CEOPage 스타일 적용 */}
+            {/* 🚀 AI 시티 빌더스 4단계 여정 */}
             <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
-              gap: 'clamp(15px, 3vw, 30px)',
-              marginBottom: 'clamp(30px, 6vw, 60px)'
+              background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+              padding: 'clamp(30px, 6vw, 50px)',
+              borderRadius: '25px',
+              marginBottom: 'clamp(30px, 6vw, 60px)',
+              border: '3px solid #8b5cf6',
+              boxShadow: '0 20px 50px rgba(139, 92, 246, 0.2)'
             }}>
-              {/* 교훈 1 */}
-              <div style={{
-                background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
-                padding: 'clamp(25px, 4vw, 40px) clamp(20px, 3vw, 30px)',
-                borderRadius: '20px',
-                textAlign: 'center',
-                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-                border: '1px solid rgba(14, 165, 233, 0.1)',
-                position: 'relative',
-                overflow: 'hidden',
-                transition: 'all 0.3s ease'
-              }}>
+              <div style={{ textAlign: 'center', marginBottom: '35px' }}>
                 <div style={{
-                  position: 'absolute',
-                  top: '-20px',
-                  right: '-20px',
-                  width: '80px',
-                  height: '80px',
-                  background: 'rgba(14, 165, 233, 0.1)',
-                  borderRadius: '50%',
-                  opacity: '0.5'
-                }}></div>
-                <div style={{
-                  fontSize: '4rem',
-                  marginBottom: '20px',
-                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1))'
-                }}>🏗️</div>
-                <h4 style={{
-                  color: '#1e40af',
-                  fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-                  marginBottom: '15px',
-                  fontWeight: '800',
-                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
-                }}>교훈 1: 입지 선정</h4>
+                  display: 'inline-block',
+                  background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                  padding: '10px 25px',
+                  borderRadius: '30px',
+                  marginBottom: '20px'
+                }}>
+                  <span style={{ color: '#fff', fontWeight: '800', fontSize: '1rem' }}>
+                    🗺️ 콘텐츠 비즈니스 로드맵
+                  </span>
+                </div>
+                <h3 style={{
+                  color: '#ffffff',
+                  fontSize: 'clamp(1.4rem, 3.5vw, 2rem)',
+                  fontWeight: '900',
+                  marginBottom: '15px'
+                }}>
+                  AI 시티 빌더스 <span style={{ color: '#fbbf24' }}>4단계 여정</span>
+                </h3>
                 <p style={{
-                  color: '#64748b',
+                  color: '#94a3b8',
                   fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                  lineHeight: '1.6',
-                  fontWeight: '500'
-                }}>수익성 높은 유튜브 채널 주제를 찾는 법</p>
+                  maxWidth: '700px',
+                  margin: '0 auto'
+                }}>
+                  1인 유니콘을 만들 수 있는 시대, 그 여정의 첫 번째 단계입니다
+                </p>
               </div>
 
-              {/* 교훈 2 */}
               <div style={{
-                background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
-                padding: 'clamp(25px, 4vw, 40px) clamp(20px, 3vw, 30px)',
-                borderRadius: '20px',
-                textAlign: 'center',
-                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-                border: '1px solid rgba(14, 165, 233, 0.1)',
-                position: 'relative',
-                overflow: 'hidden',
-                transition: 'all 0.3s ease'
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
+                gap: 'clamp(15px, 3vw, 25px)'
               }}>
+                {/* Step 1 - 현재 강의 */}
                 <div style={{
-                  position: 'absolute',
-                  top: '-20px',
-                  right: '-20px',
-                  width: '80px',
-                  height: '80px',
-                  background: 'rgba(14, 165, 233, 0.1)',
-                  borderRadius: '50%',
-                  opacity: '0.5'
-                }}></div>
+                  background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                  padding: '25px 20px',
+                  borderRadius: '20px',
+                  textAlign: 'center',
+                  boxShadow: '0 10px 30px rgba(251, 191, 36, 0.3)',
+                  border: '3px solid #fff',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: '-12px',
+                    right: '-12px',
+                    background: '#ef4444',
+                    color: '#fff',
+                    padding: '5px 12px',
+                    borderRadius: '20px',
+                    fontSize: '0.75rem',
+                    fontWeight: '800'
+                  }}>현재 강의</div>
+                  <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🏗️</div>
+                  <h4 style={{ color: '#1f2937', fontWeight: '900', marginBottom: '8px', fontSize: '1.1rem' }}>Step 1</h4>
+                  <p style={{ color: '#1f2937', fontWeight: '700', fontSize: '0.95rem', margin: 0 }}>AI로 콘텐츠 만들기</p>
+                </div>
+
+                {/* Step 2 */}
                 <div style={{
-                  fontSize: '4rem',
-                  marginBottom: '20px',
-                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1))'
-                }}>🤖</div>
-                <h4 style={{
-                  color: '#1e40af',
-                  fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-                  marginBottom: '15px',
-                  fontWeight: '800',
-                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
-                }}>교훈 2: AI 건축 자재</h4>
-                <p style={{
-                  color: '#64748b',
-                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                  lineHeight: '1.6',
-                  fontWeight: '500'
-                }}>유튜브 콘텐츠를 AI로 자동 생성하는 법</p>
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  padding: '25px 20px',
+                  borderRadius: '20px',
+                  textAlign: 'center',
+                  border: '2px solid rgba(255, 255, 255, 0.2)'
+                }}>
+                  <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>⚙️</div>
+                  <h4 style={{ color: '#fff', fontWeight: '900', marginBottom: '8px', fontSize: '1.1rem' }}>Step 2</h4>
+                  <p style={{ color: '#94a3b8', fontWeight: '600', fontSize: '0.9rem', margin: 0 }}>AI 자동화 시스템</p>
+                </div>
+
+                {/* Step 3 */}
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  padding: '25px 20px',
+                  borderRadius: '20px',
+                  textAlign: 'center',
+                  border: '2px solid rgba(255, 255, 255, 0.2)'
+                }}>
+                  <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>💻</div>
+                  <h4 style={{ color: '#fff', fontWeight: '900', marginBottom: '8px', fontSize: '1.1rem' }}>Step 3</h4>
+                  <p style={{ color: '#94a3b8', fontWeight: '600', fontSize: '0.9rem', margin: 0 }}>바이브코딩</p>
+                </div>
+
+                {/* Step 4 */}
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  padding: '25px 20px',
+                  borderRadius: '20px',
+                  textAlign: 'center',
+                  border: '2px solid rgba(255, 255, 255, 0.2)'
+                }}>
+                  <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>👑</div>
+                  <h4 style={{ color: '#fff', fontWeight: '900', marginBottom: '8px', fontSize: '1.1rem' }}>Step 4</h4>
+                  <p style={{ color: '#94a3b8', fontWeight: '600', fontSize: '0.9rem', margin: 0 }}>1인 기업 만들기</p>
+                </div>
               </div>
 
-              {/* 교훈 3 */}
               <div style={{
-                background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
-                padding: 'clamp(25px, 4vw, 40px) clamp(20px, 3vw, 30px)',
-                borderRadius: '20px',
+                marginTop: '30px',
                 textAlign: 'center',
-                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-                border: '1px solid rgba(14, 165, 233, 0.1)',
-                position: 'relative',
-                overflow: 'hidden',
-                transition: 'all 0.3s ease'
+                background: 'rgba(251, 191, 36, 0.15)',
+                padding: '20px',
+                borderRadius: '15px',
+                border: '2px solid rgba(251, 191, 36, 0.3)'
               }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '-20px',
-                  right: '-20px',
-                  width: '80px',
-                  height: '80px',
-                  background: 'rgba(14, 165, 233, 0.1)',
-                  borderRadius: '50%',
-                  opacity: '0.5'
-                }}></div>
-                <div style={{
-                  fontSize: '4rem',
-                  marginBottom: '20px',
-                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1))'
-                }}>🏢</div>
-                <h4 style={{
-                  color: '#1e40af',
-                  fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-                  marginBottom: '15px',
-                  fontWeight: '800',
-                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
-                }}>교훈 3: 시공 및 완공</h4>
                 <p style={{
-                  color: '#64748b',
+                  color: '#fbbf24',
                   fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                  lineHeight: '1.6',
-                  fontWeight: '500'
-                }}>AI로 유튜브 숏폼·롱폼 영상 제작 완성</p>
-              </div>
-
-              {/* 교훈 4 */}
-              <div style={{
-                background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
-                padding: 'clamp(25px, 4vw, 40px) clamp(20px, 3vw, 30px)',
-                borderRadius: '20px',
-                textAlign: 'center',
-                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-                border: '1px solid rgba(14, 165, 233, 0.1)',
-                position: 'relative',
-                overflow: 'hidden',
-                transition: 'all 0.3s ease'
-              }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '-20px',
-                  right: '-20px',
-                  width: '80px',
-                  height: '80px',
-                  background: 'rgba(14, 165, 233, 0.1)',
-                  borderRadius: '50%',
-                  opacity: '0.5'
-                }}></div>
-                <div style={{
-                  fontSize: '4rem',
-                  marginBottom: '20px',
-                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1))'
-                }}>💰</div>
-                <h4 style={{
-                  color: '#1e40af',
-                  fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-                  marginBottom: '15px',
-                  fontWeight: '800',
-                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
-                }}>교훈 4: 첫 월수익 100만원</h4>
-                <p style={{
-                  color: '#64748b',
-                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                  lineHeight: '1.6',
-                  fontWeight: '500'
-                }}>유튜브에서 월 100만원 벌기까지의 전략</p>
+                  fontWeight: '700',
+                  margin: 0,
+                  lineHeight: '1.8'
+                }}>
+                  💡 이 4단계를 거쳐 <strong style={{ color: '#fff' }}>1인이 유니콘을 만들 수 있는 시대</strong>가 왔습니다.<br/>
+                  함께 성장하는 네트워크와 커뮤니티를 만들어갑니다.
+                </p>
               </div>
             </div>
 
@@ -951,6 +1044,119 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   margin: '0 auto'
                 }}
               />
+            </div>
+
+            {/* 🔥 지금이 기회인 이유 */}
+            <div style={{
+              background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
+              padding: 'clamp(30px, 6vw, 50px)',
+              borderRadius: '25px',
+              marginBottom: 'clamp(30px, 6vw, 50px)',
+              border: '3px solid #fbbf24',
+              boxShadow: '0 20px 50px rgba(220, 38, 38, 0.3)'
+            }}>
+              <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+                <div style={{
+                  display: 'inline-block',
+                  background: '#fff',
+                  padding: '10px 25px',
+                  borderRadius: '30px',
+                  marginBottom: '20px'
+                }}>
+                  <span style={{ color: '#dc2626', fontWeight: '900', fontSize: '1rem' }}>
+                    🚨 이 기회를 놓치면 안 되는 이유
+                  </span>
+                </div>
+                <h3 style={{
+                  color: '#ffffff',
+                  fontSize: 'clamp(1.4rem, 3.5vw, 2rem)',
+                  fontWeight: '900',
+                  marginBottom: '20px',
+                  lineHeight: '1.5'
+                }}>
+                  기존 사업을 다 접고<br/>
+                  <span style={{ color: '#fbbf24' }}>콘텐츠에 올인하는 이유</span>
+                </h3>
+              </div>
+
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+                gap: '20px',
+                marginBottom: '25px'
+              }}>
+                {/* 이유 1 */}
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  padding: '25px',
+                  borderRadius: '15px',
+                  border: '2px solid rgba(255, 255, 255, 0.2)'
+                }}>
+                  <div style={{ fontSize: '2rem', marginBottom: '12px' }}>🏦</div>
+                  <h4 style={{ color: '#fbbf24', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
+                    구글이 다 지원해준다
+                  </h4>
+                  <p style={{ color: '#fecaca', fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
+                    1960년대 맨해튼에서 은행이 이자 없이 돈을 빌려줬듯이, 
+                    지금 구글은 <strong style={{ color: '#fff' }}>30개 이상의 AI 도구</strong>를 무료로 제공합니다.
+                  </p>
+                </div>
+
+                {/* 이유 2 */}
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  padding: '25px',
+                  borderRadius: '15px',
+                  border: '2px solid rgba(255, 255, 255, 0.2)'
+                }}>
+                  <div style={{ fontSize: '2rem', marginBottom: '12px' }}>⚖️</div>
+                  <h4 style={{ color: '#fbbf24', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
+                    경쟁이 평준화됐다
+                  </h4>
+                  <p style={{ color: '#fecaca', fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
+                    예전에는 SBS, KBS 같은 방송국과 경쟁해야 했지만, 
+                    이제 <strong style={{ color: '#fff' }}>AI 하나면 방송국 퀄리티</strong>를 혼자서 만들 수 있습니다.
+                  </p>
+                </div>
+
+                {/* 이유 3 */}
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  padding: '25px',
+                  borderRadius: '15px',
+                  border: '2px solid rgba(255, 255, 255, 0.2)'
+                }}>
+                  <div style={{ fontSize: '2rem', marginBottom: '12px' }}>🌏</div>
+                  <h4 style={{ color: '#fbbf24', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
+                    글로벌 시장이 열렸다
+                  </h4>
+                  <p style={{ color: '#fecaca', fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
+                    AI 번역·더빙으로 한국뿐 아니라 
+                    <strong style={{ color: '#fff' }}>미국, 일본, 중국, 전 세계</strong>를 타겟으로 콘텐츠를 만들 수 있습니다.
+                  </p>
+                </div>
+              </div>
+
+              <div style={{
+                background: 'rgba(0, 0, 0, 0.3)',
+                padding: '20px 25px',
+                borderRadius: '15px',
+                textAlign: 'center'
+              }}>
+                <p style={{
+                  color: '#fff',
+                  fontSize: 'clamp(1rem, 2.2vw, 1.15rem)',
+                  fontWeight: '700',
+                  margin: 0,
+                  lineHeight: '1.8'
+                }}>
+                  💡 "근데 왜 이걸 알려주세요?"<br/>
+                  <span style={{ color: '#fbbf24' }}>
+                    4단계 - 함께 성장하는 네트워크를 만들기 위해서입니다.<br/>
+                    혼자보다 여럿이 모였을 때 시너지가 있습니다.
+                  </span>
+                </p>
+              </div>
             </div>
 
             {/* 🔥 핵심 차별점 - 압도적 비주얼 */}
@@ -1030,6 +1236,107 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
             </div>
           </div>
 
+          {/* 🎁 수강생 특전 */}
+          <div style={{
+            background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+            padding: 'clamp(30px, 6vw, 50px)',
+            borderRadius: '25px',
+            marginBottom: 'clamp(30px, 6vw, 60px)',
+            border: '3px solid #34d399',
+            boxShadow: '0 20px 50px rgba(5, 150, 105, 0.3)'
+          }}>
+            <div style={{ textAlign: 'center', marginBottom: '35px' }}>
+              <div style={{
+                display: 'inline-block',
+                background: '#fff',
+                padding: '10px 25px',
+                borderRadius: '30px',
+                marginBottom: '20px'
+              }}>
+                <span style={{ color: '#059669', fontWeight: '900', fontSize: '1rem' }}>
+                  🎁 수강생 특전
+                </span>
+              </div>
+              <h3 style={{
+                color: '#ffffff',
+                fontSize: 'clamp(1.4rem, 3.5vw, 2rem)',
+                fontWeight: '900',
+                marginBottom: '15px'
+              }}>
+                강의 + <span style={{ color: '#fbbf24' }}>매주 라이브</span> + 커뮤니티
+              </h3>
+              <p style={{
+                color: '#a7f3d0',
+                fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                maxWidth: '700px',
+                margin: '0 auto'
+              }}>
+                AI 도구는 계속 바뀝니다. Gemini 3, 3.1, 3.2... 새로운 모델이 계속 나옵니다.<br/>
+                그래서 매주 라이브로 최신 AI 도구를 업데이트해드립니다.
+              </p>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+              gap: '20px'
+            }}>
+              {/* 특전 1 */}
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.15)',
+                padding: '25px',
+                borderRadius: '15px',
+                border: '2px solid rgba(255, 255, 255, 0.2)',
+                textAlign: 'center'
+              }}>
+                <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>📺</div>
+                <h4 style={{ color: '#fff', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
+                  녹화 강의 (16강)
+                </h4>
+                <p style={{ color: '#a7f3d0', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
+                  Part 1: 콘텐츠 비즈니스 마인드<br/>
+                  Part 2: AI 도구 실습
+                </p>
+              </div>
+
+              {/* 특전 2 */}
+              <div style={{
+                background: 'rgba(251, 191, 36, 0.2)',
+                padding: '25px',
+                borderRadius: '15px',
+                border: '2px solid #fbbf24',
+                textAlign: 'center'
+              }}>
+                <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>🔴</div>
+                <h4 style={{ color: '#fbbf24', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
+                  매주 라이브 (무료)
+                </h4>
+                <p style={{ color: '#a7f3d0', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
+                  새로운 AI 도구 업데이트<br/>
+                  Q&A 및 실시간 피드백
+                </p>
+              </div>
+
+              {/* 특전 3 */}
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.15)',
+                padding: '25px',
+                borderRadius: '15px',
+                border: '2px solid rgba(255, 255, 255, 0.2)',
+                textAlign: 'center'
+              }}>
+                <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>👥</div>
+                <h4 style={{ color: '#fff', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
+                  수강생 커뮤니티
+                </h4>
+                <p style={{ color: '#a7f3d0', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
+                  함께 성장하는 네트워크<br/>
+                  멘토 제이와 직접 소통
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* 강의 차별화 포인트 */}
           <div style={{
             background: '#ffffff',
@@ -1060,10 +1367,10 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
               }}>
                 <h4 style={{ color: '#dc2626', marginBottom: '15px', fontWeight: '600' }}>❌ 일반 AI 강의</h4>
                 <ul style={{ color: '#64748b', lineHeight: '1.8', margin: '0', paddingLeft: '20px' }}>
-                  <li>이론만 배움</li>
-                  <li>도구 사용법만</li>
-                  <li>혼자 학습</li>
-                  <li>단순 기능 설명</li>
+                  <li>이론만 배우고 끝</li>
+                  <li>도구 사용법만 설명</li>
+                  <li>혼자 학습, 피드백 없음</li>
+                  <li>도구가 바뀌면 강의가 무용지물</li>
                   <li>강의 완료 후 관계 끝</li>
                 </ul>
               </div>
@@ -1075,11 +1382,11 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
               }}>
                 <h4 style={{ color: '#16a34a', marginBottom: '15px', fontWeight: '600' }}>✅ AI 건물주 되기</h4>
                 <ul style={{ color: '#64748b', lineHeight: '1.8', margin: '0', paddingLeft: '20px' }}>
-                  <li>실제 수익 창출</li>
-                  <li>비즈니스 전략까지</li>
-                  <li>커뮤니티 + 멘토링</li>
-                  <li>맨해튼 부동산 철학</li>
-                  <li>지속적인 참여자 관계</li>
+                  <li><strong>수익화</strong> 목적의 콘텐츠 제작</li>
+                  <li><strong>맨해튼 부동산</strong> 비즈니스 철학</li>
+                  <li>매주 라이브로 <strong>최신 AI 도구</strong> 업데이트</li>
+                  <li>수강생 커뮤니티 + 멘토 제이 직접 소통</li>
+                  <li>4단계 성장 로드맵 제공</li>
                 </ul>
               </div>
             </div>
@@ -2029,7 +2336,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
             </div>
           </div>
 
-          {/* 커리큘럼 - 가운데 배치 */}
+          {/* 커리큘럼 - Day 1-10 형식 */}
           <div style={{
             maxWidth: '900px',
             margin: '0 auto',
@@ -2053,839 +2360,173 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
               marginBottom: 'clamp(20px, 4vw, 40px)',
               textAlign: 'center'
             }}>
-              총 16강의 · 약 16시간 · 4가지 교훈
+              총 10일 · Part 1 (마인드) + Part 2 (실전)
             </p>
 
-            {/* 교훈 1: 입지 선정 */}
-            <div style={{ marginBottom: 'clamp(20px, 4vw, 40px)' }}>
+            {/* Part 1: 비즈니스 마인드 */}
+            <div style={{ marginBottom: 'clamp(25px, 5vw, 40px)' }}>
               <div style={{
-                background: '#1e40af',
+                background: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)',
                 color: 'white',
-                padding: '20px',
+                padding: '20px 25px',
                 borderRadius: '15px',
-                marginBottom: '20px',
-                textAlign: 'center'
+                marginBottom: '20px'
               }}>
                 <h4 style={{
-                  fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)',
-                  fontWeight: '700',
-                  margin: '0',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px'
+                  fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+                  fontWeight: '800',
+                  margin: '0 0 8px 0'
                 }}>
-                  교훈 1: 입지 선정
+                  🧠 Part 1 (Day 1-5)
                 </h4>
                 <p style={{
-                  margin: '8px 0 0 0',
-                  fontSize: '1rem',
+                  margin: '0',
+                  fontSize: 'clamp(0.9rem, 2vw, 1rem)',
                   opacity: '0.9'
                 }}>
-                  디지털 맨해튼에서 수익성 높은 땅을 찾는 법
+                  AI 크리에이터 비즈니스 마인드 - 단순히 AI로 콘텐츠를 만드는 것이 아니라, 어떻게 수익화하고 사업화할지 준비하는 단계
                 </p>
               </div>
 
-              {course.lessons.slice(0, 5).map((lesson: any, index: number) => (
+              {/* Day 1-5 */}
+              {[
+                { day: 1, title: '프롤로그: 맨해튼 부자 삼촌의 교훈', subtitle: '맨해튼 부동산 거물 삼촌의 교훈과 AI 시대 재해석 | Google AI Studio 입문' },
+                { day: 2, title: '경제적 자유: 잠자는 동안에도 돈이 들어오는 구조', subtitle: '부동산 vs 콘텐츠, 경제적 자유의 새로운 정의 | AI 기반 콘텐츠 청사진 만들기' },
+                { day: 3, title: '당신의 디지털 건물에는 어떤 사람이 거주하나?', subtitle: '글로벌 CPM과 수익성 분석 | AI로 타겟 고객 심층 분석하기' },
+                { day: 4, title: '몇 층짜리 디지털 건물을 세울 것인가?', subtitle: '대중형/니치형/혼합형 전략 | AI로 시장 분석 & 건물 콘셉트 설계' },
+                { day: 5, title: '최종 입지 선정 & 건물 계획서 작성', subtitle: 'AI CITY BUILDER에 건물 계획서 넣기 | 나의 첫 디지털 건물 사업계획서 완성' }
+              ].map((item) => (
                 <div
-                  key={lesson.id}
+                  key={item.day}
                   style={{
                     background: '#ffffff',
                     borderRadius: '12px',
                     marginBottom: '12px',
                     border: '1px solid #e2e8f0',
                     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
-                    overflow: 'hidden'
-                  }}
-                >
-                  {/* 챕터 헤더 */}
-                  <div
-                    onClick={() => toggleChapter(lesson.id)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      padding: '15px 20px',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s'
-                    }}
-                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                  >
-                    <div style={{
-                      backgroundColor: '#1e40af',
-                      color: '#ffffff',
-                      borderRadius: '50%',
-                      width: '32px',
-                      height: '32px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      flexShrink: 0
-                    }}>
-                      {index + 1}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <h5 style={{
-                        color: '#1f2937',
-                        marginBottom: '4px',
-                        fontSize: '1rem',
-                        fontWeight: '600'
-                      }}>
-                        {lesson.title}
-                      </h5>
-                      <p style={{
-                        color: '#64748b',
-                        fontSize: '0.85rem',
-                        margin: '0',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px'
-                      }}>
-                        <Clock size={12} />
-                        {lesson.duration}
-                      </p>
-                    </div>
-                    <div style={{ flexShrink: 0 }}>
-                      {expandedChapters.has(lesson.id) ?
-                        <ChevronDown size={18} color="#64748b" /> :
-                        <ChevronRight size={18} color="#64748b" />
-                      }
-                    </div>
-                  </div>
-
-                  {/* 이론 & 실습 섹션 */}
-                  {expandedChapters.has(lesson.id) && lesson.sections && (
-                    <div style={{
-                      borderTop: '1px solid #f1f5f9',
-                      padding: '20px',
-                    }}>
-                      {/* 이론 섹션 */}
-                      <div style={{
-                        marginBottom: '15px',
-                        padding: '12px 15px',
-                        background: '#ffffff',
-                        borderRadius: '8px',
-                        border: '1px solid #1e40af'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <BookOpen size={16} color="#1e40af" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#1e40af'
-                          }}>
-                            이론
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.theory}
-                        </p>
-                      </div>
-
-                      {/* 실습 섹션 */}
-                      <div style={{
-                        padding: '12px 15px',
-                        background: '#1e40af',
-                        borderRadius: '8px',
-                        border: '1px solid #1e40af'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <Wrench size={16} color="#ffffff" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#ffffff'
-                          }}>
-                            실습
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#ffffff',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.practice}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* 교훈 2: AI 건축 자재 */}
-            <div style={{ marginBottom: 'clamp(20px, 4vw, 40px)' }}>
-              <div style={{
-                background: '#1e40af',
-                color: 'white',
-                padding: '20px',
-                borderRadius: '15px',
-                marginBottom: '20px',
-                textAlign: 'center'
-              }}>
-                <h4 style={{
-                  fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)',
-                  fontWeight: '700',
-                  margin: '0',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px'
-                }}>
-                  교훈 2: AI 건축 자재
-                </h4>
-                <p style={{
-                  margin: '8px 0 0 0',
-                  fontSize: '1rem',
-                  opacity: '0.9'
-                }}>
-                  텍스트, 이미지, 사운드, 영상 AI 도구 완전 정복
-                </p>
-
-                {/* 🖼️ AI 도구 생태계 맵 */}
-                <div style={{
-                  background: '#ffffff',
-                  border: '2px dashed #1e40af',
-                  borderRadius: '12px',
-                  padding: '25px',
-                  margin: '15px 0'
-                }}>
-                  <h5 style={{
-                    color: '#1f2937',
-                    fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                    fontWeight: '600',
-                    marginBottom: '15px',
-                    textAlign: 'center'
-                  }}>
-                    AI 도구들의 연결 관계도
-                  </h5>
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-                    gap: '15px',
-                    marginBottom: '15px'
-                  }}>
-                    <div style={{ textAlign: 'center', padding: '10px', background: '#f0f9ff', borderRadius: '8px' }}>
-                      <Image size={24} color="#1e40af" style={{ marginBottom: '5px' }} />
-                      <div style={{ fontSize: '0.8rem', color: '#1f2937', fontWeight: '600' }}>ChatGPT</div>
-                      <div style={{ fontSize: '0.7rem', color: '#64748b' }}>텍스트 → 아이디어</div>
-                    </div>
-                    <div style={{ textAlign: 'center', padding: '10px', background: '#f0f9ff', borderRadius: '8px' }}>
-                      <Image size={24} color="#1e40af" style={{ marginBottom: '5px' }} />
-                      <div style={{ fontSize: '0.8rem', color: '#1f2937', fontWeight: '600' }}>VEO</div>
-                      <div style={{ fontSize: '0.7rem', color: '#64748b' }}>영상 → 숏폼/롱폼</div>
-                    </div>
-                    <div style={{ textAlign: 'center', padding: '10px', background: '#f0f9ff', borderRadius: '8px' }}>
-                      <Image size={24} color="#1e40af" style={{ marginBottom: '5px' }} />
-                      <div style={{ fontSize: '0.8rem', color: '#1f2937', fontWeight: '600' }}>ElevenLabs</div>
-                      <div style={{ fontSize: '0.7rem', color: '#64748b' }}>음성 → 나레이션</div>
-                    </div>
-                    <div style={{ textAlign: 'center', padding: '10px', background: '#f0f9ff', borderRadius: '8px' }}>
-                      <Image size={24} color="#1e40af" style={{ marginBottom: '5px' }} />
-                      <div style={{ fontSize: '0.8rem', color: '#1f2937', fontWeight: '600' }}>Suno</div>
-                      <div style={{ fontSize: '0.7rem', color: '#64748b' }}>음악 → 배경음악</div>
-                    </div>
-                  </div>
-                  <div style={{
-                    textAlign: 'center',
-                    padding: '10px',
-                    background: '#1e40af',
-                    color: 'white',
-                    borderRadius: '8px',
-                    fontSize: '0.9rem',
-                    fontWeight: '600'
-                  }}>
-                    → 하나의 "디지털 건물" 완성
-                  </div>
-                </div>
-              </div>
-
-              {course.lessons.slice(5, 9).map((lesson: any, index: number) => (
-                <div
-                  key={lesson.id}
-                  style={{
-                    background: '#ffffff',
-                    borderRadius: '12px',
-                    marginBottom: '12px',
-                    border: '1px solid #e2e8f0',
-                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
-                    overflow: 'hidden'
-                  }}
-                >
-                  {/* 챕터 헤더 */}
-                  <div
-                    onClick={() => toggleChapter(lesson.id)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      padding: '15px 20px',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s'
-                    }}
-                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                  >
-                    <div style={{
-                      backgroundColor: '#1e40af',
-                      color: '#ffffff',
-                      borderRadius: '50%',
-                      width: '32px',
-                      height: '32px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      flexShrink: 0
-                    }}>
-                      {index + 6}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <h5 style={{
-                        color: '#1f2937',
-                        marginBottom: '4px',
-                        fontSize: '1rem',
-                        fontWeight: '600'
-                      }}>
-                        {lesson.title}
-                      </h5>
-                      <p style={{
-                        color: '#64748b',
-                        fontSize: '0.85rem',
-                        margin: '0',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px'
-                      }}>
-                        <Clock size={12} />
-                        {lesson.duration}
-                      </p>
-                    </div>
-                    <div style={{ flexShrink: 0 }}>
-                      {expandedChapters.has(lesson.id) ?
-                        <ChevronDown size={18} color="#64748b" /> :
-                        <ChevronRight size={18} color="#64748b" />
-                      }
-                    </div>
-                  </div>
-
-                  {/* 이론 & 실습 섹션 */}
-                  {expandedChapters.has(lesson.id) && lesson.sections && (
-                    <div style={{
-                      borderTop: '1px solid #f1f5f9',
-                      padding: '20px',
-                    }}>
-                      {/* 이론 섹션 */}
-                      <div style={{
-                        marginBottom: '15px',
-                        padding: '12px 15px',
-                        background: '#ffffff',
-                        borderRadius: '8px',
-                        border: '1px solid #1e40af'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <BookOpen size={16} color="#1e40af" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#1e40af'
-                          }}>
-                            이론
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.theory}
-                        </p>
-                      </div>
-
-                      {/* 실습 섹션 */}
-                      <div style={{
-                        padding: '12px 15px',
-                        background: '#1e40af',
-                        borderRadius: '8px',
-                        border: '1px solid #1e40af'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <Wrench size={16} color="#ffffff" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#ffffff'
-                          }}>
-                            실습
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#ffffff',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.practice}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* 교훈 3: 시공 및 완공 */}
-            <div style={{ marginBottom: 'clamp(20px, 4vw, 40px)' }}>
-              <div style={{
-                background: '#1e40af',
-                color: 'white',
-                padding: '20px',
-                borderRadius: '15px',
-                marginBottom: '20px',
-                textAlign: 'center'
-              }}>
-                <h4 style={{
-                  fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)',
-                  fontWeight: '700',
-                  margin: '0',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px'
-                }}>
-                  교훈 3: 시공 및 완공
-                </h4>
-                <p style={{
-                  margin: '8px 0 0 0',
-                  fontSize: '1rem',
-                  opacity: '0.9'
-                }}>
-                  숏폼과 롱폼으로 실제 건물을 세상에 공개
-                </p>
-              </div>
-
-              {course.lessons.slice(9, 12).map((lesson: any, index: number) => (
-                <div
-                  key={lesson.id}
-                  style={{
-                    background: '#ffffff',
-                    borderRadius: '12px',
-                    marginBottom: '12px',
-                    border: '1px solid #e2e8f0',
-                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
-                    overflow: 'hidden'
-                  }}
-                >
-                  {/* 챕터 헤더 */}
-                  <div
-                    onClick={() => toggleChapter(lesson.id)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      padding: '15px 20px',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s'
-                    }}
-                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                  >
-                    <div style={{
-                      backgroundColor: '#1e40af',
-                      color: '#ffffff',
-                      borderRadius: '50%',
-                      width: '32px',
-                      height: '32px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      flexShrink: 0
-                    }}>
-                      {index + 10}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <h5 style={{
-                        color: '#1f2937',
-                        marginBottom: '4px',
-                        fontSize: '1rem',
-                        fontWeight: '600'
-                      }}>
-                        {lesson.title}
-                      </h5>
-                      <p style={{
-                        color: '#64748b',
-                        fontSize: '0.85rem',
-                        margin: '0',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px'
-                      }}>
-                        <Clock size={12} />
-                        {lesson.duration}
-                      </p>
-                    </div>
-                    <div style={{ flexShrink: 0 }}>
-                      {expandedChapters.has(lesson.id) ?
-                        <ChevronDown size={18} color="#64748b" /> :
-                        <ChevronRight size={18} color="#64748b" />
-                      }
-                    </div>
-                  </div>
-
-                  {/* 이론 & 실습 섹션 */}
-                  {expandedChapters.has(lesson.id) && lesson.sections && (
-                    <div style={{
-                      borderTop: '1px solid #f1f5f9',
-                      padding: '20px',
-                    }}>
-                      {/* 이론 섹션 */}
-                      <div style={{
-                        marginBottom: '15px',
-                        padding: '12px 15px',
-                        background: '#ffffff',
-                        borderRadius: '8px',
-                        border: '1px solid #1e40af'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <BookOpen size={16} color="#1e40af" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#1e40af'
-                          }}>
-                            이론
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.theory}
-                        </p>
-                      </div>
-
-                      {/* 실습 섹션 */}
-                      <div style={{
-                        padding: '12px 15px',
-                        background: '#1e40af',
-                        borderRadius: '8px',
-                        border: '1px solid #1e40af'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <Wrench size={16} color="#ffffff" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#ffffff'
-                          }}>
-                            실습
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#ffffff',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.practice}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* 교훈 4: 첫 월세 받기 */}
-            <div style={{ marginBottom: '20px' }}>
-              <div style={{
-                background: '#1e40af',
-                color: 'white',
-                padding: '20px',
-                borderRadius: '15px',
-                marginBottom: '20px',
-                textAlign: 'center'
-              }}>
-                <h4 style={{
-                  fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)',
-                  fontWeight: '700',
-                  margin: '0',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px'
-                }}>
-                  교훈 4: 첫 월세 받기
-                </h4>
-                <p style={{
-                  margin: '8px 0 0 0',
-                  fontSize: '1rem',
-                  opacity: '0.9'
-                }}>
-                  4가지 수익원으로 안정적인 포트폴리오 구축
-                </p>
-
-                {/* 🖼️ 수익 포트폴리오 차트 */}
-                <div style={{
-                  background: '#ffffff',
-                  border: '2px dashed #1e40af',
-                  borderRadius: '12px',
-                  padding: '25px',
-                  margin: '15px 0'
-                }}>
-                  <h5 style={{
-                    color: '#1f2937',
-                    fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                    fontWeight: '600',
-                    marginBottom: '15px',
-                    textAlign: 'center'
-                  }}>
-                    4가지 수익원 파이차트
-                  </h5>
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+                    padding: '18px 20px',
+                    display: 'flex',
+                    alignItems: 'flex-start',
                     gap: '15px'
-                  }}>
-                    <div style={{
-                      textAlign: 'center',
-                      padding: '15px',
-                      background: 'linear-gradient(135deg, #1e40af, #1e3a8a)',
-                      borderRadius: '10px',
-                      color: 'white'
-                    }}>
-                      <div style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '5px' }}>35%</div>
-                      <div style={{ fontSize: '0.8rem', fontWeight: '600' }}>애드센스</div>
-                    </div>
-                    <div style={{
-                      textAlign: 'center',
-                      padding: '15px',
-                      background: 'linear-gradient(135deg, #06b6d4, #0891b2)',
-                      borderRadius: '10px',
-                      color: 'white'
-                    }}>
-                      <div style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '5px' }}>30%</div>
-                      <div style={{ fontSize: '0.8rem', fontWeight: '600' }}>제휴마케팅</div>
-                    </div>
-                    <div style={{
-                      textAlign: 'center',
-                      padding: '15px',
-                      background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
-                      borderRadius: '10px',
-                      color: 'white'
-                    }}>
-                      <div style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '5px' }}>25%</div>
-                      <div style={{ fontSize: '0.8rem', fontWeight: '600' }}>멤버십</div>
-                    </div>
-                    <div style={{
-                      textAlign: 'center',
-                      padding: '15px',
-                      background: 'linear-gradient(135deg, #10b981, #059669)',
-                      borderRadius: '10px',
-                      color: 'white'
-                    }}>
-                      <div style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '5px' }}>10%</div>
-                      <div style={{ fontSize: '0.8rem', fontWeight: '600' }}>디지털 상품</div>
-                    </div>
-                  </div>
+                  }}
+                >
                   <div style={{
-                    marginTop: '15px',
-                    textAlign: 'center',
-                    fontSize: '0.8rem',
-                    color: '#64748b'
+                    backgroundColor: '#1e40af',
+                    color: '#ffffff',
+                    borderRadius: '50%',
+                    width: '36px',
+                    height: '36px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    flexShrink: 0
                   }}>
-                    💡 각 영역을 클릭하면 상세 설명이 표시됩니다
+                    {item.day}
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <h5 style={{
+                      color: '#1f2937',
+                      marginBottom: '6px',
+                      fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
+                      fontWeight: '700'
+                    }}>
+                      Day {item.day}: {item.title}
+                    </h5>
+                    <p style={{
+                      color: '#64748b',
+                      fontSize: 'clamp(0.85rem, 1.8vw, 0.95rem)',
+                      margin: '0',
+                      lineHeight: '1.5'
+                    }}>
+                      {item.subtitle}
+                    </p>
                   </div>
                 </div>
+              ))}
+            </div>
+
+            {/* Part 2: 실전 콘텐츠 제작 */}
+            <div style={{ marginBottom: 'clamp(25px, 5vw, 40px)' }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                color: 'white',
+                padding: '20px 25px',
+                borderRadius: '15px',
+                marginBottom: '20px'
+              }}>
+                <h4 style={{
+                  fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+                  fontWeight: '800',
+                  margin: '0 0 8px 0'
+                }}>
+                  🛠️ Part 2 (Day 6-10)
+                </h4>
+                <p style={{
+                  margin: '0',
+                  fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                  opacity: '0.9'
+                }}>
+                  실전! AI 콘텐츠 제작 - 배운 마인드를 바탕으로 실제 수익형 콘텐츠를 만들고 첫 월세를 받는 단계
+                </p>
               </div>
 
-              {course.lessons.slice(12).map((lesson: any, index: number) => (
+              {/* Day 6-10 */}
+              {[
+                { day: 6, title: '[재료학] 텍스트 & 이미지 생성 AI 마스터', subtitle: 'ChatGPT 프롬프트 엔지니어링 | Nano Banana & ChatGPT 이미지 생성 실습' },
+                { day: 7, title: '[재료학] 사운드 & 영상 생성 AI 마스터', subtitle: 'ElevenLabs 음성 클로닝 | Suno AI BGM | VEO 영상 생성 완전정복' },
+                { day: 8, title: '[시공] AI 4단계 건축 워크플로우', subtitle: '바이럴 숏폼 & 고품질 롱폼 제작 | 멀티 플랫폼 동시 입점 전략' },
+                { day: 9, title: '[준공식] 콘텐츠 업로드 & 데이터 분석', subtitle: '핵심 지표 읽는 법 | AI 감성 분석으로 건물 리모델링' },
+                { day: 10, title: '[첫 월세] 수익 시스템 구축 완성', subtitle: '애드센스 + 제휴마케팅 + 멤버십 | 허브-앤-스포크 자동화 시스템' }
+              ].map((item) => (
                 <div
-                  key={lesson.id}
+                  key={item.day}
                   style={{
                     background: '#ffffff',
                     borderRadius: '12px',
                     marginBottom: '12px',
                     border: '1px solid #e2e8f0',
                     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
-                    overflow: 'hidden'
+                    padding: '18px 20px',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '15px'
                   }}
                 >
-                  {/* 챕터 헤더 */}
-                  <div
-                    onClick={() => toggleChapter(lesson.id)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '15px',
-                      padding: '15px 20px',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s'
-                    }}
-                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                  >
-                    <div style={{
-                      backgroundColor: '#1e40af',
-                      color: '#ffffff',
-                      borderRadius: '50%',
-                      width: '32px',
-                      height: '32px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      flexShrink: 0
-                    }}>
-                      {index + 13}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <h5 style={{
-                        color: '#1f2937',
-                        marginBottom: '4px',
-                        fontSize: '1rem',
-                        fontWeight: '600'
-                      }}>
-                        {lesson.title}
-                      </h5>
-                      <p style={{
-                        color: '#64748b',
-                        fontSize: '0.85rem',
-                        margin: '0',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px'
-                      }}>
-                        <Clock size={12} />
-                        {lesson.duration}
-                      </p>
-                    </div>
-                    <div style={{ flexShrink: 0 }}>
-                      {expandedChapters.has(lesson.id) ?
-                        <ChevronDown size={18} color="#64748b" /> :
-                        <ChevronRight size={18} color="#64748b" />
-                      }
-                    </div>
+                  <div style={{
+                    backgroundColor: '#059669',
+                    color: '#ffffff',
+                    borderRadius: '50%',
+                    width: '36px',
+                    height: '36px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    flexShrink: 0
+                  }}>
+                    {item.day}
                   </div>
-
-                  {/* 이론 & 실습 섹션 */}
-                  {expandedChapters.has(lesson.id) && lesson.sections && (
-                    <div style={{
-                      borderTop: '1px solid #f1f5f9',
-                      padding: '20px',
+                  <div style={{ flex: 1 }}>
+                    <h5 style={{
+                      color: '#1f2937',
+                      marginBottom: '6px',
+                      fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
+                      fontWeight: '700'
                     }}>
-                      {/* 이론 섹션 */}
-                      <div style={{
-                        marginBottom: '15px',
-                        padding: '12px 15px',
-                        background: '#ffffff',
-                        borderRadius: '8px',
-                        border: '1px solid #1e40af'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <BookOpen size={16} color="#1e40af" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#1e40af'
-                          }}>
-                            이론
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#1f2937',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.theory}
-                        </p>
-                      </div>
-
-                      {/* 실습 섹션 */}
-                      <div style={{
-                        padding: '12px 15px',
-                        background: '#1e40af',
-                        borderRadius: '8px',
-                        border: '1px solid #1e40af'
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <Wrench size={16} color="#ffffff" />
-                          <span style={{
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            color: '#ffffff'
-                          }}>
-                            실습
-                          </span>
-                        </div>
-                        <p style={{
-                          margin: '0',
-                          fontSize: '0.85rem',
-                          color: '#ffffff',
-                          lineHeight: '1.5'
-                        }}>
-                          {lesson.sections.practice}
-                        </p>
-                      </div>
-                    </div>
-                  )}
+                      Day {item.day}: {item.title}
+                    </h5>
+                    <p style={{
+                      color: '#64748b',
+                      fontSize: 'clamp(0.85rem, 1.8vw, 0.95rem)',
+                      margin: '0',
+                      lineHeight: '1.5'
+                    }}>
+                      {item.subtitle}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -2897,4 +2538,3 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 };
 
 export default AIBuildingCoursePage;
-

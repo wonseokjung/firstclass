@@ -64,16 +64,16 @@ const freeMoneyClasses: Course[] = [
 // 프리미엄 강의 - 4단계 Step 시스템
 const premiumClasses: Course[] = [
   // Step 1: AI 건물주 되기 - 얼리버드 45,000원 (2026년부터 95,000원)
-  { id: 999, instructor: '정원석 (AI 멘토 제이)', title: 'Step 1: AI 건물주 되기', subtitle: '✨ "무엇을 만들어야 팔리는지" + 압도적인 비주얼', description: '그냥 AI 이미지 생성이 아닙니다. 처음부터 수익화를 설계하고, 압도적인 비주얼로 차별화하세요!', image: `${process.env.PUBLIC_URL}/images/main/1.jpeg`, isNew: true, category: 'Premium', path: '/ai-building-course', isPremium: true, launchDate: '🔥 얼리버드 진행 중', price: 45000, originalPrice: 95000, isComingSoon: false },
+  { id: 999, instructor: '정원석 (AI 멘토 제이)', title: 'Step 1: AI 건물주 되기', subtitle: '🏙️ 1960년 맨해튼 기회가 지금 유튜브에', description: '유튜브 CEO가 말한 "새로운 계급의 크리에이터"가 되세요. AI로 디지털 건물을 짓고 수익화합니다.', image: `${process.env.PUBLIC_URL}/images/main/1.jpeg`, isNew: true, category: 'Premium', path: '/ai-building-course', isPremium: true, launchDate: '🔥 얼리버드 진행 중', price: 45000, originalPrice: 95000, isComingSoon: false },
   
   // Step 2: AI 에이전트 비기너 - Google OPAL로 여러 AI를 하나의 회사처럼
   { id: 1002, instructor: '정원석 (AI 멘토 제이)', title: 'Step 2: AI 에이전트 비기너', subtitle: '🤖 여러 AI를 하나의 회사처럼', description: '💎 Google OPAL로 콘텐츠 자동 생성 에이전트를 만들고 시스템화! 더 효율적인 수익 구조 완성', image: `${process.env.PUBLIC_URL}/images/main/2.jpeg`, isNew: true, category: 'Premium', path: '/chatgpt-agent-beginner', isPremium: true, launchDate: '지금 수강 가능', price: 95000, originalPrice: 95000, isComingSoon: false },
   
-  // Step 3: 1인 콘텐츠 기업 만들기 - 바이브코딩으로 서비스 개발 (먼저 직접 만들기)
-  { id: 1003, instructor: '정원석 (AI 멘토 제이)', title: 'Step 3: 1인 콘텐츠 기업 만들기', subtitle: '🚀 바이브코딩으로 서비스 개발', description: '🏆 바이브코딩을 활용해 나만의 서비스를 개발하고 1인 콘텐츠 기업을 완성하는 단계!', image: `${process.env.PUBLIC_URL}/images/main/3.jpg`, isNew: true, category: 'Premium', path: '/content-business', isPremium: true, launchDate: '오픈 예정', price: 150000, originalPrice: 150000, isComingSoon: false },
+  // Step 3: 바이브코딩 - 수익화 확장의 첫걸음
+  { id: 1003, instructor: '정원석 (AI 멘토 제이)', title: 'Step 3: 바이브코딩', subtitle: '💻 수익화 확장의 첫걸음', description: '🚀 코딩 몰라도 OK! AI에게 말로 설명하면 코드가 완성됩니다. 나만의 서비스를 직접 개발하세요!', image: `${process.env.PUBLIC_URL}/images/main/3.jpeg`, isNew: true, category: 'Premium', path: '/vibe-coding', isPremium: true, launchDate: '오픈 예정', price: 150000, originalPrice: 150000, isComingSoon: false },
   
-  // Step 4: AI 에이전트 파견소 - 우리가 만든 AI 도구를 함께 사용
-  { id: 1004, instructor: '정원석 (AI 멘토 제이)', title: 'Step 4: AI 에이전트 파견소', subtitle: '🤝 협업하기: AI 도구를 함께 활용!', description: '🚀 우리가 만든 AI 에이전트 도구를 활용해 대본→이미지→음성→영상 자동화를 함께 실현', image: `${process.env.PUBLIC_URL}/images/main/4.jpg`, isNew: true, category: 'Premium', path: '/agent-dispatch', isPremium: true, launchDate: '준비중', price: 0, originalPrice: 0, isComingSoon: false }
+  // Step 4: 1인 기업 만들기 - 크리에이터에서 CEO로
+  { id: 1004, instructor: '정원석 (AI 멘토 제이)', title: 'Step 4: 1인 기업 만들기', subtitle: '👑 크리에이터에서 CEO로', description: '🏆 사업자등록, 세금, 정부지원금까지! 1인 콘텐츠 기업을 완성하는 단계', image: `${process.env.PUBLIC_URL}/images/main/4.jpeg`, isNew: true, category: 'Premium', path: '/solo-business', isPremium: true, launchDate: '준비중', price: 0, originalPrice: 0, isComingSoon: false }
 ];
 
 // ⭐️ onCourseSelect 속성 제거됨

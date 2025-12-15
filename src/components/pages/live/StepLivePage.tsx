@@ -41,7 +41,7 @@ const STEP_INFO: { [key: string]: StepInfo } = {
     id: 'step1',
     name: 'Step 1',
     title: 'AI 건물주 되기',
-    description: 'AI 이미지 수익화, 콘텐츠 제작 실습. 수강생 Q&A 및 피드백.',
+    description: '맨해튼 부동산 비유로 배우는 AI 콘텐츠 수익화. 매주 최신 AI 도구 업데이트!',
     dayOfWeek: '화요일',
     time: '오후 8:00',
     courseId: 999,
@@ -68,30 +68,30 @@ const STEP_INFO: { [key: string]: StepInfo } = {
   step3: {
     id: 'step3',
     name: 'Step 3',
-    title: '1인 콘텐츠 기업 (바이브코딩)',
-    description: '바이브코딩으로 나만의 서비스/앱 개발! AI와 함께 1인 기업 구축 프로젝트.',
+    title: '바이브코딩',
+    description: '수익화 확장의 첫걸음! 내 사업 도구 직접 만들기',
     dayOfWeek: '목요일',
     time: '오후 8:00',
     courseId: 1003,
     vimeoEventId: '1044498498',
     price: null,
-    purchaseLink: '/content-business',
-    icon: '🎸',
+    purchaseLink: '/vibe-coding',
+    icon: '💻',
     color: '#8b5cf6'
   },
   step4: {
     id: 'step4',
     name: 'Step 4',
-    title: 'AI 에이전트 파견소',
-    description: '직접 만들기 어려운 건 AI 에이전트 파견소에서! 자동화 도구 제공.',
+    title: '1인 기업 만들기',
+    description: '크리에이터에서 CEO로! 사업자등록, 세금, 정부지원금까지.',
     dayOfWeek: '금요일',
     time: '오후 8:00',
     courseId: 1004,
     vimeoEventId: '1044498498',
     price: null,
-    purchaseLink: '#',
-    icon: '🚀',
-    color: '#10b981'
+    purchaseLink: '/solo-business',
+    icon: '🏢',
+    color: '#f59e0b'
   }
 };
 

@@ -50,7 +50,7 @@ const LIVE_SCHEDULE: LiveSchedule[] = [
     time: '오후 8:00',
     icon: '🏗️',
     title: 'AI 건물주 되기',
-    description: 'AI 이미지 수익화, 콘텐츠 제작 실습',
+    description: '맨해튼 부동산 비유로 배우는 AI 콘텐츠 수익화',
     color: COLORS.navy,
     isFree: false,
     link: '/live/step1'
@@ -72,25 +72,20 @@ const LIVE_SCHEDULE: LiveSchedule[] = [
     day: 'THU',
     dayKo: '목요일',
     time: '오후 8:00',
-    icon: '🎸',
-    title: '1인 컨텐츠 기업 - 바이브코딩',
-    description: '나만의 서비스/앱을 AI와 함께 개발',
+    icon: '💻',
+    title: '바이브코딩',
+    description: '수익화 확장의 첫걸음',
     color: '#8b5cf6',
     isFree: false,
     link: '/live/step3'
-  },
-  {
-    id: 'friday',
-    day: 'FRI',
-    dayKo: '금요일',
-    time: '오후 8:00',
-    icon: '🚀',
-    title: 'AI 에이전트 파견소',
-    description: '직접 만들기 어려운 건 AI 도구로 해결',
-    color: '#10b981',
-    isFree: false,
-    link: '/live/step4'
   }
+];
+
+// 휴식일 표시
+const REST_DAYS = [
+  { day: 'FRI', dayKo: '금요일' },
+  { day: 'SAT', dayKo: '토요일' },
+  { day: 'SUN', dayKo: '일요일' }
 ];
 
 interface LiveHubPageProps {
@@ -105,7 +100,7 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
   // 다음 라이브 계산
   useEffect(() => {
     const dayMap: { [key: string]: number } = {
-      'MON': 1, 'TUE': 2, 'WED': 3, 'THU': 4, 'FRI': 5
+      'MON': 1, 'TUE': 2, 'WED': 3, 'THU': 4
     };
 
     const now = new Date();
@@ -177,7 +172,7 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
             color: COLORS.goldLight, 
             fontSize: 'clamp(1rem, 2.5vw, 1.2rem)' 
           }}>
-            매주 월~금 오후 8시 라이브
+            매주 월~목 오후 8시 라이브 (12월 22일부터 시작!)
           </p>
         </div>
       </div>
@@ -353,6 +348,65 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
               <ChevronRight size={20} color={COLORS.grayMedium} />
             </div>
           ))}
+
+          {/* 휴식일 표시 */}
+          {REST_DAYS.map((restDay) => (
+            <div
+              key={restDay.day}
+              style={{
+                background: '#f1f5f9',
+                borderRadius: '14px',
+                padding: 'clamp(15px, 3vw, 20px)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '15px',
+                border: '1px solid #e2e8f0',
+                opacity: 0.7
+              }}
+            >
+              {/* 요일 */}
+              <div style={{
+                width: '60px',
+                height: '60px',
+                background: '#cbd5e1',
+                borderRadius: '12px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}>
+                <span style={{ fontSize: '1.3rem' }}>😴</span>
+                <span style={{ 
+                  color: COLORS.white, 
+                  fontSize: '0.7rem', 
+                  fontWeight: '700',
+                  marginTop: '2px'
+                }}>
+                  {restDay.day}
+                </span>
+              </div>
+
+              {/* 내용 */}
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <h3 style={{ 
+                  color: '#94a3b8', 
+                  fontSize: 'clamp(1rem, 2.5vw, 1.15rem)', 
+                  fontWeight: '700',
+                  margin: 0
+                }}>
+                  휴식
+                </h3>
+                <p style={{ 
+                  color: '#94a3b8', 
+                  fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
+                  margin: 0
+                }}>
+                  {restDay.dayKo}은 라이브 없음
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* 유튜브 채널 안내 */}
@@ -409,9 +463,11 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
             margin: 0,
             paddingLeft: '20px'
           }}>
-            <li>라이브는 매주 월~금 오후 8시에 진행됩니다</li>
+            <li><strong>12월 22일부터</strong> 라이브가 시작됩니다!</li>
+            <li>라이브는 매주 <strong>월~목 오후 8시</strong>에 진행됩니다</li>
             <li>월요일 무료 라이브는 유튜브에서 시청 가능합니다</li>
-            <li>프리미엄 라이브(화~금)는 해당 강의 수강생만 참여 가능합니다</li>
+            <li>프리미엄 라이브(화~목)는 해당 강의 수강생만 참여 가능합니다</li>
+            <li>금, 토, 일요일은 휴식입니다 😴</li>
             <li>지난 라이브는 아카이브에서 다시 볼 수 있습니다</li>
           </ul>
         </div>

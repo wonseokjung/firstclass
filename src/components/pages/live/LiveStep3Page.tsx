@@ -13,7 +13,7 @@ const LiveStep3Page: React.FC = () => {
         {/* 헤더 */}
         <div style={{ 
           display: 'inline-block',
-          background: 'linear-gradient(135deg, #eab308, #ca8a04)',
+          background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
           padding: '8px 20px',
           borderRadius: '30px',
           marginBottom: '20px'
@@ -27,7 +27,7 @@ const LiveStep3Page: React.FC = () => {
           fontWeight: '800',
           marginBottom: '15px'
         }}>
-          ⚡ connexionai 라이브
+          💻 바이브코딩 라이브
         </h1>
         
         <div style={{ 
@@ -38,7 +38,7 @@ const LiveStep3Page: React.FC = () => {
         </div>
         
         <h2 style={{ 
-          color: '#eab308', 
+          color: '#8b5cf6', 
           fontSize: '1.8rem',
           marginBottom: '20px'
         }}>
@@ -51,10 +51,10 @@ const LiveStep3Page: React.FC = () => {
           lineHeight: '1.8',
           marginBottom: '40px'
         }}>
-          AI 수익화 전문 자동화 에이전트 강의가<br/>
-          곧 오픈될 예정입니다!<br/><br/>
-          <span style={{ color: '#eab308' }}>강의 + 도구 + 라이브</span>로 구성된<br/>
-          완벽한 수익화 시스템을 준비하고 있습니다.
+          수익화 확장의 첫걸음!<br/>
+          바이브코딩 강의가 곧 오픈됩니다!<br/><br/>
+          <span style={{ color: '#8b5cf6' }}>내 사업 도구 직접 만들기</span><br/>
+          코딩 몰라도 OK! AI에게 말로 설명하면 됩니다.
         </p>
         
         <button

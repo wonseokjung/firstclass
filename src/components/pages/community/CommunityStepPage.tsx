@@ -36,8 +36,8 @@ interface StepConfig {
 const stepConfigs: { [key: string]: StepConfig } = {
   step1: { step: 1, title: 'AI 건물주 되기', icon: '🏠', courseIds: ['ai-building-course', 'ai-building', '999'], coursePath: '/ai-building-course' },
   step2: { step: 2, title: 'AI 에이전트 비기너', icon: '🤖', courseIds: ['chatgpt-agent-beginner', 'ai-agent-beginner', '1002'], coursePath: '/chatgpt-agent-beginner' },
-  step3: { step: 3, title: 'connexionai', icon: '⚡', courseIds: ['connexionai'], coursePath: '/ai-construction-site' },
-  step4: { step: 4, title: '1인 콘텐츠 기업 만들기', icon: '🚀', courseIds: ['content-business'], coursePath: '/ai-construction-site' }
+  step3: { step: 3, title: '바이브코딩', icon: '💻', courseIds: ['vibe-coding'], coursePath: '/vibe-coding' },
+  step4: { step: 4, title: '1인 기업 만들기', icon: '👑', courseIds: ['solo-business'], coursePath: '/solo-business' }
 };
 
 // 색상 테마

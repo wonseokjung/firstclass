@@ -51,7 +51,14 @@ const AdminDashboardPage: React.FC = () => {
   // 출금 관리
   const [pendingWithdrawals, setPendingWithdrawals] = useState<(PartnerWithdrawal & { partnerEmail: string; partnerName: string })[]>([]);
   const [withdrawalLoading, setWithdrawalLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<'users' | 'withdrawals' | 'partners'>('users');
+  const [activeTab, setActiveTab] = useState<'users' | 'withdrawals' | 'partners' | 'refunds'>('users');
+  
+  // 환불 관리
+  const [refundPayments, setRefundPayments] = useState<any[]>([]);
+  const [refundLoading, setRefundLoading] = useState(false);
+  const [manualPaymentKey, setManualPaymentKey] = useState('');
+  const [manualRefundAmount, setManualRefundAmount] = useState('');
+  const [manualCustomerInfo, setManualCustomerInfo] = useState('');
   
   // 파트너 통계
   const [partnerStats, setPartnerStats] = useState({
@@ -92,6 +99,148 @@ const AdminDashboardPage: React.FC = () => {
     checkAdmin();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
+
+  // 환불용 결제 내역 로드 (Azure 데이터에서)
+  const loadRefundPayments = () => {
+    try {
+      // allUsers에서 모든 purchases 추출
+      const allPurchases: any[] = [];
+      
+      allUsers.forEach(user => {
+        if (user.purchases && user.purchases.length > 0) {
+          user.purchases.forEach((purchase: any) => {
+            allPurchases.push({
+              ...purchase,
+              customerName: user.name,
+              customerEmail: user.email,
+              paymentKey: purchase.externalPaymentId || purchase.paymentKey || '',
+              amount: purchase.amount || 0,
+              approvedAt: purchase.purchaseDate || purchase.createdAt,
+              status: purchase.status || 'DONE'
+            });
+          });
+        }
+      });
+      
+      // 최신 순으로 정렬
+      allPurchases.sort((a, b) => 
+        new Date(b.approvedAt).getTime() - new Date(a.approvedAt).getTime()
+      );
+      
+      setRefundPayments(allPurchases);
+      console.log('✅ Azure에서 결제 내역 로드:', allPurchases.length, '건');
+    } catch (error) {
+      console.error('❌ 결제 내역 로드 실패:', error);
+    }
+  };
+
+  // 환불 처리
+  const handleRefund = async (payment: any) => {
+    const confirmMsg = `⚠️ 정말 환불하시겠습니까?\n\n` +
+      `고객명: ${payment.customerName}\n` +
+      `이메일: ${payment.customerEmail}\n` +
+      `금액: ${payment.amount?.toLocaleString()}원\n\n` +
+      `환불 후에는 취소할 수 없습니다.`;
+    
+    if (!window.confirm(confirmMsg)) return;
+
+    setRefundLoading(true);
+    
+    try {
+      // 1. 토스페이먼츠 환불 API 호출
+      const response = await fetch('/api/cancel-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          paymentKey: payment.paymentKey,
+          cancelReason: '관리자 환불 처리'
+        })
+      });
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error || '환불 실패');
+      }
+
+      // 2. Azure에서 수강 정보 삭제 (옵션)
+      try {
+        if (payment.customerEmail) {
+          // 수강 정보 삭제 로직 (필요시)
+          console.log('📝 수강 취소 처리:', payment.customerEmail);
+          // await AzureTableService.removeEnrollment(payment.customerEmail, courseId);
+        }
+      } catch (azureError) {
+        console.warn('⚠️ 수강 정보 삭제 실패 (수동 처리 필요):', azureError);
+      }
+
+      // 3. 화면에서 상태 업데이트
+      setRefundPayments(prev => 
+        prev.map(p => 
+          p.paymentKey === payment.paymentKey 
+            ? { ...p, status: 'CANCELED', canceledAt: new Date().toISOString() }
+            : p
+        )
+      );
+
+      alert(`✅ 환불 완료!\n\n${payment.customerName}님 (${payment.amount?.toLocaleString()}원)`);
+      
+    } catch (error: any) {
+      console.error('❌ 환불 처리 실패:', error);
+      alert(`❌ 환불 실패: ${error.message}`);
+    } finally {
+      setRefundLoading(false);
+    }
+  };
+
+  // 수동 환불 처리 (paymentKey 직접 입력)
+  const handleManualRefund = async () => {
+    if (!manualPaymentKey.trim()) {
+      alert('⚠️ paymentKey를 입력해주세요.');
+      return;
+    }
+
+    const confirmMsg = `⚠️ 정말 환불하시겠습니까?\n\n` +
+      `paymentKey: ${manualPaymentKey.substring(0, 20)}...\n` +
+      `고객정보: ${manualCustomerInfo || '미입력'}\n` +
+      `금액: ${manualRefundAmount ? Number(manualRefundAmount).toLocaleString() + '원' : '전액 환불'}\n\n` +
+      `환불 후에는 취소할 수 없습니다.`;
+    
+    if (!window.confirm(confirmMsg)) return;
+
+    setRefundLoading(true);
+    
+    try {
+      const response = await fetch('/api/cancel-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          paymentKey: manualPaymentKey.trim(),
+          cancelReason: '관리자 수동 환불',
+          cancelAmount: manualRefundAmount ? Number(manualRefundAmount) : undefined
+        })
+      });
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error || '환불 실패');
+      }
+
+      alert(`✅ 환불 완료!\n\n주문번호: ${result.data?.orderId || 'N/A'}`);
+      
+      // 입력 필드 초기화
+      setManualPaymentKey('');
+      setManualRefundAmount('');
+      setManualCustomerInfo('');
+      
+    } catch (error: any) {
+      console.error('❌ 수동 환불 실패:', error);
+      alert(`❌ 환불 실패: ${error.message}`);
+    } finally {
+      setRefundLoading(false);
+    }
+  };
 
   // 모든 유저 데이터 로드
   const loadAllUsers = async () => {
@@ -709,6 +858,33 @@ const AdminDashboardPage: React.FC = () => {
                 {pendingWithdrawals.length}
               </span>
             )}
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab('refunds');
+              loadRefundPayments();
+            }}
+            style={{
+              padding: '14px 28px',
+              borderRadius: '12px',
+              border: 'none',
+              background: activeTab === 'refunds' 
+                ? 'linear-gradient(135deg, #ef4444, #dc2626)' 
+                : 'white',
+              color: activeTab === 'refunds' ? 'white' : '#64748b',
+              fontSize: '1rem',
+              fontWeight: '700',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              boxShadow: activeTab === 'refunds' 
+                ? '0 4px 15px rgba(239, 68, 68, 0.4)' 
+                : '0 2px 8px rgba(0,0,0,0.1)',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            💳 환불 관리
           </button>
         </div>
 
@@ -1419,6 +1595,273 @@ const AdminDashboardPage: React.FC = () => {
                 </div>
               )}
             </div>
+          </div>
+        )}
+
+        {/* 환불 관리 탭 */}
+        {activeTab === 'refunds' && (
+          <div style={{
+            background: 'white',
+            borderRadius: '15px',
+            padding: '30px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+          }}>
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center',
+              marginBottom: '25px'
+            }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                💳 결제 내역 & 환불 관리
+                <span style={{
+                  fontSize: '0.85rem',
+                  background: '#ef4444',
+                  color: 'white',
+                  padding: '4px 12px',
+                  borderRadius: '20px',
+                  fontWeight: '600'
+                }}>
+                  {refundPayments.length}건
+                </span>
+              </h2>
+              <button
+                onClick={loadRefundPayments}
+                disabled={refundLoading}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '10px 20px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: '#f1f5f9',
+                  color: '#64748b',
+                  fontSize: '0.95rem',
+                  fontWeight: '600',
+                  cursor: refundLoading ? 'not-allowed' : 'pointer'
+                }}
+              >
+                <RefreshCw size={16} className={refundLoading ? 'animate-spin' : ''} />
+                새로고침
+              </button>
+            </div>
+
+            {/* 수동 환불 섹션 */}
+            <div style={{
+              background: 'linear-gradient(135deg, #fef2f2, #fee2e2)',
+              borderRadius: '15px',
+              padding: '25px',
+              marginBottom: '30px',
+              border: '2px solid #fecaca'
+            }}>
+              <h3 style={{ 
+                fontSize: '1.2rem', 
+                fontWeight: '700', 
+                marginBottom: '20px',
+                color: '#dc2626',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                🔑 수동 환불 (paymentKey 직접 입력)
+              </h3>
+              <p style={{ 
+                fontSize: '0.9rem', 
+                color: '#991b1b', 
+                marginBottom: '20px',
+                lineHeight: '1.6'
+              }}>
+                📧 이메일로 받은 환불 신청의 paymentKey를 입력하여 직접 환불 처리합니다.<br/>
+                ⚠️ paymentKey는 토스페이먼츠 대시보드에서도 확인 가능합니다.
+              </p>
+              
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: '#7f1d1d', marginBottom: '8px' }}>
+                    paymentKey *
+                  </label>
+                  <input
+                    type="text"
+                    value={manualPaymentKey}
+                    onChange={(e) => setManualPaymentKey(e.target.value)}
+                    placeholder="tviva_xxxxxxxxxxxxxxxx..."
+                    style={{
+                      width: '100%',
+                      padding: '12px 15px',
+                      borderRadius: '10px',
+                      border: '2px solid #fca5a5',
+                      fontSize: '0.95rem',
+                      fontFamily: 'monospace'
+                    }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: '#7f1d1d', marginBottom: '8px' }}>
+                    고객 정보 (메모용)
+                  </label>
+                  <input
+                    type="text"
+                    value={manualCustomerInfo}
+                    onChange={(e) => setManualCustomerInfo(e.target.value)}
+                    placeholder="예: 리버 / okarina910@naver.com"
+                    style={{
+                      width: '100%',
+                      padding: '12px 15px',
+                      borderRadius: '10px',
+                      border: '2px solid #fca5a5',
+                      fontSize: '0.95rem'
+                    }}
+                  />
+                </div>
+              </div>
+              
+              <div style={{ display: 'flex', gap: '15px', alignItems: 'flex-end' }}>
+                <div style={{ flex: 1 }}>
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: '#7f1d1d', marginBottom: '8px' }}>
+                    환불 금액 (비워두면 전액 환불)
+                  </label>
+                  <input
+                    type="number"
+                    value={manualRefundAmount}
+                    onChange={(e) => setManualRefundAmount(e.target.value)}
+                    placeholder="45000"
+                    style={{
+                      width: '100%',
+                      padding: '12px 15px',
+                      borderRadius: '10px',
+                      border: '2px solid #fca5a5',
+                      fontSize: '0.95rem'
+                    }}
+                  />
+                </div>
+                <button
+                  onClick={handleManualRefund}
+                  disabled={refundLoading || !manualPaymentKey.trim()}
+                  style={{
+                    padding: '12px 30px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    background: refundLoading || !manualPaymentKey.trim() 
+                      ? '#fca5a5' 
+                      : 'linear-gradient(135deg, #ef4444, #dc2626)',
+                    color: 'white',
+                    fontSize: '1rem',
+                    fontWeight: '700',
+                    cursor: refundLoading || !manualPaymentKey.trim() ? 'not-allowed' : 'pointer',
+                    boxShadow: '0 4px 15px rgba(239, 68, 68, 0.4)',
+                    transition: 'all 0.2s',
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  {refundLoading ? '처리중...' : '💸 환불 실행'}
+                </button>
+              </div>
+            </div>
+
+            <h3 style={{ fontSize: '1.1rem', fontWeight: '600', marginBottom: '15px', color: '#64748b' }}>
+              📋 전체 결제 내역 (Azure에서 로드)
+            </h3>
+
+            {refundPayments.length > 0 ? (
+              <div style={{ overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '900px' }}>
+                  <thead>
+                    <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
+                      <th style={{ padding: '15px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>결제일시</th>
+                      <th style={{ padding: '15px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>고객명</th>
+                      <th style={{ padding: '15px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>이메일</th>
+                      <th style={{ padding: '15px', textAlign: 'right', color: '#64748b', fontWeight: '600' }}>금액</th>
+                      <th style={{ padding: '15px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>상태</th>
+                      <th style={{ padding: '15px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>액션</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {refundPayments.map((payment, index) => (
+                      <tr key={payment.paymentKey || index} style={{ 
+                        borderBottom: '1px solid #f1f5f9',
+                        background: payment.status === 'CANCELED' ? '#fef2f2' : 'transparent'
+                      }}>
+                        <td style={{ padding: '15px', fontSize: '0.9rem' }}>
+                          {new Date(payment.approvedAt || payment.savedAt).toLocaleString('ko-KR')}
+                        </td>
+                        <td style={{ padding: '15px', fontWeight: '600' }}>
+                          {payment.customerName}
+                        </td>
+                        <td style={{ padding: '15px', color: '#64748b', fontSize: '0.9rem' }}>
+                          {payment.customerEmail}
+                        </td>
+                        <td style={{ padding: '15px', textAlign: 'right', fontWeight: '700', color: '#1f2937' }}>
+                          ₩{payment.amount?.toLocaleString()}
+                        </td>
+                        <td style={{ padding: '15px', textAlign: 'center' }}>
+                          {payment.status === 'CANCELED' ? (
+                            <span style={{
+                              background: '#fee2e2',
+                              color: '#dc2626',
+                              padding: '4px 12px',
+                              borderRadius: '20px',
+                              fontSize: '0.8rem',
+                              fontWeight: '600'
+                            }}>
+                              환불완료
+                            </span>
+                          ) : (
+                            <span style={{
+                              background: '#dcfce7',
+                              color: '#16a34a',
+                              padding: '4px 12px',
+                              borderRadius: '20px',
+                              fontSize: '0.8rem',
+                              fontWeight: '600'
+                            }}>
+                              결제완료
+                            </span>
+                          )}
+                        </td>
+                        <td style={{ padding: '15px', textAlign: 'center' }}>
+                          {payment.status !== 'CANCELED' && (
+                            <button
+                              onClick={() => handleRefund(payment)}
+                              disabled={refundLoading}
+                              style={{
+                                padding: '8px 16px',
+                                borderRadius: '8px',
+                                border: 'none',
+                                background: refundLoading ? '#fca5a5' : '#ef4444',
+                                color: 'white',
+                                fontSize: '0.85rem',
+                                fontWeight: '600',
+                                cursor: refundLoading ? 'not-allowed' : 'pointer',
+                                transition: 'all 0.2s'
+                              }}
+                              onMouseOver={(e) => !refundLoading && (e.currentTarget.style.background = '#dc2626')}
+                              onMouseOut={(e) => !refundLoading && (e.currentTarget.style.background = '#ef4444')}
+                            >
+                              환불하기
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div style={{
+                textAlign: 'center',
+                padding: '60px 20px',
+                color: '#94a3b8'
+              }}>
+                <div style={{ fontSize: '4rem', marginBottom: '20px', opacity: 0.3 }}>💳</div>
+                <p style={{ fontSize: '1.2rem', fontWeight: '600', marginBottom: '10px' }}>
+                  결제 내역이 없습니다
+                </p>
+                <p style={{ fontSize: '0.95rem' }}>
+                  결제가 완료되면 여기에 표시됩니다
+                </p>
+              </div>
+            )}
           </div>
         )}
       </div>

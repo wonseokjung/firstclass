@@ -405,7 +405,9 @@ const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ childr
             <Route path="/ai-building-course/player" element={<AIBuildingCoursePlayerPageWrapped />} />
             <Route path="/chatgpt-agent-beginner" element={<ChatGPTAgentBeginnerPageWrapped />} />
             <Route path="/content-business" element={<ContentBusinessPageWrapped />} />
+            <Route path="/vibe-coding" element={<ContentBusinessPageWrapped />} />
             <Route path="/agent-dispatch" element={<AgentDispatchPageWrapped />} />
+            <Route path="/solo-business" element={<AgentDispatchPageWrapped />} />
             <Route path="/chatgpt-agent-beginner/payment" element={<ChatGPTAgentBeginnerPaymentPageWrapped />} />
             <Route path="/chatgpt-agent-beginner/player" element={<ChatGPTAgentBeginnerPlayerPageWrapped />} />
             <Route path="/cost-optimization-examples" element={<CostOptimizationExamplesPageWrapped />} />

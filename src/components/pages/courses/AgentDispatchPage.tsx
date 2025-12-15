@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Zap, Clock, Handshake } from 'lucide-react';
+import { ArrowLeft, Zap, Clock, Handshake, Building2 } from 'lucide-react';
 
 interface AgentDispatchPageProps {
   onBack: () => void;
@@ -12,7 +12,7 @@ const AgentDispatchPage: React.FC<AgentDispatchPageProps> = ({ onBack }) => {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%)',
+      background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
       color: '#fff'
     }}>
       {/* 네비게이션 */}
@@ -53,7 +53,7 @@ const AgentDispatchPage: React.FC<AgentDispatchPageProps> = ({ onBack }) => {
           display: 'inline-flex',
           alignItems: 'center',
           gap: '8px',
-          background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+          background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
           padding: '8px 20px',
           borderRadius: '30px',
           marginBottom: '30px'
@@ -67,14 +67,14 @@ const AgentDispatchPage: React.FC<AgentDispatchPageProps> = ({ onBack }) => {
           width: '120px',
           height: '120px',
           borderRadius: '30px',
-          background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+          background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           margin: '0 auto 30px',
-          boxShadow: '0 20px 60px rgba(139, 92, 246, 0.3)'
+          boxShadow: '0 20px 60px rgba(245, 158, 11, 0.3)'
         }}>
-          <Zap size={60} color="#fff" />
+          <Building2 size={60} color="#fff" />
         </div>
 
         {/* 제목 */}
@@ -84,9 +84,9 @@ const AgentDispatchPage: React.FC<AgentDispatchPageProps> = ({ onBack }) => {
           marginBottom: '16px',
           lineHeight: '1.2'
         }}>
-          <span style={{ color: '#8b5cf6' }}>Step 4</span>
+          <span style={{ color: '#f59e0b' }}>Step 4</span>
           <br />
-          AI 에이전트 파견소
+          1인 기업 만들기
         </h1>
 
         {/* 부제목 */}
@@ -95,13 +95,13 @@ const AgentDispatchPage: React.FC<AgentDispatchPageProps> = ({ onBack }) => {
           color: '#94a3b8',
           marginBottom: '40px'
         }}>
-          🤝 협업하기: AI 도구를 함께 활용!
+          🏢 콘텐츠 비즈니스 사업화
         </p>
 
         {/* 핵심 컨셉 */}
         <div style={{
-          background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0.05) 100%)',
-          border: '2px solid rgba(139, 92, 246, 0.4)',
+          background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.05) 100%)',
+          border: '2px solid rgba(245, 158, 11, 0.4)',
           borderRadius: '20px',
           padding: '30px',
           marginBottom: '40px'
@@ -113,15 +113,15 @@ const AgentDispatchPage: React.FC<AgentDispatchPageProps> = ({ onBack }) => {
             gap: '12px',
             marginBottom: '16px'
           }}>
-            <Handshake size={28} color="#8b5cf6" />
-            <h3 style={{ color: '#8b5cf6', fontSize: '1.3rem', fontWeight: '700', margin: 0 }}>
-              FORGENT AI 협업 프로그램
+            <Building2 size={28} color="#f59e0b" />
+            <h3 style={{ color: '#f59e0b', fontSize: '1.3rem', fontWeight: '700', margin: 0 }}>
+              콘텐츠 크리에이터에서 CEO로
             </h3>
           </div>
           <p style={{ color: '#e0e0e0', fontSize: '1.1rem', lineHeight: '1.7' }}>
-            직접 만들기 어려운 AI 에이전트들을<br />
-            <strong style={{ color: '#8b5cf6' }}>우리가 만들어서 제공</strong>합니다.<br />
-            여러분은 <strong style={{ color: '#fff' }}>도구만 사용</strong>하면 됩니다!
+            사업자등록, 세금, 정부지원금까지!<br />
+            <strong style={{ color: '#f59e0b' }}>1인 기업</strong>을 완성하는 단계입니다.<br />
+            Step 3에서 만든 서비스로 <strong style={{ color: '#fff' }}>진짜 사업</strong>을 시작하세요!
           </p>
         </div>
 

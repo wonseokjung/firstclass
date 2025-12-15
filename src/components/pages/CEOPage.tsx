@@ -31,9 +31,9 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
     {
       step: 1,
       title: 'AI 건물주 되기',
-      subtitle: '배우기',
+      subtitle: '새로운 계급의 크리에이터',
       icon: <Sparkles size={24} />,
-      description: '다양한 AI 모델 + 비즈니스 마인드',
+      description: '맨해튼 기회가 유튜브에 왔다',
       price: '₩45,000',
       color: '#3b82f6',
       path: '/ai-building-course'
@@ -50,23 +50,23 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
     },
     {
       step: 3,
-      title: '1인 콘텐츠 기업',
-      subtitle: '키우기',
-      icon: <Building2 size={24} />,
-      description: '바이브코딩 + 사업 확장',
+      title: '바이브코딩',
+      subtitle: '수익화 확장',
+      icon: <Zap size={24} />,
+      description: '수익화 확장의 첫걸음',
       price: 'Coming Soon',
-      color: '#f59e0b',
-      path: '/content-business'
+      color: '#8b5cf6',
+      path: '/vibe-coding'
     },
     {
       step: 4,
-      title: 'AI 에이전트 파견소',
-      subtitle: '협업하기',
-      icon: <Zap size={24} />,
-      description: '우리가 만든 AI 도구를 함께 활용',
+      title: '1인 기업 만들기',
+      subtitle: 'CEO 되기',
+      icon: <Building2 size={24} />,
+      description: '크리에이터에서 CEO로',
       price: 'Coming Soon',
-      color: '#8b5cf6',
-      path: '/agent-dispatch'
+      color: '#f59e0b',
+      path: '/solo-business'
     }
   ];
 
