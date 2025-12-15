@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Zap, Clock, Handshake, Building2 } from 'lucide-react';
+import { ArrowLeft, Clock, Building2 } from 'lucide-react';
 
 interface AgentDispatchPageProps {
   onBack: () => void;

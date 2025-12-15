@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GraduationCap, Globe, Youtube, Instagram, X, Sparkles, Bot, Zap, Building2, ArrowRight, Play, Wrench, TrendingUp } from 'lucide-react';
 import NavigationBar from '../common/NavigationBar';
-import ComingSoonModal from '../modals/ComingSoonModal';
 
 interface CEOPageProps {
   onBack: () => void;
@@ -11,29 +10,18 @@ interface CEOPageProps {
 const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
   const [selectedTranscript, setSelectedTranscript] = useState<string | null>(null);
-  const [showComingSoon, setShowComingSoon] = useState(false);
-  const [comingSoonTitle, setComingSoonTitle] = useState('');
 
   const closeTranscriptModal = () => {
     setSelectedTranscript(null);
-  };
-
-  const handleStepClick = (step: { path: string; title: string }) => {
-    if (step.path === '#') {
-      setComingSoonTitle(step.title);
-      setShowComingSoon(true);
-    } else {
-      navigate(step.path);
-    }
   };
 
   const roadmapSteps = [
     {
       step: 1,
       title: 'AI 건물주 되기',
-      subtitle: '새로운 계급의 크리에이터',
+      subtitle: '배우기',
       icon: <Sparkles size={24} />,
-      description: '맨해튼 기회가 유튜브에 왔다',
+      description: '다양한 AI 모델 + 비즈니스 마인드',
       price: '₩45,000',
       color: '#3b82f6',
       path: '/ai-building-course'
@@ -50,23 +38,23 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
     },
     {
       step: 3,
-      title: '바이브코딩',
-      subtitle: '수익화 확장',
+      title: 'AI 에이전트 파견소',
+      subtitle: '만들기',
       icon: <Zap size={24} />,
-      description: '수익화 확장의 첫걸음',
+      description: 'AI 수익화 전문 자동화 에이전트',
       price: 'Coming Soon',
-      color: '#8b5cf6',
-      path: '/vibe-coding'
+      color: '#f59e0b',
+      path: '#'
     },
     {
       step: 4,
-      title: '1인 기업 만들기',
-      subtitle: 'CEO 되기',
+      title: '1인 콘텐츠 기업',
+      subtitle: '키우기',
       icon: <Building2 size={24} />,
-      description: '크리에이터에서 CEO로',
+      description: '바이브코딩 + 사업 확장',
       price: 'Coming Soon',
-      color: '#f59e0b',
-      path: '/solo-business'
+      color: '#8b5cf6',
+      path: '#'
     }
   ];
 
@@ -79,7 +67,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
 
       {/* Hero Section - New Class of AI Creators */}
       <section style={{
-        padding: 'clamp(30px, 6vw, 60px) clamp(15px, 3vw, 20px) clamp(20px, 4vw, 40px)',
+        padding: '60px 20px 40px',
         maxWidth: '1200px',
         margin: '0 auto',
         position: 'relative',
@@ -205,7 +193,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
 
       {/* YouTube CEO 인용 섹션 */}
       <section style={{
-        padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)',
+        padding: '40px 20px',
         maxWidth: '900px',
         margin: '0 auto'
       }}>
@@ -306,7 +294,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           fontSize: 'clamp(1.5rem, 4vw, 2rem)',
           fontWeight: '800',
           textAlign: 'center',
-          marginBottom: 'clamp(20px, 4vw, 40px)'
+          marginBottom: '40px'
         }}>
           🎪 우리가 하는 일
         </h2>
@@ -428,7 +416,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           border: '1px solid rgba(255,255,255,0.1)'
         }}>
           <a 
-            href="https://www.youtube.com/@CONNECT-AI-LAB" 
+            href="https://www.youtube.com/@ConnectAILAB" 
             target="_blank" 
             rel="noopener noreferrer"
             style={{
@@ -441,10 +429,10 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             }}
           >
             <Youtube size={20} color="#ff0000" />
-            <span>CONNECT AI LAB</span>
+            <span>Connect AI LAB</span>
           </a>
           <a 
-            href="https://www.instagram.com/aimentorjay/" 
+            href="https://www.instagram.com/aimentorjay" 
             target="_blank" 
             rel="noopener noreferrer"
             style={{
@@ -481,7 +469,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           <p style={{
             color: '#94a3b8',
             textAlign: 'center',
-            marginBottom: 'clamp(20px, 4vw, 40px)',
+            marginBottom: '40px',
             fontSize: '1rem'
           }}>
             단계별로 AI 크리에이터가 되는 여정
@@ -495,7 +483,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             {roadmapSteps.map((step) => (
               <div
                 key={step.step}
-                onClick={() => handleStepClick(step)}
+                onClick={() => step.path !== '#' && navigate(step.path)}
                 style={{
                   background: 'rgba(255,255,255,0.03)',
                   border: step.path !== '#' ? `2px solid ${step.color}40` : '1px solid rgba(255,255,255,0.1)',
@@ -612,7 +600,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
         <p style={{
           color: '#94a3b8',
           textAlign: 'center',
-          marginBottom: 'clamp(20px, 4vw, 40px)',
+          marginBottom: '40px',
           fontSize: '1rem'
         }}>
           기술이 없어도 → AI로 콘텐츠 생성 → 수익화 → AI 도시의 일원
@@ -727,7 +715,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             fontSize: 'clamp(1.5rem, 4vw, 2rem)',
             fontWeight: '800',
             textAlign: 'center',
-            marginBottom: 'clamp(20px, 4vw, 40px)'
+            marginBottom: '40px'
           }}>
             👨‍🏫 대표 멘토 - 정원석 (Jay)
           </h2>
@@ -960,7 +948,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
 
       {/* Footer */}
       <footer style={{
-        padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)',
+        padding: '40px 20px',
         textAlign: 'center',
         borderTop: '1px solid rgba(255,255,255,0.1)'
       }}>
@@ -968,13 +956,6 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           © 2025 AI City Builders. All rights reserved.
         </p>
       </footer>
-
-      {/* Coming Soon Modal */}
-      <ComingSoonModal
-        isOpen={showComingSoon}
-        onClose={() => setShowComingSoon(false)}
-        courseTitle={comingSoonTitle}
-      />
 
       {/* Modal */}
       {selectedTranscript && (

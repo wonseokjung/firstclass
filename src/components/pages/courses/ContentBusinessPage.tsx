@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Rocket, Code, Building2, Sparkles, Clock, Zap } from 'lucide-react';
+import { ArrowLeft, Rocket, Code, Sparkles, Clock, Zap } from 'lucide-react';
 
 interface ContentBusinessPageProps {
   onBack: () => void;
