@@ -12,6 +12,8 @@ interface Payment {
   date: string;
   realEmail?: string;
   referrerCode?: string; // 추천인 코드 (브릭 적립용)
+  tid?: string; // 결제 고유 ID (TID)
+  paymentMethod?: string; // 결제 방법 (카드/가상계좌)
   status?: 'pending' | 'processing' | 'success' | 'error' | 'skip';
   message?: string;
 }
@@ -413,6 +415,14 @@ const AdminEnrollmentFixPage: React.FC = () => {
     try {
       setIsLoading(true);
       const users = await AzureTableService.getAllUsers();
+      // 📱 디버깅: 첫 번째 사용자의 전체 데이터 구조 확인
+      if (users.length > 0) {
+        console.log('📱 첫 번째 사용자 데이터 구조:', users[0]);
+        console.log('📱 phone 필드 값:', users[0].phone);
+        // phone 필드가 있는 사용자 수 확인
+        const usersWithPhone = users.filter((u: any) => u.phone && u.phone.trim() !== '');
+        console.log(`📱 전화번호가 있는 사용자: ${usersWithPhone.length}/${users.length}명`);
+      }
       setAllUsers(users);
       setShowUserTable(true);
       setIsLoading(false);
@@ -993,7 +1003,9 @@ const AdminEnrollmentFixPage: React.FC = () => {
                   <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>이름</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>이메일</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>📱 핸드폰</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>🔗 추천인 코드</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>💳 TID</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>가입일</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>수강 강의</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>작업</th>
@@ -1001,10 +1013,13 @@ const AdminEnrollmentFixPage: React.FC = () => {
                 </thead>
                 <tbody>
                   {allUsers
-                    .filter(u => !searchEmail || u.email?.includes(searchEmail) || u.name?.includes(searchEmail))
+                    .filter(u => !searchEmail || u.email?.includes(searchEmail) || u.name?.includes(searchEmail) || u.phone?.includes(searchEmail))
                     .map((user, index) => {
                       const enrolledData = user.enrolledCourses ? JSON.parse(user.enrolledCourses) : null;
                       const enrollments = Array.isArray(enrolledData) ? enrolledData : (enrolledData?.enrollments || []);
+                      const purchases = enrolledData?.purchases || [];
+                      // TID 추출 (가장 최근 결제의 TID)
+                      const latestTid = purchases.length > 0 ? purchases[purchases.length - 1]?.tid : null;
                       const hasCourse = enrollments.some((e: any) =>
                         e.courseId === '1002' ||
                         e.courseId === 'chatgpt-agent-beginner' ||
@@ -1020,6 +1035,9 @@ const AdminEnrollmentFixPage: React.FC = () => {
                           <td style={{ padding: '12px' }}>{user.name || '-'}</td>
                           <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.9rem' }}>
                             {user.email}
+                          </td>
+                          <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.85rem', color: '#475569' }}>
+                            {user.phone || '-'}
                           </td>
                           <td style={{ padding: '12px' }}>
                             {user.referredBy ? (
@@ -1038,6 +1056,27 @@ const AdminEnrollmentFixPage: React.FC = () => {
                               </span>
                             ) : (
                               <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>-</span>
+                            )}
+                          </td>
+                          <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.75rem', color: '#64748b' }}>
+                            {latestTid ? (
+                              <span 
+                                title={latestTid}
+                                style={{ 
+                                  cursor: 'pointer',
+                                  background: '#f1f5f9',
+                                  padding: '4px 8px',
+                                  borderRadius: '4px'
+                                }}
+                                onClick={() => {
+                                  navigator.clipboard.writeText(latestTid);
+                                  alert('TID가 복사되었습니다!');
+                                }}
+                              >
+                                {latestTid.substring(0, 12)}...
+                              </span>
+                            ) : (
+                              <span style={{ color: '#94a3b8' }}>-</span>
                             )}
                           </td>
                           <td style={{ padding: '12px', fontSize: '0.85rem', color: '#64748b' }}>
@@ -1337,6 +1376,8 @@ const AdminEnrollmentFixPage: React.FC = () => {
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>마스킹 이메일</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>실제 이메일</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>🧱 추천인 코드</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>💳 TID</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>결제방법</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>날짜</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>상태</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>작업</th>
@@ -1344,7 +1385,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
                 </thead>
                 <tbody>
                   {payments
-                    .filter(p => !searchEmail || p.realEmail?.includes(searchEmail) || p.maskedEmail.includes(searchEmail) || p.name.includes(searchEmail))
+                    .filter(p => !searchEmail || p.realEmail?.includes(searchEmail) || p.maskedEmail.includes(searchEmail) || p.name.includes(searchEmail) || p.tid?.includes(searchEmail))
                     .map((payment, index) => (
                       <tr key={payment.orderId} style={{ borderBottom: '1px solid #f1f5f9' }}>
                         <td style={{ padding: '12px' }}>{payment.name}</td>
@@ -1389,6 +1430,39 @@ const AdminEnrollmentFixPage: React.FC = () => {
                               fontWeight: '600'
                             }}
                           />
+                        </td>
+                        <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.75rem', color: '#64748b' }}>
+                          {payment.tid ? (
+                            <span 
+                              title={payment.tid}
+                              style={{ 
+                                cursor: 'pointer',
+                                background: '#f1f5f9',
+                                padding: '4px 8px',
+                                borderRadius: '4px'
+                              }}
+                              onClick={() => {
+                                navigator.clipboard.writeText(payment.tid || '');
+                                alert('TID가 복사되었습니다!');
+                              }}
+                            >
+                              {payment.tid.substring(0, 12)}...
+                            </span>
+                          ) : '-'}
+                        </td>
+                        <td style={{ padding: '12px', fontSize: '0.85rem' }}>
+                          {payment.paymentMethod ? (
+                            <span style={{
+                              background: payment.paymentMethod === '카드' ? '#dbeafe' : '#fef3c7',
+                              color: payment.paymentMethod === '카드' ? '#1d4ed8' : '#92400e',
+                              padding: '4px 8px',
+                              borderRadius: '6px',
+                              fontSize: '0.8rem',
+                              fontWeight: '600'
+                            }}>
+                              {payment.paymentMethod}
+                            </span>
+                          ) : '-'}
                         </td>
                         <td style={{ padding: '12px', fontSize: '0.85rem', color: '#64748b' }}>
                           {payment.date.split(' ')[0]}
