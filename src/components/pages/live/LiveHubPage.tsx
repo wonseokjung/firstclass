@@ -96,14 +96,43 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
   const [nextLive, setNextLive] = useState<LiveSchedule | null>(null);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [isPreLaunch, setIsPreLaunch] = useState(false);
+
+  // 🚀 라이브 시작일: 2025년 12월 22일 (월요일) 오후 8시
+  const LIVE_START_DATE = new Date('2025-12-22T20:00:00+09:00');
 
   // 다음 라이브 계산
   useEffect(() => {
+    const now = new Date();
+    
+    // 아직 라이브 시작 전이면 시작일까지 카운트다운
+    if (now < LIVE_START_DATE) {
+      setIsPreLaunch(true);
+      // 시작일 전에는 첫 번째 라이브 (월요일 무료 라이브) 표시
+      setNextLive(LIVE_SCHEDULE[0]);
+      
+      const updateCountdown = () => {
+        const diff = LIVE_START_DATE.getTime() - Date.now();
+        if (diff > 0) {
+          setCountdown({
+            days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+            hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+            minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+            seconds: Math.floor((diff % (1000 * 60)) / 1000)
+          });
+        }
+      };
+
+      updateCountdown();
+      const timer = setInterval(updateCountdown, 1000);
+      return () => clearInterval(timer);
+    }
+
+    // 라이브 시작 후에는 기존 요일별 스케줄로 계산
     const dayMap: { [key: string]: number } = {
       'MON': 1, 'TUE': 2, 'WED': 3, 'THU': 4
     };
 
-    const now = new Date();
     const currentDay = now.getDay();
     
     let closestSchedule: LiveSchedule | null = null;
@@ -211,7 +240,7 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
                   {nextLive.icon} {nextLive.title}
                 </h3>
                 <p style={{ color: nextLive.color, fontWeight: '600', marginTop: '3px' }}>
-                  {nextLive.dayKo} {nextLive.time}
+                  {isPreLaunch ? '12월 22일 (일) 오후 8:00 첫 방송!' : `${nextLive.dayKo} ${nextLive.time}`}
                 </p>
               </div>
               

@@ -308,3 +308,4 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
 export default Day2Page;
 
 
+
