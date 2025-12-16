@@ -92,14 +92,14 @@ interface LiveHubPageProps {
   onBack?: () => void;
 }
 
+// 🚀 라이브 시작일: 2025년 12월 22일 (월요일) 오후 8시
+const LIVE_START_DATE = new Date('2025-12-22T20:00:00+09:00');
+
 const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
   const [nextLive, setNextLive] = useState<LiveSchedule | null>(null);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isPreLaunch, setIsPreLaunch] = useState(false);
-
-  // 🚀 라이브 시작일: 2025년 12월 22일 (월요일) 오후 8시
-  const LIVE_START_DATE = new Date('2025-12-22T20:00:00+09:00');
 
   // 다음 라이브 계산
   useEffect(() => {
