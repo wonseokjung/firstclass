@@ -1924,8 +1924,9 @@ export class AzureTableService {
       const courseIdMap: { [key: string]: string[] } = {
         'chatgpt-agent-beginner': ['chatgpt-agent-beginner', '1002'],
         '1002': ['chatgpt-agent-beginner', '1002'],
-        'ai-building-course': ['ai-building-course', '999'],
-        '999': ['ai-building-course', '999']
+        'ai-building-course': ['ai-building-course', '999', 'step1-ai-building'],
+        '999': ['ai-building-course', '999', 'step1-ai-building'],
+        'step1-ai-building': ['ai-building-course', '999', 'step1-ai-building']
       };
 
       const matchIds = courseIdMap[courseId] || [courseId];
@@ -2063,10 +2064,13 @@ export class AzureTableService {
         console.log('📚 수강 중인 강의 목록:', enrolledCourses.map(c => `${c.courseId} (${c.title})`));
       }
 
-      // courseId 매칭 (1002 <-> chatgpt-agent-beginner 호환)
+      // courseId 매칭 (1002 <-> chatgpt-agent-beginner, 999 <-> ai-building-course 호환)
       const courseIdMap: { [key: string]: string[] } = {
         'chatgpt-agent-beginner': ['chatgpt-agent-beginner', '1002'],
-        '1002': ['chatgpt-agent-beginner', '1002']
+        '1002': ['chatgpt-agent-beginner', '1002'],
+        'ai-building-course': ['ai-building-course', '999', 'step1-ai-building'],
+        '999': ['ai-building-course', '999', 'step1-ai-building'],
+        'step1-ai-building': ['ai-building-course', '999', 'step1-ai-building']
       };
 
       const matchIds = courseIdMap[courseId] || [courseId];
@@ -2222,10 +2226,13 @@ export class AzureTableService {
         }
       }
 
-      // courseId 매칭 (1002 <-> chatgpt-agent-beginner 호환)
+      // courseId 매칭 (1002 <-> chatgpt-agent-beginner, 999 <-> ai-building-course 호환)
       const courseIdMap: { [key: string]: string[] } = {
         'chatgpt-agent-beginner': ['chatgpt-agent-beginner', '1002'],
-        '1002': ['chatgpt-agent-beginner', '1002']
+        '1002': ['chatgpt-agent-beginner', '1002'],
+        'ai-building-course': ['ai-building-course', '999', 'step1-ai-building'],
+        '999': ['ai-building-course', '999', 'step1-ai-building'],
+        'step1-ai-building': ['ai-building-course', '999', 'step1-ai-building']
       };
 
       const matchIds = courseIdMap[courseId] || [courseId];

@@ -52,12 +52,8 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 
               if (paymentStatus && paymentStatus.isPaid) {
                 setIsPaidUser(true);
-                console.log('✅ 결제 확인됨 - 강의 시청 페이지로 리다이렉트');
-                // 결제된 사용자는 새로운 강의 시청 페이지로 리다이렉트
-                setTimeout(() => {
-                  window.location.href = '/ai-building-course-player';
-                }, 1000);
-                return;
+                console.log('✅ 결제 확인됨 - 소개 페이지에 "내 강의 보기" 버튼 표시');
+                // 자동 리다이렉트 제거 - 사용자가 직접 "내 강의 보기" 버튼 클릭
               } else {
                 console.log('❌ 결제되지 않음 - 강의 구매 페이지 표시');
                 setIsAlreadyEnrolled(false);
@@ -153,35 +149,88 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
         />
       )}
 
-      {isPaidUser ? (
-        // 결제 후: 새로운 강의 시청 페이지로 리다이렉트
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '400px',
-          flexDirection: 'column',
-          gap: '20px'
-        }}>
-          <div style={{
-            width: '40px',
-            height: '40px',
-            border: '4px solid #e2e8f0',
-            borderTop: '4px solid #1e40af',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite'
-          }}></div>
-          <p style={{ color: '#64748b', fontSize: '16px' }}>
-            강의 시청 페이지로 이동 중...
-          </p>
-        </div>
-      ) : (
-        // 결제 전: 강의 구매 페이지
+      {/* 모든 사용자에게 강의 소개 페이지 표시 */}
+      {/* 결제 전: 강의 구매 페이지 / 결제 후: "내 강의 보기" 버튼 추가 */}
+      {true && (
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '40px 20px'
+          padding: 'clamp(20px, 4vw, 40px) clamp(15px, 4vw, 20px)'
         }}>
+
+          {/* 결제한 사용자를 위한 "내 강의 보기" 버튼 */}
+          {isPaidUser && (
+            <div style={{
+              background: 'linear-gradient(135deg, #10b981, #059669)',
+              borderRadius: 'clamp(12px, 3vw, 20px)',
+              padding: 'clamp(20px, 5vw, 30px)',
+              marginBottom: 'clamp(25px, 5vw, 40px)',
+              boxShadow: '0 10px 40px rgba(16, 185, 129, 0.3)',
+              border: 'clamp(2px, 0.5vw, 3px) solid #34d399',
+              textAlign: 'center'
+            }}>
+              <div style={{
+                fontSize: '3rem',
+                marginBottom: '15px'
+              }}>
+                🎉
+              </div>
+              <h2 style={{
+                fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+                fontWeight: '800',
+                color: 'white',
+                marginBottom: '15px'
+              }}>
+                이미 수강 중인 강의입니다!
+              </h2>
+              <p style={{
+                fontSize: 'clamp(1rem, 2vw, 1.1rem)',
+                color: '#d1fae5',
+                marginBottom: '25px',
+                lineHeight: '1.6'
+              }}>
+                아래 버튼을 클릭하여 강의를 계속 학습하세요 📚
+              </p>
+              <button
+                onClick={() => window.location.href = '/ai-building-course-player'}
+                style={{
+                  background: 'white',
+                  color: '#059669',
+                  border: 'none',
+                  padding: 'clamp(18px, 4vw, 22px) clamp(40px, 8vw, 60px)',
+                  fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
+                  fontWeight: '900',
+                  borderRadius: '15px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 8px 30px rgba(255, 255, 255, 0.3)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 'clamp(10px, 2vw, 15px)',
+                  width: '100%',
+                  maxWidth: '400px'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                  e.currentTarget.style.boxShadow = '0 12px 40px rgba(255, 255, 255, 0.4)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.boxShadow = '0 8px 30px rgba(255, 255, 255, 0.3)';
+                }}
+                onTouchStart={(e) => {
+                  e.currentTarget.style.transform = 'scale(0.98)';
+                }}
+                onTouchEnd={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
+              >
+                <span style={{ fontSize: 'clamp(1.3rem, 3vw, 1.5rem)' }}>📖</span>
+                내 강의 보기
+              </button>
+            </div>
+          )}
           {/* 상단 메인 CTA */}
           <div style={{
             background: 'linear-gradient(135deg, #1e293b, #334155)',
@@ -2201,7 +2250,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 
               {/* Day 1-5 */}
               {[
-                { day: 1, title: '프롤로그: 맨해튼 부자 삼촌의 교훈', subtitle: '맨해튼 부동산 거물 삼촌의 교훈과 AI 시대 재해석 | Google AI Studio 입문' },
+                { day: 1, title: '프롤로그: 맨해튼 부자 삼촌의 교훈', subtitle: '맨해튼 부동산 거물 삼촌의 교훈과 AI 시대 재해석' },
                 { day: 2, title: '경제적 자유: 잠자는 동안에도 돈이 들어오는 구조', subtitle: '부동산 vs 콘텐츠, 경제적 자유의 새로운 정의 | AI 기반 콘텐츠 청사진 만들기' },
                 { day: 3, title: '당신의 디지털 건물에는 어떤 사람이 거주하나?', subtitle: '글로벌 CPM과 수익성 분석 | AI로 타겟 고객 심층 분석하기' },
                 { day: 4, title: '몇 층짜리 디지털 건물을 세울 것인가?', subtitle: '대중형/니치형/혼합형 전략 | AI로 시장 분석 & 건물 콘셉트 설계' },

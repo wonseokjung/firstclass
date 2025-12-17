@@ -103,7 +103,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
           { 
             day: 1, 
             title: '프롤로그: 맨해튼 부자 삼촌의 교훈', 
-            subtitle: '맨해튼 부동산 거물 삼촌의 교훈과 AI 시대 재해석 | Google AI Studio 입문',
+            subtitle: '맨해튼 부동산 거물 삼촌의 교훈과 AI 시대 재해석',
             hasQuiz: true,
             releaseDate: '2025-01-01'  // 1월 1일 오픈
           },
@@ -509,8 +509,8 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
             }}>
               {week.days.map((lesson) => {
                 const isCompleted = completedDays.has(lesson.day);
-                // 🔒 강의 준비 중
-                const isAvailable = false;
+                // 🔓 Day 1만 열림, Day 2~10은 준비중
+                const isAvailable = lesson.day === 1;
 
                 return (
                   <div

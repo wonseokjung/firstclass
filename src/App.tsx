@@ -122,6 +122,7 @@ const ChatGPTCoursePage = React.lazy(() => import('./components/pages/courses/Ch
 const GoogleAICoursePage = React.lazy(() => import('./components/pages/courses/GoogleAICoursePage'));
 const AIBusinessCoursePage = React.lazy(() => import('./components/pages/courses/AIBusinessCoursePage'));
 const AICodingCoursePage = React.lazy(() => import('./components/pages/courses/AICodingCoursePage'));
+const AILandlordPreviewPage = React.lazy(() => import('./components/pages/courses/AILandlordPreviewPage'));
 const AIEducationDocumentaryPage = React.lazy(() => import('./components/pages/courses/AIEducationDocumentaryPage'));
 const AIBuildingCoursePage = React.lazy(() => import('./components/pages/courses/AIBuildingCoursePage'));
 const AIBuildingCoursePlayerPage = React.lazy(() => import('./components/pages/courses/AIBuildingCoursePlayerPage'));
@@ -188,6 +189,7 @@ const ChatGPTCoursePageWrapped = withPageWrapper(ChatGPTCoursePage);
 const GoogleAICoursePageWrapped = withPageWrapper(GoogleAICoursePage);
 const AIBusinessCoursePageWrapped = withPageWrapper(AIBusinessCoursePage);
 const AICodingCoursePageWrapped = withPageWrapper(AICodingCoursePage);
+const AILandlordPreviewPageWrapped = withPageWrapper(AILandlordPreviewPage);
 const AIEducationDocumentaryPageWrapped = withPageWrapper(AIEducationDocumentaryPage);
 const AIBuildingCoursePageWrapped = withPageWrapper(AIBuildingCoursePage);
 const AIBuildingCoursePlayerPageWrapped = withPageWrapper(AIBuildingCoursePlayerPage);
@@ -401,6 +403,7 @@ const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ childr
             <Route path="/google-ai-course" element={<GoogleAICoursePageWrapped />} />
             <Route path="/ai-business-course" element={<AIBusinessCoursePageWrapped />} />
             <Route path="/ai-coding-course" element={<AICodingCoursePageWrapped />} />
+            <Route path="/ai-landlord-preview" element={<AILandlordPreviewPageWrapped />} />
             <Route path="/ai-education-documentary" element={<AIEducationDocumentaryPageWrapped />} />
             <Route path="/ai-building-course" element={<AIBuildingCoursePageWrapped />} />
             <Route path="/ai-building-course/payment" element={<AIBuildingPaymentPageWrapped />} />
