@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, MessageSquare, Award, Timer } from 'lucide-react';
+import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, MessageSquare, Award, Timer, ChevronUp, ChevronDown } from 'lucide-react';
 import { saveProgress, getProgress, saveQuizResult, getQuizProgress } from '../../../data/courseData';
 import NavigationBar from '../../common/NavigationBar';
 
@@ -209,12 +209,27 @@ const GoogleAICoursePage: React.FC<GoogleAICoursePageProps> = ({ onBack }) => {
   const [quizCompleted, setQuizCompleted] = useState<Record<number, boolean>>({});
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [quizStarted, setQuizStarted] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
+    // 모바일에서는 기본적으로 사이드바를 접어둠
+    return window.innerWidth <= 768;
+  });
   
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
+  // 화면 크기 변경 감지
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.innerWidth <= 768;
+      setIsSidebarCollapsed(isMobile);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   useEffect(() => {
     // 사용자 정보 가져오기
-    const userInfo = sessionStorage.getItem('clathon_user_session');
+    const userInfo = sessionStorage.getItem('aicitybuilders_user_session');
     const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
     
     // 저장된 진도 불러오기 (사용자별)
@@ -287,7 +302,7 @@ const GoogleAICoursePage: React.FC<GoogleAICoursePageProps> = ({ onBack }) => {
     setLessonsProgress(newProgress);
     
     // 사용자별 진도 저장
-    const userInfo = sessionStorage.getItem('clathon_user_session');
+    const userInfo = sessionStorage.getItem('aicitybuilders_user_session');
     const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
     
     await saveProgress('google-ai-course', lessonId, newProgress[lessonId], userEmail);
@@ -364,7 +379,7 @@ const GoogleAICoursePage: React.FC<GoogleAICoursePageProps> = ({ onBack }) => {
     const passed = score >= currentLessonData.quiz.requiredScore;
     
     // 사용자별 퀴즈 결과 저장
-    const userInfo = sessionStorage.getItem('clathon_user_session');
+    const userInfo = sessionStorage.getItem('aicitybuilders_user_session');
     const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
     
     await saveQuizResult('google-ai-course', currentLesson, score, passed, userEmail);
@@ -538,13 +553,24 @@ const GoogleAICoursePage: React.FC<GoogleAICoursePageProps> = ({ onBack }) => {
         </div>
 
         {/* 오른쪽 사이드바 */}
-        <div className="course-sidebar">
-          <div className="sidebar-header">
-            <h3>강의 커리큘럼</h3>
-            <p>총 {googleAICourse.lessons.length}강의 Google AI 완전정복</p>
+        <div className={`course-sidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+          <div 
+            className="sidebar-header" 
+            onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+            style={{ cursor: 'pointer' }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <h3>강의 커리큘럼</h3>
+                <p>총 {googleAICourse.lessons.length}강의 Google AI 완전정복</p>
+              </div>
+              <div className="sidebar-toggle" style={{ display: 'none' }}>
+                {isSidebarCollapsed ? <ChevronDown size={20} /> : <ChevronUp size={20} />}
+              </div>
+            </div>
           </div>
           
-          <div className="lesson-list">
+          <div className="lesson-list" style={{ display: isSidebarCollapsed ? 'none' : 'block' }}>
             {googleAICourse.lessons.map((lesson, index) => (
               <div 
                 key={lesson.id} 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, MessageSquare, Award, Timer } from 'lucide-react';
+import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, MessageSquare, Award, Timer, ChevronUp, ChevronDown } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
 import { aiCodingCourse, saveProgress, getProgress, calculateProgressPercentage, getCompletedLessonsCount, saveQuizResult, getQuizProgress } from '../../../data/courseData';
 
@@ -19,15 +19,27 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
   const [quizCompleted, setQuizCompleted] = useState<Record<number, boolean>>({});
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [quizStarted, setQuizStarted] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
+    return window.innerWidth <= 768;
+  });
   
   const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  // 화면 크기 변경 감지
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSidebarCollapsed(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // AI Coding 강의 데이터
   const course = aiCodingCourse;
 
   useEffect(() => {
     // 사용자 정보 가져오기
-    const userInfo = sessionStorage.getItem('clathon_user_session');
+    const userInfo = sessionStorage.getItem('aicitybuilders_user_session');
     const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
     
     // 저장된 진도 불러오기 (사용자별)
@@ -54,7 +66,7 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
   const currentLessonData = course.lessons.find(lesson => lesson.id === currentLesson);
   
   // 사용자 정보 가져오기 (진도 계산용)
-  const userInfo = sessionStorage.getItem('clathon_user_session');
+  const userInfo = sessionStorage.getItem('aicitybuilders_user_session');
   const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
   
   const progressPercentage = calculateProgressPercentage('ai-coding-course', course.lessons.length, userEmail);
@@ -107,7 +119,7 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
     setLessonsProgress(newProgress);
     
     // 사용자별 진도 저장
-    const userInfo = sessionStorage.getItem('clathon_user_session');
+    const userInfo = sessionStorage.getItem('aicitybuilders_user_session');
     const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
     
     await saveProgress('ai-coding-course', lessonId, newProgress[lessonId], userEmail);
@@ -184,7 +196,7 @@ const AICodingCoursePage: React.FC<AICodingCoursePageProps> = ({ onBack }) => {
     const passed = score >= currentLessonData.quiz.requiredScore;
     
     // 사용자별 퀴즈 결과 저장
-    const userInfo = sessionStorage.getItem('clathon_user_session');
+    const userInfo = sessionStorage.getItem('aicitybuilders_user_session');
     const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
     
     await saveQuizResult('ai-coding-course', currentLesson, score, passed, userEmail);

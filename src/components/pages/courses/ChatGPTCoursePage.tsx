@@ -31,7 +31,7 @@ const ChatGPTCoursePage: React.FC<ChatGPTCoursePageProps> = ({ onBack }) => {
 
   useEffect(() => {
     // 사용자 정보 가져오기
-    const userInfo = sessionStorage.getItem('clathon_user_session');
+    const userInfo = sessionStorage.getItem('aicitybuilders_user_session');
     const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
     
     // 저장된 진도 불러오기 (사용자별)
@@ -74,7 +74,7 @@ const ChatGPTCoursePage: React.FC<ChatGPTCoursePageProps> = ({ onBack }) => {
   const currentLessonData = course.lessons.find(lesson => lesson.id === currentLesson);
   
   // 사용자 정보 가져오기 (진도 계산용)
-  const userInfo = sessionStorage.getItem('clathon_user_session');
+  const userInfo = sessionStorage.getItem('aicitybuilders_user_session');
   const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
   
   const progressPercentage = calculateProgressPercentage('chatgpt-course', course.lessons.length, userEmail);
@@ -127,7 +127,7 @@ const ChatGPTCoursePage: React.FC<ChatGPTCoursePageProps> = ({ onBack }) => {
     setLessonsProgress(newProgress);
     
     // 사용자별 진도 저장
-    const userInfo = sessionStorage.getItem('clathon_user_session');
+    const userInfo = sessionStorage.getItem('aicitybuilders_user_session');
     const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
     
     await saveProgress('chatgpt-course', lessonId, newProgress[lessonId], userEmail);
@@ -204,7 +204,7 @@ const ChatGPTCoursePage: React.FC<ChatGPTCoursePageProps> = ({ onBack }) => {
     const passed = score >= currentLessonData.quiz.requiredScore;
     
     // 사용자별 퀴즈 결과 저장
-    const userInfo = sessionStorage.getItem('clathon_user_session');
+    const userInfo = sessionStorage.getItem('aicitybuilders_user_session');
     const userEmail = userInfo ? JSON.parse(userInfo).email : undefined;
     
     await saveQuizResult('chatgpt-course', currentLesson, score, passed, userEmail);
