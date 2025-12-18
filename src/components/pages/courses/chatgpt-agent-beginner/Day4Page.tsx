@@ -684,7 +684,7 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
             </p>
 
             <a
-              href="https://opal.google/_app/?flow=drive:/11u2HBc4EV7LK_XrAnNjJNvlbbPELt_IU&shared&mode=app"
+              href="https://opal.google/?flow=drive:/1qgT0E4eKCzYO-7bsWHa_p_JsvMm3APcF&shared&mode=app"
               target="_blank"
               rel="noopener noreferrer"
               style={{

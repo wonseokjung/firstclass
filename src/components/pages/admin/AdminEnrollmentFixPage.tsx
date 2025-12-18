@@ -24,6 +24,13 @@ const AdminEnrollmentFixPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [allUsers, setAllUsers] = useState<any[]>([]);
   const [showUserTable, setShowUserTable] = useState(false);
+  
+  // 🔍 결제자 검색 상태 (Azure만 검색, 토스는 스크립트 사용)
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResult, setSearchResult] = useState<any>(null);
+  const [isSearching, setIsSearching] = useState(false);
+  const [showSearchPanel, setShowSearchPanel] = useState(false);
+  
   const [payments, setPayments] = useState<Payment[]>([
     // 최신 결제 - 2025-12-03 (점심/오후)
     { orderId: 'order_1764731754941_ehilkdwjr', name: '강*미', maskedEmail: 'rk**********@naver.com', amount: 45000, date: '2025-12-03 12:16:31', realEmail: 'rk**********@naver.com' },
@@ -401,6 +408,76 @@ const AdminEnrollmentFixPage: React.FC = () => {
 
     checkAdmin();
   }, [navigate]);
+
+  // 🔍 결제자 검색 함수 (Azure만 검색, 토스는 스크립트로)
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) {
+      alert('검색어를 입력해주세요');
+      return;
+    }
+    
+    setIsSearching(true);
+    setSearchResult(null);
+    
+    try {
+      let foundUser = null;
+      const searchLower = searchQuery.toLowerCase().trim();
+      
+      if (allUsers.length > 0) {
+        foundUser = allUsers.find(u => 
+          u.email?.toLowerCase().includes(searchLower) ||
+          u.name?.toLowerCase().includes(searchLower) ||
+          u.phone?.includes(searchQuery.trim())
+        );
+      }
+      
+      if (!foundUser) {
+        const users = await AzureTableService.getAllUsers();
+        foundUser = users.find((u: any) => 
+          u.email?.toLowerCase().includes(searchLower) ||
+          u.name?.toLowerCase().includes(searchLower) ||
+          u.phone?.includes(searchQuery.trim())
+        );
+        setAllUsers(users);
+      }
+      
+      if (foundUser) {
+        let enrollments: any[] = [];
+        let payments: any[] = [];
+        
+        if (foundUser.enrolledCourses) {
+          try {
+            const parsed = JSON.parse(foundUser.enrolledCourses);
+            enrollments = parsed.enrollments || [];
+            payments = parsed.payments || parsed.purchases || [];
+          } catch (e) {
+            console.error('수강 정보 파싱 실패:', e);
+          }
+        }
+        
+        setSearchResult({
+          found: true,
+          user: foundUser,
+          enrollments,
+          payments
+        });
+      } else {
+        setSearchResult({
+          found: false,
+          query: searchQuery
+        });
+      }
+    } catch (error) {
+      console.error('검색 오류:', error);
+      setSearchResult({
+        found: false,
+        error: true,
+        message: '검색 중 오류가 발생했습니다'
+      });
+    }
+    
+    setIsSearching(false);
+  };
 
   const loadAllUsers = async () => {
     // 🔒 프로덕션 환경 체크
@@ -928,8 +1005,230 @@ const AdminEnrollmentFixPage: React.FC = () => {
               {processing && <Loader size={16} className="animate-spin" />}
               {processing ? '처리 중...' : '🤖 자동 매칭 & 일괄 추가'}
             </button>
+            <button
+              onClick={() => setShowSearchPanel(!showSearchPanel)}
+              style={{
+                padding: '12px 24px',
+                borderRadius: '10px',
+                border: 'none',
+                background: showSearchPanel ? '#fbbf24' : 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                color: showSearchPanel ? '#1e3a8a' : 'white',
+                fontSize: '1rem',
+                fontWeight: '700',
+                cursor: 'pointer',
+                boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)'
+              }}
+            >
+              🔍 결제자 검색
+            </button>
           </div>
         </div>
+
+        {/* 🔍 결제자 검색 패널 */}
+        {showSearchPanel && (
+          <div style={{
+            background: 'linear-gradient(135deg, #1e3a8a, #3b82f6)',
+            borderRadius: '20px',
+            padding: '30px',
+            marginBottom: '30px',
+            color: 'white'
+          }}>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              🔍 결제자 검색
+              <span style={{ fontSize: '0.9rem', fontWeight: '400', opacity: 0.8 }}>
+                이메일, 이름, 핸드폰 번호로 검색
+              </span>
+            </h2>
+            
+            <div style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                placeholder="이메일, 이름, 또는 핸드폰 번호 입력..."
+                style={{
+                  flex: 1,
+                  padding: '15px 20px',
+                  borderRadius: '12px',
+                  border: 'none',
+                  fontSize: '1.1rem',
+                  outline: 'none'
+                }}
+              />
+              <button
+                onClick={handleSearch}
+                disabled={isSearching}
+                style={{
+                  padding: '15px 30px',
+                  borderRadius: '12px',
+                  border: 'none',
+                  background: isSearching ? '#94a3b8' : '#fbbf24',
+                  color: '#1e3a8a',
+                  fontSize: '1.1rem',
+                  fontWeight: '700',
+                  cursor: isSearching ? 'not-allowed' : 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+              >
+                {isSearching ? <Loader size={18} className="animate-spin" /> : '🔍'}
+                {isSearching ? '검색 중...' : '검색'}
+              </button>
+            </div>
+
+            {/* 검색 결과 */}
+            {searchResult && (
+              <div style={{
+                background: 'rgba(255,255,255,0.1)',
+                borderRadius: '15px',
+                padding: '25px'
+              }}>
+                {searchResult.found ? (
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+                      <CheckCircle size={24} color="#22c55e" />
+                      <span style={{ fontSize: '1.2rem', fontWeight: '700' }}>사용자 발견!</span>
+                    </div>
+                    
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', marginBottom: '20px' }}>
+                      <div style={{ background: 'rgba(255,255,255,0.1)', padding: '15px', borderRadius: '10px' }}>
+                        <div style={{ fontSize: '0.85rem', opacity: 0.7, marginBottom: '5px' }}>📧 이메일</div>
+                        <div style={{ fontSize: '1rem', fontWeight: '600' }}>{searchResult.user.email}</div>
+                      </div>
+                      <div style={{ background: 'rgba(255,255,255,0.1)', padding: '15px', borderRadius: '10px' }}>
+                        <div style={{ fontSize: '0.85rem', opacity: 0.7, marginBottom: '5px' }}>👤 이름</div>
+                        <div style={{ fontSize: '1rem', fontWeight: '600' }}>{searchResult.user.name || '-'}</div>
+                      </div>
+                      <div style={{ background: 'rgba(255,255,255,0.1)', padding: '15px', borderRadius: '10px' }}>
+                        <div style={{ fontSize: '0.85rem', opacity: 0.7, marginBottom: '5px' }}>📱 핸드폰</div>
+                        <div style={{ fontSize: '1rem', fontWeight: '600' }}>{searchResult.user.phone || '-'}</div>
+                      </div>
+                      <div style={{ background: 'rgba(255,255,255,0.1)', padding: '15px', borderRadius: '10px' }}>
+                        <div style={{ fontSize: '0.85rem', opacity: 0.7, marginBottom: '5px' }}>📅 가입일</div>
+                        <div style={{ fontSize: '1rem', fontWeight: '600' }}>{searchResult.user.createdAt?.split('T')[0] || '-'}</div>
+                      </div>
+                    </div>
+
+                    {/* 수강 중인 강의 */}
+                    <div style={{ marginBottom: '20px' }}>
+                      <h3 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '10px' }}>
+                        📚 수강 중인 강의 ({searchResult.enrollments.length}개)
+                      </h3>
+                      {searchResult.enrollments.length > 0 ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          {searchResult.enrollments.map((e: any, i: number) => (
+                            <div key={i} style={{
+                              background: e.status === 'active' ? 'rgba(34, 197, 94, 0.2)' : 'rgba(255,255,255,0.1)',
+                              padding: '12px 15px',
+                              borderRadius: '8px',
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'center'
+                            }}>
+                              <span>{e.title || e.courseId}</span>
+                              <span style={{
+                                background: e.status === 'active' ? '#22c55e' : '#94a3b8',
+                                padding: '4px 10px',
+                                borderRadius: '6px',
+                                fontSize: '0.8rem',
+                                fontWeight: '600'
+                              }}>
+                                {e.status === 'active' ? '수강 중' : e.status}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div style={{ color: '#fbbf24', fontWeight: '600' }}>
+                          ⚠️ 등록된 강의가 없습니다
+                        </div>
+                      )}
+                    </div>
+
+                    {/* 결제 내역 */}
+                    <div>
+                      <h3 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '10px' }}>
+                        💳 결제 내역 ({searchResult.payments.length}건)
+                      </h3>
+                      {searchResult.payments.length > 0 ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          {searchResult.payments.map((p: any, i: number) => (
+                            <div key={i} style={{
+                              background: 'rgba(255,255,255,0.1)',
+                              padding: '12px 15px',
+                              borderRadius: '8px',
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                              flexWrap: 'wrap',
+                              gap: '10px'
+                            }}>
+                              <div>
+                                <div style={{ fontWeight: '600' }}>{p.courseName || p.courseTitle || p.courseId}</div>
+                                <div style={{ fontSize: '0.85rem', opacity: 0.7 }}>
+                                  {p.createdAt?.split('T')[0] || p.purchasedAt?.split('T')[0] || '-'}
+                                </div>
+                              </div>
+                              <div style={{ textAlign: 'right' }}>
+                                <div style={{ fontWeight: '700', color: '#22c55e' }}>
+                                  {p.amount?.toLocaleString()}원
+                                </div>
+                                {p.orderId && (
+                                  <div style={{ fontSize: '0.75rem', opacity: 0.6, fontFamily: 'monospace' }}>
+                                    {p.orderId.substring(0, 20)}...
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div style={{ color: '#ef4444', fontWeight: '600' }}>
+                          ❌ 결제 내역이 없습니다
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <AlertCircle size={24} color="#fbbf24" />
+                    <span style={{ fontSize: '1.1rem' }}>
+                      "{searchResult.query}" 에 해당하는 사용자를 찾을 수 없습니다.
+                      {searchResult.error && ` (${searchResult.message})`}
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* 토스 검색 안내 */}
+            <div style={{
+              background: 'rgba(0,0,0,0.2)',
+              borderRadius: '10px',
+              padding: '15px 20px',
+              marginTop: '15px',
+              fontSize: '0.9rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              flexWrap: 'wrap'
+            }}>
+              <span>💳</span>
+              <span>토스 결제 내역은 터미널에서 검색:</span>
+              <code style={{
+                background: 'rgba(0,0,0,0.3)',
+                padding: '5px 12px',
+                borderRadius: '6px',
+                fontFamily: 'monospace',
+                fontSize: '0.85rem'
+              }}>
+                node scripts/find-payment.js "{searchQuery || '이메일'}"
+              </code>
+            </div>
+          </div>
+        )}
 
         {/* 통계 */}
         <div style={{
