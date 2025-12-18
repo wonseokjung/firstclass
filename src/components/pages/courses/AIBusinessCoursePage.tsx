@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, TrendingUp, Award, Timer, ChevronUp, ChevronDown } from 'lucide-react';
+import { ArrowLeft, Clock, Users, Star, CheckCircle, Circle, TrendingUp, Award, Timer } from 'lucide-react';
 import { aiBusinessCourse, saveProgress, getProgress, calculateProgressPercentage, getCompletedLessonsCount, saveQuizResult, getQuizProgress } from '../../../data/courseData';
 import NavigationBar from '../../common/NavigationBar';
 
@@ -19,20 +19,8 @@ const AIBusinessCoursePage: React.FC<AIBusinessCoursePageProps> = ({ onBack }) =
   const [quizCompleted, setQuizCompleted] = useState<Record<number, boolean>>({});
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [quizStarted, setQuizStarted] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
-    return window.innerWidth <= 768;
-  });
   
   const iframeRef = useRef<HTMLIFrameElement>(null);
-
-  // 화면 크기 변경 감지
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSidebarCollapsed(window.innerWidth <= 768);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   // AI 비즈니스 강의 데이터
   const course = aiBusinessCourse;
