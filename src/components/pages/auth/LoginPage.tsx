@@ -20,6 +20,10 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [isLoading, setIsLoading] = useState(false);
   const [showPasswordResetModal, setShowPasswordResetModal] = useState(false);
+  const [rememberMe, setRememberMe] = useState(() => {
+    // 이전에 자동 로그인을 체크했는지 확인
+    return localStorage.getItem('aicitybuilders_remember_me') === 'true';
+  });
 
   const validateForm = () => {
     const newErrors: {[key: string]: string} = {};
@@ -90,7 +94,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
       // 세션 생성
       const sessionId = await AzureTableService.createSession(user.rowKey);
 
-      // 세션 동안 사용자 정보 유지 (localStorage도 함께 저장)
+      // 세션 동안 사용자 정보 유지
       const userInfo = {
         userId: user.rowKey,
         email: user.email,
@@ -99,7 +103,17 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
       };
       
       sessionStorage.setItem('aicitybuilders_user_session', JSON.stringify(userInfo));
-      localStorage.setItem('aicitybuilders_user', JSON.stringify(userInfo));
+      
+      // 자동 로그인 설정
+      if (rememberMe) {
+        localStorage.setItem('aicitybuilders_remember_me', 'true');
+        localStorage.setItem('aicitybuilders_user', JSON.stringify(userInfo));
+        console.log('💾 자동 로그인 활성화');
+      } else {
+        localStorage.removeItem('aicitybuilders_remember_me');
+        localStorage.removeItem('aicitybuilders_user');
+        console.log('💾 자동 로그인 비활성화');
+      }
       console.log('💾 사용자 세션 정보 저장:', userInfo);
       
       alert(`${user.name}님, 환영합니다!`);
@@ -252,7 +266,28 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
                 )}
               </div>
 
-              <div className="form-options">
+              <div className="form-options" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                <label style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '8px', 
+                  cursor: 'pointer',
+                  fontSize: '0.95rem',
+                  color: '#64748b'
+                }}>
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    style={{
+                      width: '18px',
+                      height: '18px',
+                      accentColor: '#d4af37',
+                      cursor: 'pointer'
+                    }}
+                  />
+                  자동 로그인
+                </label>
                 <div className="forgot-password">
                   <button 
                     type="button" 

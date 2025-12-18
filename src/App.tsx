@@ -387,6 +387,28 @@ const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ childr
   function App() {
     useEffect(() => {
       AzureTableService.initializeTables();
+      
+      // 🔐 자동 로그인 체크
+      const checkAutoLogin = () => {
+        const rememberMe = localStorage.getItem('aicitybuilders_remember_me');
+        const savedUser = localStorage.getItem('aicitybuilders_user');
+        const currentSession = sessionStorage.getItem('aicitybuilders_user_session');
+        
+        // 자동 로그인이 활성화되어 있고, 저장된 사용자가 있고, 현재 세션이 없는 경우
+        if (rememberMe === 'true' && savedUser && !currentSession) {
+          try {
+            const userInfo = JSON.parse(savedUser);
+            sessionStorage.setItem('aicitybuilders_user_session', savedUser);
+            console.log('🔐 자동 로그인 성공:', userInfo.email);
+          } catch (e) {
+            console.error('자동 로그인 실패:', e);
+            localStorage.removeItem('aicitybuilders_user');
+            localStorage.removeItem('aicitybuilders_remember_me');
+          }
+        }
+      };
+      
+      checkAutoLogin();
     }, []);
   
     return (
