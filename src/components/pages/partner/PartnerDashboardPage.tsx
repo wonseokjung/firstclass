@@ -367,8 +367,8 @@ const PartnerDashboardPage: React.FC = () => {
                   flexShrink: 0
                 }}>3</div>
                 <div>
-                  <div style={{ color: COLORS.textPrimary, fontWeight: '600' }}>링크로 누군가 강의 구매</div>
-                  <div style={{ color: COLORS.textMuted, fontSize: '0.9rem' }}>24시간 내 구매 시 인정</div>
+                  <div style={{ color: COLORS.textPrimary, fontWeight: '600' }}>링크로 누군가 가입하면 평생 연결!</div>
+                  <div style={{ color: COLORS.textMuted, fontSize: '0.9rem' }}>한 번 추천받으면 영구 등록</div>
                 </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
@@ -386,10 +386,42 @@ const PartnerDashboardPage: React.FC = () => {
                   flexShrink: 0
                 }}>4</div>
                 <div>
-                  <div style={{ color: COLORS.gold, fontWeight: '700' }}>판매 금액의 10% 브릭 적립!</div>
-                  <div style={{ color: COLORS.textMuted, fontSize: '0.9rem' }}>월말 정산 후 현금 출금 (최소 10만 브릭)</div>
+                  <div style={{ color: COLORS.gold, fontWeight: '700' }}>그 사람의 모든 구매에서 10% 브릭!</div>
+                  <div style={{ color: COLORS.textMuted, fontSize: '0.9rem' }}>첫 강의뿐 아니라 미래 구매 전부 적용</div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* 🔥 핵심 포인트 안내 */}
+          <div style={{
+            background: `linear-gradient(135deg, ${COLORS.success}15, ${COLORS.gold}10)`,
+            borderRadius: '20px',
+            padding: '25px',
+            marginBottom: '20px',
+            border: `2px solid ${COLORS.success}40`
+          }}>
+            <h3 style={{ color: COLORS.success, fontSize: '1.1rem', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              ✨ 평생 파트너 시스템
+            </h3>
+            <div style={{ color: COLORS.textPrimary, fontSize: '0.95rem', lineHeight: '1.8' }}>
+              <p style={{ marginBottom: '12px' }}>
+                <strong style={{ color: COLORS.gold }}>한 번 추천하면 평생 연결!</strong>
+              </p>
+              <ul style={{ margin: 0, paddingLeft: '20px', color: COLORS.textSecondary }}>
+                <li style={{ marginBottom: '8px' }}>
+                  누군가 내 링크로 <strong style={{ color: COLORS.white }}>가입만 하면</strong> 영구적으로 나와 연결됩니다
+                </li>
+                <li style={{ marginBottom: '8px' }}>
+                  그 사람이 <strong style={{ color: COLORS.gold }}>어떤 강의를 구매하든</strong> 10% 브릭 적립!
+                </li>
+                <li style={{ marginBottom: '8px' }}>
+                  첫 강의뿐 아니라 <strong style={{ color: COLORS.brick }}>Step 1, 2, 3, 4 모두</strong> 적용
+                </li>
+                <li>
+                  가상계좌 결제도 <strong style={{ color: COLORS.success }}>자동 적립</strong> (관리자 확인 후)
+                </li>
+              </ul>
             </div>
           </div>
 
