@@ -5,8 +5,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 // 🔄 자동 버전 체크 - 새 버전이 있으면 자동 새로고침
-const APP_VERSION = '2024-12-18-v1'; // 배포할 때마다 이 값 변경
-
 const checkForUpdates = async () => {
   try {
     const response = await fetch('/version.json?t=' + Date.now(), {
