@@ -703,8 +703,66 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
               영상과 다를 수 있습니다 — 더 나은 성능을 위해 계속 개선 중
             </p>
 
+            {/* 오류 발생 시 안내 */}
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.15)',
+              borderRadius: '12px',
+              padding: '15px 20px',
+              marginBottom: '20px',
+              border: '1px dashed rgba(255, 255, 255, 0.4)'
+            }}>
+              <p style={{ 
+                fontSize: '0.9rem', 
+                color: 'rgba(255, 255, 255, 0.9)', 
+                marginBottom: '10px',
+                lineHeight: '1.5'
+              }}>
+                ⚠️ 워크플로우에서 오류가 날 경우, 아래 링크를 복사해서 새 탭에 직접 붙여넣기 하세요:
+              </p>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                background: 'rgba(0, 0, 0, 0.3)',
+                borderRadius: '8px',
+                padding: '10px 15px'
+              }}>
+                <input
+                  type="text"
+                  readOnly
+                  value="https://opal.google/?flow=drive:/1rQn2CTTSefW5zXba2rTq7gGpjSGUHDfr&shared&mode=app"
+                  style={{
+                    flex: 1,
+                    background: 'transparent',
+                    border: 'none',
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    fontSize: '0.85rem',
+                    outline: 'none'
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText('https://opal.google/?flow=drive:/1rQn2CTTSefW5zXba2rTq7gGpjSGUHDfr&shared&mode=app');
+                    alert('링크가 복사되었습니다! 새 탭에 붙여넣기 하세요.');
+                  }}
+                  style={{
+                    background: '#fbbf24',
+                    color: '#92400e',
+                    border: 'none',
+                    borderRadius: '6px',
+                    padding: '8px 15px',
+                    fontSize: '0.85rem',
+                    fontWeight: '600',
+                    cursor: 'pointer'
+                  }}
+                >
+                  📋 복사
+                </button>
+              </div>
+            </div>
+
             <a
-              href="https://opal.google/_app/?flow=drive:/1LjB3JFMovtkgeM2CQrIT_bRq0i6s4WKe&shared&mode=app"
+              href="https://opal.google/?flow=drive:/1rQn2CTTSefW5zXba2rTq7gGpjSGUHDfr&shared&mode=app"
               target="_blank"
               rel="noopener noreferrer"
               style={{

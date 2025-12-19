@@ -106,9 +106,20 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
           <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px;">
             아래 워크플로우를 기반으로 자유롭게 수정하고 실험해보세요:
           </p>
+          
+          <!-- 오류 발생 시 안내 -->
+          <div style="background: #fef3c7; border: 1px dashed #f59e0b; border-radius: 12px; padding: 15px 20px; margin-bottom: 20px;">
+            <p style="font-size: 0.9rem; color: #92400e; margin-bottom: 10px; line-height: 1.5;">
+              ⚠️ 워크플로우에서 오류가 날 경우, 아래 링크를 복사해서 새 탭에 직접 붙여넣기 하세요:
+            </p>
+            <div style="background: #fffbeb; border-radius: 8px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <code style="flex: 1; font-size: 0.8rem; color: #78350f; word-break: break-all;">https://opal.google/?flow=drive:/14P_WHw_DWKIESYXn0JYP7k5vRG4Iech_&shared&mode=app</code>
+            </div>
+          </div>
+
           <div style="text-align: center; margin: 30px 0;">
             <a 
-              href="https://opal.google/_app/?flow=drive:/1Ug7YMGvzO_cbCIEeiaHmzeAEL2wMxgVv&shared&mode=app"
+              href="https://opal.google/?flow=drive:/14P_WHw_DWKIESYXn0JYP7k5vRG4Iech_&shared&mode=app"
               target="_blank"
               rel="noopener noreferrer"
               style="

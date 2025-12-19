@@ -247,8 +247,18 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
               </p>
             </div>
 
+            <!-- 오류 발생 시 안내 -->
+            <div style="background: #fef3c7; border: 1px dashed #f59e0b; border-radius: 12px; padding: 15px 20px; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+              <p style="font-size: 0.9rem; color: #92400e; margin-bottom: 10px; line-height: 1.5; text-align: left;">
+                ⚠️ 워크플로우에서 오류가 날 경우, 아래 링크를 복사해서 새 탭에 직접 붙여넣기 하세요:
+              </p>
+              <div style="background: #fffbeb; border-radius: 8px; padding: 10px 15px;">
+                <code style="font-size: 0.75rem; color: #78350f; word-break: break-all;">https://opal.google/?flow=drive:/1Tsa_QMjOFQXMtnPl8J6mLUnbMkjrOa0B&shared&mode=app</code>
+              </div>
+            </div>
+
             <a 
-              href="https://opal.google/_app/?flow=drive:/1WnRyqoQFV94yV83TyqG98fdQzDj8UsZ0&shared&mode=app"
+              href="https://opal.google/?flow=drive:/1Tsa_QMjOFQXMtnPl8J6mLUnbMkjrOa0B&shared&mode=app"
               target="_blank"
               rel="noopener noreferrer"
               style="
