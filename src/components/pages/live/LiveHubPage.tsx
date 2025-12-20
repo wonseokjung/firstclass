@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, Clock, Youtube, ChevronRight, Play } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
@@ -92,91 +92,8 @@ interface LiveHubPageProps {
   onBack?: () => void;
 }
 
-// 🚀 라이브 시작일: 2025년 12월 22일 (월요일) 오후 8시
-const LIVE_START_DATE = new Date('2025-12-22T20:00:00+09:00');
-
 const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
-  const [nextLive, setNextLive] = useState<LiveSchedule | null>(null);
-  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const [isPreLaunch, setIsPreLaunch] = useState(false);
-
-  // 다음 라이브 계산
-  useEffect(() => {
-    const now = new Date();
-    
-    // 아직 라이브 시작 전이면 시작일까지 카운트다운
-    if (now < LIVE_START_DATE) {
-      setIsPreLaunch(true);
-      // 시작일 전에는 첫 번째 라이브 (월요일 무료 라이브) 표시
-      setNextLive(LIVE_SCHEDULE[0]);
-      
-      const updateCountdown = () => {
-        const diff = LIVE_START_DATE.getTime() - Date.now();
-        if (diff > 0) {
-          setCountdown({
-            days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-            hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-            minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-            seconds: Math.floor((diff % (1000 * 60)) / 1000)
-          });
-        }
-      };
-
-      updateCountdown();
-      const timer = setInterval(updateCountdown, 1000);
-      return () => clearInterval(timer);
-    }
-
-    // 라이브 시작 후에는 기존 요일별 스케줄로 계산
-    const dayMap: { [key: string]: number } = {
-      'MON': 1, 'TUE': 2, 'WED': 3, 'THU': 4
-    };
-
-    const currentDay = now.getDay();
-    
-    let closestSchedule: LiveSchedule | null = null;
-    let closestDate: Date | null = null;
-
-    LIVE_SCHEDULE.forEach(schedule => {
-      const targetDay = dayMap[schedule.day];
-      if (targetDay !== undefined) {
-        let daysUntil = targetDay - currentDay;
-        if (daysUntil < 0 || (daysUntil === 0 && now.getHours() >= 20)) {
-          daysUntil += 7;
-        }
-        
-        const nextDate = new Date(now);
-        nextDate.setDate(now.getDate() + daysUntil);
-        nextDate.setHours(20, 0, 0, 0);
-
-        if (!closestDate || nextDate < closestDate) {
-          closestSchedule = schedule;
-          closestDate = nextDate;
-        }
-      }
-    });
-
-    if (closestSchedule && closestDate) {
-      setNextLive(closestSchedule);
-      
-      const updateCountdown = () => {
-        const diff = (closestDate as Date).getTime() - Date.now();
-        if (diff > 0) {
-          setCountdown({
-            days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-            hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-            minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-            seconds: Math.floor((diff % (1000 * 60)) / 1000)
-          });
-        }
-      };
-
-      updateCountdown();
-      const timer = setInterval(updateCountdown, 1000);
-      return () => clearInterval(timer);
-    }
-  }, []);
 
   return (
     <div style={{ minHeight: '100vh', background: COLORS.grayLight }}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, PlayCircle, Clock, BookOpen, ExternalLink, Lightbulb, TrendingUp, Building2, Video, Rocket, Target } from 'lucide-react';
+import { ArrowLeft, CheckCircle, PlayCircle, Clock, BookOpen, ExternalLink, Lightbulb, Building2, Video, Rocket, Target } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
 
 interface Day2PageProps {
