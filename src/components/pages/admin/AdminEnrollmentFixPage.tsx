@@ -1125,9 +1125,16 @@ const AdminEnrollmentFixPage: React.FC = () => {
                               borderRadius: '8px',
                               display: 'flex',
                               justifyContent: 'space-between',
-                              alignItems: 'center'
+                              alignItems: 'center',
+                              flexWrap: 'wrap',
+                              gap: '8px'
                             }}>
-                              <span>{e.title || e.courseId}</span>
+                              <div>
+                                <div style={{ fontWeight: '600' }}>{e.title || e.courseId}</div>
+                                <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>
+                                  📅 시작: {e.enrolledAt?.split('T')[0] || '-'}
+                                </div>
+                              </div>
                               <span style={{
                                 background: e.status === 'active' ? '#22c55e' : '#94a3b8',
                                 padding: '4px 10px',
@@ -1160,24 +1167,35 @@ const AdminEnrollmentFixPage: React.FC = () => {
                               padding: '12px 15px',
                               borderRadius: '8px',
                               display: 'flex',
-                              justifyContent: 'space-between',
-                              alignItems: 'center',
-                              flexWrap: 'wrap',
-                              gap: '10px'
+                              flexDirection: 'column',
+                              gap: '8px'
                             }}>
-                              <div>
-                                <div style={{ fontWeight: '600' }}>{p.courseName || p.courseTitle || p.courseId}</div>
-                                <div style={{ fontSize: '0.85rem', opacity: 0.7 }}>
-                                  {p.createdAt?.split('T')[0] || p.purchasedAt?.split('T')[0] || '-'}
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+                                <div>
+                                  <div style={{ fontWeight: '600' }}>{p.courseName || p.courseTitle || p.courseId}</div>
+                                  <div style={{ fontSize: '0.85rem', opacity: 0.7 }}>
+                                    📅 결제: {p.createdAt?.split('T')[0] || p.purchasedAt?.split('T')[0] || '-'}
+                                  </div>
+                                </div>
+                                <div style={{ textAlign: 'right' }}>
+                                  <div style={{ fontWeight: '700', color: '#22c55e' }}>
+                                    {p.amount?.toLocaleString()}원
+                                  </div>
                                 </div>
                               </div>
-                              <div style={{ textAlign: 'right' }}>
-                                <div style={{ fontWeight: '700', color: '#22c55e' }}>
-                                  {p.amount?.toLocaleString()}원
-                                </div>
+                              <div style={{ fontSize: '0.75rem', opacity: 0.7, fontFamily: 'monospace', display: 'flex', flexDirection: 'column', gap: '4px' }}>
                                 {p.orderId && (
-                                  <div style={{ fontSize: '0.75rem', opacity: 0.6, fontFamily: 'monospace' }}>
-                                    {p.orderId.substring(0, 20)}...
+                                  <div>📦 주문: {p.orderId}</div>
+                                )}
+                                {p.paymentKey && (
+                                  <div 
+                                    style={{ cursor: 'pointer', color: '#fbbf24' }}
+                                    onClick={() => {
+                                      navigator.clipboard.writeText(p.paymentKey);
+                                      alert('paymentKey가 복사되었습니다!\n\n환불 시 사용하세요.');
+                                    }}
+                                  >
+                                    🔑 환불키: {p.paymentKey.substring(0, 20)}... (클릭하여 복사)
                                   </div>
                                 )}
                               </div>

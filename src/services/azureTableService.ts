@@ -970,6 +970,7 @@ export class AzureTableService {
     externalPaymentId?: string;
     orderId?: string;
     orderName?: string;
+    paymentKey?: string;  // 🔴 환불용 토스 paymentKey
   }): Promise<{ payment: any, enrollment: EnrolledCourse }> {
     try {
       console.log('🛒 구매 처리 중:', userData.email);
@@ -986,6 +987,7 @@ export class AzureTableService {
         externalPaymentId: userData.externalPaymentId || 'local_payment',
         orderId: userData.orderId || paymentId, // 주문번호 추가
         orderName: userData.orderName || userData.title, // 주문명 추가
+        paymentKey: userData.paymentKey || null, // 🔴 환불용 토스 paymentKey 추가
         status: 'completed',
         purchasedAt: new Date().toISOString(), // 구매일 추가
         timestamp: new Date().toISOString(), // 타임스탬프 추가
@@ -1655,6 +1657,7 @@ export class AzureTableService {
     externalPaymentId?: string;
     orderId?: string;
     orderName?: string;
+    paymentKey?: string;  // 🔴 환불용 토스 paymentKey
   }): Promise<{ payment: any, enrollment: any, rewardProcessed: boolean }> {
     try {
       // 기존 구매 처리

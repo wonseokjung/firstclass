@@ -325,7 +325,8 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 amount: courseData.price,
                 paymentMethod: 'card',
                 orderId: orderId || undefined,
-                orderName: courseData.title
+                orderName: courseData.title,
+                paymentKey: paymentKey || undefined  // 🔴 환불용 paymentKey 추가
               });
               
               console.log(`✅ ${courseData.title} 구매 완료, 결과:`, result);

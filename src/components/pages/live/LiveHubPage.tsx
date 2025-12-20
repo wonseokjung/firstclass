@@ -207,69 +207,6 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
       </div>
 
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)' }}>
-        
-        {/* 다음 라이브 카운트다운 */}
-        {nextLive && (
-          <div style={{
-            background: COLORS.white,
-            borderRadius: '16px',
-            padding: 'clamp(20px, 4vw, 30px)',
-            marginBottom: '30px',
-            border: `2px solid ${nextLive.color}`,
-            boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
-          }}>
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'space-between', 
-              flexWrap: 'wrap', 
-              gap: '15px' 
-            }}>
-              <div>
-                <p style={{ color: COLORS.grayMedium, fontSize: '0.85rem', marginBottom: '5px' }}>
-                  ⏰ 다음 라이브
-                </p>
-                <h3 style={{ 
-                  color: COLORS.navy, 
-                  fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', 
-                  fontWeight: '700',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
-                }}>
-                  {nextLive.icon} {nextLive.title}
-                </h3>
-                <p style={{ color: nextLive.color, fontWeight: '600', marginTop: '3px' }}>
-                  {isPreLaunch ? '12월 22일 (일) 오후 8:00 첫 방송!' : `${nextLive.dayKo} ${nextLive.time}`}
-                </p>
-              </div>
-              
-              <div style={{ display: 'flex', gap: '8px' }}>
-                {[
-                  { value: countdown.days, label: '일' },
-                  { value: countdown.hours, label: '시' },
-                  { value: countdown.minutes, label: '분' },
-                  { value: countdown.seconds, label: '초' }
-                ].map((item, idx) => (
-                  <div key={idx} style={{
-                    background: COLORS.navy,
-                    borderRadius: '10px',
-                    padding: '10px 14px',
-                    textAlign: 'center',
-                    minWidth: '50px'
-                  }}>
-                    <div style={{ color: COLORS.goldLight, fontSize: '1.4rem', fontWeight: '800' }}>
-                      {String(item.value).padStart(2, '0')}
-                    </div>
-                    <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.65rem' }}>
-                      {item.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* 주간 스케줄 */}
         <h2 style={{ 

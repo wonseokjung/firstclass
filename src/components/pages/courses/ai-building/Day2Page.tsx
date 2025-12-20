@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, PlayCircle, Clock, BookOpen } from 'lucide-react';
+import { ArrowLeft, CheckCircle, PlayCircle, Clock, BookOpen, ExternalLink, Lightbulb, TrendingUp, Building2, Video, Rocket, Target } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
 
 interface Day2PageProps {
@@ -11,6 +11,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
   const [isDayCompleted, setIsDayCompleted] = useState<boolean>(false);
   const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>('');
+  const [activeTab, setActiveTab] = useState<'theory' | 'practice'>('theory');
 
   useEffect(() => {
     const loadUserProgress = async () => {
@@ -73,92 +74,24 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
     }
   };
 
-  const lessonData = {
-    day: 2,
-    title: "경제적 자유: 잠자는 동안에도 돈이 들어오는 구조",
-    duration: "약 50분",
-    description: "부동산 vs 콘텐츠, 경제적 자유의 새로운 정의. AI 기반 콘텐츠 청사진 만들기",
-    objectives: [
-      "경제적 자유의 진정한 의미 이해하기",
-      "패시브 인컴(수동 수익) 구조 설계하기",
-      "AI를 활용한 콘텐츠 청사진 만들기"
-    ],
-    sections: [
-      {
-        id: 'passive-income',
-        title: '💰 경제적 자유란?',
-        content: `
-          <p style="font-size: 1.1rem; line-height: 1.8;">경제적 자유는 단순히 돈이 많은 것이 아닙니다.</p>
-          <div style="background: linear-gradient(135deg, #0f172a, #1e3a5f); padding: 25px; border-radius: 15px; color: white; margin: 20px 0;">
-            <h4 style="color: #fbbf24; margin-bottom: 15px;">경제적 자유 = 시간의 자유</h4>
-            <p style="margin: 0;">일하지 않아도 생활비 이상의 수입이 들어오는 상태</p>
-          </div>
-          <ul style="list-style: none; padding: 0; margin-top: 20px;">
-            <li style="padding: 15px; margin: 10px 0; background: #f0f9ff; border-radius: 10px; border-left: 4px solid #0ea5e9;">
-              <strong>노동 소득:</strong> 일한 만큼만 돈을 받음 (시간 = 돈)
-            </li>
-            <li style="padding: 15px; margin: 10px 0; background: #fef3c7; border-radius: 10px; border-left: 4px solid #fbbf24;">
-              <strong>패시브 인컴:</strong> 시스템이 돈을 벌어줌 (시간 ≠ 돈)
-            </li>
-          </ul>
-        `
-      },
-      {
-        id: 'real-vs-digital',
-        title: '🏢 부동산 vs 디지털 콘텐츠',
-        content: `
-          <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-            <tr style="background: #1e3a5f; color: white;">
-              <th style="padding: 15px; text-align: left; border-radius: 10px 0 0 0;">항목</th>
-              <th style="padding: 15px; text-align: center;">부동산</th>
-              <th style="padding: 15px; text-align: center; border-radius: 0 10px 0 0;">디지털 콘텐츠</th>
-            </tr>
-            <tr style="background: #f8fafc;">
-              <td style="padding: 15px; font-weight: 600;">초기 자본</td>
-              <td style="padding: 15px; text-align: center;">수억원</td>
-              <td style="padding: 15px; text-align: center; color: #22c55e; font-weight: 700;">거의 0원</td>
-            </tr>
-            <tr style="background: white;">
-              <td style="padding: 15px; font-weight: 600;">수익 시작</td>
-              <td style="padding: 15px; text-align: center;">수개월~수년</td>
-              <td style="padding: 15px; text-align: center; color: #22c55e; font-weight: 700;">즉시 가능</td>
-            </tr>
-            <tr style="background: #f8fafc;">
-              <td style="padding: 15px; font-weight: 600;">확장성</td>
-              <td style="padding: 15px; text-align: center;">제한적</td>
-              <td style="padding: 15px; text-align: center; color: #22c55e; font-weight: 700;">무제한</td>
-            </tr>
-          </table>
-        `
-      },
-      {
-        id: 'ai-blueprint',
-        title: '📋 실습: AI 콘텐츠 청사진 만들기',
-        content: `
-          <div style="background: #f8fafc; padding: 25px; border-radius: 15px; border: 2px solid #e2e8f0;">
-            <h4 style="color: #1e3a5f; margin-bottom: 15px;">Google AI Studio 실습</h4>
-            <p style="margin-bottom: 15px;">아래 프롬프트를 입력해보세요:</p>
-            <div style="background: #1e293b; color: #22c55e; padding: 20px; border-radius: 10px; font-family: monospace; font-size: 0.95rem; line-height: 1.8;">
-              "나는 [관심 분야]에 관심이 있는 사람입니다.<br/>
-              AI를 활용해서 수익화할 수 있는<br/>
-              콘텐츠 채널 아이디어 5가지를 제안해주세요.<br/>
-              각각의 예상 수익 모델도 함께 알려주세요."
-            </div>
-          </div>
-        `
-      }
-    ]
-  };
+  // 성장 사이클 단계 데이터
+  const growthCycleSteps = [
+    { step: 1, title: 'AI 콘텐츠', subtitle: '유튜브, 블로그, SNS', color: '#f43f5e', icon: '🎬' },
+    { step: 2, title: '자동화 에이전트', subtitle: '콘텐츠 생산 자동화', color: '#a855f7', icon: '🤖' },
+    { step: 3, title: '바이브코딩', subtitle: 'AI와 대화하며 개발', color: '#3b82f6', icon: '💻' },
+    { step: 4, title: 'AI 1인 기업', subtitle: '수익화 & 스케일업', color: '#22c55e', icon: '🌐' },
+  ];
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0a0f1a 0%, #1a1f2e 100%)' }}>
       {/* 헤더 */}
       <div style={{
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%)',
+        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
         padding: '20px',
         position: 'sticky',
         top: 0,
-        zIndex: 100
+        zIndex: 100,
+        borderBottom: '1px solid rgba(255,255,255,0.1)'
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <button
@@ -167,13 +100,14 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              background: 'rgba(255,255,255,0.1)',
-              border: 'none',
+              background: 'rgba(255,255,255,0.05)',
+              border: '1px solid rgba(255,255,255,0.1)',
               color: 'white',
               padding: '10px 20px',
               borderRadius: '10px',
               cursor: 'pointer',
-              marginBottom: '15px'
+              marginBottom: '15px',
+              transition: 'all 0.2s'
             }}
           >
             <ArrowLeft size={20} />
@@ -182,29 +116,33 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <div style={{
-              background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-              width: '60px',
-              height: '60px',
-              borderRadius: '15px',
+              background: 'linear-gradient(135deg, #f43f5e, #ec4899)',
+              width: '65px',
+              height: '65px',
+              borderRadius: '18px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '1.5rem',
+              fontSize: '1.8rem',
               fontWeight: '800',
-              color: 'white'
+              color: 'white',
+              boxShadow: '0 8px 25px rgba(244, 63, 94, 0.4)'
             }}>
               2
             </div>
             <div>
-              <h1 style={{ color: 'white', fontSize: '1.5rem', margin: 0 }}>
-                Day {lessonData.day}: {lessonData.title}
+              <h1 style={{ color: 'white', fontSize: '1.6rem', margin: 0, fontWeight: '700' }}>
+                경제적 자유: 잠자는 동안에도 돈이 들어오는 구조
               </h1>
-              <div style={{ display: 'flex', gap: '15px', marginTop: '8px' }}>
-                <span style={{ color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <Clock size={16} /> {lessonData.duration}
+              <p style={{ color: '#e2e8f0', margin: '8px 0 0 0', fontSize: '1rem' }}>
+                AI 기반 1인 기업 청사진 만들기
+              </p>
+              <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
+                <span style={{ color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem' }}>
+                  <Clock size={16} /> 약 50분
                 </span>
                 {isDayCompleted && (
-                  <span style={{ color: '#22c55e', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <span style={{ color: '#22c55e', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem' }}>
                     <CheckCircle size={16} /> 완료됨
                   </span>
                 )}
@@ -215,58 +153,568 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
       </div>
 
       {/* 콘텐츠 */}
-      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '40px 20px' }}>
-        {/* 학습 목표 */}
+      <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '40px 20px' }}>
+        
+        {/* 학습 목표 카드 */}
         <div style={{
-          background: 'white',
-          borderRadius: '20px',
-          padding: '30px',
-          marginBottom: '30px',
-          boxShadow: '0 4px 15px rgba(0,0,0,0.05)'
+          background: 'linear-gradient(135deg, rgba(244, 63, 94, 0.1), rgba(168, 85, 247, 0.1))',
+          borderRadius: '24px',
+          padding: '35px',
+          marginBottom: '40px',
+          border: '1px solid rgba(244, 63, 94, 0.2)',
+          backdropFilter: 'blur(10px)'
         }}>
-          <h2 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#1e3a5f', marginBottom: '20px' }}>
-            <BookOpen size={24} /> 학습 목표
+          <h2 style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '12px', 
+            color: '#f43f5e', 
+            marginBottom: '25px',
+            fontSize: '1.4rem',
+            fontWeight: '700'
+          }}>
+            <Target size={28} /> 오늘의 학습 목표
           </h2>
-          <ul style={{ paddingLeft: '20px', lineHeight: '2' }}>
-            {lessonData.objectives.map((obj, idx) => (
-              <li key={idx} style={{ color: '#64748b' }}>{obj}</li>
+          <div style={{ display: 'grid', gap: '15px' }}>
+            {[
+              '경제적 자유(Financial Freedom)의 진정한 의미 이해하기',
+              '부동산 vs 콘텐츠 수익화의 현실 비교하기',
+              'AI 1인 기업 성장 사이클 이해하기',
+              '나만의 1인 기업 청사진 만들기 (실습)'
+            ].map((obj, idx) => (
+              <div key={idx} style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '12px',
+                color: '#e2e8f0',
+                fontSize: '1.05rem'
+              }}>
+                <div style={{
+                  width: '28px',
+                  height: '28px',
+                  background: 'linear-gradient(135deg, #f43f5e, #a855f7)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '0.85rem',
+                  fontWeight: '700',
+                  color: 'white',
+                  flexShrink: 0
+                }}>
+                  {idx + 1}
+                </div>
+                {obj}
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
 
-        {/* 강의 섹션들 */}
-        {lessonData.sections.map((section) => (
-          <div key={section.id} style={{
-            background: 'white',
-            borderRadius: '20px',
-            padding: '30px',
-            marginBottom: '20px',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.05)'
+        {/* 비디오 탭 */}
+        <div style={{
+          background: 'rgba(30, 41, 59, 0.5)',
+          borderRadius: '24px',
+          overflow: 'hidden',
+          marginBottom: '40px',
+          border: '1px solid rgba(255,255,255,0.1)'
+        }}>
+          {/* 탭 헤더 */}
+          <div style={{ 
+            display: 'flex', 
+            borderBottom: '1px solid rgba(255,255,255,0.1)',
+            background: 'rgba(15, 23, 42, 0.5)'
           }}>
-            <h3 style={{ color: '#1e3a5f', marginBottom: '20px' }}>{section.title}</h3>
-            <div dangerouslySetInnerHTML={{ __html: section.content }} />
+            <button
+              onClick={() => setActiveTab('theory')}
+              style={{
+                flex: 1,
+                padding: '18px 25px',
+                background: activeTab === 'theory' 
+                  ? 'linear-gradient(135deg, rgba(244, 63, 94, 0.2), rgba(168, 85, 247, 0.2))' 
+                  : 'transparent',
+                border: 'none',
+                color: activeTab === 'theory' ? '#f43f5e' : '#e2e8f0',
+                fontSize: '1.1rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '10px',
+                transition: 'all 0.3s',
+                borderBottom: activeTab === 'theory' ? '3px solid #f43f5e' : '3px solid transparent'
+              }}
+            >
+              <BookOpen size={22} /> 이론 강의
+            </button>
+            <button
+              onClick={() => setActiveTab('practice')}
+              style={{
+                flex: 1,
+                padding: '18px 25px',
+                background: activeTab === 'practice' 
+                  ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(59, 130, 246, 0.2))' 
+                  : 'transparent',
+                border: 'none',
+                color: activeTab === 'practice' ? '#22c55e' : '#e2e8f0',
+                fontSize: '1.1rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '10px',
+                transition: 'all 0.3s',
+                borderBottom: activeTab === 'practice' ? '3px solid #22c55e' : '3px solid transparent'
+              }}
+            >
+              <PlayCircle size={22} /> 실습 강의
+            </button>
           </div>
-        ))}
+
+          {/* 비디오 콘텐츠 */}
+          <div style={{ padding: '25px' }}>
+            {activeTab === 'theory' ? (
+              <div style={{ position: 'relative', paddingTop: '56.25%', borderRadius: '16px', overflow: 'hidden' }}>
+                <iframe 
+                  src="https://player.vimeo.com/video/1148246242?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" 
+                  frameBorder="0" 
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                  title="인공지능건물주되기데이2_이론"
+                />
+              </div>
+            ) : (
+              <div style={{ position: 'relative', paddingTop: '75%', borderRadius: '16px', overflow: 'hidden' }}>
+                <iframe 
+                  src="https://player.vimeo.com/video/1148248797?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" 
+                  frameBorder="0" 
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                  title="인공지능건물주되기데이2_실습"
+                />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* 섹션 1: 경제적 자유란? */}
+        <div style={{
+          background: 'rgba(30, 41, 59, 0.5)',
+          borderRadius: '24px',
+          padding: '35px',
+          marginBottom: '25px',
+          border: '1px solid rgba(255,255,255,0.1)'
+        }}>
+          <h3 style={{ 
+            color: '#fbbf24', 
+            fontSize: '1.4rem', 
+            marginBottom: '25px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
+          }}>
+            💰 경제적 자유(Financial Freedom)란?
+          </h3>
+          
+          <div style={{
+            background: 'linear-gradient(135deg, #0f172a, #1e293b)',
+            padding: '30px',
+            borderRadius: '16px',
+            marginBottom: '25px',
+            border: '1px solid rgba(251, 191, 36, 0.3)'
+          }}>
+            <p style={{ color: '#fbbf24', fontSize: '1.2rem', fontWeight: '700', margin: '0 0 15px 0' }}>
+              "일하지 않아도, 잠잘 때도, 아플 때에도 들어오는 현금 흐름"
+            </p>
+            <p style={{ color: '#e2e8f0', margin: 0, lineHeight: '1.8' }}>
+              패시브 인컴(Passive Income)을 만들기 위해 노력해야 합니다.
+              이것이 진정한 경제적 자유의 시작입니다.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+            <div style={{
+              background: 'rgba(239, 68, 68, 0.1)',
+              padding: '25px',
+              borderRadius: '16px',
+              border: '1px solid rgba(239, 68, 68, 0.3)'
+            }}>
+              <div style={{ fontSize: '2rem', marginBottom: '15px' }}>⏰</div>
+              <h4 style={{ color: '#ef4444', margin: '0 0 10px 0' }}>노동 소득</h4>
+              <p style={{ color: '#e2e8f0', margin: 0, fontSize: '0.95rem', lineHeight: '1.7' }}>
+                일한 만큼만 돈을 받음<br/>
+                <strong style={{ color: '#ef4444' }}>시간 = 돈</strong>
+              </p>
+            </div>
+            <div style={{
+              background: 'rgba(34, 197, 94, 0.1)',
+              padding: '25px',
+              borderRadius: '16px',
+              border: '1px solid rgba(34, 197, 94, 0.3)'
+            }}>
+              <div style={{ fontSize: '2rem', marginBottom: '15px' }}>🔄</div>
+              <h4 style={{ color: '#22c55e', margin: '0 0 10px 0' }}>패시브 인컴</h4>
+              <p style={{ color: '#e2e8f0', margin: 0, fontSize: '0.95rem', lineHeight: '1.7' }}>
+                시스템이 돈을 벌어줌<br/>
+                <strong style={{ color: '#22c55e' }}>시간 ≠ 돈</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* 섹션 2: 부동산 vs 디지털 콘텐츠 */}
+        <div style={{
+          background: 'rgba(30, 41, 59, 0.5)',
+          borderRadius: '24px',
+          padding: '35px',
+          marginBottom: '25px',
+          border: '1px solid rgba(255,255,255,0.1)'
+        }}>
+          <h3 style={{ 
+            color: '#0ea5e9', 
+            fontSize: '1.4rem', 
+            marginBottom: '25px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
+          }}>
+            <Building2 size={28} /> 부동산 vs 디지털 콘텐츠
+          </h3>
+
+          <div style={{
+            background: 'rgba(239, 68, 68, 0.1)',
+            padding: '25px',
+            borderRadius: '16px',
+            marginBottom: '25px',
+            border: '1px solid rgba(239, 68, 68, 0.2)'
+          }}>
+            <h4 style={{ color: '#ef4444', margin: '0 0 15px 0' }}>🏠 부동산의 현실</h4>
+            <ul style={{ color: '#e2e8f0', margin: 0, paddingLeft: '20px', lineHeight: '2' }}>
+              <li>최소 <strong style={{ color: '#ef4444' }}>10억 이상</strong> 필요 (작은 건물도)</li>
+              <li>세금 40% + 높은 월세 비용 = 실제 저축 거의 불가능</li>
+              <li>뉴욕 원룸 월 400만원, 강남 15평 월 500만원+</li>
+              <li>1년에 1억 벌어도 집 사기 <strong style={{ color: '#ef4444' }}>거의 불가능</strong></li>
+            </ul>
+          </div>
+
+          <div style={{
+            background: 'rgba(34, 197, 94, 0.1)',
+            padding: '25px',
+            borderRadius: '16px',
+            border: '1px solid rgba(34, 197, 94, 0.2)'
+          }}>
+            <h4 style={{ color: '#22c55e', margin: '0 0 15px 0' }}>📱 디지털 콘텐츠의 기회</h4>
+            <ul style={{ color: '#e2e8f0', margin: 0, paddingLeft: '20px', lineHeight: '2' }}>
+              <li>초기 자본 <strong style={{ color: '#22c55e' }}>거의 0원</strong></li>
+              <li>유튜브 광고, 책 인세 등 <strong style={{ color: '#22c55e' }}>패시브 인컴</strong> 가능</li>
+              <li>AI로 <strong style={{ color: '#22c55e' }}>개인이 방송국</strong>이 될 수 있는 시대</li>
+              <li>확장성 <strong style={{ color: '#22c55e' }}>무제한</strong></li>
+          </ul>
+          </div>
+        </div>
+
+        {/* 섹션 3: 유튜브 시장의 변화 */}
+        <div style={{
+          background: 'rgba(30, 41, 59, 0.5)',
+          borderRadius: '24px',
+          padding: '35px',
+          marginBottom: '25px',
+          border: '1px solid rgba(255,255,255,0.1)'
+        }}>
+          <h3 style={{ 
+            color: '#a855f7', 
+            fontSize: '1.4rem', 
+            marginBottom: '25px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
+          }}>
+            <Video size={28} /> 유튜브 시장의 변화 & AI의 기회
+          </h3>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginBottom: '25px' }}>
+            <div style={{
+              background: 'rgba(239, 68, 68, 0.1)',
+              padding: '25px',
+              borderRadius: '16px',
+              border: '1px solid rgba(239, 68, 68, 0.2)'
+            }}>
+              <h4 style={{ color: '#ef4444', margin: '0 0 15px 0' }}>❌ 과거 vs 현재</h4>
+              <p style={{ color: '#e2e8f0', margin: 0, lineHeight: '1.8', fontSize: '0.95rem' }}>
+                초창기: 스마트폰 하나로 아마추어 콘텐츠<br/><br/>
+                현재: SBS, KBS, MBC가 유튜브로 이동<br/>
+                → 콘텐츠 퀄리티 경쟁 심화<br/>
+                → 1세대 유튜버들 대부분 사라짐
+              </p>
+            </div>
+            <div style={{
+              background: 'rgba(34, 197, 94, 0.1)',
+              padding: '25px',
+              borderRadius: '16px',
+              border: '1px solid rgba(34, 197, 94, 0.2)'
+            }}>
+              <h4 style={{ color: '#22c55e', margin: '0 0 15px 0' }}>✅ AI로 생존하는 법</h4>
+              <p style={{ color: '#e2e8f0', margin: 0, lineHeight: '1.8', fontSize: '0.95rem' }}>
+                <strong style={{ color: '#22c55e' }}>니치(Niche) 주제</strong>를 찾아라!<br/><br/>
+                방송국이 할 수 없는 것:<br/>
+                • 나만의 전문성<br/>
+                • 특정 관심사/취미<br/>
+                • 탈북, 국봉 등 특이한 주제
+              </p>
+            </div>
+          </div>
+
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15))',
+            padding: '25px',
+            borderRadius: '16px',
+            border: '1px solid rgba(168, 85, 247, 0.3)'
+          }}>
+            <h4 style={{ color: '#a855f7', margin: '0 0 15px 0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <Lightbulb size={22} /> 핵심 인사이트
+            </h4>
+            <p style={{ color: '#e2e8f0', margin: 0, lineHeight: '1.9', fontSize: '1.05rem' }}>
+              콘텐츠만 만들어서는 장기적으로 살아남을 수 없습니다.<br/>
+              잘 나가는 유튜버들은 <strong style={{ color: '#fbbf24' }}>무조건 뭔가를 판매</strong>하고 있습니다.<br/>
+              <strong style={{ color: '#a855f7' }}>제품 또는 서비스</strong>를 판매하는 1인 기업으로 성장해야 합니다.
+            </p>
+          </div>
+        </div>
+
+        {/* 섹션 4: AI 1인 기업 성장 사이클 */}
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9))',
+          borderRadius: '24px',
+          padding: '40px',
+          marginBottom: '25px',
+          border: '1px solid rgba(255,255,255,0.15)',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          {/* 배경 장식 */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)',
+            pointerEvents: 'none'
+          }} />
+          
+          <h3 style={{ 
+            color: 'white', 
+            fontSize: '1.5rem', 
+            marginBottom: '15px',
+            textAlign: 'center',
+            position: 'relative',
+            zIndex: 1
+          }}>
+            성공적인<br/>
+            <span style={{ 
+              background: 'linear-gradient(135deg, #3b82f6, #22c55e)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              fontSize: '1.8rem',
+              fontWeight: '800'
+            }}>
+              AI 1인 기업을 위한
+            </span><br/>
+            <span style={{ color: '#22c55e', fontSize: '1.8rem', fontWeight: '800' }}>
+              무한 성장 사이클
+            </span>
+          </h3>
+
+          {/* 4단계 사이클 */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '20px',
+            marginTop: '35px',
+            position: 'relative',
+            zIndex: 1
+          }}>
+            {growthCycleSteps.map((step, idx) => (
+              <div key={step.step} style={{
+                background: `linear-gradient(135deg, ${step.color}20, ${step.color}10)`,
+                border: `2px solid ${step.color}50`,
+                borderRadius: '20px',
+                padding: '25px',
+                position: 'relative',
+                transition: 'transform 0.3s, box-shadow 0.3s'
+              }}>
+                <div style={{
+                  position: 'absolute',
+                  top: '-12px',
+                  left: '20px',
+                  background: step.color,
+                  color: 'white',
+                  padding: '4px 12px',
+            borderRadius: '20px',
+                  fontSize: '0.8rem',
+                  fontWeight: '700'
+                }}>
+                  STEP {step.step}
+                </div>
+                <div style={{ fontSize: '2.5rem', marginBottom: '10px', marginTop: '10px' }}>
+                  {step.icon}
+                </div>
+                <h4 style={{ color: step.color, margin: '0 0 8px 0', fontSize: '1.2rem', fontWeight: '700' }}>
+                  {step.title}
+                </h4>
+                <p style={{ color: '#e2e8f0', margin: 0, fontSize: '0.9rem' }}>
+                  {step.subtitle}
+                </p>
+                
+                {/* 화살표 표시 */}
+                {idx < 3 && (
+                  <div style={{
+                    position: 'absolute',
+                    right: idx % 2 === 0 ? '-15px' : 'auto',
+                    bottom: idx < 2 ? '-15px' : 'auto',
+                    left: idx % 2 === 1 ? '-15px' : 'auto',
+                    top: idx >= 2 ? '-15px' : 'auto',
+                    color: '#94a3b8',
+                    fontSize: '1.5rem'
+                  }}>
+                    {idx === 0 && '→'}
+                    {idx === 1 && '↓'}
+                    {idx === 2 && '←'}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* 순환 화살표 표시 */}
+          <div style={{
+            textAlign: 'center',
+            marginTop: '25px',
+            color: '#cbd5e1',
+            fontSize: '0.95rem'
+          }}>
+            🔄 이 사이클을 반복하며 성장합니다
+          </div>
+        </div>
+
+        {/* 섹션 5: 실습 - 청사진 만들기 */}
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(59, 130, 246, 0.15))',
+          borderRadius: '24px',
+          padding: '40px',
+          marginBottom: '40px',
+          border: '2px solid rgba(34, 197, 94, 0.3)'
+        }}>
+          <h3 style={{ 
+            color: '#22c55e', 
+            fontSize: '1.5rem', 
+            marginBottom: '25px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
+          }}>
+            <Rocket size={30} /> 실습: 나만의 1인 기업 청사진 만들기
+          </h3>
+
+          <div style={{
+            background: 'rgba(0, 0, 0, 0.3)',
+            padding: '30px',
+            borderRadius: '16px',
+            marginBottom: '25px'
+          }}>
+            <h4 style={{ color: '#fbbf24', margin: '0 0 20px 0' }}>📝 에제르 AI 청사진 도구 사용법</h4>
+            <ol style={{ color: '#e2e8f0', margin: 0, paddingLeft: '20px', lineHeight: '2.2' }}>
+              <li><strong>관심 분야</strong> 입력: 요리, 영어, 반려견, 교육 등</li>
+              <li><strong>경험/배경</strong> 입력: 10년차 선생님, 전직 요리사 등</li>
+              <li><strong>청사진 생성</strong> 버튼 클릭</li>
+              <li>AI가 4단계 성장 계획을 자동 생성!</li>
+              <li><strong>PDF 다운로드</strong>로 저장하기</li>
+            </ol>
+          </div>
+
+          <a
+            href="https://www.ezerai.xyz/blueprint"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '12px',
+              background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+              color: 'white',
+              padding: '20px 40px',
+              borderRadius: '16px',
+              fontSize: '1.2rem',
+              fontWeight: '700',
+              textDecoration: 'none',
+              boxShadow: '0 10px 30px rgba(34, 197, 94, 0.4)',
+              transition: 'transform 0.2s, box-shadow 0.2s'
+            }}
+          >
+            <ExternalLink size={24} />
+            🚀 청사진 만들러 가기 (에제르 AI)
+          </a>
+
+          <p style={{ 
+            color: '#e2e8f0', 
+            textAlign: 'center', 
+            marginTop: '20px',
+            fontSize: '0.9rem'
+          }}>
+            * 강의 수강생은 무료로 사용 가능합니다
+          </p>
+        </div>
+
+        {/* 핵심 메시지 */}
+        <div style={{
+          background: 'linear-gradient(135deg, #1e3a5f, #0f172a)',
+          borderRadius: '24px',
+          padding: '40px',
+          marginBottom: '40px',
+          textAlign: 'center',
+          border: '1px solid rgba(59, 130, 246, 0.3)'
+        }}>
+          <div style={{ fontSize: '3rem', marginBottom: '20px' }}>🦄</div>
+          <h3 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '15px' }}>
+            1인 기업 유니콘을 향해
+          </h3>
+          <p style={{ color: '#e2e8f0', lineHeight: '1.9', fontSize: '1.05rem', maxWidth: '600px', margin: '0 auto 20px' }}>
+            샘 올트먼(ChatGPT CEO)이 말한 것처럼,<br/>
+            지금은 <strong style={{ color: '#fbbf24' }}>1인 기업의 전성시대</strong>입니다.<br/><br/>
+            혼자서 AI 기업을 만들고, 유니콘 기업이 될 수 있는 시대.<br/>
+            <strong style={{ color: '#22c55e' }}>여러분도 할 수 있습니다.</strong>
+          </p>
+          <p style={{ color: '#cbd5e1', fontSize: '0.9rem' }}>
+            "꿈을 멀리 보세요. 한 걸음 한 걸음 함께 걸어갑시다." - Jay
+          </p>
+        </div>
 
         {/* 완료 버튼 */}
-        <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <button
             onClick={handleCompleteDay}
             disabled={isCompletingDay || isDayCompleted}
             style={{
               background: isDayCompleted 
                 ? 'linear-gradient(135deg, #22c55e, #16a34a)' 
-                : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                : 'linear-gradient(135deg, #f43f5e, #ec4899)',
               color: 'white',
               border: 'none',
-              padding: '15px 40px',
-              borderRadius: '15px',
-              fontSize: '1.1rem',
+              padding: '18px 45px',
+              borderRadius: '16px',
+              fontSize: '1.15rem',
               fontWeight: '700',
               cursor: isDayCompleted ? 'default' : 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '10px'
+              gap: '10px',
+              boxShadow: isDayCompleted 
+                ? '0 8px 25px rgba(34, 197, 94, 0.4)'
+                : '0 8px 25px rgba(244, 63, 94, 0.4)'
             }}
           >
             {isDayCompleted ? (
@@ -288,12 +736,15 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
               style={{
                 background: 'linear-gradient(135deg, #1e3a5f, #0f172a)',
                 color: 'white',
-                border: 'none',
-                padding: '15px 40px',
-                borderRadius: '15px',
-                fontSize: '1.1rem',
+                border: '1px solid rgba(255,255,255,0.2)',
+                padding: '18px 45px',
+                borderRadius: '16px',
+                fontSize: '1.15rem',
                 fontWeight: '700',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
               }}
             >
               Day 3으로 이동 →
@@ -306,6 +757,4 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
 };
 
 export default Day2Page;
-
-
 
