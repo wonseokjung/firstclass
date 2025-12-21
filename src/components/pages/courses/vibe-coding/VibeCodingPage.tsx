@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import NavigationBar from '../../../common/NavigationBar';
 import AzureTableService from '../../../../services/azureTableService';
-import { Code, Terminal, Zap, Rocket, CheckCircle, Star, Clock, Play } from 'lucide-react';
+import { Code, Zap, Rocket, CheckCircle, Star, Play } from 'lucide-react';
 
 interface VibeCodingPageProps {
   onBack: () => void;
@@ -10,7 +10,6 @@ interface VibeCodingPageProps {
 const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
   const [, setIsLoggedIn] = useState(false);
   const [isPaidUser, setIsPaidUser] = useState(false);
-  const [userInfo, setUserInfo] = useState<any>(null);
 
   const originalPrice = 199000;
   const salePrice = 95000;

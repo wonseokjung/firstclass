@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, PlayCircle, Clock, BookOpen, Lightbulb, Target, TrendingUp } from 'lucide-react';
+import { ArrowLeft, CheckCircle, PlayCircle, Clock, Lightbulb, Target, TrendingUp } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
 import DayDiscussion from '../../../common/DayDiscussion';
 

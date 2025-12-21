@@ -20,14 +20,6 @@ interface EscrowOrder {
   message?: string;
 }
 
-// MD5 해시 생성 (브라우저용)
-async function createMD5Hash(message: string): Promise<string> {
-  const msgBuffer = new TextEncoder().encode(message);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  // SHA-256을 MD5처럼 32자로 자름 (실제로는 MD5 라이브러리 사용 권장)
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 32);
-}
 
 // 날짜 포맷 변환
 function formatDate(dateStr: string | number): string {
@@ -55,9 +47,6 @@ const EscrowBatchPage: React.FC = () => {
   const navigate = useNavigate();
   const [mertKey, setMertKey] = useState('');
   const [orders, setOrders] = useState<EscrowOrder[]>([]);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [processedCount, setProcessedCount] = useState(0);
-  const [showScript, setShowScript] = useState(false);
 
   // 엑셀 파일 업로드 처리
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {

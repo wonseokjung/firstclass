@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PlayCircle, Lock, CheckCircle, Code, Zap, Terminal, ArrowLeft } from 'lucide-react';
+import { PlayCircle, CheckCircle, Code, Zap, Terminal, ArrowLeft } from 'lucide-react';
 import NavigationBar from '../../../common/NavigationBar';
 import AzureTableService from '../../../../services/azureTableService';
 

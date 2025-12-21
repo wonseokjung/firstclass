@@ -69,6 +69,7 @@ const DayDiscussion: React.FC<DayDiscussionProps> = ({
 
   useEffect(() => {
     loadPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [courseId, userEmail]);
 
   // 댓글 추가
