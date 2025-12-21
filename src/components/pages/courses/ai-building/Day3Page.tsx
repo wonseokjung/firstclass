@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, CheckCircle, PlayCircle, Clock, BookOpen } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
+import DayDiscussion from '../../../common/DayDiscussion';
 
 interface Day3PageProps {
   onBack: () => void;
@@ -11,6 +12,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
   const [isDayCompleted, setIsDayCompleted] = useState<boolean>(false);
   const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>('');
+  const [userName, setUserName] = useState<string>('');
 
   useEffect(() => {
     const loadUserProgress = async () => {
@@ -19,6 +21,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
         if (userInfo) {
           const parsed = JSON.parse(userInfo);
           setUserEmail(parsed.email);
+          setUserName(parsed.name || parsed.email?.split('@')[0] || '익명');
 
           const progress = await AzureTableService.getCourseDayProgress(
             parsed.email,
@@ -245,6 +248,16 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
           </div>
         ))}
 
+        {/* Day 3 토론방 */}
+        <DayDiscussion
+          courseId="ai-building-day3"
+          dayNumber={3}
+          communityPath="/community/step1"
+          accentColor="#22c55e"
+          userEmail={userEmail}
+          userName={userName}
+        />
+
         {/* 완료 버튼 */}
         <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
           <button
@@ -303,6 +316,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
 };
 
 export default Day3Page;
+
 
 
 

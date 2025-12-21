@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Award, Copy, CheckCircle } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
+import DayDiscussion from '../../../common/DayDiscussion';
 
 interface Day10PageProps {
   onBack: () => void;
@@ -12,6 +13,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
   const [isDayCompleted, setIsDayCompleted] = useState<boolean>(false);
   const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>('');
+  const [userName, setUserName] = useState<string>('');
   const [copiedPrompt, setCopiedPrompt] = useState<boolean>(false);
 
   // 사용자 정보 및 Day 완료 상태 로드
@@ -22,6 +24,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
         if (userInfo) {
           const parsed = JSON.parse(userInfo);
           setUserEmail(parsed.email);
+          setUserName(parsed.name || parsed.email?.split('@')[0] || '익명');
 
           // Day 완료 상태 확인
           const progress = await AzureTableService.getCourseDayProgress(
@@ -809,6 +812,16 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
             )}
           </div>
         ))}
+
+        {/* Day 10 토론방 */}
+        <DayDiscussion
+          courseId="step2"
+          dayNumber={10}
+          communityPath="/community/step2"
+          accentColor="#d4a439"
+          userEmail={userEmail}
+          userName={userName}
+        />
 
         {/* 완료 버튼 */}
         <div style={{

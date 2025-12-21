@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, CheckCircle, PlayCircle, Clock, BookOpen } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
+import DayDiscussion from '../../../common/DayDiscussion';
 
 interface Day8PageProps {
   onBack: () => void;
@@ -11,6 +12,7 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
   const [isDayCompleted, setIsDayCompleted] = useState<boolean>(false);
   const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>('');
+  const [userName, setUserName] = useState<string>('');
 
   useEffect(() => {
     const loadUserProgress = async () => {
@@ -19,6 +21,7 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
         if (userInfo) {
           const parsed = JSON.parse(userInfo);
           setUserEmail(parsed.email);
+          setUserName(parsed.name || parsed.email?.split('@')[0] || '익명');
           const progress = await AzureTableService.getCourseDayProgress(parsed.email, 'ai-building-course');
           if (progress && progress.completedDays.includes(8)) setIsDayCompleted(true);
         }
@@ -179,6 +182,16 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
           </div>
         ))}
 
+        {/* Day 8 토론방 */}
+        <DayDiscussion
+          courseId="ai-building-day8"
+          dayNumber={8}
+          communityPath="/community/step1"
+          accentColor="#22c55e"
+          userEmail={userEmail}
+          userName={userName}
+        />
+
         <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
           <button onClick={handleCompleteDay} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #f59e0b, #d97706)', color: 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
             {isDayCompleted ? <><CheckCircle size={24} /> Day 8 완료!</> : isCompletingDay ? '처리 중...' : <><PlayCircle size={24} /> Day 8 완료하기</>}
@@ -191,6 +204,7 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
 };
 
 export default Day8Page;
+
 
 
 

@@ -1321,10 +1321,10 @@ const AdminEnrollmentFixPage: React.FC = () => {
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>이름</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>이메일</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>📱 핸드폰</th>
-                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>🔗 추천인 코드</th>
-                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>💳 TID</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>🔗 추천인</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>가입일</th>
-                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>수강 강의</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>📚 수강 (시작일)</th>
+                    <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>💳 결제 (paymentKey)</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontSize: '0.9rem', color: '#64748b' }}>작업</th>
                   </tr>
                 </thead>
@@ -1334,9 +1334,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
                     .map((user, index) => {
                       const enrolledData = user.enrolledCourses ? JSON.parse(user.enrolledCourses) : null;
                       const enrollments = Array.isArray(enrolledData) ? enrolledData : (enrolledData?.enrollments || []);
-                      const purchases = enrolledData?.purchases || [];
-                      // TID 추출 (가장 최근 결제의 TID)
-                      const latestTid = purchases.length > 0 ? purchases[purchases.length - 1]?.tid : null;
+                      const payments = enrolledData?.payments || enrolledData?.purchases || [];
                       const hasCourse = enrollments.some((e: any) =>
                         e.courseId === '1002' ||
                         e.courseId === 'chatgpt-agent-beginner' ||
@@ -1361,128 +1359,132 @@ const AdminEnrollmentFixPage: React.FC = () => {
                               <span style={{
                                 background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
                                 color: '#1f2937',
-                                padding: '4px 10px',
-                                borderRadius: '8px',
-                                fontSize: '0.8rem',
-                                fontWeight: '700',
-                                fontFamily: 'monospace',
-                                display: 'inline-block',
-                                boxShadow: '0 2px 4px rgba(251, 191, 36, 0.3)'
+                                padding: '4px 8px',
+                                borderRadius: '6px',
+                                fontSize: '0.75rem',
+                                fontWeight: '600'
                               }}>
-                                🧱 {user.referredBy}
-                              </span>
-                            ) : (
-                              <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>-</span>
-                            )}
-                          </td>
-                          <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.75rem', color: '#64748b' }}>
-                            {latestTid ? (
-                              <span 
-                                title={latestTid}
-                                style={{ 
-                                  cursor: 'pointer',
-                                  background: '#f1f5f9',
-                                  padding: '4px 8px',
-                                  borderRadius: '4px'
-                                }}
-                                onClick={() => {
-                                  navigator.clipboard.writeText(latestTid);
-                                  alert('TID가 복사되었습니다!');
-                                }}
-                              >
-                                {latestTid.substring(0, 12)}...
+                                {user.referredBy}
                               </span>
                             ) : (
                               <span style={{ color: '#94a3b8' }}>-</span>
                             )}
                           </td>
-                          <td style={{ padding: '12px', fontSize: '0.85rem', color: '#64748b' }}>
+                          <td style={{ padding: '12px', fontSize: '0.8rem', color: '#64748b' }}>
                             {user.createdAt ? new Date(user.createdAt).toLocaleDateString('ko-KR') : '-'}
                           </td>
+                          {/* 수강 강의 + 시작일 */}
                           <td style={{ padding: '12px' }}>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                              {hasCourse && (
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <span style={{
-                                  color: '#10b981',
-                                  background: '#f0fdf4',
-                                  padding: '4px 12px',
-                                  borderRadius: '12px',
-                                  fontSize: '0.85rem',
-                                  fontWeight: '600',
-                                  display: 'inline-block'
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '0.8rem' }}>
+                              {enrollments.length > 0 ? enrollments.map((e: any, i: number) => (
+                                <div key={i} style={{ 
+                                  background: '#f0fdf4', 
+                                  padding: '4px 8px', 
+                                  borderRadius: '6px',
+                                  color: '#10b981'
                                 }}>
-                                  ✓ AI Agent 비기너
-                                </span>
-                                  <button
-                                    onClick={async () => {
-                                      if (!window.confirm(`정말로 ${user.name || user.email}의 에이전트 강의를 삭제하시겠습니까?\n\n⚠️ 이 작업은 되돌릴 수 없습니다!`)) return;
-                                      try {
-                                        await AzureTableService.removeEnrollmentFromUser(user.email, '1002');
-                                        alert('✅ 에이전트 강의가 삭제되었습니다.');
-                                        loadAllUsers();
-                                      } catch (error: any) {
-                                        alert(`오류: ${error.message}`);
-                                      }
-                                    }}
-                                    style={{
-                                      padding: '2px 8px',
-                                      borderRadius: '4px',
-                                      border: '1px solid #ef4444',
-                                      background: 'white',
-                                      color: '#ef4444',
-                                      fontSize: '0.75rem',
-                                      cursor: 'pointer'
-                                    }}
-                                  >
-                                    🗑️
-                                  </button>
+                                  <div style={{ fontWeight: '600' }}>
+                                    {e.courseId === '999' || e.courseId === 'ai-building-course' ? '🏗️ AI건물주' : 
+                                     e.courseId === '1002' || e.courseId === 'chatgpt-agent-beginner' ? '🤖 에이전트' :
+                                     e.courseId === 'vibe-coding' || e.courseId === '1003' ? '💻 바이브코딩' : e.courseId}
+                                  </div>
+                                  <div style={{ fontSize: '0.7rem', color: '#64748b' }}>
+                                    📅 {e.enrolledAt ? e.enrolledAt.split('T')[0] : '-'}
+                                  </div>
                                 </div>
+                              )) : <span style={{ color: '#94a3b8' }}>없음</span>}
+                            </div>
+                          </td>
+                          {/* 결제 정보 + paymentKey */}
+                          <td style={{ padding: '12px' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '0.8rem' }}>
+                              {payments.length > 0 ? payments.map((p: any, i: number) => (
+                                <div key={i} style={{ 
+                                  background: '#fef3c7', 
+                                  padding: '4px 8px', 
+                                  borderRadius: '6px'
+                                }}>
+                                  <div style={{ fontWeight: '600', color: '#92400e' }}>
+                                    {p.amount?.toLocaleString()}원
+                                  </div>
+                                  <div style={{ fontSize: '0.7rem', color: '#64748b' }}>
+                                    📅 {p.createdAt?.split('T')[0] || p.purchasedAt?.split('T')[0] || '-'}
+                                  </div>
+                                  {p.paymentKey && (
+                                    <div 
+                                      style={{ fontSize: '0.65rem', color: '#8b5cf6', cursor: 'pointer' }}
+                                      onClick={() => {
+                                        navigator.clipboard.writeText(p.paymentKey);
+                                        alert('🔑 paymentKey 복사됨!');
+                                      }}
+                                    >
+                                      🔑 {p.paymentKey.substring(0, 15)}...
+                                    </div>
+                                  )}
+                                </div>
+                              )) : <span style={{ color: '#94a3b8' }}>없음</span>}
+                            </div>
+                          </td>
+                          <td style={{ padding: '12px' }}>
+                            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                              {hasCourse && (
+                                <button
+                                  onClick={async () => {
+                                    if (!window.confirm(`${user.name || user.email}의 에이전트 강의를 삭제?`)) return;
+                                    try {
+                                      await AzureTableService.removeEnrollmentFromUser(user.email, '1002');
+                                      alert('✅ 삭제됨');
+                                      loadAllUsers();
+                                    } catch (error: any) {
+                                      alert(`오류: ${error.message}`);
+                                    }
+                                  }}
+                                  style={{
+                                    padding: '4px 8px',
+                                    borderRadius: '4px',
+                                    border: '1px solid #ef4444',
+                                    background: 'white',
+                                    color: '#ef4444',
+                                    fontSize: '0.7rem',
+                                    cursor: 'pointer'
+                                  }}
+                                  title="에이전트 삭제"
+                                >
+                                  🤖🗑️
+                                </button>
                               )}
                               {hasAIBuildingCourse && (
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <span style={{
-                                  color: '#3b82f6',
-                                  background: '#eff6ff',
-                                  padding: '4px 12px',
-                                  borderRadius: '12px',
-                                  fontSize: '0.85rem',
-                                  fontWeight: '600',
-                                  display: 'inline-block'
-                                }}>
-                                  ✓ AI 건물주 되기
-                                </span>
-                                  <button
-                                    onClick={async () => {
-                                      if (!window.confirm(`정말로 ${user.name || user.email}의 건물주 강의를 삭제하시겠습니까?\n\n⚠️ 이 작업은 되돌릴 수 없습니다!`)) return;
-                                      try {
-                                        await AzureTableService.removeEnrollmentFromUser(user.email, 'ai-building-course');
-                                        alert('✅ 건물주 강의가 삭제되었습니다.');
-                                        loadAllUsers();
-                                      } catch (error: any) {
-                                        alert(`오류: ${error.message}`);
-                                      }
-                                    }}
-                                    style={{
-                                      padding: '2px 8px',
-                                      borderRadius: '4px',
-                                      border: '1px solid #ef4444',
-                                      background: 'white',
-                                      color: '#ef4444',
-                                      fontSize: '0.75rem',
-                                      cursor: 'pointer'
-                                    }}
-                                  >
-                                    🗑️
-                                  </button>
-                                </div>
+                                <button
+                                  onClick={async () => {
+                                    if (!window.confirm(`${user.name || user.email}의 건물주 강의를 삭제?`)) return;
+                                    try {
+                                      await AzureTableService.removeEnrollmentFromUser(user.email, 'ai-building-course');
+                                      alert('✅ 삭제됨');
+                                      loadAllUsers();
+                                    } catch (error: any) {
+                                      alert(`오류: ${error.message}`);
+                                    }
+                                  }}
+                                  style={{
+                                    padding: '4px 8px',
+                                    borderRadius: '4px',
+                                    border: '1px solid #ef4444',
+                                    background: 'white',
+                                    color: '#ef4444',
+                                    fontSize: '0.7rem',
+                                    cursor: 'pointer'
+                                  }}
+                                  title="건물주 삭제"
+                                >
+                                  🏗️🗑️
+                                </button>
                               )}
                               {!hasCourse && !hasAIBuildingCourse && (
-                                <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>없음</span>
+                                <span style={{ color: '#94a3b8', fontSize: '0.75rem' }}>-</span>
                               )}
                             </div>
                           </td>
-                          <td style={{ padding: '12px', display: 'flex', gap: '8px', alignItems: 'center' }}>
+                          <td style={{ padding: '12px' }}>
                             {editingEmail?.oldEmail === user.email && editingEmail ? (
                               <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                                 <input

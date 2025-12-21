@@ -18,33 +18,8 @@ const LiveStep2Page: React.FC = () => {
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // 샘플 라이브 세션 데이터
-  const liveSessions: LiveSession[] = [
-    {
-      id: '1',
-      title: '🤖 AI 에이전트 비기너 1주차 - GPT 기초 마스터',
-      date: '2025-12-15',
-      time: '오후 8:00',
-      status: 'upcoming',
-      description: 'ChatGPT와 AI 에이전트의 기초 개념을 배웁니다.'
-    },
-    {
-      id: '2',
-      title: '🤖 AI 에이전트 비기너 2주차 - 자동화 워크플로우',
-      date: '2025-12-22',
-      time: '오후 8:00',
-      status: 'upcoming',
-      description: '여러 AI를 하나의 회사처럼 연결하는 방법을 배웁니다.'
-    },
-    {
-      id: '3',
-      title: '🤖 AI 에이전트 비기너 Q&A 세션',
-      date: '2025-12-29',
-      time: '오후 8:00',
-      status: 'upcoming',
-      description: '수강생 질문에 실시간으로 답변드립니다.'
-    }
-  ];
+  // 라이브 세션 데이터 (라이브 시작 후 추가 예정)
+  const liveSessions: LiveSession[] = [];
 
   useEffect(() => {
     // 수강 여부 확인

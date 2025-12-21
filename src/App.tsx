@@ -86,6 +86,26 @@ const withAIBuildingDayPageWrapper = <P extends { onBack: () => void; onNext?: (
   return WrappedComponent;
 };
 
+// Vibe Coding Day 페이지 래퍼
+const withVibeCodingDayPageWrapper = <P extends { onBack: () => void; onNext?: () => void }>(
+  Component: React.ComponentType<P>,
+  dayNum: number
+) => {
+  const WrappedComponent: React.FC<Omit<P, 'onBack' | 'onNext'>> = (props) => {
+    const navigate = useNavigate();
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <Component 
+          {...(props as P)} 
+          onBack={() => navigate('/vibe-coding-player')} 
+          onNext={dayNum < 10 ? () => navigate(`/vibe-coding/day${dayNum + 1}`) : undefined}
+        />
+      </Suspense>
+    );
+  };
+  return WrappedComponent;
+};
+
 // ============================================
 // 동적 임포트로 코드 스플리팅
 // ============================================
@@ -159,6 +179,20 @@ const CostOptimizationExamplesPage = React.lazy(() => import('./components/pages
 const N8nAutomationIntermediatePage = React.lazy(() => import('./components/pages/courses/N8nAutomationIntermediatePage'));
 const N8nAutomationAdvancedPage = React.lazy(() => import('./components/pages/courses/N8nAutomationAdvancedPage'));
 
+// Vibe Coding Course 페이지들
+const VibeCodingPage = React.lazy(() => import('./components/pages/courses/vibe-coding/VibeCodingPage'));
+const VibeCodingPlayerPage = React.lazy(() => import('./components/pages/courses/vibe-coding/VibeCodingPlayerPage'));
+const VibeCodingDay1Page = React.lazy(() => import('./components/pages/courses/vibe-coding/Day1Page'));
+const VibeCodingDay2Page = React.lazy(() => import('./components/pages/courses/vibe-coding/Day2Page'));
+const VibeCodingDay3Page = React.lazy(() => import('./components/pages/courses/vibe-coding/Day3Page'));
+const VibeCodingDay4Page = React.lazy(() => import('./components/pages/courses/vibe-coding/Day4Page'));
+const VibeCodingDay5Page = React.lazy(() => import('./components/pages/courses/vibe-coding/Day5Page'));
+const VibeCodingDay6Page = React.lazy(() => import('./components/pages/courses/vibe-coding/Day6Page'));
+const VibeCodingDay7Page = React.lazy(() => import('./components/pages/courses/vibe-coding/Day7Page'));
+const VibeCodingDay8Page = React.lazy(() => import('./components/pages/courses/vibe-coding/Day8Page'));
+const VibeCodingDay9Page = React.lazy(() => import('./components/pages/courses/vibe-coding/Day9Page'));
+const VibeCodingDay10Page = React.lazy(() => import('./components/pages/courses/vibe-coding/Day10Page'));
+
 // 인증 페이지
 const LoginPage = React.lazy(() => import('./components/pages/auth/LoginPage'));
 const SignUpPage = React.lazy(() => import('./components/pages/auth/SignUpPage'));
@@ -179,6 +213,7 @@ const RefundPolicyPage = React.lazy(() => import('./components/pages/RefundPolic
 const AdminEnrollmentFixPage = React.lazy(() => import('./components/pages/admin/AdminEnrollmentFixPage'));
 const AdminDashboardPage = React.lazy(() => import('./components/pages/admin/AdminDashboardPage'));
 const PaymentDetailsViewPage = React.lazy(() => import('./components/pages/admin/PaymentDetailsViewPage'));
+const EscrowBatchPage = React.lazy(() => import('./components/pages/admin/EscrowBatchPage'));
 
 // ============================================
 // HOC를 사용한 래핑된 컴포넌트들
@@ -261,6 +296,20 @@ const AIBuildingDay7PageWrapped = withAIBuildingDayPageWrapper(AIBuildingDay7Pag
 const AIBuildingDay8PageWrapped = withAIBuildingDayPageWrapper(AIBuildingDay8Page, 8);
 const AIBuildingDay9PageWrapped = withAIBuildingDayPageWrapper(AIBuildingDay9Page, 9);
 const AIBuildingDay10PageWrapped = withAIBuildingDayPageWrapper(AIBuildingDay10Page, 10);
+
+// Vibe Coding 래핑된 컴포넌트들
+const VibeCodingPageWrapped = withPageWrapper(VibeCodingPage);
+const VibeCodingPlayerPageWrapped = withPageWrapper(VibeCodingPlayerPage);
+const VibeCodingDay1PageWrapped = withVibeCodingDayPageWrapper(VibeCodingDay1Page, 1);
+const VibeCodingDay2PageWrapped = withVibeCodingDayPageWrapper(VibeCodingDay2Page, 2);
+const VibeCodingDay3PageWrapped = withVibeCodingDayPageWrapper(VibeCodingDay3Page, 3);
+const VibeCodingDay4PageWrapped = withVibeCodingDayPageWrapper(VibeCodingDay4Page, 4);
+const VibeCodingDay5PageWrapped = withVibeCodingDayPageWrapper(VibeCodingDay5Page, 5);
+const VibeCodingDay6PageWrapped = withVibeCodingDayPageWrapper(VibeCodingDay6Page, 6);
+const VibeCodingDay7PageWrapped = withVibeCodingDayPageWrapper(VibeCodingDay7Page, 7);
+const VibeCodingDay8PageWrapped = withVibeCodingDayPageWrapper(VibeCodingDay8Page, 8);
+const VibeCodingDay9PageWrapped = withVibeCodingDayPageWrapper(VibeCodingDay9Page, 9);
+const VibeCodingDay10PageWrapped = withVibeCodingDayPageWrapper(VibeCodingDay10Page, 10);
 
 // ============================================
 // 특수 컴포넌트들 (HOC로 처리 불가)
@@ -432,7 +481,18 @@ const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ childr
             <Route path="/ai-building-course/player" element={<AIBuildingCoursePlayerPageWrapped />} />
             <Route path="/chatgpt-agent-beginner" element={<ChatGPTAgentBeginnerPageWrapped />} />
             <Route path="/content-business" element={<ContentBusinessPageWrapped />} />
-            <Route path="/vibe-coding" element={<ContentBusinessPageWrapped />} />
+            <Route path="/vibe-coding" element={<VibeCodingPageWrapped />} />
+            <Route path="/vibe-coding-player" element={<VibeCodingPlayerPageWrapped />} />
+            <Route path="/vibe-coding/day1" element={<VibeCodingDay1PageWrapped />} />
+            <Route path="/vibe-coding/day2" element={<VibeCodingDay2PageWrapped />} />
+            <Route path="/vibe-coding/day3" element={<VibeCodingDay3PageWrapped />} />
+            <Route path="/vibe-coding/day4" element={<VibeCodingDay4PageWrapped />} />
+            <Route path="/vibe-coding/day5" element={<VibeCodingDay5PageWrapped />} />
+            <Route path="/vibe-coding/day6" element={<VibeCodingDay6PageWrapped />} />
+            <Route path="/vibe-coding/day7" element={<VibeCodingDay7PageWrapped />} />
+            <Route path="/vibe-coding/day8" element={<VibeCodingDay8PageWrapped />} />
+            <Route path="/vibe-coding/day9" element={<VibeCodingDay9PageWrapped />} />
+            <Route path="/vibe-coding/day10" element={<VibeCodingDay10PageWrapped />} />
             <Route path="/agent-dispatch" element={<AgentDispatchPageWrapped />} />
             <Route path="/solo-business" element={<AgentDispatchPageWrapped />} />
             <Route path="/chatgpt-agent-beginner/payment" element={<ChatGPTAgentBeginnerPaymentPageWrapped />} />
@@ -526,6 +586,7 @@ const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ childr
             {/* 관리자 */}
               <Route path="/admin" element={<AdminDashboardPage />} />
               <Route path="/admin/fix-enrollments" element={<AdminEnrollmentFixPage />} />
+              <Route path="/admin/escrow" element={<EscrowBatchPage />} />
             <Route path="/admin/payment-details" element={<PaymentDetailsViewPageWrapper />} />
             </Routes>
           </Suspense>

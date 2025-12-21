@@ -1929,7 +1929,9 @@ export class AzureTableService {
         '1002': ['chatgpt-agent-beginner', '1002'],
         'ai-building-course': ['ai-building-course', '999', 'step1-ai-building'],
         '999': ['ai-building-course', '999', 'step1-ai-building'],
-        'step1-ai-building': ['ai-building-course', '999', 'step1-ai-building']
+        'step1-ai-building': ['ai-building-course', '999', 'step1-ai-building'],
+        'vibe-coding': ['vibe-coding', '1003'],
+        '1003': ['vibe-coding', '1003']
       };
 
       const matchIds = courseIdMap[courseId] || [courseId];
@@ -2073,7 +2075,9 @@ export class AzureTableService {
         '1002': ['chatgpt-agent-beginner', '1002'],
         'ai-building-course': ['ai-building-course', '999', 'step1-ai-building'],
         '999': ['ai-building-course', '999', 'step1-ai-building'],
-        'step1-ai-building': ['ai-building-course', '999', 'step1-ai-building']
+        'step1-ai-building': ['ai-building-course', '999', 'step1-ai-building'],
+        'vibe-coding': ['vibe-coding', '1003'],
+        '1003': ['vibe-coding', '1003']
       };
 
       const matchIds = courseIdMap[courseId] || [courseId];
@@ -2235,7 +2239,9 @@ export class AzureTableService {
         '1002': ['chatgpt-agent-beginner', '1002'],
         'ai-building-course': ['ai-building-course', '999', 'step1-ai-building'],
         '999': ['ai-building-course', '999', 'step1-ai-building'],
-        'step1-ai-building': ['ai-building-course', '999', 'step1-ai-building']
+        'step1-ai-building': ['ai-building-course', '999', 'step1-ai-building'],
+        'vibe-coding': ['vibe-coding', '1003'],
+        '1003': ['vibe-coding', '1003']
       };
 
       const matchIds = courseIdMap[courseId] || [courseId];

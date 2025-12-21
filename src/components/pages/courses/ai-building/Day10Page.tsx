@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, PlayCircle, Clock, BookOpen, Trophy } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
+import DayDiscussion from '../../../common/DayDiscussion';
 
 interface Day10PageProps {
   onBack: () => void;
@@ -10,6 +11,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack }) => {
   const [isDayCompleted, setIsDayCompleted] = useState<boolean>(false);
   const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>('');
+  const [userName, setUserName] = useState<string>('');
 
   useEffect(() => {
     const loadUserProgress = async () => {
@@ -18,6 +20,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack }) => {
         if (userInfo) {
           const parsed = JSON.parse(userInfo);
           setUserEmail(parsed.email);
+          setUserName(parsed.name || parsed.email?.split('@')[0] || '익명');
           const progress = await AzureTableService.getCourseDayProgress(parsed.email, 'ai-building-course');
           if (progress && progress.completedDays.includes(10)) setIsDayCompleted(true);
         }
@@ -184,6 +187,16 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack }) => {
             <div dangerouslySetInnerHTML={{ __html: section.content }} />
           </div>
         ))}
+
+        {/* Day 10 토론방 */}
+        <DayDiscussion
+          courseId="ai-building-day10"
+          dayNumber={10}
+          communityPath="/community/step1"
+          accentColor="#22c55e"
+          userEmail={userEmail}
+          userName={userName}
+        />
 
         <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
           <button onClick={handleCompleteDay} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #fbbf24, #f59e0b)' : 'linear-gradient(135deg, #22c55e, #16a34a)', color: isDayCompleted ? '#1e3a5f' : 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>

@@ -18,33 +18,8 @@ const LiveStep1Page: React.FC = () => {
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // 샘플 라이브 세션 데이터
-  const liveSessions: LiveSession[] = [
-    {
-      id: '1',
-      title: '🏠 AI 건물주 되기 1주차 - AI로 콘텐츠 만들기 기초',
-      date: '2025-12-14',
-      time: '오후 8:00',
-      status: 'upcoming',
-      description: 'AI 도구들을 활용하여 콘텐츠를 만드는 기초 방법을 배웁니다.'
-    },
-    {
-      id: '2',
-      title: '🏠 AI 건물주 되기 2주차 - 비즈니스 마인드셋',
-      date: '2025-12-21',
-      time: '오후 8:00',
-      status: 'upcoming',
-      description: 'AI 시대의 비즈니스 마인드셋과 수익화 전략을 공유합니다.'
-    },
-    {
-      id: '3',
-      title: '🏠 AI 건물주 되기 Q&A 세션',
-      date: '2025-12-28',
-      time: '오후 8:00',
-      status: 'upcoming',
-      description: '수강생 질문에 실시간으로 답변드립니다.'
-    }
-  ];
+  // 라이브 세션 데이터 (라이브 시작 후 추가 예정)
+  const liveSessions: LiveSession[] = [];
 
   useEffect(() => {
     // 수강 여부 확인

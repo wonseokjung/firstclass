@@ -106,27 +106,10 @@ interface ArchiveItem {
   thumbnail?: string;
 }
 
-// 샘플 아카이브 생성 함수
-const generateSampleArchives = (stepId: string): ArchiveItem[] => {
-  const archives: ArchiveItem[] = [];
-  const baseDate = new Date();
-  
-  for (let i = 0; i < 12; i++) {
-    const date = new Date(baseDate);
-    date.setDate(date.getDate() - (i * 7));
-    
-    archives.push({
-      id: `${stepId}-ep${52 - i}`,
-      episode: 52 - i,
-      title: `EP.${52 - i} - ${STEP_INFO[stepId]?.title || 'AI 라이브'} 라이브`,
-      date: date.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' }),
-      duration: '58:32',
-      vimeoId: '1044498498',
-      thumbnail: `/images/main/${stepId === 'step1' ? '1' : stepId === 'step2' ? '2' : stepId === 'step3' ? '3' : '4'}.jpeg`
-    });
-  }
-  
-  return archives;
+// 아카이브 생성 함수 (라이브 시작 후 실제 데이터로 교체 예정)
+const generateSampleArchives = (_stepId: string): ArchiveItem[] => {
+  // 라이브 시작 전이므로 빈 배열 반환
+  return [];
 };
 
 interface StepLivePageProps {

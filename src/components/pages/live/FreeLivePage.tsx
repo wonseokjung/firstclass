@@ -30,69 +30,8 @@ interface FreeLiveArchive {
   views?: string;
 }
 
-// 샘플 무료 라이브 아카이브
-const FREE_ARCHIVES: FreeLiveArchive[] = [
-  {
-    id: 'free-1',
-    title: '🔴 AI 수익화 토크 #52 - 2024년 AI 수익화 총정리',
-    description: 'AI로 돈 버는 현실적인 방법! 2024년 수익화 전략 총정리',
-    date: '12월 9일',
-    duration: '42:15',
-    youtubeId: 'dQw4w9WgXcQ',
-    thumbnail: '/images/main/1.jpeg',
-    views: '1.2K'
-  },
-  {
-    id: 'free-2',
-    title: '🎯 주말 AI Q&A #51 - ChatGPT 최신 업데이트',
-    description: 'ChatGPT o1, Claude 3.5 최신 업데이트 정리 및 Q&A',
-    date: '12월 7일',
-    duration: '38:42',
-    youtubeId: 'dQw4w9WgXcQ',
-    thumbnail: '/images/main/2.jpeg',
-    views: '890'
-  },
-  {
-    id: 'free-3',
-    title: '🔴 AI 수익화 토크 #50 - AI 이미지로 월 100만원',
-    description: 'AI 이미지 생성으로 실제 수익 내는 방법 공개',
-    date: '12월 2일',
-    duration: '45:30',
-    youtubeId: 'dQw4w9WgXcQ',
-    thumbnail: '/images/main/3.jpeg',
-    views: '2.1K'
-  },
-  {
-    id: 'free-4',
-    title: '🎯 주말 AI Q&A #49 - AI 자동화 입문',
-    description: 'Make, Zapier, n8n으로 시작하는 AI 자동화',
-    date: '11월 30일',
-    duration: '51:22',
-    youtubeId: 'dQw4w9WgXcQ',
-    thumbnail: '/images/main/4.jpeg',
-    views: '1.5K'
-  },
-  {
-    id: 'free-5',
-    title: '🔴 AI 수익화 토크 #48 - 유튜브 자동화 전략',
-    description: 'AI로 유튜브 콘텐츠 자동 생성하는 방법',
-    date: '11월 25일',
-    duration: '39:18',
-    youtubeId: 'dQw4w9WgXcQ',
-    thumbnail: '/images/main/1.jpeg',
-    views: '1.8K'
-  },
-  {
-    id: 'free-6',
-    title: '🎯 주말 AI Q&A #47 - AI 에이전트란?',
-    description: 'AI 에이전트의 개념과 활용 방법 설명',
-    date: '11월 23일',
-    duration: '44:55',
-    youtubeId: 'dQw4w9WgXcQ',
-    thumbnail: '/images/main/2.jpeg',
-    views: '1.3K'
-  }
-];
+// 무료 라이브 아카이브 (라이브 시작 후 추가 예정)
+const FREE_ARCHIVES: FreeLiveArchive[] = [];
 
 interface FreeLivePageProps {
   onBack: () => void;

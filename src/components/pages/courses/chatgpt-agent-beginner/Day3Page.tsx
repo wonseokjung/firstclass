@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, FileText, Award, Lock } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
+import DayDiscussion from '../../../common/DayDiscussion';
 
 interface Day3PageProps {
   onBack: () => void;
@@ -15,6 +16,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
   const [isDayCompleted, setIsDayCompleted] = useState<boolean>(false);
   const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>('');
+  const [userName, setUserName] = useState<string>('');
 
   // 런칭 날짜 체크 (2025년 11월 15일 오후 9시)
   const launchDate = new Date('2025-11-15T21:00:00+09:00');
@@ -28,6 +30,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
         if (userInfo) {
           const parsed = JSON.parse(userInfo);
           setUserEmail(parsed.email);
+          setUserName(parsed.name || parsed.email?.split('@')[0] || '익명');
 
           // Day 완료 상태 확인
           const progress = await AzureTableService.getCourseDayProgress(
@@ -925,6 +928,16 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
             )}
           </div>
         </div>
+
+        {/* Day 3 토론방 */}
+        <DayDiscussion
+          courseId="step2"
+          dayNumber={3}
+          communityPath="/community/step2"
+          accentColor="#d4a439"
+          userEmail={userEmail}
+          userName={userName}
+        />
 
         {/* 3강 완료 버튼 */}
         <div style={{
