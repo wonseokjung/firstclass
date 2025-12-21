@@ -152,7 +152,6 @@ async function registerOrder(order) {
     // 스크립트를 클립보드에 복사
     navigator.clipboard.writeText(script);
     alert('📋 스크립트가 클립보드에 복사되었습니다!\n\n1. escrow-run.js 파일로 저장\n2. node escrow-run.js 실행');
-    setShowScript(true);
   };
 
   return (

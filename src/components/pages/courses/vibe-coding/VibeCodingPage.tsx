@@ -23,7 +23,6 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
           try {
             const parsedUserInfo = JSON.parse(storedUserInfo);
             setIsLoggedIn(true);
-            setUserInfo(parsedUserInfo);
 
             try {
               const paymentStatus = await AzureTableService.checkCoursePayment(
