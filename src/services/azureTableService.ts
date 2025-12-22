@@ -199,6 +199,9 @@ export interface User {
   cityMapData?: string; // AI City Map 건물주 정보 JSON 문자열
   // AI 추천 사용 횟수 필드 추가
   aiRecommendationUsageCount?: number; // AI 채널 추천 사용 횟수 (무료 3회)
+  // 라이브 관련 필드 (시스템 사용자용)
+  liveArchives?: string; // 라이브 아카이브 JSON 문자열
+  liveConfigs?: string; // 라이브 설정 JSON 문자열
 }
 
 // 기존 분리된 테이블 인터페이스들은 Users 테이블에 통합되어 더 이상 사용하지 않음
@@ -3516,6 +3519,233 @@ export class AzureTableService {
     } catch (error: any) {
       console.error(`❌ 출금 상태 업데이트 실패:`, error.message);
       return false;
+    }
+  }
+
+  // ========================================
+  // 📺 라이브 아카이브 관련 메서드
+  // ========================================
+
+  /**
+   * 특정 강의의 라이브 아카이브 목록 조회
+   * @param courseId 강의 ID (예: 'ai-building-course', 'chatgpt-agent-beginner', 'vibe-coding')
+   */
+  static async getLiveArchives(courseId: string): Promise<any[]> {
+    try {
+      console.log(`📺 ${courseId} 라이브 아카이브 조회 중...`);
+      
+      // users 테이블에서 시스템 설정으로 저장된 라이브 아카이브 조회
+      const systemUser = await this.getUserByEmail('system@aicitybuilders.com');
+      
+      if (!systemUser) {
+        console.log('ℹ️ 시스템 사용자가 없습니다. 빈 배열 반환.');
+        return [];
+      }
+
+      const allArchives = systemUser.liveArchives ? JSON.parse(systemUser.liveArchives) : [];
+      const courseArchives = allArchives.filter((archive: any) => archive.courseId === courseId);
+      
+      // 최신순 정렬
+      courseArchives.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      
+      console.log(`✅ ${courseId} 라이브 아카이브 ${courseArchives.length}개 조회 완료`);
+      return courseArchives;
+    } catch (error: any) {
+      console.error(`❌ 라이브 아카이브 조회 실패:`, error.message);
+      return [];
+    }
+  }
+
+  /**
+   * 라이브 아카이브 추가
+   * @param archive 아카이브 정보
+   */
+  static async addLiveArchive(archive: {
+    courseId: string;
+    title: string;
+    description?: string;
+    date: string;
+    youtubeId: string;
+    duration?: string;
+  }): Promise<boolean> {
+    try {
+      console.log(`📺 라이브 아카이브 추가 중:`, archive.title);
+      
+      // 시스템 사용자 조회 또는 생성
+      let systemUser = await this.getUserByEmail('system@aicitybuilders.com');
+      
+      if (!systemUser) {
+        // 시스템 사용자 생성
+        await this.createUser({
+          email: 'system@aicitybuilders.com',
+          name: 'System',
+          password: 'system-internal-user-no-login',
+          marketingAgreed: false
+        });
+        systemUser = await this.getUserByEmail('system@aicitybuilders.com');
+      }
+
+      const allArchives = systemUser?.liveArchives ? JSON.parse(systemUser.liveArchives) : [];
+      
+      const newArchive = {
+        id: `live_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        ...archive,
+        createdAt: new Date().toISOString()
+      };
+      
+      allArchives.push(newArchive);
+      
+      await this.updateUserField('system@aicitybuilders.com', 'liveArchives', JSON.stringify(allArchives));
+      
+      console.log(`✅ 라이브 아카이브 추가 완료:`, newArchive.id);
+      return true;
+    } catch (error: any) {
+      console.error(`❌ 라이브 아카이브 추가 실패:`, error.message);
+      return false;
+    }
+  }
+
+  /**
+   * 라이브 아카이브 삭제
+   * @param archiveId 아카이브 ID
+   */
+  static async deleteLiveArchive(archiveId: string): Promise<boolean> {
+    try {
+      console.log(`🗑️ 라이브 아카이브 삭제 중:`, archiveId);
+      
+      const systemUser = await this.getUserByEmail('system@aicitybuilders.com');
+      
+      if (!systemUser) {
+        console.error('❌ 시스템 사용자가 없습니다.');
+        return false;
+      }
+
+      const allArchives = systemUser.liveArchives ? JSON.parse(systemUser.liveArchives) : [];
+      const filteredArchives = allArchives.filter((archive: any) => archive.id !== archiveId);
+      
+      if (allArchives.length === filteredArchives.length) {
+        console.log('ℹ️ 삭제할 아카이브를 찾지 못했습니다.');
+        return false;
+      }
+      
+      await this.updateUserField('system@aicitybuilders.com', 'liveArchives', JSON.stringify(filteredArchives));
+      
+      console.log(`✅ 라이브 아카이브 삭제 완료:`, archiveId);
+      return true;
+    } catch (error: any) {
+      console.error(`❌ 라이브 아카이브 삭제 실패:`, error.message);
+      return false;
+    }
+  }
+
+  /**
+   * 모든 라이브 아카이브 조회 (어드민용)
+   */
+  static async getAllLiveArchives(): Promise<any[]> {
+    try {
+      console.log(`📺 전체 라이브 아카이브 조회 중...`);
+      
+      const systemUser = await this.getUserByEmail('system@aicitybuilders.com');
+      
+      if (!systemUser) {
+        return [];
+      }
+
+      const allArchives = systemUser.liveArchives ? JSON.parse(systemUser.liveArchives) : [];
+      
+      // 최신순 정렬
+      allArchives.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      
+      console.log(`✅ 전체 라이브 아카이브 ${allArchives.length}개 조회 완료`);
+      return allArchives;
+    } catch (error: any) {
+      console.error(`❌ 전체 라이브 아카이브 조회 실패:`, error.message);
+      return [];
+    }
+  }
+
+  // ========================================
+  // 🔴 현재 라이브 설정 관리
+  // ========================================
+
+  /**
+   * 현재 라이브 설정 조회
+   * @param courseId 강의 ID
+   */
+  static async getCurrentLiveConfig(courseId: string): Promise<{
+    isLive: boolean;
+    liveUrl: string;
+    liveTitle: string;
+    updatedAt: string;
+  } | null> {
+    try {
+      const systemUser = await this.getUserByEmail('system@aicitybuilders.com');
+      
+      if (!systemUser) return null;
+
+      const liveConfigs = systemUser.liveConfigs ? JSON.parse(systemUser.liveConfigs) : {};
+      return liveConfigs[courseId] || null;
+    } catch (error: any) {
+      console.error(`❌ 라이브 설정 조회 실패:`, error.message);
+      return null;
+    }
+  }
+
+  /**
+   * 현재 라이브 설정 업데이트 (어드민용)
+   * @param courseId 강의 ID
+   * @param config 라이브 설정
+   */
+  static async updateLiveConfig(courseId: string, config: {
+    isLive: boolean;
+    liveUrl: string;
+    liveTitle: string;
+  }): Promise<boolean> {
+    try {
+      console.log(`🔴 라이브 설정 업데이트:`, courseId, config.isLive ? 'ON' : 'OFF');
+      
+      let systemUser = await this.getUserByEmail('system@aicitybuilders.com');
+      
+      if (!systemUser) {
+        await this.createUser({
+          email: 'system@aicitybuilders.com',
+          name: 'System',
+          password: 'system-internal-user-no-login',
+          marketingAgreed: false
+        });
+        systemUser = await this.getUserByEmail('system@aicitybuilders.com');
+      }
+
+      const liveConfigs = systemUser?.liveConfigs ? JSON.parse(systemUser.liveConfigs) : {};
+      
+      liveConfigs[courseId] = {
+        ...config,
+        updatedAt: new Date().toISOString()
+      };
+      
+      await this.updateUserField('system@aicitybuilders.com', 'liveConfigs', JSON.stringify(liveConfigs));
+      
+      console.log(`✅ 라이브 설정 업데이트 완료`);
+      return true;
+    } catch (error: any) {
+      console.error(`❌ 라이브 설정 업데이트 실패:`, error.message);
+      return false;
+    }
+  }
+
+  /**
+   * 모든 라이브 설정 조회 (어드민용)
+   */
+  static async getAllLiveConfigs(): Promise<{ [courseId: string]: any }> {
+    try {
+      const systemUser = await this.getUserByEmail('system@aicitybuilders.com');
+      
+      if (!systemUser) return {};
+
+      return systemUser.liveConfigs ? JSON.parse(systemUser.liveConfigs) : {};
+    } catch (error: any) {
+      console.error(`❌ 전체 라이브 설정 조회 실패:`, error.message);
+      return {};
     }
   }
 }

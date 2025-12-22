@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, Clock, Youtube, ChevronRight, Play } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock, Youtube, Play, ExternalLink } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
 
 // 브랜드 컬러
@@ -13,80 +13,24 @@ const COLORS = {
   white: '#ffffff',
   grayLight: '#f8fafc',
   grayMedium: '#64748b',
-  youtube: '#FF0000'
+  youtube: '#FF0000',
+  purple: '#8b5cf6'
 };
 
-// 라이브 스케줄 정보
-interface LiveSchedule {
-  id: string;
-  day: string;
-  dayKo: string;
-  time: string;
-  icon: string;
-  title: string;
-  description: string;
-  color: string;
-  isFree: boolean;
-  link: string;
-}
+// 요일별 라이브 스케줄 (0: 일요일, 1: 월요일, ...)
+// 현재 월~수만 운영 (목요일 바이브코딩은 추후 오픈 예정)
+const WEEKLY_SCHEDULE: { [key: number]: { icon: string; title: string; color: string; isFree: boolean; link: string; time: string } | null } = {
+  0: null, // 일요일 - 휴식
+  1: { icon: '🆓', title: 'AI 수익화 토크', color: COLORS.youtube, isFree: true, link: '/live/free', time: '20:00' }, // 월요일
+  2: { icon: '🏗️', title: 'AI 건물주 되기', color: COLORS.navy, isFree: false, link: '/live/step1', time: '20:00' }, // 화요일
+  3: { icon: '🤖', title: 'AI 에이전트 비기너', color: COLORS.gold, isFree: false, link: '/live/step2', time: '20:00' }, // 수요일
+  4: null, // 목요일 - 바이브코딩 (추후 오픈 예정)
+  5: null, // 금요일 - 휴식
+  6: null, // 토요일 - 휴식
+};
 
-const LIVE_SCHEDULE: LiveSchedule[] = [
-  {
-    id: 'monday',
-    day: 'MON',
-    dayKo: '월요일',
-    time: '오후 8:00',
-    icon: '🆓',
-    title: 'AI 수익화 토크',
-    description: 'AI로 돈 버는 현실적인 방법, 성공 사례 공개',
-    color: COLORS.youtube,
-    isFree: true,
-    link: '/live/free'
-  },
-  {
-    id: 'tuesday',
-    day: 'TUE',
-    dayKo: '화요일',
-    time: '오후 8:00',
-    icon: '🏗️',
-    title: 'AI 건물주 되기',
-    description: '맨해튼 부동산 비유로 배우는 AI 콘텐츠 수익화',
-    color: COLORS.navy,
-    isFree: false,
-    link: '/live/step1'
-  },
-  {
-    id: 'wednesday',
-    day: 'WED',
-    dayKo: '수요일',
-    time: '오후 8:00',
-    icon: '🤖',
-    title: 'AI 에이전트 비기너',
-    description: '유튜브 수익화 에이전트 제작',
-    color: COLORS.gold,
-    isFree: false,
-    link: '/live/step2'
-  },
-  {
-    id: 'thursday',
-    day: 'THU',
-    dayKo: '목요일',
-    time: '오후 8:00',
-    icon: '💻',
-    title: '바이브코딩',
-    description: '수익화 확장의 첫걸음',
-    color: '#8b5cf6',
-    isFree: false,
-    link: '/live/step3'
-  }
-];
-
-// 휴식일 표시
-const REST_DAYS = [
-  { day: 'FRI', dayKo: '금요일' },
-  { day: 'SAT', dayKo: '토요일' },
-  { day: 'SUN', dayKo: '일요일' }
-];
+// 라이브 시작일 (2024년 12월 22일)
+const LIVE_START_DATE = new Date(2024, 11, 22);
 
 interface LiveHubPageProps {
   onBack?: () => void;
@@ -94,217 +38,406 @@ interface LiveHubPageProps {
 
 const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
+  const today = new Date();
+  const [currentDate, setCurrentDate] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
+
+  // 이전/다음 월 이동
+  const goToPreviousMonth = () => {
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+  };
+
+  const goToNextMonth = () => {
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+  };
+
+  const goToToday = () => {
+    setCurrentDate(new Date(today.getFullYear(), today.getMonth(), 1));
+  };
+
+  // 해당 월의 날짜들 생성
+  const getDaysInMonth = () => {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    
+    const firstDayOfMonth = new Date(year, month, 1);
+    const lastDayOfMonth = new Date(year, month + 1, 0);
+    
+    const startDayOfWeek = firstDayOfMonth.getDay();
+    const daysInMonth = lastDayOfMonth.getDate();
+    
+    const days: (Date | null)[] = [];
+    
+    // 이전 월의 날짜들 (빈 칸)
+    for (let i = 0; i < startDayOfWeek; i++) {
+      days.push(null);
+    }
+    
+    // 현재 월의 날짜들
+    for (let day = 1; day <= daysInMonth; day++) {
+      days.push(new Date(year, month, day));
+    }
+    
+    return days;
+  };
+
+  // 해당 날짜가 오늘인지 확인
+  const isToday = (date: Date) => {
+    return date.getDate() === today.getDate() &&
+           date.getMonth() === today.getMonth() &&
+           date.getFullYear() === today.getFullYear();
+  };
+
+  // 해당 날짜가 라이브 시작일 이후인지 확인
+  const isAfterLiveStart = (date: Date) => {
+    return date >= LIVE_START_DATE;
+  };
+
+  // 해당 날짜의 라이브 스케줄 가져오기
+  const getScheduleForDate = (date: Date) => {
+    if (!isAfterLiveStart(date)) return null;
+    return WEEKLY_SCHEDULE[date.getDay()];
+  };
+
+  const days = getDaysInMonth();
+  const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
+  const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
 
   return (
-    <div style={{ minHeight: '100vh', background: COLORS.grayLight }}>
-      <NavigationBar onBack={onBack} breadcrumbText="라이브 스케줄" />
+    <div style={{ minHeight: '100vh', background: '#0f172a' }}>
+      <NavigationBar onBack={onBack} breadcrumbText="라이브 캘린더" />
 
       {/* 헤더 */}
       <div style={{ 
-        background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
-        padding: 'clamp(30px, 6vw, 60px) clamp(15px, 4vw, 20px)',
+        background: 'linear-gradient(135deg, #1e3a5f 0%, #0f2847 100%)',
+        padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)',
         textAlign: 'center'
       }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h1 style={{ 
-            color: COLORS.white, 
-            fontSize: 'clamp(1.8rem, 5vw, 2.5rem)', 
-            fontWeight: '800', 
-            marginBottom: '10px' 
-          }}>
-            📺 라이브 스케줄
-          </h1>
-          <p style={{ 
-            color: COLORS.goldLight, 
-            fontSize: 'clamp(1rem, 2.5vw, 1.2rem)' 
-          }}>
-            매주 월~목 오후 8시 라이브 (12월 22일부터 시작!)
-          </p>
-        </div>
-      </div>
-
-      <div style={{ maxWidth: '800px', margin: '0 auto', padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)' }}>
-
-        {/* 주간 스케줄 */}
-        <h2 style={{ 
-          color: COLORS.navy, 
-          fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', 
-          fontWeight: '700', 
-          marginBottom: '20px',
+        <h1 style={{ 
+          color: COLORS.white, 
+          fontSize: 'clamp(1.5rem, 4vw, 2rem)', 
+          fontWeight: '800', 
+          marginBottom: '8px',
           display: 'flex',
           alignItems: 'center',
+          justifyContent: 'center',
           gap: '10px'
         }}>
-          <Calendar size={22} /> 주간 스케줄
-        </h2>
+          📅 라이브 캘린더
+        </h1>
+        <p style={{ color: COLORS.goldLight, fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
+          매주 월~목 오후 8시 라이브
+        </p>
+      </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {LIVE_SCHEDULE.map((schedule) => (
-            <div
-              key={schedule.id}
-              onClick={() => navigate(schedule.link)}
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: 'clamp(15px, 3vw, 30px)' }}>
+        
+        {/* 월 네비게이션 */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: '20px',
+          background: 'rgba(255,255,255,0.05)',
+          borderRadius: '12px',
+          padding: '12px 20px'
+        }}>
+          <button
+            onClick={goToPreviousMonth}
+            style={{
+              background: 'rgba(255,255,255,0.1)',
+              border: 'none',
+              borderRadius: '8px',
+              padding: '8px 12px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              color: COLORS.white
+            }}
+          >
+            <ChevronLeft size={20} />
+          </button>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+            <h2 style={{ 
+              color: COLORS.white, 
+              fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', 
+              fontWeight: '700',
+              margin: 0
+            }}>
+              {currentDate.getFullYear()}년 {monthNames[currentDate.getMonth()]}
+            </h2>
+            <button
+              onClick={goToToday}
               style={{
-                background: COLORS.white,
-                borderRadius: '14px',
-                padding: 'clamp(15px, 3vw, 20px)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '15px',
-                cursor: 'pointer',
-                border: `1px solid ${schedule.color}30`,
-                transition: 'all 0.2s ease',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+                background: COLORS.gold,
+                color: COLORS.navyDark,
+                border: 'none',
+                borderRadius: '6px',
+                padding: '6px 12px',
+                fontSize: '0.8rem',
+                fontWeight: '700',
+                cursor: 'pointer'
               }}
             >
-              {/* 요일 */}
-              <div style={{
-                width: '60px',
-                height: '60px',
-                background: `linear-gradient(135deg, ${schedule.color}, ${schedule.color}dd)`,
-                borderRadius: '12px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0
-              }}>
-                <span style={{ fontSize: '1.3rem' }}>{schedule.icon}</span>
-                <span style={{ 
-                  color: COLORS.white, 
-                  fontSize: '0.7rem', 
-                  fontWeight: '700',
-                  marginTop: '2px'
-                }}>
-                  {schedule.day}
-                </span>
-              </div>
+              오늘
+            </button>
+          </div>
 
-              {/* 내용 */}
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                  <h3 style={{ 
-                    color: COLORS.navy, 
-                    fontSize: 'clamp(1rem, 2.5vw, 1.15rem)', 
-                    fontWeight: '700',
-                    margin: 0
+          <button
+            onClick={goToNextMonth}
+            style={{
+              background: 'rgba(255,255,255,0.1)',
+              border: 'none',
+              borderRadius: '8px',
+              padding: '8px 12px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              color: COLORS.white
+            }}
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+
+        {/* 캘린더 */}
+        <div style={{
+          background: 'rgba(255,255,255,0.03)',
+          borderRadius: '16px',
+          overflow: 'hidden',
+          border: '1px solid rgba(255,255,255,0.1)'
+        }}>
+          {/* 요일 헤더 */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(7, 1fr)',
+            background: 'rgba(255,255,255,0.05)'
+          }}>
+            {weekDays.map((day, index) => (
+              <div
+                key={day}
+                style={{
+                  padding: '12px 5px',
+                  textAlign: 'center',
+                  color: index === 0 ? '#ef4444' : index === 6 ? '#3b82f6' : COLORS.grayMedium,
+                  fontSize: 'clamp(0.75rem, 2vw, 0.9rem)',
+                  fontWeight: '600'
+                }}
+              >
+                {day}
+              </div>
+            ))}
+          </div>
+
+          {/* 날짜 그리드 */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(7, 1fr)',
+            gap: '1px',
+            background: 'rgba(255,255,255,0.05)'
+          }}>
+            {days.map((date, index) => {
+              if (!date) {
+                return (
+                  <div
+                    key={`empty-${index}`}
+                    style={{
+                      background: '#0f172a',
+                      minHeight: 'clamp(80px, 15vw, 120px)'
+                    }}
+                  />
+                );
+              }
+
+              const schedule = getScheduleForDate(date);
+              const isTodayDate = isToday(date);
+              const dayOfWeek = date.getDay();
+
+              return (
+                <div
+                  key={date.toISOString()}
+                  onClick={() => schedule && navigate(schedule.link)}
+                  style={{
+                    background: isTodayDate ? 'rgba(240, 180, 41, 0.1)' : '#0f172a',
+                    minHeight: 'clamp(80px, 15vw, 120px)',
+                    padding: 'clamp(6px, 1.5vw, 10px)',
+                    cursor: schedule ? 'pointer' : 'default',
+                    transition: 'background 0.2s',
+                    position: 'relative',
+                    display: 'flex',
+                    flexDirection: 'column'
+                  }}
+                >
+                  {/* 날짜 숫자 */}
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '4px'
                   }}>
-                    {schedule.title}
-                  </h3>
-                  {schedule.isFree && (
                     <span style={{
-                      background: COLORS.youtube,
-                      color: COLORS.white,
-                      padding: '2px 8px',
-                      borderRadius: '10px',
-                      fontSize: '0.7rem',
-                      fontWeight: '700'
+                      color: isTodayDate 
+                        ? COLORS.navyDark
+                        : dayOfWeek === 0 
+                          ? '#ef4444' 
+                          : dayOfWeek === 6 
+                            ? '#3b82f6' 
+                            : COLORS.white,
+                      fontSize: 'clamp(0.85rem, 2vw, 1rem)',
+                      fontWeight: isTodayDate ? '700' : '500',
+                      width: isTodayDate ? '24px' : 'auto',
+                      height: isTodayDate ? '24px' : 'auto',
+                      background: isTodayDate ? COLORS.gold : 'transparent',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
                     }}>
-                      FREE
+                      {date.getDate()}
                     </span>
+                  </div>
+
+                  {/* 라이브 이벤트 */}
+                  {schedule && (
+                    <div
+                      style={{
+                        background: `linear-gradient(135deg, ${schedule.color}, ${schedule.color}cc)`,
+                        borderRadius: '6px',
+                        padding: 'clamp(4px, 1vw, 8px)',
+                        marginTop: 'auto',
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        minHeight: 'clamp(40px, 8vw, 60px)'
+                      }}
+                    >
+                      <div style={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: '4px',
+                        marginBottom: '2px'
+                      }}>
+                        <span style={{ fontSize: 'clamp(0.9rem, 2vw, 1.2rem)' }}>
+                          {schedule.icon}
+                        </span>
+                        {schedule.isFree && (
+                          <span style={{
+                            background: 'rgba(255,255,255,0.3)',
+                            color: COLORS.white,
+                            padding: '1px 4px',
+                            borderRadius: '4px',
+                            fontSize: '0.55rem',
+                            fontWeight: '700'
+                          }}>
+                            FREE
+                          </span>
+                        )}
+                      </div>
+                      <div style={{ 
+                        color: COLORS.white, 
+                        fontSize: 'clamp(0.6rem, 1.5vw, 0.75rem)', 
+                        fontWeight: '600',
+                        lineHeight: 1.2,
+                        overflow: 'hidden',
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical' as const
+                      }}>
+                        {schedule.title}
+                      </div>
+                      <div style={{
+                        color: 'rgba(255,255,255,0.8)',
+                        fontSize: 'clamp(0.55rem, 1.2vw, 0.65rem)',
+                        marginTop: '2px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '3px'
+                      }}>
+                        <Clock size={10} />
+                        {schedule.time}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 휴식일 표시 */}
+                  {!schedule && isAfterLiveStart(date) && (dayOfWeek === 0 || dayOfWeek === 5 || dayOfWeek === 6) && (
+                    <div style={{
+                      color: 'rgba(255,255,255,0.2)',
+                      fontSize: 'clamp(0.6rem, 1.2vw, 0.7rem)',
+                      marginTop: 'auto',
+                      textAlign: 'center'
+                    }}>
+                      😴
+                    </div>
                   )}
                 </div>
-                <p style={{ 
-                  color: COLORS.grayMedium, 
-                  fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
-                  margin: 0,
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap'
-                }}>
-                  {schedule.description}
-                </p>
-                <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '5px', 
-                  marginTop: '6px',
-                  color: schedule.color,
-                  fontSize: '0.85rem',
-                  fontWeight: '600'
-                }}>
-                  <Clock size={14} />
-                  {schedule.time}
-                </div>
-              </div>
+              );
+            })}
+          </div>
+        </div>
 
-              {/* 화살표 */}
-              <ChevronRight size={20} color={COLORS.grayMedium} />
-            </div>
-          ))}
-
-          {/* 휴식일 표시 */}
-          {REST_DAYS.map((restDay) => (
+        {/* 범례 */}
+        <div style={{
+          marginTop: '20px',
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '12px',
+          justifyContent: 'center'
+        }}>
+          {Object.entries(WEEKLY_SCHEDULE).filter(([_, schedule]) => schedule !== null).map(([day, schedule]) => (
             <div
-              key={restDay.day}
+              key={day}
+              onClick={() => schedule && navigate(schedule.link)}
               style={{
-                background: '#f1f5f9',
-                borderRadius: '14px',
-                padding: 'clamp(15px, 3vw, 20px)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '15px',
-                border: '1px solid #e2e8f0',
-                opacity: 0.7
+                gap: '8px',
+                background: 'rgba(255,255,255,0.05)',
+                padding: '8px 14px',
+                borderRadius: '20px',
+                cursor: 'pointer',
+                border: `1px solid ${schedule?.color}40`
               }}
             >
-              {/* 요일 */}
               <div style={{
-                width: '60px',
-                height: '60px',
-                background: '#cbd5e1',
-                borderRadius: '12px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0
-              }}>
-                <span style={{ fontSize: '1.3rem' }}>😴</span>
-                <span style={{ 
-                  color: COLORS.white, 
-                  fontSize: '0.7rem', 
-                  fontWeight: '700',
-                  marginTop: '2px'
+                width: '12px',
+                height: '12px',
+                borderRadius: '3px',
+                background: schedule?.color
+              }} />
+              <span style={{ color: COLORS.white, fontSize: '0.8rem', fontWeight: '500' }}>
+                {schedule?.icon} {schedule?.title}
+              </span>
+              {schedule?.isFree && (
+                <span style={{
+                  background: COLORS.youtube,
+                  color: COLORS.white,
+                  padding: '2px 6px',
+                  borderRadius: '8px',
+                  fontSize: '0.6rem',
+                  fontWeight: '700'
                 }}>
-                  {restDay.day}
+                  FREE
                 </span>
-              </div>
-
-              {/* 내용 */}
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <h3 style={{ 
-                  color: '#94a3b8', 
-                  fontSize: 'clamp(1rem, 2.5vw, 1.15rem)', 
-                  fontWeight: '700',
-                  margin: 0
-                }}>
-                  휴식
-                </h3>
-                <p style={{ 
-                  color: '#94a3b8', 
-                  fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
-                  margin: 0
-                }}>
-                  {restDay.dayKo}은 라이브 없음
-                </p>
-              </div>
+              )}
             </div>
           ))}
         </div>
 
         {/* 유튜브 채널 안내 */}
         <div style={{
-          marginTop: '40px',
+          marginTop: '30px',
           background: `linear-gradient(135deg, ${COLORS.youtube}, #cc0000)`,
           borderRadius: '16px',
-          padding: 'clamp(25px, 5vw, 35px)',
+          padding: 'clamp(20px, 4vw, 30px)',
           textAlign: 'center'
         }}>
-          <Youtube size={40} color={COLORS.white} style={{ marginBottom: '15px' }} />
-          <h3 style={{ color: COLORS.white, fontSize: '1.3rem', fontWeight: '700', marginBottom: '10px' }}>
+          <Youtube size={36} color={COLORS.white} style={{ marginBottom: '12px' }} />
+          <h3 style={{ color: COLORS.white, fontSize: '1.2rem', fontWeight: '700', marginBottom: '8px' }}>
             무료 라이브는 유튜브에서!
           </h3>
-          <p style={{ color: 'rgba(255,255,255,0.9)', marginBottom: '20px', fontSize: '0.95rem' }}>
+          <p style={{ color: 'rgba(255,255,255,0.9)', marginBottom: '15px', fontSize: '0.9rem' }}>
             매주 월요일 오후 8시, AI 수익화 토크
           </p>
           <button
@@ -313,9 +446,9 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
               background: COLORS.white,
               color: COLORS.youtube,
               border: 'none',
-              padding: '12px 30px',
+              padding: '10px 24px',
               borderRadius: '25px',
-              fontSize: '1rem',
+              fontSize: '0.95rem',
               fontWeight: '700',
               cursor: 'pointer',
               display: 'inline-flex',
@@ -323,35 +456,34 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
               gap: '8px'
             }}
           >
-            <Play size={18} />
-            유튜브 채널 바로가기
+            <Play size={16} />
+            유튜브 채널
+            <ExternalLink size={14} />
           </button>
         </div>
 
-        {/* 안내 */}
+        {/* 안내사항 */}
         <div style={{
-          marginTop: '30px',
+          marginTop: '20px',
           padding: '20px',
-          background: COLORS.white,
+          background: 'rgba(255,255,255,0.03)',
           borderRadius: '12px',
-          border: `1px solid ${COLORS.gold}30`
+          border: '1px solid rgba(240, 180, 41, 0.2)'
         }}>
-          <h4 style={{ color: COLORS.navy, fontWeight: '700', marginBottom: '10px' }}>
+          <h4 style={{ color: COLORS.gold, fontWeight: '700', marginBottom: '10px', fontSize: '0.95rem' }}>
             📌 안내사항
           </h4>
           <ul style={{ 
             color: COLORS.grayMedium, 
-            fontSize: '0.9rem', 
+            fontSize: '0.85rem', 
             lineHeight: '1.8',
             margin: 0,
-            paddingLeft: '20px'
+            paddingLeft: '18px'
           }}>
-            <li><strong>12월 22일부터</strong> 라이브가 시작됩니다!</li>
-            <li>라이브는 매주 <strong>월~목 오후 8시</strong>에 진행됩니다</li>
+            <li>라이브는 매주 <strong style={{ color: COLORS.white }}>월~목 오후 8시</strong>에 진행됩니다</li>
             <li>월요일 무료 라이브는 유튜브에서 시청 가능합니다</li>
             <li>프리미엄 라이브(화~목)는 해당 강의 수강생만 참여 가능합니다</li>
-            <li>금, 토, 일요일은 휴식입니다 😴</li>
-            <li>지난 라이브는 아카이브에서 다시 볼 수 있습니다</li>
+            <li>캘린더의 이벤트를 클릭하면 해당 라이브 페이지로 이동합니다</li>
           </ul>
         </div>
       </div>

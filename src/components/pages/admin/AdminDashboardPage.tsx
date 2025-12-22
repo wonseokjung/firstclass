@@ -759,6 +759,72 @@ const AdminDashboardPage: React.FC = () => {
           </div>
         </div>
 
+        {/* 🔴 바로가기 버튼들 */}
+        <div style={{
+          display: 'flex',
+          gap: '12px',
+          marginBottom: '20px',
+          flexWrap: 'wrap'
+        }}>
+          <button
+            onClick={() => navigate('/admin/live-control')}
+            style={{
+              padding: '12px 24px',
+              borderRadius: '12px',
+              border: 'none',
+              background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+              color: 'white',
+              fontSize: '0.95rem',
+              fontWeight: '700',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              boxShadow: '0 4px 15px rgba(239, 68, 68, 0.4)'
+            }}
+          >
+            🔴 라이브 관리
+          </button>
+          <button
+            onClick={() => navigate('/admin/live-archives')}
+            style={{
+              padding: '12px 24px',
+              borderRadius: '12px',
+              border: 'none',
+              background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+              color: 'white',
+              fontSize: '0.95rem',
+              fontWeight: '700',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              boxShadow: '0 4px 15px rgba(139, 92, 246, 0.4)'
+            }}
+          >
+            📺 아카이브 관리
+          </button>
+          <button
+            onClick={() => navigate('/admin/escrow')}
+            style={{
+              padding: '12px 24px',
+              borderRadius: '12px',
+              border: 'none',
+              background: 'linear-gradient(135deg, #10b981, #059669)',
+              color: 'white',
+              fontSize: '0.95rem',
+              fontWeight: '700',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)'
+            }}
+          >
+            💰 에스크로 관리
+          </button>
+        </div>
+
         {/* 탭 네비게이션 */}
         <div style={{
           display: 'flex',

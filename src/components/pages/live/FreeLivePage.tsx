@@ -1,60 +1,115 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Play, Youtube, Calendar, ExternalLink } from 'lucide-react';
+import { Play, Youtube, Calendar, ExternalLink, Clock } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
+import AzureTableService from '../../../services/azureTableService';
 
 // 브랜드 컬러
 const COLORS = {
-  navy: '#1e3a5f',
-  navyLight: '#2d4a6f',
-  navyDark: '#0f2847',
-  gold: '#f0b429',
-  goldLight: '#fcd34d',
-  goldDark: '#d4a017',
+  navy: '#0f172a',
+  navyLight: '#1e293b',
+  gold: '#fbbf24',
   white: '#ffffff',
-  grayLight: '#f8fafc',
-  grayMedium: '#64748b',
+  gray: '#94a3b8',
+  grayDark: '#64748b',
   red: '#ef4444',
   youtube: '#FF0000'
 };
 
-// 무료 라이브 아카이브 타입
-interface FreeLiveArchive {
+const COURSE_ID = 'free-live';
+const DAY_OF_WEEK = 1; // 월요일
+
+interface Archive {
   id: string;
   title: string;
-  description: string;
   date: string;
-  duration: string;
   youtubeId: string;
-  thumbnail: string;
-  views?: string;
+  duration?: string;
 }
 
-// 무료 라이브 아카이브 (라이브 시작 후 추가 예정)
-const FREE_ARCHIVES: FreeLiveArchive[] = [];
+interface LiveConfig {
+  isLive: boolean;
+  liveUrl: string;
+  liveTitle: string;
+}
 
 interface FreeLivePageProps {
-  onBack: () => void;
+  onBack?: () => void;
 }
 
 const FreeLivePage: React.FC<FreeLivePageProps> = ({ onBack }) => {
   const navigate = useNavigate();
-  const [selectedVideo, setSelectedVideo] = useState<FreeLiveArchive | null>(null);
+  const [liveConfig, setLiveConfig] = useState<LiveConfig | null>(null);
+  const [nextLiveDate, setNextLiveDate] = useState<Date | null>(null);
+  const [timeUntilLive, setTimeUntilLive] = useState('');
+  const [archives, setArchives] = useState<Archive[]>([]);
 
-  const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@CONNECT-AI-LAB';
+  const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@aicitybuilders';
+
+  useEffect(() => {
+    // 라이브 설정 및 아카이브 로드
+    const loadData = async () => {
+      try {
+        const [config, archiveData] = await Promise.all([
+          AzureTableService.getCurrentLiveConfig(COURSE_ID),
+          AzureTableService.getLiveArchives(COURSE_ID)
+        ]);
+        
+        if (config) setLiveConfig(config);
+        setArchives(archiveData);
+      } catch (e) {
+        console.error('데이터 로드 오류:', e);
+      }
+    };
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    // 다음 라이브 날짜 계산
+    const calculateNextLive = () => {
+      const now = new Date();
+      const nextLive = new Date();
+      const daysUntilLive = (DAY_OF_WEEK - now.getDay() + 7) % 7 || 7;
+      
+      if (now.getDay() === DAY_OF_WEEK && now.getHours() < 20) {
+        nextLive.setHours(20, 0, 0, 0);
+      } else {
+        nextLive.setDate(now.getDate() + (now.getDay() === DAY_OF_WEEK && now.getHours() >= 20 ? 7 : daysUntilLive));
+        nextLive.setHours(20, 0, 0, 0);
+      }
+      setNextLiveDate(nextLive);
+
+      // 남은 시간 계산
+      const diff = nextLive.getTime() - now.getTime();
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      
+      if (days > 0) {
+        setTimeUntilLive(`${days}일 ${hours}시간 후`);
+      } else if (hours > 0) {
+        setTimeUntilLive(`${hours}시간 ${minutes}분 후`);
+      } else {
+        setTimeUntilLive(`${minutes}분 후`);
+      }
+    };
+
+    calculateNextLive();
+    const interval = setInterval(calculateNextLive, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div style={{ minHeight: '100vh', background: COLORS.white }}>
+    <div style={{ minHeight: '100vh', background: COLORS.navy }}>
       <NavigationBar onBack={onBack} breadcrumbText="무료 라이브" />
       
       {/* 헤더 */}
       <div style={{
         background: `linear-gradient(135deg, ${COLORS.youtube}, #cc0000)`,
-        padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)',
+        padding: 'clamp(25px, 5vw, 50px) clamp(15px, 3vw, 20px)',
         position: 'relative',
         overflow: 'hidden'
       }}>
-        {/* 배경 장식 */}
         <div style={{
           position: 'absolute',
           top: '-30px',
@@ -65,50 +120,29 @@ const FreeLivePage: React.FC<FreeLivePageProps> = ({ onBack }) => {
           borderRadius: '50%'
         }}></div>
         
-        <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '25px' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
             <div style={{
-              width: '70px',
-              height: '70px',
+              width: '60px',
+              height: '60px',
               background: COLORS.white,
-              borderRadius: '20px',
+              borderRadius: '16px',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 8px 20px rgba(0,0,0,0.2)'
+              justifyContent: 'center'
             }}>
-              <Youtube size={40} color={COLORS.youtube} />
+              <Youtube size={36} color={COLORS.youtube} />
             </div>
             <div>
-              <h1 style={{ color: COLORS.white, fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', fontWeight: '800', marginBottom: '5px' }}>
-                🆓 무료 AI 수익화 라이브
+              <h1 style={{ color: COLORS.white, fontSize: 'clamp(1.6rem, 4vw, 2.2rem)', fontWeight: '800', marginBottom: '5px' }}>
+                🆓 무료 AI 수익화 토크
               </h1>
-              <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '1.1rem' }}>
-                매주 월요일 저녁 8시 YouTube 라이브
+              <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '1rem' }}>
+                매주 월요일 오후 8시 · 유튜브 라이브
               </p>
             </div>
           </div>
           
-          {/* 스케줄 정보 */}
-          <div style={{
-            display: 'flex',
-            gap: '20px',
-            flexWrap: 'wrap'
-          }}>
-            <div style={{
-              background: 'rgba(255,255,255,0.15)',
-              borderRadius: '12px',
-              padding: '15px 20px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px'
-            }}>
-              <Calendar size={20} color={COLORS.white} />
-              <span style={{ color: COLORS.white, fontWeight: '600' }}>매주 월요일 오후 8:00</span>
-            </div>
-          </div>
-          
-          {/* YouTube 채널 링크 */}
           <a
             href={YOUTUBE_CHANNEL_URL}
             target="_blank"
@@ -116,218 +150,139 @@ const FreeLivePage: React.FC<FreeLivePageProps> = ({ onBack }) => {
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '10px',
-              marginTop: '25px',
-              padding: '14px 28px',
+              gap: '8px',
+              padding: '12px 24px',
               background: COLORS.white,
               color: COLORS.youtube,
-              borderRadius: '12px',
+              borderRadius: '10px',
               textDecoration: 'none',
               fontWeight: '700',
-              fontSize: '1.1rem',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
-              transition: 'all 0.3s ease'
+              fontSize: '1rem'
             }}
           >
-            <Youtube size={24} />
-            YouTube 채널 구독하기
-            <ExternalLink size={18} />
+            <Youtube size={20} />
+            채널 구독하기
+            <ExternalLink size={16} />
           </a>
         </div>
       </div>
       
-      {/* 메인 컨텐츠 */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)' }}>
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)' }}>
         
-        {/* 선택된 영상 플레이어 */}
-        {selectedVideo && (
-          <div style={{ marginBottom: '50px' }}>
-            <div style={{
-              background: COLORS.navyDark,
-              borderRadius: '20px',
-              overflow: 'hidden',
-              boxShadow: `0 10px 40px ${COLORS.navy}30`
-            }}>
-              <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
-                <iframe
-                  src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    border: 'none'
-                  }}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  title={selectedVideo.title}
-                />
-              </div>
+        {/* 라이브 상태 */}
+        {liveConfig?.isLive && liveConfig?.liveUrl ? (
+          <div style={{
+            background: `linear-gradient(135deg, ${COLORS.red}20, ${COLORS.red}10)`,
+            border: `2px solid ${COLORS.red}`,
+            borderRadius: '20px',
+            padding: '30px',
+            marginBottom: '30px'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+              <span style={{
+                background: COLORS.red,
+                color: COLORS.white,
+                padding: '6px 14px',
+                borderRadius: '20px',
+                fontSize: '0.9rem',
+                fontWeight: '700',
+                animation: 'pulse 2s infinite'
+              }}>
+                🔴 LIVE NOW
+              </span>
+              <span style={{ color: COLORS.white, fontSize: '1.2rem', fontWeight: '700' }}>
+                {liveConfig?.liveTitle || '라이브 진행 중'}
+              </span>
             </div>
             
-            <div style={{ marginTop: '20px' }}>
-              <h2 style={{ color: COLORS.navy, fontSize: '1.3rem', fontWeight: '700' }}>
-                {selectedVideo.title}
-              </h2>
-              <p style={{ color: COLORS.grayMedium, marginTop: '8px' }}>
-                {selectedVideo.description}
-              </p>
-              <p style={{ color: COLORS.grayMedium, marginTop: '5px', fontSize: '0.9rem' }}>
-                {selectedVideo.date} · {selectedVideo.duration} · 조회수 {selectedVideo.views}
-              </p>
-            </div>
-          </div>
-        )}
-        
-        {/* 아카이브 그리드 */}
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '25px' }}>
-            <Play size={28} color={COLORS.youtube} />
-            <h2 style={{ color: COLORS.navy, fontSize: '1.5rem', fontWeight: '800' }}>
-              📺 지난 무료 라이브
-            </h2>
-            <span style={{
-              background: COLORS.youtube,
-              color: COLORS.white,
-              padding: '4px 12px',
-              borderRadius: '20px',
-              fontSize: '0.85rem',
-              fontWeight: '700'
+            <div style={{
+              position: 'relative',
+              paddingBottom: '56.25%',
+              height: 0,
+              borderRadius: '12px',
+              overflow: 'hidden',
+              marginBottom: '20px'
             }}>
-              {FREE_ARCHIVES.length}개
-            </span>
-          </div>
-          
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-            gap: '25px'
-          }}>
-            {FREE_ARCHIVES.map((archive) => (
-              <div
-                key={archive.id}
-                onClick={() => setSelectedVideo(archive)}
+              <iframe
+                src={`https://www.youtube.com/embed/${liveConfig?.liveUrl}?autoplay=1`}
+                title={liveConfig?.liveTitle || '라이브 방송'}
                 style={{
-                  background: COLORS.white,
-                  borderRadius: '15px',
-                  overflow: 'hidden',
-                  border: selectedVideo?.id === archive.id ? `3px solid ${COLORS.youtube}` : `2px solid ${COLORS.navy}10`,
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  boxShadow: selectedVideo?.id === archive.id ? `0 8px 25px ${COLORS.youtube}30` : `0 4px 15px ${COLORS.navy}08`
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  border: 'none'
                 }}
-              >
-                {/* 썸네일 */}
-                <div style={{
-                  position: 'relative',
-                  aspectRatio: '16/9',
-                  background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyLight})`,
-                  overflow: 'hidden'
-                }}>
-                  <img 
-                    src={archive.thumbnail} 
-                    alt={archive.title}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      opacity: 0.85
-                    }}
-                  />
-                  <div style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
-                    <div style={{
-                      width: '55px',
-                      height: '55px',
-                      background: `${COLORS.youtube}dd`,
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      transition: 'all 0.3s ease'
-                    }}>
-                      <Play size={26} color={COLORS.white} style={{ marginLeft: '3px' }} />
-                    </div>
-                  </div>
-                  
-                  {/* 재생시간 */}
-                  <div style={{
-                    position: 'absolute',
-                    bottom: '10px',
-                    right: '10px',
-                    background: 'rgba(0,0,0,0.8)',
-                    color: COLORS.white,
-                    padding: '4px 8px',
-                    borderRadius: '5px',
-                    fontSize: '0.8rem',
-                    fontWeight: '600'
-                  }}>
-                    {archive.duration}
-                  </div>
-                  
-                  {/* YouTube 배지 */}
-                  <div style={{
-                    position: 'absolute',
-                    top: '10px',
-                    left: '10px',
-                    background: COLORS.youtube,
-                    color: COLORS.white,
-                    padding: '4px 10px',
-                    borderRadius: '8px',
-                    fontSize: '0.75rem',
-                    fontWeight: '700',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px'
-                  }}>
-                    <Youtube size={14} />
-                    FREE
-                  </div>
-                </div>
-                
-                {/* 정보 */}
-                <div style={{ padding: '18px' }}>
-                  <h3 style={{
-                    color: COLORS.navyDark,
-                    fontSize: '1rem',
-                    fontWeight: '700',
-                    marginBottom: '10px',
-                    lineHeight: '1.4',
-                    display: '-webkit-box',
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden'
-                  }}>
-                    {archive.title}
-                  </h3>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    color: COLORS.grayMedium,
-                    fontSize: '0.85rem'
-                  }}>
-                    <span>{archive.date}</span>
-                    <span>·</span>
-                    <span>조회수 {archive.views}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+
+            <button
+              onClick={() => window.open(`https://www.youtube.com/watch?v=${liveConfig?.liveUrl}`, '_blank')}
+              style={{
+                background: COLORS.red,
+                color: COLORS.white,
+                border: 'none',
+                padding: '14px 28px',
+                borderRadius: '12px',
+                fontSize: '1rem',
+                fontWeight: '700',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                margin: '0 auto'
+              }}
+            >
+              <ExternalLink size={18} />
+              유튜브에서 보기
+            </button>
           </div>
-          
-          {/* YouTube 채널로 이동 */}
-          <div style={{ textAlign: 'center', marginTop: '40px' }}>
+        ) : (
+          <div style={{
+            background: `linear-gradient(135deg, ${COLORS.navyLight}, ${COLORS.navy})`,
+            border: `1px solid ${COLORS.youtube}40`,
+            borderRadius: '20px',
+            padding: '40px',
+            textAlign: 'center',
+            marginBottom: '30px'
+          }}>
+            <div style={{ fontSize: '3rem', marginBottom: '15px' }}>📅</div>
+            <h2 style={{ color: COLORS.white, fontSize: '1.5rem', fontWeight: '700', marginBottom: '10px' }}>
+              다음 무료 라이브
+            </h2>
+            <div style={{ color: '#ff6b6b', fontSize: '1.3rem', fontWeight: '700', marginBottom: '8px' }}>
+              {nextLiveDate?.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'long' })}
+            </div>
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              gap: '8px',
+              color: COLORS.gray,
+              marginBottom: '20px'
+            }}>
+              <Clock size={18} />
+              오후 8시
+            </div>
+            <div style={{
+              background: `${COLORS.gold}20`,
+              border: `1px solid ${COLORS.gold}50`,
+              borderRadius: '12px',
+              padding: '15px 25px',
+              display: 'inline-block'
+            }}>
+              <span style={{ color: COLORS.gold, fontWeight: '700', fontSize: '1.1rem' }}>
+                ⏰ {timeUntilLive}
+              </span>
+            </div>
+
+            <p style={{ color: COLORS.gray, marginTop: '25px', fontSize: '0.95rem' }}>
+              유튜브 채널을 구독하고 알림 설정하세요!
+            </p>
+            
             <a
               href={YOUTUBE_CHANNEL_URL}
               target="_blank"
@@ -335,84 +290,204 @@ const FreeLivePage: React.FC<FreeLivePageProps> = ({ onBack }) => {
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '10px',
-                padding: '16px 35px',
+                gap: '8px',
+                marginTop: '15px',
+                padding: '12px 24px',
                 background: COLORS.youtube,
                 color: COLORS.white,
-                borderRadius: '12px',
+                borderRadius: '10px',
                 textDecoration: 'none',
-                fontWeight: '700',
-                fontSize: '1.1rem',
-                boxShadow: `0 6px 20px ${COLORS.youtube}40`,
-                transition: 'all 0.3s ease'
+                fontWeight: '700'
               }}
             >
-              <Youtube size={24} />
-              YouTube에서 더 보기
-              <ExternalLink size={18} />
+              <Youtube size={20} />
+              유튜브에서 알림 받기
             </a>
           </div>
+        )}
+
+        {/* 지난 라이브 아카이브 */}
+        <div style={{ marginBottom: '30px' }}>
+          <h3 style={{ 
+            color: COLORS.white, 
+            fontSize: '1.3rem', 
+            fontWeight: '700', 
+            marginBottom: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px'
+          }}>
+            <Play size={22} />
+            지난 무료 라이브
+            <span style={{
+              background: COLORS.youtube,
+              color: COLORS.white,
+              padding: '4px 10px',
+              borderRadius: '12px',
+              fontSize: '0.8rem',
+              fontWeight: '700'
+            }}>
+              {archives.length}개
+            </span>
+          </h3>
+
+          {archives.length > 0 ? (
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
+              gap: '20px' 
+            }}>
+              {archives.map((archive) => (
+                <div
+                  key={archive.id}
+                  onClick={() => window.open(`https://www.youtube.com/watch?v=${archive.youtubeId}`, '_blank')}
+                  style={{
+                    background: COLORS.navyLight,
+                    border: `1px solid ${COLORS.youtube}20`,
+                    borderRadius: '14px',
+                    overflow: 'hidden',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  {/* 썸네일 */}
+                  <div style={{
+                    position: 'relative',
+                    paddingBottom: '56.25%',
+                    background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyLight})`
+                  }}>
+                    <img 
+                      src={`https://img.youtube.com/vi/${archive.youtubeId}/maxresdefault.jpg`}
+                      alt={archive.title}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                      }}
+                      onError={(e) => {
+                        e.currentTarget.src = `https://img.youtube.com/vi/${archive.youtubeId}/hqdefault.jpg`;
+                      }}
+                    />
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '10px',
+                      right: '10px',
+                      background: 'rgba(0,0,0,0.8)',
+                      color: COLORS.white,
+                      padding: '4px 8px',
+                      borderRadius: '4px',
+                      fontSize: '0.8rem'
+                    }}>
+                      {archive.duration}
+                    </div>
+                    <div style={{
+                      position: 'absolute',
+                      top: '10px',
+                      left: '10px',
+                      background: COLORS.youtube,
+                      color: COLORS.white,
+                      padding: '4px 8px',
+                      borderRadius: '6px',
+                      fontSize: '0.7rem',
+                      fontWeight: '700',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px'
+                    }}>
+                      <Youtube size={12} />
+                      FREE
+                    </div>
+                  </div>
+                  
+                  <div style={{ padding: '15px' }}>
+                    <h4 style={{ color: COLORS.white, fontSize: '1rem', fontWeight: '600', marginBottom: '8px', lineHeight: 1.3 }}>
+                      {archive.title}
+                    </h4>
+                    <div style={{ color: COLORS.grayDark, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                      <Calendar size={14} />
+                      {archive.date}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div style={{
+              background: COLORS.navyLight,
+              borderRadius: '14px',
+              padding: '40px',
+              textAlign: 'center'
+            }}>
+              <div style={{ fontSize: '2rem', marginBottom: '10px' }}>📼</div>
+              <p style={{ color: COLORS.gray }}>
+                아직 아카이브가 없습니다<br/>
+                첫 라이브 후 여기서 다시 볼 수 있어요!
+              </p>
+            </div>
+          )}
         </div>
-        
+
         {/* 프리미엄 라이브 안내 */}
         <div style={{
-          marginTop: '60px',
-          background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
-          borderRadius: '20px',
-          padding: '40px',
+          background: `linear-gradient(135deg, ${COLORS.navyLight}, ${COLORS.navy})`,
+          border: `1px solid ${COLORS.gold}40`,
+          borderRadius: '16px',
+          padding: '30px',
           textAlign: 'center'
         }}>
-          <h3 style={{ color: COLORS.goldLight, fontSize: '1.4rem', fontWeight: '700', marginBottom: '15px' }}>
+          <h3 style={{ color: COLORS.gold, fontSize: '1.2rem', fontWeight: '700', marginBottom: '12px' }}>
             💎 더 깊이 있는 학습을 원하신다면?
           </h3>
-          <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '1.1rem', marginBottom: '30px', lineHeight: '1.8' }}>
-            프리미엄 라이브에서는 실전 코딩, 1:1 Q&A, 아카이브까지!<br/>
-            Step 1~4 강의 구매 시 전용 라이브에 참여할 수 있어요.
+          <p style={{ color: COLORS.gray, fontSize: '0.95rem', marginBottom: '20px', lineHeight: '1.6' }}>
+            프리미엄 라이브에서는 실전 코딩, 1:1 Q&A까지!
           </p>
           
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '15px',
-            flexWrap: 'wrap'
-          }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
             <button
               onClick={() => navigate('/live/step1')}
               style={{
-                padding: '14px 28px',
-                background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldDark})`,
-                color: COLORS.navyDark,
+                padding: '12px 24px',
+                background: `linear-gradient(135deg, ${COLORS.gold}, #f59e0b)`,
+                color: COLORS.navy,
                 border: 'none',
-                borderRadius: '12px',
-                fontSize: '1rem',
-                fontWeight: '700',
-                cursor: 'pointer',
-                boxShadow: `0 4px 15px ${COLORS.gold}40`
-              }}
-            >
-              🏗️ Step 1 라이브
-            </button>
-            <button
-              onClick={() => navigate('/live/step2')}
-              style={{
-                padding: '14px 28px',
-                background: 'rgba(255,255,255,0.1)',
-                color: COLORS.white,
-                border: '2px solid rgba(255,255,255,0.3)',
-                borderRadius: '12px',
-                fontSize: '1rem',
+                borderRadius: '10px',
+                fontSize: '0.95rem',
                 fontWeight: '700',
                 cursor: 'pointer'
               }}
             >
-              🤖 Step 2 라이브
+              🏠 AI 건물주 라이브
+            </button>
+            <button
+              onClick={() => navigate('/live/step2')}
+              style={{
+                padding: '12px 24px',
+                background: 'rgba(255,255,255,0.1)',
+                color: COLORS.white,
+                border: '1px solid rgba(255,255,255,0.3)',
+                borderRadius: '10px',
+                fontSize: '0.95rem',
+                fontWeight: '700',
+                cursor: 'pointer'
+              }}
+            >
+              🤖 AI 에이전트 라이브
             </button>
           </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.6; }
+        }
+      `}</style>
     </div>
   );
 };
 
 export default FreeLivePage;
-

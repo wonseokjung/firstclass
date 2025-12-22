@@ -96,3 +96,4 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
 
 export default Day8Page;
 
+

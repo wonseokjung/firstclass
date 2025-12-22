@@ -214,6 +214,8 @@ const AdminEnrollmentFixPage = React.lazy(() => import('./components/pages/admin
 const AdminDashboardPage = React.lazy(() => import('./components/pages/admin/AdminDashboardPage'));
 const PaymentDetailsViewPage = React.lazy(() => import('./components/pages/admin/PaymentDetailsViewPage'));
 const EscrowBatchPage = React.lazy(() => import('./components/pages/admin/EscrowBatchPage'));
+const LiveArchiveAdminPage = React.lazy(() => import('./components/pages/admin/LiveArchiveAdminPage'));
+const LiveControlPage = React.lazy(() => import('./components/pages/admin/LiveControlPage'));
 
 // ============================================
 // HOC를 사용한 래핑된 컴포넌트들
@@ -587,7 +589,9 @@ const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ childr
               <Route path="/admin" element={<AdminDashboardPage />} />
               <Route path="/admin/fix-enrollments" element={<AdminEnrollmentFixPage />} />
               <Route path="/admin/escrow" element={<EscrowBatchPage />} />
-            <Route path="/admin/payment-details" element={<PaymentDetailsViewPageWrapper />} />
+              <Route path="/admin/live-archives" element={<LiveArchiveAdminPage />} />
+              <Route path="/admin/live-control" element={<LiveControlPage />} />
+              <Route path="/admin/payment-details" element={<PaymentDetailsViewPageWrapper />} />
             </Routes>
           </Suspense>
         </div>
