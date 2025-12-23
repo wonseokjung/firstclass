@@ -303,7 +303,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
 
           {/* 라이브 입장 버튼 */}
           <div 
-            onClick={() => navigate('/live')}
+            onClick={() => navigate('/live/step1')}
             style={{
               background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.9))',
               border: '2px solid rgba(255, 255, 255, 0.3)',

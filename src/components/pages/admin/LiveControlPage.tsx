@@ -17,9 +17,8 @@ const COLORS = {
   youtube: '#FF0000'
 };
 
-// 강의 설정 (월~수만 운영)
+// 강의 설정 (유료 강의만 관리, 무료 라이브는 유튜브에서 직접 관리)
 const COURSES = [
-  { id: 'free-live', name: '🆓 무료 라이브 (AI 수익화 토크)', color: COLORS.youtube, dayOfWeek: '월요일' },
   { id: 'ai-building-course', name: '🏠 AI 건물주 되기', color: COLORS.blue, dayOfWeek: '화요일' },
   { id: 'chatgpt-agent-beginner', name: '🤖 AI 에이전트 비기너', color: COLORS.cyan, dayOfWeek: '수요일' },
 ];

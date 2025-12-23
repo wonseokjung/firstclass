@@ -122,17 +122,55 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
   const [hasAccess, setHasAccess] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isLiveNow, setIsLiveNow] = useState(false);
+  const [liveUrl, setLiveUrl] = useState('');
+  const [liveTitle, setLiveTitle] = useState('');
   const [selectedArchive, setSelectedArchive] = useState<ArchiveItem | null>(null);
   const [archives, setArchives] = useState<ArchiveItem[]>([]);
   const [nextLiveDate, setNextLiveDate] = useState<Date | null>(null);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   const stepInfo = stepId ? STEP_INFO[stepId] : null;
+  
+  // Step ID를 Azure courseId로 매핑
+  const getCourseIdForStep = (step: string): string => {
+    const mapping: { [key: string]: string } = {
+      'step1': 'ai-building-course',
+      'step2': 'chatgpt-agent-beginner',
+      'step3': 'vibe-coding',
+      'step4': 'solo-business'
+    };
+    return mapping[step] || step;
+  };
 
-  // 다음 라이브 날짜 계산
+  // Azure에서 라이브 설정 가져오기 + 다음 라이브 날짜 계산
   useEffect(() => {
-    if (!stepInfo) return;
+    if (!stepInfo || !stepId) return;
 
+    const loadLiveConfig = async () => {
+      try {
+        const courseId = getCourseIdForStep(stepId);
+        console.log('🔴 라이브 설정 로드 중...', courseId);
+        
+        const config = await AzureTableService.getCurrentLiveConfig(courseId);
+        console.log('📡 Azure 라이브 설정:', config);
+        
+        if (config && config.isLive && config.liveUrl) {
+          setIsLiveNow(true);
+          setLiveUrl(config.liveUrl);
+          setLiveTitle(config.liveTitle || '라이브 진행 중');
+          console.log('✅ 라이브 ON!', config.liveUrl);
+        } else {
+          setIsLiveNow(false);
+          console.log('⏸️ 라이브 OFF');
+        }
+      } catch (error) {
+        console.error('라이브 설정 로드 실패:', error);
+      }
+    };
+    
+    loadLiveConfig();
+
+    // 다음 라이브 날짜 계산
     const dayMap: { [key: string]: number } = {
       '일요일': 0, '월요일': 1, '화요일': 2, '수요일': 3,
       '목요일': 4, '금요일': 5, '토요일': 6
@@ -148,14 +186,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
     nextDate.setDate(now.getDate() + daysUntil);
     nextDate.setHours(20, 0, 0, 0);
     setNextLiveDate(nextDate);
-
-    // 현재 라이브 중인지 체크
-    const liveEndTime = new Date(nextDate);
-    liveEndTime.setHours(21, 0, 0, 0);
-    if (now >= nextDate && now <= liveEndTime && currentDay === targetDay) {
-      setIsLiveNow(true);
-    }
-  }, [stepInfo]);
+  }, [stepInfo, stepId]);
 
   // 카운트다운 업데이트
   useEffect(() => {
@@ -511,10 +542,10 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
             overflow: 'hidden',
             boxShadow: `0 10px 40px ${COLORS.navy}30`
           }}>
-            {isLiveNow ? (
+            {isLiveNow && liveUrl ? (
               <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
                 <iframe
-                  src={`https://vimeo.com/event/${stepInfo.vimeoEventId}/embed`}
+                  src={`https://www.youtube.com/embed/${liveUrl}?autoplay=1`}
                   style={{
                     position: 'absolute',
                     top: 0,
@@ -523,9 +554,9 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
                     height: '100%',
                     border: 'none'
                   }}
-                  allow="autoplay; fullscreen; picture-in-picture"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
-                  title={`${stepInfo.name} 라이브`}
+                  title={liveTitle || `${stepInfo.name} 라이브`}
                 />
               </div>
             ) : selectedArchive ? (

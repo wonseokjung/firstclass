@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import { CheckCircle, AlertCircle, Loader, Upload, X } from 'lucide-react';
 import AzureTableService from '../../../services/azureTableService';
 import NavigationBar from '../../common/NavigationBar';
 
@@ -11,12 +11,69 @@ interface Payment {
   amount: number;
   date: string;
   realEmail?: string;
+  phone?: string; // 전화번호 (마스킹)
   referrerCode?: string; // 추천인 코드 (브릭 적립용)
   tid?: string; // 결제 고유 ID (TID)
   paymentMethod?: string; // 결제 방법 (카드/가상계좌)
   status?: 'pending' | 'processing' | 'success' | 'error' | 'skip';
   message?: string;
+  productName?: string; // 상품명
 }
+
+// 🔥 토스페이먼츠 데이터 파싱 함수
+const parseTossPaymentsData = (rawText: string): Payment[] => {
+  const payments: Payment[] = [];
+  const lines = rawText.split('\n').map(line => line.trim()).filter(line => line);
+  
+  let currentPayment: Partial<Payment> = {};
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    
+    // 주문번호 찾기
+    if (line.startsWith('order_')) {
+      if (currentPayment.orderId) {
+        // 이전 결제 저장
+        if (currentPayment.orderId && currentPayment.maskedEmail && currentPayment.amount) {
+          payments.push(currentPayment as Payment);
+        }
+      }
+      currentPayment = { orderId: line, status: 'pending' };
+    }
+    // 이메일 찾기 (@ 포함)
+    else if (line.includes('@') && !currentPayment.maskedEmail) {
+      currentPayment.maskedEmail = line;
+      currentPayment.realEmail = line;
+    }
+    // 금액 찾기 (숫자,숫자 형식)
+    else if (/^\d{1,3}(,\d{3})*$/.test(line)) {
+      currentPayment.amount = parseInt(line.replace(/,/g, ''));
+    }
+    // 상품명 찾기
+    else if (line.includes('Step 1:') || line.includes('AI 건물주') || line.includes('Google Opal') || line.includes('에이전트')) {
+      currentPayment.productName = line;
+    }
+    // 구매자명 찾기 (한글 2-3자 + 마스킹)
+    else if (/^[가-힣]{1}\*[가-힣]{1,2}$/.test(line) || /^[A-Za-z]{2}\*+[A-Za-z]*$/.test(line)) {
+      currentPayment.name = line;
+    }
+    // 전화번호 찾기 (010****1234 형식)
+    else if (/^010\*{4}\d{4}$/.test(line) || /^010-\*{4}-\d{4}$/.test(line)) {
+      currentPayment.phone = line.replace(/-/g, '');
+    }
+    // 날짜 찾기
+    else if (/^\d{4}-\d{2}-\d{2}/.test(line) && !currentPayment.date) {
+      currentPayment.date = line;
+    }
+  }
+  
+  // 마지막 결제 저장
+  if (currentPayment.orderId && currentPayment.maskedEmail && currentPayment.amount) {
+    payments.push(currentPayment as Payment);
+  }
+  
+  return payments;
+};
 
 const AdminEnrollmentFixPage: React.FC = () => {
   const navigate = useNavigate();
@@ -30,6 +87,11 @@ const AdminEnrollmentFixPage: React.FC = () => {
   const [searchResult, setSearchResult] = useState<any>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [showSearchPanel, setShowSearchPanel] = useState(false);
+  
+  // 🔥 토스페이먼츠 데이터 붙여넣기 상태
+  const [showTossModal, setShowTossModal] = useState(false);
+  const [tossRawData, setTossRawData] = useState('');
+  const [parsedPayments, setParsedPayments] = useState<Payment[]>([]);
   
   const [payments, setPayments] = useState<Payment[]>([
     // 최신 결제 - 2025-12-03 (점심/오후)
@@ -1006,6 +1068,26 @@ const AdminEnrollmentFixPage: React.FC = () => {
               {processing ? '처리 중...' : '🤖 자동 매칭 & 일괄 추가'}
             </button>
             <button
+              onClick={() => setShowTossModal(true)}
+              style={{
+                padding: '12px 24px',
+                borderRadius: '10px',
+                border: 'none',
+                background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                color: 'white',
+                fontSize: '1rem',
+                fontWeight: '700',
+                cursor: 'pointer',
+                boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
+              <Upload size={18} />
+              토스 데이터 붙여넣기
+            </button>
+            <button
               onClick={() => setShowSearchPanel(!showSearchPanel)}
               style={{
                 padding: '12px 24px',
@@ -1706,7 +1788,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
                   {payments
                     .filter(p => !searchEmail || p.realEmail?.includes(searchEmail) || p.maskedEmail.includes(searchEmail) || p.name.includes(searchEmail) || p.tid?.includes(searchEmail))
                     .map((payment, index) => (
-                      <tr key={payment.orderId} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                      <tr key={`${payment.orderId}_${index}`} style={{ borderBottom: '1px solid #f1f5f9' }}>
                         <td style={{ padding: '12px' }}>{payment.name}</td>
                         <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.9rem' }}>{payment.maskedEmail}</td>
                         <td style={{ padding: '12px' }}>
@@ -1784,7 +1866,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
                           ) : '-'}
                         </td>
                         <td style={{ padding: '12px', fontSize: '0.85rem', color: '#64748b' }}>
-                          {payment.date.split(' ')[0]}
+                          {payment.date?.split(' ')[0] || '-'}
                         </td>
                         <td style={{ padding: '12px' }}>
                           {payment.status === 'success' && (
@@ -1842,6 +1924,286 @@ const AdminEnrollmentFixPage: React.FC = () => {
           </div>
         )}
       </div>
+      
+      {/* 🔥 토스페이먼츠 데이터 붙여넣기 모달 */}
+      {showTossModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0,0,0,0.7)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            background: 'white',
+            borderRadius: '20px',
+            padding: '30px',
+            width: '90%',
+            maxWidth: '800px',
+            maxHeight: '90vh',
+            overflow: 'auto'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#1e293b' }}>
+                📋 토스페이먼츠 데이터 붙여넣기
+              </h2>
+              <button
+                onClick={() => { setShowTossModal(false); setTossRawData(''); setParsedPayments([]); }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+              >
+                <X size={24} />
+              </button>
+            </div>
+            
+            <p style={{ color: '#64748b', marginBottom: '15px' }}>
+              토스페이먼츠 어드민에서 결제 내역을 복사해서 붙여넣으세요.<br/>
+              주문번호, 이메일, 금액, 상품명을 자동으로 파싱합니다.
+            </p>
+            
+            <textarea
+              value={tossRawData}
+              onChange={(e) => setTossRawData(e.target.value)}
+              placeholder="토스페이먼츠에서 복사한 데이터를 여기에 붙여넣기..."
+              style={{
+                width: '100%',
+                height: '200px',
+                padding: '15px',
+                borderRadius: '10px',
+                border: '2px solid #e2e8f0',
+                fontSize: '0.9rem',
+                fontFamily: 'monospace',
+                resize: 'vertical',
+                boxSizing: 'border-box'
+              }}
+            />
+            
+            <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
+              <button
+                onClick={() => {
+                  const parsed = parseTossPaymentsData(tossRawData);
+                  setParsedPayments(parsed);
+                }}
+                style={{
+                  padding: '12px 24px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                  color: 'white',
+                  fontWeight: '700',
+                  cursor: 'pointer'
+                }}
+              >
+                🔍 파싱하기
+              </button>
+              
+              {parsedPayments.length > 0 && (
+                <button
+                  onClick={async () => {
+                    // 바로 Azure에 등록 (스마트 매칭 사용)
+                    let success = 0, failed = 0, skipped = 0;
+                    const results: string[] = [];
+                    
+                    // 모든 사용자 목록 가져오기 (스마트 매칭용)
+                    const allAzureUsers = await AzureTableService.getAllUsers();
+                    
+                    // 🔥 스마트 매칭 함수: 마스킹된 정보로 실제 사용자 찾기
+                    const findUserByPattern = (maskedEmail: string, maskedName: string, maskedPhone?: string) => {
+                      // 이메일 패턴 분석 (bd****@gmail.com → starts with 'bd', ends with '@gmail.com')
+                      const emailMatch = maskedEmail.match(/^([a-zA-Z0-9]+)\*+@(.+)$/);
+                      const emailPrefix = emailMatch ? emailMatch[1].toLowerCase() : '';
+                      const emailDomain = emailMatch ? emailMatch[2].toLowerCase() : '';
+                      
+                      // 이름 패턴 분석 (전*진 → starts with '전', ends with '진')
+                      const nameFirst = maskedName.charAt(0);
+                      const nameLast = maskedName.charAt(maskedName.length - 1);
+                      
+                      // 전화번호 패턴 분석 (010****1723 → ends with '1723')
+                      const phoneSuffix = maskedPhone ? maskedPhone.slice(-4) : '';
+                      
+                      let bestMatch: any = null;
+                      let bestScore = 0;
+                      
+                      for (const user of allAzureUsers) {
+                        let score = 0;
+                        let emailMatched = false;
+                        
+                        // 이메일 매칭 (도메인 + prefix 모두 일치해야 함)
+                        if (user.email && emailPrefix && emailDomain) {
+                          const userEmail = user.email.toLowerCase();
+                          const userDomain = userEmail.split('@')[1];
+                          
+                          // 도메인이 반드시 일치해야 함!
+                          if (userDomain === emailDomain && userEmail.startsWith(emailPrefix)) {
+                            score += 5; // 이메일 매칭은 5점 (필수)
+                            emailMatched = true;
+                          }
+                        }
+                        
+                        // 이메일 도메인이 다르면 스킵 (잘못된 매칭 방지)
+                        if (!emailMatched && emailDomain) {
+                          continue;
+                        }
+                        
+                        // 이름 매칭 (보조)
+                        if (user.name && nameFirst !== '*') {
+                          const userName = user.name;
+                          if (userName.startsWith(nameFirst) && userName.endsWith(nameLast)) {
+                            score += 2;
+                          }
+                        }
+                        
+                        // 전화번호 매칭 (보조)
+                        if (user.phone && phoneSuffix) {
+                          if (user.phone.endsWith(phoneSuffix)) {
+                            score += 2;
+                          }
+                        }
+                        
+                        // 가장 높은 점수 사용자 선택 (최소 5점: 이메일 일치 필수)
+                        if (score >= 5 && score > bestScore) {
+                          bestScore = score;
+                          bestMatch = user;
+                        }
+                      }
+                      return bestMatch;
+                    };
+                    
+                    for (const payment of parsedPayments) {
+                      try {
+                        const maskedEmail = payment.maskedEmail;
+                        if (!maskedEmail || !maskedEmail.includes('@')) {
+                          skipped++;
+                          results.push(`⏭️ ${payment.name}: 이메일 없음`);
+                          continue;
+                        }
+                        
+                        // 상품명으로 courseId, 금액 결정
+                        let courseId = 'ai-building-course';
+                        let title = 'Step 1: AI 건물주 되기 기초';
+                        let amount = 45000;
+                        
+                        if (payment.productName?.includes('Google Opal') || payment.productName?.includes('에이전트') || payment.amount === 95000) {
+                          courseId = 'chatgpt-agent-beginner';
+                          title = 'Google Opal 유튜브 수익화 에이전트 기초';
+                          amount = 95000;
+                        }
+                        
+                        // 🔥 스마트 매칭으로 사용자 찾기
+                        let matchedUser = await AzureTableService.getUserByEmail(maskedEmail);
+                        
+                        if (!matchedUser) {
+                          // 직접 이메일로 못 찾으면 패턴 매칭
+                          matchedUser = findUserByPattern(maskedEmail, payment.name || '', payment.phone);
+                        }
+                        
+                        if (!matchedUser) {
+                          console.log(`❌ 매칭 실패: ${maskedEmail} / ${payment.name}`);
+                          results.push(`❌ ${payment.name} (${maskedEmail}): 매칭 실패`);
+                          failed++;
+                          continue;
+                        }
+                        
+                        const realEmail = matchedUser.email;
+                        
+                        // 이미 등록되어 있는지 확인
+                        if (matchedUser.enrolledCourses) {
+                          const enrolled = JSON.parse(matchedUser.enrolledCourses);
+                          const enrollments = enrolled.enrollments || enrolled || [];
+                          const alreadyHas = enrollments.some((e: any) => 
+                            e.courseId === courseId || 
+                            (courseId === 'ai-building-course' && e.courseId === '999') ||
+                            (courseId === 'chatgpt-agent-beginner' && e.courseId === '1002')
+                          );
+                          if (alreadyHas) {
+                            console.log(`⏭️ 이미 등록됨: ${realEmail} → ${title}`);
+                            results.push(`⏭️ ${payment.name}: 이미 등록됨`);
+                            skipped++;
+                            continue;
+                          }
+                        }
+                        
+                        // 기존 버튼과 동일한 함수 사용!
+                        await AzureTableService.addPurchaseAndEnrollmentToUser({
+                          email: realEmail,
+                          courseId,
+                          title,
+                          amount,
+                          paymentMethod: '가상계좌',
+                          paymentKey: payment.orderId
+                        });
+                        
+                        console.log(`✅ 등록 완료: ${realEmail} → ${title}`);
+                        results.push(`✅ ${payment.name} → ${realEmail}: ${courseId === 'ai-building-course' ? '건물주' : '에이전트'}`);
+                        success++;
+                      } catch (error: any) {
+                        console.error(`❌ 등록 실패: ${payment.maskedEmail}`, error);
+                        results.push(`❌ ${payment.name}: ${error.message}`);
+                        failed++;
+                      }
+                    }
+                    
+                    setShowTossModal(false);
+                    setTossRawData('');
+                    setParsedPayments([]);
+                    alert(`🎉 등록 완료!\n\n✅ 성공: ${success}건\n⏭️ 스킵: ${skipped}건\n❌ 실패: ${failed}건\n\n${results.join('\n')}`);
+                    
+                    // 사용자 목록 새로고침
+                    const updatedUsers = await AzureTableService.getAllUsers();
+                    setAllUsers(updatedUsers);
+                  }}
+                  style={{
+                    padding: '12px 24px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    background: 'linear-gradient(135deg, #10b981, #059669)',
+                    color: 'white',
+                    fontWeight: '700',
+                    cursor: 'pointer'
+                  }}
+                >
+                  🚀 {parsedPayments.length}건 바로 등록하기
+                </button>
+              )}
+            </div>
+            
+            {/* 파싱 결과 미리보기 */}
+            {parsedPayments.length > 0 && (
+              <div style={{ marginTop: '20px' }}>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '10px' }}>
+                  📊 파싱 결과 ({parsedPayments.length}건)
+                </h3>
+                <div style={{ maxHeight: '200px', overflow: 'auto', border: '1px solid #e2e8f0', borderRadius: '10px' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
+                    <thead style={{ background: '#f8fafc', position: 'sticky', top: 0 }}>
+                      <tr>
+                        <th style={{ padding: '10px', textAlign: 'left' }}>주문번호</th>
+                        <th style={{ padding: '10px', textAlign: 'left' }}>이메일</th>
+                        <th style={{ padding: '10px', textAlign: 'right' }}>금액</th>
+                        <th style={{ padding: '10px', textAlign: 'left' }}>상품</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {parsedPayments.map((p, i) => (
+                        <tr key={i} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                          <td style={{ padding: '8px', fontFamily: 'monospace', fontSize: '0.75rem' }}>{p.orderId?.substring(0, 25)}...</td>
+                          <td style={{ padding: '8px' }}>{p.maskedEmail}</td>
+                          <td style={{ padding: '8px', textAlign: 'right', fontWeight: '600' }}>₩{p.amount?.toLocaleString()}</td>
+                          <td style={{ padding: '8px', fontSize: '0.8rem' }}>{p.productName?.substring(0, 20) || '-'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

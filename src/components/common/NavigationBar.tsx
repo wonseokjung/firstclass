@@ -199,21 +199,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
           <button className="nav-link" onClick={() => navigate('/ceo')}>소개</button>
           <button 
             className="nav-link" 
-            onClick={() => navigate('/live')}
-            style={navButtonStyle}
-            onMouseOver={(e) => {
-              e.currentTarget.style.background = brandTheme.navyLight;
-              e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = brandTheme.navy;
-              e.currentTarget.style.transform = 'translateY(0)';
-            }}
-          >
-            📺 라이브
-          </button>
-          <button 
-            className="nav-link" 
             onClick={() => navigate('/community')}
             style={navButtonStyle}
             onMouseOver={(e) => {
@@ -271,17 +256,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               소개
             </button>
 
-            <button 
-              className="mobile-nav-link" 
-              onClick={() => handleMobileNavClick(() => navigate('/live'))}
-              style={{ 
-                background: brandTheme.navy,
-                color: brandTheme.gold,
-                fontWeight: '700'
-              }}
-            >
-              📺 라이브
-            </button>
             <button 
               className="mobile-nav-link" 
               onClick={() => handleMobileNavClick(() => navigate('/community'))}

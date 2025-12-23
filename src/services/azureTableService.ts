@@ -1,5 +1,11 @@
 // Azure SDK 대신 REST API 직접 호출 사용
 
+// 🚀 개발 모드에서만 로그 출력 (프로덕션 성능 향상)
+const isDev = process.env.NODE_ENV === 'development';
+const devLog = (...args: unknown[]) => { if (isDev) console.log(...args); };
+const devWarn = (...args: unknown[]) => { if (isDev) console.warn(...args); };
+const devError = (...args: unknown[]) => { console.error(...args); }; // 에러는 항상 출력
+
 /**
  * 🔐 보안 개선: Azure Table Storage SAS URLs
  * 
@@ -23,8 +29,8 @@ const AZURE_SAS_URLS = {
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   const hasEnvVars = process.env.REACT_APP_AZURE_SAS_URL_USERS;
   if (!hasEnvVars) {
-    console.warn('⚠️ Azure SAS URL 환경변수가 설정되지 않았습니다. 기본값(하드코딩)을 사용합니다.');
-    console.warn('💡 보안을 위해 .env.local 파일에 환경변수를 설정하세요.');
+    devWarn('⚠️ Azure SAS URL 환경변수가 설정되지 않았습니다. 기본값(하드코딩)을 사용합니다.');
+    devWarn('💡 보안을 위해 .env.local 파일에 환경변수를 설정하세요.');
   }
 }
 
@@ -32,15 +38,15 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
 const isConnectionConfigured = true; // SAS URL이 있으므로 항상 true
 
 if (!isConnectionConfigured) {
-  console.error('⚠️ Azure Storage Connection String이 설정되지 않았습니다!');
-  console.log('🔧 .env 파일에 REACT_APP_AZURE_STORAGE_CONNECTION_STRING을 설정해주세요.');
-  console.log('📋 Azure Portal에서 Connection String을 복사하여 설정하세요.');
+  devError('⚠️ Azure Storage Connection String이 설정되지 않았습니다!');
+  devLog('🔧 .env 파일에 REACT_APP_AZURE_STORAGE_CONNECTION_STRING을 설정해주세요.');
+  devLog('📋 Azure Portal에서 Connection String을 복사하여 설정하세요.');
 }
 
 
 // Azure SAS URL 기반 초기화 함수
 const initializeAzureClients = () => {
-  console.log('✅ Azure Table Storage 연결 완료');
+  devLog('✅ Azure Table Storage 연결 완료');
 };
 
 
@@ -50,9 +56,9 @@ if (isConnectionConfigured) {
   // 앱 시작 시 테이블 자동 생성
   setTimeout(() => {
     AzureTableService.initializeTables().then(() => {
-      console.log('🚀 Azure Table Storage 완전 초기화 완료!');
+      devLog('🚀 Azure Table Storage 완전 초기화 완료!');
     }).catch(error => {
-      console.error('⚠️ 테이블 초기화 중 오류:', error);
+      devError('⚠️ 테이블 초기화 중 오류:', error);
     });
   }, 1000);
 }
@@ -301,7 +307,7 @@ export class AzureTableService {
         // 성공하거나 재시도할 필요 없는 오류인 경우 바로 반환
         if (response.ok || response.status < 500) {
           if (attempt > 1) {
-            console.log(`✅ ${attempt}번째 시도에서 성공!`);
+            devLog(`✅ ${attempt}번째 시도에서 성공!`);
           }
           return response;
         }
@@ -311,17 +317,17 @@ export class AzureTableService {
 
       } catch (error: any) {
         // lastError = error as Error;
-        console.warn(`🔄 요청 실패 (시도 ${attempt}/${maxRetries}):`, error?.message || error);
+        devWarn(`🔄 요청 실패 (시도 ${attempt}/${maxRetries}):`, error?.message || error);
 
         // 타임아웃 에러인 경우 명확히 표시
         if (error?.name === 'AbortError') {
-          console.warn('⏱️ 요청 타임아웃 (15초 초과)');
+          devWarn('⏱️ 요청 타임아웃 (15초 초과)');
         }
 
         // 마지막 시도가 아니면 대기 후 재시도
         if (attempt < maxRetries) {
           const waitTime = delay * attempt;
-          console.log(`⏳ ${waitTime}ms 후 재시도...`);
+          devLog(`⏳ ${waitTime}ms 후 재시도...`);
           await new Promise(resolve => setTimeout(resolve, waitTime));
         }
       }
@@ -350,10 +356,10 @@ export class AzureTableService {
     const etag = (body as any)['odata.etag'] || (body as any)['odata.etag'];
     if (etag) {
       headers['If-Match'] = etag;
-      console.log('🔧 ETag 사용:', etag);
+      devLog('🔧 ETag 사용:', etag);
     } else {
       headers['If-Match'] = '*';
-      console.log('🔧 ETag 없음, * 사용');
+      devLog('🔧 ETag 없음, * 사용');
     }
 
     const azureEntity = this.convertToAzureEntity(body);
@@ -365,23 +371,23 @@ export class AzureTableService {
       mode: 'cors',
     };
 
-    console.log('🔧 Azure PUT 요청 (엔티티 업데이트):', url);
-    console.log('🔧 요청 헤더:', headers);
+    devLog('🔧 Azure PUT 요청 (엔티티 업데이트):', url);
+    devLog('🔧 요청 헤더:', headers);
 
     try {
       const response = await this.retryRequest(url, options);
 
       if (response.ok) {
         const text = await response.text();
-        console.log('✅ Azure PUT 요청 성공');
+        devLog('✅ Azure PUT 요청 성공');
         return text ? JSON.parse(text) : { success: true };
       } else {
         const errorText = await response.text();
-        console.error(`Azure PUT 오류:`, response.status, errorText);
+        devError(`Azure PUT 오류:`, response.status, errorText);
         throw new Error(`Azure PUT 실패: ${response.status} - ${errorText}`);
       }
     } catch (error: any) {
-      console.error(`Azure PUT 요청 실패:`, error.message);
+      devError(`Azure PUT 요청 실패:`, error.message);
       throw error;
     }
   }
@@ -397,7 +403,7 @@ export class AzureTableService {
 
     // 🔧 디버깅: 업데이트용 SAS URL 확인  
     if (method !== 'GET') {
-      console.log(`🔗 ${method} 요청용 SAS URL:`, baseUrl.substring(0, 100) + '...');
+      devLog(`🔗 ${method} 요청용 SAS URL:`, baseUrl.substring(0, 100) + '...');
     }
 
     let url = baseUrl;
@@ -434,11 +440,11 @@ export class AzureTableService {
       // Azure Table Storage용 엔티티 변환
       const azureEntity = this.convertToAzureEntity(body);
       options.body = JSON.stringify(azureEntity);
-      console.log(`🔧 Azure ${method} 요청 엔티티:`, azureEntity);
+      devLog(`🔧 Azure ${method} 요청 엔티티:`, azureEntity);
     }
 
     // 🔗 디버깅: 최종 요청 URL 출력  
-    console.log(`🔗 Final Azure Request URL: ${url}`);
+    devLog(`🔗 Final Azure Request URL: ${url}`);
 
     try {
       const response = await fetch(url, options);
@@ -453,11 +459,11 @@ export class AzureTableService {
         return text ? JSON.parse(text) : { success: true };
       } else {
         const errorText = await response.text();
-        console.error(`Azure ${method} 오류 (${tableName}):`, response.status, errorText);
+        devError(`Azure ${method} 오류 (${tableName}):`, response.status, errorText);
         throw new Error(`Azure ${method} 실패: ${response.status} - ${errorText}`);
       }
     } catch (error: any) {
-      console.error(`Azure ${method} 요청 실패 (${tableName}):`, error.message);
+      devError(`Azure ${method} 요청 실패 (${tableName}):`, error.message);
       throw error;
     }
   }
@@ -514,7 +520,7 @@ export class AzureTableService {
     azureEntity.PartitionKey = String(azureEntity.PartitionKey);
     azureEntity.RowKey = String(azureEntity.RowKey);
 
-    console.log('🔧 Azure 엔티티 변환 결과:', azureEntity);
+    devLog('🔧 Azure 엔티티 변환 결과:', azureEntity);
     return azureEntity;
   }
 
@@ -526,12 +532,12 @@ export class AzureTableService {
                          window.location.hostname === 'aicitybuilders.com';
     
     if (isProduction) {
-      console.log('🔒 보안: 프로덕션 환경에서는 연결 테스트가 차단됩니다.');
+      devLog('🔒 보안: 프로덕션 환경에서는 연결 테스트가 차단됩니다.');
       return true; // 프로덕션에서는 그냥 성공으로 처리
     }
     
     try {
-      console.log('🧪 Azure Table Storage 단일 Users 테이블 SAS URL 테스트 시작...');
+      devLog('🧪 Azure Table Storage 단일 Users 테이블 SAS URL 테스트 시작...');
 
       const headers = {
         'Accept': 'application/json;odata=fullmetadata',
@@ -540,7 +546,7 @@ export class AzureTableService {
 
       // Users 테이블 연결 테스트
       const sasUrl = AZURE_SAS_URLS.users;
-      console.log(`🔗 Users 테이블 테스트 중...`);
+      devLog(`🔗 Users 테이블 테스트 중...`);
 
       const response = await fetch(sasUrl, {
         method: 'GET',
@@ -550,21 +556,21 @@ export class AzureTableService {
 
       if (response.ok) {
         await response.json(); // 데이터 읽기만 하고 사용하지 않음
-        console.log(`✅ Users 테이블 연결 성공! (상태: ${response.status})`);
-        console.log('🎉 Azure Table Storage 연결 성공!');
-        console.log('🚀 쓰기 권한(sp=raud) 포함으로 완전한 CRUD 작업 준비 완료!');
-        console.log('🎯 모든 데이터를 Users 테이블에 통합 저장 가능!');
+        devLog(`✅ Users 테이블 연결 성공! (상태: ${response.status})`);
+        devLog('🎉 Azure Table Storage 연결 성공!');
+        devLog('🚀 쓰기 권한(sp=raud) 포함으로 완전한 CRUD 작업 준비 완료!');
+        devLog('🎯 모든 데이터를 Users 테이블에 통합 저장 가능!');
         return true;
       } else {
-        console.log(`❌ Users 테이블 연결 실패 (상태: ${response.status})`);
+        devLog(`❌ Users 테이블 연결 실패 (상태: ${response.status})`);
         return false;
       }
 
     } catch (error: any) {
-      console.error('❌ Azure Users 테이블 연결 테스트 실패:', error.message);
+      devError('❌ Azure Users 테이블 연결 테스트 실패:', error.message);
 
       if (error.message.includes('CORS')) {
-        console.log('🔧 CORS 오류: Azure Portal에서 CORS 설정을 확인하세요.');
+        devLog('🔧 CORS 오류: Azure Portal에서 CORS 설정을 확인하세요.');
       }
 
       return false;
@@ -579,17 +585,17 @@ export class AzureTableService {
     const isConnected = await this.testAzureConnection();
 
     if (isConnected) {
-      console.log('🚀 Azure Table Storage REST API 연결 완료!');
-      console.log('📋 이제 실제 Azure에 데이터를 저장할 수 있습니다!');
+      devLog('🚀 Azure Table Storage REST API 연결 완료!');
+      devLog('📋 이제 실제 Azure에 데이터를 저장할 수 있습니다!');
 
       // 필요한 테이블들 준비 완료 로그
       const tablesToCreate = ['users', 'mentoringssessions', 'studentpackages'];
       tablesToCreate.forEach(tableName => {
-        console.log(`📋 Table '${tableName}' 준비 완료`);
+        devLog(`📋 Table '${tableName}' 준비 완료`);
       });
     } else {
-      console.error('❌ Azure Table Storage 연결 실패! CORS 설정을 확인하세요.');
-      console.error('💡 해결 방법: Azure Portal에서 Storage Account CORS 설정에 현재 도메인을 추가하세요.');
+      devError('❌ Azure Table Storage 연결 실패! CORS 설정을 확인하세요.');
+      devError('💡 해결 방법: Azure Portal에서 Storage Account CORS 설정에 현재 도메인을 추가하세요.');
     }
   }
 
@@ -603,13 +609,13 @@ export class AzureTableService {
                          window.location.hostname === 'aicitybuilders.com';
     
     if (isProduction) {
-      console.warn('🔒 보안: 프로덕션 환경에서는 전체 사용자 조회가 차단됩니다.');
-      console.warn('📍 관리자 작업은 로컬 환경(localhost)에서 진행해주세요.');
+      devWarn('🔒 보안: 프로덕션 환경에서는 전체 사용자 조회가 차단됩니다.');
+      devWarn('📍 관리자 작업은 로컬 환경(localhost)에서 진행해주세요.');
       return []; // 빈 배열 반환 - 네트워크에 데이터 노출 안 됨!
     }
     
     try {
-      console.log('🔍 Azure Users 테이블에서 모든 사용자 조회 중... (로컬 환경)');
+      devLog('🔍 Azure Users 테이블에서 모든 사용자 조회 중... (로컬 환경)');
 
       let allUsers: User[] = [];
       let continuationNextPartitionKey: string | null = null;
@@ -645,15 +651,15 @@ export class AzureTableService {
         continuationNextRowKey = response.headers.get('x-ms-continuation-NextRowKey');
 
         if (continuationNextPartitionKey) {
-          console.log(`📦 추가 데이터 로드 중... (현재 ${allUsers.length}명)`);
+          devLog(`📦 추가 데이터 로드 중... (현재 ${allUsers.length}명)`);
         }
 
       } while (continuationNextPartitionKey && continuationNextRowKey);
 
-      console.log(`✅ 총 ${allUsers.length}명의 사용자 조회 완료`);
+      devLog(`✅ 총 ${allUsers.length}명의 사용자 조회 완료`);
       return allUsers;
     } catch (error: any) {
-      console.error('❌ 모든 사용자 조회 실패:', error.message);
+      devError('❌ 모든 사용자 조회 실패:', error.message);
       return [];
     }
   }
@@ -661,10 +667,10 @@ export class AzureTableService {
   static async getUserByEmail(email: string): Promise<User | null> {
     try {
       // 🚀 Azure에서 사용자 검색 시도!
-      console.log('🔍 Azure Users 테이블에서 사용자 검색 중...', email);
+      devLog('🔍 Azure Users 테이블에서 사용자 검색 중...', email);
 
       // 🔧 디버깅: 사용 중인 SAS URL 확인
-      console.log(`🔗 조회용 SAS URL:`, AZURE_SAS_URLS.users.substring(0, 100) + '...');
+      devLog(`🔗 조회용 SAS URL:`, AZURE_SAS_URLS.users.substring(0, 100) + '...');
 
       // Azure Table Storage에서 쿼리 (이메일로 필터링)
       const baseUrl = AZURE_SAS_URLS.users;
@@ -683,7 +689,7 @@ export class AzureTableService {
       if (response.ok) {
         const data = await response.json();
         if (data.value && data.value.length > 0) {
-          console.log('✅ Azure에서 사용자 찾음:', email);
+          devLog('✅ Azure에서 사용자 찾음:', email);
           const azureUser = data.value[0];
 
           // Azure 응답의 키 필드를 소문자로 매핑
@@ -695,14 +701,14 @@ export class AzureTableService {
 
           return user;
         } else {
-          console.log('🔍 Azure에서 사용자를 찾을 수 없음:', email);
+          devLog('🔍 Azure에서 사용자를 찾을 수 없음:', email);
           return null;
         }
       } else {
         throw new Error(`Azure 검색 실패: ${response.status}`);
       }
     } catch (error: any) {
-      console.error('❌ Azure 사용자 검색 실패:', error.message);
+      devError('❌ Azure 사용자 검색 실패:', error.message);
 
       // CORS 오류인 경우 더 명확한 메시지
       if (error.message.includes('CORS') || error.message.includes('<!DOCTYPE')) {
@@ -725,8 +731,8 @@ export class AzureTableService {
     if (!isValid) return null;
 
     // ✅ 로그인 성공 - 업데이트 없이 바로 반환 (성능 최적화)
-    console.log('🎉 사용자 로그인 성공:', user.email);
-    console.log('⚡ Azure 업데이트 생략으로 빠른 로그인 완료');
+    devLog('🎉 사용자 로그인 성공:', user.email);
+    devLog('⚡ Azure 업데이트 생략으로 빠른 로그인 완료');
 
     // 현재 시간을 클라이언트에서만 설정 (실제 DB 업데이트 없음)
     const loginTime = new Date().toISOString();
@@ -743,14 +749,14 @@ export class AzureTableService {
       if (userIndex !== -1) {
         users[userIndex].lastLoginAt = loginTime;
         localStorage.setItem('clathon_users', JSON.stringify(users));
-        console.log('💾 LocalStorage에만 로그인 시간 기록');
+        devLog('💾 LocalStorage에만 로그인 시간 기록');
       } else {
         users.push(userWithLoginTime);
         localStorage.setItem('clathon_users', JSON.stringify(users));
-        console.log('💾 LocalStorage에 사용자 정보 추가');
+        devLog('💾 LocalStorage에 사용자 정보 추가');
       }
     } catch (localError) {
-      console.warn('⚠️ LocalStorage 저장 실패 (로그인은 성공):', localError);
+      devWarn('⚠️ LocalStorage 저장 실패 (로그인은 성공):', localError);
     }
 
     return userWithLoginTime;
@@ -844,19 +850,19 @@ export class AzureTableService {
     };
 
     try {
-      console.log('👤 새 사용자 생성 중...', user.email);
+      devLog('👤 새 사용자 생성 중...', user.email);
       await this.azureRequest('users', 'POST', user);
-      console.log('✅ 사용자 생성 성공:', user.email);
+      devLog('✅ 사용자 생성 성공:', user.email);
 
       // 추천인이 있다면 추천인의 추천 카운트 업데이트
       if (userData.referredBy) {
         await this.incrementReferralCount(userData.referredBy);
-        console.log('🎁 추천인 카운트 업데이트:', userData.referredBy);
+        devLog('🎁 추천인 카운트 업데이트:', userData.referredBy);
       }
 
       return user;
     } catch (error: any) {
-      console.error('❌ 사용자 생성 실패:', error.message);
+      devError('❌ 사용자 생성 실패:', error.message);
       throw error;
     }
   }
@@ -864,12 +870,12 @@ export class AzureTableService {
   // 완전한 User 객체를 받아서 생성하는 함수
   static async createUserDirect(userData: User): Promise<User> {
     try {
-      console.log('👤 사용자 직접 생성 중...', userData.email);
+      devLog('👤 사용자 직접 생성 중...', userData.email);
       await this.azureRequest('users', 'POST', userData);
-      console.log('✅ 사용자 직접 생성 성공:', userData.email);
+      devLog('✅ 사용자 직접 생성 성공:', userData.email);
       return userData;
     } catch (error: any) {
-      console.error('❌ 사용자 직접 생성 실패:', error.message);
+      devError('❌ 사용자 직접 생성 실패:', error.message);
       throw error;
     }
   }
@@ -877,20 +883,20 @@ export class AzureTableService {
   // 사용자 ID로 사용자 조회
   static async getUserById(userId: string): Promise<User | null> {
     try {
-      console.log('🔍 사용자 ID로 조회 중...', userId);
+      devLog('🔍 사용자 ID로 조회 중...', userId);
 
       // Azure REST API를 통한 단일 엔티티 조회 
       const response = await this.azureRequest('users', 'GET', null, `users|${userId}`);
 
       if (response) {
-        console.log('✅ 사용자 조회 성공:', response.email);
+        devLog('✅ 사용자 조회 성공:', response.email);
         return response;
       } else {
-        console.log('❌ 사용자 조회 실패: 데이터 없음');
+        devLog('❌ 사용자 조회 실패: 데이터 없음');
         return null;
       }
     } catch (error: any) {
-      console.error('❌ 사용자 조회 오류:', error.message);
+      devError('❌ 사용자 조회 오류:', error.message);
       return null;
     }
   }
@@ -898,49 +904,49 @@ export class AzureTableService {
   // 사용자 수강 정보 조회 (Users 테이블에서) - 이메일 기반
   static async getUserEnrollmentsByEmail(email: string): Promise<EnrolledCourse[]> {
     try {
-      console.log('🔍 수강 정보 조회:', email);
+      devLog('🔍 수강 정보 조회:', email);
 
       let user = await this.getUserByEmail(email);
-      console.log('👤 조회된 사용자 정보:', user ? { email: user.email, rowKey: user.rowKey, hasEnrolledCourses: !!user.enrolledCourses } : 'null');
+      devLog('👤 조회된 사용자 정보:', user ? { email: user.email, rowKey: user.rowKey, hasEnrolledCourses: !!user.enrolledCourses } : 'null');
 
       if (!user) {
-        console.log('❌ 사용자 없음:', email);
+        devLog('❌ 사용자 없음:', email);
         return [];
       }
 
       if (!user || !user.enrolledCourses) {
-        console.log('📚 수강 중인 강의가 없습니다. enrolledCourses 필드:', user.enrolledCourses);
+        devLog('📚 수강 중인 강의가 없습니다. enrolledCourses 필드:', user.enrolledCourses);
         return [];
       }
 
-      console.log('📝 enrolledCourses 원본 데이터:', user.enrolledCourses);
+      devLog('📝 enrolledCourses 원본 데이터:', user.enrolledCourses);
 
       // JSON 문자열 파싱 (통합 데이터 구조 지원)
       const userData = JSON.parse(user.enrolledCourses);
-      console.log('📊 파싱된 userData:', userData);
+      devLog('📊 파싱된 userData:', userData);
 
       let enrolledCourses: EnrolledCourse[] = [];
 
       if (Array.isArray(userData)) {
         // 기존 단순 배열 형태
-        console.log('📋 기존 배열 형태 데이터 감지');
+        devLog('📋 기존 배열 형태 데이터 감지');
         enrolledCourses = userData;
       } else if (userData.enrollments) {
         // 새로운 통합 구조 (enrollments + payments)
-        console.log('📋 새로운 통합 구조 데이터 감지');
+        devLog('📋 새로운 통합 구조 데이터 감지');
         enrolledCourses = userData.enrollments;
       } else {
-        console.log('⚠️ 알 수 없는 데이터 구조:', userData);
+        devLog('⚠️ 알 수 없는 데이터 구조:', userData);
       }
 
-      console.log('✅ 수강 정보 조회 성공:', enrolledCourses.length, '개 강의');
-      console.log('📚 수강 강의 목록:', enrolledCourses);
-      console.log('📊 결제 정보도 함께 저장됨:', userData.payments?.length || 0, '개 결제');
+      devLog('✅ 수강 정보 조회 성공:', enrolledCourses.length, '개 강의');
+      devLog('📚 수강 강의 목록:', enrolledCourses);
+      devLog('📊 결제 정보도 함께 저장됨:', userData.payments?.length || 0, '개 결제');
 
       return enrolledCourses;
     } catch (error: any) {
-      console.error('❌ 수강 정보 조회 실패:', error.message);
-      console.error('❌ 오류 상세:', error);
+      devError('❌ 수강 정보 조회 실패:', error.message);
+      devError('❌ 오류 상세:', error);
       return [];
     }
   }
@@ -948,17 +954,17 @@ export class AzureTableService {
   // 특정 강좌 수강 상태 확인 (이메일 + 강좌 ID 기반)
   static async isUserEnrolledInCourse(email: string, courseId: string): Promise<boolean> {
     try {
-      console.log('🔍 강좌 수강 상태 확인:', email, '→', courseId);
+      devLog('🔍 강좌 수강 상태 확인:', email, '→', courseId);
 
       const enrolledCourses = await this.getUserEnrollmentsByEmail(email);
       const isEnrolled = enrolledCourses.some(course =>
         course.courseId === courseId && course.status === 'active'
       );
 
-      console.log(isEnrolled ? '✅ 이미 수강 중' : '❌ 미수강', ':', courseId);
+      devLog(isEnrolled ? '✅ 이미 수강 중' : '❌ 미수강', ':', courseId);
       return isEnrolled;
     } catch (error: any) {
-      console.error('❌ 수강 상태 확인 실패:', error.message);
+      devError('❌ 수강 상태 확인 실패:', error.message);
       return false;
     }
   }
@@ -976,7 +982,7 @@ export class AzureTableService {
     paymentKey?: string;  // 🔴 환불용 토스 paymentKey
   }): Promise<{ payment: any, enrollment: EnrolledCourse }> {
     try {
-      console.log('🛒 구매 처리 중:', userData.email);
+      devLog('🛒 구매 처리 중:', userData.email);
 
       // 결제 정보 생성
       const paymentId = `payment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -1013,31 +1019,31 @@ export class AzureTableService {
 
       // 기존 사용자 정보 조회 - 이메일로 조회
       let user = await this.getUserByEmail(userData.email);
-      console.log('🔍 getUserByEmail 결과:', user);
+      devLog('🔍 getUserByEmail 결과:', user);
 
       // 🚨 사용자가 존재하지만 실제 엔티티가 없는 경우 체크
       if (user && user.rowKey) {
-        console.log('🔍 실제 엔티티 존재 확인 시작. RowKey:', user.rowKey);
-        console.log('🔍 확인할 PartitionKey:', user.partitionKey || 'users');
+        devLog('🔍 실제 엔티티 존재 확인 시작. RowKey:', user.rowKey);
+        devLog('🔍 확인할 PartitionKey:', user.partitionKey || 'users');
 
         try {
           // 실제로 해당 RowKey로 엔티티가 존재하는지 직접 확인
           const actualUser = await this.azureRequest('users', 'GET', null, `users|${user.rowKey}`);
-          console.log('✅ 실제 사용자 엔티티 확인됨:', user.rowKey);
-          console.log('✅ 확인된 사용자 데이터:', {
+          devLog('✅ 실제 사용자 엔티티 확인됨:', user.rowKey);
+          devLog('✅ 확인된 사용자 데이터:', {
             rowKey: actualUser.rowKey,
             email: actualUser.email,
             partitionKey: actualUser.partitionKey
           });
         } catch (checkError: any) {
-          console.error('❌ GET 요청 실패 상세 정보:');
-          console.error('❌ RowKey:', user.rowKey);
-          console.error('❌ 요청 URL 패턴:', `users|${user.rowKey}`);
-          console.error('❌ 오류 메시지:', checkError.message);
-          console.error('❌ 오류 전체:', checkError);
+          devError('❌ GET 요청 실패 상세 정보:');
+          devError('❌ RowKey:', user.rowKey);
+          devError('❌ 요청 URL 패턴:', `users|${user.rowKey}`);
+          devError('❌ 오류 메시지:', checkError.message);
+          devError('❌ 오류 전체:', checkError);
 
-          console.warn('⚠️ getUserByEmail이 반환한 사용자가 실제로는 존재하지 않음:', user.rowKey);
-          console.warn('⚠️ 이는 Azure 테이블 데이터 불일치 또는 권한 문제일 수 있습니다');
+          devWarn('⚠️ getUserByEmail이 반환한 사용자가 실제로는 존재하지 않음:', user.rowKey);
+          devWarn('⚠️ 이는 Azure 테이블 데이터 불일치 또는 권한 문제일 수 있습니다');
           user = null; // 존재하지 않는 사용자로 처리
         }
       }
@@ -1045,13 +1051,13 @@ export class AzureTableService {
       if (!user) {
         // ❌❌❌ 절대 새로운 사용자 생성하지 않음! ❌❌❌
         // ❌❌❌ 기존 사용자만 업데이트! 새 사용자 생성 금지! ❌❌❌
-        console.error('❌ 사용자를 찾을 수 없습니다:', userData.email);
+        devError('❌ 사용자를 찾을 수 없습니다:', userData.email);
         throw new Error(`사용자를 찾을 수 없습니다: ${userData.email}. 기존 사용자만 업데이트 가능합니다.`);
       }
 
       // 🔧 UUID RowKey 사용자는 그대로 유지하고 업데이트만 수행
       if (user.rowKey !== userData.email) {
-        console.log('📝 UUID RowKey 사용자 발견. 기존 RowKey 유지하여 업데이트:', user.rowKey, 'for email:', userData.email);
+        devLog('📝 UUID RowKey 사용자 발견. 기존 RowKey 유지하여 업데이트:', user.rowKey, 'for email:', userData.email);
         // 마이그레이션하지 않고 기존 UUID RowKey로 업데이트 진행
       }
 
@@ -1069,14 +1075,14 @@ export class AzureTableService {
             payments = userData.payments;
           }
         } catch (e) {
-          console.log('⚠️ 기존 수강 정보 파싱 실패, 새로 시작');
+          devLog('⚠️ 기존 수강 정보 파싱 실패, 새로 시작');
         }
       }
 
       // 중복 체크 및 추가
       const existingIndex = enrolledCourses.findIndex(course => course.courseId === userData.courseId);
       if (existingIndex >= 0) {
-        console.log('⚠️ 이미 수강중인 강의입니다. 정보를 업데이트합니다.');
+        devLog('⚠️ 이미 수강중인 강의입니다. 정보를 업데이트합니다.');
         enrolledCourses[existingIndex] = { ...enrolledCourses[existingIndex], ...newEnrollment };
       } else {
         enrolledCourses.push(newEnrollment);
@@ -1113,15 +1119,15 @@ export class AzureTableService {
       // Azure에 업데이트 - 기존 user.rowKey 사용 (UUID든 이메일이든 상관없이)
       try {
         await this.azureRequest('users', 'MERGE', updatedUser, `users|${user.rowKey}`);
-        console.log('✅ 구매 완료 (MERGE with RowKey:', user.rowKey, ')');
+        devLog('✅ 구매 완료 (MERGE with RowKey:', user.rowKey, ')');
       } catch (mergeError: any) {
         await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
-        console.log('✅ 구매 완료 (PUT with RowKey:', user.rowKey, ')');
+        devLog('✅ 구매 완료 (PUT with RowKey:', user.rowKey, ')');
       }
 
       return { payment, enrollment: newEnrollment };
     } catch (error: any) {
-      console.error('❌ 구매+수강신청 추가 실패:', error.message);
+      devError('❌ 구매+수강신청 추가 실패:', error.message);
       throw error;
     }
   }
@@ -1135,7 +1141,7 @@ export class AzureTableService {
     externalPaymentId?: string;
   }): Promise<{ payment: any, enrollment: any }> {
     try {
-      console.log('🛒 통합 강좌 구매 프로세스 시작 (Users 테이블만 사용)...', purchaseData.courseId);
+      devLog('🛒 통합 강좌 구매 프로세스 시작 (Users 테이블만 사용)...', purchaseData.courseId);
 
       // 강의 제목 매핑
       const courseTitleMap: Record<string, string> = {
@@ -1154,7 +1160,7 @@ export class AzureTableService {
       const courseTitle = courseTitleMap[purchaseData.courseId] || purchaseData.courseId;
 
       // Users 테이블에 모든 정보 저장
-      console.log('📊 addPurchaseAndEnrollmentToUser 호출:', {
+      devLog('📊 addPurchaseAndEnrollmentToUser 호출:', {
         ...purchaseData,
         title: courseTitle
       });
@@ -1164,11 +1170,11 @@ export class AzureTableService {
         title: courseTitle
       });
 
-      console.log('✅ 통합 강좌 구매 프로세스 완료!', purchaseData.courseId, '최종 결과:', result);
+      devLog('✅ 통합 강좌 구매 프로세스 완료!', purchaseData.courseId, '최종 결과:', result);
 
       return result;
     } catch (error: any) {
-      console.error('❌ 통합 강좌 구매 프로세스 실패:', error.message);
+      devError('❌ 통합 강좌 구매 프로세스 실패:', error.message);
       throw new Error(`강좌 구매 실패: ${error.message}`);
     }
   }
@@ -1176,7 +1182,7 @@ export class AzureTableService {
   // === 세션 관리 메서드 (간소화된 버전) ===
   static async createSession(userId: string): Promise<string> {
     try {
-      console.log('🔐 세션 생성 중...', userId);
+      devLog('🔐 세션 생성 중...', userId);
 
       // 간단한 세션 ID 생성 (실제로는 JWT 토큰이나 더 복잡한 세션 관리 시스템 사용 권장)
       const sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -1190,11 +1196,11 @@ export class AzureTableService {
       };
 
       localStorage.setItem(`clathon_session_${sessionId}`, JSON.stringify(sessionData));
-      console.log('✅ 세션 생성 완료:', sessionId);
+      devLog('✅ 세션 생성 완료:', sessionId);
 
       return sessionId;
     } catch (error: any) {
-      console.error('❌ 세션 생성 실패:', error.message);
+      devError('❌ 세션 생성 실패:', error.message);
       throw new Error(`세션 생성 실패: ${error.message}`);
     }
   }
@@ -1208,16 +1214,16 @@ export class AzureTableService {
     externalPaymentId?: string;
   }): Promise<any> {
     try {
-      console.log('💳 결제 정보 생성 중...', paymentData);
+      devLog('💳 결제 정보 생성 중...', paymentData);
 
       // 통합 구매+수강신청 프로세스 호출
       const result = await this.purchaseAndEnrollCourseUnified(paymentData);
 
-      console.log('✅ 결제 정보 생성 완료:', paymentData.courseId, '결과:', result);
+      devLog('✅ 결제 정보 생성 완료:', paymentData.courseId, '결과:', result);
       return result.payment;
     } catch (error: any) {
-      console.error('❌ 결제 정보 생성 실패:', error.message);
-      console.error('❌ 결제 오류 상세:', error);
+      devError('❌ 결제 정보 생성 실패:', error.message);
+      devError('❌ 결제 오류 상세:', error);
       throw new Error(`결제 정보 생성 실패: ${error.message}`);
     }
   }
@@ -1233,7 +1239,7 @@ export class AzureTableService {
     sessionNumber?: number;
   }): Promise<any> {
     try {
-      console.log('📅 멘토링 세션 생성 중...', sessionData);
+      devLog('📅 멘토링 세션 생성 중...', sessionData);
 
       const sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       const meetingLink = `https://meet.google.com/${Math.random().toString(36).substr(2, 12)}`;
@@ -1265,11 +1271,11 @@ export class AzureTableService {
         });
 
         if (response.ok) {
-          console.log('✅ Azure에 멘토링 세션 저장 완료:', sessionId);
+          devLog('✅ Azure에 멘토링 세션 저장 완료:', sessionId);
           return session;
         }
       } catch (azureError) {
-        console.log('⚠️ Azure 저장 실패, 로컬 저장으로 전환:', azureError);
+        devLog('⚠️ Azure 저장 실패, 로컬 저장으로 전환:', azureError);
       }
 
       // Fallback: localStorage에 저장
@@ -1278,11 +1284,11 @@ export class AzureTableService {
       existingSessions.push(session);
       localStorage.setItem(sessionsKey, JSON.stringify(existingSessions));
 
-      console.log('✅ 로컬에 멘토링 세션 저장 완료:', sessionId);
+      devLog('✅ 로컬에 멘토링 세션 저장 완료:', sessionId);
       return session;
 
     } catch (error: any) {
-      console.error('❌ 멘토링 세션 생성 실패:', error.message);
+      devError('❌ 멘토링 세션 생성 실패:', error.message);
       throw new Error(`멘토링 세션 생성 실패: ${error.message}`);
     }
   }
@@ -1290,7 +1296,7 @@ export class AzureTableService {
   // 사용자의 멘토링 세션 목록 조회
   static async getUserMentoringSessions(studentEmail: string): Promise<any[]> {
     try {
-      console.log('📋 멘토링 세션 목록 조회:', studentEmail);
+      devLog('📋 멘토링 세션 목록 조회:', studentEmail);
 
       // Azure에서 조회 시도
       try {
@@ -1306,21 +1312,21 @@ export class AzureTableService {
 
         if (response.ok) {
           const data = await response.json();
-          console.log('✅ Azure에서 멘토링 세션 조회 완료:', data.value?.length || 0, '개');
+          devLog('✅ Azure에서 멘토링 세션 조회 완료:', data.value?.length || 0, '개');
           return data.value || [];
         }
       } catch (azureError) {
-        console.log('⚠️ Azure 조회 실패, 로컬 조회로 전환:', azureError);
+        devLog('⚠️ Azure 조회 실패, 로컬 조회로 전환:', azureError);
       }
 
       // Fallback: localStorage에서 조회
       const sessionsKey = `clathon_mentoring_sessions_${studentEmail}`;
       const sessions = JSON.parse(localStorage.getItem(sessionsKey) || '[]');
-      console.log('📋 로컬에서 멘토링 세션 조회 완료:', sessions.length, '개');
+      devLog('📋 로컬에서 멘토링 세션 조회 완료:', sessions.length, '개');
       return sessions;
 
     } catch (error: any) {
-      console.error('❌ 멘토링 세션 조회 실패:', error.message);
+      devError('❌ 멘토링 세션 조회 실패:', error.message);
       return [];
     }
   }
@@ -1336,7 +1342,7 @@ export class AzureTableService {
     progressRating: number;
   }): Promise<any> {
     try {
-      console.log('📝 세션 기록 저장 중...', recordData);
+      devLog('📝 세션 기록 저장 중...', recordData);
 
       const recordId = `record_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
@@ -1361,11 +1367,11 @@ export class AzureTableService {
       existingRecords.push(record);
       localStorage.setItem(recordsKey, JSON.stringify(existingRecords));
 
-      console.log('✅ 세션 기록 저장 완료:', recordId);
+      devLog('✅ 세션 기록 저장 완료:', recordId);
       return record;
 
     } catch (error: any) {
-      console.error('❌ 세션 기록 저장 실패:', error.message);
+      devError('❌ 세션 기록 저장 실패:', error.message);
       throw new Error(`세션 기록 저장 실패: ${error.message}`);
     }
   }
@@ -1378,7 +1384,7 @@ export class AzureTableService {
     paymentAmount: number;
   }): Promise<any> {
     try {
-      console.log('📦 학생 패키지 생성 중...', packageData);
+      devLog('📦 학생 패키지 생성 중...', packageData);
 
       const packageId = `package_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
@@ -1410,11 +1416,11 @@ export class AzureTableService {
         });
 
         if (response.ok) {
-          console.log('✅ Azure에 패키지 정보 저장 완료:', packageId);
+          devLog('✅ Azure에 패키지 정보 저장 완료:', packageId);
           return package_;
         }
       } catch (azureError) {
-        console.log('⚠️ Azure 저장 실패, 로컬 저장으로 전환:', azureError);
+        devLog('⚠️ Azure 저장 실패, 로컬 저장으로 전환:', azureError);
       }
 
       // Fallback: localStorage
@@ -1423,11 +1429,11 @@ export class AzureTableService {
       existingPackages.push(package_);
       localStorage.setItem(packagesKey, JSON.stringify(existingPackages));
 
-      console.log('✅ 로컬에 패키지 정보 저장 완료:', packageId);
+      devLog('✅ 로컬에 패키지 정보 저장 완료:', packageId);
       return package_;
 
     } catch (error: any) {
-      console.error('❌패키지 생성 실패:', error.message);
+      devError('❌패키지 생성 실패:', error.message);
       throw new Error(`패키지 생성 실패: ${error.message}`);
     }
   }
@@ -1465,7 +1471,7 @@ export class AzureTableService {
       const user = userList.find((u: any) => u.referralCode === referralCode);
       return user || null;
     } catch (error: any) {
-      console.error('❌ 추천 코드로 사용자 조회 실패:', error.message);
+      devError('❌ 추천 코드로 사용자 조회 실패:', error.message);
       return null;
     }
   }
@@ -1475,7 +1481,7 @@ export class AzureTableService {
     try {
       const referrer = await this.getUserByReferralCode(referralCode);
       if (!referrer) {
-        console.warn('⚠️ 추천인을 찾을 수 없습니다:', referralCode);
+        devWarn('⚠️ 추천인을 찾을 수 없습니다:', referralCode);
         return;
       }
 
@@ -1487,9 +1493,9 @@ export class AzureTableService {
       };
 
       await this.azureRequest('users', 'PUT', updatedUser, referrer.rowKey);
-      console.log('✅ 추천 카운트 업데이트 성공:', referralCode, currentCount + 1);
+      devLog('✅ 추천 카운트 업데이트 성공:', referralCode, currentCount + 1);
     } catch (error: any) {
-      console.error('❌ 추천 카운트 업데이트 실패:', error.message);
+      devError('❌ 추천 카운트 업데이트 실패:', error.message);
     }
   }
 
@@ -1505,7 +1511,7 @@ export class AzureTableService {
     try {
       const referrer = await this.getUserByReferralCode(transaction.toReferralCode);
       if (!referrer) {
-        console.warn('⚠️ 추천인을 찾을 수 없습니다:', transaction.toReferralCode);
+        devWarn('⚠️ 추천인을 찾을 수 없습니다:', transaction.toReferralCode);
         return false;
       }
 
@@ -1544,10 +1550,10 @@ export class AzureTableService {
       };
 
       await this.azureRequest('users', 'PUT', updatedUser, referrer.rowKey);
-      console.log('✅ 리워드 지급 완료:', transaction.toReferralCode, transaction.amount);
+      devLog('✅ 리워드 지급 완료:', transaction.toReferralCode, transaction.amount);
       return true;
     } catch (error: any) {
-      console.error('❌ 리워드 지급 실패:', error.message);
+      devError('❌ 리워드 지급 실패:', error.message);
       return false;
     }
   }
@@ -1560,14 +1566,14 @@ export class AzureTableService {
       // 추천인 조회
       const referrer = await this.getUserByReferralCode(referralCode);
       if (!referrer) {
-        console.warn('⚠️ 추천인을 찾을 수 없습니다:', referralCode);
+        devWarn('⚠️ 추천인을 찾을 수 없습니다:', referralCode);
         return false;
       }
 
       // 신규 가입자 조회
       const newUser = await this.getUserByEmail(newUserEmail);
       if (!newUser) {
-        console.warn('⚠️ 신규 가입자를 찾을 수 없습니다:', newUserEmail);
+        devWarn('⚠️ 신규 가입자를 찾을 수 없습니다:', newUserEmail);
         return false;
       }
 
@@ -1637,7 +1643,7 @@ export class AzureTableService {
         this.azureRequest('users', 'PUT', updatedNewUser, newUser.rowKey)
       ]);
 
-      console.log('✅ 가입 리워드 지급 완료:', {
+      devLog('✅ 가입 리워드 지급 완료:', {
         referrer: referralCode,
         newUser: newUserEmail,
         amount: SIGNUP_REWARD_AMOUNT
@@ -1645,7 +1651,7 @@ export class AzureTableService {
 
       return true;
     } catch (error: any) {
-      console.error('❌ 가입 리워드 지급 실패:', error.message);
+      devError('❌ 가입 리워드 지급 실패:', error.message);
       return false;
     }
   }
@@ -1669,7 +1675,7 @@ export class AzureTableService {
       // 구매한 사용자 정보 조회
       const buyer = await this.getUserByEmail(userData.email);
       if (!buyer || !buyer.referredBy) {
-        console.log('ℹ️ 추천인이 없어 리워드 처리를 건너뜁니다.');
+        devLog('ℹ️ 추천인이 없어 리워드 처리를 건너뜁니다.');
         return { ...result, rewardProcessed: false };
       }
 
@@ -1686,7 +1692,7 @@ export class AzureTableService {
 
       return { ...result, rewardProcessed };
     } catch (error: any) {
-      console.error('❌ 리워드 포함 구매 처리 실패:', error.message);
+      devError('❌ 리워드 포함 구매 처리 실패:', error.message);
       throw error;
     }
   }
@@ -1694,7 +1700,7 @@ export class AzureTableService {
   // 🗑️ 사용자의 수강 강의 삭제 (관리자용)
   static async removeEnrollmentFromUser(email: string, courseId: string): Promise<boolean> {
     try {
-      console.log(`🗑️ 강의 삭제 시작: ${email} → ${courseId}`);
+      devLog(`🗑️ 강의 삭제 시작: ${email} → ${courseId}`);
 
       // 사용자 정보 조회
       const user = await this.getUserByEmail(email);
@@ -1723,13 +1729,13 @@ export class AzureTableService {
       );
 
       if (enrollmentIndex === -1) {
-        console.log('⚠️ 해당 강의가 등록되어 있지 않습니다.');
+        devLog('⚠️ 해당 강의가 등록되어 있지 않습니다.');
         return false;
       }
 
       // 강의 삭제
       const removedEnrollment = enrollments.splice(enrollmentIndex, 1)[0];
-      console.log('🗑️ 삭제된 강의:', removedEnrollment);
+      devLog('🗑️ 삭제된 강의:', removedEnrollment);
 
       // 관련 결제 정보도 삭제 (선택적)
       const paymentIndex = payments.findIndex((p: any) => 
@@ -1738,7 +1744,7 @@ export class AzureTableService {
       );
       if (paymentIndex !== -1) {
         const removedPayment = payments.splice(paymentIndex, 1)[0];
-        console.log('🗑️ 삭제된 결제 정보:', removedPayment);
+        devLog('🗑️ 삭제된 결제 정보:', removedPayment);
       }
 
       // 업데이트된 데이터 저장
@@ -1750,11 +1756,11 @@ export class AzureTableService {
       // Azure에 업데이트 (updateUserField 사용)
       await this.updateUserField(email, 'enrolledCourses', updatedEnrolledCourses);
       await this.updateUserField(email, 'totalEnrolledCourses', enrollments.length);
-      console.log(`✅ 강의 삭제 완료: ${email} → ${courseId}`);
+      devLog(`✅ 강의 삭제 완료: ${email} → ${courseId}`);
 
       return true;
     } catch (error: any) {
-      console.error('❌ 강의 삭제 실패:', error.message);
+      devError('❌ 강의 삭제 실패:', error.message);
       throw new Error(`강의 삭제 실패: ${error.message}`);
     }
   }
@@ -1805,11 +1811,11 @@ export class AzureTableService {
 
       // Azure Table에 업데이트 (PUT 요청) - 올바른 RowKey 사용
       await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
-      console.log('✅ 추천 코드 생성 완료:', referralCode);
+      devLog('✅ 추천 코드 생성 완료:', referralCode);
       return referralCode;
 
     } catch (error: any) {
-      console.error('❌ 추천 코드 생성 실패:', error.message);
+      devError('❌ 추천 코드 생성 실패:', error.message);
       throw error;
     }
   }
@@ -1829,7 +1835,7 @@ export class AzureTableService {
 
       // 추천 코드가 없으면 생성
       if (!user.referralCode) {
-        console.log('🔄 추천 코드가 없어서 생성 중...');
+        devLog('🔄 추천 코드가 없어서 생성 중...');
         await this.generateReferralCodeForUser(email);
         user = await this.getUserByEmail(email); // 업데이트된 사용자 정보 다시 가져오기
         if (!user) {
@@ -1846,7 +1852,7 @@ export class AzureTableService {
         stats: RewardUtils.parseReferralStats(user.referralStats || '{}')
       };
     } catch (error: any) {
-      console.error('❌ 리워드 현황 조회 실패:', error.message);
+      devError('❌ 리워드 현황 조회 실패:', error.message);
       return null;
     }
   }
@@ -1856,11 +1862,11 @@ export class AzureTableService {
   // 사용자의 구매한 강의 목록 가져오기
   static async getUserPurchasedCourses(email: string): Promise<any[]> {
     try {
-      console.log('🛒 구매 강의 목록 조회:', email);
+      devLog('🛒 구매 강의 목록 조회:', email);
 
       const user = await this.getUserByEmail(email);
       if (!user || !user.enrolledCourses) {
-        console.log('❌ 구매 정보가 없음:', email);
+        devLog('❌ 구매 정보가 없음:', email);
         return [];
       }
 
@@ -1890,10 +1896,10 @@ export class AzureTableService {
         };
       });
 
-      console.log('🛒 구매 강의 목록 (enriched):', enrichedPayments);
+      devLog('🛒 구매 강의 목록 (enriched):', enrichedPayments);
       return enrichedPayments;
     } catch (error: any) {
-      console.error('❌ 구매 강의 목록 조회 실패:', error.message);
+      devError('❌ 구매 강의 목록 조회 실패:', error.message);
       return [];
     }
   }
@@ -1901,16 +1907,16 @@ export class AzureTableService {
   // 특정 강의의 결제 상태 확인
   static async checkCoursePayment(email: string, courseId: string): Promise<{ isPaid: boolean, paymentInfo?: any }> {
     try {
-      console.log('💳 강의 결제 상태 확인:', email, '→', courseId);
+      devLog('💳 강의 결제 상태 확인:', email, '→', courseId);
 
       const user = await this.getUserByEmail(email);
       if (!user) {
-        console.log('❌ 사용자를 찾을 수 없음:', email);
+        devLog('❌ 사용자를 찾을 수 없음:', email);
         return { isPaid: false };
       }
 
       if (!user.enrolledCourses) {
-        console.log('❌ 수강 정보가 없음:', email);
+        devLog('❌ 수강 정보가 없음:', email);
         return { isPaid: false };
       }
 
@@ -1938,7 +1944,7 @@ export class AzureTableService {
       };
 
       const matchIds = courseIdMap[courseId] || [courseId];
-      console.log('🔍 결제 확인 - 매칭 시도할 ID:', matchIds);
+      devLog('🔍 결제 확인 - 매칭 시도할 ID:', matchIds);
 
       // 해당 강의의 수강 상태 확인 (여러 courseId 허용)
       const enrollment = enrolledCourses.find(course => matchIds.includes(course.courseId));
@@ -1953,10 +1959,10 @@ export class AzureTableService {
         enrollment: enrollment || null
       };
 
-      console.log('💳 결제 상태 확인 결과:', result);
+      devLog('💳 결제 상태 확인 결과:', result);
       return result;
     } catch (error: any) {
-      console.error('❌ 결제 상태 확인 실패:', error.message);
+      devError('❌ 결제 상태 확인 실패:', error.message);
       return { isPaid: false };
     }
   }
@@ -1966,12 +1972,12 @@ export class AzureTableService {
   // 비밀번호 재설정 토큰 생성 및 이메일 전송 요청
   static async requestPasswordReset(email: string): Promise<boolean> {
     try {
-      console.log('🔐 비밀번호 재설정 요청:', email);
+      devLog('🔐 비밀번호 재설정 요청:', email);
 
       // 사용자 존재 확인
       const user = await this.getUserByEmail(email);
       if (!user) {
-        console.log('❌ 등록되지 않은 이메일:', email);
+        devLog('❌ 등록되지 않은 이메일:', email);
         return false;
       }
 
@@ -1991,18 +1997,18 @@ export class AzureTableService {
       await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
 
       // 실제 이메일 전송 (여기서는 시뮬레이션)
-      console.log('📧 비밀번호 재설정 이메일 전송 시뮬레이션');
-      console.log('📧 수신자:', email);
-      console.log('📧 재설정 코드:', resetToken);
-      console.log('📧 만료 시간:', resetTokenExpiry);
+      devLog('📧 비밀번호 재설정 이메일 전송 시뮬레이션');
+      devLog('📧 수신자:', email);
+      devLog('📧 재설정 코드:', resetToken);
+      devLog('📧 만료 시간:', resetTokenExpiry);
 
       // 실제 프로덕션에서는 이메일 서비스 (SendGrid, AWS SES 등) 사용
       // await sendPasswordResetEmail(email, resetToken);
 
-      console.log('✅ 비밀번호 재설정 요청 완료:', email);
+      devLog('✅ 비밀번호 재설정 요청 완료:', email);
       return true;
     } catch (error: any) {
-      console.error('❌ 비밀번호 재설정 요청 실패:', error.message);
+      devError('❌ 비밀번호 재설정 요청 실패:', error.message);
       return false;
     }
   }
@@ -2024,16 +2030,16 @@ export class AzureTableService {
     learningTimeMinutes: number = 0
   ): Promise<boolean> {
     try {
-      console.log(`📚 Day ${dayNumber} 완료 처리 중:`, email, courseId);
+      devLog(`📚 Day ${dayNumber} 완료 처리 중:`, email, courseId);
 
       // 사용자 정보 조회
       const user = await this.getUserByEmail(email);
       if (!user) {
-        console.error('❌ 사용자를 찾을 수 없음:', email);
+        devError('❌ 사용자를 찾을 수 없음:', email);
         return false;
       }
 
-      console.log('✅ 사용자 정보 찾음:', user.email);
+      devLog('✅ 사용자 정보 찾음:', user.email);
 
       // 수강 정보 파싱 (새로운 형식: {enrollments: [...], payments: [...]})
       let enrolledCourses: EnrolledCourse[] = [];
@@ -2045,31 +2051,31 @@ export class AzureTableService {
             // 새 형식: {enrollments: [...], payments: [...]}
             if (parsed.enrollments && Array.isArray(parsed.enrollments)) {
               enrolledCourses = parsed.enrollments;
-              console.log('✅ 새 형식 (enrollments) 파싱 성공');
+              devLog('✅ 새 형식 (enrollments) 파싱 성공');
             }
             // 기존 형식: [{...}, {...}]
             else if (Array.isArray(parsed)) {
               enrolledCourses = parsed;
-              console.log('✅ 기존 형식 (배열) 파싱 성공');
+              devLog('✅ 기존 형식 (배열) 파싱 성공');
             }
           } catch (e) {
-            console.error('❌ JSON 파싱 실패:', e);
+            devError('❌ JSON 파싱 실패:', e);
           }
         } else if (Array.isArray(user.enrolledCourses)) {
           enrolledCourses = user.enrolledCourses;
-          console.log('✅ 이미 배열 형태');
+          devLog('✅ 이미 배열 형태');
         } else if (typeof user.enrolledCourses === 'object') {
           const coursesObj = user.enrolledCourses as any;
           if (coursesObj.enrollments && Array.isArray(coursesObj.enrollments)) {
             enrolledCourses = coursesObj.enrollments;
-            console.log('✅ 이미 객체 형태 (enrollments)');
+            devLog('✅ 이미 객체 형태 (enrollments)');
           }
         }
       }
 
-      console.log('📚 수강 중인 강의 수:', enrolledCourses.length);
+      devLog('📚 수강 중인 강의 수:', enrolledCourses.length);
       if (enrolledCourses.length > 0) {
-        console.log('📚 수강 중인 강의 목록:', enrolledCourses.map(c => `${c.courseId} (${c.title})`));
+        devLog('📚 수강 중인 강의 목록:', enrolledCourses.map(c => `${c.courseId} (${c.title})`));
       }
 
       // courseId 매칭 (1002 <-> chatgpt-agent-beginner, 999 <-> ai-building-course 호환)
@@ -2084,17 +2090,17 @@ export class AzureTableService {
       };
 
       const matchIds = courseIdMap[courseId] || [courseId];
-      console.log('🔍 매칭 시도할 ID:', matchIds);
+      devLog('🔍 매칭 시도할 ID:', matchIds);
 
       // 해당 강의 찾기
       const courseIndex = enrolledCourses.findIndex(c => matchIds.includes(c.courseId));
       if (courseIndex === -1) {
-        console.error('❌ 수강 중인 강의가 아님:', courseId);
-        console.error('💡 등록된 강의:', enrolledCourses.map(c => c.courseId).join(', '));
+        devError('❌ 수강 중인 강의가 아님:', courseId);
+        devError('💡 등록된 강의:', enrolledCourses.map(c => c.courseId).join(', '));
         return false;
       }
 
-      console.log('✅ 강의 찾음:', enrolledCourses[courseIndex].courseId, '-', enrolledCourses[courseIndex].title);
+      devLog('✅ 강의 찾음:', enrolledCourses[courseIndex].courseId, '-', enrolledCourses[courseIndex].title);
 
       const course = enrolledCourses[courseIndex];
 
@@ -2110,7 +2116,7 @@ export class AzureTableService {
 
       // 이미 완료된 Day인지 확인
       if (course.completedDays.includes(dayNumber)) {
-        console.log(`ℹ️ Day ${dayNumber}은 이미 완료됨`);
+        devLog(`ℹ️ Day ${dayNumber}은 이미 완료됨`);
         // 기존 학습 시간에 추가
         if (course.dayProgress[dayNumber]) {
           course.dayProgress[dayNumber].learningTimeMinutes =
@@ -2142,7 +2148,7 @@ export class AzureTableService {
       if (course.completedDays.length === totalDays) {
         course.status = 'completed';
         course.completedAt = new Date().toISOString();
-        console.log('🎉 강의 전체 완료!');
+        devLog('🎉 강의 전체 완료!');
       }
 
       // lastAccessedAt 업데이트
@@ -2160,11 +2166,11 @@ export class AzureTableService {
           // 새 형식: {enrollments: [...], payments: [...]} 유지
           parsed.enrollments = enrolledCourses;
           updatedEnrolledCoursesString = JSON.stringify(parsed);
-          console.log('✅ 새 형식 유지 (enrollments + payments)');
+          devLog('✅ 새 형식 유지 (enrollments + payments)');
         } else {
           // 기존 형식: [{...}] 그대로
           updatedEnrolledCoursesString = JSON.stringify(enrolledCourses);
-          console.log('✅ 기존 형식 유지 (배열)');
+          devLog('✅ 기존 형식 유지 (배열)');
         }
       } else {
         updatedEnrolledCoursesString = JSON.stringify(enrolledCourses);
@@ -2182,7 +2188,7 @@ export class AzureTableService {
       // Azure에 업데이트
       await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
 
-      console.log(`✅ Day ${dayNumber} 완료 처리 완료:`, {
+      devLog(`✅ Day ${dayNumber} 완료 처리 완료:`, {
         completedDays: course.completedDays,
         progress: course.progress,
         status: course.status
@@ -2190,7 +2196,7 @@ export class AzureTableService {
 
       return true;
     } catch (error: any) {
-      console.error(`❌ Day ${dayNumber} 완료 처리 실패:`, error.message);
+      devError(`❌ Day ${dayNumber} 완료 처리 실패:`, error.message);
       return false;
     }
   }
@@ -2207,11 +2213,11 @@ export class AzureTableService {
     totalLearningTime: number;
   } | null> {
     try {
-      console.log('📊 강의 진행 상황 조회:', email, courseId);
+      devLog('📊 강의 진행 상황 조회:', email, courseId);
 
       const user = await this.getUserByEmail(email);
       if (!user) {
-        console.log('❌ 사용자를 찾을 수 없음:', email);
+        devLog('❌ 사용자를 찾을 수 없음:', email);
         return null;
       }
 
@@ -2251,7 +2257,7 @@ export class AzureTableService {
       const course = enrolledCourses.find(c => matchIds.includes(c.courseId));
 
       if (!course) {
-        console.log('❌ 수강 중인 강의가 아님:', courseId);
+        devLog('❌ 수강 중인 강의가 아님:', courseId);
         return null;
       }
 
@@ -2262,7 +2268,7 @@ export class AzureTableService {
         totalLearningTime: course.learningTimeMinutes || 0
       };
     } catch (error: any) {
-      console.error('❌ 강의 진행 상황 조회 실패:', error.message);
+      devError('❌ 강의 진행 상황 조회 실패:', error.message);
       return null;
     }
   }
@@ -2274,11 +2280,11 @@ export class AzureTableService {
    */
   static async adminChangePassword(email: string, newPassword: string): Promise<boolean> {
     try {
-      console.log('🔐 관리자 비밀번호 변경 시작:', email);
+      devLog('🔐 관리자 비밀번호 변경 시작:', email);
 
       const user = await this.getUserByEmail(email);
       if (!user) {
-        console.log('❌ 사용자를 찾을 수 없음:', email);
+        devLog('❌ 사용자를 찾을 수 없음:', email);
         return false;
       }
 
@@ -2295,10 +2301,10 @@ export class AzureTableService {
       // Azure에 업데이트
       await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
 
-      console.log('✅ 비밀번호 변경 완료:', email);
+      devLog('✅ 비밀번호 변경 완료:', email);
       return true;
     } catch (error: any) {
-      console.error('❌ 비밀번호 변경 실패:', error.message);
+      devError('❌ 비밀번호 변경 실패:', error.message);
       return false;
     }
   }
@@ -2309,12 +2315,12 @@ export class AzureTableService {
    */
   static async generatePasswordResetCode(email: string): Promise<string | null> {
     try {
-      console.log('🔐 비밀번호 재설정 코드 생성:', email);
+      devLog('🔐 비밀번호 재설정 코드 생성:', email);
 
       // 사용자 존재 확인
       const user = await this.getUserByEmail(email);
       if (!user) {
-        console.log('❌ 사용자를 찾을 수 없음:', email);
+        devLog('❌ 사용자를 찾을 수 없음:', email);
         return null;
       }
 
@@ -2333,10 +2339,10 @@ export class AzureTableService {
 
       localStorage.setItem(`password_reset_${email}`, JSON.stringify(resetData));
 
-      console.log('✅ 재설정 코드 생성 완료:', code);
+      devLog('✅ 재설정 코드 생성 완료:', code);
       return code;
     } catch (error: any) {
-      console.error('❌ 재설정 코드 생성 실패:', error.message);
+      devError('❌ 재설정 코드 생성 실패:', error.message);
       return null;
     }
   }
@@ -2348,11 +2354,11 @@ export class AzureTableService {
    */
   static async verifyPasswordResetCode(email: string, code: string): Promise<boolean> {
     try {
-      console.log('🔍 재설정 코드 검증:', email, code);
+      devLog('🔍 재설정 코드 검증:', email, code);
 
       const savedDataString = localStorage.getItem(`password_reset_${email}`);
       if (!savedDataString) {
-        console.log('❌ 저장된 코드 없음');
+        devLog('❌ 저장된 코드 없음');
         return false;
       }
 
@@ -2360,27 +2366,27 @@ export class AzureTableService {
 
       // 만료 확인
       if (Date.now() > savedData.expiresAt) {
-        console.log('❌ 코드 만료됨');
+        devLog('❌ 코드 만료됨');
         localStorage.removeItem(`password_reset_${email}`);
         return false;
       }
 
       // 이미 사용됨
       if (savedData.used) {
-        console.log('❌ 이미 사용된 코드');
+        devLog('❌ 이미 사용된 코드');
         return false;
       }
 
       // 코드 일치 확인
       if (savedData.code !== code) {
-        console.log('❌ 코드 불일치');
+        devLog('❌ 코드 불일치');
         return false;
       }
 
-      console.log('✅ 코드 검증 성공');
+      devLog('✅ 코드 검증 성공');
       return true;
     } catch (error: any) {
-      console.error('❌ 코드 검증 실패:', error.message);
+      devError('❌ 코드 검증 실패:', error.message);
       return false;
     }
   }
@@ -2393,12 +2399,12 @@ export class AzureTableService {
    */
   static async resetPassword(email: string, code: string, newPassword: string): Promise<boolean> {
     try {
-      console.log('🔐 비밀번호 재설정 시작:', email);
+      devLog('🔐 비밀번호 재설정 시작:', email);
 
       // 코드 검증
       const isValid = await this.verifyPasswordResetCode(email, code);
       if (!isValid) {
-        console.log('❌ 코드 검증 실패');
+        devLog('❌ 코드 검증 실패');
         return false;
       }
 
@@ -2416,10 +2422,10 @@ export class AzureTableService {
         localStorage.setItem(`password_reset_${email}`, JSON.stringify(savedData));
       }
 
-      console.log('✅ 비밀번호 재설정 완료');
+      devLog('✅ 비밀번호 재설정 완료');
       return true;
     } catch (error: any) {
-      console.error('❌ 비밀번호 재설정 실패:', error.message);
+      devError('❌ 비밀번호 재설정 실패:', error.message);
       return false;
     }
   }
@@ -2430,7 +2436,7 @@ export class AzureTableService {
    */
   static async clearPasswordResetCode(email: string): Promise<void> {
     localStorage.removeItem(`password_reset_${email}`);
-    console.log('🗑️ 재설정 코드 삭제:', email);
+    devLog('🗑️ 재설정 코드 삭제:', email);
   }
 
   // === 수료 보상 시스템 ===
@@ -2447,12 +2453,12 @@ export class AzureTableService {
     pointAmount: number = 10000
   ): Promise<boolean> {
     try {
-      console.log('🎁 수료 보상 지급 시작:', email, courseId, pointAmount);
+      devLog('🎁 수료 보상 지급 시작:', email, courseId, pointAmount);
 
       // 사용자 정보 조회
       const user = await this.getUserByEmail(email);
       if (!user) {
-        console.error('❌ 사용자를 찾을 수 없음:', email);
+        devError('❌ 사용자를 찾을 수 없음:', email);
         return false;
       }
 
@@ -2463,7 +2469,7 @@ export class AzureTableService {
       );
 
       if (alreadyRewarded) {
-        console.log('ℹ️ 이미 수료 보상을 받은 강의입니다:', courseId);
+        devLog('ℹ️ 이미 수료 보상을 받은 강의입니다:', courseId);
         return false;
       }
 
@@ -2496,10 +2502,10 @@ export class AzureTableService {
       // Azure에 업데이트
       await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
 
-      console.log('✅ 수료 보상 지급 완료:', email, pointAmount, '포인트');
+      devLog('✅ 수료 보상 지급 완료:', email, pointAmount, '포인트');
       return true;
     } catch (error: any) {
-      console.error('❌ 수료 보상 지급 실패:', error.message);
+      devError('❌ 수료 보상 지급 실패:', error.message);
       return false;
     }
   }
@@ -2516,19 +2522,19 @@ export class AzureTableService {
     orderId: string
   ): Promise<boolean> {
     try {
-      console.log('💰 포인트 사용 시작:', email, pointsToUse, '포인트');
+      devLog('💰 포인트 사용 시작:', email, pointsToUse, '포인트');
 
       // 사용자 정보 조회
       const user = await this.getUserByEmail(email);
       if (!user) {
-        console.error('❌ 사용자를 찾을 수 없음:', email);
+        devError('❌ 사용자를 찾을 수 없음:', email);
         return false;
       }
 
       // 포인트 잔액 확인
       const currentPoints = user.totalRewards || 0;
       if (currentPoints < pointsToUse) {
-        console.error('❌ 포인트 잔액 부족:', currentPoints, '<', pointsToUse);
+        devError('❌ 포인트 잔액 부족:', currentPoints, '<', pointsToUse);
         return false;
       }
 
@@ -2562,11 +2568,11 @@ export class AzureTableService {
       // Azure에 업데이트
       await this.azureRequest('users', 'PUT', updatedUser, `users|${user.rowKey}`);
 
-      console.log('✅ 포인트 사용 완료:', email, pointsToUse, '포인트 차감');
-      console.log('💰 남은 포인트:', currentPoints - pointsToUse);
+      devLog('✅ 포인트 사용 완료:', email, pointsToUse, '포인트 차감');
+      devLog('💰 남은 포인트:', currentPoints - pointsToUse);
       return true;
     } catch (error: any) {
-      console.error('❌ 포인트 사용 실패:', error.message);
+      devError('❌ 포인트 사용 실패:', error.message);
       return false;
     }
   }
@@ -2583,7 +2589,7 @@ export class AzureTableService {
       }
       return user.totalRewards || 0;
     } catch (error: any) {
-      console.error('❌ 포인트 조회 실패:', error.message);
+      devError('❌ 포인트 조회 실패:', error.message);
       return 0;
     }
   }
@@ -2596,11 +2602,11 @@ export class AzureTableService {
    */
   static async updateUserField(email: string, fieldName: string, value: any): Promise<boolean> {
     try {
-      console.log(`🔄 사용자 필드 업데이트: ${email} - ${fieldName}`);
+      devLog(`🔄 사용자 필드 업데이트: ${email} - ${fieldName}`);
 
       const user = await this.getUserByEmail(email);
       if (!user) {
-        console.error('❌ 사용자를 찾을 수 없음:', email);
+        devError('❌ 사용자를 찾을 수 없음:', email);
         return false;
       }
 
@@ -2653,10 +2659,10 @@ export class AzureTableService {
         throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
 
-      console.log(`✅ ${fieldName} 업데이트 성공`);
+      devLog(`✅ ${fieldName} 업데이트 성공`);
       return true;
     } catch (error: any) {
-      console.error(`❌ ${fieldName} 업데이트 실패:`, error.message);
+      devError(`❌ ${fieldName} 업데이트 실패:`, error.message);
       return false;
     }
   }
@@ -2664,15 +2670,15 @@ export class AzureTableService {
   // AI 추천 사용 횟수 증가
   static async incrementAIRecommendationUsage(email: string): Promise<boolean> {
     try {
-      console.log(`🔄 AI 추천 사용 횟수 증가: ${email}`);
+      devLog(`🔄 AI 추천 사용 횟수 증가: ${email}`);
 
       const user = await this.getUserByEmail(email);
       if (!user) {
-        console.error('❌ 사용자를 찾을 수 없음:', email);
+        devError('❌ 사용자를 찾을 수 없음:', email);
         return false;
       }
 
-      console.log(`🔑 실제 RowKey: ${user.rowKey}`);
+      devLog(`🔑 실제 RowKey: ${user.rowKey}`);
       const currentCount = user.aiRecommendationUsageCount || 0;
       const newCount = currentCount + 1;
 
@@ -2722,10 +2728,10 @@ export class AzureTableService {
         throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
 
-      console.log(`✅ AI 추천 사용 횟수 증가 성공: ${currentCount} → ${newCount}`);
+      devLog(`✅ AI 추천 사용 횟수 증가 성공: ${currentCount} → ${newCount}`);
       return true;
     } catch (error: any) {
-      console.error(`❌ AI 추천 사용 횟수 증가 실패:`, error.message);
+      devError(`❌ AI 추천 사용 횟수 증가 실패:`, error.message);
       return false;
     }
   }
@@ -2751,7 +2757,7 @@ export class AzureTableService {
   // 강의별 게시글 목록 조회
   static async getPostsByCourse(courseId: string): Promise<any[]> {
     try {
-      console.log(`📋 ${courseId} 게시글 조회 중...`);
+      devLog(`📋 ${courseId} 게시글 조회 중...`);
       
       const baseUrl = AZURE_SAS_URLS.posts.split('?')[0];
       const sasToken = AZURE_SAS_URLS.posts.split('?')[1];
@@ -2778,10 +2784,10 @@ export class AzureTableService {
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
       
-      console.log(`✅ ${posts.length}개 게시글 조회 완료`);
+      devLog(`✅ ${posts.length}개 게시글 조회 완료`);
       return posts;
     } catch (error: any) {
-      console.error(`❌ 게시글 조회 실패:`, error.message);
+      devError(`❌ 게시글 조회 실패:`, error.message);
       return [];
     }
   }
@@ -2796,7 +2802,7 @@ export class AzureTableService {
     category: string;
   }): Promise<{ success: boolean; postId?: string; error?: string }> {
     try {
-      console.log(`📝 게시글 작성 중...`);
+      devLog(`📝 게시글 작성 중...`);
       
       const postId = `post_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
       const now = new Date().toISOString();
@@ -2835,10 +2841,10 @@ export class AzureTableService {
         throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
 
-      console.log(`✅ 게시글 작성 완료: ${postId}`);
+      devLog(`✅ 게시글 작성 완료: ${postId}`);
       return { success: true, postId };
     } catch (error: any) {
-      console.error(`❌ 게시글 작성 실패:`, error.message);
+      devError(`❌ 게시글 작성 실패:`, error.message);
       return { success: false, error: error.message };
     }
   }
@@ -2901,10 +2907,10 @@ export class AzureTableService {
         throw new Error('좋아요 업데이트 실패');
       }
 
-      console.log(`✅ 좋아요 ${alreadyLiked ? '취소' : '추가'} 완료`);
+      devLog(`✅ 좋아요 ${alreadyLiked ? '취소' : '추가'} 완료`);
       return true;
     } catch (error: any) {
-      console.error(`❌ 좋아요 실패:`, error.message);
+      devError(`❌ 좋아요 실패:`, error.message);
       return false;
     }
   }
@@ -2912,7 +2918,7 @@ export class AzureTableService {
   // 댓글 목록 조회
   static async getCommentsByPost(postId: string): Promise<any[]> {
     try {
-      console.log(`💬 ${postId} 댓글 조회 중...`);
+      devLog(`💬 ${postId} 댓글 조회 중...`);
       
       const baseUrl = AZURE_SAS_URLS.comments.split('?')[0];
       const sasToken = AZURE_SAS_URLS.comments.split('?')[1];
@@ -2939,10 +2945,10 @@ export class AzureTableService {
         new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
       );
       
-      console.log(`✅ ${comments.length}개 댓글 조회 완료`);
+      devLog(`✅ ${comments.length}개 댓글 조회 완료`);
       return comments;
     } catch (error: any) {
-      console.error(`❌ 댓글 조회 실패:`, error.message);
+      devError(`❌ 댓글 조회 실패:`, error.message);
       return [];
     }
   }
@@ -2956,7 +2962,7 @@ export class AzureTableService {
     authorName: string;
   }): Promise<{ success: boolean; commentId?: string; error?: string }> {
     try {
-      console.log(`💬 댓글 작성 중...`);
+      devLog(`💬 댓글 작성 중...`);
       
       const commentId = `comment_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
       const now = new Date().toISOString();
@@ -2993,10 +2999,10 @@ export class AzureTableService {
       // 게시글의 댓글 수 업데이트
       await this.updatePostCommentCount(comment.courseId, comment.postId, 1);
 
-      console.log(`✅ 댓글 작성 완료: ${commentId}`);
+      devLog(`✅ 댓글 작성 완료: ${commentId}`);
       return { success: true, commentId };
     } catch (error: any) {
-      console.error(`❌ 댓글 작성 실패:`, error.message);
+      devError(`❌ 댓글 작성 실패:`, error.message);
       return { success: false, error: error.message };
     }
   }
@@ -3034,7 +3040,7 @@ export class AzureTableService {
         body: JSON.stringify({ commentCount: newCount })
       });
     } catch (error) {
-      console.error('댓글 수 업데이트 실패:', error);
+      devError('댓글 수 업데이트 실패:', error);
     }
   }
 
@@ -3077,10 +3083,10 @@ export class AzureTableService {
         throw new Error('삭제 실패');
       }
 
-      console.log(`✅ 게시글 삭제 완료: ${postId}`);
+      devLog(`✅ 게시글 삭제 완료: ${postId}`);
       return true;
     } catch (error: any) {
-      console.error(`❌ 게시글 삭제 실패:`, error.message);
+      devError(`❌ 게시글 삭제 실패:`, error.message);
       return false;
     }
   }
@@ -3096,7 +3102,7 @@ export class AzureTableService {
       const user = await this.getUserByEmail(email);
       
       if (!user) {
-        console.warn(`⚠️ 사용자를 찾을 수 없습니다: ${email}`);
+        devWarn(`⚠️ 사용자를 찾을 수 없습니다: ${email}`);
         return null;
       }
 
@@ -3127,7 +3133,7 @@ export class AzureTableService {
 
       return partner;
     } catch (error: any) {
-      console.error(`❌ 파트너 조회 실패:`, error.message);
+      devError(`❌ 파트너 조회 실패:`, error.message);
       return null;
     }
   }
@@ -3150,14 +3156,14 @@ export class AzureTableService {
         if (value !== undefined) {
           const success = await this.updateUserField(email, key, value);
           if (!success) {
-            console.error(`❌ 필드 업데이트 실패: ${key}`);
+            devError(`❌ 필드 업데이트 실패: ${key}`);
             return false;
           }
         }
       }
       return true;
     } catch (error: any) {
-      console.error(`❌ 파트너 브릭 업데이트 실패:`, error.message);
+      devError(`❌ 파트너 브릭 업데이트 실패:`, error.message);
       return false;
     }
   }
@@ -3213,10 +3219,10 @@ export class AzureTableService {
         referralHistory: JSON.stringify(referralHistory)
       });
 
-      console.log(`✅ 추천 내역 추가: ${partnerEmail} +${earnedBricks} 브릭`);
+      devLog(`✅ 추천 내역 추가: ${partnerEmail} +${earnedBricks} 브릭`);
       return true;
     } catch (error: any) {
-      console.error(`❌ 추천 내역 추가 실패:`, error.message);
+      devError(`❌ 추천 내역 추가 실패:`, error.message);
       return false;
     }
   }
@@ -3232,7 +3238,7 @@ export class AzureTableService {
         new Date(b.referralDate).getTime() - new Date(a.referralDate).getTime()
       );
     } catch (error: any) {
-      console.error(`❌ 추천 내역 조회 실패:`, error.message);
+      devError(`❌ 추천 내역 조회 실패:`, error.message);
       return [];
     }
   }
@@ -3291,10 +3297,10 @@ export class AzureTableService {
         withdrawalHistory: JSON.stringify(withdrawalHistory)
       });
 
-      console.log(`✅ 출금 신청 완료: ${partnerEmail} ${amount} 브릭`);
+      devLog(`✅ 출금 신청 완료: ${partnerEmail} ${amount} 브릭`);
       return { success: true, message: '출금 신청이 완료되었습니다. 월말에 정산됩니다.' };
     } catch (error: any) {
-      console.error(`❌ 출금 신청 실패:`, error.message);
+      devError(`❌ 출금 신청 실패:`, error.message);
       return { success: false, message: error.message };
     }
   }
@@ -3310,7 +3316,7 @@ export class AzureTableService {
         new Date(b.requestDate).getTime() - new Date(a.requestDate).getTime()
       );
     } catch (error: any) {
-      console.error(`❌ 출금 내역 조회 실패:`, error.message);
+      devError(`❌ 출금 내역 조회 실패:`, error.message);
       return [];
     }
   }
@@ -3342,10 +3348,10 @@ export class AzureTableService {
         } catch { /* ignore */ }
       }
       
-      console.log(`✅ 월말 정산 완료: ${partnerEmail}`);
+      devLog(`✅ 월말 정산 완료: ${partnerEmail}`);
       return true;
     } catch (error: any) {
-      console.error(`❌ 월말 정산 실패:`, error.message);
+      devError(`❌ 월말 정산 실패:`, error.message);
       return false;
     }
   }
@@ -3376,7 +3382,7 @@ export class AzureTableService {
 
       return null;
     } catch (error: any) {
-      console.error(`❌ 추천 코드로 파트너 검색 실패:`, error.message);
+      devError(`❌ 추천 코드로 파트너 검색 실패:`, error.message);
       return null;
     }
   }
@@ -3384,7 +3390,7 @@ export class AzureTableService {
   // 추천 코드로 파트너 이메일 찾기
   static async getEmailByReferralCode(referralCode: string): Promise<string | null> {
     try {
-      console.log(`🔍 추천 코드로 이메일 검색: ${referralCode}`);
+      devLog(`🔍 추천 코드로 이메일 검색: ${referralCode}`);
       
       // users 테이블에서 referralCode로 검색
       const baseUrl = AZURE_SAS_URLS.users.split('?')[0];
@@ -3403,15 +3409,15 @@ export class AzureTableService {
         const data = await response.json();
         if (data.value && data.value.length > 0) {
           const user = data.value[0] as User;
-          console.log(`✅ 추천 코드 ${referralCode} → 이메일 ${user.email}`);
+          devLog(`✅ 추천 코드 ${referralCode} → 이메일 ${user.email}`);
           return user.email;
         }
       }
 
-      console.log(`⚠️ 추천 코드 ${referralCode}에 해당하는 사용자 없음`);
+      devLog(`⚠️ 추천 코드 ${referralCode}에 해당하는 사용자 없음`);
       return null;
     } catch (error: any) {
-      console.error(`❌ 추천 코드로 이메일 검색 실패:`, error.message);
+      devError(`❌ 추천 코드로 이메일 검색 실패:`, error.message);
       return null;
     }
   }
@@ -3419,7 +3425,7 @@ export class AzureTableService {
   // 모든 대기 중인 출금 요청 조회 (관리자용)
   static async getAllPendingWithdrawals(): Promise<(PartnerWithdrawal & { partnerEmail: string; partnerName: string })[]> {
     try {
-      console.log('🔍 대기 중인 출금 요청 조회...');
+      devLog('🔍 대기 중인 출금 요청 조회...');
       
       // 모든 사용자 조회
       const baseUrl = AZURE_SAS_URLS.users.split('?')[0];
@@ -3459,10 +3465,10 @@ export class AzureTableService {
         new Date(b.requestDate).getTime() - new Date(a.requestDate).getTime()
       );
 
-      console.log(`✅ 대기 중인 출금 요청 ${allWithdrawals.length}건`);
+      devLog(`✅ 대기 중인 출금 요청 ${allWithdrawals.length}건`);
       return allWithdrawals;
     } catch (error: any) {
-      console.error(`❌ 출금 요청 조회 실패:`, error.message);
+      devError(`❌ 출금 요청 조회 실패:`, error.message);
       return [];
     }
   }
@@ -3475,7 +3481,7 @@ export class AzureTableService {
     rejectReason?: string
   ): Promise<boolean> {
     try {
-      console.log(`🔄 출금 상태 업데이트: ${partnerEmail} → ${status}`);
+      devLog(`🔄 출금 상태 업데이트: ${partnerEmail} → ${status}`);
       
       const user = await this.getUserByEmail(partnerEmail);
       if (!user || !user.withdrawalHistory) return false;
@@ -3484,7 +3490,7 @@ export class AzureTableService {
       const targetIndex = withdrawals.findIndex(w => w.rowKey === withdrawalRowKey);
       
       if (targetIndex === -1) {
-        console.error('❌ 출금 요청을 찾을 수 없음');
+        devError('❌ 출금 요청을 찾을 수 없음');
         return false;
       }
 
@@ -3514,10 +3520,10 @@ export class AzureTableService {
       // 출금 내역 저장
       await this.updateUserField(partnerEmail, 'withdrawalHistory', JSON.stringify(withdrawals));
 
-      console.log(`✅ 출금 상태 업데이트 완료: ${status}`);
+      devLog(`✅ 출금 상태 업데이트 완료: ${status}`);
       return true;
     } catch (error: any) {
-      console.error(`❌ 출금 상태 업데이트 실패:`, error.message);
+      devError(`❌ 출금 상태 업데이트 실패:`, error.message);
       return false;
     }
   }
@@ -3532,13 +3538,13 @@ export class AzureTableService {
    */
   static async getLiveArchives(courseId: string): Promise<any[]> {
     try {
-      console.log(`📺 ${courseId} 라이브 아카이브 조회 중...`);
+      devLog(`📺 ${courseId} 라이브 아카이브 조회 중...`);
       
       // users 테이블에서 시스템 설정으로 저장된 라이브 아카이브 조회
       const systemUser = await this.getUserByEmail('system@aicitybuilders.com');
       
       if (!systemUser) {
-        console.log('ℹ️ 시스템 사용자가 없습니다. 빈 배열 반환.');
+        devLog('ℹ️ 시스템 사용자가 없습니다. 빈 배열 반환.');
         return [];
       }
 
@@ -3548,10 +3554,10 @@ export class AzureTableService {
       // 최신순 정렬
       courseArchives.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
       
-      console.log(`✅ ${courseId} 라이브 아카이브 ${courseArchives.length}개 조회 완료`);
+      devLog(`✅ ${courseId} 라이브 아카이브 ${courseArchives.length}개 조회 완료`);
       return courseArchives;
     } catch (error: any) {
-      console.error(`❌ 라이브 아카이브 조회 실패:`, error.message);
+      devError(`❌ 라이브 아카이브 조회 실패:`, error.message);
       return [];
     }
   }
@@ -3569,7 +3575,7 @@ export class AzureTableService {
     duration?: string;
   }): Promise<boolean> {
     try {
-      console.log(`📺 라이브 아카이브 추가 중:`, archive.title);
+      devLog(`📺 라이브 아카이브 추가 중:`, archive.title);
       
       // 시스템 사용자 조회 또는 생성
       let systemUser = await this.getUserByEmail('system@aicitybuilders.com');
@@ -3597,10 +3603,10 @@ export class AzureTableService {
       
       await this.updateUserField('system@aicitybuilders.com', 'liveArchives', JSON.stringify(allArchives));
       
-      console.log(`✅ 라이브 아카이브 추가 완료:`, newArchive.id);
+      devLog(`✅ 라이브 아카이브 추가 완료:`, newArchive.id);
       return true;
     } catch (error: any) {
-      console.error(`❌ 라이브 아카이브 추가 실패:`, error.message);
+      devError(`❌ 라이브 아카이브 추가 실패:`, error.message);
       return false;
     }
   }
@@ -3611,12 +3617,12 @@ export class AzureTableService {
    */
   static async deleteLiveArchive(archiveId: string): Promise<boolean> {
     try {
-      console.log(`🗑️ 라이브 아카이브 삭제 중:`, archiveId);
+      devLog(`🗑️ 라이브 아카이브 삭제 중:`, archiveId);
       
       const systemUser = await this.getUserByEmail('system@aicitybuilders.com');
       
       if (!systemUser) {
-        console.error('❌ 시스템 사용자가 없습니다.');
+        devError('❌ 시스템 사용자가 없습니다.');
         return false;
       }
 
@@ -3624,16 +3630,16 @@ export class AzureTableService {
       const filteredArchives = allArchives.filter((archive: any) => archive.id !== archiveId);
       
       if (allArchives.length === filteredArchives.length) {
-        console.log('ℹ️ 삭제할 아카이브를 찾지 못했습니다.');
+        devLog('ℹ️ 삭제할 아카이브를 찾지 못했습니다.');
         return false;
       }
       
       await this.updateUserField('system@aicitybuilders.com', 'liveArchives', JSON.stringify(filteredArchives));
       
-      console.log(`✅ 라이브 아카이브 삭제 완료:`, archiveId);
+      devLog(`✅ 라이브 아카이브 삭제 완료:`, archiveId);
       return true;
     } catch (error: any) {
-      console.error(`❌ 라이브 아카이브 삭제 실패:`, error.message);
+      devError(`❌ 라이브 아카이브 삭제 실패:`, error.message);
       return false;
     }
   }
@@ -3643,7 +3649,7 @@ export class AzureTableService {
    */
   static async getAllLiveArchives(): Promise<any[]> {
     try {
-      console.log(`📺 전체 라이브 아카이브 조회 중...`);
+      devLog(`📺 전체 라이브 아카이브 조회 중...`);
       
       const systemUser = await this.getUserByEmail('system@aicitybuilders.com');
       
@@ -3656,10 +3662,10 @@ export class AzureTableService {
       // 최신순 정렬
       allArchives.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
       
-      console.log(`✅ 전체 라이브 아카이브 ${allArchives.length}개 조회 완료`);
+      devLog(`✅ 전체 라이브 아카이브 ${allArchives.length}개 조회 완료`);
       return allArchives;
     } catch (error: any) {
-      console.error(`❌ 전체 라이브 아카이브 조회 실패:`, error.message);
+      devError(`❌ 전체 라이브 아카이브 조회 실패:`, error.message);
       return [];
     }
   }
@@ -3686,7 +3692,7 @@ export class AzureTableService {
       const liveConfigs = systemUser.liveConfigs ? JSON.parse(systemUser.liveConfigs) : {};
       return liveConfigs[courseId] || null;
     } catch (error: any) {
-      console.error(`❌ 라이브 설정 조회 실패:`, error.message);
+      devError(`❌ 라이브 설정 조회 실패:`, error.message);
       return null;
     }
   }
@@ -3702,7 +3708,7 @@ export class AzureTableService {
     liveTitle: string;
   }): Promise<boolean> {
     try {
-      console.log(`🔴 라이브 설정 업데이트:`, courseId, config.isLive ? 'ON' : 'OFF');
+      devLog(`🔴 라이브 설정 업데이트:`, courseId, config.isLive ? 'ON' : 'OFF');
       
       let systemUser = await this.getUserByEmail('system@aicitybuilders.com');
       
@@ -3725,10 +3731,10 @@ export class AzureTableService {
       
       await this.updateUserField('system@aicitybuilders.com', 'liveConfigs', JSON.stringify(liveConfigs));
       
-      console.log(`✅ 라이브 설정 업데이트 완료`);
+      devLog(`✅ 라이브 설정 업데이트 완료`);
       return true;
     } catch (error: any) {
-      console.error(`❌ 라이브 설정 업데이트 실패:`, error.message);
+      devError(`❌ 라이브 설정 업데이트 실패:`, error.message);
       return false;
     }
   }
@@ -3744,7 +3750,7 @@ export class AzureTableService {
 
       return systemUser.liveConfigs ? JSON.parse(systemUser.liveConfigs) : {};
     } catch (error: any) {
-      console.error(`❌ 전체 라이브 설정 조회 실패:`, error.message);
+      devError(`❌ 전체 라이브 설정 조회 실패:`, error.message);
       return {};
     }
   }

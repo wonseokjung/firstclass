@@ -112,11 +112,6 @@ const withVibeCodingDayPageWrapper = <P extends { onBack: () => void; onNext?: (
 
 // 메인 페이지
 const MainPage = React.lazy(() => import('./components/pages/MainPage'));
-const AIConstructionSitePage = React.lazy(() => import('./components/pages/AIConstructionSitePage'));
-const AIConstructionSiteStep1Page = React.lazy(() => import('./components/pages/AIConstructionSiteStep1Page'));
-const AIConstructionSiteStep2Page = React.lazy(() => import('./components/pages/AIConstructionSiteStep2Page'));
-const AIConstructionSiteStep3Page = React.lazy(() => import('./components/pages/AIConstructionSiteStep3Page'));
-const AIWorkflowEditorPage = React.lazy(() => import('./components/pages/AIWorkflowEditorPage'));
 const RoadmapPage = React.lazy(() => import('./components/pages/RoadmapPage'));
 const ChatGPTPrompts40Page = React.lazy(() => import('./components/pages/ChatGPTPrompts40Page'));
 const AIMoneyMasterPromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyMasterPromptsPage'));
@@ -149,7 +144,6 @@ const AIBuildingCoursePlayerPage = React.lazy(() => import('./components/pages/c
 const ChatGPTAgentBeginnerPage = React.lazy(() => import('./components/pages/courses/ChatGPTAgentBeginnerPage'));
 const ContentBusinessPage = React.lazy(() => import('./components/pages/courses/ContentBusinessPage'));
 const AgentDispatchPage = React.lazy(() => import('./components/pages/courses/AgentDispatchPage'));
-const LongformToShortsPage = React.lazy(() => import('./components/pages/tools/LongformToShortsPage'));
 const ChatGPTAgentBeginnerPlayerPage = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/ChatGPTAgentBeginnerPlayerPage'));
 const Day1Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day1Page'));
 const Day2Page = React.lazy(() => import('./components/pages/courses/chatgpt-agent-beginner/Day2Page'));
@@ -252,7 +246,6 @@ const AIMoneyMasterPromptsPageWrapped = withPageWrapper(AIMoneyMasterPromptsPage
 const AIMoneyImagePromptsPageWrapped = withPageWrapper(AIMoneyImagePromptsPage);
 const AIMoneyVideoPromptsPageWrapped = withPageWrapper(AIMoneyVideoPromptsPage);
 const AIRealisticCharacterVideoPageWrapped = withPageWrapper(AIRealisticCharacterVideoPage);
-const AIConstructionSitePageWrapped = withPageWrapper(AIConstructionSitePage);
 
 // 인증 페이지
 const LoginPageWrapped = withPageWrapper(LoginPage);
@@ -263,11 +256,7 @@ const PaymentFailPageWrapped = withPageWrapper(PaymentFailPage);
 const RefundPolicyPageWrapped = withPageWrapper(RefundPolicyPage);
 
 // Suspense만 적용 (onBack 없음)
-const AIConstructionSiteStep1PageWrapped = withSuspense(AIConstructionSiteStep1Page);
-const AIConstructionSiteStep2PageWrapped = withSuspense(AIConstructionSiteStep2Page);
-const AIConstructionSiteStep3PageWrapped = withSuspense(AIConstructionSiteStep3Page);
 const RoadmapPageWrapped = withSuspense(RoadmapPage);
-const AIWorkflowEditorPageWrapped = withSuspense(AIWorkflowEditorPage);
 const LiveHubPageWrapped = withPageWrapper(LiveHubPage, '/');
 const StepLivePageWrapped = withPageWrapper(StepLivePage, '/live');
 const FreeLivePageWrapped = withPageWrapper(FreeLivePage, '/live');
@@ -550,18 +539,6 @@ const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ childr
             <Route path="/ai-money-image-prompts" element={<AIMoneyImagePromptsPageWrapped />} />
             <Route path="/ai-money-video-prompts" element={<AIMoneyVideoPromptsPageWrapped />} />
             <Route path="/ai-character-video-prompts" element={<AIRealisticCharacterVideoPageWrapped />} />
-            
-            {/* AI 건물 공사장 */}
-            <Route path="/ai-construction-site" element={<AIConstructionSitePageWrapped />} />
-            <Route path="/ai-construction-site/step1" element={<AIConstructionSiteStep1PageWrapped />} />
-            <Route path="/ai-construction-site/step2" element={<AIConstructionSiteStep2PageWrapped />} />
-            <Route path="/ai-construction-site/step3" element={<AIConstructionSiteStep3PageWrapped />} />
-            <Route path="/tools/longform-to-shorts" element={
-              <Suspense fallback={<LoadingSpinner />}>
-                <LongformToShortsPage />
-              </Suspense>
-            } />
-            <Route path="/ai-workflow-editor" element={<AIWorkflowEditorPageWrapped />} />
             
               {/* 라이브 페이지 */}
             <Route path="/live" element={<LiveHubPageWrapped />} />
