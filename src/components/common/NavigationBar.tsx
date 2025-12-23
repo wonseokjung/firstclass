@@ -214,6 +214,25 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
           </button>
           <button 
             className="nav-link" 
+            onClick={() => navigate('/live')}
+            style={{
+              ...navButtonStyle,
+              background: '#dc2626',
+              color: '#ffffff'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = '#ef4444';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = '#dc2626';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
+          >
+            📺 라이브
+          </button>
+          <button 
+            className="nav-link" 
             onClick={() => navigate('/partner')}
             style={{
               ...navButtonStyle,
@@ -266,6 +285,18 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               }}
             >
               💬 커뮤니티
+            </button>
+
+            <button 
+              className="mobile-nav-link" 
+              onClick={() => handleMobileNavClick(() => navigate('/live'))}
+              style={{ 
+                background: '#dc2626',
+                color: '#ffffff',
+                fontWeight: '700'
+              }}
+            >
+              📺 라이브
             </button>
 
             <button 

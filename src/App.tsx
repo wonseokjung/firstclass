@@ -258,8 +258,8 @@ const RefundPolicyPageWrapped = withPageWrapper(RefundPolicyPage);
 // Suspense만 적용 (onBack 없음)
 const RoadmapPageWrapped = withSuspense(RoadmapPage);
 const LiveHubPageWrapped = withPageWrapper(LiveHubPage, '/');
-const StepLivePageWrapped = withPageWrapper(StepLivePage, '/live');
-const FreeLivePageWrapped = withPageWrapper(FreeLivePage, '/live');
+const StepLivePageWrapped = withPageWrapper(StepLivePage, '/');
+const FreeLivePageWrapped = withPageWrapper(FreeLivePage, '/');
 const CommunityHubPageWrapped = withSuspense(CommunityHubPage);
 const CommunityStepPageWrapped = withSuspense(CommunityStepPage);
 const ForgotPasswordPageWrapped = withSuspense(ForgotPasswordPage);
