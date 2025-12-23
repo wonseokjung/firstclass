@@ -135,11 +135,14 @@ const LiveControlPage: React.FC = () => {
     setSaving(null);
   };
 
-  // 유튜브 URL에서 ID 추출
+  // 유튜브 URL에서 ID 추출 (다양한 형식 지원)
   const extractYoutubeId = (url: string): string | null => {
     const patterns = [
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/live\/)([^&\n?#]+)/,
-      /^([a-zA-Z0-9_-]{11})$/
+      /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,  // embed 링크
+      /youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/, // 일반 링크
+      /youtu\.be\/([a-zA-Z0-9_-]{11})/,             // 짧은 링크
+      /youtube\.com\/live\/([a-zA-Z0-9_-]{11})/,    // 라이브 링크
+      /^([a-zA-Z0-9_-]{11})$/                       // ID만
     ];
     for (const pattern of patterns) {
       const match = url.match(pattern);

@@ -102,7 +102,8 @@ interface ArchiveItem {
   title: string;
   date: string;
   duration: string;
-  vimeoId: string;
+  vimeoId?: string;
+  youtubeId?: string;
   thumbnail?: string;
 }
 
@@ -543,38 +544,122 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
             boxShadow: `0 10px 40px ${COLORS.navy}30`
           }}>
             {isLiveNow && liveUrl ? (
-              <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
-                <iframe
-                  src={`https://www.youtube.com/embed/${liveUrl}?autoplay=1`}
+              <div style={{
+                aspectRatio: '16/9',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
+                color: COLORS.white,
+                padding: '40px',
+                textAlign: 'center'
+              }}>
+                <div style={{
+                  width: '80px',
+                  height: '80px',
+                  borderRadius: '50%',
+                  background: '#ff0000',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '24px',
+                  animation: 'pulse 2s infinite'
+                }}>
+                  <span style={{ fontSize: '2rem' }}>▶</span>
+                </div>
+                <h2 style={{ fontSize: '1.8rem', fontWeight: '800', marginBottom: '12px' }}>
+                  🔴 {liveTitle || '라이브 진행 중!'}
+                </h2>
+                <p style={{ fontSize: '1rem', opacity: 0.8, marginBottom: '24px' }}>
+                  지금 바로 라이브에 참여하세요!
+                </p>
+                <a
+                  href={`https://www.youtube.com/watch?v=${liveUrl}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    border: 'none'
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    padding: '16px 32px',
+                    background: 'linear-gradient(135deg, #ff0000, #cc0000)',
+                    color: 'white',
+                    borderRadius: '50px',
+                    fontSize: '1.1rem',
+                    fontWeight: '700',
+                    textDecoration: 'none',
+                    boxShadow: '0 4px 20px rgba(255,0,0,0.4)',
+                    transition: 'transform 0.2s, box-shadow 0.2s'
                   }}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  title={liveTitle || `${stepInfo.name} 라이브`}
-                />
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                    e.currentTarget.style.boxShadow = '0 6px 30px rgba(255,0,0,0.5)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = '0 4px 20px rgba(255,0,0,0.4)';
+                  }}
+                >
+                  🎓 수강생 전용 라이브 보러가기
+                </a>
               </div>
             ) : selectedArchive ? (
-              <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
-                <iframe
-                  src={`https://player.vimeo.com/video/${selectedArchive.vimeoId}?h=&badge=0&autopause=0&player_id=0&app_id=58479`}
+              <div style={{
+                aspectRatio: '16/9',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
+                color: COLORS.white,
+                padding: '40px',
+                textAlign: 'center'
+              }}>
+                <div style={{
+                  width: '70px',
+                  height: '70px',
+                  borderRadius: '50%',
+                  background: COLORS.gold,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '20px'
+                }}>
+                  <Play size={32} color={COLORS.navyDark} />
+                </div>
+                <h3 style={{ fontSize: '1.4rem', fontWeight: '700', marginBottom: '8px' }}>
+                  {selectedArchive.title}
+                </h3>
+                <p style={{ fontSize: '0.9rem', opacity: 0.7, marginBottom: '20px' }}>
+                  {selectedArchive.date} · {selectedArchive.duration}
+                </p>
+                <a
+                  href={selectedArchive.youtubeId 
+                    ? `https://www.youtube.com/watch?v=${selectedArchive.youtubeId}`
+                    : `https://vimeo.com/${selectedArchive.vimeoId}`
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    border: 'none'
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    padding: '14px 28px',
+                    background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldDark})`,
+                    color: COLORS.navyDark,
+                    borderRadius: '50px',
+                    fontSize: '1rem',
+                    fontWeight: '700',
+                    textDecoration: 'none',
+                    boxShadow: `0 4px 20px ${COLORS.gold}40`,
+                    transition: 'transform 0.2s'
                   }}
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowFullScreen
-                  title={selectedArchive.title}
-                />
+                  onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                  onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                >
+                  📺 아카이브 영상 보러가기
+                </a>
               </div>
             ) : (
               <div style={{
@@ -598,24 +683,15 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
             )}
           </div>
           
-          {selectedArchive && (
-            <div style={{ marginTop: '20px' }}>
-              <h2 style={{ color: COLORS.navy, fontSize: '1.3rem', fontWeight: '700' }}>
-                {selectedArchive.title}
-              </h2>
-              <p style={{ color: COLORS.grayMedium, marginTop: '5px' }}>
-                {selectedArchive.date} · {selectedArchive.duration}
-              </p>
-            </div>
-          )}
         </div>
         
         {/* 아카이브 섹션 */}
+        {archives.length > 0 && (
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '25px' }}>
             <Archive size={28} color={COLORS.navy} />
             <h2 style={{ color: COLORS.navy, fontSize: '1.5rem', fontWeight: '800' }}>
-              📚 지난 라이브 아카이브
+              📚 지난 라이브 다시보기
             </h2>
             <span style={{
               background: COLORS.gold,
@@ -745,23 +821,8 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
             ))}
           </div>
           
-          {/* 더보기 */}
-          <div style={{ textAlign: 'center', marginTop: '30px' }}>
-            <button style={{
-              padding: '12px 30px',
-              background: 'transparent',
-              border: `2px solid ${COLORS.navy}`,
-              color: COLORS.navy,
-              borderRadius: '10px',
-              fontSize: '1rem',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease'
-            }}>
-              더 많은 아카이브 보기 →
-            </button>
-          </div>
         </div>
+        )}
         
         {/* 가성비 섹션 */}
         <div style={{
