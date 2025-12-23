@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aicitybuilders-v1.1.0'; // Day 8 오픈 및 리팩토링 반영
+const CACHE_NAME = 'aicitybuilders-v1.2.0'; // Network-First 전략으로 변경
 const urlsToCache = [
   '/',
   '/manifest.json',
@@ -64,40 +64,28 @@ self.addEventListener('fetch', function (event) {
     return;
   }
 
+  // 🚀 Network-First 전략: 항상 최신 버전 가져오기!
   event.respondWith(
-    caches.match(event.request)
+    fetch(event.request)
       .then(function (response) {
-        // 캐시에서 발견된 경우 캐시 반환
-        if (response) {
-          return response;
+        // 네트워크 성공 시 캐시에 저장
+        if (response && response.status === 200 && response.type === 'basic') {
+          var responseToCache = response.clone();
+          caches.open(CACHE_NAME)
+            .then(function (cache) {
+              cache.put(event.request, responseToCache);
+            })
+            .catch(error => {
+              console.warn('캐시 저장 실패:', error);
+            });
         }
-
-        return fetch(event.request).then(
-          function (response) {
-            // 유효한 응답인지 확인
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            // GET 요청만 캐시에 저장
-            if (event.request.method === 'GET') {
-              // 응답 복제 (스트림은 한 번만 사용 가능)
-              var responseToCache = response.clone();
-
-              caches.open(CACHE_NAME)
-                .then(function (cache) {
-                  cache.put(event.request, responseToCache);
-                })
-                .catch(error => {
-                  console.warn('Failed to update cache:', error);
-                });
-            }
-
-            return response;
-          }
-        ).catch(error => {
-          console.warn('Fetch failed:', error);
-          return caches.match('/'); // 오프라인 폴백
+        return response;
+      })
+      .catch(function (error) {
+        // 네트워크 실패 시 캐시에서 가져오기 (오프라인 지원)
+        console.warn('네트워크 실패, 캐시 사용:', error);
+        return caches.match(event.request).then(function (response) {
+          return response || caches.match('/');
         });
       })
   );

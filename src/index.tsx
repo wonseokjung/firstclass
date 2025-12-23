@@ -57,8 +57,22 @@ const checkForUpdates = async () => {
 // 페이지 로드 시 버전 체크
 checkForUpdates();
 
-// 3분마다 버전 체크 (더 자주)
-setInterval(checkForUpdates, 3 * 60 * 1000);
+// 1분마다 버전 체크
+setInterval(checkForUpdates, 60 * 1000);
+
+// 탭 포커스 시 버전 체크 (다른 탭 갔다가 오면 바로 체크)
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    console.log('👀 탭 포커스 - 버전 체크 중...');
+    checkForUpdates();
+  }
+});
+
+// 윈도우 포커스 시 버전 체크
+window.addEventListener('focus', () => {
+  console.log('👀 윈도우 포커스 - 버전 체크 중...');
+  checkForUpdates();
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
