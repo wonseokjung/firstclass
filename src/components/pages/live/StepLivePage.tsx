@@ -107,11 +107,7 @@ interface ArchiveItem {
   thumbnail?: string;
 }
 
-// 아카이브 생성 함수 (라이브 시작 후 실제 데이터로 교체 예정)
-const generateSampleArchives = (_stepId: string): ArchiveItem[] => {
-  // 라이브 시작 전이므로 빈 배열 반환
-  return [];
-};
+// 아카이브는 Azure에서 직접 가져옴
 
 interface StepLivePageProps {
   onBack: () => void;
@@ -125,7 +121,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
   const [isLiveNow, setIsLiveNow] = useState(false);
   const [liveUrl, setLiveUrl] = useState('');
   const [liveTitle, setLiveTitle] = useState('');
-  const [selectedArchive, setSelectedArchive] = useState<ArchiveItem | null>(null);
+  const [selectedArchive] = useState<ArchiveItem | null>(null);
   const [archives, setArchives] = useState<ArchiveItem[]>([]);
   const [nextLiveDate, setNextLiveDate] = useState<Date | null>(null);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
