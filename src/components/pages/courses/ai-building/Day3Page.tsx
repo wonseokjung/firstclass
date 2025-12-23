@@ -685,7 +685,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
           </div>
 
           <a
-            href="https://www.ezerai.xyz/"
+            href="https://www.ezerai.xyz/youtube-calculator"
             target="_blank"
             rel="noopener noreferrer"
             style={{
