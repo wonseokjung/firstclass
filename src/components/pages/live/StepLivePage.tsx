@@ -233,7 +233,24 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
         // 테스트 계정 체크
         if (user.email === 'test10@gmail.com') {
           setHasAccess(true);
-          setArchives(generateSampleArchives(stepId || 'step1'));
+          
+          // Azure에서 아카이브 가져오기
+          const courseIdForArchive = getCourseIdForStep(stepId || 'step1');
+          const azureArchives = await AzureTableService.getLiveArchives(courseIdForArchive);
+          
+          if (azureArchives && azureArchives.length > 0) {
+            const formattedArchives: ArchiveItem[] = azureArchives.map((a: any, index: number) => ({
+              id: a.RowKey || `archive-${index}`,
+              episode: azureArchives.length - index,
+              title: a.title || '라이브 아카이브',
+              date: a.date || new Date(a.Timestamp || Date.now()).toLocaleDateString('ko-KR'),
+              duration: a.duration || '약 60분',
+              youtubeId: a.youtubeId,
+              thumbnail: a.youtubeId ? `https://img.youtube.com/vi/${a.youtubeId}/mqdefault.jpg` : undefined
+            }));
+            setArchives(formattedArchives);
+          }
+          
           setIsLoading(false);
           return;
         }
@@ -252,7 +269,24 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
 
         if (courseIds.includes(stepInfo.courseId)) {
           setHasAccess(true);
-          setArchives(generateSampleArchives(stepId || 'step1'));
+          
+          // Azure에서 아카이브 가져오기
+          const courseIdForArchive = getCourseIdForStep(stepId || 'step1');
+          const azureArchives = await AzureTableService.getLiveArchives(courseIdForArchive);
+          
+          if (azureArchives && azureArchives.length > 0) {
+            // Azure 아카이브를 ArchiveItem 형식으로 변환
+            const formattedArchives: ArchiveItem[] = azureArchives.map((a: any, index: number) => ({
+              id: a.RowKey || `archive-${index}`,
+              episode: azureArchives.length - index,
+              title: a.title || '라이브 아카이브',
+              date: a.date || new Date(a.Timestamp || Date.now()).toLocaleDateString('ko-KR'),
+              duration: a.duration || '약 60분',
+              youtubeId: a.youtubeId,
+              thumbnail: a.youtubeId ? `https://img.youtube.com/vi/${a.youtubeId}/mqdefault.jpg` : undefined
+            }));
+            setArchives(formattedArchives);
+          }
         }
       } catch (error) {
         console.error('접근 권한 확인 실패:', error);
@@ -715,17 +749,32 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
             gap: '20px'
           }}>
             {archives.map((archive) => (
-              <div
+              <a
                 key={archive.id}
-                onClick={() => setSelectedArchive(archive)}
+                href={archive.youtubeId 
+                  ? `https://www.youtube.com/watch?v=${archive.youtubeId}`
+                  : `https://vimeo.com/${archive.vimeoId}`
+                }
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   background: COLORS.white,
                   borderRadius: '15px',
                   overflow: 'hidden',
-                  border: selectedArchive?.id === archive.id ? `3px solid ${COLORS.gold}` : `2px solid ${COLORS.navy}15`,
+                  border: `2px solid ${COLORS.navy}15`,
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
-                  boxShadow: selectedArchive?.id === archive.id ? `0 8px 25px ${COLORS.gold}30` : `0 4px 15px ${COLORS.navy}10`
+                  boxShadow: `0 4px 15px ${COLORS.navy}10`,
+                  textDecoration: 'none',
+                  display: 'block'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-5px)';
+                  e.currentTarget.style.boxShadow = `0 8px 25px ${COLORS.gold}30`;
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = `0 4px 15px ${COLORS.navy}10`;
                 }}
               >
                 {/* 썸네일 */}
@@ -821,7 +870,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
                     {archive.date}
                   </p>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
           
