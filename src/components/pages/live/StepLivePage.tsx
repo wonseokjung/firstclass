@@ -241,8 +241,12 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
         // Azure에서 구매 확인
         const purchasedCourses = await AzureTableService.getUserPurchasedCourses(user.email);
         const courseIds = purchasedCourses.map(p => {
-          if (p.courseId === 'ai-building-course') return 999;
-          if (p.courseId === 'chatgpt-agent-beginner') return 1002;
+          // courseId가 문자열이든 숫자든 모두 매칭
+          const cid = String(p.courseId);
+          if (cid === 'ai-building-course' || cid === '999') return 999;
+          if (cid === 'chatgpt-agent-beginner' || cid === '1002') return 1002;
+          if (cid === 'vibe-coding' || cid === '1003') return 1003;
+          if (cid === 'solo-business' || cid === '1004') return 1004;
           return null;
         }).filter(id => id !== null) as number[];
 

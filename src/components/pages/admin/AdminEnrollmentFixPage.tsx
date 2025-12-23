@@ -1088,6 +1088,69 @@ const AdminEnrollmentFixPage: React.FC = () => {
               토스 데이터 붙여넣기
             </button>
             <button
+              onClick={async () => {
+                if (!allUsers.length) {
+                  alert('먼저 "모든 사용자 보기"를 클릭해주세요.');
+                  return;
+                }
+                
+                const choice = window.prompt(
+                  '이메일 추출 대상을 선택하세요:\n\n' +
+                  '1 = 전체 회원\n' +
+                  '2 = 마케팅 동의 회원\n' +
+                  '3 = 수강생만\n\n' +
+                  '번호 입력:'
+                );
+                
+                if (!choice) return;
+                
+                let targetUsers = allUsers.filter((u: any) => u.email && u.email.includes('@'));
+                let groupName = '전체 회원';
+                
+                if (choice === '2') {
+                  targetUsers = targetUsers.filter((u: any) => u.marketingAgreed === true || u.marketingAgreed === 'true');
+                  groupName = '마케팅 동의';
+                } else if (choice === '3') {
+                  targetUsers = targetUsers.filter((u: any) => u.enrolledCourses && u.enrolledCourses.includes('enrollments'));
+                  groupName = '수강생';
+                }
+                
+                const emails = targetUsers.map((u: any) => u.email);
+                const emailText = emails.join(', ');
+                
+                // 클립보드에 복사
+                try {
+                  await navigator.clipboard.writeText(emailText);
+                  alert(`✅ ${groupName} ${emails.length}명 이메일 복사 완료!\n\nGmail에서 BCC에 붙여넣기 하세요.`);
+                } catch (e) {
+                  // 클립보드 실패시 다운로드
+                  const blob = new Blob([emailText], { type: 'text/plain' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `emails_${groupName}_${emails.length}.txt`;
+                  a.click();
+                  alert(`✅ ${groupName} ${emails.length}명 이메일 파일 다운로드 완료!`);
+                }
+              }}
+              style={{
+                padding: '12px 24px',
+                borderRadius: '10px',
+                border: 'none',
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                color: 'white',
+                fontSize: '1rem',
+                fontWeight: '700',
+                cursor: 'pointer',
+                boxShadow: '0 4px 15px rgba(245, 158, 11, 0.3)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
+              📧 이메일 목록 추출
+            </button>
+            <button
               onClick={() => setShowSearchPanel(!showSearchPanel)}
               style={{
                 padding: '12px 24px',
