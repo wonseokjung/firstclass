@@ -372,12 +372,12 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
           <div style={{ padding: '25px' }}>
             <div style={{ position: 'relative', paddingTop: '56.25%', borderRadius: '16px', overflow: 'hidden' }}>
               <iframe 
-                src="https://player.vimeo.com/video/1149056427?badge=0&autopause=0&player_id=0&app_id=58479" 
+                src="https://player.vimeo.com/video/1149061122?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" 
                 frameBorder="0" 
                 allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
                 referrerPolicy="strict-origin-when-cross-origin"
                 style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                title="건물주되기데이3"
+                title="데이3건물주되기수정"
               />
             </div>
           </div>
