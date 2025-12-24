@@ -251,19 +251,21 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
           return;
         }
 
-        // Azure에서 구매 확인
-        const purchasedCourses = await AzureTableService.getUserPurchasedCourses(user.email);
-        const courseIds = purchasedCourses.map(p => {
-          // courseId가 문자열이든 숫자든 모두 매칭
-          const cid = String(p.courseId);
-          if (cid === 'ai-building-course' || cid === '999') return 999;
-          if (cid === 'chatgpt-agent-beginner' || cid === '1002') return 1002;
-          if (cid === 'vibe-coding' || cid === '1003') return 1003;
-          if (cid === 'solo-business' || cid === '1004') return 1004;
-          return null;
-        }).filter(id => id !== null) as number[];
+        // Azure에서 결제 상태 확인 (checkCoursePayment 사용)
+        const courseIdForPayment = getCourseIdForStep(stepId || 'step1');
+        console.log('🔍 Step 라이브 결제 확인 시작:', {
+          email: user.email,
+          stepId,
+          courseIdForPayment,
+          stepInfoCourseId: stepInfo.courseId
+        });
+        
+        const paymentStatus = await AzureTableService.checkCoursePayment(user.email, courseIdForPayment);
+        
+        console.log('💳 결제 확인 결과:', paymentStatus);
 
-        if (courseIds.includes(stepInfo.courseId)) {
+        if (paymentStatus && paymentStatus.isPaid) {
+          console.log('✅ 결제 확인됨! 접근 허용');
           setHasAccess(true);
           
           // Azure에서 아카이브 가져오기
