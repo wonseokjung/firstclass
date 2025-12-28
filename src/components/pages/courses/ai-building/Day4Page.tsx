@@ -354,7 +354,7 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
           <div style={{ padding: '20px' }}>
             <div style={{ position: 'relative', paddingTop: '56.25%', borderRadius: '12px', overflow: 'hidden' }}>
               <iframe 
-                src="https://player.vimeo.com/video/1149647556?badge=0&autopause=0&player_id=0&app_id=58479" 
+                src="https://player.vimeo.com/video/1149691638?badge=0&autopause=0&player_id=0&app_id=58479" 
                 frameBorder="0" 
                 allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
                 referrerPolicy="strict-origin-when-cross-origin"
@@ -397,7 +397,7 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
               <li>디지털 건물에 <strong style={{ color: '#3b82f6' }}>어떤 사람들</strong>이 살지 결정</li>
               <li><strong style={{ color: '#3b82f6' }}>인종, 나라</strong> 그리고 <strong style={{ color: '#3b82f6' }}>카테고리</strong> (뷰티, 테크, 교육)</li>
               <li>나라별/콘텐츠별 CPM 차이 이해</li>
-            </ul>
+          </ul>
           </div>
 
           <div style={{
@@ -551,8 +551,8 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
                 }}>
                   <div style={{ fontSize: '1.3rem', marginBottom: '6px' }}>{item.icon}</div>
                   <p style={{ color: '#cbd5e1', margin: 0, fontSize: '0.85rem' }}>{item.title}</p>
-                </div>
-              ))}
+          </div>
+        ))}
             </div>
           </div>
 
