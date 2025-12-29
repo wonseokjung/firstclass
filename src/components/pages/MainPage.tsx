@@ -360,7 +360,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
                   <div className="free-badge-overlay" style={{
                     background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                     fontWeight: '900',
-                    color: '#0d1b2a',
+                    color: '#ffffff',
                     boxShadow: '0 4px 15px rgba(251, 191, 36, 0.4)'
                   }}>FREE</div>
                   <div className="card-overlay">
@@ -375,106 +375,6 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
           </div>
         </section>
 
-        {/* AI Gym 배너 */}
-        <section style={{
-          margin: '60px auto',
-          maxWidth: '1200px',
-          padding: '0 20px'
-        }}>
-          <div 
-            onClick={() => navigate('/ai-gym')}
-            style={{
-              background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #0d1b2a 100%)',
-              borderRadius: '20px',
-              padding: '40px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              cursor: 'pointer',
-              border: '2px solid #ffd60a',
-              boxShadow: '0 10px 40px rgba(255, 214, 10, 0.2)',
-              transition: 'transform 0.3s, box-shadow 0.3s',
-              flexWrap: 'wrap',
-              gap: '20px'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 15px 50px rgba(255, 214, 10, 0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 10px 40px rgba(255, 214, 10, 0.2)';
-            }}
-          >
-            <div style={{ flex: 1, minWidth: '250px' }}>
-              <div style={{
-                display: 'inline-block',
-                background: 'rgba(255, 214, 10, 0.2)',
-                border: '1px solid rgba(255, 214, 10, 0.4)',
-                borderRadius: '20px',
-                padding: '6px 14px',
-                marginBottom: '15px'
-              }}>
-                <span style={{ color: '#ffd60a', fontSize: '0.8rem', fontWeight: 600 }}>
-                  🏃 NEW! 기초 체력 훈련소
-                </span>
-              </div>
-              <h3 style={{
-                color: '#fff',
-                fontSize: '1.8rem',
-                fontWeight: 300,
-                marginBottom: '10px',
-                lineHeight: 1.3
-              }}>
-                <span style={{ color: '#ffd60a', fontWeight: 700 }}>바이브코딩</span> 전, 코어부터 쌓자 💪
-              </h3>
-              <p style={{ color: '#778da9', fontSize: '1rem', marginBottom: '15px' }}>
-                코드 보고 쫄지 않는 체력 만들기 · Python 기초부터 AI 생성까지
-              </p>
-              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                <span style={{ 
-                  background: 'rgba(255, 214, 10, 0.15)', 
-                  color: '#ffd60a', 
-                  padding: '5px 12px', 
-                  borderRadius: '15px',
-                  fontSize: '0.8rem'
-                }}>
-                  🚶 1km 워밍업
-                </span>
-                <span style={{ 
-                  background: '#ffd60a', 
-                  color: '#0d1b2a', 
-                  padding: '5px 12px', 
-                  borderRadius: '15px',
-                  fontSize: '0.8rem',
-                  fontWeight: 700
-                }}>
-                  🏃 3km 조깅 - NOW!
-                </span>
-                <span style={{ 
-                  background: 'rgba(255, 214, 10, 0.15)', 
-                  color: '#ffd60a', 
-                  padding: '5px 12px', 
-                  borderRadius: '15px',
-                  fontSize: '0.8rem'
-                }}>
-                  🏅 하프마라톤
-                </span>
-              </div>
-            </div>
-            <div style={{
-              background: '#ffd60a',
-              color: '#0d1b2a',
-              padding: '15px 30px',
-              borderRadius: '12px',
-              fontWeight: 700,
-              fontSize: '1rem',
-              whiteSpace: 'nowrap'
-            }}>
-              무료로 시작하기 →
-            </div>
-          </div>
-        </section>
       </main>
 
       <footer className="footer">
@@ -488,7 +388,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
               <p><strong>이메일:</strong> jay@connexionai.kr</p>
               <p><strong>운영시간:</strong> 평일 09:00-18:00</p>
             </div>
-            <div style={{ marginTop: '12px', fontSize: '0.85rem', color: '#aaa' }}>
+            <div style={{ marginTop: '12px', fontSize: '0.85rem', color: '#778da9' }}>
               <p>커넥젼에이아이이 | 대표: 정원석 | 사업자번호: 887-55-00386</p>
             </div>
           </div>

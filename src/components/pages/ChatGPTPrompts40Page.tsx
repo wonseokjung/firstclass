@@ -1200,7 +1200,7 @@ ESG 현황: [환경/사회/지배구조 수준]
             </div>
             <div>
               <div style={{ fontSize: '3rem', fontWeight: '700', color: '#ef4444', marginBottom: '10px' }}>FREE</div>
-              <div style={{ color: '#1b263b', fontSize: '1.1rem' }}>무료 제공</div>
+              <div style={{ color: '#ffffff', fontSize: '1.1rem' }}>무료 제공</div>
             </div>
           </div>
         </div>
@@ -1264,10 +1264,10 @@ ESG 현황: [환경/사회/지배구조 수준]
                           marginBottom: '15px'
                         }}>
                           <div style={{ flex: 1 }}>
-                            <h4 style={{ color: '#1b263b', fontWeight: '600', marginBottom: '8px' }}>
+                            <h4 style={{ color: '#ffffff', fontWeight: '600', marginBottom: '8px' }}>
                               {prompt.title}
                             </h4>
-                            <p style={{ color: '#1b263b', opacity: '0.8', fontSize: '0.9rem' }}>
+                            <p style={{ color: '#ffffff', opacity: '0.8', fontSize: '0.9rem' }}>
                               {prompt.description}
                             </p>
                           </div>
@@ -1310,7 +1310,7 @@ ESG 현황: [환경/사회/지배구조 수준]
                           fontFamily: 'monospace',
                           fontSize: '0.85rem',
                           lineHeight: '1.5',
-                          color: '#1b263b',
+                          color: '#ffffff',
                           whiteSpace: 'pre-wrap',
                           overflow: 'auto'
                         }}>
@@ -1326,7 +1326,7 @@ ESG 현황: [환경/사회/지배구조 수준]
                       borderRadius: '10px',
                       marginTop: '15px'
                     }}>
-                      <p style={{ color: '#1b263b', opacity: '0.8' }}>
+                      <p style={{ color: '#ffffff', opacity: '0.8' }}>
                         이 카테고리에는 총 <strong>{category.count}개</strong>의 프롬프트가 있습니다.<br />
                         <span style={{ fontSize: '0.9rem' }}>전체 프롬프트는 가이드북에서 확인하실 수 있습니다.</span>
                       </p>

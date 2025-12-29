@@ -59,17 +59,17 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
             <div style={{ background: 'rgba(0,0,0,0.3)', borderRadius: '16px', padding: '20px', textAlign: 'center' }}>
               <div style={{ fontSize: '2rem', marginBottom: '10px' }}>📊</div>
-              <div style={{ color: '#0d1b2a', fontWeight: '700' }}>피드백 수집</div>
+              <div style={{ color: '#ffffff', fontWeight: '700' }}>피드백 수집</div>
               <p style={{ color: '#94a3b8', fontSize: '0.9rem', margin: '8px 0 0 0' }}>Intercom, Crisp</p>
             </div>
             <div style={{ background: 'rgba(0,0,0,0.3)', borderRadius: '16px', padding: '20px', textAlign: 'center' }}>
               <div style={{ fontSize: '2rem', marginBottom: '10px' }}>🐛</div>
-              <div style={{ color: '#0d1b2a', fontWeight: '700' }}>버그 추적</div>
+              <div style={{ color: '#ffffff', fontWeight: '700' }}>버그 추적</div>
               <p style={{ color: '#94a3b8', fontSize: '0.9rem', margin: '8px 0 0 0' }}>Sentry, LogRocket</p>
             </div>
             <div style={{ background: 'rgba(0,0,0,0.3)', borderRadius: '16px', padding: '20px', textAlign: 'center' }}>
               <div style={{ fontSize: '2rem', marginBottom: '10px' }}>📈</div>
-              <div style={{ color: '#0d1b2a', fontWeight: '700' }}>분석</div>
+              <div style={{ color: '#ffffff', fontWeight: '700' }}>분석</div>
               <p style={{ color: '#94a3b8', fontSize: '0.9rem', margin: '8px 0 0 0' }}>Posthog, Mixpanel</p>
             </div>
           </div>

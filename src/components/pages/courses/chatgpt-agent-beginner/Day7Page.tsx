@@ -516,7 +516,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
             <h2 style={{
               fontSize: '1.6rem',
               fontWeight: '700',
-              color: '#0d1b2a',
+              color: '#ffffff',
               margin: 0,
               display: 'flex',
               alignItems: 'center',

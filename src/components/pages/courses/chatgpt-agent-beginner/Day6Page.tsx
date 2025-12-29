@@ -529,7 +529,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
               <h2 style={{
                 fontSize: '1.75rem',
                 fontWeight: '700',
-                color: '#1b263b',
+                color: '#ffffff',
                 margin: 0,
                 display: 'flex',
                 alignItems: 'center',

@@ -573,7 +573,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 <div style={{
                   display: 'inline-block',
                   background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
-                  color: '#0d1b2a',
+                  color: '#ffffff',
                   padding: '10px 25px',
                   borderRadius: '25px',
                   fontSize: '0.9rem',
@@ -817,8 +817,8 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     fontWeight: '800'
                   }}>현재 강의</div>
                   <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🏗️</div>
-                  <h4 style={{ color: '#1b263b', fontWeight: '900', marginBottom: '8px', fontSize: '1.1rem' }}>Step 1</h4>
-                  <p style={{ color: '#1b263b', fontWeight: '700', fontSize: '0.95rem', margin: 0 }}>AI로 콘텐츠 만들기</p>
+                  <h4 style={{ color: '#ffffff', fontWeight: '900', marginBottom: '8px', fontSize: '1.1rem' }}>Step 1</h4>
+                  <p style={{ color: '#ffffff', fontWeight: '700', fontSize: '0.95rem', margin: 0 }}>AI로 콘텐츠 만들기</p>
                 </div>
 
                 {/* Step 2 */}
@@ -1987,7 +1987,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                       fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
                       fontWeight: '700',
                       marginBottom: '15px',
-                      color: '#1b263b',
+                      color: '#ffffff',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '8px'
@@ -2020,7 +2020,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                       fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
                       fontWeight: '700',
                       marginBottom: '15px',
-                      color: '#1b263b',
+                      color: '#ffffff',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '8px'
@@ -2055,7 +2055,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                       fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
                       fontWeight: '700',
                       marginBottom: '15px',
-                      color: '#1b263b',
+                      color: '#ffffff',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '8px'

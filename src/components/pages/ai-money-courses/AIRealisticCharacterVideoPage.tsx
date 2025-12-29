@@ -167,7 +167,7 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
           <div style={{
             display: 'inline-block',
             background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
-            color: '#0d1b2a',
+            color: '#ffffff',
             padding: '8px 20px',
             borderRadius: '25px',
             fontSize: '0.9rem',

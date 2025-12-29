@@ -137,7 +137,7 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
               onClick={() => window.location.href = '/vibe-coding-player'}
               style={{
                 background: 'linear-gradient(135deg, #22c55e, #16a34a)',
-                color: '#0d1b2a',
+                color: '#ffffff',
                 border: 'none',
                 padding: '20px 50px',
                 borderRadius: '16px',
@@ -157,7 +157,7 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
               disabled
               style={{
                 background: 'linear-gradient(135deg, #64748b, #475569)',
-                color: '#0d1b2a',
+                color: '#ffffff',
                 border: 'none',
                 padding: '20px 50px',
                 borderRadius: '16px',
@@ -272,7 +272,7 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#0d1b2a',
+                  color: '#ffffff',
                   fontWeight: '800',
                   fontSize: '1.1rem',
                   flexShrink: 0
@@ -351,7 +351,7 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
               onClick={() => window.location.href = '/vibe-coding-player'}
               style={{
                 background: 'linear-gradient(135deg, #22c55e, #16a34a)',
-                color: '#0d1b2a',
+                color: '#ffffff',
                 border: 'none',
                 padding: '20px 50px',
                 borderRadius: '16px',
@@ -371,7 +371,7 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
               disabled
               style={{
                 background: 'linear-gradient(135deg, #64748b, #475569)',
-                color: '#0d1b2a',
+                color: '#ffffff',
                 border: 'none',
                 padding: '20px 50px',
                 borderRadius: '16px',

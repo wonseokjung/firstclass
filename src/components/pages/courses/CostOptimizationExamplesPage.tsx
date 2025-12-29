@@ -564,7 +564,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
                   <h2 style={{
                     fontSize: '24px',
                     fontWeight: '700',
-                    color: '#0d1b2a',
+                    color: '#ffffff',
                     margin: 0,
                   }}>
                     AI 추천 모델
@@ -588,7 +588,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
                       background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                       padding: '8px 16px',
                       borderRadius: '8px',
-                      color: '#0d1b2a',
+                      color: '#ffffff',
                       fontSize: '14px',
                       fontWeight: '600',
                     }}>
@@ -732,7 +732,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
                   background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                   padding: '30px',
                   borderRadius: '16px',
-                  color: '#0d1b2a',
+                  color: '#ffffff',
                   marginBottom: '20px',
                 }}>
                   <div style={{ marginBottom: '24px' }}>
@@ -1308,7 +1308,7 @@ const TextCalculator: React.FC<any> = ({ calc, setCalc, cost, models }) => {
           background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
         padding: '30px',
         borderRadius: '16px',
-        color: '#0d1b2a',
+        color: '#ffffff',
       }}>
         <h3 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '20px' }}>
           💰 1회 요청당 예상 비용
@@ -1472,7 +1472,7 @@ const ImageCalculator: React.FC<any> = ({ calc, setCalc, cost }) => {
         background: 'linear-gradient(135deg, #ec4899, #be185d)',
         padding: '30px',
         borderRadius: '16px',
-        color: '#0d1b2a',
+        color: '#ffffff',
       }}>
         <h3 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '20px' }}>
           💰 예상 비용
@@ -1608,7 +1608,7 @@ const AudioCalculator: React.FC<any> = ({ calc, setCalc }) => {
         background: 'linear-gradient(135deg, #8b5cf6, #6d28d9)',
         padding: '30px',
         borderRadius: '16px',
-        color: '#0d1b2a',
+        color: '#ffffff',
       }}>
         <h3 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '20px' }}>
           💰 1회 요청당 예상 비용
@@ -1716,7 +1716,7 @@ const VideoCalculator: React.FC<any> = ({ calc, setCalc }) => {
         background: 'linear-gradient(135deg, #e5c100, #d97706)',
         padding: '30px',
         borderRadius: '16px',
-        color: '#0d1b2a',
+        color: '#ffffff',
       }}>
         <h3 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '20px' }}>
           💰 예상 비용
@@ -1864,7 +1864,7 @@ const EmbeddingCalculator: React.FC<any> = ({ calc, setCalc }) => {
         background: 'linear-gradient(135deg, #10b981, #059669)',
         padding: '30px',
         borderRadius: '16px',
-        color: '#0d1b2a',
+        color: '#ffffff',
       }}>
         <h3 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '20px' }}>
           💰 예상 비용
@@ -1974,7 +1974,7 @@ const TranscriptionCalculator: React.FC<any> = ({ calc, setCalc }) => {
         background: 'linear-gradient(135deg, #ef4444, #dc2626)',
         padding: '30px',
         borderRadius: '16px',
-        color: '#0d1b2a',
+        color: '#ffffff',
       }}>
         <h3 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '20px' }}>
           💰 예상 비용

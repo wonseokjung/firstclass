@@ -122,9 +122,9 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
           <h1 style={{ 
             fontSize: '48px', 
             fontWeight: 'bold', 
-            color: '#1b263b', 
+            color: '#ef4444', 
             marginBottom: '24px',
-            background: 'linear-gradient(to right, white, #ccc)',
+            background: 'linear-gradient(to right, #ef4444, #dc2626)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
@@ -182,7 +182,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
               onClick={handleRetry}
               style={{
                 background: 'linear-gradient(to right, #0ea5e9, #a01e36)',
-                color: '#1b263b',
+                color: '#ffffff',
                 fontWeight: 'bold',
                 padding: '16px 32px',
                 borderRadius: '12px',
@@ -234,7 +234,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
               onMouseOut={(e) => {
                 e.currentTarget.style.transform = 'scale(1)';
                 e.currentTarget.style.borderColor = '#333';
-                e.currentTarget.style.color = 'white';
+                e.currentTarget.style.color = '#1b263b';
               }}
             >
               <Home style={{ width: '20px', height: '20px' }} />
@@ -357,7 +357,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
             justifyContent: 'center',
             margin: '0 auto 16px'
           }}>
-            <span style={{ color: '#1b263b', fontWeight: 'bold', fontSize: '20px' }}>💡</span>
+            <span style={{ fontWeight: 'bold', fontSize: '20px' }}>💡</span>
           </div>
           <h3 style={{ 
             fontSize: '20px', 

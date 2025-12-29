@@ -353,7 +353,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   onClick={handleSaveName}
                   style={{
                     background: 'linear-gradient(135deg, #22c55e, #16a34a)',
-                    color: 'white',
+                    color: '#ffffff',
                     border: 'none',
                     padding: '14px 24px',
                     borderRadius: '14px',
@@ -373,7 +373,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   onClick={handleCancelEdit}
                   style={{
                     background: 'rgba(255, 255, 255, 0.15)',
-                    color: 'white',
+                    color: '#ffffff',
                     border: '1px solid rgba(255, 255, 255, 0.3)',
                     padding: '14px 24px',
                     borderRadius: '14px',
@@ -401,7 +401,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 <h1 style={{ 
                   fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
                   fontWeight: '900',
-                  color: 'white',
+                  color: '#ffffff',
                   margin: 0,
                   textShadow: '0 2px 10px rgba(0, 0, 0, 0.2)'
                 }}>
@@ -914,7 +914,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                       background: course.status === 'completed' 
                         ? 'linear-gradient(135deg, #e5c100, #d97706)'
                         : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-                      color: 'white',
+                      color: '#ffffff',
                       fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
                       fontWeight: '700',
                       cursor: 'pointer',
@@ -1029,7 +1029,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               }}>
                 <span style={{ 
                   fontSize: '0.9rem', 
-                  color: 'white',
+                  color: '#ffffff',
                   fontWeight: '700',
                   letterSpacing: '0.5px'
                 }}>
@@ -1040,13 +1040,13 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
                 fontWeight: '900',
                 marginBottom: '15px',
-                color: '#1b263b'
+                color: '#ffffff'
               }}>
                 💳 구매한 강의
               </h2>
               <p style={{ 
                 fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                color: '#64748b',
+                color: '#94a3b8',
                 maxWidth: '600px',
                 margin: '0 auto',
                 lineHeight: '1.6'
@@ -1143,7 +1143,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                     top: '20px',
                     right: '20px',
                     background: 'linear-gradient(135deg, #10b981, #059669)',
-                    color: 'white',
+                    color: '#ffffff',
                     padding: '6px 14px',
                     borderRadius: '20px',
                     fontSize: '0.75rem',
@@ -1239,7 +1239,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                         borderRadius: '12px',
                         border: 'none',
                         background: 'linear-gradient(135deg, #10b981, #059669)',
-                        color: 'white',
+                        color: '#ffffff',
                         fontSize: '1rem',
                         fontWeight: '700',
                         cursor: 'pointer',

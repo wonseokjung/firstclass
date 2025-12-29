@@ -69,7 +69,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
           <h1 style={{
             fontSize: 'clamp(2rem, 5vw, 3rem)',
             fontWeight: '900',
-            color: '#1b263b',
+            color: '#ffffff',
             marginBottom: '20px',
             background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
             WebkitBackgroundClip: 'text',

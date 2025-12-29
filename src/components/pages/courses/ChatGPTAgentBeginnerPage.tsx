@@ -1256,7 +1256,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               <h2 style={{
               fontSize: 'clamp(2rem, 4vw, 2.5rem)',
                 fontWeight: '800',
-                color: '#1b263b',
+                color: '#ffffff',
               marginBottom: '40px',
               textAlign: 'center'
             }}>
@@ -1400,7 +1400,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                         fontSize: '1rem',
                         fontWeight: '700',
                         marginBottom: '10px',
-                        color: '#1b263b'
+                        color: '#ffffff'
                       }}>
                         📜 Official Transcript
                       </h5>
@@ -1504,7 +1504,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                         fontSize: '1rem',
                         fontWeight: '700',
                         marginBottom: '10px',
-                        color: '#1b263b'
+                        color: '#ffffff'
                       }}>
                         📜 Official Transcript
                       </h5>
@@ -1879,7 +1879,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             </h3>
               </div>
             <p style={{
-                color: '#1b263b',
+                color: '#ffffff',
                 fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
                 margin: '0',
                 fontWeight: '800'
@@ -2059,7 +2059,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                         <strong style={{ color: '#1b263b' }}>이론:</strong> {lesson.sections.theory}
                       </p>
                       <p style={{ marginBottom: '0', fontWeight: '500' }}>
-                        <strong style={{ color: '#1b263b' }}>실습:</strong> {lesson.sections.practice}
+                        <strong style={{ color: '#ffffff' }}>실습:</strong> {lesson.sections.practice}
                         </p>
                       </div>
                 </div>

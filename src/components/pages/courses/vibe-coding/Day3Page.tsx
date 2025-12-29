@@ -60,7 +60,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
             {[{ num: 1, title: 'Todo 앱', desc: '기본 CRUD 익히기', time: '20분' }, { num: 2, title: '날씨 앱', desc: 'API 연동하기', time: '25분' }, { num: 3, title: '커머스 앱', desc: '결제 시스템 구현', time: '35분' }].map(p => (
               <div key={p.num} style={{ background: 'rgba(0,0,0,0.3)', borderRadius: '16px', padding: '20px', display: 'flex', alignItems: 'center', gap: '15px' }}>
                 <div style={{ width: '50px', height: '50px', background: 'linear-gradient(135deg, #06b6d4, #0891b2)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0d1b2a', fontWeight: '800', fontSize: '1.3rem' }}>{p.num}</div>
-                <div style={{ flex: 1 }}><div style={{ color: '#0d1b2a', fontWeight: '700' }}>{p.title}</div><div style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{p.desc}</div></div>
+                <div style={{ flex: 1 }}><div style={{ color: '#ffffff', fontWeight: '700' }}>{p.title}</div><div style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{p.desc}</div></div>
                 <div style={{ color: '#a78bfa', fontWeight: '600' }}>{p.time}</div>
               </div>
             ))}

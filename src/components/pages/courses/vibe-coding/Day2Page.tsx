@@ -65,7 +65,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <div style={{ background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)', width: '65px', height: '65px', borderRadius: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.8rem', boxShadow: '0 8px 25px rgba(139, 92, 246, 0.4)' }}>💡</div>
             <div>
-              <h1 style={{ color: '#0d1b2a', fontSize: 'clamp(1.3rem, 3vw, 1.6rem)', margin: 0, fontWeight: '700' }}>Day 2: 아이디어를 돈이 되는 앱으로</h1>
+              <h1 style={{ color: '#ffffff', fontSize: 'clamp(1.3rem, 3vw, 1.6rem)', margin: 0, fontWeight: '700' }}>Day 2: 아이디어를 돈이 되는 앱으로</h1>
               <p style={{ color: '#a78bfa', margin: '5px 0 0 0' }}>아이디어 검증부터 MVP 설계까지</p>
               <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
                 <span style={{ color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem' }}><Clock size={16} /> 55분</span>

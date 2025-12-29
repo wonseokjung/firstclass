@@ -233,7 +233,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
                   background: 'rgba(0,0,0,0.7)',
                   padding: '10px 15px',
                   borderRadius: '8px',
-                  color: '#0d1b2a'
+                  color: '#ffffff'
                 }}>
                   <button onClick={togglePlay} style={{ background: 'none', border: 'none', color: '#0d1b2a', cursor: 'pointer' }}>
                     {isPlaying ? <Pause size={20} /> : <Play size={20} />}
@@ -464,7 +464,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
                   <span style={{ 
                     fontSize: '0.75rem',
                     background: '#10b981',
-                    color: '#0d1b2a',
+                    color: '#ffffff',
                     padding: '4px 8px',
                     borderRadius: '4px'
                   }}>
@@ -559,7 +559,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
                 gap: '8px',
                 padding: '12px 20px',
                 background: '#6b7280',
-                color: '#0d1b2a',
+                color: '#ffffff',
                 border: 'none',
                 borderRadius: '8px',
                 cursor: 'pointer',
@@ -580,7 +580,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
                 gap: '8px',
                 padding: '12px 24px',
                 background: isCompleted ? '#10b981' : '#0ea5e9',
-                color: '#0d1b2a',
+                color: '#ffffff',
                 border: 'none',
                 borderRadius: '8px',
                 cursor: isCompleted ? 'default' : 'pointer',
@@ -599,7 +599,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
                 gap: '8px',
                 padding: '12px 20px',
                 background: '#0ea5e9',
-                color: '#0d1b2a',
+                color: '#ffffff',
                 border: 'none',
                 borderRadius: '8px',
                 cursor: 'pointer',

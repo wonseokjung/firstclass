@@ -521,7 +521,7 @@ const AIMoneyMasterPromptsPage: React.FC<AIMoneyMasterPromptsPageProps> = ({ onB
       <div
         style={{
           background: `radial-gradient(circle at 15% 20%, rgba(250,204,21,0.4), transparent 45%), linear-gradient(120deg, ${BRAND_NAVY} 0%, ${BRAND_BLUE} 60%, #1f3ca6 100%)`,
-          color: '#0d1b2a',
+          color: '#ffffff',
           padding: '70px 20px',
           textAlign: 'center',
           position: 'relative',
@@ -743,7 +743,7 @@ const AIMoneyMasterPromptsPage: React.FC<AIMoneyMasterPromptsPageProps> = ({ onB
       <div style={{
         padding: '60px 20px',
         background: BRAND_NAVY,
-        color: '#0d1b2a',
+        color: '#ffffff',
         textAlign: 'center',
         borderTop: `4px solid ${BRAND_GOLD}`
       }}>

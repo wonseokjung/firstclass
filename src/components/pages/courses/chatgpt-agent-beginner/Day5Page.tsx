@@ -362,7 +362,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
           <h2 style={{
             fontSize: '2rem',
             fontWeight: '800',
-            color: '#1b263b',
+            color: '#ffffff',
             marginBottom: '15px'
           }}>
             🚀 Day 5 준비 중
@@ -721,7 +721,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
               <h2 style={{
                 fontSize: '1.75rem',
                 fontWeight: '700',
-                color: '#1b263b',
+                color: '#ffffff',
                 margin: 0,
                 display: 'flex',
                 alignItems: 'center',

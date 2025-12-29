@@ -211,7 +211,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           <h1 style={{
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
             fontWeight: '800',
-            color: '#1b263b',
+            color: '#ffffff',
             marginBottom: '10px'
           }}>
             강의 결제
@@ -450,7 +450,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                     style={{
                       width: '100%',
                       background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-                      color: '#0d1b2a',
+                      color: '#ffffff',
                       border: 'none',
                       padding: '18px',
                       borderRadius: '12px',

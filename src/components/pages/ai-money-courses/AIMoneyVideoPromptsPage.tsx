@@ -388,7 +388,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
           <div style={{
             display: 'inline-block',
             background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
-            color: '#0d1b2a',
+            color: '#ffffff',
             padding: '8px 20px',
             borderRadius: '25px',
             fontSize: '0.9rem',
@@ -440,7 +440,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
           background: `linear-gradient(rgba(30, 41, 59, 0.85), rgba(30, 41, 59, 0.85)), url('/images/ai_video_money.jpg')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          color: '#0d1b2a',
+          color: '#ffffff',
           padding: '70px 20px',
           textAlign: 'center',
           position: 'relative',
@@ -611,7 +611,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                     }}
                     style={{
                       background: BRAND_GOLD,
-                      color: '#0d1b2a',
+                      color: '#ffffff',
                       border: 'none',
                       padding: '8px 18px',
                       borderRadius: '999px',
@@ -823,7 +823,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                     }}
                     style={{
                       background: '#38bdf8',
-                      color: '#0d1b2a',
+                      color: '#ffffff',
                       border: 'none',
                       padding: '8px 18px',
                       borderRadius: '999px',
@@ -1049,7 +1049,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                     }}
                     style={{
                       background: '#22c55e',
-                      color: '#0d1b2a',
+                      color: '#ffffff',
                       border: 'none',
                       padding: '8px 18px',
                       borderRadius: '999px',
@@ -1438,7 +1438,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                     }}
                     style={{
                       background: BRAND_GOLD,
-                      color: '#0d1b2a',
+                      color: '#ffffff',
                       border: 'none',
                       padding: '8px 18px',
                       borderRadius: '999px',
@@ -1900,7 +1900,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
 분위기: 평화롭고 기대감 넘치는 산책 전의 순간.`, 'character-synthesis-prompt')}
                 style={{
                   background: '#8b5cf6',
-                  color: '#0d1b2a',
+                  color: '#ffffff',
                   border: 'none',
                   padding: '12px 25px',
                   borderRadius: '8px',
@@ -2168,7 +2168,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
       <div style={{
         padding: '60px 20px',
         background: BRAND_NAVY,
-        color: '#0d1b2a',
+        color: '#ffffff',
         textAlign: 'center',
         borderTop: `4px solid ${BRAND_GOLD}`
       }}>
