@@ -1,0 +1,116 @@
+{
+    "nav": {
+        "about": "📖 About",
+        "community": "💬 Community",
+        "live": "📺 Live",
+        "partner": "🧱 Partners",
+        "faq": "❓ FAQ",
+        "login": "🔐 Log In",
+        "signup": "Sign Up",
+        "logout": "Log Out",
+        "myCourses": "My Courses",
+        "welcome": "Hello, {{name}}!",
+        "admin": "Admin"
+    },
+    "main": {
+        "heroTitle": "Build Your Digital Empire With AI",
+        "heroSubtitle": "Learn how to create content, automate your workflow, and monetize your skills using cutting-edge AI tools.",
+        "premiumCourses": "Premium Courses",
+        "premiumSubtitle": "Become an AI Creator and monetize your content",
+        "freeCourses": "Free AI Fundamentals",
+        "freeMonetization": "Free AI Monetization Class",
+        "watchCourse": "Watch Course",
+        "continueLearning": "✅ Continue Learning",
+        "viewDetails": "📚 View Course Details",
+        "checking": "Checking...",
+        "watchDocumentary": "Watch Documentary",
+        "comingSoon": "🚀 Coming Soon",
+        "free": "FREE",
+        "premium": "PREMIUM",
+        "enrollNow": "Enroll Now",
+        "startLearning": "Start Learning",
+        "earlyBird": "🔥 Early Bird"
+    },
+    "footer": {
+        "contact": "Contact Us",
+        "email": "Email",
+        "businessHours": "Business Hours",
+        "weekdays": "Mon-Fri 09:00-18:00 (KST)",
+        "policy": "Policies",
+        "refundPolicy": "📋 Refund Policy",
+        "copyright": "© 2025 Connexion AI. All rights reserved.",
+        "servingWorldwide": "🌍 Serving students worldwide from Seoul, South Korea"
+    },
+    "courses": {
+        "step1": {
+            "title": "Step 1: AI Income Blueprint",
+            "subtitle": "🏙️ The 1960s Manhattan opportunity is now on YouTube",
+            "description": "Become the \"new class of creators\" that YouTube's CEO talked about. Build digital real estate with AI and monetize."
+        },
+        "step2": {
+            "title": "Step 2: AI Agent Masterclass",
+            "subtitle": "🤖 Multiple AIs working as one company",
+            "description": "💎 Create content automation agents with Google OPAL! Build a more efficient revenue structure."
+        },
+        "step3": {
+            "title": "Step 3: Vibe Coding",
+            "subtitle": "💻 Your first step to scaling monetization",
+            "description": "🚀 No coding experience? No problem! Just describe to AI and get working code. Build your own service!"
+        },
+        "step4": {
+            "title": "Step 4: Build Your Solo Business",
+            "subtitle": "👑 From Creator to CEO",
+            "description": "🏆 Business registration, taxes, government support! Complete your one-person content business."
+        },
+        "features": {
+            "videoLessons": "Video Lessons",
+            "lifetimeAccess": "Lifetime Access",
+            "communitySupport": "Community Support",
+            "certificate": "Certificate"
+        }
+    },
+    "auth": {
+        "email": "Email",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "name": "Name",
+        "loginTitle": "Welcome Back!",
+        "signupTitle": "Create Your Account",
+        "forgotPassword": "Forgot Password?",
+        "noAccount": "Don't have an account?",
+        "hasAccount": "Already have an account?",
+        "loginButton": "Log In",
+        "signupButton": "Sign Up",
+        "googleLogin": "Continue with Google",
+        "rememberMe": "Remember me"
+    },
+    "payment": {
+        "title": "Complete Your Purchase",
+        "subtotal": "Subtotal",
+        "discount": "Discount",
+        "total": "Total",
+        "payNow": "Pay Now",
+        "securePayment": "🔒 Secure Payment",
+        "moneyBackGuarantee": "30-Day Money Back Guarantee",
+        "paypal": "Pay with PayPal",
+        "card": "Pay with Card"
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "success": "Success!",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "save": "Save",
+        "delete": "Delete",
+        "edit": "Edit",
+        "back": "Back",
+        "next": "Next",
+        "previous": "Previous",
+        "close": "Close",
+        "search": "Search",
+        "filter": "Filter",
+        "all": "All",
+        "none": "None"
+    }
+}

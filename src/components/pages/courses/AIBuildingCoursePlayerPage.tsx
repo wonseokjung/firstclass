@@ -509,8 +509,8 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
             }}>
               {week.days.map((lesson) => {
                 const isCompleted = completedDays.has(lesson.day);
-                // 🔓 Day 1~4 열림, Day 5~10은 준비중
-                const isAvailable = lesson.day <= 4;
+                // 🔓 Day 1~4, Day 6 열림 / Day 5, 7~10은 준비중
+                const isAvailable = lesson.day <= 4 || lesson.day === 6;
 
                 return (
                   <div
@@ -626,7 +626,6 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
                           alignItems: 'center',
                           gap: '8px'
                         }}>
-                          {lesson.hasQuiz && <span>📝 퀴즈 포함</span>}
                         </div>
                       </div>
                     </div>

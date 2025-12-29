@@ -1,0 +1,116 @@
+{
+    "nav": {
+        "about": "📖 소개",
+        "community": "💬 커뮤니티",
+        "live": "📺 라이브",
+        "partner": "🧱 파트너",
+        "faq": "❓ FAQ",
+        "login": "🔐 Log In",
+        "signup": "회원가입",
+        "logout": "로그아웃",
+        "myCourses": "내 강의",
+        "welcome": "안녕하세요, {{name}}님!",
+        "admin": "관리자"
+    },
+    "main": {
+        "heroTitle": "AI로 디지털 제국을 건설하세요",
+        "heroSubtitle": "최첨단 AI 도구로 콘텐츠를 만들고, 워크플로우를 자동화하고, 스킬을 수익화하는 방법을 배우세요.",
+        "premiumCourses": "프리미엄 강의",
+        "premiumSubtitle": "AI 크리에이터가 되어 콘텐츠로 수익을 창출하세요",
+        "freeCourses": "인공지능 기초 무료 강의",
+        "freeMonetization": "인공지능 수익화 무료 강의클래스",
+        "watchCourse": "강의 보기",
+        "continueLearning": "✅ 학습 이어하기",
+        "viewDetails": "📚 강의 자세히 보기",
+        "checking": "확인 중...",
+        "watchDocumentary": "다큐멘터리 보기",
+        "comingSoon": "🚀 Coming Soon",
+        "free": "FREE",
+        "premium": "PREMIUM",
+        "enrollNow": "수강 신청",
+        "startLearning": "학습 시작",
+        "earlyBird": "🔥 얼리버드"
+    },
+    "footer": {
+        "contact": "문의하기",
+        "email": "이메일",
+        "businessHours": "운영시간",
+        "weekdays": "평일 09:00-18:00",
+        "policy": "정책",
+        "refundPolicy": "📋 환불 정책",
+        "copyright": "© 2025 커넥젼에이아이. All rights reserved.",
+        "servingWorldwide": "🌍 대한민국 서울에서 전 세계 학생들에게 서비스합니다"
+    },
+    "courses": {
+        "step1": {
+            "title": "Step 1: AI 건물주 되기",
+            "subtitle": "🏙️ 1960년 맨해튼 기회가 지금 유튜브에",
+            "description": "유튜브 CEO가 말한 \"새로운 계급의 크리에이터\"가 되세요. AI로 디지털 건물을 짓고 수익화합니다."
+        },
+        "step2": {
+            "title": "Step 2: AI 에이전트 비기너",
+            "subtitle": "🤖 여러 AI를 하나의 회사처럼",
+            "description": "💎 Google OPAL로 콘텐츠 자동 생성 에이전트를 만들고 시스템화! 더 효율적인 수익 구조 완성"
+        },
+        "step3": {
+            "title": "Step 3: 바이브코딩",
+            "subtitle": "💻 수익화 확장의 첫걸음",
+            "description": "🚀 코딩 몰라도 OK! AI에게 말로 설명하면 코드가 완성됩니다. 나만의 서비스를 직접 개발하세요!"
+        },
+        "step4": {
+            "title": "Step 4: 1인 기업 만들기",
+            "subtitle": "👑 크리에이터에서 CEO로",
+            "description": "🏆 사업자등록, 세금, 정부지원금까지! 1인 콘텐츠 기업을 완성하는 단계"
+        },
+        "features": {
+            "videoLessons": "영상 강의",
+            "lifetimeAccess": "평생 이용",
+            "communitySupport": "커뮤니티 지원",
+            "certificate": "수료증"
+        }
+    },
+    "auth": {
+        "email": "이메일",
+        "password": "비밀번호",
+        "confirmPassword": "비밀번호 확인",
+        "name": "이름",
+        "loginTitle": "다시 오신 것을 환영합니다!",
+        "signupTitle": "계정 만들기",
+        "forgotPassword": "비밀번호를 잊으셨나요?",
+        "noAccount": "계정이 없으신가요?",
+        "hasAccount": "이미 계정이 있으신가요?",
+        "loginButton": "로그인",
+        "signupButton": "회원가입",
+        "googleLogin": "Google로 계속하기",
+        "rememberMe": "로그인 상태 유지"
+    },
+    "payment": {
+        "title": "결제 완료하기",
+        "subtotal": "소계",
+        "discount": "할인",
+        "total": "총액",
+        "payNow": "결제하기",
+        "securePayment": "🔒 안전한 결제",
+        "moneyBackGuarantee": "30일 환불 보장",
+        "paypal": "PayPal로 결제",
+        "card": "카드로 결제"
+    },
+    "common": {
+        "loading": "로딩 중...",
+        "error": "오류가 발생했습니다",
+        "success": "성공!",
+        "cancel": "취소",
+        "confirm": "확인",
+        "save": "저장",
+        "delete": "삭제",
+        "edit": "수정",
+        "back": "뒤로",
+        "next": "다음",
+        "previous": "이전",
+        "close": "닫기",
+        "search": "검색",
+        "filter": "필터",
+        "all": "전체",
+        "none": "없음"
+    }
+}

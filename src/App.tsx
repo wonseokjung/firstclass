@@ -56,9 +56,9 @@ const withDayPageWrapper = <P extends { onBack: () => void; onNext: () => void }
     const navigate = useNavigate();
     return (
       <Suspense fallback={<LoadingSpinner />}>
-        <Component 
-          {...(props as P)} 
-          onBack={() => navigate('/chatgpt-agent-beginner/player')} 
+        <Component
+          {...(props as P)}
+          onBack={() => navigate('/chatgpt-agent-beginner/player')}
           onNext={() => navigate(`/chatgpt-agent-beginner/day${dayNum + 1}`)}
         />
       </Suspense>
@@ -76,9 +76,9 @@ const withAIBuildingDayPageWrapper = <P extends { onBack: () => void; onNext?: (
     const navigate = useNavigate();
     return (
       <Suspense fallback={<LoadingSpinner />}>
-        <Component 
-          {...(props as P)} 
-          onBack={() => navigate('/ai-building-course/player')} 
+        <Component
+          {...(props as P)}
+          onBack={() => navigate('/ai-building-course/player')}
           onNext={dayNum < 10 ? () => navigate(`/ai-building-course/day${dayNum + 1}`) : undefined}
         />
       </Suspense>
@@ -96,9 +96,9 @@ const withVibeCodingDayPageWrapper = <P extends { onBack: () => void; onNext?: (
     const navigate = useNavigate();
     return (
       <Suspense fallback={<LoadingSpinner />}>
-        <Component 
-          {...(props as P)} 
-          onBack={() => navigate('/vibe-coding-player')} 
+        <Component
+          {...(props as P)}
+          onBack={() => navigate('/vibe-coding-player')}
           onNext={dayNum < 10 ? () => navigate(`/vibe-coding/day${dayNum + 1}`) : undefined}
         />
       </Suspense>
@@ -123,6 +123,9 @@ const FAQPage = React.lazy(() => import('./components/pages/FAQPage'));
 const CEOPage = React.lazy(() => import('./components/pages/CEOPage'));
 const ContactPage = React.lazy(() => import('./components/pages/ContactPage'));
 const ClubsPage = React.lazy(() => import('./components/pages/ClubsPage'));
+
+// 영어 랜딩 페이지
+const EnglishLandingPage = React.lazy(() => import('./components/pages/EnglishLandingPage'));
 
 // 라이브 페이지
 const LiveHubPage = React.lazy(() => import('./components/pages/live/LiveHubPage'));
@@ -311,7 +314,7 @@ const VibeCodingDay10PageWrapped = withVibeCodingDayPageWrapper(VibeCodingDay10P
 const MainPageWrapper = () => {
   const navigate = useNavigate();
   // 추천 추적은 GlobalReferralTracker에서 전역 처리
-  
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const redirectPath = urlParams.get('redirect');
@@ -323,7 +326,7 @@ const MainPageWrapper = () => {
   return (
     <>
       <SnowEffect />
-      <MainPage 
+      <MainPage
         onFAQClick={() => navigate('/faq')}
         onLoginClick={() => navigate('/login')}
         onSignUpClick={() => navigate('/signup')}
@@ -333,240 +336,247 @@ const MainPageWrapper = () => {
 };
 
 // 리다이렉트 컴포넌트들
-  const RedirectToNewPlayerUrl = () => {
-    const navigate = useNavigate();
-    useEffect(() => {
-      navigate('/chatgpt-agent-beginner/player', { replace: true });
-    }, [navigate]);
-    return <LoadingSpinner />;
-  };
+const RedirectToNewPlayerUrl = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate('/chatgpt-agent-beginner/player', { replace: true });
+  }, [navigate]);
+  return <LoadingSpinner />;
+};
 
-  const RedirectToNewAIBuildingPlayerUrl = () => {
-    const navigate = useNavigate();
-    useEffect(() => {
-      navigate('/ai-building-course/player', { replace: true });
-    }, [navigate]);
-    return <LoadingSpinner />;
-  };
-  
+const RedirectToNewAIBuildingPlayerUrl = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate('/ai-building-course/player', { replace: true });
+  }, [navigate]);
+  return <LoadingSpinner />;
+};
+
 // Coming Soon 안내 페이지
-  const ComingSoonNotice = () => {
-    const navigate = useNavigate();
-    
-    return (
+const ComingSoonNotice = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '20px'
+    }}>
       <div style={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '20px'
+        background: 'white',
+        borderRadius: '20px',
+        padding: '60px 40px',
+        textAlign: 'center',
+        maxWidth: '600px',
+        width: '100%',
+        boxShadow: '0 20px 50px rgba(0, 0, 0, 0.2)'
       }}>
-        <div style={{
-          background: 'white',
-          borderRadius: '20px',
-          padding: '60px 40px',
-          textAlign: 'center',
-          maxWidth: '600px',
-          width: '100%',
-          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.2)'
-        }}>
-          <div style={{ fontSize: '4rem', marginBottom: '20px' }}>🏗️</div>
+        <div style={{ fontSize: '4rem', marginBottom: '20px' }}>🏗️</div>
         <h1 style={{ fontSize: '2.5rem', fontWeight: '700', color: '#1f2937', marginBottom: '20px' }}>
-            AI 건물 짓기 강의
-          </h1>
+          AI 건물 짓기 강의
+        </h1>
         <h2 style={{ fontSize: '1.8rem', color: '#0ea5e9', marginBottom: '30px', fontWeight: '600' }}>
           🗓️ Coming Soon
-          </h2>
+        </h2>
         <p style={{ fontSize: '1.2rem', color: '#4b5563', lineHeight: '1.6', marginBottom: '30px' }}>
-          더 완성도 높은 강의와 혁신적인 교육 경험을 위해<br/>열심히 준비하고 있습니다! 💪
-          </p>
+          더 완성도 높은 강의와 혁신적인 교육 경험을 위해<br />열심히 준비하고 있습니다! 💪
+        </p>
         <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '15px', marginBottom: '30px' }}>
           <p style={{ color: '#0ea5e9', fontSize: '1.1rem', fontWeight: '600', marginBottom: '10px' }}>
-              ⏰ 기다리는 동안
-            </p>
+            ⏰ 기다리는 동안
+          </p>
           <p style={{ color: '#6b7280', fontSize: '1rem' }}>
-              다른 무료 강의들로 AI 실력을 미리 쌓아보세요!
-            </p>
-          </div>
-          <button
-            onClick={() => navigate('/')}
-            style={{
-              background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
-              color: 'white',
-              border: 'none',
-              padding: '15px 30px',
-              fontSize: '1.1rem',
-              fontWeight: '600',
-              borderRadius: '10px',
-              cursor: 'pointer',
-              transition: 'transform 0.3s ease'
-            }}
+            다른 무료 강의들로 AI 실력을 미리 쌓아보세요!
+          </p>
+        </div>
+        <button
+          onClick={() => navigate('/')}
+          style={{
+            background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
+            color: 'white',
+            border: 'none',
+            padding: '15px 30px',
+            fontSize: '1.1rem',
+            fontWeight: '600',
+            borderRadius: '10px',
+            cursor: 'pointer',
+            transition: 'transform 0.3s ease'
+          }}
           onMouseEnter={(e) => { (e.target as HTMLElement).style.transform = 'scale(1.05)'; }}
           onMouseLeave={(e) => { (e.target as HTMLElement).style.transform = 'scale(1)'; }}
-          >
-            다른 강의 보러가기 🚀
-          </button>
-        </div>
+        >
+          다른 강의 보러가기 🚀
+        </button>
       </div>
-    );
-  };
-  
+    </div>
+  );
+};
+
 // 관리자 결제 상세 페이지 래퍼
 const PaymentDetailsViewPageWrapper = () => (
-      <Suspense fallback={<LoadingSpinner />}>
+  <Suspense fallback={<LoadingSpinner />}>
     <PaymentDetailsViewPage onBack={() => window.location.href = '/admin'} />
-      </Suspense>
-    );
+  </Suspense>
+);
 
 // 🔗 전역 추천 코드 추적 컴포넌트 (모든 페이지에서 작동)
 const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useReferralTracking();
   return <>{children}</>;
-  };
+};
 
 // ============================================
 // 메인 App 컴포넌트
 // ============================================
-  function App() {
-    useEffect(() => {
-      AzureTableService.initializeTables();
-      
-      // 🔐 자동 로그인 체크
-      const checkAutoLogin = () => {
-        const rememberMe = localStorage.getItem('aicitybuilders_remember_me');
-        const savedUser = localStorage.getItem('aicitybuilders_user');
-        const currentSession = sessionStorage.getItem('aicitybuilders_user_session');
-        
-        // 자동 로그인이 활성화되어 있고, 저장된 사용자가 있고, 현재 세션이 없는 경우
-        if (rememberMe === 'true' && savedUser && !currentSession) {
-          try {
-            const userInfo = JSON.parse(savedUser);
-            sessionStorage.setItem('aicitybuilders_user_session', savedUser);
-            console.log('🔐 자동 로그인 성공:', userInfo.email);
-          } catch (e) {
-            console.error('자동 로그인 실패:', e);
-            localStorage.removeItem('aicitybuilders_user');
-            localStorage.removeItem('aicitybuilders_remember_me');
-          }
+function App() {
+  useEffect(() => {
+    AzureTableService.initializeTables();
+
+    // 🔐 자동 로그인 체크
+    const checkAutoLogin = () => {
+      const rememberMe = localStorage.getItem('aicitybuilders_remember_me');
+      const savedUser = localStorage.getItem('aicitybuilders_user');
+      const currentSession = sessionStorage.getItem('aicitybuilders_user_session');
+
+      // 자동 로그인이 활성화되어 있고, 저장된 사용자가 있고, 현재 세션이 없는 경우
+      if (rememberMe === 'true' && savedUser && !currentSession) {
+        try {
+          const userInfo = JSON.parse(savedUser);
+          sessionStorage.setItem('aicitybuilders_user_session', savedUser);
+          console.log('🔐 자동 로그인 성공:', userInfo.email);
+        } catch (e) {
+          console.error('자동 로그인 실패:', e);
+          localStorage.removeItem('aicitybuilders_user');
+          localStorage.removeItem('aicitybuilders_remember_me');
         }
-      };
-      
-      checkAutoLogin();
-    }, []);
-  
-    return (
-      <Router>
+      }
+    };
+
+    checkAutoLogin();
+  }, []);
+
+  return (
+    <Router>
       <GlobalReferralTracker>
         <div className="App">
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
-            {/* 메인 */}
+              {/* 메인 */}
               <Route path="/" element={<MainPageWrapper />} />
-            
-            {/* 강의 페이지 */}
-            <Route path="/chatgpt-course" element={<ChatGPTCoursePageWrapped />} />
-            <Route path="/google-ai-course" element={<GoogleAICoursePageWrapped />} />
-            <Route path="/ai-business-course" element={<AIBusinessCoursePageWrapped />} />
-            <Route path="/ai-coding-course" element={<AICodingCoursePageWrapped />} />
-            <Route path="/ai-landlord-preview" element={<AILandlordPreviewPageWrapped />} />
-            <Route path="/ai-education-documentary" element={<AIEducationDocumentaryPageWrapped />} />
-            <Route path="/ai-building-course" element={<AIBuildingCoursePageWrapped />} />
-            <Route path="/ai-building-course/payment" element={<AIBuildingPaymentPageWrapped />} />
-            <Route path="/ai-building-course/player" element={<AIBuildingCoursePlayerPageWrapped />} />
-            <Route path="/chatgpt-agent-beginner" element={<ChatGPTAgentBeginnerPageWrapped />} />
-            <Route path="/content-business" element={<ContentBusinessPageWrapped />} />
-            <Route path="/vibe-coding" element={<VibeCodingPageWrapped />} />
-            <Route path="/vibe-coding-player" element={<VibeCodingPlayerPageWrapped />} />
-            <Route path="/vibe-coding/day1" element={<VibeCodingDay1PageWrapped />} />
-            <Route path="/vibe-coding/day2" element={<VibeCodingDay2PageWrapped />} />
-            <Route path="/vibe-coding/day3" element={<VibeCodingDay3PageWrapped />} />
-            <Route path="/vibe-coding/day4" element={<VibeCodingDay4PageWrapped />} />
-            <Route path="/vibe-coding/day5" element={<VibeCodingDay5PageWrapped />} />
-            <Route path="/vibe-coding/day6" element={<VibeCodingDay6PageWrapped />} />
-            <Route path="/vibe-coding/day7" element={<VibeCodingDay7PageWrapped />} />
-            <Route path="/vibe-coding/day8" element={<VibeCodingDay8PageWrapped />} />
-            <Route path="/vibe-coding/day9" element={<VibeCodingDay9PageWrapped />} />
-            <Route path="/vibe-coding/day10" element={<VibeCodingDay10PageWrapped />} />
-            <Route path="/agent-dispatch" element={<AgentDispatchPageWrapped />} />
-            <Route path="/solo-business" element={<AgentDispatchPageWrapped />} />
-            <Route path="/chatgpt-agent-beginner/payment" element={<ChatGPTAgentBeginnerPaymentPageWrapped />} />
-            <Route path="/chatgpt-agent-beginner/player" element={<ChatGPTAgentBeginnerPlayerPageWrapped />} />
-            <Route path="/cost-optimization-examples" element={<CostOptimizationExamplesPageWrapped />} />
-            <Route path="/n8n-automation-intermediate" element={<N8nAutomationIntermediatePageWrapped />} />
-            <Route path="/n8n-automation-advanced" element={<N8nAutomationAdvancedPageWrapped />} />
-            
-            {/* Day 페이지들 - ChatGPT Agent Beginner */}
-            <Route path="/chatgpt-agent-beginner/day1" element={<Day1PageWrapped />} />
-            <Route path="/chatgpt-agent-beginner/day2" element={<Day2PageWrapped />} />
-            <Route path="/chatgpt-agent-beginner/day3" element={<Day3PageWrapped />} />
-            <Route path="/chatgpt-agent-beginner/day4" element={<Day4PageWrapped />} />
-            <Route path="/chatgpt-agent-beginner/day5" element={<Day5PageWrapped />} />
-            <Route path="/chatgpt-agent-beginner/day6" element={<Day6PageWrapped />} />
-            <Route path="/chatgpt-agent-beginner/day7" element={<Day7PageWrapped />} />
-            <Route path="/chatgpt-agent-beginner/day8" element={<Day8PageWrapped />} />
-            <Route path="/chatgpt-agent-beginner/day9" element={<Day9PageWrapped />} />
-            <Route path="/chatgpt-agent-beginner/day10" element={<Day10PageWrapped />} />
-            
-            {/* Day 페이지들 - AI Building Course */}
-            <Route path="/ai-building-course/day1" element={<AIBuildingDay1PageWrapped />} />
-            <Route path="/ai-building-course/day2" element={<AIBuildingDay2PageWrapped />} />
-            <Route path="/ai-building-course/day3" element={<AIBuildingDay3PageWrapped />} />
-            <Route path="/ai-building-course/day4" element={<AIBuildingDay4PageWrapped />} />
-            <Route path="/ai-building-course/day5" element={<AIBuildingDay5PageWrapped />} />
-            <Route path="/ai-building-course/day6" element={<AIBuildingDay6PageWrapped />} />
-            <Route path="/ai-building-course/day7" element={<AIBuildingDay7PageWrapped />} />
-            <Route path="/ai-building-course/day8" element={<AIBuildingDay8PageWrapped />} />
-            <Route path="/ai-building-course/day9" element={<AIBuildingDay9PageWrapped />} />
-            <Route path="/ai-building-course/day10" element={<AIBuildingDay10PageWrapped />} />
-            
-            {/* 리다이렉트 */}
+
+              {/* 영어 랜딩 페이지 */}
+              <Route path="/en" element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <EnglishLandingPage />
+                </Suspense>
+              } />
+
+              {/* 강의 페이지 */}
+              <Route path="/chatgpt-course" element={<ChatGPTCoursePageWrapped />} />
+              <Route path="/google-ai-course" element={<GoogleAICoursePageWrapped />} />
+              <Route path="/ai-business-course" element={<AIBusinessCoursePageWrapped />} />
+              <Route path="/ai-coding-course" element={<AICodingCoursePageWrapped />} />
+              <Route path="/ai-landlord-preview" element={<AILandlordPreviewPageWrapped />} />
+              <Route path="/ai-education-documentary" element={<AIEducationDocumentaryPageWrapped />} />
+              <Route path="/ai-building-course" element={<AIBuildingCoursePageWrapped />} />
+              <Route path="/ai-building-course/payment" element={<AIBuildingPaymentPageWrapped />} />
+              <Route path="/ai-building-course/player" element={<AIBuildingCoursePlayerPageWrapped />} />
+              <Route path="/chatgpt-agent-beginner" element={<ChatGPTAgentBeginnerPageWrapped />} />
+              <Route path="/content-business" element={<ContentBusinessPageWrapped />} />
+              <Route path="/vibe-coding" element={<VibeCodingPageWrapped />} />
+              <Route path="/vibe-coding-player" element={<VibeCodingPlayerPageWrapped />} />
+              <Route path="/vibe-coding/day1" element={<VibeCodingDay1PageWrapped />} />
+              <Route path="/vibe-coding/day2" element={<VibeCodingDay2PageWrapped />} />
+              <Route path="/vibe-coding/day3" element={<VibeCodingDay3PageWrapped />} />
+              <Route path="/vibe-coding/day4" element={<VibeCodingDay4PageWrapped />} />
+              <Route path="/vibe-coding/day5" element={<VibeCodingDay5PageWrapped />} />
+              <Route path="/vibe-coding/day6" element={<VibeCodingDay6PageWrapped />} />
+              <Route path="/vibe-coding/day7" element={<VibeCodingDay7PageWrapped />} />
+              <Route path="/vibe-coding/day8" element={<VibeCodingDay8PageWrapped />} />
+              <Route path="/vibe-coding/day9" element={<VibeCodingDay9PageWrapped />} />
+              <Route path="/vibe-coding/day10" element={<VibeCodingDay10PageWrapped />} />
+              <Route path="/agent-dispatch" element={<AgentDispatchPageWrapped />} />
+              <Route path="/solo-business" element={<AgentDispatchPageWrapped />} />
+              <Route path="/chatgpt-agent-beginner/payment" element={<ChatGPTAgentBeginnerPaymentPageWrapped />} />
+              <Route path="/chatgpt-agent-beginner/player" element={<ChatGPTAgentBeginnerPlayerPageWrapped />} />
+              <Route path="/cost-optimization-examples" element={<CostOptimizationExamplesPageWrapped />} />
+              <Route path="/n8n-automation-intermediate" element={<N8nAutomationIntermediatePageWrapped />} />
+              <Route path="/n8n-automation-advanced" element={<N8nAutomationAdvancedPageWrapped />} />
+
+              {/* Day 페이지들 - ChatGPT Agent Beginner */}
+              <Route path="/chatgpt-agent-beginner/day1" element={<Day1PageWrapped />} />
+              <Route path="/chatgpt-agent-beginner/day2" element={<Day2PageWrapped />} />
+              <Route path="/chatgpt-agent-beginner/day3" element={<Day3PageWrapped />} />
+              <Route path="/chatgpt-agent-beginner/day4" element={<Day4PageWrapped />} />
+              <Route path="/chatgpt-agent-beginner/day5" element={<Day5PageWrapped />} />
+              <Route path="/chatgpt-agent-beginner/day6" element={<Day6PageWrapped />} />
+              <Route path="/chatgpt-agent-beginner/day7" element={<Day7PageWrapped />} />
+              <Route path="/chatgpt-agent-beginner/day8" element={<Day8PageWrapped />} />
+              <Route path="/chatgpt-agent-beginner/day9" element={<Day9PageWrapped />} />
+              <Route path="/chatgpt-agent-beginner/day10" element={<Day10PageWrapped />} />
+
+              {/* Day 페이지들 - AI Building Course */}
+              <Route path="/ai-building-course/day1" element={<AIBuildingDay1PageWrapped />} />
+              <Route path="/ai-building-course/day2" element={<AIBuildingDay2PageWrapped />} />
+              <Route path="/ai-building-course/day3" element={<AIBuildingDay3PageWrapped />} />
+              <Route path="/ai-building-course/day4" element={<AIBuildingDay4PageWrapped />} />
+              <Route path="/ai-building-course/day5" element={<AIBuildingDay5PageWrapped />} />
+              <Route path="/ai-building-course/day6" element={<AIBuildingDay6PageWrapped />} />
+              <Route path="/ai-building-course/day7" element={<AIBuildingDay7PageWrapped />} />
+              <Route path="/ai-building-course/day8" element={<AIBuildingDay8PageWrapped />} />
+              <Route path="/ai-building-course/day9" element={<AIBuildingDay9PageWrapped />} />
+              <Route path="/ai-building-course/day10" element={<AIBuildingDay10PageWrapped />} />
+
+              {/* 리다이렉트 */}
               <Route path="/chatgpt-agent-beginner-player" element={<RedirectToNewPlayerUrl />} />
               <Route path="/ai-building-course-player" element={<RedirectToNewAIBuildingPlayerUrl />} />
               <Route path="/workflow-automation-master" element={<ComingSoonNotice />} />
-            
-            {/* 일반 페이지 */}
-            <Route path="/faq" element={<FAQPageWrapped />} />
-            <Route path="/ceo" element={<CEOPageWrapped />} />
-            <Route path="/contact" element={<ContactPageWrapped />} />
-            
-            {/* 파트너 프로그램 */}
-            <Route path="/partner" element={
-              <Suspense fallback={<LoadingSpinner />}>
-                <PartnerDashboardPage />
-              </Suspense>
-            } />
-            <Route path="/clubs" element={<ClubsPageWrapped />} />
-            <Route path="/roadmap" element={<RoadmapPageWrapped />} />
-            <Route path="/chatgpt-prompts-40plus" element={<ChatGPTPrompts40PageWrapped />} />
-            <Route path="/ai-money-master-prompts" element={<AIMoneyMasterPromptsPageWrapped />} />
-            <Route path="/ai-money-image-prompts" element={<AIMoneyImagePromptsPageWrapped />} />
-            <Route path="/ai-money-video-prompts" element={<AIMoneyVideoPromptsPageWrapped />} />
-            <Route path="/ai-character-video-prompts" element={<AIRealisticCharacterVideoPageWrapped />} />
-            
+
+              {/* 일반 페이지 */}
+              <Route path="/faq" element={<FAQPageWrapped />} />
+              <Route path="/ceo" element={<CEOPageWrapped />} />
+              <Route path="/contact" element={<ContactPageWrapped />} />
+
+              {/* 파트너 프로그램 */}
+              <Route path="/partner" element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <PartnerDashboardPage />
+                </Suspense>
+              } />
+              <Route path="/clubs" element={<ClubsPageWrapped />} />
+              <Route path="/roadmap" element={<RoadmapPageWrapped />} />
+              <Route path="/chatgpt-prompts-40plus" element={<ChatGPTPrompts40PageWrapped />} />
+              <Route path="/ai-money-master-prompts" element={<AIMoneyMasterPromptsPageWrapped />} />
+              <Route path="/ai-money-image-prompts" element={<AIMoneyImagePromptsPageWrapped />} />
+              <Route path="/ai-money-video-prompts" element={<AIMoneyVideoPromptsPageWrapped />} />
+              <Route path="/ai-character-video-prompts" element={<AIRealisticCharacterVideoPageWrapped />} />
+
               {/* 라이브 페이지 */}
-            <Route path="/live" element={<LiveHubPageWrapped />} />
-            <Route path="/live/free" element={<FreeLivePageWrapped />} />
-            <Route path="/live/:stepId" element={<StepLivePageWrapped />} />
-            
+              <Route path="/live" element={<LiveHubPageWrapped />} />
+              <Route path="/live/free" element={<FreeLivePageWrapped />} />
+              <Route path="/live/:stepId" element={<StepLivePageWrapped />} />
+
               {/* 커뮤니티 */}
-            <Route path="/community" element={<CommunityHubPageWrapped />} />
-            <Route path="/community/:stepId" element={<CommunityStepPageWrapped />} />
-            
-            {/* 인증 */}
-            <Route path="/login" element={<LoginPageWrapped />} />
-            <Route path="/signup" element={<SignUpPageWrapped />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPageWrapped />} />
-            <Route path="/dashboard" element={<UserDashboardPageWrapped />} />
-            
-            {/* 결제 */}
-            <Route path="/payment/success" element={<PaymentSuccessPageWrapped />} />
-            <Route path="/payment/fail" element={<PaymentFailPageWrapped />} />
-            
-            {/* 환불 정책 */}
-            <Route path="/refund-policy" element={<RefundPolicyPageWrapped />} />
-            
-            {/* 관리자 */}
+              <Route path="/community" element={<CommunityHubPageWrapped />} />
+              <Route path="/community/:stepId" element={<CommunityStepPageWrapped />} />
+
+              {/* 인증 */}
+              <Route path="/login" element={<LoginPageWrapped />} />
+              <Route path="/signup" element={<SignUpPageWrapped />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPageWrapped />} />
+              <Route path="/dashboard" element={<UserDashboardPageWrapped />} />
+
+              {/* 결제 */}
+              <Route path="/payment/success" element={<PaymentSuccessPageWrapped />} />
+              <Route path="/payment/fail" element={<PaymentFailPageWrapped />} />
+
+              {/* 환불 정책 */}
+              <Route path="/refund-policy" element={<RefundPolicyPageWrapped />} />
+
+              {/* 관리자 */}
               <Route path="/admin" element={<AdminDashboardPage />} />
               <Route path="/admin/fix-enrollments" element={<AdminEnrollmentFixPage />} />
               <Route path="/admin/escrow" element={<EscrowBatchPage />} />
@@ -577,8 +587,8 @@ const GlobalReferralTracker: React.FC<{ children: React.ReactNode }> = ({ childr
           </Suspense>
         </div>
       </GlobalReferralTracker>
-      </Router>
-    );
-  }
-  
-  export default App;
+    </Router>
+  );
+}
+
+export default App;

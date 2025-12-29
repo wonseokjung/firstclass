@@ -67,13 +67,13 @@ const freeMoneyClasses: Course[] = [
 const premiumClasses: Course[] = [
   // Step 1: AI 건물주 되기 - 얼리버드 45,000원 (2026년부터 95,000원)
   { id: 999, instructor: '정원석 (AI 멘토 제이)', title: 'Step 1: AI 건물주 되기', subtitle: '🏙️ 1960년 맨해튼 기회가 지금 유튜브에', description: '유튜브 CEO가 말한 "새로운 계급의 크리에이터"가 되세요. AI로 디지털 건물을 짓고 수익화합니다.', image: `${process.env.PUBLIC_URL}/images/main/1.jpeg`, isNew: true, category: 'Premium', path: '/ai-building-course', isPremium: true, launchDate: '🔥 얼리버드 진행 중', price: 45000, originalPrice: 95000, isComingSoon: false },
-  
+
   // Step 2: AI 에이전트 비기너 - Google OPAL로 여러 AI를 하나의 회사처럼
   { id: 1002, instructor: '정원석 (AI 멘토 제이)', title: 'Step 2: AI 에이전트 비기너', subtitle: '🤖 여러 AI를 하나의 회사처럼', description: '💎 Google OPAL로 콘텐츠 자동 생성 에이전트를 만들고 시스템화! 더 효율적인 수익 구조 완성', image: `${process.env.PUBLIC_URL}/images/main/2.jpeg`, isNew: true, category: 'Premium', path: '/chatgpt-agent-beginner', isPremium: true, launchDate: '지금 수강 가능', price: 95000, originalPrice: 95000, isComingSoon: false },
-  
+
   // Step 3: 바이브코딩 - 수익화 확장의 첫걸음
   { id: 1003, instructor: '정원석 (AI 멘토 제이)', title: 'Step 3: 바이브코딩', subtitle: '💻 수익화 확장의 첫걸음', description: '🚀 코딩 몰라도 OK! AI에게 말로 설명하면 코드가 완성됩니다. 나만의 서비스를 직접 개발하세요!', image: `${process.env.PUBLIC_URL}/images/main/3.jpeg`, isNew: true, category: 'Premium', path: '/vibe-coding', isPremium: true, launchDate: '오픈 예정', price: 150000, originalPrice: 150000, isComingSoon: false },
-  
+
   // Step 4: 1인 기업 만들기 - 크리에이터에서 CEO로
   { id: 1004, instructor: '정원석 (AI 멘토 제이)', title: 'Step 4: 1인 기업 만들기', subtitle: '👑 크리에이터에서 CEO로', description: '🏆 사업자등록, 세금, 정부지원금까지! 1인 콘텐츠 기업을 완성하는 단계', image: `${process.env.PUBLIC_URL}/images/main/4.jpeg`, isNew: true, category: 'Premium', path: '/solo-business', isPremium: true, launchDate: '준비중', price: 0, originalPrice: 0, isComingSoon: false }
 ];
@@ -222,9 +222,9 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
     );
 
     return (
-      <div 
-        key={course.id} 
-        className="masterclass-card" 
+      <div
+        key={course.id}
+        className="masterclass-card"
         onClick={() => handleCourseClick(course)}
         style={{
           border: '2px solid rgba(255, 215, 0, 0.5)',
@@ -248,9 +248,9 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
               padding: '60px 20px 20px 20px', display: 'flex', flexDirection: 'column',
               alignItems: 'center', justifyContent: 'flex-end'
             }}>
-              <div style={{ 
-                background: 'linear-gradient(135deg, #ffd700, #ffb347)', 
-                padding: '8px 20px', borderRadius: '20px', 
+              <div style={{
+                background: 'linear-gradient(135deg, #ffd700, #ffb347)',
+                padding: '8px 20px', borderRadius: '20px',
                 fontSize: '0.9rem', fontWeight: 'bold', color: '#1a1a2e',
                 boxShadow: '0 4px 15px rgba(255, 215, 0, 0.4)',
                 marginBottom: '8px'
@@ -377,9 +377,11 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
 
       <footer className="footer">
         <div className="footer-content">
-          <div className="footer-section"><h3>AI City Builders</h3></div>
           <div className="footer-section">
-            <h4>문의하기</h4>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: '700' }}>AI City Builders</h3>
+          </div>
+          <div className="footer-section">
+            <h4 style={{ fontSize: '1rem', fontWeight: '600', marginBottom: '12px' }}>문의하기</h4>
             <div className="business-info">
               <p><strong>이메일:</strong> jay@connexionai.kr</p>
               <p><strong>운영시간:</strong> 평일 09:00-18:00</p>
@@ -389,21 +391,30 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
             </div>
           </div>
           <div className="footer-section">
-            <h4>정책</h4>
+            <h4 style={{ fontSize: '1rem', fontWeight: '600', marginBottom: '12px' }}>정책</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <button 
+              <button
                 onClick={() => navigate('/refund-policy')}
-                style={{ 
-                  background: 'none', 
-                  border: 'none', 
-                  color: '#9ca3af', 
-                  cursor: 'pointer', 
+                style={{
+                  background: 'rgba(251, 191, 36, 0.15)',
+                  border: '1px solid rgba(251, 191, 36, 0.3)',
+                  color: '#fbbf24',
+                  cursor: 'pointer',
                   fontSize: '0.9rem',
+                  fontWeight: '600',
                   textAlign: 'left',
-                  padding: 0
+                  padding: '10px 14px',
+                  borderRadius: '8px',
+                  transition: 'all 0.2s'
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = '#fbbf24'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = '#9ca3af'; }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(251, 191, 36, 0.25)';
+                  e.currentTarget.style.borderColor = '#fbbf24';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(251, 191, 36, 0.15)';
+                  e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.3)';
+                }}
               >
                 📋 환불 정책
               </button>

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import './i18n'; // i18n 초기화
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -29,21 +30,21 @@ const checkForUpdates = async () => {
         'Expires': '0'
       }
     });
-    
+
     if (!response.ok) return;
-    
+
     const data = await response.json();
     const storedVersion = localStorage.getItem('app_version');
-    
+
     console.log('📦 현재 버전:', storedVersion, '서버 버전:', data.version);
-    
+
     if (storedVersion && storedVersion !== data.version) {
       console.log('🔄 새 버전 감지! 캐시 클리어 후 새로고침...');
       localStorage.setItem('app_version', data.version);
-      
+
       // 캐시 클리어 후 강제 새로고침
       await clearAllCaches();
-      
+
       // 강제 새로고침 (캐시 무시)
       window.location.href = window.location.href.split('?')[0] + '?v=' + Date.now();
     } else if (!storedVersion) {
