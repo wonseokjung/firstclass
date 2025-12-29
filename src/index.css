@@ -5383,7 +5383,7 @@ body {
 /* Auth 페이지 (로그인/회원가입) 스타일 */
 .auth-page {
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
-  color: #ffffff;
+  color: #0d1b2a;
   min-height: 100vh;
 }
 
@@ -5459,7 +5459,7 @@ body {
   border: 1px solid rgba(14, 165, 233, 0.3);
   border-radius: var(--border-radius);
   padding: 0.875rem 1rem;
-  color: #ffffff !important;
+  color: #0d1b2a !important;
   font-size: 1rem;
   transition: var(--transition);
 }

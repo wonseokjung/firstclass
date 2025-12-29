@@ -602,7 +602,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
 
           {/* 가상계좌 정보 카드 */}
           <div style={{
-            background: 'linear-gradient(135deg, #1e3a5f, #ffffff)',
+            background: 'linear-gradient(135deg, #1e3a5f, #0d1b2a)',
             border: '2px solid #ffd60a',
             borderRadius: '20px',
             padding: '30px',

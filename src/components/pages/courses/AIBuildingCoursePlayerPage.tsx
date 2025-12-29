@@ -6,7 +6,7 @@ import AzureTableService from '../../../services/azureTableService';
 
 // 브랜드 컬러 정의 - AI 건물주 테마 (블루 + 골드)
 const COLORS = {
-  navy: '#ffffff',
+  navy: '#0d1b2a',
   navyLight: '#1e3a5f',
   navyDark: '#020617',
   blue: '#0ea5e9',

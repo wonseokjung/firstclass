@@ -450,7 +450,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                     style={{
                       width: '100%',
                       background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-                      color: 'white',
+                      color: '#0d1b2a',
                       border: 'none',
                       padding: '18px',
                       borderRadius: '12px',

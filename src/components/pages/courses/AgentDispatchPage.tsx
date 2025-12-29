@@ -12,7 +12,7 @@ const AgentDispatchPage: React.FC<AgentDispatchPageProps> = ({ onBack }) => {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #ffffff 0%, #0d1b2a 50%, #ffffff 100%)',
+      background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #ffffff 100%)',
       color: '#fff'
     }}>
       {/* 네비게이션 */}

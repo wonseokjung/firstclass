@@ -241,7 +241,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
     <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0a0f1a 0%, #1a1f2e 100%)' }}>
       {/* 헤더 */}
       <div style={{
-        background: 'linear-gradient(135deg, #ffffff 0%, #0d1b2a 100%)',
+        background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
         padding: '20px',
         position: 'sticky',
         top: 0,
@@ -280,7 +280,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
               justifyContent: 'center',
               fontSize: '1.8rem',
               fontWeight: '800',
-              color: '#ffffff',
+              color: '#ffd60a',
               boxShadow: '0 8px 25px rgba(251, 191, 36, 0.4)'
             }}>
               1
@@ -354,7 +354,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                   justifyContent: 'center',
                   fontSize: '0.85rem',
                   fontWeight: '700',
-                  color: '#ffffff',
+                  color: '#ffd60a',
                   flexShrink: 0
                 }}>
                   {idx + 1}
@@ -421,7 +421,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
           </h3>
           
           <div style={{
-            background: 'linear-gradient(135deg, #ffffff, #0d1b2a)',
+            background: 'linear-gradient(135deg, #0d1b2a, #1b263b)',
             padding: '30px',
             borderRadius: '16px',
             marginBottom: '25px',
@@ -579,7 +579,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
 
         {/* 핵심 메시지 */}
         <div style={{
-          background: 'linear-gradient(135deg, #1e3a5f, #ffffff)',
+          background: 'linear-gradient(135deg, #1e3a5f, #0d1b2a)',
           borderRadius: '24px',
           padding: '40px',
           marginBottom: '40px',
@@ -753,7 +753,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                     justifyContent: 'center',
                     fontSize: '0.9rem',
                     fontWeight: '700',
-                    color: '#ffffff'
+                    color: '#ffd60a'
                   }}>
                     {post.author.charAt(0)}
                   </div>
@@ -855,7 +855,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
             <button
               onClick={onNext}
               style={{
-                background: 'linear-gradient(135deg, #1e3a5f, #ffffff)',
+                background: 'linear-gradient(135deg, #1e3a5f, #0d1b2a)',
                 color: 'white',
                 border: '1px solid rgba(255,255,255,0.2)',
                 padding: '18px 45px',

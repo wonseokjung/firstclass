@@ -288,7 +288,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   marginBottom: '15px',
                   fontWeight: '900',
                   textShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
-                  background: 'linear-gradient(45deg, #ffffff, #e0f2fe)',
+                  background: 'linear-gradient(45deg, #0d1b2a, #1b263b)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text'
@@ -340,7 +340,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   fontWeight: '900',
                   marginBottom: '12px',
                   textShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
-                  background: 'linear-gradient(45deg, #ffffff, #fef3c7)',
+                  background: 'linear-gradient(45deg, #0d1b2a, #1b263b)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text'
@@ -459,7 +459,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 
           {/* 🎬 강의 소개 영상 */}
           <div style={{
-            background: 'linear-gradient(135deg, #0d1b2a, #ffffff)',
+            background: 'linear-gradient(135deg, #0d1b2a, #1b263b)',
             padding: 'clamp(30px, 6vw, 50px)',
             borderRadius: '30px',
             marginBottom: 'clamp(30px, 6vw, 60px)',
@@ -753,7 +753,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 
             {/* 🚀 AI 시티 빌더스 4단계 여정 */}
             <div style={{
-              background: 'linear-gradient(135deg, #ffffff 0%, #0d1b2a 100%)',
+              background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
               padding: 'clamp(30px, 6vw, 50px)',
               borderRadius: '25px',
               marginBottom: 'clamp(30px, 6vw, 60px)',
@@ -1021,7 +1021,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 
             {/* 🔥 핵심 차별점 - 압도적 비주얼 */}
             <div style={{
-              background: 'linear-gradient(135deg, #0d1b2a 0%, #ffffff 100%)',
+              background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
               padding: 'clamp(25px, 5vw, 50px) clamp(20px, 4vw, 40px)',
               borderRadius: '25px',
               marginBottom: 'clamp(20px, 4vw, 40px)',

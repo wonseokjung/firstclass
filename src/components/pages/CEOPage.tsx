@@ -722,7 +722,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
 
           {/* 멘토 프로필 카드 */}
           <div style={{
-            background: 'linear-gradient(135deg, #0d1b2a 0%, #ffffff 100%)',
+            background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
             border: '2px solid rgba(251, 191, 36, 0.3)',
             borderRadius: '24px',
             padding: 'clamp(24px, 5vw, 40px)',

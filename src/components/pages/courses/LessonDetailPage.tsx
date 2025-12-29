@@ -233,12 +233,12 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
                   background: 'rgba(0,0,0,0.7)',
                   padding: '10px 15px',
                   borderRadius: '8px',
-                  color: 'white'
+                  color: '#0d1b2a'
                 }}>
-                  <button onClick={togglePlay} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}>
+                  <button onClick={togglePlay} style={{ background: 'none', border: 'none', color: '#0d1b2a', cursor: 'pointer' }}>
                     {isPlaying ? <Pause size={20} /> : <Play size={20} />}
                   </button>
-                  <button onClick={restart} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}>
+                  <button onClick={restart} style={{ background: 'none', border: 'none', color: '#0d1b2a', cursor: 'pointer' }}>
                     <RotateCcw size={16} />
                   </button>
                   <span style={{ fontSize: '14px' }}>{formatTime(currentTime)} / {formatTime(duration)}</span>
@@ -373,7 +373,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
           padding: 'clamp(15px, 3vw, 30px)',
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           borderRadius: '20px',
-          color: 'white',
+          color: '#0d1b2a',
           textAlign: 'center'
         }}>
           <h1 style={{ 
@@ -464,7 +464,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
                   <span style={{ 
                     fontSize: '0.75rem',
                     background: '#10b981',
-                    color: 'white',
+                    color: '#0d1b2a',
                     padding: '4px 8px',
                     borderRadius: '4px'
                   }}>
@@ -559,7 +559,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
                 gap: '8px',
                 padding: '12px 20px',
                 background: '#6b7280',
-                color: 'white',
+                color: '#0d1b2a',
                 border: 'none',
                 borderRadius: '8px',
                 cursor: 'pointer',
@@ -580,7 +580,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
                 gap: '8px',
                 padding: '12px 24px',
                 background: isCompleted ? '#10b981' : '#0ea5e9',
-                color: 'white',
+                color: '#0d1b2a',
                 border: 'none',
                 borderRadius: '8px',
                 cursor: isCompleted ? 'default' : 'pointer',
@@ -599,7 +599,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
                 gap: '8px',
                 padding: '12px 20px',
                 background: '#0ea5e9',
-                color: 'white',
+                color: '#0d1b2a',
                 border: 'none',
                 borderRadius: '8px',
                 cursor: 'pointer',

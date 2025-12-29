@@ -9,7 +9,7 @@ interface FAQPageProps {
 
 // 브랜드 컬러: 네이비 + 골드
 const brandColors = {
-  navy: '#ffffff',
+  navy: '#0d1b2a',
   navyLight: '#142238',
   navyMid: '#1e3a5f',
   gold: '#d4af37',

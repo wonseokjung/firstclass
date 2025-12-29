@@ -329,7 +329,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                   left: '50%',
                   transform: 'translateX(-50%)',
                   background: item.color,
-                  color: '#ffffff',
+                  color: '#ffd60a',
                   width: '28px',
                   height: '28px',
                   borderRadius: '50%',
@@ -569,7 +569,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
             <button
               onClick={onNext}
               style={{
-                background: 'linear-gradient(135deg, #1e3a5f, #ffffff)',
+                background: 'linear-gradient(135deg, #1e3a5f, #0d1b2a)',
                 color: 'white',
                 border: '1px solid rgba(139, 92, 246, 0.3)',
                 padding: '18px 45px',

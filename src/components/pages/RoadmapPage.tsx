@@ -217,8 +217,8 @@ const RoadmapPage: React.FC = () => {
               onClick={() => step.status !== 'coming_soon' && navigate(step.path)}
               style={{
                 background: step.status === 'featured' 
-                  ? 'linear-gradient(135deg, #1a1a2e 0%, #ffffff 100%)'
-                  : 'linear-gradient(135deg, #0d1b2a 0%, #ffffff 100%)',
+                  ? 'linear-gradient(135deg, #1a1a2e 0%, #1b263b 100%)'
+                  : 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
                 borderRadius: '24px',
                 padding: step.status === 'featured' ? '3px' : '0',
                 cursor: step.status !== 'coming_soon' ? 'pointer' : 'default',
@@ -250,7 +250,7 @@ const RoadmapPage: React.FC = () => {
 
               <div style={{
                 background: step.status === 'featured' 
-                  ? 'linear-gradient(135deg, #1a1a2e 0%, #ffffff 100%)'
+                  ? 'linear-gradient(135deg, #1a1a2e 0%, #1b263b 100%)'
                   : 'transparent',
                 borderRadius: '22px',
                 padding: '32px',

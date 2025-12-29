@@ -42,7 +42,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <div style={{ background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)', width: '65px', height: '65px', borderRadius: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.8rem' }}>🔧</div>
             <div>
-              <h1 style={{ color: 'white', fontSize: 'clamp(1.3rem, 3vw, 1.6rem)', margin: 0 }}>Day 9: 유지보수와 확장</h1>
+              <h1 style={{ color: '#0d1b2a', fontSize: 'clamp(1.3rem, 3vw, 1.6rem)', margin: 0 }}>Day 9: 유지보수와 확장</h1>
               <p style={{ color: '#a78bfa', margin: '5px 0 0 0' }}>사용자 피드백을 코드로 바로 반영</p>
               <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
                 <span style={{ color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '5px' }}><Clock size={16} /> 45분</span>
@@ -59,17 +59,17 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
             <div style={{ background: 'rgba(0,0,0,0.3)', borderRadius: '16px', padding: '20px', textAlign: 'center' }}>
               <div style={{ fontSize: '2rem', marginBottom: '10px' }}>📊</div>
-              <div style={{ color: 'white', fontWeight: '700' }}>피드백 수집</div>
+              <div style={{ color: '#0d1b2a', fontWeight: '700' }}>피드백 수집</div>
               <p style={{ color: '#94a3b8', fontSize: '0.9rem', margin: '8px 0 0 0' }}>Intercom, Crisp</p>
             </div>
             <div style={{ background: 'rgba(0,0,0,0.3)', borderRadius: '16px', padding: '20px', textAlign: 'center' }}>
               <div style={{ fontSize: '2rem', marginBottom: '10px' }}>🐛</div>
-              <div style={{ color: 'white', fontWeight: '700' }}>버그 추적</div>
+              <div style={{ color: '#0d1b2a', fontWeight: '700' }}>버그 추적</div>
               <p style={{ color: '#94a3b8', fontSize: '0.9rem', margin: '8px 0 0 0' }}>Sentry, LogRocket</p>
             </div>
             <div style={{ background: 'rgba(0,0,0,0.3)', borderRadius: '16px', padding: '20px', textAlign: 'center' }}>
               <div style={{ fontSize: '2rem', marginBottom: '10px' }}>📈</div>
-              <div style={{ color: 'white', fontWeight: '700' }}>분석</div>
+              <div style={{ color: '#0d1b2a', fontWeight: '700' }}>분석</div>
               <p style={{ color: '#94a3b8', fontSize: '0.9rem', margin: '8px 0 0 0' }}>Posthog, Mixpanel</p>
             </div>
           </div>
@@ -85,10 +85,10 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
         <DayDiscussion courseId="vibe-coding-day9" dayNumber={9} communityPath="/community/step3" accentColor="#8b5cf6" userEmail={userEmail} userName={userName} />
 
         <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button onClick={handleComplete} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #8b5cf6, #7c3aed)', color: 'white', border: 'none', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <button onClick={handleComplete} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #8b5cf6, #7c3aed)', color: '#0d1b2a', border: 'none', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
             {isDayCompleted ? <><CheckCircle size={24} /> Day 9 완료!</> : isCompletingDay ? '처리 중...' : <><PlayCircle size={24} /> Day 9 완료하기</>}
           </button>
-          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #ffffff)', color: 'white', border: '1px solid rgba(139, 92, 246, 0.3)', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: 'pointer' }}>Day 10으로 이동 →</button>}
+          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #0d1b2a)', color: '#0d1b2a', border: '1px solid rgba(139, 92, 246, 0.3)', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: 'pointer' }}>Day 10으로 이동 →</button>}
         </div>
       </div>
     </div>

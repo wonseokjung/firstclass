@@ -217,7 +217,7 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
       <div
         style={{
           background: `radial-gradient(circle at 15% 20%, rgba(250,204,21,0.4), transparent 45%), linear-gradient(120deg, ${BRAND_NAVY} 0%, ${BRAND_BLUE} 60%, #1f3ca6 100%)`,
-          color: 'white',
+          color: '#0d1b2a',
           padding: '70px 20px',
           textAlign: 'center',
           position: 'relative',
@@ -261,7 +261,7 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
           <h2 style={{ 
             fontSize: 'clamp(1.5rem, 4vw, 2.2rem)', 
             fontWeight: 800, 
-            color: '#ffffff', 
+            color: '#0d1b2a', 
             marginBottom: 'clamp(15px, 3vw, 25px)',
             textAlign: 'center'
           }}>
@@ -375,7 +375,7 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
 
       <div style={{ padding: '60px 20px', background: CARD_BG }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '30px' }}>
-          <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff', marginBottom: '15px' }}>
+          <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0d1b2a', marginBottom: '15px' }}>
             💰 실전 수익화 이미지 생성 프롬프트 10선
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
@@ -477,7 +477,7 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
                             style={{
                               marginTop: '15px',
                               background: 'white',
-                              color: '#ffffff',
+                              color: '#0d1b2a',
                               padding: '18px',
                               borderRadius: '12px',
                               fontFamily:
@@ -504,7 +504,7 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
       <div style={{
         padding: '60px 20px',
         background: BRAND_NAVY,
-        color: 'white',
+        color: '#0d1b2a',
         textAlign: 'center',
         borderTop: `4px solid ${BRAND_GOLD}`
       }}>

@@ -13,7 +13,7 @@ const EnglishLandingPage: React.FC = () => {
         <div style={{
             minHeight: '100vh',
             background: 'linear-gradient(135deg, #ffffff 0%, #1e3a5f 50%, #0f2744 100%)',
-            color: '#ffffff',
+            color: '#0d1b2a',
             fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
             display: 'flex',
             flexDirection: 'column',
@@ -154,7 +154,7 @@ const EnglishLandingPage: React.FC = () => {
                         gap: '8px',
                         background: '#dc2626',
                         border: 'none',
-                        color: '#ffffff',
+                        color: '#0d1b2a',
                         padding: '14px 28px',
                         borderRadius: '12px',
                         fontSize: '1rem',

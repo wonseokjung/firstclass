@@ -428,7 +428,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(to bottom, #f8fafc, #ffffff)',
+      background: 'linear-gradient(to bottom, #1b263b, #0d1b2a)',
       paddingBottom: '60px'
     }}>
       {/* 헤더 */}
@@ -541,7 +541,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
               <div style={{
                 width: `${progressPercentage}%`,
                 height: '100%',
-                background: 'linear-gradient(90deg, #ffffff, #f0f9ff, #ffffff)',
+                background: 'linear-gradient(90deg, #0d1b2a, #1b263b, #0d1b2a)',
                 backgroundSize: '200% 100%',
                 animation: 'shimmer 2s infinite',
                 borderRadius: '10px',

@@ -1011,7 +1011,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
       {userStats.purchasedCourses.length > 0 && (
         <section style={{ 
           padding: 'clamp(60px, 10vw, 100px) 0', 
-          background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)'
+          background: 'linear-gradient(180deg, #0d1b2a 0%, #1b263b 100%)'
         }}>
           <div style={{
             maxWidth: '1400px',

@@ -87,7 +87,7 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
           <button onClick={handleComplete} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #8b5cf6, #7c3aed)', color: 'white', border: 'none', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
             {isDayCompleted ? <><CheckCircle size={24} /> Day 8 완료!</> : isCompletingDay ? '처리 중...' : <><PlayCircle size={24} /> Day 8 완료하기</>}
           </button>
-          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #ffffff)', color: 'white', border: '1px solid rgba(139, 92, 246, 0.3)', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: 'pointer' }}>Day 9로 이동 →</button>}
+          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #0d1b2a)', color: 'white', border: '1px solid rgba(139, 92, 246, 0.3)', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: 'pointer' }}>Day 9로 이동 →</button>}
         </div>
       </div>
     </div>

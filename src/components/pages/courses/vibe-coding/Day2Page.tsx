@@ -65,7 +65,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <div style={{ background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)', width: '65px', height: '65px', borderRadius: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.8rem', boxShadow: '0 8px 25px rgba(139, 92, 246, 0.4)' }}>💡</div>
             <div>
-              <h1 style={{ color: 'white', fontSize: 'clamp(1.3rem, 3vw, 1.6rem)', margin: 0, fontWeight: '700' }}>Day 2: 아이디어를 돈이 되는 앱으로</h1>
+              <h1 style={{ color: '#0d1b2a', fontSize: 'clamp(1.3rem, 3vw, 1.6rem)', margin: 0, fontWeight: '700' }}>Day 2: 아이디어를 돈이 되는 앱으로</h1>
               <p style={{ color: '#a78bfa', margin: '5px 0 0 0' }}>아이디어 검증부터 MVP 설계까지</p>
               <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
                 <span style={{ color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem' }}><Clock size={16} /> 55분</span>
@@ -109,7 +109,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
             {['이 문제를 겪는 사람이 충분한가?', '사람들이 돈을 내고 해결하고 싶어하는가?', '경쟁 제품보다 10배 나은 점이 있는가?', '나 혼자서 1주일 안에 MVP를 만들 수 있는가?'].map((item, idx) => (
               <div key={idx} style={{ background: 'rgba(6, 182, 212, 0.1)', borderRadius: '12px', padding: '15px 20px', border: '1px solid rgba(6, 182, 212, 0.2)', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div style={{ width: '28px', height: '28px', background: 'linear-gradient(135deg, #06b6d4, #0891b2)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '700', fontSize: '0.9rem' }}>{idx + 1}</div>
+                <div style={{ width: '28px', height: '28px', background: 'linear-gradient(135deg, #06b6d4, #0891b2)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0d1b2a', fontWeight: '700', fontSize: '0.9rem' }}>{idx + 1}</div>
                 <span style={{ color: '#e2e8f0', fontSize: '1rem' }}>{item}</span>
               </div>
             ))}
@@ -133,10 +133,10 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
 
         {/* 완료 버튼 */}
         <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button onClick={handleCompleteDay} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #8b5cf6, #7c3aed)', color: 'white', border: 'none', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: isDayCompleted ? '0 8px 25px rgba(34, 197, 94, 0.4)' : '0 8px 25px rgba(139, 92, 246, 0.4)' }}>
+          <button onClick={handleCompleteDay} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #8b5cf6, #7c3aed)', color: '#0d1b2a', border: 'none', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: isDayCompleted ? '0 8px 25px rgba(34, 197, 94, 0.4)' : '0 8px 25px rgba(139, 92, 246, 0.4)' }}>
             {isDayCompleted ? <><CheckCircle size={24} /> Day 2 완료!</> : isCompletingDay ? '처리 중...' : <><PlayCircle size={24} /> Day 2 완료하기</>}
           </button>
-          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #ffffff)', color: 'white', border: '1px solid rgba(139, 92, 246, 0.3)', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: 'pointer' }}>Day 3로 이동 →</button>}
+          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #0d1b2a)', color: '#0d1b2a', border: '1px solid rgba(139, 92, 246, 0.3)', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: 'pointer' }}>Day 3로 이동 →</button>}
         </div>
       </div>
     </div>

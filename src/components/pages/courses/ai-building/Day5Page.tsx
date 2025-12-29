@@ -111,7 +111,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
         id: 'business-plan',
         title: '📝 디지털 건물 사업계획서',
         content: `
-          <div style="background: linear-gradient(135deg, #ffffff, #1e3a5f); padding: 30px; border-radius: 15px; color: white;">
+          <div style="background: linear-gradient(135deg, #0d1b2a, #1e3a5f); padding: 30px; border-radius: 15px; color: white;">
             <h4 style="color: #ffd60a; margin-bottom: 20px;">🏗️ 나의 디지털 건물 계획서</h4>
             <div style="display: grid; gap: 15px;">
               <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
@@ -162,15 +162,15 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
 
   return (
     <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
-      <div style={{ background: 'linear-gradient(135deg, #ffffff 0%, #1e3a5f 100%)', padding: '20px', position: 'sticky', top: 0, zIndex: 100 }}>
+      <div style={{ background: 'linear-gradient(135deg, #0d1b2a 0%, #1e3a5f 100%)', padding: '20px', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <button onClick={onBack} style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', padding: '10px 20px', borderRadius: '10px', cursor: 'pointer', marginBottom: '15px' }}>
+          <button onClick={onBack} style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.1)', border: 'none', color: '#0d1b2a', padding: '10px 20px', borderRadius: '10px', cursor: 'pointer', marginBottom: '15px' }}>
             <ArrowLeft size={20} /> 강의 목록으로
           </button>
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-            <div style={{ background: 'linear-gradient(135deg, #0ea5e9, #0284c7)', width: '60px', height: '60px', borderRadius: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: '800', color: 'white' }}>5</div>
+            <div style={{ background: 'linear-gradient(135deg, #0ea5e9, #0284c7)', width: '60px', height: '60px', borderRadius: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: '800', color: '#0d1b2a' }}>5</div>
             <div>
-              <h1 style={{ color: 'white', fontSize: '1.5rem', margin: 0 }}>Day {lessonData.day}: {lessonData.title}</h1>
+              <h1 style={{ color: '#0d1b2a', fontSize: '1.5rem', margin: 0 }}>Day {lessonData.day}: {lessonData.title}</h1>
               <div style={{ display: 'flex', gap: '15px', marginTop: '8px' }}>
                 <span style={{ color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '5px' }}><Clock size={16} /> {lessonData.duration}</span>
                 {isDayCompleted && <span style={{ color: '#22c55e', display: 'flex', alignItems: 'center', gap: '5px' }}><CheckCircle size={16} /> 완료됨</span>}
@@ -206,10 +206,10 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
         />
 
         <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
-          <button onClick={handleCompleteDay} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #0ea5e9, #0284c7)', color: 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <button onClick={handleCompleteDay} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #0ea5e9, #0284c7)', color: '#0d1b2a', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
             {isDayCompleted ? <><CheckCircle size={24} /> Day 5 완료!</> : isCompletingDay ? '처리 중...' : <><PlayCircle size={24} /> Day 5 완료하기</>}
           </button>
-          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #e5c100, #d97706)', color: 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: 'pointer' }}>Part 2 시작 →</button>}
+          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #e5c100, #d97706)', color: '#0d1b2a', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: 'pointer' }}>Part 2 시작 →</button>}
         </div>
       </div>
     </div>

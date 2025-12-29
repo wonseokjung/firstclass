@@ -155,7 +155,7 @@ async function registerOrder(order) {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#ffffff', color: 'white' }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#0d1b2a' }}>
       <NavigationBar onBack={() => navigate('/admin/fix-enrollments')} breadcrumbText="에스크로 일괄 등록" />
 
       <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '40px 20px' }}>

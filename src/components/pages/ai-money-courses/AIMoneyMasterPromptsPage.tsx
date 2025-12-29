@@ -521,7 +521,7 @@ const AIMoneyMasterPromptsPage: React.FC<AIMoneyMasterPromptsPageProps> = ({ onB
       <div
         style={{
           background: `radial-gradient(circle at 15% 20%, rgba(250,204,21,0.4), transparent 45%), linear-gradient(120deg, ${BRAND_NAVY} 0%, ${BRAND_BLUE} 60%, #1f3ca6 100%)`,
-          color: 'white',
+          color: '#0d1b2a',
           padding: '70px 20px',
           textAlign: 'center',
           position: 'relative',
@@ -613,7 +613,7 @@ const AIMoneyMasterPromptsPage: React.FC<AIMoneyMasterPromptsPageProps> = ({ onB
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '30px' }}>
           {[{ heading: 'STEP 1 · 스타터 번들 (8개)', sections: starterSections }, { heading: 'STEP 2 · AI & Money 필수 프롬프트 30선', sections: masterPackageSections }].map((group) => (
             <div key={group.heading}>
-              <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff', marginBottom: '15px' }}>
+              <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0d1b2a', marginBottom: '15px' }}>
                 {group.heading}
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
@@ -714,7 +714,7 @@ const AIMoneyMasterPromptsPage: React.FC<AIMoneyMasterPromptsPageProps> = ({ onB
                                 style={{
                                   marginTop: '15px',
                                   background: 'white',
-                                  color: '#ffffff',
+                                  color: '#0d1b2a',
                                   padding: '18px',
                                   borderRadius: '12px',
                                   fontFamily:
@@ -743,7 +743,7 @@ const AIMoneyMasterPromptsPage: React.FC<AIMoneyMasterPromptsPageProps> = ({ onB
       <div style={{
         padding: '60px 20px',
         background: BRAND_NAVY,
-        color: 'white',
+        color: '#0d1b2a',
         textAlign: 'center',
         borderTop: `4px solid ${BRAND_GOLD}`
       }}>
