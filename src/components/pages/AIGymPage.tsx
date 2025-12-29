@@ -331,6 +331,7 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
         }
         // 안전하게 계산 (간단한 수식만)
         if (/^[\d\s+\-*/().]+$/.test(evalExpr)) {
+          // eslint-disable-next-line no-new-func
           const result = Function(`"use strict"; return (${evalExpr})`)();
           if (typeof result === 'number') {
             variables[varName] = result;
@@ -343,7 +344,6 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
     
     // 모든 print 문 찾기 (f-string과 일반 print 구분)
     const allPrintMatches = Array.from(code.matchAll(/print\((f?["'])([^"']*)(["'])\)/g));
-    const processedIndices = new Set<number>();
     
     for (const match of allPrintMatches) {
       const isFString = match[1].startsWith('f');
@@ -374,6 +374,7 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
               }
               // 안전하게 계산
               if (/^[\d\s+\-*/().]+$/.test(evalExpr)) {
+                // eslint-disable-next-line no-new-func
                 const calcResult = Function(`"use strict"; return (${evalExpr})`)();
                 result = calcResult.toString();
               }

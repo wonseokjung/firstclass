@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Globe, ArrowLeft, Youtube, Mail } from 'lucide-react';
+import { ArrowLeft, Youtube, Mail } from 'lucide-react';
 
 const EnglishLandingPage: React.FC = () => {
     const navigate = useNavigate();
