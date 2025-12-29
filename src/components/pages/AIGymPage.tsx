@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../common/NavigationBar';
 
@@ -105,11 +105,12 @@ const CodeEditor: React.FC<{
 
 const AIGymPage: React.FC = () => {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const [apiKey, setApiKey] = useState('');
   const [isApiKeySet, setIsApiKeySet] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState(1);
   
-  // 결과 상태
+  // 결과 상태 - 모든 hooks는 컴포넌트 최상단에!
   const [textResult, setTextResult] = useState('');
   const [textLoading, setTextLoading] = useState(false);
   const [imageResult, setImageResult] = useState('');
@@ -128,6 +129,43 @@ const AIGymPage: React.FC = () => {
   const [basicLoading, setBasicLoading] = useState(false);
   const [geminiBasicResult, setGeminiBasicResult] = useState('');
   const [geminiBasicLoading, setGeminiBasicLoading] = useState(false);
+  
+  // 로그인 체크
+  useEffect(() => {
+    const userSession = sessionStorage.getItem('aicitybuilders_user_session');
+    const savedUser = localStorage.getItem('aicitybuilders_user');
+    
+    if (userSession || savedUser) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  // 로그인 안되어 있으면 로그인 페이지로 리다이렉트
+  useEffect(() => {
+    if (isLoggedIn === false) {
+      navigate('/login', { state: { from: '/ai-gym', message: '기초 체력 훈련소에 입장하려면 로그인이 필요합니다!' } });
+    }
+  }, [isLoggedIn, navigate]);
+
+  // 로딩 중이거나 로그인 안됐으면 로딩 표시
+  if (isLoggedIn === null || isLoggedIn === false) {
+    return (
+      <div style={{ 
+        minHeight: '100vh', 
+        background: `linear-gradient(135deg, ${colors.navy} 0%, ${colors.navyLight} 100%)`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <div style={{ textAlign: 'center', color: colors.white }}>
+          <div style={{ fontSize: '3rem', marginBottom: '20px' }}>🏃</div>
+          <p style={{ fontSize: '1.2rem' }}>로그인 확인 중...</p>
+        </div>
+      </div>
+    );
+  }
 
   // 기본 코드들 - 1km 워밍업용 (간단한 체험만!)
   const warmupCodes = {
