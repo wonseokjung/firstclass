@@ -35,7 +35,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0f0a1e 0%, #1a1033 50%, #0f172a 100%)' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0f0a1e 0%, #1a1033 50%, #ffffff 100%)' }}>
       <div style={{ background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(124, 58, 237, 0.1))', borderBottom: '1px solid rgba(139, 92, 246, 0.3)', padding: '20px', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(20px)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <button onClick={onBack} style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(139, 92, 246, 0.2)', border: '1px solid rgba(139, 92, 246, 0.4)', color: '#c4b5fd', padding: '10px 20px', borderRadius: '12px', cursor: 'pointer', marginBottom: '15px' }}><ArrowLeft size={20} /> 강의 목록으로</button>
@@ -77,7 +77,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
 
         <div style={{ background: 'rgba(30, 41, 59, 0.5)', borderRadius: '24px', padding: 'clamp(25px, 5vw, 40px)', marginBottom: '30px', border: '1px solid rgba(255,255,255,0.1)' }}>
           <h2 style={{ color: '#06b6d4', display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '25px' }}><Wrench size={28} /> Google Antigravity로 빠른 수정</h2>
-          <div style={{ background: '#1e293b', borderRadius: '12px', padding: '20px', fontFamily: 'monospace', color: '#22c55e', fontSize: '0.95rem', lineHeight: '1.8' }}>
+          <div style={{ background: '#0d1b2a', borderRadius: '12px', padding: '20px', fontFamily: 'monospace', color: '#22c55e', fontSize: '0.95rem', lineHeight: '1.8' }}>
             "사용자가 [문제점]을 겪고 있어.<br/>이 문제를 해결하려면:<br/>1. 현재 코드 분석<br/>2. 수정 방안 제시<br/>3. 테스트 코드 작성"
           </div>
         </div>
@@ -88,7 +88,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
           <button onClick={handleComplete} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #8b5cf6, #7c3aed)', color: 'white', border: 'none', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
             {isDayCompleted ? <><CheckCircle size={24} /> Day 9 완료!</> : isCompletingDay ? '처리 중...' : <><PlayCircle size={24} /> Day 9 완료하기</>}
           </button>
-          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #0f172a)', color: 'white', border: '1px solid rgba(139, 92, 246, 0.3)', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: 'pointer' }}>Day 10으로 이동 →</button>}
+          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #ffffff)', color: 'white', border: '1px solid rgba(139, 92, 246, 0.3)', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: 'pointer' }}>Day 10으로 이동 →</button>}
         </div>
       </div>
     </div>

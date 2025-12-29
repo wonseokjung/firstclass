@@ -233,7 +233,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
           )}
           {/* 상단 메인 CTA */}
           <div style={{
-            background: 'linear-gradient(135deg, #1e293b, #334155)',
+            background: 'linear-gradient(135deg, #0d1b2a, #1b263b)',
             borderRadius: '30px',
             padding: 'clamp(30px, 6vw, 60px) clamp(20px, 4vw, 40px)',
             textAlign: 'center',
@@ -242,7 +242,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
             boxShadow: '0 25px 60px rgba(30, 41, 59, 0.5)',
             position: 'relative',
             overflow: 'hidden',
-            border: '4px solid #fbbf24'
+            border: '4px solid #ffd60a'
           }}>
             {/* 배경 장식 요소들 */}
             <div style={{
@@ -275,7 +275,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   justifyContent: 'center',
                   width: '90px',
                   height: '90px',
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                   borderRadius: '50%',
                   marginBottom: '25px',
                   boxShadow: '0 15px 40px rgba(251, 191, 36, 0.5)',
@@ -301,7 +301,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   opacity: '0.95',
                   fontWeight: '700',
                   textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                  color: '#fbbf24'
+                  color: '#ffd60a'
                 }}>
                   🏙️ 1960년 맨해튼 부동산 기회가 지금 유튜브에 왔다
                 </h2>
@@ -349,7 +349,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 </div>
                 <div style={{
                   fontSize: 'clamp(0.85rem, 2.5vw, 1.1rem)',
-                  color: '#fbbf24',
+                  color: '#ffd60a',
                   fontWeight: '700',
                   marginBottom: '12px',
                   background: 'rgba(251, 191, 36, 0.2)',
@@ -362,7 +362,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 </div>
                 <div style={{
                   fontSize: '1rem',
-                  color: '#fbbf24',
+                  color: '#ffd60a',
                   fontWeight: '700',
                   background: 'rgba(251, 191, 36, 0.15)',
                   padding: '12px 20px',
@@ -375,7 +375,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 </div>
                 <div style={{
                   fontSize: '0.95rem',
-                  color: '#fbbf24',
+                  color: '#ffd60a',
                   fontWeight: '600',
                   background: 'rgba(251, 191, 36, 0.1)',
                   padding: '10px 16px',
@@ -397,7 +397,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 <div style={{
                   position: 'absolute',
                   inset: '-6px',
-                  background: 'linear-gradient(135deg, #f59e0b, #d97706, #f59e0b)',
+                  background: 'linear-gradient(135deg, #e5c100, #d97706, #e5c100)',
                   borderRadius: '30px',
                   opacity: '0.4',
                   animation: 'pulse 2s infinite',
@@ -408,7 +408,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   onClick={handleEarlyBirdPayment}
                   style={{
                     position: 'relative',
-                    background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                    background: 'linear-gradient(135deg, #e5c100, #d97706)',
                     color: 'white',
                     border: '2px solid rgba(255, 255, 255, 0.8)',
                     padding: 'clamp(15px, 4vw, 30px) clamp(30px, 8vw, 70px)',
@@ -449,7 +449,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 margin: '0',
                 textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
                 fontWeight: '600',
-                color: '#fbbf24'
+                color: '#ffd60a'
               }}>
                 🎉 얼리버드 45,000원 | 📅 강의 오픈: 2026년 1월 1일
               </p>
@@ -459,17 +459,17 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 
           {/* 🎬 강의 소개 영상 */}
           <div style={{
-            background: 'linear-gradient(135deg, #1e293b, #0f172a)',
+            background: 'linear-gradient(135deg, #0d1b2a, #ffffff)',
             padding: 'clamp(30px, 6vw, 50px)',
             borderRadius: '30px',
             marginBottom: 'clamp(30px, 6vw, 60px)',
-            border: '3px solid #fbbf24',
+            border: '3px solid #ffd60a',
             boxShadow: '0 25px 60px rgba(251, 191, 36, 0.2)'
           }}>
             <div style={{ textAlign: 'center', marginBottom: '30px' }}>
               <div style={{
                 display: 'inline-block',
-                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                 padding: '10px 25px',
                 borderRadius: '30px',
                 marginBottom: '15px'
@@ -572,8 +572,8 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 
                 <div style={{
                   display: 'inline-block',
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                  color: '#1e293b',
+                  background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
+                  color: '#0d1b2a',
                   padding: '10px 25px',
                   borderRadius: '25px',
                   fontSize: '0.9rem',
@@ -587,7 +587,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 <h2 style={{
                   fontSize: 'clamp(2rem, 4vw, 2.8rem)',
                   fontWeight: '900',
-                  color: '#1f2937',
+                  color: '#1b263b',
                   marginBottom: '15px',
                   textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
                 }}>
@@ -615,12 +615,12 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 
                 {/* 맨해튼 스토리 박스 */}
                 <div style={{
-                  background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
+                  background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
                   padding: 'clamp(25px, 5vw, 40px)',
                   borderRadius: '20px',
                   maxWidth: '900px',
                   margin: '0 auto 30px',
-                  border: '3px solid #fbbf24',
+                  border: '3px solid #ffd60a',
                   boxShadow: '0 15px 40px rgba(0, 0, 0, 0.2)'
                 }}>
                   <div style={{
@@ -632,7 +632,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   }}>
                     <span style={{ fontSize: '2rem' }}>🗽</span>
                     <h4 style={{
-                      color: '#fbbf24',
+                      color: '#ffd60a',
                       fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
                       fontWeight: '900',
                       margin: 0
@@ -647,9 +647,9 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     textAlign: 'left'
                   }}>
                     1960년대, 무작정 미국으로 건너온 외삼촌은 세탁소에서 일하며 시작했습니다.<br/><br/>
-                    당시 맨해튼은 <strong style={{ color: '#fbbf24' }}>건물을 사면 은행에서 이자 없이 돈을 빌려주던 시대</strong>였죠.
+                    당시 맨해튼은 <strong style={{ color: '#ffd60a' }}>건물을 사면 은행에서 이자 없이 돈을 빌려주던 시대</strong>였죠.
                     10억짜리 건물을 사면 11억을 빌려줬고, 남은 1억으로 인테리어해서 세입자만 채우면 건물이 내 것이 됐습니다.<br/><br/>
-                    그렇게 건물 하나, 두 개, 세 개... <strong style={{ color: '#fbbf24' }}>지금은 맨해튼에 수백 개의 빌딩을 가진 부동산 재벌</strong>이 되었습니다.
+                    그렇게 건물 하나, 두 개, 세 개... <strong style={{ color: '#ffd60a' }}>지금은 맨해튼에 수백 개의 빌딩을 가진 부동산 재벌</strong>이 되었습니다.
                   </p>
                 </div>
 
@@ -680,7 +680,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     }}>지금 유튜브가 딱 그때입니다</h4>
                   </div>
                   <p style={{
-                    color: '#334155',
+                    color: '#1b263b',
                     fontSize: 'clamp(1rem, 2.2vw, 1.15rem)',
                     lineHeight: '1.9',
                     margin: '0',
@@ -725,7 +725,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   <div style={{ 
                     fontSize: 'clamp(1rem, 2.2vw, 1.15rem)', 
                     fontWeight: '600', 
-                    color: '#1f2937',
+                    color: '#1b263b',
                     lineHeight: '2',
                     textAlign: 'left'
                   }}>
@@ -744,7 +744,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   padding: '8px 18px',
                   borderRadius: '12px',
                   display: 'inline-block',
-                  border: '2px solid #fbbf24'
+                  border: '2px solid #ffd60a'
                 }}>
                   💡 커리큘럼은 변경될 수 있습니다
                 </span>
@@ -753,7 +753,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 
             {/* 🚀 AI 시티 빌더스 4단계 여정 */}
             <div style={{
-              background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+              background: 'linear-gradient(135deg, #ffffff 0%, #0d1b2a 100%)',
               padding: 'clamp(30px, 6vw, 50px)',
               borderRadius: '25px',
               marginBottom: 'clamp(30px, 6vw, 60px)',
@@ -778,7 +778,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   fontWeight: '900',
                   marginBottom: '15px'
                 }}>
-                  AI 시티 빌더스 <span style={{ color: '#fbbf24' }}>4단계 여정</span>
+                  AI 시티 빌더스 <span style={{ color: '#ffd60a' }}>4단계 여정</span>
                 </h3>
                 <p style={{
                   color: '#94a3b8',
@@ -797,7 +797,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
               }}>
                 {/* Step 1 - 현재 강의 */}
                 <div style={{
-                  background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                  background: 'linear-gradient(135deg, #ffd60a 0%, #e5c100 100%)',
                   padding: '25px 20px',
                   borderRadius: '20px',
                   textAlign: 'center',
@@ -817,8 +817,8 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     fontWeight: '800'
                   }}>현재 강의</div>
                   <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🏗️</div>
-                  <h4 style={{ color: '#1f2937', fontWeight: '900', marginBottom: '8px', fontSize: '1.1rem' }}>Step 1</h4>
-                  <p style={{ color: '#1f2937', fontWeight: '700', fontSize: '0.95rem', margin: 0 }}>AI로 콘텐츠 만들기</p>
+                  <h4 style={{ color: '#1b263b', fontWeight: '900', marginBottom: '8px', fontSize: '1.1rem' }}>Step 1</h4>
+                  <p style={{ color: '#1b263b', fontWeight: '700', fontSize: '0.95rem', margin: 0 }}>AI로 콘텐츠 만들기</p>
                 </div>
 
                 {/* Step 2 */}
@@ -870,7 +870,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 border: '2px solid rgba(251, 191, 36, 0.3)'
               }}>
                 <p style={{
-                  color: '#fbbf24',
+                  color: '#ffd60a',
                   fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
                   fontWeight: '700',
                   margin: 0,
@@ -888,7 +888,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
               padding: '20px',
               borderRadius: '20px',
               marginBottom: 'clamp(20px, 4vw, 40px)',
-              border: '3px solid #fbbf24',
+              border: '3px solid #ffd60a',
               textAlign: 'center',
               boxShadow: '0 10px 40px rgba(251, 191, 36, 0.2)'
             }}>
@@ -912,7 +912,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
               padding: 'clamp(30px, 6vw, 50px)',
               borderRadius: '25px',
               marginBottom: 'clamp(30px, 6vw, 50px)',
-              border: '3px solid #fbbf24',
+              border: '3px solid #ffd60a',
               boxShadow: '0 20px 50px rgba(220, 38, 38, 0.3)'
             }}>
               <div style={{ textAlign: 'center', marginBottom: '30px' }}>
@@ -935,7 +935,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   lineHeight: '1.5'
                 }}>
                   기존 사업을 다 접고<br/>
-                  <span style={{ color: '#fbbf24' }}>콘텐츠에 올인하는 이유</span>
+                  <span style={{ color: '#ffd60a' }}>콘텐츠에 올인하는 이유</span>
                 </h3>
               </div>
 
@@ -953,7 +953,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   border: '2px solid rgba(255, 255, 255, 0.2)'
                 }}>
                   <div style={{ fontSize: '2rem', marginBottom: '12px' }}>🏦</div>
-                  <h4 style={{ color: '#fbbf24', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
+                  <h4 style={{ color: '#ffd60a', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
                     구글이 다 지원해준다
                   </h4>
                   <p style={{ color: '#fecaca', fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
@@ -970,7 +970,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   border: '2px solid rgba(255, 255, 255, 0.2)'
                 }}>
                   <div style={{ fontSize: '2rem', marginBottom: '12px' }}>⚖️</div>
-                  <h4 style={{ color: '#fbbf24', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
+                  <h4 style={{ color: '#ffd60a', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
                     경쟁이 평준화됐다
                   </h4>
                   <p style={{ color: '#fecaca', fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
@@ -987,7 +987,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   border: '2px solid rgba(255, 255, 255, 0.2)'
                 }}>
                   <div style={{ fontSize: '2rem', marginBottom: '12px' }}>🌏</div>
-                  <h4 style={{ color: '#fbbf24', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
+                  <h4 style={{ color: '#ffd60a', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
                     글로벌 시장이 열렸다
                   </h4>
                   <p style={{ color: '#fecaca', fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
@@ -1011,7 +1011,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   lineHeight: '1.8'
                 }}>
                   💡 "근데 왜 이걸 알려주세요?"<br/>
-                  <span style={{ color: '#fbbf24' }}>
+                  <span style={{ color: '#ffd60a' }}>
                     4단계 - 함께 성장하는 네트워크를 만들기 위해서입니다.<br/>
                     혼자보다 여럿이 모였을 때 시너지가 있습니다.
                   </span>
@@ -1021,17 +1021,17 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 
             {/* 🔥 핵심 차별점 - 압도적 비주얼 */}
             <div style={{
-              background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
+              background: 'linear-gradient(135deg, #0d1b2a 0%, #ffffff 100%)',
               padding: 'clamp(25px, 5vw, 50px) clamp(20px, 4vw, 40px)',
               borderRadius: '25px',
               marginBottom: 'clamp(20px, 4vw, 40px)',
-              border: '3px solid #fbbf24',
+              border: '3px solid #ffd60a',
               boxShadow: '0 15px 50px rgba(251, 191, 36, 0.2)'
             }}>
               <div style={{ textAlign: 'center', marginBottom: '30px' }}>
                 <div style={{
                   display: 'inline-block',
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                   padding: '10px 25px',
                   borderRadius: '30px',
                   marginBottom: '20px'
@@ -1048,7 +1048,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   lineHeight: '1.4'
                 }}>
                   콘텐츠를 "생성"하는 게 아닙니다.<br/>
-                  <span style={{ color: '#fbbf24' }}>압도적으로 강한 주제를 "선택"</span>하는 겁니다.
+                  <span style={{ color: '#ffd60a' }}>압도적으로 강한 주제를 "선택"</span>하는 겁니다.
                 </h3>
                 <p style={{
                   color: '#94a3b8',
@@ -1067,7 +1067,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
               <div style={{
                 borderRadius: '20px',
                 overflow: 'hidden',
-                border: '4px solid #fbbf24',
+                border: '4px solid #ffd60a',
                 boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)'
               }}>
                 <img 
@@ -1080,7 +1080,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   }}
                 />
                 <div style={{
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                   padding: '20px',
                   textAlign: 'center'
                 }}>
@@ -1123,7 +1123,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 fontWeight: '900',
                 marginBottom: '15px'
               }}>
-                강의 + <span style={{ color: '#fbbf24' }}>매주 라이브</span> + 커뮤니티
+                강의 + <span style={{ color: '#ffd60a' }}>매주 라이브</span> + 커뮤니티
               </h3>
               <p style={{
                 color: '#a7f3d0',
@@ -1164,11 +1164,11 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 background: 'rgba(251, 191, 36, 0.2)',
                 padding: '25px',
                 borderRadius: '15px',
-                border: '2px solid #fbbf24',
+                border: '2px solid #ffd60a',
                 textAlign: 'center'
               }}>
                 <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>🔴</div>
-                <h4 style={{ color: '#fbbf24', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
+                <h4 style={{ color: '#ffd60a', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
                   매주 라이브 (무료)
                 </h4>
                 <p style={{ color: '#a7f3d0', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
@@ -1208,7 +1208,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
             <h3 style={{
               fontSize: 'clamp(1.3rem, 3vw, 1.8rem)',
               fontWeight: '700',
-              color: '#1f2937',
+              color: '#1b263b',
               textAlign: 'center',
               marginBottom: 'clamp(20px, 4vw, 40px)'
             }}>
@@ -1263,7 +1263,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
             <h3 style={{
               fontSize: 'clamp(1.3rem, 3vw, 1.8rem)',
               fontWeight: '700',
-              color: '#1f2937',
+              color: '#1b263b',
               textAlign: 'center',
               marginBottom: 'clamp(20px, 4vw, 40px)'
             }}>
@@ -1290,7 +1290,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   listStyle: 'none',
                   padding: '0',
                   margin: '0',
-                  color: '#1f2937',
+                  color: '#1b263b',
                   lineHeight: '2'
                 }}>
                   <li style={{ marginBottom: '8px' }}>
@@ -1325,7 +1325,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   listStyle: 'none',
                   padding: '0',
                   margin: '0',
-                  color: '#1f2937',
+                  color: '#1b263b',
                   lineHeight: '2'
                 }}>
                   <li style={{ marginBottom: '8px' }}>
@@ -1360,7 +1360,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   listStyle: 'none',
                   padding: '0',
                   margin: '0',
-                  color: '#1f2937',
+                  color: '#1b263b',
                   lineHeight: '2'
                 }}>
                   <li style={{ marginBottom: '8px' }}>
@@ -1407,7 +1407,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 {/* 슬로건 */}
                 <div style={{
                   display: 'inline-block',
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                   padding: '10px 25px',
                   borderRadius: '30px',
                   marginBottom: '25px'
@@ -1433,8 +1433,8 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   lineHeight: '1.8',
                   marginBottom: '25px'
                 }}>
-                  ChatGPT, Claude, Gemini... <strong style={{ color: '#fbbf24' }}>매주 새로운 기능</strong>이 쏟아집니다.<br/>
-                  녹화 강의만으로는 <strong style={{ color: '#fbbf24' }}>최신 AI를 따라갈 수 없습니다.</strong><br/><br/>
+                  ChatGPT, Claude, Gemini... <strong style={{ color: '#ffd60a' }}>매주 새로운 기능</strong>이 쏟아집니다.<br/>
+                  녹화 강의만으로는 <strong style={{ color: '#ffd60a' }}>최신 AI를 따라갈 수 없습니다.</strong><br/><br/>
                   그래서 준비했습니다! 👇
                 </p>
 
@@ -1446,7 +1446,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   marginBottom: '25px',
                   border: '2px solid rgba(251, 191, 36, 0.3)'
                 }}>
-                  <h5 style={{ color: '#fbbf24', fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)', fontWeight: '700', marginBottom: '20px', textAlign: 'center' }}>
+                  <h5 style={{ color: '#ffd60a', fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)', fontWeight: '700', marginBottom: '20px', textAlign: 'center' }}>
                     ✨ Step 1 구성
                   </h5>
                   <div style={{
@@ -1457,13 +1457,13 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     <div style={{ textAlign: 'center', padding: '20px', background: 'rgba(255,255,255,0.08)', borderRadius: '15px' }}>
                       <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>📚</div>
                       <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', marginBottom: '5px' }}>기본 코어 강의</div>
-                      <div style={{ color: '#fbbf24', fontWeight: '800', fontSize: '1.5rem' }}>12개</div>
+                      <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: '1.5rem' }}>12개</div>
                       <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>영구 소장</div>
                     </div>
                     <div style={{ textAlign: 'center', padding: '20px', background: 'rgba(251,191,36,0.15)', borderRadius: '15px', border: '2px solid rgba(251,191,36,0.4)' }}>
                       <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🔴</div>
                       <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', marginBottom: '5px' }}>주간 라이브</div>
-                      <div style={{ color: '#fbbf24', fontWeight: '800', fontSize: '1.5rem' }}>52회/년</div>
+                      <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: '1.5rem' }}>52회/년</div>
                       <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>1년간 무제한 참여</div>
                     </div>
                   </div>
@@ -1471,7 +1471,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 
                 {/* 가성비 계산 */}
                 <div style={{
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                   borderRadius: '20px',
                   padding: '25px 30px',
                   marginBottom: '20px'
@@ -1549,19 +1549,19 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 gap: '20px'
               }}>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '5px' }}>HD 동영상</div>
+                  <div style={{ fontWeight: '600', color: '#1b263b', marginBottom: '5px' }}>HD 동영상</div>
                   <div style={{ fontSize: '0.8rem', color: '#64748b' }}>기본 콘텐츠 5개</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '5px' }}>주간 라이브</div>
+                  <div style={{ fontWeight: '600', color: '#1b263b', marginBottom: '5px' }}>주간 라이브</div>
                   <div style={{ fontSize: '0.8rem', color: '#64748b' }}>매주 1회 진행</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '5px' }}>다시보기</div>
+                  <div style={{ fontWeight: '600', color: '#1b263b', marginBottom: '5px' }}>다시보기</div>
                   <div style={{ fontSize: '0.8rem', color: '#64748b' }}>아카이브 무제한</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontWeight: '600', color: '#1f2937', marginBottom: '5px' }}>수강 기간</div>
+                  <div style={{ fontWeight: '600', color: '#1b263b', marginBottom: '5px' }}>수강 기간</div>
                   <div style={{ fontSize: '0.8rem', color: '#64748b' }}>1년간 접근</div>
                 </div>
               </div>
@@ -1584,7 +1584,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 fontSize: 'clamp(1.5rem, 4vw, 2.2rem)',
                 fontWeight: '800',
                 marginBottom: '16px',
-                color: '#1f2937'
+                color: '#1b263b'
               }}>
                 📰 언론이 주목한 실화
               </h3>
@@ -1643,7 +1643,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
                     fontWeight: '800',
                     marginBottom: '15px',
-                    color: '#1f2937',
+                    color: '#1b263b',
                     lineHeight: '1.3'
                   }}>
                     맨손으로 부동산 신화 6000만 달러의 사나이
@@ -1727,7 +1727,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
                     fontWeight: '800',
                     marginBottom: '15px',
-                    color: '#1f2937',
+                    color: '#1b263b',
                     lineHeight: '1.3'
                   }}>
                     커넥젼에이아이 정원석 대표<br />
@@ -1786,7 +1786,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
                 fontWeight: '700',
                 marginBottom: '15px',
-                color: '#1f2937'
+                color: '#1b263b'
               }}>
                 💡 이 두 이야기가 만나면?
               </h5>
@@ -1844,7 +1844,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 fontWeight: '900',
                 textAlign: 'center',
                 marginBottom: 'clamp(30px, 6vw, 60px)',
-                color: '#1f2937',
+                color: '#1b263b',
                 textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
               }}>
                 대표 멘토 - 정원석 (Jay)
@@ -1967,7 +1967,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     fontSize: '2rem',
                     fontWeight: '800',
                     marginBottom: '15px',
-                    color: '#1f2937',
+                    color: '#1b263b',
                     textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
                   }}>
                     정원석 (Jay)
@@ -1987,7 +1987,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                       fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
                       fontWeight: '700',
                       marginBottom: '15px',
-                      color: '#1f2937',
+                      color: '#1b263b',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '8px'
@@ -2020,7 +2020,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                       fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
                       fontWeight: '700',
                       marginBottom: '15px',
-                      color: '#1f2937',
+                      color: '#1b263b',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '8px'
@@ -2055,7 +2055,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                       fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
                       fontWeight: '700',
                       marginBottom: '15px',
-                      color: '#1f2937',
+                      color: '#1b263b',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '8px'
@@ -2105,7 +2105,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     <p style={{
                       fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
                       lineHeight: '1.7',
-                      color: '#1f2937',
+                      color: '#1b263b',
                       margin: '0',
                       fontWeight: '500',
                       fontStyle: 'italic'
@@ -2131,7 +2131,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
             <h3 style={{
               fontSize: 'clamp(1.3rem, 3vw, 1.8rem)',
               fontWeight: '700',
-              color: '#1f2937',
+              color: '#1b263b',
               textAlign: 'center',
               marginBottom: 'clamp(20px, 4vw, 40px)'
             }}>
@@ -2158,7 +2158,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   Q. AI 경험이 전혀 없어도 따라할 수 있나요?
                 </h4>
                 <p style={{
-                  color: '#1f2937',
+                  color: '#1b263b',
                   margin: '0',
                   lineHeight: '1.6'
                 }}>
@@ -2184,7 +2184,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   Q. 수강료 외에 추가 비용이 발생하나요?
                 </h4>
                 <p style={{
-                  color: '#1f2937',
+                  color: '#1b263b',
                   margin: '0',
                   lineHeight: '1.6'
                 }}>
@@ -2206,7 +2206,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
             boxShadow: '0 15px 35px rgba(0, 0, 0, 0.1)'
           }}>
             <h3 style={{
-              color: '#1f2937',
+              color: '#1b263b',
               fontSize: '2rem',
               fontWeight: '800',
               marginBottom: '10px',
@@ -2287,7 +2287,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   </div>
                   <div style={{ flex: 1 }}>
                     <h5 style={{
-                      color: '#1f2937',
+                      color: '#1b263b',
                       marginBottom: '6px',
                       fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
                       fontWeight: '700'
@@ -2371,7 +2371,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   </div>
                   <div style={{ flex: 1 }}>
                     <h5 style={{
-                      color: '#1f2937',
+                      color: '#1b263b',
                       marginBottom: '6px',
                       fontSize: 'clamp(0.95rem, 2vw, 1.05rem)',
                       fontWeight: '700'

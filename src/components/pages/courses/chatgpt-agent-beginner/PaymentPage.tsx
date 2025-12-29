@@ -211,7 +211,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           <h1 style={{
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
             fontWeight: '800',
-            color: '#1f2937',
+            color: '#1b263b',
             marginBottom: '10px'
           }}>
             강의 결제
@@ -258,7 +258,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
               <h2 style={{
                 fontSize: 'clamp(1.1rem, 3vw, 1.5rem)',
                 fontWeight: '700',
-                color: '#1f2937',
+                color: '#1b263b',
                 marginBottom: '5px',
                 lineHeight: '1.3'
               }}>
@@ -290,7 +290,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             }}>
               <span style={{
                 fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)',
-                color: '#1f2937',
+                color: '#1b263b',
                 fontWeight: '700'
               }}>
                 결제 금액
@@ -346,7 +346,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             borderRadius: '12px',
             padding: 'clamp(12px, 3vw, 20px)',
             marginBottom: 'clamp(12px, 3vw, 20px)',
-            border: '2px solid #fbbf24'
+            border: '2px solid #ffd60a'
           }}>
             <p style={{
               fontSize: '0.95rem',
@@ -376,7 +376,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
               lineHeight: '1.7',
               margin: 0
             }}>
-              <strong style={{ color: '#1f2937' }}>📧 결제 후 안내:</strong><br />
+              <strong style={{ color: '#1b263b' }}>📧 결제 후 안내:</strong><br />
               • 결제 완료 시 마이페이지에서 수강 신청 내역을 확인하실 수 있습니다.<br />
               • 2025년 11월 15일부터 강의를 수강하실 수 있습니다.<br />
               • 문의사항: <strong>jay@connexionai.kr</strong>
@@ -529,7 +529,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
               <div className="fade-in">
                 <div style={{
                   background: '#fef3c7',
-                  border: '2px solid #f59e0b',
+                  border: '2px solid #e5c100',
                   borderRadius: '15px',
                   padding: 'clamp(12px, 3vw, 20px)',
                   marginBottom: '20px'

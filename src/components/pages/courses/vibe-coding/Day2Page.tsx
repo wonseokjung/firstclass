@@ -47,7 +47,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0f0a1e 0%, #1a1033 50%, #0f172a 100%)' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0f0a1e 0%, #1a1033 50%, #ffffff 100%)' }}>
       {/* 헤더 */}
       <div style={{
         background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(124, 58, 237, 0.1))',
@@ -122,9 +122,9 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
             <TrendingUp size={28} /> MVP로 성공한 서비스들
           </h2>
           <div style={{ color: '#e2e8f0', lineHeight: '2' }}>
-            <p><strong style={{ color: '#fbbf24' }}>Dropbox</strong> - 영상 하나로 10만 대기자 확보</p>
-            <p><strong style={{ color: '#fbbf24' }}>Zapier</strong> - 엑셀 시트 하나로 시작</p>
-            <p><strong style={{ color: '#fbbf24' }}>Buffer</strong> - 랜딩 페이지 하나로 검증</p>
+            <p><strong style={{ color: '#ffd60a' }}>Dropbox</strong> - 영상 하나로 10만 대기자 확보</p>
+            <p><strong style={{ color: '#ffd60a' }}>Zapier</strong> - 엑셀 시트 하나로 시작</p>
+            <p><strong style={{ color: '#ffd60a' }}>Buffer</strong> - 랜딩 페이지 하나로 검증</p>
           </div>
         </div>
 
@@ -136,7 +136,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
           <button onClick={handleCompleteDay} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #8b5cf6, #7c3aed)', color: 'white', border: 'none', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: isDayCompleted ? '0 8px 25px rgba(34, 197, 94, 0.4)' : '0 8px 25px rgba(139, 92, 246, 0.4)' }}>
             {isDayCompleted ? <><CheckCircle size={24} /> Day 2 완료!</> : isCompletingDay ? '처리 중...' : <><PlayCircle size={24} /> Day 2 완료하기</>}
           </button>
-          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #0f172a)', color: 'white', border: '1px solid rgba(139, 92, 246, 0.3)', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: 'pointer' }}>Day 3로 이동 →</button>}
+          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #ffffff)', color: 'white', border: '1px solid rgba(139, 92, 246, 0.3)', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: 'pointer' }}>Day 3로 이동 →</button>}
         </div>
       </div>
     </div>

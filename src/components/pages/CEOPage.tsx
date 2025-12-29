@@ -43,7 +43,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
       icon: <Zap size={24} />,
       description: 'AI 수익화 전문 자동화 에이전트',
       price: 'Coming Soon',
-      color: '#f59e0b',
+      color: '#e5c100',
       path: '#'
     },
     {
@@ -103,7 +103,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             borderRadius: '30px',
             marginBottom: '8px'
           }}>
-            <span style={{ color: '#fbbf24', fontSize: '0.9rem', fontWeight: '600' }}>
+            <span style={{ color: '#ffd60a', fontSize: '0.9rem', fontWeight: '600' }}>
               🏙️ AI City Builders
               </span>
           </div>
@@ -117,7 +117,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             maxWidth: '900px'
           }}>
             <span style={{
-              background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+              background: 'linear-gradient(135deg, #ffd60a 0%, #e5c100 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
@@ -136,7 +136,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           }}>
             기술이 없어서 못했던 사람들도<br />
             <strong style={{ color: '#fff' }}>AI로 콘텐츠를 만들고 수익화</strong>할 수 있도록<br />
-            <span style={{ color: '#fbbf24', fontWeight: '700' }}>교육</span>과 <span style={{ color: '#fbbf24', fontWeight: '700' }}>도구</span>를 제공합니다.
+            <span style={{ color: '#ffd60a', fontWeight: '700' }}>교육</span>과 <span style={{ color: '#ffd60a', fontWeight: '700' }}>도구</span>를 제공합니다.
           </p>
 
           {/* 교육 + 도구 = AI 도시 */}
@@ -160,7 +160,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
               <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.85rem', margin: '4px 0 0 0' }}>AI 활용법</p>
             </div>
 
-            <span style={{ color: '#fbbf24', fontSize: '2rem', fontWeight: '900' }}>+</span>
+            <span style={{ color: '#ffd60a', fontSize: '2rem', fontWeight: '900' }}>+</span>
 
             <div style={{
               background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
@@ -174,10 +174,10 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
               <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.85rem', margin: '4px 0 0 0' }}>AI 에이전트</p>
             </div>
 
-            <span style={{ color: '#fbbf24', fontSize: '2rem', fontWeight: '900' }}>=</span>
+            <span style={{ color: '#ffd60a', fontSize: '2rem', fontWeight: '900' }}>=</span>
 
             <div style={{
-              background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+              background: 'linear-gradient(135deg, #e5c100 0%, #d97706 100%)',
               borderRadius: '16px',
               padding: 'clamp(16px, 3vw, 24px) clamp(24px, 4vw, 36px)',
               textAlign: 'center',
@@ -246,7 +246,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             zIndex: 1
           }}>
             "AI will create an entirely <span style={{ 
-              color: '#fbbf24', 
+              color: '#ffd60a', 
               fontWeight: '900',
               textDecoration: 'underline',
               textDecorationColor: 'rgba(251, 191, 36, 0.5)'
@@ -259,7 +259,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             margin: 0,
             lineHeight: '1.6'
           }}>
-            "AI는 <strong style={{ color: '#fbbf24' }}>완전히 새로운 크리에이터 계급</strong>을 만들어낼 것입니다.<br />
+            "AI는 <strong style={{ color: '#ffd60a' }}>완전히 새로운 크리에이터 계급</strong>을 만들어낼 것입니다.<br />
             지금은 기술이나 장비가 없어서 못하는 사람들도요."
           </p>
 
@@ -271,7 +271,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             border: '1px solid rgba(251, 191, 36, 0.2)'
           }}>
             <p style={{
-              color: '#fbbf24',
+              color: '#ffd60a',
               fontSize: '1rem',
               fontWeight: '700',
               margin: 0,
@@ -348,7 +348,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
               width: '70px',
               height: '70px',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+              background: 'linear-gradient(135deg, #ffd60a 0%, #e5c100 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -357,14 +357,14 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             }}>
               <GraduationCap size={36} color="#000" />
             </div>
-            <h3 style={{ color: '#fbbf24', fontSize: '1.3rem', fontWeight: '800', marginBottom: '12px' }}>
+            <h3 style={{ color: '#ffd60a', fontSize: '1.3rem', fontWeight: '800', marginBottom: '12px' }}>
               AI City Builders
             </h3>
-            <p style={{ color: '#fbbf24', fontSize: '1.1rem', fontWeight: '700', marginBottom: '8px' }}>
+            <p style={{ color: '#ffd60a', fontSize: '1.1rem', fontWeight: '700', marginBottom: '8px' }}>
               🎓 교육 + 🛠️ 도구
             </p>
             <p style={{ color: '#e0e0e0', fontSize: '0.9rem', lineHeight: '1.6', margin: 0 }}>
-              그 무대에 설 인재를<br /><strong style={{ color: '#fbbf24' }}>양성</strong>하고 <strong style={{ color: '#fbbf24' }}>도구</strong>를 제공
+              그 무대에 설 인재를<br /><strong style={{ color: '#ffd60a' }}>양성</strong>하고 <strong style={{ color: '#ffd60a' }}>도구</strong>를 제공
             </p>
           </div>
         </div>
@@ -376,8 +376,8 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
         }}>
           <div style={{
             display: 'inline-block',
-            background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
-            border: '2px solid #fbbf24',
+            background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
+            border: '2px solid #ffd60a',
             borderRadius: '16px',
             padding: '24px 40px'
           }}>
@@ -393,7 +393,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
               gap: '8px'
             }}>
               <span>🏙️</span>
-              <span style={{ color: '#fbbf24' }}>AI 크리에이터 도시</span>
+              <span style={{ color: '#ffd60a' }}>AI 크리에이터 도시</span>
             </p>
           </div>
         </div>
@@ -633,7 +633,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
               step: '03',
               title: '💰 수익화', 
               desc: '수익형 콘텐츠 채널을 완성하고 월 수익을 창출합니다',
-              color: '#f59e0b',
+              color: '#e5c100',
               highlight: 'AI 크리에이터'
             },
             { 
@@ -722,7 +722,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
 
           {/* 멘토 프로필 카드 */}
           <div style={{
-            background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
+            background: 'linear-gradient(135deg, #0d1b2a 0%, #ffffff 100%)',
             border: '2px solid rgba(251, 191, 36, 0.3)',
             borderRadius: '24px',
             padding: 'clamp(24px, 5vw, 40px)',
@@ -740,7 +740,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                 width: '120px',
                 height: '120px',
                 borderRadius: '50%',
-                border: '4px solid #fbbf24',
+                border: '4px solid #ffd60a',
                 overflow: 'hidden',
                 boxShadow: '0 0 40px rgba(251, 191, 36, 0.3)'
               }}>
@@ -763,8 +763,8 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                 maxWidth: '600px',
                 margin: 0
               }}>
-                <strong style={{ color: '#fbbf24' }}>AI로 콘텐츠를 만드는 크리에이터</strong>를 양성하고,<br />
-                함께 <strong style={{ color: '#fbbf24' }}>AI 도시</strong>를 만들어가고 있습니다.
+                <strong style={{ color: '#ffd60a' }}>AI로 콘텐츠를 만드는 크리에이터</strong>를 양성하고,<br />
+                함께 <strong style={{ color: '#ffd60a' }}>AI 도시</strong>를 만들어가고 있습니다.
               </p>
 
               {/* 역할 배지 */}
@@ -782,7 +782,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                   <span key={idx} style={{
                     background: 'rgba(251, 191, 36, 0.15)',
                     border: '1px solid rgba(251, 191, 36, 0.3)',
-                    color: '#fbbf24',
+                    color: '#ffd60a',
                     padding: '8px 16px',
                   borderRadius: '20px',
                   fontSize: '0.85rem',
@@ -815,7 +815,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                 gap: '14px'
               }}>
                 <div style={{
-                  background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                  background: 'linear-gradient(135deg, #ffd60a 0%, #e5c100 100%)',
                   color: '#000',
                   padding: '8px 14px',
                   borderRadius: '10px',
@@ -856,7 +856,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             borderRadius: '30px',
             marginBottom: '24px'
           }}>
-            <span style={{ color: '#fbbf24', fontSize: '0.9rem', fontWeight: '600' }}>
+            <span style={{ color: '#ffd60a', fontSize: '0.9rem', fontWeight: '600' }}>
               ✨ New Class of AI Creators
             </span>
           </div>
@@ -869,7 +869,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             lineHeight: '1.3'
           }}>
             AI 크리에이터가 되어<br />
-            <span style={{ color: '#fbbf24' }}>AI 도시</span>를 함께 만들어갑시다
+            <span style={{ color: '#ffd60a' }}>AI 도시</span>를 함께 만들어갑시다
         </h2>
 
         <p style={{
@@ -891,7 +891,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
         <button
           onClick={onBack}
           style={{
-                background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                background: 'linear-gradient(135deg, #ffd60a 0%, #e5c100 100%)',
             color: '#000',
             border: 'none',
                 padding: '18px 40px',
@@ -921,8 +921,8 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
               onClick={() => navigate('/roadmap')}
               style={{
                 background: 'transparent',
-                color: '#fbbf24',
-                border: '2px solid #fbbf24',
+                color: '#ffd60a',
+                border: '2px solid #ffd60a',
                 padding: '18px 40px',
                 borderRadius: '14px',
                 fontWeight: '700',

@@ -12,7 +12,7 @@ const COLORS = {
   bgCardHover: '#234060',
   
   // 메인 컬러
-  gold: '#fbbf24',
+  gold: '#ffd60a',
   goldLight: '#fcd34d',
   goldBright: '#fef08a',
   

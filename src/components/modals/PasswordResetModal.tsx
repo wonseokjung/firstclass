@@ -113,7 +113,7 @@ const PasswordResetModal: React.FC<PasswordResetModalProps> = ({
               {/* 개발 중 안내 */}
               <div style={{
                 background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-                border: '2px solid #fbbf24',
+                border: '2px solid #ffd60a',
                 borderRadius: '12px',
                 padding: '20px',
                 marginBottom: '20px',
@@ -142,7 +142,7 @@ const PasswordResetModal: React.FC<PasswordResetModalProps> = ({
                   background: 'white',
                   borderRadius: '8px',
                   padding: '15px',
-                  border: '1px solid #fbbf24'
+                  border: '1px solid #ffd60a'
                 }}>
                   <p style={{
                     fontSize: '0.9rem',

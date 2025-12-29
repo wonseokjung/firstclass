@@ -91,7 +91,7 @@ const STEP_INFO: { [key: string]: StepInfo } = {
     price: null,
     purchaseLink: '/solo-business',
     icon: '🏢',
-    color: '#f59e0b'
+    color: '#e5c100'
   }
 };
 

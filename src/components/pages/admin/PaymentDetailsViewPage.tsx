@@ -278,7 +278,7 @@ const PaymentDetailsViewPage: React.FC<PaymentDetailsViewPageProps> = ({ onBack 
                   borderRadius: '12px',
                   padding: '25px',
                   boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-                  border: payment.status === 'DONE' ? '2px solid #10b981' : payment.status === 'WAITING_FOR_DEPOSIT' ? '2px solid #f59e0b' : '1px solid #e2e8f0'
+                  border: payment.status === 'DONE' ? '2px solid #10b981' : payment.status === 'WAITING_FOR_DEPOSIT' ? '2px solid #e5c100' : '1px solid #e2e8f0'
                 }}
               >
                 {/* 상태 뱃지 */}

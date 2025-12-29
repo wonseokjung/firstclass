@@ -131,7 +131,7 @@ const Step1IdeaGeneratorPage: React.FC<Step1IdeaGeneratorPageProps> = ({ onBack 
   const getDifficultyBadge = (difficulty: string) => {
     const badges = {
       beginner: { text: '초급', color: '#10b981', bg: '#d1fae5' },
-      intermediate: { text: '중급', color: '#f59e0b', bg: '#fef3c7' },
+      intermediate: { text: '중급', color: '#e5c100', bg: '#fef3c7' },
       advanced: { text: '고급', color: '#ef4444', bg: '#fee2e2' }
     };
     const badge = badges[difficulty as keyof typeof badges];
@@ -246,7 +246,7 @@ const Step1IdeaGeneratorPage: React.FC<Step1IdeaGeneratorPageProps> = ({ onBack 
                 display: 'block',
                 fontSize: 'clamp(1rem, 2vw, 1.1rem)',
                 fontWeight: '700',
-                color: '#1f2937',
+                color: '#1b263b',
                 marginBottom: '10px'
               }}>
                 💡 관심 분야 *
@@ -275,7 +275,7 @@ const Step1IdeaGeneratorPage: React.FC<Step1IdeaGeneratorPageProps> = ({ onBack 
                 display: 'block',
                 fontSize: 'clamp(1rem, 2vw, 1.1rem)',
                 fontWeight: '700',
-                color: '#1f2937',
+                color: '#1b263b',
                 marginBottom: '10px'
               }}>
                 💰 투자 가능 예산
@@ -306,7 +306,7 @@ const Step1IdeaGeneratorPage: React.FC<Step1IdeaGeneratorPageProps> = ({ onBack 
                 display: 'block',
                 fontSize: 'clamp(1rem, 2vw, 1.1rem)',
                 fontWeight: '700',
-                color: '#1f2937',
+                color: '#1b263b',
                 marginBottom: '10px'
               }}>
                 ⏰ 주당 투자 가능 시간
@@ -337,7 +337,7 @@ const Step1IdeaGeneratorPage: React.FC<Step1IdeaGeneratorPageProps> = ({ onBack 
                 display: 'block',
                 fontSize: 'clamp(1rem, 2vw, 1.1rem)',
                 fontWeight: '700',
-                color: '#1f2937',
+                color: '#1b263b',
                 marginBottom: '10px'
               }}>
                 🎯 목표
@@ -486,7 +486,7 @@ const Step1IdeaGeneratorPage: React.FC<Step1IdeaGeneratorPageProps> = ({ onBack 
                     <h3 style={{
                       fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)',
                       fontWeight: '800',
-                      color: '#1f2937',
+                      color: '#1b263b',
                       margin: 0,
                       flex: 1
                     }}>
@@ -561,7 +561,7 @@ const Step1IdeaGeneratorPage: React.FC<Step1IdeaGeneratorPageProps> = ({ onBack 
                         gap: '6px',
                         marginBottom: '5px'
                       }}>
-                        <DollarSign size={16} color="#f59e0b" />
+                        <DollarSign size={16} color="#e5c100" />
                         <span style={{
                           fontSize: '0.85rem',
                           color: '#d97706',
@@ -573,7 +573,7 @@ const Step1IdeaGeneratorPage: React.FC<Step1IdeaGeneratorPageProps> = ({ onBack 
                       <div style={{
                         fontSize: '0.9rem',
                         fontWeight: '700',
-                        color: '#f59e0b'
+                        color: '#e5c100'
                       }}>
                         {idea.estimatedRevenue}
                       </div>
@@ -635,7 +635,7 @@ const Step1IdeaGeneratorPage: React.FC<Step1IdeaGeneratorPageProps> = ({ onBack 
                             key={idx}
                             style={{
                               background: '#f3f4f6',
-                              color: '#374151',
+                              color: '#415a77',
                               padding: '4px 10px',
                               borderRadius: '6px',
                               fontSize: '0.8rem',

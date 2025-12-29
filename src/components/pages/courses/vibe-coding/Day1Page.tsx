@@ -79,7 +79,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
   return (
     <div style={{ 
       minHeight: '100vh', 
-      background: 'linear-gradient(180deg, #0f0a1e 0%, #1a1033 50%, #0f172a 100%)' 
+      background: 'linear-gradient(180deg, #0f0a1e 0%, #1a1033 50%, #ffffff 100%)' 
     }}>
       {/* 헤더 */}
       <div style={{
@@ -294,7 +294,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
           border: '1px solid rgba(251, 191, 36, 0.3)'
         }}>
           <h2 style={{ 
-            color: '#fbbf24', 
+            color: '#ffd60a', 
             fontSize: 'clamp(1.3rem, 3vw, 1.6rem)', 
             marginBottom: '25px',
             display: 'flex',
@@ -313,7 +313,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
               { step: 1, title: '콘텐츠 만들기', desc: 'AI로 영상/글 제작', icon: '🎬', color: '#8b5cf6' },
               { step: 2, title: '시스템 만들기', desc: '에이전트로 자동화', icon: '🤖', color: '#06b6d4' },
               { step: 3, title: '바이브코딩', desc: '웹사이트/앱 개발', icon: '💻', color: '#22c55e' },
-              { step: 4, title: '1인 기업', desc: '수익화 & 확장', icon: '🚀', color: '#fbbf24' },
+              { step: 4, title: '1인 기업', desc: '수익화 & 확장', icon: '🚀', color: '#ffd60a' },
             ].map((item) => (
               <div key={item.step} style={{
                 background: 'rgba(0, 0, 0, 0.3)',
@@ -329,7 +329,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                   left: '50%',
                   transform: 'translateX(-50%)',
                   background: item.color,
-                  color: '#0f172a',
+                  color: '#ffffff',
                   width: '28px',
                   height: '28px',
                   borderRadius: '50%',
@@ -355,7 +355,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
             marginTop: '20px',
             textAlign: 'center'
           }}>
-            <p style={{ color: '#fbbf24', fontSize: '1.1rem', fontWeight: '600', margin: 0 }}>
+            <p style={{ color: '#ffd60a', fontSize: '1.1rem', fontWeight: '600', margin: 0 }}>
               🎯 이 강의는 <strong>Step 3: 바이브코딩</strong>에 집중합니다!
             </p>
           </div>
@@ -569,7 +569,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
             <button
               onClick={onNext}
               style={{
-                background: 'linear-gradient(135deg, #1e3a5f, #0f172a)',
+                background: 'linear-gradient(135deg, #1e3a5f, #ffffff)',
                 color: 'white',
                 border: '1px solid rgba(139, 92, 246, 0.3)',
                 padding: '18px 45px',

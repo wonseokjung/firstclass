@@ -177,7 +177,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #1e293b, #334155)'
+      background: 'linear-gradient(135deg, #0d1b2a, #1b263b)'
     }}>
       <NavigationBar
         onBack={() => navigate('/ai-building-course')}
@@ -201,7 +201,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             justifyContent: 'center',
             width: 'clamp(60px, 12vw, 80px)',
             height: 'clamp(60px, 12vw, 80px)',
-            background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+            background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
             borderRadius: '50%',
             marginBottom: 'clamp(12px, 3vw, 20px)',
             boxShadow: '0 8px 25px rgba(251, 191, 36, 0.4)'
@@ -227,10 +227,10 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           <div style={{
             display: 'inline-block',
             background: 'rgba(251, 191, 36, 0.2)',
-            border: '2px solid #fbbf24',
+            border: '2px solid #ffd60a',
             padding: 'clamp(6px, 2vw, 8px) clamp(12px, 3vw, 20px)',
             borderRadius: '25px',
-            color: '#fbbf24',
+            color: '#ffd60a',
             fontSize: 'clamp(0.8rem, 2.5vw, 0.9rem)',
             fontWeight: '700'
           }}>
@@ -245,7 +245,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           padding: 'clamp(20px, 5vw, 40px)',
           marginBottom: 'clamp(20px, 4vw, 30px)',
           boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
-          border: '2px solid #fbbf24'
+          border: '2px solid #ffd60a'
         }}>
           {/* 가격 정보 */}
           <div style={{
@@ -278,7 +278,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
               borderRadius: '20px',
               fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)',
               fontWeight: '800',
-              border: '2px solid #fbbf24'
+              border: '2px solid #ffd60a'
             }}>
               💰 50,000원 할인
             </div>
@@ -350,8 +350,8 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                     disabled={isLoading}
                     style={{
                       width: '100%',
-                      background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                      color: '#1e293b',
+                      background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
+                      color: '#0d1b2a',
                       border: 'none',
                       padding: 'clamp(12px, 3vw, 18px)',
                       borderRadius: '10px',
@@ -430,7 +430,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
               <div className="fade-in">
                 <div style={{
                   background: '#fef3c7',
-                  border: '2px solid #f59e0b',
+                  border: '2px solid #e5c100',
                   borderRadius: '15px',
                   padding: '20px',
                   marginBottom: '20px'
@@ -515,7 +515,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           <h3 style={{
             fontSize: '1.1rem',
             fontWeight: '700',
-            color: '#fbbf24',
+            color: '#ffd60a',
             marginBottom: '15px'
           }}>
             📌 안내사항

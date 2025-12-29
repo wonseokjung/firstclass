@@ -44,7 +44,7 @@ const stepConfigs: { [key: string]: StepConfig } = {
 const theme = {
   navy: '#0f2744',
   navyLight: '#1e3a5f',
-  gold: '#fbbf24',
+  gold: '#ffd60a',
   white: '#ffffff',
   gray: '#64748b',
   grayLight: '#f1f5f9',

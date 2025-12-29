@@ -258,7 +258,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
             <h2 style={{
               fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
               fontWeight: '700',
-              color: '#1f2937',
+              color: '#1b263b',
               marginBottom: 'clamp(15px, 3vw, 20px)',
               textAlign: 'center'
             }}>
@@ -318,14 +318,14 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                 fontSize: 'clamp(2rem, 4vw, 2.8rem)',
                 marginBottom: '20px',
                 fontWeight: '800',
-                color: '#1f2937'
+                color: '#1b263b'
               }}>
                 🧠 AI Agent Maker
               </h1>
               <h2 style={{
                 fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
                 marginBottom: '15px',
-                color: '#1f2937',
+                color: '#1b263b',
                 fontWeight: '700'
               }}>
                 10일 완성, 수익화하는 인공지능 에이전트 만들기
@@ -406,7 +406,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   borderRadius: '30px',
                   fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
                   fontWeight: '800',
-                  border: '2px solid #fbbf24',
+                  border: '2px solid #ffd60a',
                   boxShadow: '0 4px 15px rgba(251, 191, 36, 0.4)'
                 }}>
                   💰 특별가
@@ -489,7 +489,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   style={{
                     background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
                     color: '#92400e',
-                    border: 'clamp(2px, 0.5vw, 3px) solid #fbbf24',
+                    border: 'clamp(2px, 0.5vw, 3px) solid #ffd60a',
                     padding: 'clamp(18px, 4vw, 25px) clamp(30px, 8vw, 60px)',
                     fontSize: 'clamp(1.1rem, 3.5vw, 1.6rem)',
                     fontWeight: '900',
@@ -656,7 +656,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
               <h2 style={{
               fontSize: 'clamp(2rem, 4vw, 2.5rem)',
                 fontWeight: '800',
-                color: '#1f2937',
+                color: '#1b263b',
               marginBottom: 'clamp(20px, 4vw, 40px)',
               textAlign: 'center'
             }}>
@@ -728,7 +728,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
               marginBottom: '50px'
               }}>
                 <h3 style={{
-                  color: '#1f2937',
+                  color: '#1b263b',
                 fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                   fontWeight: '800',
                 marginBottom: 'clamp(20px, 4vw, 40px)',
@@ -766,7 +766,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                       석사
                     </div>
                     <h4 style={{
-                      color: '#1f2937',
+                      color: '#1b263b',
                     fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)',
                     fontWeight: '800',
                     marginBottom: '10px'
@@ -800,7 +800,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                         fontSize: '1rem',
                         fontWeight: '700',
                         marginBottom: '10px',
-                        color: '#1f2937'
+                        color: '#1b263b'
                       }}>
                         📜 Official Transcript
                       </h5>
@@ -870,7 +870,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                       학사
                     </div>
                     <h4 style={{
-                      color: '#1f2937',
+                      color: '#1b263b',
                     fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)',
                     fontWeight: '800',
                     marginBottom: '10px'
@@ -904,7 +904,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                         fontSize: '1rem',
                         fontWeight: '700',
                         marginBottom: '10px',
-                        color: '#1f2937'
+                        color: '#1b263b'
                       }}>
                         📜 Official Transcript
                       </h5>
@@ -963,7 +963,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
               marginBottom: '50px'
               }}>
                 <h3 style={{
-                  color: '#1f2937',
+                  color: '#1b263b',
                 fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                   fontWeight: '800',
                   marginBottom: '30px',
@@ -977,7 +977,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                 margin: '0 auto',
                 fontSize: 'clamp(1.05rem, 2vw, 1.2rem)',
                 lineHeight: '2.2',
-                color: '#1f2937'
+                color: '#1b263b'
               }}>
                 <p style={{ marginBottom: '20px', fontWeight: '500' }}>
                   <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>현재</strong> · 커넥젼에이아이 대표 · 서울사이버대학교 대우교수
@@ -1032,7 +1032,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
               <h2 style={{
                 fontSize: 'clamp(1.8rem, 3vw, 2.2rem)',
                 fontWeight: '800',
-                color: '#1f2937',
+                color: '#1b263b',
                 marginBottom: '20px'
               }}>
                 10일 완성, 수익화하는 AI 에이전트
@@ -1056,7 +1056,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                 border: '1px solid #e2e8f0'
               }}>
                 <p style={{
-                  color: '#1f2937',
+                  color: '#1b263b',
                   fontSize: '1.1rem',
                   lineHeight: '1.7',
                   margin: '0 0 30px 0',
@@ -1076,7 +1076,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
             margin: '0 auto'
           }}>
             <h3 style={{
-              color: '#1f2937',
+              color: '#1b263b',
               fontSize: 'clamp(2rem, 4vw, 2.5rem)',
               fontWeight: '800',
               marginBottom: '15px',
@@ -1150,13 +1150,13 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                     <div style={{
                       fontSize: 'clamp(1rem, 2vw, 1.15rem)',
                       lineHeight: '1.8',
-                      color: '#1f2937'
+                      color: '#1b263b'
                     }}>
                       <p style={{ marginBottom: '12px', fontWeight: '500' }}>
-                        <strong style={{ color: '#1f2937' }}>이론:</strong> {lesson.sections.theory}
+                        <strong style={{ color: '#1b263b' }}>이론:</strong> {lesson.sections.theory}
                       </p>
                       <p style={{ marginBottom: '0', fontWeight: '500' }}>
-                        <strong style={{ color: '#1f2937' }}>실습:</strong> {lesson.sections.practice}
+                        <strong style={{ color: '#1b263b' }}>실습:</strong> {lesson.sections.practice}
                         </p>
                       </div>
                 </div>
@@ -1220,13 +1220,13 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                     <div style={{
                       fontSize: 'clamp(1rem, 2vw, 1.15rem)',
                       lineHeight: '1.8',
-                      color: '#1f2937'
+                      color: '#1b263b'
                     }}>
                       <p style={{ marginBottom: '12px', fontWeight: '500' }}>
-                        <strong style={{ color: '#1f2937' }}>이론:</strong> {lesson.sections.theory}
+                        <strong style={{ color: '#1b263b' }}>이론:</strong> {lesson.sections.theory}
                       </p>
                       <p style={{ marginBottom: '0', fontWeight: '500' }}>
-                        <strong style={{ color: '#1f2937' }}>실습:</strong> {lesson.sections.practice}
+                        <strong style={{ color: '#1b263b' }}>실습:</strong> {lesson.sections.practice}
                         </p>
                       </div>
                 </div>
@@ -1272,7 +1272,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   borderRadius: '30px',
                   fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
                   fontWeight: '800',
-                  border: '2px solid #fbbf24',
+                  border: '2px solid #ffd60a',
                   boxShadow: '0 4px 15px rgba(251, 191, 36, 0.4)'
                 }}>
                   🎓 지금 바로 시작하세요
@@ -1334,7 +1334,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   style={{
                     background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
                     color: '#92400e',
-                    border: '3px solid #fbbf24',
+                    border: '3px solid #ffd60a',
                     padding: '25px 60px',
                     fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
                     fontWeight: '900',

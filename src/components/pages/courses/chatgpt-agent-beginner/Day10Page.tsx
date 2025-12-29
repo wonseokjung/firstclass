@@ -148,7 +148,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
         title: '✨ Day 10에서 배울 내용',
         duration: '',
         content: `
-          <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: 3px solid #fbbf24; padding: 40px; margin: 30px 0; border-radius: 20px; box-shadow: 0 10px 30px rgba(251, 191, 36, 0.3); text-align: center;">
+          <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: 3px solid #ffd60a; padding: 40px; margin: 30px 0; border-radius: 20px; box-shadow: 0 10px 30px rgba(251, 191, 36, 0.3); text-align: center;">
             <h2 style="color: #92400e; margin: 0 0 20px 0; font-size: 2rem; font-weight: 800;">
               🎬 일관성 있고 이어지는 영상 시리즈 제작
             </h2>
@@ -165,7 +165,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
         title: '🎥 일관성 있는 영상 시리즈 데모',
         duration: '',
         content: `
-          <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 30px; color: #1f2937; font-weight: 600; text-align: center;">
+          <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 30px; color: #1b263b; font-weight: 600; text-align: center;">
             아래 두 영상을 보시면 <strong>같은 스타일로 이어지는 영상</strong>이 어떻게 만들어지는지 확인할 수 있습니다! 🎬
           </p>
         `
@@ -214,12 +214,12 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
         videoUrl: 'https://player.vimeo.com/video/1141671373?badge=0&autopause=0&player_id=0&app_id=58479',
         isVimeo: true,
         content: `
-          <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px; color: #1f2937; font-weight: 600;">
+          <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px; color: #1b263b; font-weight: 600;">
             이 강의에서는 JSON 프롬프트를 활용한 고품질 영상 생성과 22개의 Google Opal 에이전트로 
             일관성 있는 영상 시리즈를 제작하는 방법을 배웁니다.
           </p>
 
-          <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #fbbf24; padding: 25px; margin: 25px 0; border-radius: 12px; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);">
+          <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #ffd60a; padding: 25px; margin: 25px 0; border-radius: 12px; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);">
             <h4 style="color: #92400e; margin: 0 0 15px 0; font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; gap: 10px;">
               <span style="font-size: 1.5rem;">⚡</span> 이 강의에서 배울 핵심 내용
             </h4>
@@ -251,7 +251,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
             </div>
 
             <!-- 오류 발생 시 안내 -->
-            <div style="background: #fef3c7; border: 1px dashed #f59e0b; border-radius: 12px; padding: 15px 20px; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+            <div style="background: #fef3c7; border: 1px dashed #e5c100; border-radius: 12px; padding: 15px 20px; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
               <p style="font-size: 0.9rem; color: #92400e; margin-bottom: 10px; line-height: 1.5; text-align: left;">
                 ⚠️ 워크플로우에서 오류가 날 경우, 아래 링크를 복사해서 새 탭에 직접 붙여넣기 하세요:
               </p>
@@ -333,7 +333,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
             Google Opal에서 다음과 같은 구조로 에이전트를 배치합니다:
           </p>
           
-          <div style="background: #fef3c7; border-left: 4px solid #fbbf24; padding: 20px; margin: 25px 0; border-radius: 8px;">
+          <div style="background: #fef3c7; border-left: 4px solid #ffd60a; padding: 20px; margin: 25px 0; border-radius: 8px;">
             <h4 style="color: #92400e; margin: 0 0 15px 0; font-size: 1.15rem;">📊 에이전트 구조</h4>
             <ol style="color: #92400e; line-height: 2; margin: 0; padding-left: 20px;">
               <li><strong>대표 에이전트 (User Input):</strong> 주제 입력</li>
@@ -376,7 +376,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
         title: '📝 실습 과제',
         duration: '',
         content: `
-          <div style="background: #fef3c7; border-left: 4px solid #fbbf24; padding: 20px; margin: 25px 0; border-radius: 8px;">
+          <div style="background: #fef3c7; border-left: 4px solid #ffd60a; padding: 20px; margin: 25px 0; border-radius: 8px;">
             <h4 style="color: #92400e; margin: 0 0 15px 0; font-size: 1.15rem;">🎯 숙제 미션</h4>
             <ol style="color: #92400e; line-height: 2; margin: 0; padding-left: 20px;">
               <li><strong>제품 영상 만들기:</strong> 코카콜라, 환타, 가방, 음식 등 원하는 제품의 광고 영상 제작</li>
@@ -514,7 +514,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
               {lessonData.duration}
             </span>
             <span style={{
-              background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+              background: 'linear-gradient(135deg, #e5c100, #d97706)',
               color: 'white',
               padding: 'clamp(5px, 1.2vw, 6px) clamp(12px, 2.5vw, 16px)',
               borderRadius: '20px',
@@ -544,7 +544,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
             <h3 style={{
               fontSize: 'clamp(1rem, 2.3vw, 1.1rem)',
               fontWeight: '700',
-              color: '#1e293b',
+              color: '#0d1b2a',
               marginBottom: 'clamp(12px, 2.5vw, 15px)'
             }}>
               📚 학습 목표
@@ -585,7 +585,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
                 <h2 style={{
                   fontSize: 'clamp(1.3rem, 3.5vw, 1.8rem)',
                   fontWeight: '800',
-                  color: '#1e293b',
+                  color: '#0d1b2a',
                   margin: '0 0 clamp(8px, 2vw, 10px) 0',
                   lineHeight: '1.3'
                 }}>
@@ -650,7 +650,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
                   borderRadius: '16px',
                   padding: 'clamp(20px, 4vw, 30px)',
                   marginBottom: '25px',
-                  border: '2px solid #fbbf24',
+                  border: '2px solid #ffd60a',
                   boxShadow: '0 8px 25px rgba(251, 191, 36, 0.2)'
                 }}>
                   <div style={{
@@ -676,7 +676,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
                     <button
                       onClick={copyPromptToClipboard}
                       style={{
-                        background: copiedPrompt ? '#10b981' : '#fbbf24',
+                        background: copiedPrompt ? '#10b981' : '#ffd60a',
                         color: copiedPrompt ? 'white' : '#78350f',
                         border: 'none',
                         padding: 'clamp(10px, 2vw, 12px) clamp(18px, 3vw, 25px)',
@@ -719,7 +719,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
 
                   <div style={{
                     background: 'white',
-                    color: '#1f2937',
+                    color: '#1b263b',
                     padding: 'clamp(15px, 3vw, 25px)',
                     borderRadius: '12px',
                     fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
@@ -805,7 +805,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
                 style={{
                   fontSize: 'clamp(0.95rem, 2vw, 1rem)',
                   lineHeight: '1.8',
-                  color: '#334155'
+                  color: '#1b263b'
                 }}
                 dangerouslySetInnerHTML={{ __html: section.content }}
               />
@@ -835,7 +835,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack, onNext }) => {
           <h3 style={{
             fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
             fontWeight: '700',
-            color: '#1e293b',
+            color: '#0d1b2a',
             marginBottom: 'clamp(12px, 2.5vw, 15px)',
             lineHeight: '1.3'
           }}>

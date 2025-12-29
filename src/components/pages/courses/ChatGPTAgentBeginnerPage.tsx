@@ -305,7 +305,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             <h2 style={{
               fontSize: 'clamp(1.5rem, 3vw, 1.8rem)',
               fontWeight: '700',
-              color: '#1f2937',
+              color: '#1b263b',
               marginBottom: '20px'
             }}>
               🎬 강의 소개
@@ -343,7 +343,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             maxWidth: '1100px',
             margin: '0 auto clamp(60px, 10vw, 80px) auto',
             padding: 'clamp(40px, 6vw, 60px) clamp(20px, 4vw, 40px)',
-            background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
+            background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
             borderRadius: 'clamp(15px, 3vw, 25px)',
             boxShadow: '0 20px 60px rgba(0, 0, 0, 0.25)',
             position: 'relative',
@@ -365,13 +365,13 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               <div style={{
                 display: 'inline-block',
                 background: 'linear-gradient(135deg, #1e40af, #1e3a8a)',
-                border: '2px solid #fbbf24',
+                border: '2px solid #ffd60a',
                 padding: '8px 20px',
                 borderRadius: '999px',
                 marginBottom: '20px',
                 fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
                 fontWeight: '700',
-                color: '#fbbf24',
+                color: '#ffd60a',
                 boxShadow: '0 4px 15px rgba(251, 191, 36, 0.3)'
               }}>
                 ✨ 실제 결과물
@@ -394,7 +394,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 margin: '0 auto'
               }}>
                 강의에서 실제로 만든 프로페셔널 콘텐츠입니다.<br />
-                <strong style={{ color: '#fbbf24' }}>Google OPAL 무료 AI</strong>로 이런 영상을 자동 생성하는 방법을 배웁니다! 🚀
+                <strong style={{ color: '#ffd60a' }}>Google OPAL 무료 AI</strong>로 이런 영상을 자동 생성하는 방법을 배웁니다! 🚀
               </p>
             </div>
 
@@ -448,7 +448,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   <h4 style={{
                     fontSize: 'clamp(1.1rem, 2.3vw, 1.3rem)',
                     fontWeight: '800',
-                    color: '#1e293b',
+                    color: '#0d1b2a',
                     marginBottom: '10px',
                     display: 'flex',
                     alignItems: 'center',
@@ -508,7 +508,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   <h4 style={{
                     fontSize: 'clamp(1.1rem, 2.3vw, 1.3rem)',
                     fontWeight: '800',
-                    color: '#1e293b',
+                    color: '#0d1b2a',
                     marginBottom: '10px',
                     display: 'flex',
                     alignItems: 'center',
@@ -577,7 +577,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   <h4 style={{
                     fontSize: 'clamp(1.1rem, 2.3vw, 1.3rem)',
                     fontWeight: '800',
-                    color: '#1e293b',
+                    color: '#0d1b2a',
                     marginBottom: '10px'
                   }}>
                     💰 수익화 자동화 시스템
@@ -600,9 +600,9 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               textAlign: 'center',
               marginTop: 'clamp(60px, 9vw, 80px)',
               padding: 'clamp(40px, 6vw, 55px) clamp(30px, 5vw, 45px)',
-              background: 'linear-gradient(135deg, #1e293b, #334155)',
+              background: 'linear-gradient(135deg, #0d1b2a, #1b263b)',
               borderRadius: '25px',
-              border: '4px solid #fbbf24',
+              border: '4px solid #ffd60a',
               position: 'relative',
               zIndex: 1,
               boxShadow: '0 20px 60px rgba(30, 41, 59, 0.4)',
@@ -626,7 +626,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               }}>
                 <div style={{
                   display: 'inline-block',
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                   borderRadius: '50%',
                   padding: '18px',
                   marginBottom: '25px',
@@ -641,7 +641,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 <h3 style={{
                   fontSize: 'clamp(1.6rem, 3.5vw, 2.2rem)',
                   fontWeight: '900',
-                  color: '#fbbf24',
+                  color: '#ffd60a',
                   marginBottom: '25px',
                   lineHeight: '1.3',
                   textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
@@ -656,10 +656,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   maxWidth: '800px',
                   fontWeight: '500'
                 }}>
-                  💬 <strong style={{ color: '#fbbf24' }}>Gemini 2.5 Flash</strong> <span style={{ color: '#cbd5e1' }}>(텍스트 생성)</span><br />
-                  🎬 <strong style={{ color: '#fbbf24' }}>Veo</strong> <span style={{ color: '#cbd5e1' }}>(영상 생성)</span><br />
-                  🎨 <strong style={{ color: '#fbbf24' }}>Imagen</strong> <span style={{ color: '#cbd5e1' }}>(이미지 생성)</span><br />
-                  🎙️ <strong style={{ color: '#fbbf24' }}>AudioLM</strong> <span style={{ color: '#cbd5e1' }}>(음성 생성)</span><br />
+                  💬 <strong style={{ color: '#ffd60a' }}>Gemini 2.5 Flash</strong> <span style={{ color: '#cbd5e1' }}>(텍스트 생성)</span><br />
+                  🎬 <strong style={{ color: '#ffd60a' }}>Veo</strong> <span style={{ color: '#cbd5e1' }}>(영상 생성)</span><br />
+                  🎨 <strong style={{ color: '#ffd60a' }}>Imagen</strong> <span style={{ color: '#cbd5e1' }}>(이미지 생성)</span><br />
+                  🎙️ <strong style={{ color: '#ffd60a' }}>AudioLM</strong> <span style={{ color: '#cbd5e1' }}>(음성 생성)</span><br />
                   <br />
                   <span style={{
                     fontSize: 'clamp(1.2rem, 2.8vw, 1.5rem)',
@@ -703,14 +703,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 fontSize: 'clamp(2rem, 4vw, 2.8rem)',
                 marginBottom: '20px',
                 fontWeight: '800',
-                color: '#1f2937'
+                color: '#1b263b'
               }}>
                 🧠 AI Agent Maker
               </h1>
               <h2 style={{
                 fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
                 marginBottom: '15px',
-                color: '#1f2937',
+                color: '#1b263b',
                 fontWeight: '700'
               }}>
                 10일 완성, 수익화하는 인공지능 에이전트 만들기
@@ -776,7 +776,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 {/* 슬로건 */}
                 <div style={{
                   display: 'inline-block',
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                   padding: '10px 25px',
                   borderRadius: '30px',
                   marginBottom: '25px'
@@ -802,8 +802,8 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   lineHeight: '1.8',
                   marginBottom: '25px'
                 }}>
-                  Google OPAL, Claude, ChatGPT... <strong style={{ color: '#fbbf24' }}>매주 새로운 기능</strong>이 쏟아집니다.<br/>
-                  녹화 강의만으로는 <strong style={{ color: '#fbbf24' }}>최신 AI를 따라갈 수 없습니다.</strong><br/><br/>
+                  Google OPAL, Claude, ChatGPT... <strong style={{ color: '#ffd60a' }}>매주 새로운 기능</strong>이 쏟아집니다.<br/>
+                  녹화 강의만으로는 <strong style={{ color: '#ffd60a' }}>최신 AI를 따라갈 수 없습니다.</strong><br/><br/>
                   그래서 준비했습니다! 👇
                 </p>
 
@@ -815,7 +815,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   marginBottom: '25px',
                   border: '2px solid rgba(251, 191, 36, 0.3)'
                 }}>
-                  <h5 style={{ color: '#fbbf24', fontSize: 'clamp(1.1rem, 3vw, 1.3rem)', fontWeight: '700', marginBottom: '20px', textAlign: 'center' }}>
+                  <h5 style={{ color: '#ffd60a', fontSize: 'clamp(1.1rem, 3vw, 1.3rem)', fontWeight: '700', marginBottom: '20px', textAlign: 'center' }}>
                     ✨ Step 2 구성
                   </h5>
                   <div style={{
@@ -826,13 +826,13 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     <div style={{ textAlign: 'center', padding: '20px 15px', background: 'rgba(255,255,255,0.08)', borderRadius: '15px' }}>
                       <div style={{ fontSize: '2.2rem', marginBottom: '10px' }}>📚</div>
                       <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', marginBottom: '5px' }}>기본 코어 강의</div>
-                      <div style={{ color: '#fbbf24', fontWeight: '800', fontSize: 'clamp(1.3rem, 3vw, 1.5rem)' }}>10개</div>
+                      <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: 'clamp(1.3rem, 3vw, 1.5rem)' }}>10개</div>
                       <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>10일 완성 커리큘럼</div>
                     </div>
                     <div style={{ textAlign: 'center', padding: '20px 15px', background: 'rgba(251,191,36,0.15)', borderRadius: '15px', border: '2px solid rgba(251,191,36,0.4)' }}>
                       <div style={{ fontSize: '2.2rem', marginBottom: '10px' }}>🔴</div>
                       <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', marginBottom: '5px' }}>주간 라이브</div>
-                      <div style={{ color: '#fbbf24', fontWeight: '800', fontSize: 'clamp(1.3rem, 3vw, 1.5rem)' }}>52회/년</div>
+                      <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: 'clamp(1.3rem, 3vw, 1.5rem)' }}>52회/년</div>
                       <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>1년간 무제한 참여</div>
                     </div>
                   </div>
@@ -840,7 +840,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
                 {/* 가성비 계산 */}
                 <div style={{
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                   borderRadius: '20px',
                   padding: 'clamp(20px, 4vw, 25px) clamp(20px, 4vw, 30px)',
                   marginBottom: '20px'
@@ -940,7 +940,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   borderRadius: 'clamp(20px, 4vw, 30px)',
                   fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
                   fontWeight: '800',
-                  border: 'clamp(1.5px, 0.4vw, 2px) solid #fbbf24',
+                  border: 'clamp(1.5px, 0.4vw, 2px) solid #ffd60a',
                   boxShadow: '0 4px 15px rgba(251, 191, 36, 0.4)'
                 }}>
                   🎉 특별 할인가
@@ -1033,7 +1033,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 style={{
                     background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
                     color: '#92400e',
-                    border: '3px solid #fbbf24',
+                    border: '3px solid #ffd60a',
                     padding: 'clamp(18px, 4vw, 25px) clamp(40px, 8vw, 60px)',
                     fontSize: 'clamp(1.1rem, 3.5vw, 1.6rem)',
                     fontWeight: '900',
@@ -1096,12 +1096,12 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
           {/* 우리의 미션 섹션 */}
           <div style={{
-            background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
+            background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
             borderRadius: '20px',
             padding: 'clamp(40px, 6vw, 60px) clamp(30px, 5vw, 50px)',
             marginBottom: 'clamp(30px, 6vw, 60px)',
             boxShadow: '0 20px 60px rgba(30, 41, 59, 0.4)',
-            border: '3px solid #fbbf24',
+            border: '3px solid #ffd60a',
             position: 'relative',
             overflow: 'hidden'
           }}>
@@ -1125,7 +1125,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             }}>
               <div style={{
                 display: 'inline-block',
-                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                 borderRadius: '50%',
                 padding: '20px',
                 marginBottom: '25px',
@@ -1149,19 +1149,19 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 maxWidth: '900px',
                 margin: '0 auto'
               }}>
-                <p style={{ marginBottom: '25px', fontWeight: '600', color: '#fbbf24', fontSize: 'clamp(1.2rem, 2.8vw, 1.6rem)' }}>
+                <p style={{ marginBottom: '25px', fontWeight: '600', color: '#ffd60a', fontSize: 'clamp(1.2rem, 2.8vw, 1.6rem)' }}>
                   과도하게 비싼 AI 교육 가격을 낮추고 싶습니다.
                 </p>
                 <p style={{ marginBottom: '25px', color: '#cbd5e1' }}>
                   AI 교육은 누구나 접근할 수 있어야 합니다.<br/>
-                  하지만 현실은 <strong style={{ color: '#fbbf24' }}>수십만 원에서 수백만 원</strong>의 높은 가격 장벽이 존재합니다.
+                  하지만 현실은 <strong style={{ color: '#ffd60a' }}>수십만 원에서 수백만 원</strong>의 높은 가격 장벽이 존재합니다.
                 </p>
                 <p style={{ marginBottom: '25px', fontWeight: '700', color: 'white', fontSize: 'clamp(1.2rem, 2.8vw, 1.5rem)' }}>
                   그래서 우리는 직접 플랫폼을 만들었습니다.
                 </p>
                 <p style={{ marginBottom: '0', color: '#cbd5e1' }}>
                   Jay 멘토가 직접 강의를 제작하고, 중간 유통 비용 없이 여러분께 전달합니다. 
-                  이것이 바로 <strong style={{ color: '#fbbf24', fontSize: '1.1em' }}>AI City Builders</strong>의 시작입니다.
+                  이것이 바로 <strong style={{ color: '#ffd60a', fontSize: '1.1em' }}>AI City Builders</strong>의 시작입니다.
                 </p>
               </div>
             </div>
@@ -1180,7 +1180,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 padding: 'clamp(20px, 4vw, 35px) clamp(15px, 3vw, 25px)',
                 textAlign: 'center',
                 boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
-                border: '2px solid #fbbf24',
+                border: '2px solid #ffd60a',
                 transition: 'transform 0.3s ease',
                 cursor: 'pointer'
               }}
@@ -1205,7 +1205,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 padding: 'clamp(20px, 4vw, 35px) clamp(15px, 3vw, 25px)',
                 textAlign: 'center',
                 boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
-                border: '2px solid #fbbf24',
+                border: '2px solid #ffd60a',
                 transition: 'transform 0.3s ease',
                 cursor: 'pointer'
               }}
@@ -1230,7 +1230,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 padding: 'clamp(20px, 4vw, 35px) clamp(15px, 3vw, 25px)',
                 textAlign: 'center',
                 boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
-                border: '2px solid #fbbf24',
+                border: '2px solid #ffd60a',
                 transition: 'transform 0.3s ease',
                 cursor: 'pointer'
               }}
@@ -1256,7 +1256,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               <h2 style={{
               fontSize: 'clamp(2rem, 4vw, 2.5rem)',
                 fontWeight: '800',
-                color: '#1f2937',
+                color: '#1b263b',
               marginBottom: '40px',
               textAlign: 'center'
             }}>
@@ -1328,7 +1328,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               marginBottom: '50px'
               }}>
                 <h3 style={{
-                  color: '#1f2937',
+                  color: '#1b263b',
                 fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                   fontWeight: '800',
                 marginBottom: '40px',
@@ -1366,7 +1366,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                       석사
                     </div>
                     <h4 style={{
-                      color: '#1f2937',
+                      color: '#1b263b',
                     fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)',
                     fontWeight: '800',
                     marginBottom: '10px'
@@ -1400,7 +1400,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                         fontSize: '1rem',
                         fontWeight: '700',
                         marginBottom: '10px',
-                        color: '#1f2937'
+                        color: '#1b263b'
                       }}>
                         📜 Official Transcript
                       </h5>
@@ -1470,7 +1470,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                       학사
                     </div>
                     <h4 style={{
-                      color: '#1f2937',
+                      color: '#1b263b',
                     fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)',
                     fontWeight: '800',
                     marginBottom: '10px'
@@ -1504,7 +1504,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                         fontSize: '1rem',
                         fontWeight: '700',
                         marginBottom: '10px',
-                        color: '#1f2937'
+                        color: '#1b263b'
                       }}>
                         📜 Official Transcript
                       </h5>
@@ -1556,10 +1556,10 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
             {/* 주요 경력 섹션 - 타임라인 형식 */}
               <div style={{
-                background: 'linear-gradient(135deg, #1e293b, #334155)',
+                background: 'linear-gradient(135deg, #0d1b2a, #1b263b)',
               padding: 'clamp(40px, 6vw, 60px) clamp(30px, 5vw, 50px)',
               borderRadius: '20px',
-                border: '3px solid #fbbf24',
+                border: '3px solid #ffd60a',
               marginBottom: 'clamp(30px, 6vw, 60px)',
                 boxShadow: '0 20px 60px rgba(30, 41, 59, 0.4)',
                 position: 'relative',
@@ -1596,7 +1596,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   maxWidth: '1000px',
                 margin: '0 auto',
                     paddingLeft: 'clamp(20px, 4vw, 40px)',
-                    borderLeft: '4px solid #fbbf24'
+                    borderLeft: '4px solid #ffd60a'
                 }}>
                   <div style={{ marginBottom: '35px', paddingLeft: '25px', position: 'relative' }}>
                       <div style={{
@@ -1605,14 +1605,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                         top: '5px',
                         width: '24px',
                         height: '24px',
-                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                         borderRadius: '50%',
-                        border: '4px solid #1e293b',
+                        border: '4px solid #0d1b2a',
                         boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)'
                       }}></div>
                       <p style={{ marginBottom: '12px', fontWeight: '600', fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)' }}>
                       <strong style={{ 
-                          background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                          background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                           WebkitBackgroundClip: 'text',
                           WebkitTextFillColor: 'transparent',
                           fontSize: 'clamp(1.3rem, 2.8vw, 1.6rem)',
@@ -1631,14 +1631,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                         top: '5px',
                         width: '24px',
                         height: '24px',
-                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                         borderRadius: '50%',
-                        border: '4px solid #1e293b',
+                        border: '4px solid #0d1b2a',
                         boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)'
                       }}></div>
                       <p style={{ marginBottom: '12px', fontWeight: '600', fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)' }}>
                       <strong style={{ 
-                          background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                          background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                           WebkitBackgroundClip: 'text',
                           WebkitTextFillColor: 'transparent',
                           fontSize: 'clamp(1.3rem, 2.8vw, 1.6rem)',
@@ -1657,14 +1657,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                         top: '5px',
                         width: '24px',
                         height: '24px',
-                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                         borderRadius: '50%',
-                        border: '4px solid #1e293b',
+                        border: '4px solid #0d1b2a',
                         boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)'
                       }}></div>
                       <p style={{ marginBottom: '12px', fontWeight: '600', fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)' }}>
                       <strong style={{ 
-                          background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                          background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                           WebkitBackgroundClip: 'text',
                           WebkitTextFillColor: 'transparent',
                           fontSize: 'clamp(1.3rem, 2.8vw, 1.6rem)',
@@ -1683,14 +1683,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                         top: '5px',
                         width: '24px',
                         height: '24px',
-                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                         borderRadius: '50%',
-                        border: '4px solid #1e293b',
+                        border: '4px solid #0d1b2a',
                         boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)'
                       }}></div>
                       <p style={{ marginBottom: '12px', fontWeight: '600', fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)' }}>
                       <strong style={{ 
-                          background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                          background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                           WebkitBackgroundClip: 'text',
                           WebkitTextFillColor: 'transparent',
                           fontSize: 'clamp(1.3rem, 2.8vw, 1.6rem)',
@@ -1709,14 +1709,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                         top: '5px',
                         width: '24px',
                         height: '24px',
-                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                         borderRadius: '50%',
-                        border: '4px solid #1e293b',
+                        border: '4px solid #0d1b2a',
                         boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)'
                       }}></div>
                       <p style={{ marginBottom: '12px', fontWeight: '600', fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)' }}>
                       <strong style={{ 
-                          background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                          background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                           WebkitBackgroundClip: 'text',
                           WebkitTextFillColor: 'transparent',
                           fontSize: 'clamp(1.3rem, 2.8vw, 1.6rem)',
@@ -1735,14 +1735,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                         top: '5px',
                         width: '24px',
                         height: '24px',
-                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                         borderRadius: '50%',
-                        border: '4px solid #1e293b',
+                        border: '4px solid #0d1b2a',
                         boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)'
                       }}></div>
                       <p style={{ marginBottom: '12px', fontWeight: '600', fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)' }}>
                       <strong style={{ 
-                          background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                          background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                           WebkitBackgroundClip: 'text',
                           WebkitTextFillColor: 'transparent',
                           fontSize: 'clamp(1.3rem, 2.8vw, 1.6rem)',
@@ -1761,14 +1761,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                         top: '5px',
                         width: '24px',
                         height: '24px',
-                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                         borderRadius: '50%',
-                        border: '4px solid #1e293b',
+                        border: '4px solid #0d1b2a',
                         boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)'
                       }}></div>
                       <p style={{ marginBottom: '12px', fontWeight: '600', fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)' }}>
                       <strong style={{ 
-                          background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                          background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                           WebkitBackgroundClip: 'text',
                           WebkitTextFillColor: 'transparent',
                           fontSize: 'clamp(1.3rem, 2.8vw, 1.6rem)',
@@ -1812,7 +1812,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               <h2 style={{
                 fontSize: 'clamp(1.8rem, 3vw, 2.2rem)',
                 fontWeight: '800',
-                color: '#1f2937',
+                color: '#1b263b',
                 marginBottom: '20px'
               }}>
                 10일 완성, 수익화하는 AI 에이전트
@@ -1836,7 +1836,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 border: '1px solid #e2e8f0'
               }}>
                 <p style={{
-                  color: '#1f2937',
+                  color: '#1b263b',
                   fontSize: '1.1rem',
                   lineHeight: '1.7',
                   margin: '0 0 30px 0',
@@ -1862,14 +1862,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               <div style={{
                 display: 'inline-block',
                 background: 'linear-gradient(135deg, #1e40af, #1e3a8a)',
-                border: '3px solid #fbbf24',
+                border: '3px solid #ffd60a',
                 padding: '15px 30px',
                 borderRadius: '50px',
                 marginBottom: '25px',
                 boxShadow: '0 10px 30px rgba(30, 64, 175, 0.3)'
           }}>
             <h3 style={{
-                  color: '#fbbf24',
+                  color: '#ffd60a',
                   fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
                   fontWeight: '900',
                   margin: '0',
@@ -1879,13 +1879,13 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             </h3>
               </div>
             <p style={{
-                color: '#1f2937',
+                color: '#1b263b',
                 fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
                 margin: '0',
                 fontWeight: '800'
               }}>
                 하루 1시간 × 10일 = <span style={{ 
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   fontWeight: '900'
@@ -1896,14 +1896,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             {/* CORE: Day 1-3 */}
             <div style={{ marginBottom: '60px' }}>
               <div style={{
-                background: 'linear-gradient(135deg, #1e293b, #334155)',
+                background: 'linear-gradient(135deg, #0d1b2a, #1b263b)',
                 color: 'white',
                 padding: 'clamp(25px, 5vw, 40px)',
                 borderRadius: '20px',
                 marginBottom: '30px',
                 textAlign: 'center',
                 boxShadow: '0 15px 40px rgba(30, 41, 59, 0.4)',
-                border: '3px solid #fbbf24',
+                border: '3px solid #ffd60a',
                 position: 'relative',
                 overflow: 'hidden'
               }}>
@@ -1924,7 +1924,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   fontWeight: '900',
                   margin: '0 0 15px 0',
                   letterSpacing: '0.5px',
-                  color: '#fbbf24',
+                  color: '#ffd60a',
                   textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
                 }}>
                   🎯 Part 1 (Day 1-6)
@@ -1966,13 +1966,13 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     <div style={{
                       fontSize: 'clamp(1rem, 2vw, 1.15rem)',
                       lineHeight: '1.8',
-                      color: '#1f2937'
+                      color: '#1b263b'
                     }}>
                       <p style={{ marginBottom: '12px', fontWeight: '500' }}>
-                        <strong style={{ color: '#1f2937' }}>이론:</strong> {lesson.sections.theory}
+                        <strong style={{ color: '#1b263b' }}>이론:</strong> {lesson.sections.theory}
                       </p>
                       <p style={{ marginBottom: '0', fontWeight: '500' }}>
-                        <strong style={{ color: '#1f2937' }}>실습:</strong> {lesson.sections.practice}
+                        <strong style={{ color: '#1b263b' }}>실습:</strong> {lesson.sections.practice}
                         </p>
                       </div>
                 </div>
@@ -1983,14 +1983,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
             {/* Part 2: Day 7-10 */}
             <div style={{ marginBottom: '60px' }}>
               <div style={{
-                background: 'linear-gradient(135deg, #1e293b, #334155)',
+                background: 'linear-gradient(135deg, #0d1b2a, #1b263b)',
                 color: 'white',
                 padding: 'clamp(25px, 5vw, 40px)',
                 borderRadius: '20px',
                 marginBottom: '30px',
                 textAlign: 'center',
                 boxShadow: '0 15px 40px rgba(30, 41, 59, 0.4)',
-                border: '3px solid #fbbf24',
+                border: '3px solid #ffd60a',
                 position: 'relative',
                 overflow: 'hidden'
               }}>
@@ -2011,7 +2011,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   fontWeight: '900',
                   margin: '0 0 15px 0',
                   letterSpacing: '0.5px',
-                  color: '#fbbf24',
+                  color: '#ffd60a',
                   textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
                 }}>
                   🚀 Part 2 (Day 7-10)
@@ -2053,13 +2053,13 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     <div style={{
                       fontSize: 'clamp(1rem, 2vw, 1.15rem)',
                       lineHeight: '1.8',
-                      color: '#1f2937'
+                      color: '#1b263b'
                     }}>
                       <p style={{ marginBottom: '12px', fontWeight: '500' }}>
-                        <strong style={{ color: '#1f2937' }}>이론:</strong> {lesson.sections.theory}
+                        <strong style={{ color: '#1b263b' }}>이론:</strong> {lesson.sections.theory}
                       </p>
                       <p style={{ marginBottom: '0', fontWeight: '500' }}>
-                        <strong style={{ color: '#1f2937' }}>실습:</strong> {lesson.sections.practice}
+                        <strong style={{ color: '#1b263b' }}>실습:</strong> {lesson.sections.practice}
                         </p>
                       </div>
                 </div>
@@ -2069,11 +2069,11 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
             {/* 하단 CTA - 가격 & 수강 신청 버튼 */}
             <div style={{
-              background: 'linear-gradient(135deg, #1e293b, #334155)',
+              background: 'linear-gradient(135deg, #0d1b2a, #1b263b)',
               borderRadius: '25px',
               padding: 'clamp(50px, 7vw, 70px) clamp(35px, 6vw, 55px)',
               marginTop: '80px',
-              border: '4px solid #fbbf24',
+              border: '4px solid #ffd60a',
               boxShadow: '0 25px 70px rgba(30, 41, 59, 0.5)',
               position: 'relative',
               overflow: 'hidden'
@@ -2115,7 +2115,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   borderRadius: '30px',
                   fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
                   fontWeight: '800',
-                  border: '2px solid #fbbf24',
+                  border: '2px solid #ffd60a',
                   boxShadow: '0 4px 15px rgba(251, 191, 36, 0.4)'
                 }}>
                   🎓 지금 바로 시작하세요
@@ -2187,7 +2187,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   style={{
                     background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
                     color: '#92400e',
-                    border: '3px solid #fbbf24',
+                    border: '3px solid #ffd60a',
                     padding: 'clamp(18px, 4vw, 25px) clamp(40px, 8vw, 60px)',
                     fontSize: 'clamp(1.1rem, 3.5vw, 1.6rem)',
                     fontWeight: '900',

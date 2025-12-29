@@ -13,7 +13,7 @@ const COLORS = {
   cyan: '#06b6d4',
   cyanLight: '#22d3ee',
   green: '#22c55e',
-  gold: '#fbbf24',
+  gold: '#ffd60a',
   white: '#ffffff',
   grayLight: '#f8fafc',
   grayMedium: '#94a3b8',
@@ -197,7 +197,7 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0f0a1e 0%, #1a1033 50%, #0f172a 100%)' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0f0a1e 0%, #1a1033 50%, #ffffff 100%)' }}>
       <NavigationBar />
       
       {/* 헤더 */}

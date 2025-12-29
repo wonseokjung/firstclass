@@ -193,7 +193,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
           
           <h3>5. 오늘의 과제</h3>
           
-          <div style="background: #fef3c7; border-left: 4px solid #fbbf24; padding: 20px; margin: 25px 0; border-radius: 8px;">
+          <div style="background: #fef3c7; border-left: 4px solid #ffd60a; padding: 20px; margin: 25px 0; border-radius: 8px;">
             <p style="font-size: 1.05rem; line-height: 1.8; color: #78350f; margin: 0;">
               <strong>🎯 과제:</strong> 장면 1개짜리 시니어 콘텐츠 생성 워크플로우 구축<br/>
               <strong>📌 구성:</strong> 입력(타겟/주제/목적/언어) → 리서치 → 장면 생성 → 대본 정제 → 음성·이미지 생성
@@ -401,7 +401,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                 alignItems: 'flex-start',
                 gap: '15px',
                 fontSize: '1.05rem',
-                color: '#1f2937',
+                color: '#1b263b',
                 transition: 'all 0.3s ease',
                 borderRadius: '8px'
               }}
@@ -487,7 +487,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                 borderRadius: '6px',
                 fontWeight: '700',
                 fontSize: '0.9rem',
-                border: '1px solid #fbbf24'
+                border: '1px solid #ffd60a'
               }}>
                 Ctrl + Shift + R
               </code> (Windows/Linux) 또는{' '}
@@ -497,7 +497,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                 borderRadius: '6px',
                 fontWeight: '700',
                 fontSize: '0.9rem',
-                border: '1px solid #fbbf24'
+                border: '1px solid #ffd60a'
               }}>
                 Cmd + Shift + R
               </code> (Mac)을 눌러서 <strong>캐시 새로고침</strong>을 하시면 해결됩니다!
@@ -529,7 +529,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
               <h2 style={{
                 fontSize: '1.75rem',
                 fontWeight: '700',
-                color: '#1f2937',
+                color: '#1b263b',
                 margin: 0,
                 display: 'flex',
                 alignItems: 'center',
@@ -625,7 +625,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                 🎬 시니어 콘텐츠 워크플로우
               </h2>
               <div style={{
-                background: '#fbbf24',
+                background: '#ffd60a',
                 color: '#92400e',
                 padding: '6px 16px',
                 borderRadius: '8px',
@@ -690,7 +690,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                     alert('링크가 복사되었습니다! 새 탭에 붙여넣기 하세요.');
                   }}
                   style={{
-                    background: '#fbbf24',
+                    background: '#ffd60a',
                     color: '#92400e',
                     border: 'none',
                     borderRadius: '6px',
@@ -713,7 +713,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '12px',
-                background: '#fbbf24',
+                background: '#ffd60a',
                 color: '#92400e',
                 padding: '16px 35px',
                 borderRadius: '12px',
@@ -732,7 +732,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
               onMouseOut={(e) => {
                 e.currentTarget.style.transform = 'translateY(0) scale(1)';
                 e.currentTarget.style.boxShadow = '0 6px 20px rgba(251, 191, 36, 0.5)';
-                e.currentTarget.style.background = '#fbbf24';
+                e.currentTarget.style.background = '#ffd60a';
               }}
             >
               <span style={{ fontSize: '1.3rem' }}>🚀</span>
@@ -788,7 +788,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                 <h3 style={{
                   fontSize: '1.3rem',
                   fontWeight: '700',
-                  color: '#1f2937',
+                  color: '#1b263b',
                   marginBottom: '0'
                 }}>
                   {section.title}
@@ -847,7 +847,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
               style={{
                 fontSize: '1.05rem',
                 lineHeight: '1.8',
-                color: '#374151'
+                color: '#415a77'
               }}
               dangerouslySetInnerHTML={{ __html: section.content }}
             />
@@ -861,7 +861,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
           <h2 style={{
             fontSize: '1.8rem',
             fontWeight: '700',
-            color: '#1f2937',
+            color: '#1b263b',
             marginBottom: '30px',
             display: 'flex',
             alignItems: 'center',
@@ -882,7 +882,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                 <p style={{
                   fontWeight: '700',
                   marginBottom: '15px',
-                  color: '#1f2937',
+                  color: '#1b263b',
                   fontSize: '1.05rem'
                 }}>
                   Q{index + 1}. {q.question}
@@ -952,7 +952,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                         />
                         <span style={{
                           fontSize: '1rem',
-                          color: '#1f2937',
+                          color: '#1b263b',
                           flex: 1,
                           fontWeight: quizSubmitted && isCorrectOption ? '600' : 'normal'
                         }}>{option}</span>
@@ -1148,7 +1148,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
         }
         
         h3 {
-          color: #1f2937;
+          color: #1b263b;
           font-size: 1.25rem;
           font-weight: 700;
           margin-top: 25px;

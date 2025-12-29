@@ -111,27 +111,27 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
         id: 'business-plan',
         title: '📝 디지털 건물 사업계획서',
         content: `
-          <div style="background: linear-gradient(135deg, #0f172a, #1e3a5f); padding: 30px; border-radius: 15px; color: white;">
-            <h4 style="color: #fbbf24; margin-bottom: 20px;">🏗️ 나의 디지털 건물 계획서</h4>
+          <div style="background: linear-gradient(135deg, #ffffff, #1e3a5f); padding: 30px; border-radius: 15px; color: white;">
+            <h4 style="color: #ffd60a; margin-bottom: 20px;">🏗️ 나의 디지털 건물 계획서</h4>
             <div style="display: grid; gap: 15px;">
               <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
-                <strong style="color: #fbbf24;">1. 건물명:</strong><br/>
+                <strong style="color: #ffd60a;">1. 건물명:</strong><br/>
                 <span style="color: #94a3b8;">[채널/블로그 이름]</span>
               </div>
               <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
-                <strong style="color: #fbbf24;">2. 건물 유형:</strong><br/>
+                <strong style="color: #ffd60a;">2. 건물 유형:</strong><br/>
                 <span style="color: #94a3b8;">대중형 / 니치형 / 혼합형</span>
               </div>
               <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
-                <strong style="color: #fbbf24;">3. 타겟 세입자:</strong><br/>
+                <strong style="color: #ffd60a;">3. 타겟 세입자:</strong><br/>
                 <span style="color: #94a3b8;">[연령/국가/관심사]</span>
               </div>
               <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
-                <strong style="color: #fbbf24;">4. 수익 모델:</strong><br/>
+                <strong style="color: #ffd60a;">4. 수익 모델:</strong><br/>
                 <span style="color: #94a3b8;">광고/제휴/멤버십/제품</span>
               </div>
               <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
-                <strong style="color: #fbbf24;">5. 첫 번째 액션:</strong><br/>
+                <strong style="color: #ffd60a;">5. 첫 번째 액션:</strong><br/>
                 <span style="color: #94a3b8;">[오늘 바로 할 일]</span>
               </div>
             </div>
@@ -142,7 +142,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
         id: 'ai-city-builder',
         title: '🔧 실습: AI City Builder에 계획서 입력',
         content: `
-          <div style="background: #fef3c7; padding: 25px; border-radius: 15px; border: 2px solid #fbbf24;">
+          <div style="background: #fef3c7; padding: 25px; border-radius: 15px; border: 2px solid #ffd60a;">
             <h4 style="color: #92400e; margin-bottom: 15px;">🎯 다음 단계</h4>
             <p style="color: #92400e; line-height: 1.8;">
               1. <a href="/construction" style="color: #0ea5e9; font-weight: 700;">AI 도시 공사장</a>으로 이동<br/>
@@ -162,7 +162,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
 
   return (
     <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
-      <div style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%)', padding: '20px', position: 'sticky', top: 0, zIndex: 100 }}>
+      <div style={{ background: 'linear-gradient(135deg, #ffffff 0%, #1e3a5f 100%)', padding: '20px', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <button onClick={onBack} style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', padding: '10px 20px', borderRadius: '10px', cursor: 'pointer', marginBottom: '15px' }}>
             <ArrowLeft size={20} /> 강의 목록으로
@@ -209,7 +209,7 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
           <button onClick={handleCompleteDay} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #0ea5e9, #0284c7)', color: 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
             {isDayCompleted ? <><CheckCircle size={24} /> Day 5 완료!</> : isCompletingDay ? '처리 중...' : <><PlayCircle size={24} /> Day 5 완료하기</>}
           </button>
-          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: 'pointer' }}>Part 2 시작 →</button>}
+          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #e5c100, #d97706)', color: 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: 'pointer' }}>Part 2 시작 →</button>}
         </div>
       </div>
     </div>

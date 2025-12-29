@@ -9,7 +9,7 @@ interface FAQPageProps {
 
 // 브랜드 컬러: 네이비 + 골드
 const brandColors = {
-  navy: '#0a1628',
+  navy: '#ffffff',
   navyLight: '#142238',
   navyMid: '#1e3a5f',
   gold: '#d4af37',
@@ -164,7 +164,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
         {
           question: "동영상이 재생되지 않아요.",
           answer: `
-            <h4 style="color: #f59e0b; margin-bottom: 15px;">🔧 동영상 재생 문제 해결</h4>
+            <h4 style="color: #e5c100; margin-bottom: 15px;">🔧 동영상 재생 문제 해결</h4>
             
             <p style="margin-bottom: 12px;"><strong>1. 브라우저 확인</strong></p>
             <ul style="margin-left: 20px; margin-bottom: 15px; line-height: 1.8;">
@@ -185,7 +185,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
         {
           question: "로그인이 안 돼요.",
           answer: `
-            <h4 style="color: #f59e0b; margin-bottom: 15px;">🔑 로그인 문제 해결</h4>
+            <h4 style="color: #e5c100; margin-bottom: 15px;">🔑 로그인 문제 해결</h4>
             
             <p style="margin-bottom: 12px;"><strong>비밀번호 분실 시</strong></p>
             <ul style="margin-left: 20px; margin-bottom: 15px; line-height: 1.8;">

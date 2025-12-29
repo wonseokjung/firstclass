@@ -200,7 +200,7 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
           {/* 베타 테스트 배너 */}
           <div style={{
             background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-            border: '2px solid #fbbf24',
+            border: '2px solid #ffd60a',
             borderRadius: '15px',
             padding: '20px 30px',
             marginBottom: 'clamp(20px, 4vw, 40px)',
@@ -246,7 +246,7 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
               fontSize: 'clamp(2rem, 4vw, 2.8rem)',
               marginBottom: '20px',
               fontWeight: '800',
-              color: '#1f2937'
+              color: '#1b263b'
             }}>
               🤖 n8n 콘텐츠 자동화 중급
             </h1>
@@ -254,7 +254,7 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
             <h2 style={{
               fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
               marginBottom: '15px',
-              color: '#1f2937',
+              color: '#1b263b',
               fontWeight: '700'
             }}>
               노코드로 시작해서 코드로 완성하는 YouTube 자동화
@@ -353,7 +353,7 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
               </h3>
               <p style={{
                 fontSize: '1.05rem',
-                color: '#1f2937',
+                color: '#1b263b',
                 lineHeight: '1.8',
                 marginBottom: '20px'
               }}>
@@ -381,7 +381,7 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
               <h4 style={{
                 fontSize: '1.2rem',
                 fontWeight: '700',
-                color: '#1f2937',
+                color: '#1b263b',
                 marginBottom: '15px'
               }}>
                 🔍 기술적 한계 분석:
@@ -469,7 +469,7 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
             <h3 style={{
               fontSize: 'clamp(2rem, 4vw, 2.5rem)',
               fontWeight: '800',
-              color: '#1f2937',
+              color: '#1b263b',
               marginBottom: 'clamp(20px, 4vw, 40px)',
               textAlign: 'center'
             }}>
@@ -502,13 +502,13 @@ const N8nAutomationIntermediatePage: React.FC<N8nAutomationIntermediatePageProps
                   <div style={{
                     fontSize: 'clamp(1rem, 2vw, 1.15rem)',
                     lineHeight: '1.8',
-                    color: '#1f2937'
+                    color: '#1b263b'
                   }}>
                     <p style={{ marginBottom: '12px', fontWeight: '500' }}>
-                      <strong style={{ color: '#1f2937' }}>이론:</strong> {lesson.sections.theory}
+                      <strong style={{ color: '#1b263b' }}>이론:</strong> {lesson.sections.theory}
                     </p>
                     <p style={{ marginBottom: '0', fontWeight: '500' }}>
-                      <strong style={{ color: '#1f2937' }}>실습:</strong> {lesson.sections.practice}
+                      <strong style={{ color: '#1b263b' }}>실습:</strong> {lesson.sections.practice}
                     </p>
                   </div>
                 </div>

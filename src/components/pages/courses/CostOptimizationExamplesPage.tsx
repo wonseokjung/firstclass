@@ -464,7 +464,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
                 <h2 style={{
                   fontSize: '28px',
                   fontWeight: '700',
-                  color: '#1e293b',
+                  color: '#0d1b2a',
                   margin: 0,
                 }}>
                   사용 목적을 선택하세요
@@ -522,7 +522,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
                   <h3 style={{
                       fontSize: '20px',
                     fontWeight: '700',
-                      color: selectedPurpose === purpose.id ? '#ffffff' : '#1e293b',
+                      color: selectedPurpose === purpose.id ? '#ffffff' : '#0d1b2a',
                       marginBottom: '8px',
                   }}>
                       {purpose.label}
@@ -564,7 +564,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
                   <h2 style={{
                     fontSize: '24px',
                     fontWeight: '700',
-                    color: '#1e293b',
+                    color: '#0d1b2a',
                     margin: 0,
                   }}>
                     AI 추천 모델
@@ -625,7 +625,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
                     borderRadius: '12px',
                   }}>
                     <span style={{ fontSize: '15px', color: '#64748b', fontWeight: '500' }}>처리 티어</span>
-                    <span style={{ fontSize: '15px', color: '#1e293b', fontWeight: '700' }}>
+                    <span style={{ fontSize: '15px', color: '#0d1b2a', fontWeight: '700' }}>
                       {purposeConfig.recommendedTier.toUpperCase()}
                     </span>
                   </div>
@@ -637,7 +637,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
                     borderRadius: '12px',
                   }}>
                     <span style={{ fontSize: '15px', color: '#64748b', fontWeight: '500' }}>API 타입</span>
-                    <span style={{ fontSize: '15px', color: '#1e293b', fontWeight: '700' }}>
+                    <span style={{ fontSize: '15px', color: '#0d1b2a', fontWeight: '700' }}>
                       {purposeConfig.apiType === 'text' ? 'Text API' :
                        purposeConfig.apiType === 'image-gen' ? 'Image 생성' :
                        purposeConfig.apiType === 'audio' ? 'Audio API' :
@@ -652,7 +652,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
                   padding: '16px',
                   background: '#fef3c7',
                   borderRadius: '12px',
-                  border: '2px solid #fbbf24',
+                  border: '2px solid #ffd60a',
                 }}>
                     <p style={{
                     fontSize: '14px',
@@ -682,7 +682,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
                   <h2 style={{
                     fontSize: '24px',
                     fontWeight: '700',
-                    color: '#1e293b',
+                    color: '#0d1b2a',
                     margin: 0,
                   }}>
                     예상 비용
@@ -853,7 +853,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
                   <h3 style={{
                     fontSize: '20px',
             fontWeight: '700',
-                    color: '#1e293b',
+                    color: '#0d1b2a',
                     marginBottom: '20px',
                   }}>
                     ⚙️ 세부 설정
@@ -881,7 +881,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
                           border: '2px solid #e2e8f0',
                           borderRadius: '8px',
                           fontSize: '15px',
-                          color: '#1e293b',
+                          color: '#0d1b2a',
                         }}>
                           {purposeConfig.typicalInput.toLocaleString()} 토큰
                         </div>
@@ -902,7 +902,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
                           border: '2px solid #e2e8f0',
                           borderRadius: '8px',
                           fontSize: '15px',
-                          color: '#1e293b',
+                          color: '#0d1b2a',
                         }}>
                           {purposeConfig.typicalOutput.toLocaleString()} 토큰
                         </div>
@@ -1039,7 +1039,7 @@ const TextCalculator: React.FC<any> = ({ calc, setCalc, cost, models }) => {
 
   return (
     <div>
-      <h2 style={{ fontSize: '28px', fontWeight: '700', color: '#1e293b', marginBottom: '30px' }}>
+      <h2 style={{ fontSize: '28px', fontWeight: '700', color: '#0d1b2a', marginBottom: '30px' }}>
         📝 Text API 비용 계산기
           </h2>
 
@@ -1089,7 +1089,7 @@ const TextCalculator: React.FC<any> = ({ calc, setCalc, cost, models }) => {
             borderRadius: '12px',
             background: '#ffffff',
             cursor: 'pointer',
-            color: '#1e293b',
+            color: '#0d1b2a',
             fontWeight: '500',
           }}
         >
@@ -1169,7 +1169,7 @@ const TextCalculator: React.FC<any> = ({ calc, setCalc, cost, models }) => {
             <h5 style={{
               fontSize: '14px',
               fontWeight: '700',
-              color: '#1e293b',
+              color: '#0d1b2a',
               marginBottom: '12px',
             }}>
               🇰🇷 한글
@@ -1199,7 +1199,7 @@ const TextCalculator: React.FC<any> = ({ calc, setCalc, cost, models }) => {
             <h5 style={{
               fontSize: '14px',
                 fontWeight: '700',
-              color: '#1e293b',
+              color: '#0d1b2a',
               marginBottom: '12px',
             }}>
               🇺🇸 영어
@@ -1225,7 +1225,7 @@ const TextCalculator: React.FC<any> = ({ calc, setCalc, cost, models }) => {
           background: '#fef3c7',
           padding: '12px 16px',
           borderRadius: '8px',
-          border: '1px solid #fbbf24',
+          border: '1px solid #ffd60a',
         }}>
               <p style={{
             fontSize: '13px',
@@ -1351,7 +1351,7 @@ const ImageCalculator: React.FC<any> = ({ calc, setCalc, cost }) => {
 
   return (
     <div>
-      <h2 style={{ fontSize: '28px', fontWeight: '700', color: '#1e293b', marginBottom: '30px' }}>
+      <h2 style={{ fontSize: '28px', fontWeight: '700', color: '#0d1b2a', marginBottom: '30px' }}>
         🎨 Image 생성 비용 계산기
           </h2>
 
@@ -1379,7 +1379,7 @@ const ImageCalculator: React.FC<any> = ({ calc, setCalc, cost }) => {
             borderRadius: '12px',
             background: '#ffffff',
             cursor: 'pointer',
-            color: '#1e293b',
+            color: '#0d1b2a',
             fontWeight: '500',
           }}
         >
@@ -1439,7 +1439,7 @@ const ImageCalculator: React.FC<any> = ({ calc, setCalc, cost }) => {
             borderRadius: '12px',
             background: '#ffffff',
             cursor: 'pointer',
-            color: '#1e293b',
+            color: '#0d1b2a',
             fontWeight: '500',
           }}
         >
@@ -1523,7 +1523,7 @@ const AudioCalculator: React.FC<any> = ({ calc, setCalc }) => {
 
   return (
     <div>
-      <h2 style={{ fontSize: '28px', fontWeight: '700', color: '#1e293b', marginBottom: '30px' }}>
+      <h2 style={{ fontSize: '28px', fontWeight: '700', color: '#0d1b2a', marginBottom: '30px' }}>
         🎵 Audio API 비용 계산기
           </h2>
 
@@ -1543,7 +1543,7 @@ const AudioCalculator: React.FC<any> = ({ calc, setCalc }) => {
             borderRadius: '12px',
             background: '#ffffff',
             cursor: 'pointer',
-            color: '#1e293b',
+            color: '#0d1b2a',
             fontWeight: '500',
           }}
         >
@@ -1660,7 +1660,7 @@ const VideoCalculator: React.FC<any> = ({ calc, setCalc }) => {
 
   return (
     <div>
-      <h2 style={{ fontSize: '28px', fontWeight: '700', color: '#1e293b', marginBottom: '30px' }}>
+      <h2 style={{ fontSize: '28px', fontWeight: '700', color: '#0d1b2a', marginBottom: '30px' }}>
         🎬 Video 생성 비용 계산기
       </h2>
 
@@ -1680,7 +1680,7 @@ const VideoCalculator: React.FC<any> = ({ calc, setCalc }) => {
             borderRadius: '12px',
             background: '#ffffff',
             cursor: 'pointer',
-            color: '#1e293b',
+            color: '#0d1b2a',
             fontWeight: '500',
           }}
         >
@@ -1713,7 +1713,7 @@ const VideoCalculator: React.FC<any> = ({ calc, setCalc }) => {
 
       {/* Cost Display */}
       <div style={{
-        background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+        background: 'linear-gradient(135deg, #e5c100, #d97706)',
         padding: '30px',
         borderRadius: '16px',
         color: '#ffffff',
@@ -1768,7 +1768,7 @@ const EmbeddingCalculator: React.FC<any> = ({ calc, setCalc }) => {
 
   return (
     <div>
-      <h2 style={{ fontSize: '28px', fontWeight: '700', color: '#1e293b', marginBottom: '30px' }}>
+      <h2 style={{ fontSize: '28px', fontWeight: '700', color: '#0d1b2a', marginBottom: '30px' }}>
         🔢 Embedding 비용 계산기
       </h2>
 
@@ -1788,7 +1788,7 @@ const EmbeddingCalculator: React.FC<any> = ({ calc, setCalc }) => {
             borderRadius: '12px',
             background: '#ffffff',
             cursor: 'pointer',
-            color: '#1e293b',
+            color: '#0d1b2a',
             fontWeight: '500',
           }}
         >
@@ -1918,7 +1918,7 @@ const TranscriptionCalculator: React.FC<any> = ({ calc, setCalc }) => {
 
   return (
     <div>
-      <h2 style={{ fontSize: '28px', fontWeight: '700', color: '#1e293b', marginBottom: '30px' }}>
+      <h2 style={{ fontSize: '28px', fontWeight: '700', color: '#0d1b2a', marginBottom: '30px' }}>
         🎙️ Transcription/TTS 비용 계산기
       </h2>
 
@@ -1938,7 +1938,7 @@ const TranscriptionCalculator: React.FC<any> = ({ calc, setCalc }) => {
             borderRadius: '12px',
             background: '#ffffff',
             cursor: 'pointer',
-            color: '#1e293b',
+            color: '#0d1b2a',
             fontWeight: '500',
           }}
         >

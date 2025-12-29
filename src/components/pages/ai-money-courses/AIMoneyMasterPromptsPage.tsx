@@ -570,10 +570,10 @@ const AIMoneyMasterPromptsPage: React.FC<AIMoneyMasterPromptsPageProps> = ({ onB
           boxShadow: '0 20px 60px rgba(15, 23, 42, 0.1)',
           border: '1px solid #e2e8f0'
         }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '15px', color: '#0f172a' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '15px', color: '#ffffff' }}>
             ✅ 사용 방법
           </h2>
-          <ul style={{ margin: 0, paddingLeft: '18px', lineHeight: 1.8, color: '#334155' }}>
+          <ul style={{ margin: 0, paddingLeft: '18px', lineHeight: 1.8, color: '#1b263b' }}>
             <li>대괄호(`[ ]`)로 표시된 변수만 자신의 상황과 산업에 맞게 입력하세요.</li>
             <li>프롬프트를 복사해 ChatGPT, Gemini 등 원하는 AI 편집기에 붙여넣고 실험해 보세요.</li>
             <li>“역할(role)”이나 배경 문장은 자유롭게 바꾸어 사용할 수 있습니다.</li>
@@ -603,7 +603,7 @@ const AIMoneyMasterPromptsPage: React.FC<AIMoneyMasterPromptsPageProps> = ({ onB
               boxShadow: '0 10px 20px rgba(15, 23, 42, 0.08)'
             }}>
               <p style={{ margin: 0, color: BRAND_GOLD, fontWeight: 700, letterSpacing: '0.1em' }}>{step.title}</p>
-              <p style={{ margin: '10px 0 0', color: '#0f172a', lineHeight: 1.6 }}>{step.text}</p>
+              <p style={{ margin: '10px 0 0', color: '#ffffff', lineHeight: 1.6 }}>{step.text}</p>
             </div>
           ))}
         </div>
@@ -613,7 +613,7 @@ const AIMoneyMasterPromptsPage: React.FC<AIMoneyMasterPromptsPageProps> = ({ onB
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '30px' }}>
           {[{ heading: 'STEP 1 · 스타터 번들 (8개)', sections: starterSections }, { heading: 'STEP 2 · AI & Money 필수 프롬프트 30선', sections: masterPackageSections }].map((group) => (
             <div key={group.heading}>
-              <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0f172a', marginBottom: '15px' }}>
+              <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff', marginBottom: '15px' }}>
                 {group.heading}
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
@@ -643,7 +643,7 @@ const AIMoneyMasterPromptsPage: React.FC<AIMoneyMasterPromptsPageProps> = ({ onB
                       }}
                     >
                       <div>
-                        <h3 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '8px', color: '#0f172a' }}>
+                        <h3 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '8px', color: '#ffffff' }}>
                           {section.title}
                         </h3>
                         <p style={{ margin: 0, color: '#475569', lineHeight: 1.6 }}>{section.description}</p>
@@ -669,7 +669,7 @@ const AIMoneyMasterPromptsPage: React.FC<AIMoneyMasterPromptsPageProps> = ({ onB
                             >
                               <div style={{ display: 'flex', justifyContent: 'space-between', gap: '15px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
                                 <div style={{ flex: 1 }}>
-                                  <h4 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700, color: '#0f172a' }}>
+                                  <h4 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700, color: '#ffffff' }}>
                                     {prompt.title}
                                   </h4>
                                   {prompt.description && (
@@ -682,7 +682,7 @@ const AIMoneyMasterPromptsPage: React.FC<AIMoneyMasterPromptsPageProps> = ({ onB
                                   onClick={() => copyToClipboard(prompt.prompt, promptId)}
                                   style={{
                                     background: copiedPromptId === promptId ? '#16a34a' : BRAND_GOLD,
-                                    color: copiedPromptId === promptId ? 'white' : '#0f172a',
+                                    color: copiedPromptId === promptId ? 'white' : '#ffffff',
                                     border: 'none',
                                     padding: '8px 16px',
                                     borderRadius: '999px',
@@ -714,7 +714,7 @@ const AIMoneyMasterPromptsPage: React.FC<AIMoneyMasterPromptsPageProps> = ({ onB
                                 style={{
                                   marginTop: '15px',
                                   background: 'white',
-                                  color: '#0f172a',
+                                  color: '#ffffff',
                                   padding: '18px',
                                   borderRadius: '12px',
                                   fontFamily:

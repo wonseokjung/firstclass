@@ -206,7 +206,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
     <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0a0f1a 0%, #1a1f2e 100%)' }}>
       {/* 헤더 */}
       <div style={{
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+        background: 'linear-gradient(135deg, #ffffff 0%, #0d1b2a 100%)',
         padding: '20px',
         position: 'sticky',
         top: 0,
@@ -236,7 +236,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <div style={{
-              background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+              background: 'linear-gradient(135deg, #e5c100, #d97706)',
               width: '65px',
               height: '65px',
               borderRadius: '18px',
@@ -287,7 +287,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             display: 'flex', 
             alignItems: 'center', 
             gap: '12px', 
-            color: '#f59e0b', 
+            color: '#e5c100', 
             marginBottom: '20px',
             fontSize: '1.3rem',
             fontWeight: '700'
@@ -318,7 +318,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                   justifyContent: 'center',
                   fontSize: '0.8rem',
                   fontWeight: '600',
-                  color: '#f59e0b',
+                  color: '#e5c100',
                   flexShrink: 0
                 }}>
                   {idx + 1}
@@ -344,7 +344,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
-            color: '#f59e0b',
+            color: '#e5c100',
             fontSize: '1rem',
             fontWeight: '600'
           }}>
@@ -391,12 +391,12 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             marginBottom: '20px'
           }}>
             <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px 0', lineHeight: '1.8' }}>
-              신나죠? 제가 여러분들에게 드리고 싶은 능력은 아주 <strong style={{ color: '#f59e0b' }}>코어적인 거예요</strong>.
+              신나죠? 제가 여러분들에게 드리고 싶은 능력은 아주 <strong style={{ color: '#e5c100' }}>코어적인 거예요</strong>.
             </p>
             <p style={{ color: '#e2e8f0', fontSize: '0.95rem', margin: 0, lineHeight: '1.8' }}>
               인공지능은 너무나도 빠르게 변하고 있죠. 새로운 것들이 계속 나옵니다. 
               그래서 여러분이 새로운 게 나올 때마다 배우는 게 중요한 게 아니라, 
-              <strong style={{ color: '#f59e0b' }}>새로운 게 나와도 "아 이거 이거겠구나" 하면서 바로 이해할 수 있는 힘</strong>이 필요해요.
+              <strong style={{ color: '#e5c100' }}>새로운 게 나와도 "아 이거 이거겠구나" 하면서 바로 이해할 수 있는 힘</strong>이 필요해요.
             </p>
           </div>
 
@@ -406,11 +406,11 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             borderRadius: '12px',
             border: '1px solid rgba(245, 158, 11, 0.2)'
           }}>
-            <p style={{ color: '#f59e0b', fontWeight: '600', margin: '0 0 8px 0' }}>
+            <p style={{ color: '#e5c100', fontWeight: '600', margin: '0 0 8px 0' }}>
               💡 원리와 기초를 알아야 합니다!
             </p>
             <p style={{ color: '#cbd5e1', margin: 0, lineHeight: '1.7' }}>
-              그걸 알려면 이 <strong style={{ color: '#f59e0b' }}>원리와 기초</strong>를 알아야 돼요. 
+              그걸 알려면 이 <strong style={{ color: '#e5c100' }}>원리와 기초</strong>를 알아야 돼요. 
               제가 여러분들을 위해서 이런 걸 준비했습니다.
             </p>
           </div>
@@ -442,14 +442,14 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             marginBottom: '20px'
           }}>
             <p style={{ color: '#cbd5e1', fontSize: '0.95rem', margin: '0 0 16px 0', lineHeight: '1.8' }}>
-              콜랩은 원래 <strong style={{ color: '#f59e0b' }}>주피터 노트북</strong>이라는 거에서 유래되었어요.
+              콜랩은 원래 <strong style={{ color: '#e5c100' }}>주피터 노트북</strong>이라는 거에서 유래되었어요.
               연구원들이 코드를 실험해보고 싶을 때 여기다가 코드를 작성하고 결과물들이 나오는데,
-              이런 게 그냥 나갔다가 다시 들어와도 <strong style={{ color: '#f59e0b' }}>결과물들이 계속 보이거든요</strong>.
+              이런 게 그냥 나갔다가 다시 들어와도 <strong style={{ color: '#e5c100' }}>결과물들이 계속 보이거든요</strong>.
             </p>
             <p style={{ color: '#e2e8f0', fontSize: '0.9rem', margin: 0, lineHeight: '1.8' }}>
               그러니까 이렇게 바꿨다가 저렇게 바꿨다가... "어 이거 고양이 요 파란색 눈으로 해보면 어떨까", 
               "노란색 눈으로 해보면 어떨까"... 이런 식으로 하면서 밑에다가 계속 계속 해 나아가면서 
-              그 프롬프트마다의 특징들을 <strong style={{ color: '#f59e0b' }}>한눈에 볼 수가 있는 거예요</strong>.
+              그 프롬프트마다의 특징들을 <strong style={{ color: '#e5c100' }}>한눈에 볼 수가 있는 거예요</strong>.
             </p>
           </div>
 
@@ -467,7 +467,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                 border: '1px solid rgba(245, 158, 11, 0.15)'
               }}>
                 <div style={{ fontSize: '2rem', marginBottom: '10px' }}>{item.icon}</div>
-                <strong style={{ color: '#f59e0b', fontSize: '1rem' }}>{item.title}</strong>
+                <strong style={{ color: '#e5c100', fontSize: '1rem' }}>{item.title}</strong>
                 <p style={{ color: '#e2e8f0', margin: '8px 0 0 0', fontSize: '0.85rem' }}>{item.desc}</p>
           </div>
         ))}
@@ -503,7 +503,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
               이렇게 보면 막 어떤 코드들이 나오는 거잖아요. 이게 컴퓨터 코드거든요.
               이거 보면 "어려워 보기 싫어" 이게 바로 나온단 말이에요. 어쩔 수 없어요.
             </p>
-            <p style={{ color: '#f59e0b', fontSize: '1rem', fontWeight: '600', margin: '0 0 12px 0' }}>
+            <p style={{ color: '#e5c100', fontSize: '1rem', fontWeight: '600', margin: '0 0 12px 0' }}>
               근데 요게 좀 보다 보면 익숙해져요! 🔥
             </p>
             <p style={{ color: '#e2e8f0', fontSize: '0.9rem', margin: 0, lineHeight: '1.8' }}>
@@ -554,16 +554,16 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             marginBottom: '20px'
           }}>
             <p style={{ color: '#e2e8f0', fontSize: '0.95rem', margin: '0 0 16px 0' }}>
-              콜랩을 실행하려면 <strong style={{ color: '#f59e0b' }}>Google API 키</strong>라는 이름으로 시크릿을 설정해야 돼요.
+              콜랩을 실행하려면 <strong style={{ color: '#e5c100' }}>Google API 키</strong>라는 이름으로 시크릿을 설정해야 돼요.
               우리 Day 5강에서 그 API 키 받았었던 거 기억나죠?
             </p>
             
             <ol style={{ color: '#cbd5e1', margin: 0, paddingLeft: '20px', lineHeight: '2.2', fontSize: '0.9rem' }}>
-              <li>Google에서 <strong style={{ color: '#f59e0b' }}>AI Studio</strong> 검색해서 들어가기</li>
-              <li><strong style={{ color: '#f59e0b' }}>Copy API Key</strong> 누르기</li>
-              <li>다시 콜랩으로 돌아가서 왼쪽에 <strong style={{ color: '#f59e0b' }}>🔑 열쇠</strong> 아이콘 클릭</li>
+              <li>Google에서 <strong style={{ color: '#e5c100' }}>AI Studio</strong> 검색해서 들어가기</li>
+              <li><strong style={{ color: '#e5c100' }}>Copy API Key</strong> 누르기</li>
+              <li>다시 콜랩으로 돌아가서 왼쪽에 <strong style={{ color: '#e5c100' }}>🔑 열쇠</strong> 아이콘 클릭</li>
               <li>보안 비밀에 API 키 붙여넣기</li>
-              <li><strong style={{ color: '#f59e0b' }}>액세스 권한 부여</strong> 체크하기</li>
+              <li><strong style={{ color: '#e5c100' }}>액세스 권한 부여</strong> 체크하기</li>
             </ol>
           </div>
 
@@ -574,7 +574,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             border: '1px solid rgba(245, 158, 11, 0.15)'
           }}>
             <p style={{ color: '#e2e8f0', margin: 0, fontSize: '0.9rem', lineHeight: '1.7' }}>
-              💡 <strong style={{ color: '#f59e0b' }}>왜 이렇게 귀찮게 해 놨어요?</strong><br/>
+              💡 <strong style={{ color: '#e5c100' }}>왜 이렇게 귀찮게 해 놨어요?</strong><br/>
               구글에서 여러분들의 API 키를 보호하기 위해서 이렇게 한 거예요!
             </p>
           </div>
@@ -716,13 +716,13 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             marginBottom: '20px'
           }}>
             <p style={{ color: '#cbd5e1', fontSize: '0.95rem', margin: '0 0 16px 0', lineHeight: '1.8' }}>
-              저희가 이제 <strong style={{ color: '#f59e0b' }}>자동화 에이전트</strong>를 배울 거잖아요.
+              저희가 이제 <strong style={{ color: '#e5c100' }}>자동화 에이전트</strong>를 배울 거잖아요.
               Step 2와 Step 3에서 자동화 에이전트를 만들 건데, 이 자동화 에이전트란 뭐냐면
-              결국 이 대화형 인공지능에서 조금 더 <strong style={{ color: '#f59e0b' }}>개발적으로 바뀌는 거예요</strong>.
+              결국 이 대화형 인공지능에서 조금 더 <strong style={{ color: '#e5c100' }}>개발적으로 바뀌는 거예요</strong>.
             </p>
             <p style={{ color: '#e2e8f0', fontSize: '0.9rem', margin: 0, lineHeight: '1.8' }}>
               여러 개의 인공지능들을 한 번에 협업시켜야 되는데, 이 원리와 구조를 알아야 
-              <strong style={{ color: '#f59e0b' }}> 워크플로우</strong>라는 걸 잘 만들 수가 있어요.
+              <strong style={{ color: '#e5c100' }}> 워크플로우</strong>라는 걸 잘 만들 수가 있어요.
               이 워크플로우를 잘 만들어야 우리가 자동화 에이전트를 만들 수 있어요!
             </p>
           </div>
@@ -733,7 +733,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             borderRadius: '12px',
             border: '1px solid rgba(245, 158, 11, 0.25)'
           }}>
-            <p style={{ color: '#f59e0b', fontWeight: '700', margin: '0 0 12px 0', fontSize: '1.05rem' }}>
+            <p style={{ color: '#e5c100', fontWeight: '700', margin: '0 0 12px 0', fontSize: '1.05rem' }}>
               🧠 지금 배우는 원리가 엄청난 힘이 됩니다!
             </p>
             <p style={{ color: '#cbd5e1', margin: 0, lineHeight: '1.8', fontSize: '0.95rem' }}>
@@ -752,7 +752,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
           border: '1px solid rgba(245, 158, 11, 0.2)'
         }}>
           <h3 style={{ 
-            color: '#f59e0b', 
+            color: '#e5c100', 
             fontSize: '1.3rem', 
             marginBottom: '20px',
             display: 'flex',
@@ -804,7 +804,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
               alignItems: 'center',
               justifyContent: 'center',
               gap: '12px',
-              background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
+              background: 'linear-gradient(135deg, #e5c100, #ea580c)',
               color: 'white',
               padding: '20px 32px',
               borderRadius: '16px',
@@ -884,7 +884,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
           <p style={{ color: '#e2e8f0', lineHeight: '1.8', fontSize: '0.95rem', maxWidth: '600px', margin: '0 auto' }}>
             이런 작은 실행들이 쌓이고 쌓여서 여러분들이 진짜 AI로 1인 기업을 만들고 
             새로운 비즈니스를 할 수 있도록 도와줄 거예요.<br/><br/>
-            <strong style={{ color: '#f59e0b' }}>AI 건물주 되기</strong>에서는 여러분들이 
+            <strong style={{ color: '#e5c100' }}>AI 건물주 되기</strong>에서는 여러분들이 
             이 흔한 컴맹을 벗어나게 해줄 겁니다. 여러분들은 이제 컴퓨터를 잘하는 사람이 될 거예요!
           </p>
           <p style={{ color: '#64748b', fontSize: '0.85rem', marginTop: '20px' }}>
@@ -923,7 +923,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
               style={{
                 background: 'rgba(245, 158, 11, 0.1)',
                 border: '1px solid rgba(245, 158, 11, 0.2)',
-                color: '#f59e0b',
+                color: '#e5c100',
                 padding: '8px 14px',
                 borderRadius: '8px',
                 fontSize: '0.85rem',
@@ -946,7 +946,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
               <div style={{
                 width: '36px',
                 height: '36px',
-                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                background: 'linear-gradient(135deg, #e5c100, #d97706)',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
@@ -980,7 +980,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                     disabled={!newComment.trim() || isSubmitting}
                     style={{
                       background: newComment.trim() && !isSubmitting
-                        ? 'linear-gradient(135deg, #f59e0b, #d97706)' 
+                        ? 'linear-gradient(135deg, #e5c100, #d97706)' 
                         : 'rgba(100,100,100,0.3)',
                       border: 'none',
                       color: 'white',
@@ -1036,7 +1036,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
                   <div style={{
                     width: '32px',
                     height: '32px',
-                    background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                    background: 'linear-gradient(135deg, #e5c100, #d97706)',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
@@ -1112,7 +1112,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             style={{
               background: isDayCompleted 
                 ? 'linear-gradient(135deg, #22c55e, #16a34a)' 
-                : 'linear-gradient(135deg, #f59e0b, #d97706)',
+                : 'linear-gradient(135deg, #e5c100, #d97706)',
               color: 'white',
               border: 'none',
               padding: '16px 40px',

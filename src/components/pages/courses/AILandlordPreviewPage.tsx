@@ -65,7 +65,7 @@ const AILandlordPreviewPage: React.FC<AILandlordPreviewPageProps> = ({ onBack })
       icon: <Zap size={28} />,
       title: '구글이 주는 "대출"',
       description: 'Gemini, Veo 3.1, Flash... 무료 AI 도구 = 1960년대 110% 대출',
-      color: '#f59e0b'
+      color: '#e5c100'
     },
     {
       icon: <TrendingUp size={28} />,
@@ -543,7 +543,7 @@ const AILandlordPreviewPage: React.FC<AILandlordPreviewPageProps> = ({ onBack })
 
         {/* 다음 단계 안내 */}
         <div style={{
-          background: `linear-gradient(135deg, ${BRAND_GOLD} 0%, #fbbf24 100%)`,
+          background: `linear-gradient(135deg, ${BRAND_GOLD} 0%, #ffd60a 100%)`,
           borderRadius: '16px',
           padding: 'clamp(25px, 5vw, 35px)',
           textAlign: 'center'

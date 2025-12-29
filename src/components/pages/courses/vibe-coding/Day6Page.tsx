@@ -35,7 +35,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0f0a1e 0%, #1a1033 50%, #0f172a 100%)' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0f0a1e 0%, #1a1033 50%, #ffffff 100%)' }}>
       <div style={{ background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(124, 58, 237, 0.1))', borderBottom: '1px solid rgba(139, 92, 246, 0.3)', padding: '20px', position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(20px)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <button onClick={onBack} style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(139, 92, 246, 0.2)', border: '1px solid rgba(139, 92, 246, 0.4)', color: '#c4b5fd', padding: '10px 20px', borderRadius: '12px', cursor: 'pointer', marginBottom: '15px' }}><ArrowLeft size={20} /> 강의 목록으로</button>
@@ -55,7 +55,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
 
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: 'clamp(20px, 5vw, 40px) 20px' }}>
         <div style={{ background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.1))', borderRadius: '24px', padding: 'clamp(25px, 5vw, 40px)', marginBottom: '30px', border: '1px solid rgba(251, 191, 36, 0.3)' }}>
-          <h2 style={{ color: '#fbbf24', display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '25px' }}><DollarSign size={28} /> 수익화 모델 비교</h2>
+          <h2 style={{ color: '#ffd60a', display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '25px' }}><DollarSign size={28} /> 수익화 모델 비교</h2>
           <div style={{ display: 'grid', gap: '15px' }}>
             {[
               { model: 'SaaS 구독', pros: '예측 가능한 수익', cons: '유지보수 필요', example: 'Notion, Figma' },
@@ -64,7 +64,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
               { model: '커미션/수수료', pros: '성장과 연동', cons: '거래량 필요', example: 'Stripe, Shopify' }
             ].map((item, idx) => (
               <div key={idx} style={{ background: 'rgba(0,0,0,0.3)', borderRadius: '16px', padding: '20px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1.5fr', gap: '15px', alignItems: 'center' }}>
-                <div style={{ color: '#fbbf24', fontWeight: '700' }}>{item.model}</div>
+                <div style={{ color: '#ffd60a', fontWeight: '700' }}>{item.model}</div>
                 <div style={{ color: '#22c55e', fontSize: '0.9rem' }}>✅ {item.pros}</div>
                 <div style={{ color: '#f87171', fontSize: '0.9rem' }}>⚠️ {item.cons}</div>
                 <div style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{item.example}</div>
@@ -86,7 +86,7 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
           <button onClick={handleComplete} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #8b5cf6, #7c3aed)', color: 'white', border: 'none', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
             {isDayCompleted ? <><CheckCircle size={24} /> Day 6 완료!</> : isCompletingDay ? '처리 중...' : <><PlayCircle size={24} /> Day 6 완료하기</>}
           </button>
-          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #0f172a)', color: 'white', border: '1px solid rgba(139, 92, 246, 0.3)', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: 'pointer' }}>Day 7로 이동 →</button>}
+          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #ffffff)', color: 'white', border: '1px solid rgba(139, 92, 246, 0.3)', padding: '18px 45px', borderRadius: '16px', fontSize: '1.15rem', fontWeight: '700', cursor: 'pointer' }}>Day 7로 이동 →</button>}
         </div>
       </div>
     </div>

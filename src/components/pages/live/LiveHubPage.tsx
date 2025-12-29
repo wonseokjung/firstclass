@@ -103,7 +103,7 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
   const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f172a' }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff' }}>
       <NavigationBar onBack={onBack} breadcrumbText="라이브 캘린더" />
 
       {/* 헤더 */}
@@ -137,7 +137,7 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
           alignItems: 'center',
           justifyContent: 'space-between',
           marginBottom: '20px',
-          background: 'rgba(255,255,255,0.05)',
+          background: 'linear-gradient(135deg, #1e3a5f 0%, #0f2847 100%)',
           borderRadius: '12px',
           padding: '12px 20px'
         }}>
@@ -202,16 +202,17 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
 
         {/* 캘린더 */}
         <div style={{
-          background: 'rgba(255,255,255,0.03)',
+          background: '#ffffff',
           borderRadius: '16px',
           overflow: 'hidden',
-          border: '1px solid rgba(255,255,255,0.1)'
+          border: '1px solid #e2e8f0',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
         }}>
           {/* 요일 헤더 */}
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(7, 1fr)',
-            background: 'rgba(255,255,255,0.05)'
+            background: 'linear-gradient(135deg, #1e3a5f 0%, #0f2847 100%)'
           }}>
             {weekDays.map((day, index) => (
               <div
@@ -219,7 +220,7 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
                 style={{
                   padding: '12px 5px',
                   textAlign: 'center',
-                  color: index === 0 ? '#ef4444' : index === 6 ? '#3b82f6' : COLORS.grayMedium,
+                  color: index === 0 ? '#ff6b6b' : index === 6 ? '#74b9ff' : COLORS.white,
                   fontSize: 'clamp(0.75rem, 2vw, 0.9rem)',
                   fontWeight: '600'
                 }}
@@ -234,7 +235,7 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
             display: 'grid',
             gridTemplateColumns: 'repeat(7, 1fr)',
             gap: '1px',
-            background: 'rgba(255,255,255,0.05)'
+            background: '#e2e8f0'
           }}>
             {days.map((date, index) => {
               if (!date) {
@@ -242,7 +243,7 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
                   <div
                     key={`empty-${index}`}
                     style={{
-                      background: '#0f172a',
+                      background: '#f8fafc',
                       minHeight: 'clamp(80px, 15vw, 120px)'
                     }}
                   />
@@ -258,7 +259,7 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
                   key={date.toISOString()}
                   onClick={() => schedule && navigate(schedule.link)}
                   style={{
-                    background: isTodayDate ? 'rgba(240, 180, 41, 0.1)' : '#0f172a',
+                    background: isTodayDate ? 'rgba(240, 180, 41, 0.1)' : '#ffffff',
                     minHeight: 'clamp(80px, 15vw, 120px)',
                     padding: 'clamp(6px, 1.5vw, 10px)',
                     cursor: schedule ? 'pointer' : 'default',
@@ -282,7 +283,7 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
                           ? '#ef4444' 
                           : dayOfWeek === 6 
                             ? '#3b82f6' 
-                            : COLORS.white,
+                            : '#1e293b',
                       fontSize: 'clamp(0.85rem, 2vw, 1rem)',
                       fontWeight: isTodayDate ? '700' : '500',
                       width: isTodayDate ? '24px' : 'auto',
@@ -363,7 +364,7 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
                   {/* 휴식일 표시 */}
                   {!schedule && isAfterLiveStart(date) && (dayOfWeek === 0 || dayOfWeek === 5 || dayOfWeek === 6) && (
                     <div style={{
-                      color: 'rgba(255,255,255,0.2)',
+                      color: '#94a3b8',
                       fontSize: 'clamp(0.6rem, 1.2vw, 0.7rem)',
                       marginTop: 'auto',
                       textAlign: 'center'
@@ -393,11 +394,12 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px',
-                background: 'rgba(255,255,255,0.05)',
+                background: 'linear-gradient(135deg, #1e3a5f 0%, #0f2847 100%)',
                 padding: '8px 14px',
                 borderRadius: '20px',
                 cursor: 'pointer',
-                border: `1px solid ${schedule?.color}40`
+                border: `1px solid ${schedule?.color}40`,
+                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
               }}
             >
               <div style={{
@@ -466,21 +468,22 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
         <div style={{
           marginTop: '20px',
           padding: '20px',
-          background: 'rgba(255,255,255,0.03)',
+          background: 'linear-gradient(135deg, #1e3a5f 0%, #0f2847 100%)',
           borderRadius: '12px',
-          border: '1px solid rgba(240, 180, 41, 0.2)'
+          border: '1px solid rgba(240, 180, 41, 0.3)',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
         }}>
           <h4 style={{ color: COLORS.gold, fontWeight: '700', marginBottom: '10px', fontSize: '0.95rem' }}>
             📌 안내사항
           </h4>
           <ul style={{ 
-            color: COLORS.grayMedium, 
+            color: COLORS.white, 
             fontSize: '0.85rem', 
             lineHeight: '1.8',
             margin: 0,
             paddingLeft: '18px'
           }}>
-            <li>라이브는 매주 <strong style={{ color: COLORS.white }}>월~목 오후 8시</strong>에 진행됩니다</li>
+            <li>라이브는 매주 <strong style={{ color: COLORS.goldLight }}>월~목 오후 8시</strong>에 진행됩니다</li>
             <li>월요일 무료 라이브는 유튜브에서 시청 가능합니다</li>
             <li>프리미엄 라이브(화~목)는 해당 강의 수강생만 참여 가능합니다</li>
             <li>캘린더의 이벤트를 클릭하면 해당 라이브 페이지로 이동합니다</li>

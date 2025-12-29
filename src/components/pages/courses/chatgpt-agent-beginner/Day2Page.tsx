@@ -133,7 +133,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
             </p>
           </div>
           
-          <div style="background: #fef3c7; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #f59e0b;">
+          <div style="background: #fef3c7; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #e5c100;">
             <p style="margin: 0 0 10px 0; font-size: 1.05rem;">
               <strong>② 시퀀싱 (Sequencing, 순서화)</strong>
             </p>
@@ -163,12 +163,12 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
         content: `
           <h3>🚀 유튜브 콘텐츠 자동 생성 멀티 에이전트 시스템 구축</h3>
           
-          <p style="font-size: 1.05rem; line-height: 1.8; color: #374151; margin-bottom: 20px;">
+          <p style="font-size: 1.05rem; line-height: 1.8; color: #415a77; margin-bottom: 20px;">
             4개의 전문 에이전트를 연결하여 트렌드 분석부터 대본 작성, 정책 체크까지 한 번에 수행하는 자동화 시스템을 만들어봅니다.
           </p>
           
           <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin: 20px 0; border: 2px solid #e2e8f0;">
-            <h4 style="color: #1f2937; margin-bottom: 15px;">📋 4단계 워크플로</h4>
+            <h4 style="color: #1b263b; margin-bottom: 15px;">📋 4단계 워크플로</h4>
             <ol style="margin: 0; padding-left: 20px; line-height: 2;">
               <li><strong>트렌드 탐색기:</strong> 웹 검색으로 인기 트렌드 키워드 3개 추출 (GPT-5 Mini/Nano)</li>
               <li><strong>기획 전문가:</strong> 키워드 기반 클릭 유도 제목, 설명, 태그 작성 (GPT-5)</li>
@@ -177,7 +177,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
             </ol>
           </div>
           
-          <div style="background: #fef3c7; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #f59e0b;">
+          <div style="background: #fef3c7; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #e5c100;">
             <p style="margin: 0; font-size: 1rem; color: #78350f;">
               <strong>💡 비용 절감 팁:</strong> Instruction은 영어로 작성하고 Output은 한글로 요청하세요. 영어 토큰 비용이 한글보다 훨씬 저렴합니다!
             </p>
@@ -276,7 +276,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
           <h2 style={{
             fontSize: '2rem',
             fontWeight: '800',
-            color: '#1f2937',
+            color: '#1b263b',
             marginBottom: '15px'
           }}>
             🚀 2강 준비 중
@@ -463,7 +463,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
             borderRadius: '12px',
             padding: '20px 25px',
             marginBottom: '25px',
-            border: '2px solid #f59e0b',
+            border: '2px solid #e5c100',
             boxShadow: '0 4px 12px rgba(245, 158, 11, 0.15)'
           }}>
             <p style={{
@@ -512,7 +512,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
                 alignItems: 'flex-start',
                 gap: '15px',
                 fontSize: '1.05rem',
-                color: '#1f2937',
+                color: '#1b263b',
                 transition: 'all 0.3s ease',
                 borderRadius: '8px'
               }}
@@ -589,7 +589,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
                 <h3 style={{
                   fontSize: '1.3rem',
                   fontWeight: '700',
-                  color: '#1f2937',
+                  color: '#1b263b',
                   marginBottom: '0'
                 }}>
                   {section.title}
@@ -762,7 +762,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
               style={{
                 fontSize: '1.05rem',
                 lineHeight: '1.8',
-                color: '#374151'
+                color: '#415a77'
               }}
               dangerouslySetInnerHTML={{ __html: section.content }}
             />
@@ -776,7 +776,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
           <h2 style={{
             fontSize: '1.8rem',
             fontWeight: '700',
-            color: '#1f2937',
+            color: '#1b263b',
             marginBottom: '30px',
             display: 'flex',
             alignItems: 'center',
@@ -797,7 +797,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
                 <p style={{
                   fontWeight: '700',
                   marginBottom: '15px',
-                  color: '#1f2937',
+                  color: '#1b263b',
                   fontSize: '1.05rem'
                 }}>
                   Q{index + 1}. {q.question}
@@ -867,7 +867,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
                         />
                         <span style={{ 
                           fontSize: '1rem',
-                          color: '#1f2937',
+                          color: '#1b263b',
                           flex: 1,
                           fontWeight: quizSubmitted && isCorrectOption ? '600' : 'normal'
                         }}>{option}</span>
@@ -1076,7 +1076,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
                   background: 'linear-gradient(135deg, #f8fafc, #f0f9ff)',
                   borderRadius: '12px',
                   textDecoration: 'none',
-                  color: '#1f2937',
+                  color: '#1b263b',
                   transition: 'all 0.3s ease',
                   border: '2px solid #e2e8f0',
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
@@ -1148,7 +1148,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
         }
         
         h3 {
-          color: #1f2937;
+          color: #1b263b;
           font-size: 1.25rem;
           font-weight: 700;
           margin-top: 25px;
@@ -1166,7 +1166,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
         }
         
         pre {
-          background: #1f2937;
+          background: #1b263b;
           color: #f8fafc;
           padding: 20px;
           border-radius: 10px;

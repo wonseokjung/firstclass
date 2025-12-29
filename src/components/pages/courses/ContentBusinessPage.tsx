@@ -12,7 +12,7 @@ const ContentBusinessPage: React.FC<ContentBusinessPageProps> = ({ onBack }) => 
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+      background: 'linear-gradient(135deg, #ffffff 0%, #0d1b2a 50%, #ffffff 100%)',
       color: '#fff'
     }}>
       {/* 네비게이션 */}

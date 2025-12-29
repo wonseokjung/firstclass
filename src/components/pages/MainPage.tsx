@@ -46,6 +46,7 @@ interface Course {
 
 // Basic/Free Courses 데이터 (path 추가)
 const aiMasterClasses: Course[] = [
+  { id: 0, instructor: '기초 체력 훈련소', title: '🏃 기초 체력 훈련소', subtitle: '바이브코딩 전, 코어부터 쌓자', description: '코드 보고 쫄지 않는 체력 만들기 · Python 기초부터 AI 생성까지', image: `${process.env.PUBLIC_URL}/images/바이브코딩전 준비운동.jpeg`, isNew: true, category: 'AI 기초', path: '/ai-gym', isDocumentary: false },
   { id: 1, instructor: 'CHATGPT', title: 'ChatGPT의 정석', subtitle: 'AI 업무 혁신 완전정복', description: 'AI 멘토 JAY와 함께하는 ChatGPT 실전 활용법', image: `${process.env.PUBLIC_URL}/images/ChatGPT.png`, isNew: true, category: 'AI & Technology', path: '/chatgpt-course', isDocumentary: false },
   { id: 5, instructor: 'AI CODING', title: 'AI 코딩 완전정복', subtitle: 'GitHub Copilot부터 Claude까지 모든 AI 코딩 도구', description: 'AI를 활용한 차세대 코딩! 생산성 10배 올리는 실전 가이드', image: `${process.env.PUBLIC_URL}/images/aicoding.png`, isNew: true, category: 'AI Coding', path: '/ai-coding-course', isDocumentary: false },
   { id: 3, instructor: 'GOOGLE AI', title: 'Google AI 완전정복', subtitle: '구글이 만든 인공지능, VEO, Gemini, CLI', description: 'AI 멘토 JAY와 함께하는 Google AI 실전 가이드', image: `${process.env.PUBLIC_URL}/images/gemini3.png`, isNew: true, category: 'AI & Technology', path: '/google-ai-course', isDocumentary: false },
@@ -237,7 +238,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
           <OptimizedImage src={course.image} alt={course.title} className="instructor-image" loading="lazy" placeholder="true" />
           <div className="premium-badge" style={{
             background: 'linear-gradient(135deg, #ffd700, #ffb347)',
-            color: '#0a1628',
+            color: '#ffffff',
             fontWeight: '800',
             boxShadow: '0 4px 15px rgba(255, 215, 0, 0.5)'
           }}>PREMIUM</div>
@@ -275,7 +276,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
           <div className="section-header-mc">
             <h2 className="section-title-mc">
               <span className="highlight-category" style={{
-                background: 'linear-gradient(135deg, #0a1628, #1e3a5f)',
+                background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -283,7 +284,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
               }}>
                 프리미엄 강의
               </span>
-              <div style={{ fontSize: '0.8em', marginTop: '8px', fontWeight: '600', color: '#0a1628' }}>
+              <div style={{ fontSize: '0.8em', marginTop: '8px', fontWeight: '600', color: '#ffffff' }}>
                 AI 크리에이터가 되어 콘텐츠로 수익을 창출하세요
               </div>
             </h2>
@@ -302,7 +303,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
           <div className="section-header-mc">
             <h2 className="section-title-mc">
               <span className="highlight-category" style={{
-                background: 'linear-gradient(135deg, #1e40af, #1e3a8a)',
+                background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -339,7 +340,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
           <div className="section-header-mc">
             <h2 className="section-title-mc">
               <span className="highlight-category" style={{
-                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -357,9 +358,9 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
                 <div className="card-image-container">
                   <OptimizedImage src={course.image} alt={course.title} className="instructor-image" loading="lazy" placeholder="true" />
                   <div className="free-badge-overlay" style={{
-                    background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                    background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                     fontWeight: '900',
-                    color: '#1e293b',
+                    color: '#0d1b2a',
                     boxShadow: '0 4px 15px rgba(251, 191, 36, 0.4)'
                   }}>FREE</div>
                   <div className="card-overlay">
@@ -371,6 +372,107 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* AI Gym 배너 */}
+        <section style={{
+          margin: '60px auto',
+          maxWidth: '1200px',
+          padding: '0 20px'
+        }}>
+          <div 
+            onClick={() => navigate('/ai-gym')}
+            style={{
+              background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #0d1b2a 100%)',
+              borderRadius: '20px',
+              padding: '40px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer',
+              border: '2px solid #ffd60a',
+              boxShadow: '0 10px 40px rgba(255, 214, 10, 0.2)',
+              transition: 'transform 0.3s, box-shadow 0.3s',
+              flexWrap: 'wrap',
+              gap: '20px'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-5px)';
+              e.currentTarget.style.boxShadow = '0 15px 50px rgba(255, 214, 10, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 10px 40px rgba(255, 214, 10, 0.2)';
+            }}
+          >
+            <div style={{ flex: 1, minWidth: '250px' }}>
+              <div style={{
+                display: 'inline-block',
+                background: 'rgba(255, 214, 10, 0.2)',
+                border: '1px solid rgba(255, 214, 10, 0.4)',
+                borderRadius: '20px',
+                padding: '6px 14px',
+                marginBottom: '15px'
+              }}>
+                <span style={{ color: '#ffd60a', fontSize: '0.8rem', fontWeight: 600 }}>
+                  🏃 NEW! 기초 체력 훈련소
+                </span>
+              </div>
+              <h3 style={{
+                color: '#fff',
+                fontSize: '1.8rem',
+                fontWeight: 300,
+                marginBottom: '10px',
+                lineHeight: 1.3
+              }}>
+                <span style={{ color: '#ffd60a', fontWeight: 700 }}>바이브코딩</span> 전, 코어부터 쌓자 💪
+              </h3>
+              <p style={{ color: '#778da9', fontSize: '1rem', marginBottom: '15px' }}>
+                코드 보고 쫄지 않는 체력 만들기 · Python 기초부터 AI 생성까지
+              </p>
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                <span style={{ 
+                  background: 'rgba(255, 214, 10, 0.15)', 
+                  color: '#ffd60a', 
+                  padding: '5px 12px', 
+                  borderRadius: '15px',
+                  fontSize: '0.8rem'
+                }}>
+                  🚶 1km 워밍업
+                </span>
+                <span style={{ 
+                  background: '#ffd60a', 
+                  color: '#0d1b2a', 
+                  padding: '5px 12px', 
+                  borderRadius: '15px',
+                  fontSize: '0.8rem',
+                  fontWeight: 700
+                }}>
+                  🏃 3km 조깅 - NOW!
+                </span>
+                <span style={{ 
+                  background: 'rgba(255, 214, 10, 0.15)', 
+                  color: '#ffd60a', 
+                  padding: '5px 12px', 
+                  borderRadius: '15px',
+                  fontSize: '0.8rem'
+                }}>
+                  🏅 하프마라톤
+                </span>
+              </div>
+            </div>
+            <div style={{
+              background: '#ffd60a',
+              color: '#0d1b2a',
+              padding: '15px 30px',
+              borderRadius: '12px',
+              fontWeight: 700,
+              fontSize: '1rem',
+              whiteSpace: 'nowrap'
+            }}>
+              무료로 시작하기 →
+            </div>
           </div>
         </section>
       </main>
@@ -398,7 +500,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
                 style={{
                   background: 'rgba(251, 191, 36, 0.15)',
                   border: '1px solid rgba(251, 191, 36, 0.3)',
-                  color: '#fbbf24',
+                  color: '#ffd60a',
                   cursor: 'pointer',
                   fontSize: '0.9rem',
                   fontWeight: '600',
@@ -409,7 +511,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'rgba(251, 191, 36, 0.25)';
-                  e.currentTarget.style.borderColor = '#fbbf24';
+                  e.currentTarget.style.borderColor = '#ffd60a';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.background = 'rgba(251, 191, 36, 0.15)';

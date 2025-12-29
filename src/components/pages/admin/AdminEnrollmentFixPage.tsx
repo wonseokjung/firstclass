@@ -1137,7 +1137,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
                 padding: '12px 24px',
                 borderRadius: '10px',
                 border: 'none',
-                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                background: 'linear-gradient(135deg, #e5c100, #d97706)',
                 color: 'white',
                 fontSize: '1rem',
                 fontWeight: '700',
@@ -1156,7 +1156,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
                 padding: '12px 24px',
                 borderRadius: '10px',
                 border: 'none',
-                background: showSearchPanel ? '#fbbf24' : 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                background: showSearchPanel ? '#ffd60a' : 'linear-gradient(135deg, #3b82f6, #2563eb)',
                 color: showSearchPanel ? '#1e3a8a' : 'white',
                 fontSize: '1rem',
                 fontWeight: '700',
@@ -1208,7 +1208,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
                   padding: '15px 30px',
                   borderRadius: '12px',
                   border: 'none',
-                  background: isSearching ? '#94a3b8' : '#fbbf24',
+                  background: isSearching ? '#94a3b8' : '#ffd60a',
                   color: '#1e3a8a',
                   fontSize: '1.1rem',
                   fontWeight: '700',
@@ -1293,7 +1293,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
                           ))}
                         </div>
                       ) : (
-                        <div style={{ color: '#fbbf24', fontWeight: '600' }}>
+                        <div style={{ color: '#ffd60a', fontWeight: '600' }}>
                           ⚠️ 등록된 강의가 없습니다
                         </div>
                       )}
@@ -1334,7 +1334,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
                                 )}
                                 {p.paymentKey && (
                                   <div 
-                                    style={{ cursor: 'pointer', color: '#fbbf24' }}
+                                    style={{ cursor: 'pointer', color: '#ffd60a' }}
                                     onClick={() => {
                                       navigator.clipboard.writeText(p.paymentKey);
                                       alert('paymentKey가 복사되었습니다!\n\n환불 시 사용하세요.');
@@ -1356,7 +1356,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
                   </div>
                 ) : (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <AlertCircle size={24} color="#fbbf24" />
+                    <AlertCircle size={24} color="#ffd60a" />
                     <span style={{ fontSize: '1.1rem' }}>
                       "{searchResult.query}" 에 해당하는 사용자를 찾을 수 없습니다.
                       {searchResult.error && ` (${searchResult.message})`}
@@ -1407,7 +1407,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
             boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
           }}>
             <div style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '5px' }}>전체</div>
-            <div style={{ fontSize: '2rem', fontWeight: '700', color: '#1f2937' }}>{stats.total}</div>
+            <div style={{ fontSize: '2rem', fontWeight: '700', color: '#1b263b' }}>{stats.total}</div>
           </div>
           <div style={{
             background: 'white',
@@ -1425,7 +1425,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
             boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
           }}>
             <div style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '5px' }}>건너뜀</div>
-            <div style={{ fontSize: '2rem', fontWeight: '700', color: '#f59e0b' }}>{stats.skipped}</div>
+            <div style={{ fontSize: '2rem', fontWeight: '700', color: '#e5c100' }}>{stats.skipped}</div>
           </div>
           <div style={{
             background: 'white',
@@ -1502,8 +1502,8 @@ const AdminEnrollmentFixPage: React.FC = () => {
                           <td style={{ padding: '12px' }}>
                             {user.referredBy ? (
                               <span style={{
-                                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                                color: '#1f2937',
+                                background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
+                                color: '#1b263b',
                                 padding: '4px 8px',
                                 borderRadius: '6px',
                                 fontSize: '0.75rem',
@@ -1886,7 +1886,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
                             style={{
                               padding: '8px 12px',
                               borderRadius: '6px',
-                              border: '1px solid #fbbf24',
+                              border: '1px solid #ffd60a',
                               fontSize: '0.85rem',
                               width: '100px',
                               background: payment.status ? '#f8fafc' : '#fffbeb',
@@ -1943,7 +1943,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
                             </span>
                           )}
                           {payment.status === 'skip' && (
-                            <span style={{ color: '#f59e0b' }}>건너뜀</span>
+                            <span style={{ color: '#e5c100' }}>건너뜀</span>
                           )}
                           {payment.status === 'processing' && (
                             <span style={{ color: '#0ea5e9', display: 'flex', alignItems: 'center', gap: '5px' }}>
@@ -2012,7 +2012,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
             overflow: 'auto'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#1e293b' }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0d1b2a' }}>
                 📋 토스페이먼츠 데이터 붙여넣기
               </h2>
               <button

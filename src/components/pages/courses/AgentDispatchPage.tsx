@@ -12,7 +12,7 @@ const AgentDispatchPage: React.FC<AgentDispatchPageProps> = ({ onBack }) => {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+      background: 'linear-gradient(135deg, #ffffff 0%, #0d1b2a 50%, #ffffff 100%)',
       color: '#fff'
     }}>
       {/* 네비게이션 */}
@@ -53,7 +53,7 @@ const AgentDispatchPage: React.FC<AgentDispatchPageProps> = ({ onBack }) => {
           display: 'inline-flex',
           alignItems: 'center',
           gap: '8px',
-          background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+          background: 'linear-gradient(135deg, #e5c100 0%, #d97706 100%)',
           padding: '8px 20px',
           borderRadius: '30px',
           marginBottom: '30px'
@@ -67,7 +67,7 @@ const AgentDispatchPage: React.FC<AgentDispatchPageProps> = ({ onBack }) => {
           width: '120px',
           height: '120px',
           borderRadius: '30px',
-          background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+          background: 'linear-gradient(135deg, #e5c100 0%, #d97706 100%)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -84,7 +84,7 @@ const AgentDispatchPage: React.FC<AgentDispatchPageProps> = ({ onBack }) => {
           marginBottom: '16px',
           lineHeight: '1.2'
         }}>
-          <span style={{ color: '#f59e0b' }}>Step 4</span>
+          <span style={{ color: '#e5c100' }}>Step 4</span>
           <br />
           1인 기업 만들기
         </h1>
@@ -113,14 +113,14 @@ const AgentDispatchPage: React.FC<AgentDispatchPageProps> = ({ onBack }) => {
             gap: '12px',
             marginBottom: '16px'
           }}>
-            <Building2 size={28} color="#f59e0b" />
-            <h3 style={{ color: '#f59e0b', fontSize: '1.3rem', fontWeight: '700', margin: 0 }}>
+            <Building2 size={28} color="#e5c100" />
+            <h3 style={{ color: '#e5c100', fontSize: '1.3rem', fontWeight: '700', margin: 0 }}>
               콘텐츠 크리에이터에서 CEO로
             </h3>
           </div>
           <p style={{ color: '#e0e0e0', fontSize: '1.1rem', lineHeight: '1.7' }}>
             사업자등록, 세금, 정부지원금까지!<br />
-            <strong style={{ color: '#f59e0b' }}>1인 기업</strong>을 완성하는 단계입니다.<br />
+            <strong style={{ color: '#e5c100' }}>1인 기업</strong>을 완성하는 단계입니다.<br />
             Step 3에서 만든 서비스로 <strong style={{ color: '#fff' }}>진짜 사업</strong>을 시작하세요!
           </p>
         </div>

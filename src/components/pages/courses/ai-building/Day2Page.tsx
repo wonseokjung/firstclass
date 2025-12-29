@@ -220,7 +220,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
     <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0a0f1a 0%, #1a1f2e 100%)' }}>
       {/* 헤더 */}
       <div style={{
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+        background: 'linear-gradient(135deg, #ffffff 0%, #0d1b2a 100%)',
         padding: '20px',
         position: 'sticky',
         top: 0,
@@ -443,7 +443,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
           border: '1px solid rgba(255,255,255,0.1)'
         }}>
           <h3 style={{ 
-            color: '#fbbf24', 
+            color: '#ffd60a', 
             fontSize: '1.4rem', 
             marginBottom: '25px',
             display: 'flex',
@@ -454,13 +454,13 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
           </h3>
           
           <div style={{
-            background: 'linear-gradient(135deg, #0f172a, #1e293b)',
+            background: 'linear-gradient(135deg, #ffffff, #0d1b2a)',
             padding: '30px',
             borderRadius: '16px',
             marginBottom: '25px',
             border: '1px solid rgba(251, 191, 36, 0.3)'
           }}>
-            <p style={{ color: '#fbbf24', fontSize: '1.2rem', fontWeight: '700', margin: '0 0 15px 0' }}>
+            <p style={{ color: '#ffd60a', fontSize: '1.2rem', fontWeight: '700', margin: '0 0 15px 0' }}>
               "일하지 않아도, 잠잘 때도, 아플 때에도 들어오는 현금 흐름"
             </p>
             <p style={{ color: '#e2e8f0', margin: 0, lineHeight: '1.8' }}>
@@ -612,7 +612,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
             </h4>
             <p style={{ color: '#e2e8f0', margin: 0, lineHeight: '1.9', fontSize: '1.05rem' }}>
               콘텐츠만 만들어서는 장기적으로 살아남을 수 없습니다.<br/>
-              잘 나가는 유튜버들은 <strong style={{ color: '#fbbf24' }}>무조건 뭔가를 판매</strong>하고 있습니다.<br/>
+              잘 나가는 유튜버들은 <strong style={{ color: '#ffd60a' }}>무조건 뭔가를 판매</strong>하고 있습니다.<br/>
               <strong style={{ color: '#a855f7' }}>제품 또는 서비스</strong>를 판매하는 1인 기업으로 성장해야 합니다.
             </p>
           </div>
@@ -759,7 +759,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
             borderRadius: '16px',
             marginBottom: '25px'
           }}>
-            <h4 style={{ color: '#fbbf24', margin: '0 0 20px 0' }}>📝 에제르 AI 청사진 도구 사용법</h4>
+            <h4 style={{ color: '#ffd60a', margin: '0 0 20px 0' }}>📝 에제르 AI 청사진 도구 사용법</h4>
             <ol style={{ color: '#e2e8f0', margin: 0, paddingLeft: '20px', lineHeight: '2.2' }}>
               <li><strong>관심 분야</strong> 입력: 요리, 영어, 반려견, 교육 등</li>
               <li><strong>경험/배경</strong> 입력: 10년차 선생님, 전직 요리사 등</li>
@@ -805,7 +805,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
 
         {/* 핵심 메시지 */}
         <div style={{
-          background: 'linear-gradient(135deg, #1e3a5f, #0f172a)',
+          background: 'linear-gradient(135deg, #1e3a5f, #ffffff)',
           borderRadius: '24px',
           padding: '40px',
           marginBottom: '40px',
@@ -818,7 +818,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
           </h3>
           <p style={{ color: '#e2e8f0', lineHeight: '1.9', fontSize: '1.05rem', maxWidth: '600px', margin: '0 auto 20px' }}>
             샘 올트먼(ChatGPT CEO)이 말한 것처럼,<br/>
-            지금은 <strong style={{ color: '#fbbf24' }}>1인 기업의 전성시대</strong>입니다.<br/><br/>
+            지금은 <strong style={{ color: '#ffd60a' }}>1인 기업의 전성시대</strong>입니다.<br/><br/>
             혼자서 AI 기업을 만들고, 유니콘 기업이 될 수 있는 시대.<br/>
             <strong style={{ color: '#22c55e' }}>여러분도 할 수 있습니다.</strong>
           </p>
@@ -1082,7 +1082,7 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
             <button
               onClick={onNext}
               style={{
-                background: 'linear-gradient(135deg, #1e3a5f, #0f172a)',
+                background: 'linear-gradient(135deg, #1e3a5f, #ffffff)',
                 color: 'white',
                 border: '1px solid rgba(255,255,255,0.2)',
                 padding: '18px 45px',

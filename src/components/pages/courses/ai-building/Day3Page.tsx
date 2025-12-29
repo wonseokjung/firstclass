@@ -214,14 +214,14 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
     { country: '🇯🇵 일본', cpm: '$3', color: '#ec4899' },
     { country: '🇰🇷 한국', cpm: '$2.5', color: '#f43f5e' },
     { country: '🇧🇷 브라질', cpm: '$1.5', color: '#22c55e' },
-    { country: '🇮🇳 인도', cpm: '$0.8', color: '#f59e0b' },
+    { country: '🇮🇳 인도', cpm: '$0.8', color: '#e5c100' },
   ];
 
   return (
     <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0a0f1a 0%, #1a1f2e 100%)' }}>
       {/* 헤더 */}
       <div style={{
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+        background: 'linear-gradient(135deg, #ffffff 0%, #0d1b2a 100%)',
         padding: '20px',
         position: 'sticky',
         top: 0,
@@ -392,7 +392,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
           border: '1px solid rgba(255,255,255,0.1)'
         }}>
           <h3 style={{ 
-            color: '#fbbf24', 
+            color: '#ffd60a', 
             fontSize: '1.4rem', 
             marginBottom: '25px',
             display: 'flex',
@@ -403,13 +403,13 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
           </h3>
           
           <div style={{
-            background: 'linear-gradient(135deg, #0f172a, #1e293b)',
+            background: 'linear-gradient(135deg, #ffffff, #0d1b2a)',
             padding: '30px',
             borderRadius: '16px',
             marginBottom: '25px',
             border: '1px solid rgba(251, 191, 36, 0.3)'
           }}>
-            <p style={{ color: '#fbbf24', fontSize: '1.2rem', fontWeight: '700', margin: '0 0 15px 0' }}>
+            <p style={{ color: '#ffd60a', fontSize: '1.2rem', fontWeight: '700', margin: '0 0 15px 0' }}>
               "맨해튼은 120개가 넘는 언어가 공존하는 곳"
             </p>
             <p style={{ color: '#e2e8f0', margin: 0, lineHeight: '1.8' }}>
@@ -459,7 +459,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
           border: '1px solid rgba(255,255,255,0.1)'
         }}>
           <h3 style={{ 
-            color: '#f59e0b', 
+            color: '#e5c100', 
             fontSize: '1.4rem', 
             marginBottom: '25px',
             display: 'flex',
@@ -476,7 +476,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
             marginBottom: '25px',
             border: '1px solid rgba(245, 158, 11, 0.2)'
           }}>
-            <h4 style={{ color: '#f59e0b', margin: '0 0 15px 0' }}>🇮🇳 인도인 타겟팅 건물의 경우</h4>
+            <h4 style={{ color: '#e5c100', margin: '0 0 15px 0' }}>🇮🇳 인도인 타겟팅 건물의 경우</h4>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
               <div style={{
                 background: 'rgba(34, 197, 94, 0.1)',
@@ -515,7 +515,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
               <Lightbulb size={22} /> 1층 전략: 할랄 푸드
             </h4>
             <p style={{ color: '#e2e8f0', margin: 0, lineHeight: '1.9', fontSize: '1rem' }}>
-              인도 사람들을 타겟으로 한다면 1층에 <strong style={{ color: '#fbbf24' }}>할랄 푸드(Halal Food)</strong> 식당을 넣습니다.<br/>
+              인도 사람들을 타겟으로 한다면 1층에 <strong style={{ color: '#ffd60a' }}>할랄 푸드(Halal Food)</strong> 식당을 넣습니다.<br/>
               그러면 위층에 살면서 1층에서 밥 먹기 편하니까 더 많이 입주하게 됩니다.<br/>
               <strong style={{ color: '#a855f7' }}>콘텐츠도 마찬가지!</strong> 타겟 시청자가 좋아하는 것을 제공해야 합니다.
             </p>
@@ -612,7 +612,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
               <ul style={{ color: '#e2e8f0', margin: 0, paddingLeft: '20px', lineHeight: '2' }}>
                 <li><strong style={{ color: '#22c55e' }}>금융/테크</strong>: 1.5배 (가장 높음)</li>
                 <li><strong style={{ color: '#3b82f6' }}>교육/비즈니스</strong>: 1.3배</li>
-                <li><strong style={{ color: '#fbbf24' }}>게임/엔터테인먼트</strong>: 1.0배</li>
+                <li><strong style={{ color: '#ffd60a' }}>게임/엔터테인먼트</strong>: 1.0배</li>
                 <li><strong style={{ color: '#94a3b8' }}>퀴즈/일반</strong>: 0.8배</li>
               </ul>
             </div>
@@ -625,7 +625,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
               <h4 style={{ color: '#22c55e', margin: '0 0 15px 0' }}>⏱️ 영상 길이별 수익</h4>
               <ul style={{ color: '#e2e8f0', margin: 0, paddingLeft: '20px', lineHeight: '2' }}>
                 <li><strong style={{ color: '#ef4444' }}>쇼츠 (1분 미만)</strong>: 가장 낮음</li>
-                <li><strong style={{ color: '#fbbf24' }}>1-8분</strong>: 중간광고 불가</li>
+                <li><strong style={{ color: '#ffd60a' }}>1-8분</strong>: 중간광고 불가</li>
                 <li><strong style={{ color: '#3b82f6' }}>8-20분</strong>: 중간광고 1개</li>
                 <li><strong style={{ color: '#22c55e' }}>20분 이상</strong>: 중간광고 여러 개</li>
           </ul>
@@ -638,12 +638,12 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
             borderRadius: '16px',
             border: '1px solid rgba(251, 191, 36, 0.3)'
           }}>
-            <h4 style={{ color: '#fbbf24', margin: '0 0 15px 0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <h4 style={{ color: '#ffd60a', margin: '0 0 15px 0', display: 'flex', alignItems: 'center', gap: '10px' }}>
               💡 Jay의 경우
             </h4>
             <p style={{ color: '#e2e8f0', margin: 0, lineHeight: '1.9', fontSize: '1.05rem' }}>
               한국 타겟 + 테크/교육 콘텐츠 + 긴 영상(실습)<br/>
-              → <strong style={{ color: '#fbbf24' }}>1만 뷰당 약 9~12만원</strong> 수익<br/>
+              → <strong style={{ color: '#ffd60a' }}>1만 뷰당 약 9~12만원</strong> 수익<br/>
               평균보다 높은 이유: 테크 분야 + 긴 영상 + 교육 콘텐츠의 조합!
             </p>
           </div>
@@ -674,7 +674,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
             borderRadius: '16px',
             marginBottom: '25px'
           }}>
-            <h4 style={{ color: '#fbbf24', margin: '0 0 20px 0' }}>📝 오늘의 미션</h4>
+            <h4 style={{ color: '#ffd60a', margin: '0 0 20px 0' }}>📝 오늘의 미션</h4>
             <ol style={{ color: '#e2e8f0', margin: 0, paddingLeft: '20px', lineHeight: '2.2' }}>
               <li><strong>타겟 국가</strong> 선택하기 (미국, 일본, 한국 등)</li>
               <li><strong>콘텐츠 종류</strong> 선택하기 (테크, 교육, 게임 등)</li>
@@ -720,7 +720,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
 
         {/* 핵심 메시지 */}
         <div style={{
-          background: 'linear-gradient(135deg, #1e3a5f, #0f172a)',
+          background: 'linear-gradient(135deg, #1e3a5f, #ffffff)',
           borderRadius: '24px',
           padding: '40px',
           marginBottom: '40px',
@@ -732,7 +732,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
             전략적 타겟팅이 핵심입니다
           </h3>
           <p style={{ color: '#e2e8f0', lineHeight: '1.9', fontSize: '1.05rem', maxWidth: '600px', margin: '0 auto 20px' }}>
-            건물을 지을 때 <strong style={{ color: '#fbbf24' }}>누가 살 건지</strong> 미리 정하듯이,<br/>
+            건물을 지을 때 <strong style={{ color: '#ffd60a' }}>누가 살 건지</strong> 미리 정하듯이,<br/>
             콘텐츠를 만들 때도 <strong style={{ color: '#22c55e' }}>누가 볼 건지</strong> 먼저 정해야 합니다.<br/><br/>
             나라, 콘텐츠 종류, 영상 길이를 전략적으로 선택하면<br/>
             <strong style={{ color: '#3b82f6' }}>같은 노력으로 더 많은 수익</strong>을 얻을 수 있습니다.
@@ -997,7 +997,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
             <button
               onClick={onNext}
               style={{
-                background: 'linear-gradient(135deg, #1e3a5f, #0f172a)',
+                background: 'linear-gradient(135deg, #1e3a5f, #ffffff)',
                 color: 'white',
                 border: '1px solid rgba(255,255,255,0.2)',
                 padding: '18px 45px',

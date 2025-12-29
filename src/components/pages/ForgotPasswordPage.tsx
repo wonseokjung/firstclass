@@ -252,7 +252,7 @@ const ForgotPasswordPage: React.FC = () => {
               <div style={{
                 width: '60px',
                 height: '60px',
-                background: `linear-gradient(135deg, ${BRAND_GOLD} 0%, #fbbf24 100%)`,
+                background: `linear-gradient(135deg, ${BRAND_GOLD} 0%, #ffd60a 100%)`,
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
@@ -374,7 +374,7 @@ const ForgotPasswordPage: React.FC = () => {
               style={{
                 width: '100%',
                 padding: '14px',
-                background: `linear-gradient(135deg, ${BRAND_GOLD} 0%, #fbbf24 100%)`,
+                background: `linear-gradient(135deg, ${BRAND_GOLD} 0%, #ffd60a 100%)`,
                 color: BRAND_NAVY,
                 border: 'none',
                 borderRadius: '10px',

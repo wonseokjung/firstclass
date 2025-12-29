@@ -451,7 +451,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
               }}
             >
               <h2 style={{ 
-                color: '#1f2937',
+                color: '#1b263b',
                 fontSize: '1.4rem',
                 fontWeight: '600',
                 marginBottom: '20px',
@@ -490,7 +490,7 @@ const LessonDetailPage: React.FC<LessonDetailPageProps> = ({ onBack, lessonId, c
                   whiteSpace: 'pre-wrap',
                   lineHeight: '1.7',
                   fontSize: '1rem',
-                  color: '#374151'
+                  color: '#415a77'
                 }}>
                   {section.content}
                   

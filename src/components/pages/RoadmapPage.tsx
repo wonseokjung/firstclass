@@ -79,8 +79,8 @@ const RoadmapPage: React.FC = () => {
       details: '콘텐츠를 만드는 사람에서 사업을 운영하는 사람이 됩니다. 사업자등록, 세금, 정부지원금 활용까지.',
       price: '준비중',
       priceType: '',
-      color: '#f59e0b',
-      gradient: 'linear-gradient(135deg, #d4af37 0%, #f59e0b 50%, #fbbf24 100%)',
+      color: '#e5c100',
+      gradient: 'linear-gradient(135deg, #d4af37 0%, #e5c100 50%, #ffd60a 100%)',
       features: [
         '🏢 개인사업자 & 법인 설립',
         '💰 세금 & 정부지원금 활용',
@@ -113,7 +113,7 @@ const RoadmapPage: React.FC = () => {
       }}>
         <div style={{
           display: 'inline-block',
-          background: 'linear-gradient(135deg, #d4af37 0%, #f59e0b 100%)',
+          background: 'linear-gradient(135deg, #d4af37 0%, #e5c100 100%)',
           padding: '8px 20px',
           borderRadius: '30px',
           marginBottom: '24px'
@@ -131,7 +131,7 @@ const RoadmapPage: React.FC = () => {
           lineHeight: '1.2'
         }}>
           AI 크리에이터가 되는 여정<br />
-          <span style={{ color: '#f59e0b' }}>교육 + 도구로 함께합니다</span>
+          <span style={{ color: '#e5c100' }}>교육 + 도구로 함께합니다</span>
         </h1>
         
         <p style={{
@@ -167,7 +167,7 @@ const RoadmapPage: React.FC = () => {
                   height: '50px',
                   borderRadius: '50%',
                   background: step.status === 'featured' ? step.gradient : 
-                             step.status === 'coming_soon' ? '#374151' : step.color,
+                             step.status === 'coming_soon' ? '#415a77' : step.color,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -175,12 +175,12 @@ const RoadmapPage: React.FC = () => {
                   fontWeight: '800',
                   fontSize: '1.2rem',
                   boxShadow: step.status === 'featured' ? '0 0 30px rgba(245, 158, 11, 0.5)' : 'none',
-                  border: step.status === 'featured' ? '3px solid #fbbf24' : 'none'
+                  border: step.status === 'featured' ? '3px solid #ffd60a' : 'none'
                 }}>
                   {step.step}
                 </div>
                 <span style={{
-                  color: step.status === 'featured' ? '#f59e0b' : '#94a3b8',
+                  color: step.status === 'featured' ? '#e5c100' : '#94a3b8',
                   fontSize: '0.75rem',
                   fontWeight: '600'
                 }}>
@@ -191,7 +191,7 @@ const RoadmapPage: React.FC = () => {
                 <div style={{
                   width: '60px',
                   height: '3px',
-                  background: index < 2 ? 'linear-gradient(90deg, ' + steps[index].color + ', ' + steps[index + 1].color + ')' : '#374151',
+                  background: index < 2 ? 'linear-gradient(90deg, ' + steps[index].color + ', ' + steps[index + 1].color + ')' : '#415a77',
                   margin: '0 10px 20px'
                 }} />
               )}
@@ -217,8 +217,8 @@ const RoadmapPage: React.FC = () => {
               onClick={() => step.status !== 'coming_soon' && navigate(step.path)}
               style={{
                 background: step.status === 'featured' 
-                  ? 'linear-gradient(135deg, #1a1a2e 0%, #0f172a 100%)'
-                  : 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
+                  ? 'linear-gradient(135deg, #1a1a2e 0%, #ffffff 100%)'
+                  : 'linear-gradient(135deg, #0d1b2a 0%, #ffffff 100%)',
                 borderRadius: '24px',
                 padding: step.status === 'featured' ? '3px' : '0',
                 cursor: step.status !== 'coming_soon' ? 'pointer' : 'default',
@@ -226,7 +226,7 @@ const RoadmapPage: React.FC = () => {
                 transition: 'all 0.3s ease',
                 position: 'relative',
                 ...(step.status === 'featured' && {
-                  background: 'linear-gradient(135deg, #d4af37 0%, #f59e0b 50%, #fbbf24 100%)',
+                  background: 'linear-gradient(135deg, #d4af37 0%, #e5c100 50%, #ffd60a 100%)',
                 })
               }}
             >
@@ -237,7 +237,7 @@ const RoadmapPage: React.FC = () => {
                   top: '-12px',
                   left: '50%',
                   transform: 'translateX(-50%)',
-                  background: 'linear-gradient(135deg, #d4af37 0%, #f59e0b 100%)',
+                  background: 'linear-gradient(135deg, #d4af37 0%, #e5c100 100%)',
                   padding: '6px 16px',
                   borderRadius: '20px',
                   zIndex: 10
@@ -250,7 +250,7 @@ const RoadmapPage: React.FC = () => {
 
               <div style={{
                 background: step.status === 'featured' 
-                  ? 'linear-gradient(135deg, #1a1a2e 0%, #0f172a 100%)'
+                  ? 'linear-gradient(135deg, #1a1a2e 0%, #ffffff 100%)'
                   : 'transparent',
                 borderRadius: '22px',
                 padding: '32px',
@@ -296,7 +296,7 @@ const RoadmapPage: React.FC = () => {
 
                 {/* Description */}
                 <p style={{
-                  color: step.status === 'featured' ? '#f59e0b' : '#94a3b8',
+                  color: step.status === 'featured' ? '#e5c100' : '#94a3b8',
                   fontSize: '1rem',
                   fontWeight: '600',
                   marginBottom: '12px'
@@ -358,14 +358,14 @@ const RoadmapPage: React.FC = () => {
                   }}>
                     {step.highlights.map((highlight, idx) => (
                       <p key={idx} style={{
-                        color: '#fbbf24',
+                        color: '#ffd60a',
                         fontSize: '0.85rem',
                         margin: idx === step.highlights!.length - 1 ? 0 : '0 0 8px 0',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '8px'
                       }}>
-                        <Star size={14} fill="#fbbf24" /> {highlight}
+                        <Star size={14} fill="#ffd60a" /> {highlight}
                       </p>
                     ))}
                   </div>

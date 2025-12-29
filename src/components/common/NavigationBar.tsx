@@ -8,8 +8,8 @@ import AzureTableService from '../../services/azureTableService';
 const brandTheme = {
   navy: '#0f2744',
   navyLight: '#1e3a5f',
-  gold: '#fbbf24',
-  goldDark: '#f59e0b',
+  gold: '#ffd60a',
+  goldDark: '#e5c100',
   white: '#ffffff'
 };
 
@@ -194,13 +194,13 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               borderRadius: '8px',
               fontWeight: '700',
               fontSize: '0.9rem',
-              border: '2px solid #fbbf24',
+              border: '2px solid #ffd60a',
               cursor: 'pointer',
               transition: 'all 0.2s'
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.background = '#fbbf24';
-              e.currentTarget.style.color = '#1e293b';
+              e.currentTarget.style.background = '#ffd60a';
+              e.currentTarget.style.color = '#0d1b2a';
               e.currentTarget.style.transform = 'translateY(-2px)';
             }}
             onMouseOut={(e) => {
@@ -230,7 +230,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                 height: '45px',
                 borderRadius: '50%',
                 objectFit: 'cover',
-                border: '2px solid #fbbf24',
+                border: '2px solid #ffd60a',
                 boxShadow: '0 2px 10px rgba(251, 191, 36, 0.3)'
               }}
             />

@@ -14,36 +14,36 @@
   }
 }                                                    
 
-/* CSS 변수로 테마 관리 - 다크 테마 기준 */
+/* CSS 변수로 테마 관리 - 페라리 네이비 + 골드 테마 */
 :root {
-  /* 브랜드 컬러 */
-  --color-primary: #1e40af;
-  --color-primary-hover: #1e3a8a;
-  --color-accent: #fbbf24;
-  --color-accent-hover: #f59e0b;
+  /* 페라리 브랜드 컬러 🏎️ */
+  --color-primary: #0d1b2a;
+  --color-primary-hover: #1b263b;
+  --color-accent: #ffd60a;
+  --color-accent-hover: #e5c100;
   --color-success: #10b981;
   --color-success-hover: #059669;
   
-  /* 시맨틱 컬러 (다크 테마) */
-  --color-background: #ffffff;
-  --color-background-secondary: #f8fafc;
-  --color-text: #1f2937;
-  --color-text-secondary: #6b7280;
-  --color-text-muted: #9ca3af;
-  --color-border: #e5e7eb;
+  /* 시맨틱 컬러 (페라리 다크 테마) */
+  --color-background: #0d1b2a;
+  --color-background-secondary: #1b263b;
+  --color-text: #ffffff;
+  --color-text-secondary: #778da9;
+  --color-text-muted: #415a77;
+  --color-border: #415a77;
   
   /* 다크 서페이스 (카드, 섹션 배경 등) */
-  --color-surface-dark: #0a0a0a;
-  --color-surface-darker: #1a1a1a;
+  --color-surface-dark: #0d1b2a;
+  --color-surface-darker: #1b263b;
   
-  /* 그레이스케일 (다크 테마 기준) */
-  --color-gray-100: #666666;
-  --color-gray-200: #333;
-  --color-gray-300: #222;
-  --color-gray-400: #555;
-  --color-gray-500: #333;
-  --color-gray-600: #1a1a1a;
-  --color-gray-700: #0a0a0a;
+  /* 그레이스케일 (페라리 네이비 기준) */
+  --color-gray-100: #778da9;
+  --color-gray-200: #415a77;
+  --color-gray-300: #1b263b;
+  --color-gray-400: #415a77;
+  --color-gray-500: #1b263b;
+  --color-gray-600: #0d1b2a;
+  --color-gray-700: #0a1628;
   
   /* 레거시 호환성 - 기존 변수명 유지 (추후 제거 예정) */
   --color-black: var(--color-background);
@@ -255,7 +255,7 @@ html {
 body {
   font-family: var(--font-family);
   background-color: var(--color-black) !important;
-  color: #1f2937 !important;
+  color: #ffffff !important;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -359,7 +359,7 @@ body {
 
 /* 공통 헤더 스타일 */
 .masterclass-header-original {
-  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
   border-bottom: 3px solid #fbbf24;
   padding: 16px 0;
   position: sticky;
@@ -396,12 +396,12 @@ body {
 .logo-icon {
   width: 32px;
   height: 32px;
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  background: linear-gradient(135deg, #ffd60a, #e5c100);
   border-radius: var(--border-radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1e293b;
+  color: #ffffff;
   font-weight: 700;
   font-size: 18px;
   box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
@@ -444,7 +444,7 @@ body {
   background: var(--color-gray-500);
   border: 1px solid var(--color-gray-400);
   border-radius: var(--border-radius);
-  color: #1f2937;
+  color: #ffffff;
   font-size: 16px;
   outline: none;
   transition: var(--transition);
@@ -501,8 +501,8 @@ body {
 }
 
 .cta-button {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: #1e293b;
+  background: linear-gradient(135deg, #ffd60a, #e5c100);
+  color: #ffffff;
   border: none;
   padding: 8px 16px;
   border-radius: 8px;
@@ -515,7 +515,7 @@ body {
 }
 
 .cta-button:hover {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: linear-gradient(135deg, #e5c100, #c9a800);
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(251, 191, 36, 0.5);
 }
@@ -561,7 +561,7 @@ body {
 .nav-arrow {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  background: linear-gradient(135deg, #ffd60a, #e5c100);
   border: 2px solid #fbbf24;
   border-radius: 50%;
   display: flex;
@@ -569,14 +569,14 @@ body {
   justify-content: center;
   cursor: pointer;
   transition: var(--transition);
-  color: #1e293b;
+  color: #ffffff;
   box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
 }
 
 .nav-arrow:hover {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: linear-gradient(135deg, #e5c100, #c9a800);
   border-color: #f59e0b;
-  color: #1e293b;
+  color: #ffffff;
   transform: scale(1.1);
   box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
 }
@@ -659,7 +659,7 @@ body {
   top: 16px;
   right: 16px;
   background: var(--color-primary);
-  color: #1f2937;
+  color: #ffffff;
   padding: 6px 12px;
   border-radius: var(--border-radius-sm);
   font-size: 12px;
@@ -687,7 +687,7 @@ body {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #1f2937;
+  color: #ffffff;
   padding: 12px 20px;
   border-radius: 6px;
   font-size: 14px;
@@ -712,7 +712,7 @@ body {
 .instructor-name {
   font-size: 16px;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 8px;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -782,7 +782,7 @@ body {
 .documentary-title {
   font-size: 48px;
   font-weight: 700;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 16px;
   letter-spacing: -1px;
 }
@@ -859,7 +859,7 @@ body {
   justify-content: center;
   cursor: pointer;
   transition: var(--transition-slow);
-  color: #1f2937;
+  color: #ffffff;
   backdrop-filter: blur(10px);
 }
 
@@ -875,7 +875,7 @@ body {
   right: 0;
   background: linear-gradient(transparent, rgba(255, 255, 255, 0.9));
   padding: 40px 32px 32px;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .video-info-overlay h3 {
@@ -919,7 +919,7 @@ body {
 .story-title {
   font-size: 36px;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   text-align: center;
   margin-bottom: 60px;
   letter-spacing: -0.5px;
@@ -959,7 +959,7 @@ body {
 .story-card h4 {
   font-size: 24px;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 16px;
 }
 
@@ -983,7 +983,7 @@ body {
 .supporters-title {
   font-size: 36px;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 16px;
   letter-spacing: -0.5px;
 }
@@ -1017,7 +1017,7 @@ body {
 .supporter-card h4 {
   font-size: 18px;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 12px;
 }
 
@@ -1061,7 +1061,7 @@ body {
 }
 
 .company-name {
-  color: #1f2937;
+  color: #ffffff;
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 12px;
@@ -1132,7 +1132,7 @@ body {
   gap: 12px;
   font-size: 24px;
   font-weight: 700;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .logo-icon {
@@ -1143,7 +1143,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1f2937;
+  color: #ffffff;
   font-weight: 700;
   font-size: 20px;
 }
@@ -1171,7 +1171,7 @@ body {
 }
 
 .browse-btn:hover {
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .search-container {
@@ -1187,7 +1187,7 @@ body {
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  color: #1f2937;
+  color: #ffffff;
   font-size: 16px;
   outline: none;
   transition: border-color 0.2s;
@@ -1230,7 +1230,7 @@ body {
 
 .cta-button {
   background: #0ea5e9;
-  color: #1f2937;
+  color: #ffffff;
   border: none;
   padding: 14px 28px;
   border-radius: 8px;
@@ -1256,14 +1256,14 @@ body {
   display: flex;
   min-height: calc(100vh - 80px);
   background: #ffffff;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .course-main {
   flex: 1;
   padding: 40px;
   background: #ffffff;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .course-sidebar {
@@ -1273,7 +1273,7 @@ body {
   padding: 40px 20px;
   overflow-y: auto;
   max-height: calc(100vh - 80px);
-  color: #1f2937;
+  color: #ffffff;
 }
 
 /* 모바일 강의 페이지 레이아웃 */
@@ -1297,7 +1297,7 @@ body {
     background: #f8fafc;
     max-height: 400px; /* 모바일에서 높이 제한 */
     overflow-y: auto;
-    color: #1f2937;
+    color: #ffffff;
   }
 
   /* 모바일에서 비디오 컨테이너 최적화 */
@@ -1709,7 +1709,7 @@ body {
 .sidebar-header h3 {
   font-size: 20px;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 8px;
 }
 
@@ -1784,7 +1784,7 @@ body {
 .lesson-info .lesson-title {
   font-size: 14px;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 6px;
   line-height: 1.3;
   overflow: hidden;
@@ -1891,7 +1891,7 @@ body {
 .video-placeholder-content h3 {
   font-size: 24px;
   margin-bottom: 8px;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .video-placeholder-content p {
@@ -1908,7 +1908,7 @@ body {
 .lesson-title {
   font-size: 20px;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 12px;
   line-height: 1.4;
   overflow: hidden;
@@ -2019,7 +2019,7 @@ body {
 .next-btn {
   background: #0ea5e9;
   border-color: #0ea5e9;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .next-btn:hover:not(:disabled) {
@@ -2103,7 +2103,7 @@ body {
 .quiz-header h3 {
   font-size: 20px;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -2134,7 +2134,7 @@ body {
 .question-text {
   font-size: 18px;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 20px;
   line-height: 1.5;
 }
@@ -2160,7 +2160,7 @@ body {
   background: #f3f4f6;
   border: 1px solid #d1d5db;
   border-radius: 8px;
-  color: #1f2937;
+  color: #ffffff;
   cursor: pointer;
   transition: all 0.2s;
   font-family: inherit;
@@ -3064,7 +3064,7 @@ body {
 .modal-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 12px;
   line-height: 1.2;
 }
@@ -3213,7 +3213,7 @@ body {
 .success-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 16px;
 }
 
@@ -3344,7 +3344,7 @@ body {
 .footer {
   background: #ffffff;
   border-top: 1px solid rgba(14, 165, 233, 0.2);
-  color: #1f2937;
+  color: #ffffff;
   padding: 60px 0 20px;
   margin-top: 120px;
   position: relative;
@@ -3399,20 +3399,20 @@ body {
 }
 
 .footer-section p {
-  color: #1f2937;
+  color: #ffffff;
   line-height: 1.6;
   margin-bottom: 8px;
   transition: color 0.3s ease;
 }
 
 .footer-section p:hover {
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .business-info p {
   margin-bottom: 8px;
   font-size: 0.95rem;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .business-info strong {
@@ -3430,7 +3430,7 @@ body {
 }
 
 .footer-section ul li a {
-  color: #1f2937;
+  color: #ffffff;
   text-decoration: none;
   transition: all 0.3s ease;
   position: relative;
@@ -3468,7 +3468,7 @@ body {
 }
 
 .footer-bottom p {
-  color: #1f2937;
+  color: #ffffff;
   font-size: 0.9rem;
   margin: 0;
 }
@@ -3514,7 +3514,7 @@ body {
 
 .discount-badge {
   background: linear-gradient(135deg, #dc2626, #ef4444);
-  color: #1f2937;
+  color: #ffffff;
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 0.8rem;
@@ -3523,7 +3523,7 @@ body {
 
 .enroll-btn {
   background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  color: #1f2937;
+  color: #ffffff;
   padding: 10px 20px;
   border: none;
   border-radius: 8px;
@@ -3603,7 +3603,7 @@ body {
 .payment-header h3 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #1f2937;
+  color: #ffffff;
   margin: 0;
 }
 
@@ -3631,7 +3631,7 @@ body {
 .course-info h4 {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   margin: 0 0 16px 0;
   line-height: 1.5;
   overflow: hidden;
@@ -3663,7 +3663,7 @@ body {
 
 .price-display .discount {
   background: linear-gradient(135deg, #dc2626, #ef4444);
-  color: #1f2937;
+  color: #ffffff;
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 0.8rem;
@@ -3677,7 +3677,7 @@ body {
 .payment-methods h5 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   margin: 0 0 16px 0;
 }
 
@@ -3707,14 +3707,14 @@ body {
 
 .payment-btn.primary {
   background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  color: #1f2937;
+  color: #ffffff;
   border-color: #0ea5e9;
 }
 
 .payment-btn.primary:hover:not(:disabled) {
   background: linear-gradient(135deg, #0284c7, #0ea5e9);
   border-color: #0284c7;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .payment-btn:disabled {
@@ -3784,8 +3784,8 @@ body {
   position: absolute;
   top: 12px;
   right: 12px;
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: #1e293b;
+  background: linear-gradient(135deg, #ffd60a, #e5c100);
+  color: #ffffff;
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.8rem;
@@ -3804,8 +3804,8 @@ body {
 }
 
 .free-badge {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: #1e293b;
+  background: linear-gradient(135deg, #ffd60a, #e5c100);
+  color: #ffffff;
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.8rem;
@@ -3853,7 +3853,7 @@ body {
   align-items: center;
   gap: 8px;
   background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  color: #1f2937;
+  color: #ffffff;
   padding: 8px 16px;
   border-radius: 50px;
   font-size: 0.9rem;
@@ -3864,7 +3864,7 @@ body {
 }
 
 .premium-title {
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 15px;
   display: flex;
   align-items: center;
@@ -3887,7 +3887,7 @@ body {
 
 .premium-subtitle {
   font-size: 1.2rem;
-  color: #1f2937;
+  color: #ffffff;
   line-height: 1.6;
   margin-bottom: 25px;
 }
@@ -3937,13 +3937,13 @@ body {
 
 .original-price {
   font-size: 1.2rem;
-  color: #1f2937;
+  color: #ffffff;
   text-decoration: line-through;
 }
 
 .discount-tag {
   background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  color: #1f2937;
+  color: #ffffff;
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.8rem;
@@ -3952,7 +3952,7 @@ body {
 
 .enroll-btn.premium-enroll {
   background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  color: #1f2937;
+  color: #ffffff;
   border: none;
   padding: 16px 32px;
   border-radius: 50px;
@@ -3972,7 +3972,7 @@ body {
 
 .launch-note {
   text-align: center;
-  color: #1f2937;
+  color: #ffffff;
   font-size: 0.85rem;
   font-style: italic;
 }
@@ -3987,7 +3987,7 @@ body {
 }
 
 .course-intro-section h2, .benefits-section h2, .instructor-section h2, .launch-preview h2 {
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 30px;
   font-size: 1.8rem;
 }
@@ -4011,7 +4011,7 @@ body {
 }
 
 .instructor-credentials p {
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 8px;
   font-size: 1.05rem;
   font-weight: 500;
@@ -4025,7 +4025,7 @@ body {
 }
 
 .instructor-message p {
-  color: #1f2937;
+  color: #ffffff;
   font-size: 1.1rem;
   line-height: 1.6;
   font-style: italic;
@@ -4075,7 +4075,7 @@ body {
 }
 
 .audience-text p {
-  color: #1f2937;
+  color: #ffffff;
   line-height: 1.5;
 }
 
@@ -4113,7 +4113,7 @@ body {
 }
 
 .benefit-card p {
-  color: #1f2937;
+  color: #ffffff;
   line-height: 1.5;
 }
 
@@ -4130,7 +4130,7 @@ body {
 
 .preview-content p {
   font-size: 1.1rem;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 25px;
 }
 
@@ -4166,7 +4166,7 @@ body {
 
 .lesson-number.premium-number {
   background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .lesson-status.premium-status .coming-soon {
@@ -4183,7 +4183,7 @@ body {
 
 .premium-cta-btn {
   background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  color: #1f2937;
+  color: #ffffff;
   border: none;
   padding: 14px 28px;
   border-radius: 50px;
@@ -4202,7 +4202,7 @@ body {
 }
 
 .cta-note {
-  color: #1f2937;
+  color: #ffffff;
   font-size: 0.8rem;
   font-style: italic;
 }
@@ -4254,7 +4254,7 @@ body {
 
 .launch-date {
   background: linear-gradient(135deg, #f59e0b, #f97316);
-  color: #1f2937;
+  color: #ffffff;
   padding: 6px 16px;
   border-radius: 20px;
   font-size: 0.8rem;
@@ -4317,7 +4317,7 @@ body {
 
 .launch-info {
   text-align: center;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .launch-text {
@@ -4341,7 +4341,7 @@ body {
 .premium-btn {
   background: linear-gradient(135deg, #0ea5e9, #0284c7);
   border: 2px solid white;
-  color: #1f2937;
+  color: #ffffff;
   font-weight: 600;
 }
 
@@ -4365,7 +4365,7 @@ body {
 }
 
 .premium-description {
-  color: #1f2937;
+  color: #ffffff;
   font-weight: 600;
   line-height: 1.5;
 }
@@ -4392,7 +4392,7 @@ body {
 
 .premium-discount {
   background: linear-gradient(135deg, #ef4444, #dc2626);
-  color: #1f2937;
+  color: #ffffff;
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 0.75rem;
@@ -4402,7 +4402,7 @@ body {
 
 .premium-enroll-btn {
   background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  color: #1f2937;
+  color: #ffffff;
   border: none;
   padding: 14px 20px;
   border-radius: 8px;
@@ -4517,7 +4517,7 @@ body {
 .course-badge {
   display: inline-block;
   background: linear-gradient(135deg, var(--color-primary), #0ea5e9);
-  color: #1f2937;
+  color: #ffffff;
   padding: 0.5rem 1rem;
   border-radius: 2rem;
   font-size: 0.875rem;
@@ -4638,7 +4638,7 @@ body {
 }
 
 .current-price {
-  color: #1f2937;
+  color: #ffffff;
   font-size: 2.25rem;
   font-weight: 700;
 }
@@ -4653,7 +4653,7 @@ body {
 .purchase-button {
   width: 100%;
   background: linear-gradient(135deg, var(--color-primary), #0ea5e9);
-  color: #1f2937;
+  color: #ffffff;
   border: none;
   padding: 1rem 2rem;
   border-radius: var(--border-radius-lg);
@@ -4727,7 +4727,7 @@ body {
 
 .lesson-number {
   background: linear-gradient(135deg, var(--color-primary), #0ea5e9);
-  color: #1f2937;
+  color: #ffffff;
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
@@ -4746,7 +4746,7 @@ body {
 .lesson-title {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 0.5rem;
 }
 
@@ -4785,7 +4785,7 @@ body {
 
 .lesson-play-button:hover {
   background: var(--color-primary);
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .instructor-section {
@@ -4819,7 +4819,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1f2937;
+  color: #ffffff;
   font-size: 1.5rem;
   font-weight: 700;
   flex-shrink: 0;
@@ -4865,7 +4865,7 @@ body {
 
 .final-cta-button {
   background: linear-gradient(135deg, var(--color-primary), #0ea5e9);
-  color: #1f2937;
+  color: #ffffff;
   border: none;
   padding: 1rem 3rem;
   border-radius: var(--border-radius-lg);
@@ -4932,7 +4932,7 @@ body {
 /* CEO 페이지 스타일 */
 .ceo-page {
   background: var(--color-black);
-  color: #1f2937;
+  color: #ffffff;
   min-height: 100vh;
 }
 
@@ -4975,7 +4975,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1f2937;
+  color: #ffffff;
   font-size: 1.5rem;
   font-weight: 700;
   box-shadow: 0 8px 32px rgba(14, 165, 233, 0.3);
@@ -5017,7 +5017,7 @@ body {
 .ceo-name {
   font-size: 3rem;
   font-weight: 700;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 0.5rem;
 }
 
@@ -5095,7 +5095,7 @@ body {
 
 .degree-level {
   background: linear-gradient(135deg, var(--color-primary), #0ea5e9);
-  color: #1f2937;
+  color: #ffffff;
   padding: 0.5rem 1rem;
   border-radius: 2rem;
   font-size: 0.875rem;
@@ -5107,7 +5107,7 @@ body {
 .university {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 0.5rem;
 }
 
@@ -5170,7 +5170,7 @@ body {
 .role-card h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 1rem;
 }
 
@@ -5238,7 +5238,7 @@ body {
 .timeline-content h3 {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   margin-bottom: 0.75rem;
 }
 
@@ -5306,7 +5306,7 @@ body {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .cta-content p {
@@ -5320,7 +5320,7 @@ body {
   font-size: 1.25rem;
   padding: 1.25rem 3rem;
   background: linear-gradient(135deg, var(--color-primary), #0ea5e9);
-  color: #1f2937;
+  color: #ffffff;
   border: none;
   border-radius: var(--border-radius-lg);
   font-weight: 600;
@@ -5383,7 +5383,7 @@ body {
 /* Auth 페이지 (로그인/회원가입) 스타일 */
 .auth-page {
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
-  color: #1f2937;
+  color: #ffffff;
   min-height: 100vh;
 }
 
@@ -5459,7 +5459,7 @@ body {
   border: 1px solid rgba(14, 165, 233, 0.3);
   border-radius: var(--border-radius);
   padding: 0.875rem 1rem;
-  color: #1f2937 !important;
+  color: #ffffff !important;
   font-size: 1rem;
   transition: var(--transition);
 }
@@ -5563,7 +5563,7 @@ body {
 
 .auth-submit-button {
   background: linear-gradient(135deg, var(--color-primary), #0ea5e9);
-  color: #1f2937;
+  color: #ffffff;
   border: none;
   padding: 1rem 2rem;
   border-radius: var(--border-radius-lg);
@@ -5681,7 +5681,7 @@ body {
 }
 
 .checkbox-custom svg {
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .checkbox-text {
@@ -5872,7 +5872,7 @@ body {
 .dashboard-page {
   min-height: 100vh;
   background-color: var(--color-black);
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .dashboard-content {
@@ -5907,7 +5907,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .profile-info h1 {
@@ -5924,7 +5924,7 @@ body {
 
 .stat-badge {
   background: var(--color-primary);
-  color: #1f2937;
+  color: #ffffff;
   padding: 8px 16px;
   border-radius: var(--border-radius);
   font-size: 14px;
@@ -5962,14 +5962,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .stat-number {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 5px;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .stat-label {
@@ -5982,7 +5982,7 @@ body {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 20px;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 /* 수강 강의 섹션 */
@@ -6018,7 +6018,7 @@ body {
 .course-title {
   font-size: 18px;
   font-weight: 600;
-  color: #1f2937;
+  color: #ffffff;
   flex: 1;
 }
 
@@ -6032,17 +6032,17 @@ body {
 
 .course-status.active {
   background: var(--color-success);
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .course-status.completed {
   background: var(--color-primary);
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .course-status.paused {
   background: var(--color-gray-300);
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .course-progress {
@@ -6082,7 +6082,7 @@ body {
 .course-continue-btn {
   width: 100%;
   background: var(--color-primary);
-  color: #1f2937;
+  color: #ffffff;
   border: none;
   padding: 12px;
   border-radius: var(--border-radius);
@@ -6111,7 +6111,7 @@ body {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 10px;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .empty-state p {
@@ -6146,7 +6146,7 @@ body {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 10px;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .recommendation-card p {
@@ -6167,7 +6167,7 @@ body {
 
 .recommendation-btn:hover {
   background: var(--color-primary);
-  color: #1f2937;
+  color: #ffffff;
 }
 
 /* 대시보드 반응형 디자인 */
@@ -6324,7 +6324,7 @@ body {
   top: -40px;
   right: 0;
   background: rgba(14, 165, 233, 0.9);
-  color: #1f2937;
+  color: #ffffff;
   border: none;
   border-radius: 50%;
   width: 40px;
@@ -6438,7 +6438,7 @@ body {
   align-items: center;
   justify-content: center;
   margin: 0 auto 20px;
-  color: #1f2937;
+  color: #ffffff;
   transition: all 0.3s ease;
 }
 
@@ -6517,8 +6517,8 @@ body {
 }
 
 .mobile-nav-link.cta {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: #1e293b;
+  background: linear-gradient(135deg, #ffd60a, #e5c100);
+  color: #ffffff;
   text-align: center;
   font-weight: 700;
   margin-top: 8px;
@@ -6527,9 +6527,9 @@ body {
 }
 
 .mobile-nav-link.cta:hover {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: linear-gradient(135deg, #e5c100, #c9a800);
   transform: translateX(0) scale(1.02);
-  color: #1e293b;
+  color: #ffffff;
   box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
 }
 

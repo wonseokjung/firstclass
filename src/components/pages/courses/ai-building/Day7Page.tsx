@@ -102,7 +102,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
               <p style="font-size: 0.9rem; opacity: 0.9; margin-top: 5px;">다양한 장르</p>
             </div>
           </div>
-          <div style="background: #1e293b; padding: 20px; border-radius: 15px; color: #22c55e; font-family: monospace; margin-top: 20px;">
+          <div style="background: #0d1b2a; padding: 20px; border-radius: 15px; color: #22c55e; font-family: monospace; margin-top: 20px;">
             <strong>Suno AI 프롬프트 예시:</strong><br/><br/>
             "편안한 로파이 힙합 비트,<br/>
             공부할 때 듣기 좋은,<br/>
@@ -139,7 +139,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
 
   return (
     <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
-      <div style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', padding: '20px', position: 'sticky', top: 0, zIndex: 100 }}>
+      <div style={{ background: 'linear-gradient(135deg, #e5c100 0%, #d97706 100%)', padding: '20px', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <button onClick={onBack} style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.2)', border: 'none', color: 'white', padding: '10px 20px', borderRadius: '10px', cursor: 'pointer', marginBottom: '15px' }}><ArrowLeft size={20} /> 강의 목록으로</button>
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
@@ -179,10 +179,10 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
         />
 
         <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
-          <button onClick={handleCompleteDay} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #f59e0b, #d97706)', color: 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <button onClick={handleCompleteDay} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #e5c100, #d97706)', color: 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
             {isDayCompleted ? <><CheckCircle size={24} /> Day 7 완료!</> : isCompletingDay ? '처리 중...' : <><PlayCircle size={24} /> Day 7 완료하기</>}
           </button>
-          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #0f172a)', color: 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: 'pointer' }}>Day 8로 이동 →</button>}
+          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #ffffff)', color: 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: 'pointer' }}>Day 8로 이동 →</button>}
         </div>
       </div>
     </div>

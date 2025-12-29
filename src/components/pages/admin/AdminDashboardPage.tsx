@@ -651,7 +651,7 @@ const AdminDashboardPage: React.FC = () => {
           <button
             onClick={() => navigate('/admin/fix-enrollments')}
             style={{
-              background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+              background: 'linear-gradient(135deg, #e5c100, #d97706)',
               color: 'white',
               border: 'none',
               padding: '20px',
@@ -697,7 +697,7 @@ const AdminDashboardPage: React.FC = () => {
               <Users size={32} color="#6366f1" />
               <div>
                 <div style={{ fontSize: '0.9rem', color: '#64748b' }}>전체 사용자</div>
-                <div style={{ fontSize: '2rem', fontWeight: '800', color: '#1f2937' }}>
+                <div style={{ fontSize: '2rem', fontWeight: '800', color: '#1b263b' }}>
                   {stats.totalUsers}
                 </div>
               </div>
@@ -715,7 +715,7 @@ const AdminDashboardPage: React.FC = () => {
               <BookOpen size={32} color="#10b981" />
               <div>
                 <div style={{ fontSize: '0.9rem', color: '#64748b' }}>결제 사용자</div>
-                <div style={{ fontSize: '2rem', fontWeight: '800', color: '#1f2937' }}>
+                <div style={{ fontSize: '2rem', fontWeight: '800', color: '#1b263b' }}>
                   {stats.paidUsers}
                 </div>
               </div>
@@ -730,10 +730,10 @@ const AdminDashboardPage: React.FC = () => {
             border: '2px solid #fef3c7'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
-              <DollarSign size={32} color="#f59e0b" />
+              <DollarSign size={32} color="#e5c100" />
               <div>
                 <div style={{ fontSize: '0.9rem', color: '#64748b' }}>총 매출</div>
-                <div style={{ fontSize: '2rem', fontWeight: '800', color: '#1f2937' }}>
+                <div style={{ fontSize: '2rem', fontWeight: '800', color: '#1b263b' }}>
                   ₩{(stats.totalRevenue / 10000).toFixed(0)}만
                 </div>
               </div>
@@ -751,7 +751,7 @@ const AdminDashboardPage: React.FC = () => {
               <TrendingUp size={32} color="#0ea5e9" />
               <div>
                 <div style={{ fontSize: '0.9rem', color: '#64748b' }}>평균 진행률</div>
-                <div style={{ fontSize: '2rem', fontWeight: '800', color: '#1f2937' }}>
+                <div style={{ fontSize: '2rem', fontWeight: '800', color: '#1b263b' }}>
                   {stats.avgProgress}%
                 </div>
               </div>
@@ -1053,7 +1053,7 @@ const AdminDashboardPage: React.FC = () => {
                 padding: '12px 20px',
                 borderRadius: '10px',
                 border: 'none',
-                background: '#f59e0b',
+                background: '#e5c100',
                 color: 'white',
                 fontSize: '1rem',
                 fontWeight: '600',
@@ -1065,7 +1065,7 @@ const AdminDashboardPage: React.FC = () => {
                 transition: 'all 0.2s'
               }}
               onMouseOver={(e) => e.currentTarget.style.background = '#d97706'}
-              onMouseOut={(e) => e.currentTarget.style.background = '#f59e0b'}
+              onMouseOut={(e) => e.currentTarget.style.background = '#e5c100'}
             >
               📋 이메일 복사 ({filteredUsers.length})
             </button>
@@ -1181,8 +1181,8 @@ const AdminDashboardPage: React.FC = () => {
                   <td style={{ padding: '12px', textAlign: 'center' }}>
                     {user.referredBy ? (
                       <span style={{
-                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                        color: '#1f2937',
+                        background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
+                        color: '#1b263b',
                         padding: '4px 10px',
                         borderRadius: '8px',
                         fontSize: '0.75rem',
@@ -1250,7 +1250,7 @@ const AdminDashboardPage: React.FC = () => {
                         padding: '6px 12px',
                         borderRadius: '8px',
                         border: 'none',
-                        background: '#f59e0b',
+                        background: '#e5c100',
                         color: 'white',
                         fontSize: '0.85rem',
                         fontWeight: '600',
@@ -1262,7 +1262,7 @@ const AdminDashboardPage: React.FC = () => {
                         e.currentTarget.style.transform = 'scale(1.05)';
                       }}
                       onMouseOut={(e) => {
-                        e.currentTarget.style.background = '#f59e0b';
+                        e.currentTarget.style.background = '#e5c100';
                         e.currentTarget.style.transform = 'scale(1)';
                       }}
                     >
@@ -1346,11 +1346,11 @@ const AdminDashboardPage: React.FC = () => {
                 <tbody>
                   {pendingWithdrawals.map((withdrawal) => (
                     <tr key={withdrawal.rowKey} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                      <td style={{ padding: '15px', color: '#374151' }}>
+                      <td style={{ padding: '15px', color: '#415a77' }}>
                         {new Date(withdrawal.requestDate).toLocaleDateString('ko-KR')}
                       </td>
                       <td style={{ padding: '15px' }}>
-                        <div style={{ fontWeight: '600', color: '#1f2937' }}>{withdrawal.partnerName}</div>
+                        <div style={{ fontWeight: '600', color: '#1b263b' }}>{withdrawal.partnerName}</div>
                         <div style={{ fontSize: '0.85rem', color: '#64748b' }}>{withdrawal.partnerEmail}</div>
                       </td>
                       <td style={{ padding: '15px', textAlign: 'right' }}>
@@ -1362,9 +1362,9 @@ const AdminDashboardPage: React.FC = () => {
                           ₩{withdrawal.amount.toLocaleString()}
                         </span>
                       </td>
-                      <td style={{ padding: '15px', color: '#374151' }}>{withdrawal.bankName}</td>
-                      <td style={{ padding: '15px', color: '#374151', fontFamily: 'monospace' }}>{withdrawal.accountNumber}</td>
-                      <td style={{ padding: '15px', color: '#374151' }}>{withdrawal.accountHolder}</td>
+                      <td style={{ padding: '15px', color: '#415a77' }}>{withdrawal.bankName}</td>
+                      <td style={{ padding: '15px', color: '#415a77', fontFamily: 'monospace' }}>{withdrawal.accountNumber}</td>
+                      <td style={{ padding: '15px', color: '#415a77' }}>{withdrawal.accountHolder}</td>
                       <td style={{ padding: '15px', textAlign: 'center' }}>
                         <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
                           <button
@@ -1541,7 +1541,7 @@ const AdminDashboardPage: React.FC = () => {
                 🧱 전체 파트너 목록 ({allPartners.length}명)
                 <span style={{
                   fontSize: '0.85rem',
-                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                  background: 'linear-gradient(135deg, #e5c100, #d97706)',
                   color: 'white',
                   padding: '4px 12px',
                   borderRadius: '20px',
@@ -1558,7 +1558,7 @@ const AdminDashboardPage: React.FC = () => {
                       <th style={{ padding: '15px', textAlign: 'center', color: '#64748b', fontWeight: '600', width: '60px' }}>순위</th>
                       <th style={{ padding: '15px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>파트너</th>
                       <th style={{ padding: '15px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>추천코드</th>
-                      <th style={{ padding: '15px', textAlign: 'right', color: '#f59e0b', fontWeight: '700' }}>🧱 총 브릭 ↓</th>
+                      <th style={{ padding: '15px', textAlign: 'right', color: '#e5c100', fontWeight: '700' }}>🧱 총 브릭 ↓</th>
                       <th style={{ padding: '15px', textAlign: 'right', color: '#64748b', fontWeight: '600' }}>출금가능</th>
                       <th style={{ padding: '15px', textAlign: 'right', color: '#64748b', fontWeight: '600' }}>대기중</th>
                       <th style={{ padding: '15px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>추천수</th>
@@ -1589,7 +1589,7 @@ const AdminDashboardPage: React.FC = () => {
                           )}
                         </td>
                         <td style={{ padding: '15px' }}>
-                          <div style={{ fontWeight: '600', color: '#1f2937' }}>{partner.name}</div>
+                          <div style={{ fontWeight: '600', color: '#1b263b' }}>{partner.name}</div>
                           <div style={{ fontSize: '0.85rem', color: '#64748b' }}>{partner.email}</div>
                         </td>
                         <td style={{ padding: '15px' }}>
@@ -1598,7 +1598,7 @@ const AdminDashboardPage: React.FC = () => {
                             background: '#f1f5f9', 
                             padding: '4px 8px', 
                             borderRadius: '6px',
-                            color: '#1f2937',
+                            color: '#1b263b',
                             fontWeight: '600'
                           }}>
                             {partner.referralCode || '-'}
@@ -1607,7 +1607,7 @@ const AdminDashboardPage: React.FC = () => {
                         <td style={{ padding: '15px', textAlign: 'right' }}>
                           <span style={{ 
                             fontWeight: '800', 
-                            color: '#f59e0b',
+                            color: '#e5c100',
                             fontSize: '1.1rem',
                             background: partner.totalBricks > 0 ? 'linear-gradient(135deg, #fffbeb, #fef3c7)' : 'transparent',
                             padding: partner.totalBricks > 0 ? '4px 10px' : '0',
@@ -1857,7 +1857,7 @@ const AdminDashboardPage: React.FC = () => {
                         <td style={{ padding: '15px', color: '#64748b', fontSize: '0.9rem' }}>
                           {payment.customerEmail}
                         </td>
-                        <td style={{ padding: '15px', textAlign: 'right', fontWeight: '700', color: '#1f2937' }}>
+                        <td style={{ padding: '15px', textAlign: 'right', fontWeight: '700', color: '#1b263b' }}>
                           ₩{payment.amount?.toLocaleString()}
                         </td>
                         <td style={{ padding: '15px', textAlign: 'center' }}>
@@ -1964,7 +1964,7 @@ const AdminDashboardPage: React.FC = () => {
               fontSize: '1.5rem',
               fontWeight: '700',
               marginBottom: '20px',
-              color: '#1f2937'
+              color: '#1b263b'
             }}>
               🔐 비밀번호 변경
             </h2>
@@ -2036,7 +2036,7 @@ const AdminDashboardPage: React.FC = () => {
                   padding: '12px',
                   borderRadius: '10px',
                   border: 'none',
-                  background: '#f59e0b',
+                  background: '#e5c100',
                   color: 'white',
                   fontSize: '1rem',
                   fontWeight: '600',
@@ -2044,7 +2044,7 @@ const AdminDashboardPage: React.FC = () => {
                   transition: 'all 0.2s'
                 }}
                 onMouseOver={(e) => e.currentTarget.style.background = '#d97706'}
-                onMouseOut={(e) => e.currentTarget.style.background = '#f59e0b'}
+                onMouseOut={(e) => e.currentTarget.style.background = '#e5c100'}
               >
                 변경하기
               </button>
@@ -2112,7 +2112,7 @@ const AdminDashboardPage: React.FC = () => {
               fontSize: '1.8rem',
               fontWeight: '700',
               marginBottom: '10px',
-              color: '#1f2937'
+              color: '#1b263b'
             }}>
               📧 일괄 이메일 발송
             </h2>
@@ -2179,7 +2179,7 @@ const AdminDashboardPage: React.FC = () => {
 
             <div style={{
               background: '#fef3c7',
-              border: '1px solid #fbbf24',
+              border: '1px solid #ffd60a',
               borderRadius: '10px',
               padding: '15px',
               marginBottom: '20px'

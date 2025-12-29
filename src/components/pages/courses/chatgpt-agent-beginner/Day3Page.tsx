@@ -287,7 +287,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
           <h2 style={{
             fontSize: '2rem',
             fontWeight: '800',
-            color: '#1f2937',
+            color: '#1b263b',
             marginBottom: '15px'
           }}>
             🚀 3강 준비 중
@@ -501,7 +501,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
                 alignItems: 'flex-start',
                 gap: '15px',
                 fontSize: '1.05rem',
-                color: '#1f2937',
+                color: '#1b263b',
                 transition: 'all 0.3s ease',
                 borderRadius: '8px'
               }}
@@ -578,7 +578,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
                 <h3 style={{
                   fontSize: '1.3rem',
                   fontWeight: '700',
-                  color: '#1f2937',
+                  color: '#1b263b',
                   marginBottom: '0'
                 }}>
                   {section.title}
@@ -751,7 +751,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
               style={{
                 fontSize: '1.05rem',
                 lineHeight: '1.8',
-                color: '#374151'
+                color: '#415a77'
               }}
               dangerouslySetInnerHTML={{ __html: section.content }}
             />
@@ -765,7 +765,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
           <h2 style={{
             fontSize: '1.8rem',
             fontWeight: '700',
-            color: '#1f2937',
+            color: '#1b263b',
             marginBottom: '30px',
             display: 'flex',
             alignItems: 'center',
@@ -786,7 +786,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
                 <p style={{
                   fontWeight: '700',
                   marginBottom: '15px',
-                  color: '#1f2937',
+                  color: '#1b263b',
                   fontSize: '1.05rem'
                 }}>
                   Q{index + 1}. {q.question}
@@ -856,7 +856,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
                         />
                         <span style={{ 
                           fontSize: '1rem',
-                          color: '#1f2937',
+                          color: '#1b263b',
                           flex: 1,
                           fontWeight: quizSubmitted && isCorrectOption ? '600' : 'normal'
                         }}>{option}</span>
@@ -1065,7 +1065,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
                   background: 'linear-gradient(135deg, #f8fafc, #f0f9ff)',
                   borderRadius: '12px',
                   textDecoration: 'none',
-                  color: '#1f2937',
+                  color: '#1b263b',
                   transition: 'all 0.3s ease',
                   border: '2px solid #e2e8f0',
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
@@ -1137,7 +1137,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
         }
         
         h3 {
-          color: #1f2937;
+          color: #1b263b;
           font-size: 1.25rem;
           font-weight: 700;
           margin-top: 25px;
@@ -1155,7 +1155,7 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
         }
         
         pre {
-          background: #1f2937;
+          background: #1b263b;
           color: #f8fafc;
           padding: 20px;
           border-radius: 10px;

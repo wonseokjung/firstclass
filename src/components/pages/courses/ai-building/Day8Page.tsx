@@ -79,7 +79,7 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
                 <p style="margin: 5px 0 0; opacity: 0.9;">이미지, 음성, BGM, 영상 클립 AI로 생성</p>
               </div>
             </div>
-            <div style="background: linear-gradient(135deg, #f59e0b, #d97706); padding: 25px; border-radius: 15px; color: white; display: flex; align-items: center; gap: 20px;">
+            <div style="background: linear-gradient(135deg, #e5c100, #d97706); padding: 25px; border-radius: 15px; color: white; display: flex; align-items: center; gap: 20px;">
               <div style="font-size: 2.5rem; background: rgba(255,255,255,0.2); padding: 15px; border-radius: 15px;">3️⃣</div>
               <div>
                 <strong style="font-size: 1.2rem;">시공 (편집 & 조립)</strong>
@@ -124,7 +124,7 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
             <tr style="background: white;">
               <td style="padding: 15px; font-weight: 600;">AI 활용도</td>
               <td style="padding: 15px; text-align: center; color: #22c55e; font-weight: 700;">90% 자동화 가능</td>
-              <td style="padding: 15px; text-align: center; color: #f59e0b; font-weight: 700;">70% 자동화 가능</td>
+              <td style="padding: 15px; text-align: center; color: #e5c100; font-weight: 700;">70% 자동화 가능</td>
             </tr>
           </table>
         `
@@ -133,8 +133,8 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
         id: 'multi-platform',
         title: '🌐 멀티 플랫폼 전략',
         content: `
-          <div style="background: linear-gradient(135deg, #0f172a, #1e3a5f); padding: 25px; border-radius: 15px; color: white;">
-            <h4 style="color: #fbbf24; margin-bottom: 15px;">🎯 허브 앤 스포크 전략</h4>
+          <div style="background: linear-gradient(135deg, #ffffff, #1e3a5f); padding: 25px; border-radius: 15px; color: white;">
+            <h4 style="color: #ffd60a; margin-bottom: 15px;">🎯 허브 앤 스포크 전략</h4>
             <p style="line-height: 1.8; margin-bottom: 20px;">
               <strong>허브 (본체):</strong> YouTube 롱폼 채널<br/>
               <strong>스포크 (지선):</strong> TikTok, Instagram, Twitter로 트래픽 유입
@@ -153,7 +153,7 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
 
   return (
     <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
-      <div style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', padding: '20px', position: 'sticky', top: 0, zIndex: 100 }}>
+      <div style={{ background: 'linear-gradient(135deg, #e5c100 0%, #d97706 100%)', padding: '20px', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <button onClick={onBack} style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.2)', border: 'none', color: 'white', padding: '10px 20px', borderRadius: '10px', cursor: 'pointer', marginBottom: '15px' }}><ArrowLeft size={20} /> 강의 목록으로</button>
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
@@ -193,10 +193,10 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
         />
 
         <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
-          <button onClick={handleCompleteDay} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #f59e0b, #d97706)', color: 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <button onClick={handleCompleteDay} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #22c55e, #16a34a)' : 'linear-gradient(135deg, #e5c100, #d97706)', color: 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
             {isDayCompleted ? <><CheckCircle size={24} /> Day 8 완료!</> : isCompletingDay ? '처리 중...' : <><PlayCircle size={24} /> Day 8 완료하기</>}
           </button>
-          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #0f172a)', color: 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: 'pointer' }}>Day 9로 이동 →</button>}
+          {onNext && <button onClick={onNext} style={{ background: 'linear-gradient(135deg, #1e3a5f, #ffffff)', color: 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: 'pointer' }}>Day 9로 이동 →</button>}
         </div>
       </div>
     </div>

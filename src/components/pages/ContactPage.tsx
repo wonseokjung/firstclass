@@ -69,7 +69,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
           <h1 style={{
             fontSize: 'clamp(2rem, 5vw, 3rem)',
             fontWeight: '900',
-            color: '#1f2937',
+            color: '#1b263b',
             marginBottom: '20px',
             background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
             WebkitBackgroundClip: 'text',
@@ -120,7 +120,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
             <h3 style={{
               fontSize: '1.3rem',
               fontWeight: '700',
-              color: '#1f2937',
+              color: '#1b263b',
               marginBottom: '10px'
             }}>
               이메일
@@ -166,7 +166,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
             <h3 style={{
               fontSize: '1.3rem',
               fontWeight: '700',
-              color: '#1f2937',
+              color: '#1b263b',
               marginBottom: '10px'
             }}>
               수강생 커뮤니티
@@ -200,7 +200,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
             <div style={{
               width: '60px',
               height: '60px',
-              background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+              background: 'linear-gradient(135deg, #e5c100, #d97706)',
               borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
@@ -212,7 +212,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
             <h3 style={{
               fontSize: '1.3rem',
               fontWeight: '700',
-              color: '#1f2937',
+              color: '#1b263b',
               marginBottom: '10px'
             }}>
               사업자 정보
@@ -243,7 +243,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
           <h2 style={{
             fontSize: '1.8rem',
             fontWeight: '700',
-            color: '#1f2937',
+            color: '#1b263b',
             marginBottom: '10px',
             textAlign: 'center'
           }}>
@@ -260,7 +260,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
           {/* 중요 안내 메시지 */}
           <div style={{
             background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-            border: '2px solid #f59e0b',
+            border: '2px solid #e5c100',
             borderRadius: '12px',
             padding: 'clamp(18px, 3vw, 25px)',
             marginBottom: '30px',
@@ -321,7 +321,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
               <label style={{
                 display: 'block',
                 marginBottom: '8px',
-                color: '#1f2937',
+                color: '#1b263b',
                 fontWeight: '600',
                 fontSize: '0.95rem'
               }}>
@@ -351,7 +351,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
               <label style={{
                 display: 'block',
                 marginBottom: '8px',
-                color: '#1f2937',
+                color: '#1b263b',
                 fontWeight: '600',
                 fontSize: '0.95rem'
               }}>
@@ -381,7 +381,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
               <label style={{
                 display: 'block',
                 marginBottom: '8px',
-                color: '#1f2937',
+                color: '#1b263b',
                 fontWeight: '600',
                 fontSize: '0.95rem'
               }}>
@@ -418,7 +418,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
               <label style={{
                 display: 'block',
                 marginBottom: '8px',
-                color: '#1f2937',
+                color: '#1b263b',
                 fontWeight: '600',
                 fontSize: '0.95rem'
               }}>
@@ -494,7 +494,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ onBack }) => {
           <h3 style={{
             fontSize: '1.5rem',
             fontWeight: '700',
-            color: '#1f2937',
+            color: '#1b263b',
             marginBottom: '15px'
           }}>
             자주 묻는 질문

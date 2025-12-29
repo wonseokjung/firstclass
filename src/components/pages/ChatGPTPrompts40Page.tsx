@@ -18,7 +18,7 @@ const ChatGPTPrompts40Page: React.FC<ChatGPTPrompts40PageProps> = ({ onBack }) =
       title: '👔 리더십 & 매니지먼트',
       description: '팀 관리, 의사결정, 갈등 해결을 위한 프롬프트',
       count: 20,
-      color: '#1f2937',
+      color: '#1b263b',
       prompts: [
         {
           title: '팀 성과 향상 계획 수립',
@@ -572,7 +572,7 @@ const ChatGPTPrompts40Page: React.FC<ChatGPTPrompts40PageProps> = ({ onBack }) =
       title: '💰 재무 관리 & 투자',
       description: '40대 재무 계획과 투자 전략을 위한 프롬프트',
       count: 10,
-      color: '#f59e0b',
+      color: '#e5c100',
       prompts: [
         {
           title: '40대 재무 포트폴리오 설계',
@@ -1104,7 +1104,7 @@ ESG 현황: [환경/사회/지배구조 수준]
 
       {/* 히어로 섹션 */}
       <div className="course-hero" style={{ 
-        background: 'linear-gradient(135deg, #1f2937 0%, #0ea5e9 100%)',
+        background: 'linear-gradient(135deg, #1b263b 0%, #0ea5e9 100%)',
         padding: 'clamp(30px, 6vw, 60px) clamp(15px, 3vw, 20px)',
         textAlign: 'center',
         color: 'white'
@@ -1188,19 +1188,19 @@ ESG 현황: [환경/사회/지배구조 수준]
           }}>
             <div>
               <div style={{ fontSize: '3rem', fontWeight: '700', color: '#0ea5e9', marginBottom: '10px' }}>100</div>
-              <div style={{ color: '#1f2937', fontSize: '1.1rem' }}>실전 프롬프트</div>
+              <div style={{ color: '#1b263b', fontSize: '1.1rem' }}>실전 프롬프트</div>
             </div>
             <div>
               <div style={{ fontSize: '3rem', fontWeight: '700', color: '#10b981', marginBottom: '10px' }}>6</div>
-              <div style={{ color: '#1f2937', fontSize: '1.1rem' }}>주요 카테고리</div>
+              <div style={{ color: '#1b263b', fontSize: '1.1rem' }}>주요 카테고리</div>
             </div>
             <div>
-              <div style={{ fontSize: '3rem', fontWeight: '700', color: '#f59e0b', marginBottom: '10px' }}>40+</div>
-              <div style={{ color: '#1f2937', fontSize: '1.1rem' }}>타겟 연령층</div>
+              <div style={{ fontSize: '3rem', fontWeight: '700', color: '#e5c100', marginBottom: '10px' }}>40+</div>
+              <div style={{ color: '#1b263b', fontSize: '1.1rem' }}>타겟 연령층</div>
             </div>
             <div>
               <div style={{ fontSize: '3rem', fontWeight: '700', color: '#ef4444', marginBottom: '10px' }}>FREE</div>
-              <div style={{ color: '#1f2937', fontSize: '1.1rem' }}>무료 제공</div>
+              <div style={{ color: '#1b263b', fontSize: '1.1rem' }}>무료 제공</div>
             </div>
           </div>
         </div>
@@ -1224,7 +1224,7 @@ ESG 현황: [환경/사회/지배구조 수준]
                   style={{
                     padding: '25px',
                     background: activeCategory === category.id ? category.color : 'transparent',
-                    color: activeCategory === category.id ? 'white' : '#1f2937',
+                    color: activeCategory === category.id ? 'white' : '#1b263b',
                     cursor: 'pointer',
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -1264,10 +1264,10 @@ ESG 현황: [환경/사회/지배구조 수준]
                           marginBottom: '15px'
                         }}>
                           <div style={{ flex: 1 }}>
-                            <h4 style={{ color: '#1f2937', fontWeight: '600', marginBottom: '8px' }}>
+                            <h4 style={{ color: '#1b263b', fontWeight: '600', marginBottom: '8px' }}>
                               {prompt.title}
                             </h4>
-                            <p style={{ color: '#1f2937', opacity: '0.8', fontSize: '0.9rem' }}>
+                            <p style={{ color: '#1b263b', opacity: '0.8', fontSize: '0.9rem' }}>
                               {prompt.description}
                             </p>
                           </div>
@@ -1310,7 +1310,7 @@ ESG 현황: [환경/사회/지배구조 수준]
                           fontFamily: 'monospace',
                           fontSize: '0.85rem',
                           lineHeight: '1.5',
-                          color: '#1f2937',
+                          color: '#1b263b',
                           whiteSpace: 'pre-wrap',
                           overflow: 'auto'
                         }}>
@@ -1326,7 +1326,7 @@ ESG 현황: [환경/사회/지배구조 수준]
                       borderRadius: '10px',
                       marginTop: '15px'
                     }}>
-                      <p style={{ color: '#1f2937', opacity: '0.8' }}>
+                      <p style={{ color: '#1b263b', opacity: '0.8' }}>
                         이 카테고리에는 총 <strong>{category.count}개</strong>의 프롬프트가 있습니다.<br />
                         <span style={{ fontSize: '0.9rem' }}>전체 프롬프트는 가이드북에서 확인하실 수 있습니다.</span>
                       </p>

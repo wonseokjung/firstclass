@@ -166,7 +166,7 @@ const CommunityPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div className="loading-spinner"></div>
       </div>
     );
@@ -175,7 +175,7 @@ const CommunityPage: React.FC = () => {
   // 미로그인 또는 수강생 아닌 경우
   if (!isLoggedIn || !hasEnrolledCourses) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0f172a' }}>
+      <div style={{ minHeight: '100vh', background: '#ffffff' }}>
         <NavigationBar />
         <div style={{ 
           maxWidth: '600px', 
@@ -233,7 +233,7 @@ const CommunityPage: React.FC = () => {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f172a' }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff' }}>
       <NavigationBar />
       
       <div style={{ maxWidth: '1000px', margin: '0 auto', padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)' }}>
@@ -290,10 +290,10 @@ const CommunityPage: React.FC = () => {
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
               style={{
-                background: selectedCategory === cat.id ? '#3b82f6' : '#1e293b',
+                background: selectedCategory === cat.id ? '#3b82f6' : '#0d1b2a',
                 color: selectedCategory === cat.id ? 'white' : '#94a3b8',
                 border: '1px solid',
-                borderColor: selectedCategory === cat.id ? '#3b82f6' : '#334155',
+                borderColor: selectedCategory === cat.id ? '#3b82f6' : '#1b263b',
                 padding: '10px 18px',
                 borderRadius: '25px',
                 fontWeight: '600',
@@ -311,7 +311,7 @@ const CommunityPage: React.FC = () => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
           {filteredPosts.length === 0 ? (
             <div style={{
-              background: '#1e293b',
+              background: '#0d1b2a',
               borderRadius: '16px',
               padding: '50px',
               textAlign: 'center'
@@ -328,8 +328,8 @@ const CommunityPage: React.FC = () => {
                 <div
                   key={post.id}
                   style={{
-                    background: '#1e293b',
-                    border: '1px solid #334155',
+                    background: '#0d1b2a',
+                    border: '1px solid #1b263b',
                     borderRadius: '16px',
                     padding: '20px',
                     cursor: 'pointer',
@@ -339,13 +339,13 @@ const CommunityPage: React.FC = () => {
                     e.currentTarget.style.borderColor = '#3b82f6';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = '#334155';
+                    e.currentTarget.style.borderColor = '#1b263b';
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                       <span style={{
-                        background: '#0f172a',
+                        background: '#ffffff',
                         padding: '4px 10px',
                         borderRadius: '15px',
                         fontSize: '0.8rem',
@@ -417,7 +417,7 @@ const CommunityPage: React.FC = () => {
           padding: '20px'
         }}>
           <div style={{
-            background: '#1e293b',
+            background: '#0d1b2a',
             borderRadius: '20px',
             padding: '30px',
             width: '100%',
@@ -452,8 +452,8 @@ const CommunityPage: React.FC = () => {
                 style={{
                   width: '100%',
                   padding: '12px',
-                  background: '#0f172a',
-                  border: '1px solid #334155',
+                  background: '#ffffff',
+                  border: '1px solid #1b263b',
                   borderRadius: '10px',
                   color: 'white',
                   fontSize: '1rem'
@@ -478,8 +478,8 @@ const CommunityPage: React.FC = () => {
                 style={{
                   width: '100%',
                   padding: '12px',
-                  background: '#0f172a',
-                  border: '1px solid #334155',
+                  background: '#ffffff',
+                  border: '1px solid #1b263b',
                   borderRadius: '10px',
                   color: 'white',
                   fontSize: '1rem'
@@ -498,8 +498,8 @@ const CommunityPage: React.FC = () => {
                 style={{
                   width: '100%',
                   padding: '12px',
-                  background: '#0f172a',
-                  border: '1px solid #334155',
+                  background: '#ffffff',
+                  border: '1px solid #1b263b',
                   borderRadius: '10px',
                   color: 'white',
                   fontSize: '1rem',
@@ -515,7 +515,7 @@ const CommunityPage: React.FC = () => {
                 style={{
                   background: 'transparent',
                   color: '#94a3b8',
-                  border: '1px solid #334155',
+                  border: '1px solid #1b263b',
                   padding: '12px 25px',
                   borderRadius: '10px',
                   cursor: 'pointer'

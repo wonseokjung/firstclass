@@ -111,7 +111,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
           </p>
           
           <!-- 오류 발생 시 안내 -->
-          <div style="background: #fef3c7; border: 1px dashed #f59e0b; border-radius: 12px; padding: 15px 20px; margin-bottom: 20px;">
+          <div style="background: #fef3c7; border: 1px dashed #e5c100; border-radius: 12px; padding: 15px 20px; margin-bottom: 20px;">
             <p style="font-size: 0.9rem; color: #92400e; margin-bottom: 10px; line-height: 1.5;">
               ⚠️ 워크플로우에서 오류가 날 경우, 아래 링크를 복사해서 새 탭에 직접 붙여넣기 하세요:
             </p>
@@ -181,7 +181,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
             제공된 워크플로우(베이스라인)를 기반으로 다양한 실습을 진행해보세요:
           </p>
           
-          <div style="background: #fef3c7; border-left: 4px solid #fbbf24; padding: 20px; margin: 25px 0; border-radius: 8px;">
+          <div style="background: #fef3c7; border-left: 4px solid #ffd60a; padding: 20px; margin: 25px 0; border-radius: 8px;">
             <h4 style="color: #92400e; margin: 0 0 15px 0; font-size: 1.15rem;">🎯 숙제 미션</h4>
             <ol style="color: #92400e; line-height: 2; margin: 0; padding-left: 20px;">
               <li><strong>프롬프트 변경:</strong> 다양한 프롬프트를 시도하며 결과물 비교하기</li>
@@ -330,7 +330,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
             <h3 style={{
               fontSize: '1.1rem',
               fontWeight: '700',
-              color: '#1e293b',
+              color: '#0d1b2a',
               marginBottom: '15px'
             }}>
               📚 학습 목표
@@ -359,7 +359,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
           <h2 style={{
             fontSize: '1.3rem',
             fontWeight: '700',
-            color: '#1e293b',
+            color: '#0d1b2a',
             marginBottom: '20px',
             display: 'flex',
             alignItems: 'center',
@@ -407,7 +407,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
                 <div style={{
                   fontSize: '1.05rem',
                   fontWeight: '600',
-                  color: '#1e293b'
+                  color: '#0d1b2a'
                 }}>
                   {section.title}
                 </div>
@@ -450,7 +450,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
               <h2 style={{
                 fontSize: '1.5rem',
                 fontWeight: '700',
-                color: '#1e293b',
+                color: '#0d1b2a',
                 margin: '0 0 10px 0'
               }}>
                 {section.title}
@@ -497,7 +497,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
               style={{
                 fontSize: '1rem',
                 lineHeight: '1.8',
-                color: '#334155'
+                color: '#1b263b'
               }}
               dangerouslySetInnerHTML={{ __html: section.content }}
             />
@@ -526,7 +526,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
           <h3 style={{
             fontSize: '1.5rem',
             fontWeight: '700',
-            color: '#1e293b',
+            color: '#0d1b2a',
             marginBottom: '15px'
           }}>
             {isDayCompleted ? '✅ Day 9 완료!' : '강의를 완료하셨나요?'}

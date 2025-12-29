@@ -85,7 +85,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack }) => {
                 예상 수익: 멤버당 월 $1-50
               </p>
             </div>
-            <div style="background: linear-gradient(135deg, #f59e0b, #d97706); padding: 25px; border-radius: 15px; color: white;">
+            <div style="background: linear-gradient(135deg, #e5c100, #d97706); padding: 25px; border-radius: 15px; color: white;">
               <h4 style="margin-bottom: 10px;">4️⃣ 디지털 제품/서비스</h4>
               <p style="margin: 0; opacity: 0.9;">전자책, 온라인 강의, 컨설팅 등 직접 제작 상품</p>
               <p style="margin: 10px 0 0; font-size: 0.9rem; background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px;">
@@ -99,8 +99,8 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack }) => {
         id: 'automation',
         title: '🔄 허브-앤-스포크 자동화',
         content: `
-          <div style="background: linear-gradient(135deg, #0f172a, #1e3a5f); padding: 30px; border-radius: 15px; color: white; text-align: center;">
-            <h4 style="color: #fbbf24; margin-bottom: 25px; font-size: 1.3rem;">🏭 24시간 돌아가는 디지털 공장</h4>
+          <div style="background: linear-gradient(135deg, #ffffff, #1e3a5f); padding: 30px; border-radius: 15px; color: white; text-align: center;">
+            <h4 style="color: #ffd60a; margin-bottom: 25px; font-size: 1.3rem;">🏭 24시간 돌아가는 디지털 공장</h4>
             <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
               <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
                 <div style="font-size: 2rem;">📝</div>
@@ -168,7 +168,7 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack }) => {
               <h1 style={{ color: 'white', fontSize: '1.5rem', margin: 0 }}>Day {lessonData.day}: {lessonData.title}</h1>
               <div style={{ display: 'flex', gap: '15px', marginTop: '8px' }}>
                 <span style={{ color: 'rgba(255,255,255,0.8)', display: 'flex', alignItems: 'center', gap: '5px' }}><Clock size={16} /> {lessonData.duration}</span>
-                {isDayCompleted && <span style={{ color: '#fbbf24', display: 'flex', alignItems: 'center', gap: '5px' }}><Trophy size={16} /> 전체 완료!</span>}
+                {isDayCompleted && <span style={{ color: '#ffd60a', display: 'flex', alignItems: 'center', gap: '5px' }}><Trophy size={16} /> 전체 완료!</span>}
               </div>
             </div>
           </div>
@@ -199,13 +199,13 @@ const Day10Page: React.FC<Day10PageProps> = ({ onBack }) => {
         />
 
         <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
-          <button onClick={handleCompleteDay} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #fbbf24, #f59e0b)' : 'linear-gradient(135deg, #22c55e, #16a34a)', color: isDayCompleted ? '#1e3a5f' : 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <button onClick={handleCompleteDay} disabled={isCompletingDay || isDayCompleted} style={{ background: isDayCompleted ? 'linear-gradient(135deg, #ffd60a, #e5c100)' : 'linear-gradient(135deg, #22c55e, #16a34a)', color: isDayCompleted ? '#1e3a5f' : 'white', border: 'none', padding: '15px 40px', borderRadius: '15px', fontSize: '1.1rem', fontWeight: '700', cursor: isDayCompleted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
             {isDayCompleted ? <><Trophy size={24} /> 🎉 전체 강의 완료!</> : isCompletingDay ? '처리 중...' : <><PlayCircle size={24} /> 강의 완료하기</>}
           </button>
         </div>
 
         {isDayCompleted && (
-          <div style={{ marginTop: '30px', background: 'linear-gradient(135deg, #fbbf24, #f59e0b)', borderRadius: '20px', padding: '30px', textAlign: 'center' }}>
+          <div style={{ marginTop: '30px', background: 'linear-gradient(135deg, #ffd60a, #e5c100)', borderRadius: '20px', padding: '30px', textAlign: 'center' }}>
             <h3 style={{ color: '#1e3a5f', marginBottom: '15px' }}>🏆 AI 디지털 건물주 수료!</h3>
             <p style={{ color: '#1e3a5f', marginBottom: '20px' }}>축하합니다! 이제 첫 월세를 받을 준비가 되었습니다!</p>
             <button onClick={onBack} style={{ background: '#1e3a5f', color: 'white', border: 'none', padding: '15px 30px', borderRadius: '10px', cursor: 'pointer', fontWeight: '700' }}>

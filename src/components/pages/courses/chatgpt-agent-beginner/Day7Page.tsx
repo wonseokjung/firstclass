@@ -162,7 +162,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
             <li>유튜브 스튜디오: 대시보드, 콘텐츠 관리, 분석, 수익 창출 설정</li>
           </ul>
           
-          <div style="background: #fef3c7; border-left: 4px solid #fbbf24; padding: 20px; margin: 25px 0; border-radius: 8px;">
+          <div style="background: #fef3c7; border-left: 4px solid #ffd60a; padding: 20px; margin: 25px 0; border-radius: 8px;">
             <p style="font-size: 1.05rem; line-height: 1.8; color: #78350f; margin: 0;">
               <strong>⚠️ 중요:</strong> 커스터마이징(Customization)은 채널의 정체성을 유튜브 알고리즘과 시청자에게 알리는 가장 중요한 단계입니다.
             </p>
@@ -465,7 +465,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 alignItems: 'flex-start',
                 gap: '15px',
                 fontSize: '1.05rem',
-                color: '#1f2937',
+                color: '#1b263b',
                 transition: 'all 0.3s ease',
                 borderRadius: '8px'
               }}
@@ -516,7 +516,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
             <h2 style={{
               fontSize: '1.6rem',
               fontWeight: '700',
-              color: '#1e293b',
+              color: '#0d1b2a',
               margin: 0,
               display: 'flex',
               alignItems: 'center',
@@ -620,7 +620,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 borderRadius: '6px',
                 fontWeight: '700',
                 fontSize: '0.9rem',
-                border: '1px solid #fbbf24'
+                border: '1px solid #ffd60a'
               }}>
                 Ctrl + Shift + R
               </code> (Windows/Linux) 또는{' '}
@@ -630,7 +630,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 borderRadius: '6px',
                 fontWeight: '700',
                 fontSize: '0.9rem',
-                border: '1px solid #fbbf24'
+                border: '1px solid #ffd60a'
               }}>
                 Cmd + Shift + R
               </code> (Mac)을 눌러서 <strong>캐시 새로고침</strong>을 하시면 해결됩니다!
@@ -684,7 +684,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 🎬 채널 생성 워크플로우
               </h2>
               <div style={{
-                background: '#fbbf24',
+                background: '#ffd60a',
                 color: '#92400e',
                 padding: '6px 16px',
                 borderRadius: '8px',
@@ -749,7 +749,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                     alert('링크가 복사되었습니다! 새 탭에 붙여넣기 하세요.');
                   }}
                   style={{
-                    background: '#fbbf24',
+                    background: '#ffd60a',
                     color: '#92400e',
                     border: 'none',
                     borderRadius: '6px',
@@ -772,7 +772,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '12px',
-                background: '#fbbf24',
+                background: '#ffd60a',
                 color: '#92400e',
                 padding: '16px 35px',
                 borderRadius: '12px',
@@ -791,7 +791,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
               onMouseOut={(e) => {
                 e.currentTarget.style.transform = 'translateY(0) scale(1)';
                 e.currentTarget.style.boxShadow = '0 6px 20px rgba(251, 191, 36, 0.5)';
-                e.currentTarget.style.background = '#fbbf24';
+                e.currentTarget.style.background = '#ffd60a';
               }}
             >
               <span style={{ fontSize: '1.3rem' }}>🚀</span>
@@ -847,7 +847,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 <h3 style={{
                   fontSize: '1.3rem',
                   fontWeight: '700',
-                  color: '#1f2937',
+                  color: '#1b263b',
                   marginBottom: '0'
                 }}>
                   {section.title}
@@ -906,7 +906,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                       alignItems: 'center',
                       justifyContent: 'center',
                       minHeight: '400px',
-                      background: 'linear-gradient(135deg, #1e293b, #0f172a)',
+                      background: 'linear-gradient(135deg, #0d1b2a, #ffffff)',
                       borderRadius: '12px',
                       padding: '40px',
                       textAlign: 'center'
@@ -915,7 +915,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                         width: '80px',
                         height: '80px',
                         border: '4px solid rgba(251, 191, 36, 0.3)',
-                        borderTop: '4px solid #fbbf24',
+                        borderTop: '4px solid #ffd60a',
                         borderRadius: '50%',
                         animation: 'spin 1s linear infinite',
                         marginBottom: '30px'
@@ -943,7 +943,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                         border: '1px solid rgba(251, 191, 36, 0.3)',
                         borderRadius: '10px',
                         padding: '15px 25px',
-                        color: '#fbbf24',
+                        color: '#ffd60a',
                         fontSize: '0.95rem',
                         fontWeight: '600'
                       }}>
@@ -963,7 +963,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
               style={{
                 fontSize: '1.05rem',
                 lineHeight: '1.8',
-                color: '#374151'
+                color: '#415a77'
               }}
               dangerouslySetInnerHTML={{ __html: section.content }}
             />
@@ -977,7 +977,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
           <h2 style={{
             fontSize: '1.8rem',
             fontWeight: '700',
-            color: '#1f2937',
+            color: '#1b263b',
             marginBottom: '30px',
             display: 'flex',
             alignItems: 'center',
@@ -998,7 +998,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 <p style={{
                   fontWeight: '700',
                   marginBottom: '15px',
-                  color: '#1f2937',
+                  color: '#1b263b',
                   fontSize: '1.05rem'
                 }}>
                   Q{index + 1}. {q.question}
@@ -1068,7 +1068,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                         />
                         <span style={{ 
                           fontSize: '1rem',
-                          color: '#1f2937',
+                          color: '#1b263b',
                           flex: 1,
                           fontWeight: quizSubmitted && isCorrectOption ? '600' : 'normal'
                         }}>{option}</span>
@@ -1275,7 +1275,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                   background: 'linear-gradient(135deg, #f8fafc, #f0f9ff)',
                   borderRadius: '15px',
                   textDecoration: 'none',
-                  color: '#1f2937',
+                  color: '#1b263b',
                   transition: 'all 0.3s ease',
                   border: '2px solid #e2e8f0',
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
@@ -1314,7 +1314,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                     <div style={{ 
                       fontWeight: '700', 
                       fontSize: '1rem',
-                      color: '#1f2937'
+                      color: '#1b263b'
                     }}>
                       {resource.title}
                     </div>
@@ -1347,7 +1347,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
         }
         
         h3 {
-          color: #1f2937;
+          color: #1b263b;
           font-size: 1.25rem;
           font-weight: 700;
           margin-top: 25px;
@@ -1355,7 +1355,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
         }
         
         h4 {
-          color: #374151;
+          color: #415a77;
           font-size: 1.1rem;
           font-weight: 600;
           margin-top: 20px;

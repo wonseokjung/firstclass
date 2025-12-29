@@ -65,9 +65,9 @@ const clubTiers: ClubTier[] = [
       '광고 수익화 전략 공유',
       '전용 네트워킹 이벤트'
     ],
-    color: '#fbbf24',
+    color: '#ffd60a',
     gradient: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-    badgeColor: '#f59e0b'
+    badgeColor: '#e5c100'
   },
   {
     id: 'pro',
@@ -127,7 +127,7 @@ const ClubsPage: React.FC<ClubsPageProps> = ({ onBack }) => {
 
       {/* 히어로 섹션 */}
       <div style={{
-        background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
+        background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
         color: 'white',
         padding: 'clamp(60px, 10vw, 100px) clamp(20px, 4vw, 40px)',
         textAlign: 'center',
@@ -148,13 +148,13 @@ const ClubsPage: React.FC<ClubsPageProps> = ({ onBack }) => {
           <div style={{
             display: 'inline-block',
             background: 'rgba(251, 191, 36, 0.1)',
-            border: '2px solid #fbbf24',
+            border: '2px solid #ffd60a',
             padding: '8px 20px',
             borderRadius: '999px',
             marginBottom: '20px',
             fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
             fontWeight: '700',
-            color: '#fbbf24'
+            color: '#ffd60a'
           }}>
             🏆 AI 크리에이터 클럽
           </div>
@@ -196,7 +196,7 @@ const ClubsPage: React.FC<ClubsPageProps> = ({ onBack }) => {
               minWidth: 'clamp(140px, 20vw, 180px)'
             }}>
               <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '10px' }}>🌱</div>
-              <div style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: '800', color: '#fbbf24' }}>5개</div>
+              <div style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: '800', color: '#ffd60a' }}>5개</div>
               <div style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)', opacity: '0.8' }}>클럽 단계</div>
             </div>
             
@@ -239,7 +239,7 @@ const ClubsPage: React.FC<ClubsPageProps> = ({ onBack }) => {
           <h2 style={{
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
             fontWeight: '800',
-            color: '#1e293b',
+            color: '#0d1b2a',
             marginBottom: '15px'
           }}>
             클럽 단계별 혜택
@@ -332,7 +332,7 @@ const ClubsPage: React.FC<ClubsPageProps> = ({ onBack }) => {
                 <h4 style={{
                   fontSize: 'clamp(1rem, 2.2vw, 1.1rem)',
                   fontWeight: '700',
-                  color: '#1e293b',
+                  color: '#0d1b2a',
                   marginBottom: '15px',
                   display: 'flex',
                   alignItems: 'center',
@@ -409,7 +409,7 @@ const ClubsPage: React.FC<ClubsPageProps> = ({ onBack }) => {
 
       {/* CTA 섹션 */}
       <div style={{
-        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+        background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
         padding: 'clamp(60px, 10vw, 80px) clamp(20px, 4vw, 40px)',
         textAlign: 'center'
       }}>
@@ -437,7 +437,7 @@ const ClubsPage: React.FC<ClubsPageProps> = ({ onBack }) => {
             style={{
               padding: 'clamp(15px, 3vw, 18px) clamp(40px, 6vw, 50px)',
               background: 'white',
-              color: '#f59e0b',
+              color: '#e5c100',
               border: 'none',
               borderRadius: '12px',
               fontSize: 'clamp(1.05rem, 2.3vw, 1.2rem)',

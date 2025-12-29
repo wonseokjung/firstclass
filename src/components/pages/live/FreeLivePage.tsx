@@ -6,9 +6,9 @@ import AzureTableService from '../../../services/azureTableService';
 
 // 브랜드 컬러
 const COLORS = {
-  navy: '#0f172a',
-  navyLight: '#1e293b',
-  gold: '#fbbf24',
+  navy: '#1e3a5f',
+  navyLight: '#0d1b2a',
+  gold: '#ffd60a',
   white: '#ffffff',
   gray: '#94a3b8',
   grayDark: '#64748b',
@@ -100,7 +100,7 @@ const FreeLivePage: React.FC<FreeLivePageProps> = ({ onBack }) => {
   }, []);
 
   return (
-    <div style={{ minHeight: '100vh', background: COLORS.navy }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff' }}>
       <NavigationBar onBack={onBack} breadcrumbText="무료 라이브" />
       
       {/* 헤더 */}
@@ -309,7 +309,7 @@ const FreeLivePage: React.FC<FreeLivePageProps> = ({ onBack }) => {
         {/* 지난 라이브 아카이브 */}
         <div style={{ marginBottom: '30px' }}>
           <h3 style={{ 
-            color: COLORS.white, 
+            color: '#1e293b', 
             fontSize: '1.3rem', 
             fontWeight: '700', 
             marginBottom: '20px',
@@ -450,7 +450,7 @@ const FreeLivePage: React.FC<FreeLivePageProps> = ({ onBack }) => {
               onClick={() => navigate('/live/step1')}
               style={{
                 padding: '12px 24px',
-                background: `linear-gradient(135deg, ${COLORS.gold}, #f59e0b)`,
+                background: `linear-gradient(135deg, ${COLORS.gold}, #e5c100)`,
                 color: COLORS.navy,
                 border: 'none',
                 borderRadius: '10px',

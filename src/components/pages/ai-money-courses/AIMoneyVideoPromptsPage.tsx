@@ -380,15 +380,15 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
 
       {/* 강의 영상 섹션 */}
       <div style={{
-        background: 'linear-gradient(135deg, #1e293b, #334155)',
+        background: 'linear-gradient(135deg, #0d1b2a, #1b263b)',
         padding: '60px 20px',
-        borderBottom: '4px solid #fbbf24'
+        borderBottom: '4px solid #ffd60a'
       }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
           <div style={{
             display: 'inline-block',
-            background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-            color: '#1e293b',
+            background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
+            color: '#0d1b2a',
             padding: '8px 20px',
             borderRadius: '25px',
             fontSize: '0.9rem',
@@ -414,7 +414,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
             borderRadius: '16px',
             overflow: 'hidden',
             boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
-            border: '3px solid #fbbf24'
+            border: '3px solid #ffd60a'
           }}>
             <iframe 
               style={{
@@ -445,7 +445,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
           textAlign: 'center',
           position: 'relative',
           overflow: 'hidden',
-          borderBottom: '4px solid #fbbf24'
+          borderBottom: '4px solid #ffd60a'
         }}
       >
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
@@ -486,7 +486,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
             <h2 style={{ 
               fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', 
               fontWeight: 800, 
-              color: '#0f172a', 
+              color: '#ffffff', 
               marginBottom: '15px'
             }}>
               🎬 텍스트 투 비디오 생성 실전 예제
@@ -568,7 +568,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                   <h4 style={{ 
                     fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', 
                     fontWeight: 700, 
-                    color: '#0f172a',
+                    color: '#ffffff',
                     margin: 0
                   }}>
                     📝 JSON 프롬프트
@@ -611,7 +611,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                     }}
                     style={{
                       background: BRAND_GOLD,
-                      color: '#0f172a',
+                      color: '#ffffff',
                       border: 'none',
                       padding: '8px 18px',
                       borderRadius: '999px',
@@ -631,7 +631,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                 
                 <div style={{
                   background: 'white',
-                  color: '#0f172a',
+                  color: '#ffffff',
                   padding: '20px',
                   borderRadius: '12px',
                   fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
@@ -779,7 +779,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                   <h4 style={{ 
                     fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', 
                     fontWeight: 700, 
-                    color: '#0f172a',
+                    color: '#ffffff',
                     margin: 0
                   }}>
                     📝 JSON 프롬프트 (북극 버전)
@@ -843,7 +843,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                 
                 <div style={{
                   background: 'white',
-                  color: '#0f172a',
+                  color: '#ffffff',
                   padding: '20px',
                   borderRadius: '12px',
                   fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
@@ -1004,7 +1004,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                   <h4 style={{ 
                     fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', 
                     fontWeight: 700, 
-                    color: '#0f172a',
+                    color: '#ffffff',
                     margin: 0
                   }}>
                     📝 JSON 프롬프트 (한국 버전)
@@ -1069,7 +1069,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                 
                 <div style={{
                   background: 'white',
-                  color: '#0f172a',
+                  color: '#ffffff',
                   padding: '20px',
                   borderRadius: '12px',
                   fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
@@ -1198,7 +1198,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
         </div>
       </div>
 
-      <div style={{ padding: 'clamp(50px, 8vw, 80px) clamp(15px, 5vw, 20px)', background: '#1e293b' }}>
+      <div style={{ padding: 'clamp(50px, 8vw, 80px) clamp(15px, 5vw, 20px)', background: '#0d1b2a' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 'clamp(30px, 5vw, 50px)' }}>
             <h2 style={{ 
@@ -1264,7 +1264,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                 <h5 style={{ 
                   fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', 
                   fontWeight: 700, 
-                  color: '#0f172a',
+                  color: '#ffffff',
                   margin: '0 0 15px 0',
                   display: 'flex',
                   alignItems: 'center',
@@ -1305,7 +1305,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                       <p style={{ 
                         margin: 0, 
                         fontWeight: 700, 
-                        color: '#0f172a',
+                        color: '#ffffff',
                         fontSize: 'clamp(0.9rem, 2vw, 1rem)'
                       }}>
                         🎬 Start Frame (첫 프레임)
@@ -1341,7 +1341,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                       <p style={{ 
                         margin: 0, 
                         fontWeight: 700, 
-                        color: '#0f172a',
+                        color: '#ffffff',
                         fontSize: 'clamp(0.9rem, 2vw, 1rem)'
                       }}>
                         🎞️ End Frame (마지막 프레임)
@@ -1390,7 +1390,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                   <h4 style={{ 
                     fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', 
                     fontWeight: 700, 
-                    color: '#0f172a',
+                    color: '#ffffff',
                     margin: 0
                   }}>
                     📝 JSON 프롬프트 (이미지 투 비디오)
@@ -1438,7 +1438,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                     }}
                     style={{
                       background: BRAND_GOLD,
-                      color: '#0f172a',
+                      color: '#ffffff',
                       border: 'none',
                       padding: '8px 18px',
                       borderRadius: '999px',
@@ -1458,7 +1458,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                 
                 <div style={{
                   background: 'white',
-                  color: '#0f172a',
+                  color: '#ffffff',
                   padding: '20px',
                   borderRadius: '12px',
                   fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
@@ -1518,7 +1518,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                 <h5 style={{ 
                   fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', 
                   fontWeight: 700, 
-                  color: '#0f172a',
+                  color: '#ffffff',
                   margin: '0 0 15px 0',
                   display: 'flex',
                   alignItems: 'center',
@@ -1559,7 +1559,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                       <p style={{ 
                         margin: 0, 
                         fontWeight: 700, 
-                        color: '#0f172a',
+                        color: '#ffffff',
                         fontSize: 'clamp(0.9rem, 2vw, 1rem)'
                       }}>
                         🎬 Start Frame (첫 프레임)
@@ -1595,7 +1595,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                       <p style={{ 
                         margin: 0, 
                         fontWeight: 700, 
-                        color: '#0f172a',
+                        color: '#ffffff',
                         fontSize: 'clamp(0.9rem, 2vw, 1rem)'
                       }}>
                         🎞️ End Frame (마지막 프레임)
@@ -1703,7 +1703,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
       </div>
 
       {/* Character Synthesis Section */}
-      <div style={{ padding: 'clamp(50px, 8vw, 80px) clamp(15px, 5vw, 20px)', background: '#0f172a' }}>
+      <div style={{ padding: 'clamp(50px, 8vw, 80px) clamp(15px, 5vw, 20px)', background: '#ffffff' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 'clamp(30px, 5vw, 50px)' }}>
             <h2 style={{ 
@@ -1765,7 +1765,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                 <h5 style={{
                   fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)',
                   fontWeight: 700,
-                  color: '#0f172a',
+                  color: '#ffffff',
                   margin: '0 0 15px 0',
                   display: 'flex',
                   alignItems: 'center',
@@ -1806,7 +1806,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                       <p style={{
                         margin: 0,
                         fontWeight: 700,
-                        color: '#0f172a',
+                        color: '#ffffff',
                         fontSize: 'clamp(0.9rem, 2vw, 1rem)'
                       }}>
                         🧑 캐릭터 1: 강준
@@ -1842,7 +1842,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                       <p style={{
                         margin: 0,
                         fontWeight: 700,
-                        color: '#0f172a',
+                        color: '#ffffff',
                         fontSize: 'clamp(0.9rem, 2vw, 1rem)'
                       }}>
                         🐕 캐릭터 2: 구름이
@@ -1865,7 +1865,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                 <h5 style={{
                   fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)',
                   fontWeight: 700,
-                  color: '#0f172a',
+                  color: '#ffffff',
                   margin: '0 0 15px 0',
                   display: 'flex',
                   alignItems: 'center',
@@ -1887,7 +1887,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
               </div>
 
               {/* Prompt */}
-              <h4 style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', fontWeight: 700, color: '#0f172a', marginBottom: '15px' }}>
+              <h4 style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', fontWeight: 700, color: '#ffffff', marginBottom: '15px' }}>
                 📝 사용된 프롬프트
               </h4>
               <button
@@ -1920,7 +1920,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
               </button>
               <pre style={{
                 background: '#f8fafc',
-                color: '#1f2937',
+                color: '#1b263b',
                 padding: '20px',
                 borderRadius: '10px',
                 overflowX: 'auto',
@@ -1998,10 +1998,10 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
           boxShadow: '0 20px 60px rgba(15, 23, 42, 0.1)',
           border: '1px solid #e2e8f0'
         }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '15px', color: '#0f172a' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '15px', color: '#ffffff' }}>
             ✅ 사용 방법
           </h2>
-          <ul style={{ margin: 0, paddingLeft: '18px', lineHeight: 1.8, color: '#334155' }}>
+          <ul style={{ margin: 0, paddingLeft: '18px', lineHeight: 1.8, color: '#1b263b' }}>
             <li>대괄호(`[ ]`)로 표시된 변수만 자신의 콘텐츠나 제품에 맞게 수정하세요.</li>
             <li>프롬프트를 복사해 Google Veo, Runway Gen-3, Pika 등 원하는 영상 생성 AI에 붙여넣으세요.</li>
             <li>영상 길이, 스타일, 톤앤매너 등을 추가 지시로 세밀하게 조정할 수 있습니다.</li>
@@ -2031,7 +2031,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
               boxShadow: '0 10px 20px rgba(15, 23, 42, 0.08)'
             }}>
               <p style={{ margin: 0, color: BRAND_GOLD, fontWeight: 700, letterSpacing: '0.1em' }}>{step.title}</p>
-              <p style={{ margin: '10px 0 0', color: '#0f172a', lineHeight: 1.6 }}>{step.text}</p>
+              <p style={{ margin: '10px 0 0', color: '#ffffff', lineHeight: 1.6 }}>{step.text}</p>
             </div>
           ))}
         </div>
@@ -2039,7 +2039,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
 
       <div style={{ padding: '60px 20px', background: CARD_BG }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '30px' }}>
-          <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0f172a', marginBottom: '15px' }}>
+          <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff', marginBottom: '15px' }}>
             🎥 실전 수익화 비디오 생성 프롬프트 10선
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
@@ -2069,7 +2069,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                   }}
                 >
                   <div>
-                    <h3 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '8px', color: '#0f172a' }}>
+                    <h3 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '8px', color: '#ffffff' }}>
                       {section.title}
                     </h3>
                     <p style={{ margin: 0, color: '#475569', lineHeight: 1.6 }}>{section.description}</p>
@@ -2095,7 +2095,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                         >
                           <div style={{ display: 'flex', justifyContent: 'space-between', gap: '15px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
                             <div style={{ flex: 1 }}>
-                              <h4 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700, color: '#0f172a' }}>
+                              <h4 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700, color: '#ffffff' }}>
                                 {prompt.title}
                               </h4>
                               <p style={{ marginTop: '6px', marginBottom: '4px', color: '#475569', fontSize: '0.9rem', fontWeight: 600 }}>
@@ -2109,7 +2109,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                               onClick={() => copyToClipboard(prompt.prompt, promptId)}
                               style={{
                                 background: copiedPromptId === promptId ? '#16a34a' : BRAND_GOLD,
-                                color: copiedPromptId === promptId ? 'white' : '#0f172a',
+                                color: copiedPromptId === promptId ? 'white' : '#ffffff',
                                 border: 'none',
                                 padding: '8px 16px',
                                 borderRadius: '999px',
@@ -2141,7 +2141,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                             style={{
                               marginTop: '15px',
                               background: 'white',
-                              color: '#0f172a',
+                              color: '#ffffff',
                               padding: '18px',
                               borderRadius: '12px',
                               fontFamily:

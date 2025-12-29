@@ -161,13 +161,13 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
       <div style={{
         background: 'linear-gradient(135deg, #dc2626, #b91c1c)',
         padding: '60px 20px',
-        borderBottom: '4px solid #fbbf24'
+        borderBottom: '4px solid #ffd60a'
       }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
           <div style={{
             display: 'inline-block',
-            background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-            color: '#1e293b',
+            background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
+            color: '#0d1b2a',
             padding: '8px 20px',
             borderRadius: '25px',
             fontSize: '0.9rem',
@@ -205,7 +205,7 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
             borderRadius: '16px',
             overflow: 'hidden',
             boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
-            border: '3px solid #fbbf24'
+            border: '3px solid #ffd60a'
           }}>
             <iframe 
               style={{
@@ -228,9 +228,9 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
 
       {/* 영상 설명 섹션 */}
       <div style={{
-        background: '#1e293b',
+        background: '#0d1b2a',
         padding: '40px 20px',
-        borderBottom: '2px solid #334155'
+        borderBottom: '2px solid #1b263b'
       }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <div style={{
@@ -239,7 +239,7 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
             padding: '30px',
             border: '1px solid rgba(251, 191, 36, 0.3)'
           }}>
-            <h3 style={{ color: '#fbbf24', fontSize: '1.3rem', fontWeight: '700', marginBottom: '20px' }}>
+            <h3 style={{ color: '#ffd60a', fontSize: '1.3rem', fontWeight: '700', marginBottom: '20px' }}>
               💡 오늘 영상 핵심 내용
             </h3>
             <ul style={{ 
@@ -290,7 +290,7 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
           textAlign: 'center',
           position: 'relative',
           overflow: 'hidden',
-          borderBottom: '4px solid #fbbf24'
+          borderBottom: '4px solid #ffd60a'
         }}
       >
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
@@ -354,7 +354,7 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
             <div style={{ padding: '30px' }}>
               {/* 생성된 이미지 */}
               <div style={{ marginBottom: '30px' }}>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#0f172a', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#ffffff', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <span>🖼️</span>
                   <span>생성된 이미지</span>
                 </h3>
@@ -394,7 +394,7 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '15px', marginBottom: '15px' }}>
                   <div>
-                    <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#0f172a', margin: 0 }}>
+                    <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#ffffff', margin: 0 }}>
                       📝 이미지 생성 JSON 프롬프트
                     </h3>
                     <p style={{ color: '#64748b', margin: '8px 0 0 0', fontSize: '0.95rem' }}>
@@ -405,7 +405,7 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
                     onClick={() => copyToClipboard(imagePrompt, 'image-prompt')}
                     style={{
                       background: copiedPromptId === 'image-prompt' ? '#10b981' : BRAND_GOLD,
-                      color: copiedPromptId === 'image-prompt' ? 'white' : '#0f172a',
+                      color: copiedPromptId === 'image-prompt' ? 'white' : '#ffffff',
                       border: 'none',
                       padding: '12px 24px',
                       borderRadius: '12px',
@@ -438,7 +438,7 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
                     lineHeight: 1.6,
                     whiteSpace: 'pre-wrap',
                     wordBreak: 'break-word',
-                    color: '#334155'
+                    color: '#1b263b'
                   }}>
                     {imagePrompt}
                   </pre>
@@ -504,7 +504,7 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
 
             <div style={{ padding: '30px' }}>
               <div style={{
-                background: '#0f172a',
+                background: '#ffffff',
                 borderRadius: '16px',
                 overflow: 'hidden',
                 boxShadow: '0 10px 30px rgba(15, 23, 42, 0.3)'
@@ -559,7 +559,7 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
       </div>
 
       {/* 워크플로우 가이드 */}
-      <div style={{ padding: '60px 20px', background: '#1e293b' }}>
+      <div style={{ padding: '60px 20px', background: '#0d1b2a' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <h2 style={{ color: 'white', fontSize: '1.8rem', fontWeight: '800', textAlign: 'center', marginBottom: '40px' }}>
             📋 실전 워크플로우
@@ -612,7 +612,7 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
             background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
             borderRadius: '20px',
             padding: '35px',
-            border: '3px solid #fbbf24'
+            border: '3px solid #ffd60a'
           }}>
             <h3 style={{ color: '#92400e', fontSize: '1.4rem', fontWeight: '800', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
               <span>⚠️</span>
@@ -651,7 +651,7 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
               onClick={() => navigate('/ai-money-video-prompts')}
               style={{
                 background: BRAND_GOLD,
-                color: '#0f172a',
+                color: '#ffffff',
                 border: 'none',
                 padding: '15px 30px',
                 borderRadius: '12px',

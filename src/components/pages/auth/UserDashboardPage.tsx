@@ -16,7 +16,7 @@ const COLORS = {
   white: '#ffffff',
   grayLight: '#f8fafc',
   grayMedium: '#64748b',
-  grayDark: '#1f2937',
+  grayDark: '#1b263b',
 };
 
 interface UserDashboardPageProps {
@@ -335,12 +335,12 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   style={{
                     padding: '14px 20px',
                     borderRadius: '14px',
-                    border: '2px solid #fbbf24',
+                    border: '2px solid #ffd60a',
                     fontSize: '1.2rem',
                     fontWeight: '700',
                     outline: 'none',
                     background: 'white',
-                    color: '#1f2937',
+                    color: '#1b263b',
                     minWidth: '220px',
                     boxShadow: '0 4px 15px rgba(251, 191, 36, 0.3)'
                   }}
@@ -797,7 +797,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                       <h3 style={{ 
                         fontSize: '1.2rem',
                         fontWeight: '600',
-                        color: '#1f2937',
+                        color: '#1b263b',
                         margin: 0,
                         flex: 1
                       }}>
@@ -809,8 +809,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                         fontSize: '0.8rem',
                         fontWeight: '500',
                         background: course.status === 'active' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(245, 158, 11, 0.2)',
-                        color: course.status === 'active' ? '#10b981' : '#f59e0b',
-                        border: `1px solid ${course.status === 'active' ? '#10b981' : '#f59e0b'}`
+                        color: course.status === 'active' ? '#10b981' : '#e5c100',
+                        border: `1px solid ${course.status === 'active' ? '#10b981' : '#e5c100'}`
                       }}>
                         {course.status === 'active' ? '🔥 수강 중' : 
                          course.status === 'completed' ? '✅ 완료' : '⏸️ 일시정지'}
@@ -912,7 +912,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                       borderRadius: '12px',
                       border: 'none',
                       background: course.status === 'completed' 
-                        ? 'linear-gradient(135deg, #f59e0b, #d97706)'
+                        ? 'linear-gradient(135deg, #e5c100, #d97706)'
                         : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
                       color: 'white',
                       fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
@@ -968,7 +968,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               <h3 style={{ 
                 fontSize: '1.4rem',
                 fontWeight: '600',
-                color: '#1f2937',
+                color: '#1b263b',
                 marginBottom: '15px'
               }}>
                 아직 수강 중인 강의가 없습니다
@@ -1040,7 +1040,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
                 fontWeight: '900',
                 marginBottom: '15px',
-                color: '#1f2937'
+                color: '#1b263b'
               }}>
                 💳 구매한 강의
               </h2>
@@ -1157,7 +1157,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                     <h3 style={{ 
                       fontSize: '1.2rem',
                       fontWeight: '700',
-                      color: '#1f2937',
+                      color: '#1b263b',
                       marginBottom: '12px'
                     }}>
                       {displayCourseName}
@@ -1191,7 +1191,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                         <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '4px' }}>
                           결제 수단
                         </div>
-                        <div style={{ fontSize: '0.95rem', fontWeight: '600', color: '#1f2937' }}>
+                        <div style={{ fontSize: '0.95rem', fontWeight: '600', color: '#1b263b' }}>
                           {purchase.paymentMethod === 'CARD' || purchase.paymentMethod === 'card' 
                             ? '💳 카드 결제' 
                             : purchase.paymentMethod}
@@ -1296,7 +1296,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 fontSize: '1.6rem',
                 fontWeight: '600',
                 marginBottom: 'clamp(15px, 3vw, 30px)',
-                color: '#1f2937'
+                color: '#1b263b'
               }}>
                 🎯 학습 진행률
               </h3>
@@ -1342,14 +1342,14 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 color: '#666666',
                 marginBottom: '10px'
               }}>
-                전체 <strong style={{ color: '#1f2937' }}>{userStats.totalCourses}개</strong> 강의 중 <strong style={{ color: '#1f2937' }}>{userStats.completedCourses}개</strong>를 완료했습니다!
+                전체 <strong style={{ color: '#1b263b' }}>{userStats.totalCourses}개</strong> 강의 중 <strong style={{ color: '#1b263b' }}>{userStats.completedCourses}개</strong>를 완료했습니다!
               </p>
               {userStats.inProgressCourses > 0 && (
                 <p style={{ 
                   fontSize: '0.9rem',
                   color: '#666666'
                 }}>
-                  현재 <strong style={{ color: '#1f2937' }}>{userStats.inProgressCourses}개</strong> 강의를 수강 중입니다.
+                  현재 <strong style={{ color: '#1b263b' }}>{userStats.inProgressCourses}개</strong> 강의를 수강 중입니다.
                 </p>
               )}
             </div>

@@ -122,7 +122,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
           <h1 style={{ 
             fontSize: '48px', 
             fontWeight: 'bold', 
-            color: '#1f2937', 
+            color: '#1b263b', 
             marginBottom: '24px',
             background: 'linear-gradient(to right, white, #ccc)',
             WebkitBackgroundClip: 'text',
@@ -182,7 +182,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
               onClick={handleRetry}
               style={{
                 background: 'linear-gradient(to right, #0ea5e9, #a01e36)',
-                color: '#1f2937',
+                color: '#1b263b',
                 fontWeight: 'bold',
                 padding: '16px 32px',
                 borderRadius: '12px',
@@ -214,7 +214,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
               style={{
                 border: '1px solid #e2e8f0',
                 background: 'transparent',
-                color: '#1f2937',
+                color: '#1b263b',
                 fontWeight: '500',
                 padding: '16px 32px',
                 borderRadius: '12px',
@@ -250,7 +250,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
           <h2 style={{ 
             fontSize: '32px', 
             fontWeight: 'bold', 
-            color: '#1f2937', 
+            color: '#1b263b', 
             marginBottom: '16px' 
           }}>
             💡 해결 방법
@@ -327,7 +327,7 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
               <h3 style={{ 
                 fontSize: '20px', 
                 fontWeight: 'bold', 
-                color: '#1f2937', 
+                color: '#1b263b', 
                 marginBottom: '8px' 
               }}>
                 {item.title}
@@ -357,12 +357,12 @@ const PaymentFailPage: React.FC<PaymentFailPageProps> = ({ onBack }) => {
             justifyContent: 'center',
             margin: '0 auto 16px'
           }}>
-            <span style={{ color: '#1f2937', fontWeight: 'bold', fontSize: '20px' }}>💡</span>
+            <span style={{ color: '#1b263b', fontWeight: 'bold', fontSize: '20px' }}>💡</span>
           </div>
           <h3 style={{ 
             fontSize: '20px', 
             fontWeight: 'bold', 
-            color: '#1f2937', 
+            color: '#1b263b', 
             marginBottom: '16px' 
           }}>
             문제가 계속 발생하면 고객센터로 연락주세요

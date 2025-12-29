@@ -215,7 +215,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
       icon: <Building2 size={28} />,
       title: '1960년대 맨해튼의 교훈',
       description: '첫 건물을 담보로 두 번째 건물, 두 번째로 세 번째... 복리의 마법',
-      color: '#fbbf24'
+      color: '#ffd60a'
     },
     {
       icon: <Zap size={28} />,
@@ -241,7 +241,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
     <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0a0f1a 0%, #1a1f2e 100%)' }}>
       {/* 헤더 */}
       <div style={{
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+        background: 'linear-gradient(135deg, #ffffff 0%, #0d1b2a 100%)',
         padding: '20px',
         position: 'sticky',
         top: 0,
@@ -271,7 +271,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <div style={{
-              background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+              background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
               width: '65px',
               height: '65px',
               borderRadius: '18px',
@@ -280,7 +280,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
               justifyContent: 'center',
               fontSize: '1.8rem',
               fontWeight: '800',
-              color: '#0f172a',
+              color: '#ffffff',
               boxShadow: '0 8px 25px rgba(251, 191, 36, 0.4)'
             }}>
               1
@@ -323,7 +323,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
             display: 'flex', 
             alignItems: 'center', 
             gap: '12px', 
-            color: '#fbbf24', 
+            color: '#ffd60a', 
             marginBottom: '25px',
             fontSize: '1.4rem',
             fontWeight: '700'
@@ -347,14 +347,14 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                 <div style={{
                   width: '28px',
                   height: '28px',
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                   borderRadius: '8px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontSize: '0.85rem',
                   fontWeight: '700',
-                  color: '#0f172a',
+                  color: '#ffffff',
                   flexShrink: 0
                 }}>
                   {idx + 1}
@@ -381,7 +381,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
             background: 'rgba(15, 23, 42, 0.5)',
             borderBottom: '1px solid rgba(255,255,255,0.1)'
           }}>
-            <PlayCircle size={24} color="#fbbf24" />
+            <PlayCircle size={24} color="#ffd60a" />
             <span style={{ color: 'white', fontWeight: '700', fontSize: '1.1rem' }}>
               🎬 강의 영상
             </span>
@@ -410,7 +410,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
           border: '1px solid rgba(255,255,255,0.1)'
         }}>
           <h3 style={{ 
-            color: '#fbbf24', 
+            color: '#ffd60a', 
             fontSize: '1.4rem', 
             marginBottom: '25px',
             display: 'flex',
@@ -421,14 +421,14 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
           </h3>
           
           <div style={{
-            background: 'linear-gradient(135deg, #0f172a, #1e293b)',
+            background: 'linear-gradient(135deg, #ffffff, #0d1b2a)',
             padding: '30px',
             borderRadius: '16px',
             marginBottom: '25px',
             border: '1px solid rgba(251, 191, 36, 0.3)'
           }}>
             <p style={{ color: '#e2e8f0', fontSize: '1.1rem', lineHeight: '1.9', margin: 0 }}>
-              <strong style={{ color: '#fbbf24' }}>1960년대 맨해튼</strong>에서 부동산으로 부자가 된 외삼촌의 실제 이야기를 통해,
+              <strong style={{ color: '#ffd60a' }}>1960년대 맨해튼</strong>에서 부동산으로 부자가 된 외삼촌의 실제 이야기를 통해,
               <strong style={{ color: '#3b82f6' }}> 지금 AI 콘텐츠 시장</strong>에서 어떻게 같은 원리로 
               <strong style={{ color: '#22c55e' }}> "콘텐츠 건물주"</strong>가 될 수 있는지 알려드립니다.
             </p>
@@ -442,7 +442,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
           }}>
             <p style={{ color: '#e2e8f0', fontSize: '1rem', lineHeight: '1.8', margin: 0 }}>
               어디서 주워들은 이론이 아닙니다. 뉴욕 트럼프 타워에 사시는 외삼촌 밑에서 
-              직접 일하며 배운 <strong style={{ color: '#fbbf24' }}>부동산 투자의 원리</strong>를, 
+              직접 일하며 배운 <strong style={{ color: '#ffd60a' }}>부동산 투자의 원리</strong>를, 
               지금 <strong style={{ color: '#3b82f6' }}>AI 기반 콘텐츠 비즈니스</strong>에 그대로 적용하고 있는 실전 경험담입니다.
             </p>
           </div>
@@ -544,15 +544,15 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
               border: '2px solid rgba(251, 191, 36, 0.3)'
             }}>
               <div style={{ fontSize: '2.5rem', marginBottom: '15px', textAlign: 'center' }}>🏢</div>
-              <h4 style={{ color: '#fbbf24', fontSize: '1.2rem', fontWeight: '700', marginBottom: '20px', textAlign: 'center' }}>
+              <h4 style={{ color: '#ffd60a', fontSize: '1.2rem', fontWeight: '700', marginBottom: '20px', textAlign: 'center' }}>
                 1960년대 맨해튼
               </h4>
               <div style={{ color: '#e2e8f0', fontSize: '1rem', lineHeight: '2.2' }}>
-                • 건물 = <strong style={{ color: '#fbbf24' }}>자산</strong><br/>
-                • 은행 대출 = <strong style={{ color: '#fbbf24' }}>레버리지</strong><br/>
-                • 월세 = <strong style={{ color: '#fbbf24' }}>수익</strong><br/>
-                • 인테리어 = <strong style={{ color: '#fbbf24' }}>가치 상승</strong><br/>
-                • 직원 고용 = <strong style={{ color: '#fbbf24' }}>관리</strong>
+                • 건물 = <strong style={{ color: '#ffd60a' }}>자산</strong><br/>
+                • 은행 대출 = <strong style={{ color: '#ffd60a' }}>레버리지</strong><br/>
+                • 월세 = <strong style={{ color: '#ffd60a' }}>수익</strong><br/>
+                • 인테리어 = <strong style={{ color: '#ffd60a' }}>가치 상승</strong><br/>
+                • 직원 고용 = <strong style={{ color: '#ffd60a' }}>관리</strong>
               </div>
             </div>
 
@@ -579,7 +579,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
 
         {/* 핵심 메시지 */}
         <div style={{
-          background: 'linear-gradient(135deg, #1e3a5f, #0f172a)',
+          background: 'linear-gradient(135deg, #1e3a5f, #ffffff)',
           borderRadius: '24px',
           padding: '40px',
           marginBottom: '40px',
@@ -591,7 +591,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
             AI 콘텐츠 건물주가 되세요
           </h3>
           <p style={{ color: '#e2e8f0', lineHeight: '1.9', fontSize: '1.05rem', maxWidth: '600px', margin: '0 auto 20px' }}>
-            1960년대 맨해튼에서 <strong style={{ color: '#fbbf24' }}>110% 대출</strong>이 가능했던 것처럼,<br/>
+            1960년대 맨해튼에서 <strong style={{ color: '#ffd60a' }}>110% 대출</strong>이 가능했던 것처럼,<br/>
             지금은 <strong style={{ color: '#3b82f6' }}>무료 AI 도구</strong>로 콘텐츠 제국을 세울 수 있습니다.<br/><br/>
             <strong style={{ color: '#22c55e' }}>첫 번째 채널이 성공하면, 두 번째, 세 번째...</strong>
           </p>
@@ -746,14 +746,14 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                   <div style={{
                     width: '36px',
                     height: '36px',
-                    background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                    background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     fontSize: '0.9rem',
                     fontWeight: '700',
-                    color: '#0f172a'
+                    color: '#ffffff'
                   }}>
                     {post.author.charAt(0)}
                   </div>
@@ -822,8 +822,8 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
             style={{
               background: isDayCompleted 
                 ? 'linear-gradient(135deg, #22c55e, #16a34a)' 
-                : 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-              color: isDayCompleted ? 'white' : '#0f172a',
+                : 'linear-gradient(135deg, #ffd60a, #e5c100)',
+              color: isDayCompleted ? 'white' : '#ffffff',
               border: 'none',
               padding: '18px 45px',
               borderRadius: '16px',
@@ -855,7 +855,7 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
             <button
               onClick={onNext}
               style={{
-                background: 'linear-gradient(135deg, #1e3a5f, #0f172a)',
+                background: 'linear-gradient(135deg, #1e3a5f, #ffffff)',
                 color: 'white',
                 border: '1px solid rgba(255,255,255,0.2)',
                 padding: '18px 45px',

@@ -123,6 +123,7 @@ const FAQPage = React.lazy(() => import('./components/pages/FAQPage'));
 const CEOPage = React.lazy(() => import('./components/pages/CEOPage'));
 const ContactPage = React.lazy(() => import('./components/pages/ContactPage'));
 const ClubsPage = React.lazy(() => import('./components/pages/ClubsPage'));
+const AIGymPage = React.lazy(() => import('./components/pages/AIGymPage'));
 
 // 영어 랜딩 페이지
 const EnglishLandingPage = React.lazy(() => import('./components/pages/EnglishLandingPage'));
@@ -245,6 +246,7 @@ const FAQPageWrapped = withPageWrapper(FAQPage);
 const CEOPageWrapped = withPageWrapper(CEOPage);
 const ContactPageWrapped = withPageWrapper(ContactPage);
 const ClubsPageWrapped = withPageWrapper(ClubsPage);
+const AIGymPageWrapped = withSuspense(AIGymPage);
 const ChatGPTPrompts40PageWrapped = withPageWrapper(ChatGPTPrompts40Page);
 const AIMoneyMasterPromptsPageWrapped = withPageWrapper(AIMoneyMasterPromptsPage);
 const AIMoneyImagePromptsPageWrapped = withPageWrapper(AIMoneyImagePromptsPage);
@@ -547,6 +549,7 @@ function App() {
                 </Suspense>
               } />
               <Route path="/clubs" element={<ClubsPageWrapped />} />
+              <Route path="/ai-gym" element={<AIGymPageWrapped />} />
               <Route path="/roadmap" element={<RoadmapPageWrapped />} />
               <Route path="/chatgpt-prompts-40plus" element={<ChatGPTPrompts40PageWrapped />} />
               <Route path="/ai-money-master-prompts" element={<AIMoneyMasterPromptsPageWrapped />} />

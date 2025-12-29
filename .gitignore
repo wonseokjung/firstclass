@@ -22,3 +22,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .env
+
+# Large PDF files
+public/pdf/프롬프트 엔지니어링.pdf

@@ -572,7 +572,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           <div style={{
             width: '100px',
             height: '100px',
-            background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+            background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
             borderRadius: '50%',
             display: 'flex',
             alignItems: 'center',
@@ -586,7 +586,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           <h1 style={{
             fontSize: '2rem',
             fontWeight: '800',
-            color: '#fbbf24',
+            color: '#ffd60a',
             marginBottom: '15px'
           }}>
             가상계좌 발급 완료!
@@ -602,8 +602,8 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
 
           {/* 가상계좌 정보 카드 */}
           <div style={{
-            background: 'linear-gradient(135deg, #1e3a5f, #0f172a)',
-            border: '2px solid #fbbf24',
+            background: 'linear-gradient(135deg, #1e3a5f, #ffffff)',
+            border: '2px solid #ffd60a',
             borderRadius: '20px',
             padding: '30px',
             marginBottom: '30px',
@@ -619,7 +619,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             <div style={{ marginBottom: '20px' }}>
               <div style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '5px' }}>계좌번호</div>
               <div style={{ 
-                color: '#fbbf24', 
+                color: '#ffd60a', 
                 fontSize: '1.5rem', 
                 fontWeight: '800',
                 fontFamily: 'monospace',
@@ -763,7 +763,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 right: '-16px',
                 width: '48px',
                 height: '48px',
-                background: 'linear-gradient(135deg, #fbbf24, #f97316)',
+                background: 'linear-gradient(135deg, #ffd60a, #f97316)',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
@@ -779,7 +779,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           <h1 style={{ 
             fontSize: '48px', 
             fontWeight: 'bold', 
-            color: '#1f2937', 
+            color: '#1b263b', 
             marginBottom: '24px'
           }}>
             결제 완료!
@@ -787,7 +787,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             
           <p style={{ 
             fontSize: '20px', 
-            color: '#374151', 
+            color: '#415a77', 
             marginBottom: '16px', 
             lineHeight: '1.6' 
           }}>
@@ -800,7 +800,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           
           <p style={{ 
             fontSize: '18px', 
-            color: '#374151', 
+            color: '#415a77', 
             marginBottom: '48px' 
           }}>
             이제 바로 학습을 시작하고 새로운 스킬을 마스터해보세요! 🚀

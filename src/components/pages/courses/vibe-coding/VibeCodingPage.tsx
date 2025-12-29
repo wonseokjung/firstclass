@@ -65,7 +65,7 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
   return (
     <div style={{ 
       minHeight: '100vh', 
-      background: 'linear-gradient(180deg, #0f0a1e 0%, #1a1033 50%, #0f172a 100%)',
+      background: 'linear-gradient(180deg, #0f0a1e 0%, #1a1033 50%, #ffffff 100%)',
       color: 'white'
     }}>
       <NavigationBar onBack={onBack} breadcrumbText="AI 수익화 바이브코딩" />
@@ -87,8 +87,8 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
             marginBottom: '25px',
             border: '1px solid rgba(251, 191, 36, 0.5)'
           }}>
-            <Star size={16} color="#fbbf24" fill="#fbbf24" />
-            <span style={{ color: '#fbbf24', fontWeight: '600', fontSize: '0.9rem' }}>🚧 강의 준비중</span>
+            <Star size={16} color="#ffd60a" fill="#ffd60a" />
+            <span style={{ color: '#ffd60a', fontWeight: '600', fontSize: '0.9rem' }}>🚧 강의 준비중</span>
           </div>
           
           <h1 style={{ 

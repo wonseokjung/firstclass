@@ -12,7 +12,7 @@ const EnglishLandingPage: React.FC = () => {
     return (
         <div style={{
             minHeight: '100vh',
-            background: 'linear-gradient(135deg, #0a1628 0%, #1e3a5f 50%, #0f2744 100%)',
+            background: 'linear-gradient(135deg, #ffffff 0%, #1e3a5f 50%, #0f2744 100%)',
             color: '#ffffff',
             fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
             display: 'flex',
@@ -30,7 +30,7 @@ const EnglishLandingPage: React.FC = () => {
                     width: '100px',
                     height: '100px',
                     borderRadius: '50%',
-                    border: '3px solid #fbbf24',
+                    border: '3px solid #ffd60a',
                     marginBottom: '32px',
                     boxShadow: '0 8px 30px rgba(251, 191, 36, 0.3)'
                 }}
@@ -45,7 +45,7 @@ const EnglishLandingPage: React.FC = () => {
                 borderRadius: '25px',
                 marginBottom: '24px',
                 fontSize: '1rem',
-                color: '#fbbf24',
+                color: '#ffd60a',
                 fontWeight: '600'
             }}>
                 🚧 Coming Soon
@@ -56,7 +56,7 @@ const EnglishLandingPage: React.FC = () => {
                 fontSize: '3rem',
                 fontWeight: '800',
                 marginBottom: '16px',
-                background: 'linear-gradient(135deg, #ffffff, #fbbf24)',
+                background: 'linear-gradient(135deg, #ffffff, #ffd60a)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text'
@@ -67,7 +67,7 @@ const EnglishLandingPage: React.FC = () => {
             <h2 style={{
                 fontSize: '1.5rem',
                 fontWeight: '600',
-                color: '#fbbf24',
+                color: '#ffd60a',
                 marginBottom: '24px'
             }}>
                 English Version
@@ -85,7 +85,7 @@ const EnglishLandingPage: React.FC = () => {
                 <br /><br />
                 Learn how to create AI-powered content and build passive income streams.
                 <br />
-                <strong style={{ color: '#fbbf24' }}>No coding experience required.</strong>
+                <strong style={{ color: '#ffd60a' }}>No coding experience required.</strong>
             </p>
 
             {/* What's Coming */}
@@ -115,7 +115,7 @@ const EnglishLandingPage: React.FC = () => {
                             borderBottom: idx < 2 ? '1px solid rgba(255,255,255,0.1)' : 'none'
                         }}>
                             <div style={{ fontWeight: '600' }}>{course.title}</div>
-                            <div style={{ fontSize: '0.85rem', color: '#fbbf24' }}>
+                            <div style={{ fontSize: '0.85rem', color: '#ffd60a' }}>
                                 {course.status}
                             </div>
                         </div>
@@ -131,9 +131,9 @@ const EnglishLandingPage: React.FC = () => {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '8px',
-                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                         border: 'none',
-                        color: '#1e293b',
+                        color: '#0d1b2a',
                         padding: '14px 28px',
                         borderRadius: '12px',
                         fontSize: '1rem',
@@ -182,11 +182,11 @@ const EnglishLandingPage: React.FC = () => {
                     gap: '8px',
                     marginBottom: '12px'
                 }}>
-                    <Mail size={18} color="#fbbf24" />
+                    <Mail size={18} color="#ffd60a" />
                     <span style={{ fontWeight: '600' }}>Get Notified When We Launch</span>
                 </div>
                 <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.6)' }}>
-                    Contact us: <a href="mailto:jay@connexionai.kr" style={{ color: '#fbbf24' }}>jay@connexionai.kr</a>
+                    Contact us: <a href="mailto:jay@connexionai.kr" style={{ color: '#ffd60a' }}>jay@connexionai.kr</a>
                 </p>
             </div>
 

@@ -206,7 +206,7 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
     <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0a0f1a 0%, #1a1f2e 100%)' }}>
       {/* 헤더 */}
       <div style={{
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+        background: 'linear-gradient(135deg, #ffffff 0%, #0d1b2a 100%)',
         padding: '20px',
         position: 'sticky',
         top: 0,

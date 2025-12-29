@@ -394,7 +394,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
               <p style={{
                 fontSize: '1.1rem',
                 fontWeight: '700',
-                color: '#1f2937',
+                color: '#1b263b',
                 textAlign: 'center',
                 marginBottom: '15px'
               }}>

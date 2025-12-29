@@ -5,12 +5,12 @@ import NavigationBar from '../../common/NavigationBar';
 import AzureTableService from '../../../services/azureTableService';
 
 const COLORS = {
-  navy: '#0f172a',
-  navyLight: '#1e293b',
+  navy: '#ffffff',
+  navyLight: '#0d1b2a',
   blue: '#0ea5e9',
   cyan: '#06b6d4',
   purple: '#8b5cf6',
-  gold: '#fbbf24',
+  gold: '#ffd60a',
   red: '#ef4444',
   white: '#ffffff',
   gray: '#94a3b8',

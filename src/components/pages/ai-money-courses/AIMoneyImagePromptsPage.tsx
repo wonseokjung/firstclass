@@ -261,7 +261,7 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
           <h2 style={{ 
             fontSize: 'clamp(1.5rem, 4vw, 2.2rem)', 
             fontWeight: 800, 
-            color: '#0f172a', 
+            color: '#ffffff', 
             marginBottom: 'clamp(15px, 3vw, 25px)',
             textAlign: 'center'
           }}>
@@ -334,10 +334,10 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
           boxShadow: '0 20px 60px rgba(15, 23, 42, 0.1)',
           border: '1px solid #e2e8f0'
         }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '15px', color: '#0f172a' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '15px', color: '#ffffff' }}>
             ✅ 사용 방법
           </h2>
-          <ul style={{ margin: 0, paddingLeft: '18px', lineHeight: 1.8, color: '#334155' }}>
+          <ul style={{ margin: 0, paddingLeft: '18px', lineHeight: 1.8, color: '#1b263b' }}>
             <li>대괄호(`[ ]`)로 표시된 변수만 자신의 상품이나 콘텐츠에 맞게 수정하세요.</li>
             <li>프롬프트를 복사해 Gemini 3 Pro, ChatGPT, Midjourney 등 원하는 이미지 생성 AI에 붙여넣으세요.</li>
             <li>결과물이 마음에 들지 않으면 "글씨를 더 크게", "배경을 더 밝게", "색상을 더 따뜻하게" 등의 추가 지시를 하세요.</li>
@@ -367,7 +367,7 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
               boxShadow: '0 10px 20px rgba(15, 23, 42, 0.08)'
             }}>
               <p style={{ margin: 0, color: BRAND_GOLD, fontWeight: 700, letterSpacing: '0.1em' }}>{step.title}</p>
-              <p style={{ margin: '10px 0 0', color: '#0f172a', lineHeight: 1.6 }}>{step.text}</p>
+              <p style={{ margin: '10px 0 0', color: '#ffffff', lineHeight: 1.6 }}>{step.text}</p>
             </div>
           ))}
         </div>
@@ -375,7 +375,7 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
 
       <div style={{ padding: '60px 20px', background: CARD_BG }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '30px' }}>
-          <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0f172a', marginBottom: '15px' }}>
+          <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff', marginBottom: '15px' }}>
             💰 실전 수익화 이미지 생성 프롬프트 10선
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
@@ -405,7 +405,7 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
                   }}
                 >
                   <div>
-                    <h3 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '8px', color: '#0f172a' }}>
+                    <h3 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '8px', color: '#ffffff' }}>
                       {section.title}
                     </h3>
                     <p style={{ margin: 0, color: '#475569', lineHeight: 1.6 }}>{section.description}</p>
@@ -431,7 +431,7 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
                         >
                           <div style={{ display: 'flex', justifyContent: 'space-between', gap: '15px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
                             <div style={{ flex: 1 }}>
-                              <h4 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700, color: '#0f172a' }}>
+                              <h4 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700, color: '#ffffff' }}>
                                 {prompt.title}
                               </h4>
                               <p style={{ marginTop: '6px', marginBottom: '4px', color: '#475569', fontSize: '0.9rem', fontWeight: 600 }}>
@@ -445,7 +445,7 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
                               onClick={() => copyToClipboard(prompt.prompt, promptId)}
                               style={{
                                 background: copiedPromptId === promptId ? '#16a34a' : BRAND_GOLD,
-                                color: copiedPromptId === promptId ? 'white' : '#0f172a',
+                                color: copiedPromptId === promptId ? 'white' : '#ffffff',
                                 border: 'none',
                                 padding: '8px 16px',
                                 borderRadius: '999px',
@@ -477,7 +477,7 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
                             style={{
                               marginTop: '15px',
                               background: 'white',
-                              color: '#0f172a',
+                              color: '#ffffff',
                               padding: '18px',
                               borderRadius: '12px',
                               fontFamily:
