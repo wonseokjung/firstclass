@@ -143,9 +143,9 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
         days: [
           { 
             day: 6, 
-            title: '[재료학] 텍스트 & 이미지 생성 AI 마스터', 
-            subtitle: 'ChatGPT 프롬프트 엔지니어링 | Nano Banana & ChatGPT 이미지 생성 실습',
-            hasQuiz: true,
+            title: '프롬프트 엔지니어링 & 이미지 생성 AI', 
+            subtitle: 'Google Colab으로 나노 바나나 마스터하기 | 코드 보고 쫄지 않기',
+            hasQuiz: false,
             releaseDate: '2025-01-06'  // 1월 6일 오픈
           },
           { 
