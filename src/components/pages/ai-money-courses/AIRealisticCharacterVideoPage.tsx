@@ -354,7 +354,7 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
             <div style={{ padding: '30px' }}>
               {/* 생성된 이미지 */}
               <div style={{ marginBottom: '30px' }}>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#ffffff', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#1b263b', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <span>🖼️</span>
                   <span>생성된 이미지</span>
                 </h3>
@@ -394,7 +394,7 @@ const AIRealisticCharacterVideoPage: React.FC<AIRealisticCharacterVideoPageProps
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '15px', marginBottom: '15px' }}>
                   <div>
-                    <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#ffffff', margin: 0 }}>
+                    <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#1b263b', margin: 0 }}>
                       📝 이미지 생성 JSON 프롬프트
                     </h3>
                     <p style={{ color: '#64748b', margin: '8px 0 0 0', fontSize: '0.95rem' }}>

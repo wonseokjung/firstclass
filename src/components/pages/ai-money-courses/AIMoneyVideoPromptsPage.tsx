@@ -568,7 +568,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                   <h4 style={{ 
                     fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', 
                     fontWeight: 700, 
-                    color: '#ffffff',
+                    color: '#1b263b',
                     margin: 0
                   }}>
                     📝 JSON 프롬프트
@@ -779,7 +779,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                   <h4 style={{ 
                     fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', 
                     fontWeight: 700, 
-                    color: '#ffffff',
+                    color: '#1b263b',
                     margin: 0
                   }}>
                     📝 JSON 프롬프트 (북극 버전)
@@ -1004,7 +1004,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                   <h4 style={{ 
                     fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', 
                     fontWeight: 700, 
-                    color: '#ffffff',
+                    color: '#1b263b',
                     margin: 0
                   }}>
                     📝 JSON 프롬프트 (한국 버전)
@@ -1264,7 +1264,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                 <h5 style={{ 
                   fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', 
                   fontWeight: 700, 
-                  color: '#ffffff',
+                  color: '#1b263b',
                   margin: '0 0 15px 0',
                   display: 'flex',
                   alignItems: 'center',
@@ -1390,7 +1390,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                   <h4 style={{ 
                     fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', 
                     fontWeight: 700, 
-                    color: '#ffffff',
+                    color: '#1b263b',
                     margin: 0
                   }}>
                     📝 JSON 프롬프트 (이미지 투 비디오)
@@ -1518,7 +1518,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                 <h5 style={{ 
                   fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', 
                   fontWeight: 700, 
-                  color: '#ffffff',
+                  color: '#1b263b',
                   margin: '0 0 15px 0',
                   display: 'flex',
                   alignItems: 'center',
@@ -1765,7 +1765,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                 <h5 style={{
                   fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)',
                   fontWeight: 700,
-                  color: '#ffffff',
+                  color: '#1b263b',
                   margin: '0 0 15px 0',
                   display: 'flex',
                   alignItems: 'center',
@@ -1865,7 +1865,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                 <h5 style={{
                   fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)',
                   fontWeight: 700,
-                  color: '#ffffff',
+                  color: '#1b263b',
                   margin: '0 0 15px 0',
                   display: 'flex',
                   alignItems: 'center',
@@ -1887,7 +1887,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
               </div>
 
               {/* Prompt */}
-              <h4 style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', fontWeight: 700, color: '#ffffff', marginBottom: '15px' }}>
+              <h4 style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', fontWeight: 700, color: '#1b263b', marginBottom: '15px' }}>
                 📝 사용된 프롬프트
               </h4>
               <button
@@ -1998,7 +1998,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
           boxShadow: '0 20px 60px rgba(15, 23, 42, 0.1)',
           border: '1px solid #e2e8f0'
         }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '15px', color: '#ffffff' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '15px', color: '#1b263b' }}>
             ✅ 사용 방법
           </h2>
           <ul style={{ margin: 0, paddingLeft: '18px', lineHeight: 1.8, color: '#1b263b' }}>
@@ -2031,7 +2031,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
               boxShadow: '0 10px 20px rgba(15, 23, 42, 0.08)'
             }}>
               <p style={{ margin: 0, color: BRAND_GOLD, fontWeight: 700, letterSpacing: '0.1em' }}>{step.title}</p>
-              <p style={{ margin: '10px 0 0', color: '#ffffff', lineHeight: 1.6 }}>{step.text}</p>
+              <p style={{ margin: '10px 0 0', color: '#1b263b', lineHeight: 1.6 }}>{step.text}</p>
             </div>
           ))}
         </div>
@@ -2069,7 +2069,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                   }}
                 >
                   <div>
-                    <h3 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '8px', color: '#ffffff' }}>
+                    <h3 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '8px', color: '#1b263b' }}>
                       {section.title}
                     </h3>
                     <p style={{ margin: 0, color: '#475569', lineHeight: 1.6 }}>{section.description}</p>
@@ -2095,7 +2095,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
                         >
                           <div style={{ display: 'flex', justifyContent: 'space-between', gap: '15px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
                             <div style={{ flex: 1 }}>
-                              <h4 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700, color: '#ffffff' }}>
+                              <h4 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700, color: '#1b263b' }}>
                                 {prompt.title}
                               </h4>
                               <p style={{ marginTop: '6px', marginBottom: '4px', color: '#475569', fontSize: '0.9rem', fontWeight: 600 }}>

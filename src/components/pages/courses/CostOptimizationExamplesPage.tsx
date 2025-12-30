@@ -564,7 +564,7 @@ const CostOptimizationExamplesPage: React.FC<CostOptimizationExamplesPageProps> 
                   <h2 style={{
                     fontSize: '24px',
                     fontWeight: '700',
-                    color: '#ffffff',
+                    color: '#1b263b',
                     margin: 0,
                   }}>
                     AI 추천 모델

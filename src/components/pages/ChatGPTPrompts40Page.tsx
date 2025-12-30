@@ -1200,7 +1200,7 @@ ESG 현황: [환경/사회/지배구조 수준]
             </div>
             <div>
               <div style={{ fontSize: '3rem', fontWeight: '700', color: '#ef4444', marginBottom: '10px' }}>FREE</div>
-              <div style={{ color: '#ffffff', fontSize: '1.1rem' }}>무료 제공</div>
+              <div style={{ color: '#1b263b', fontSize: '1.1rem' }}>무료 제공</div>
             </div>
           </div>
         </div>

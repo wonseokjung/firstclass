@@ -1981,7 +1981,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                       fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
                       fontWeight: '700',
                       marginBottom: '15px',
-                      color: '#ffffff',
+                      color: '#1b263b',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '8px'
@@ -2014,7 +2014,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                       fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
                       fontWeight: '700',
                       marginBottom: '15px',
-                      color: '#ffffff',
+                      color: '#1b263b',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '8px'
@@ -2049,7 +2049,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                       fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
                       fontWeight: '700',
                       marginBottom: '15px',
-                      color: '#ffffff',
+                      color: '#1b263b',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '8px'
