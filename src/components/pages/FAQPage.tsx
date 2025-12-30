@@ -39,16 +39,16 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
           answer: `
             <h4 style="color: #60a5fa; margin-bottom: 15px;">🚀 New Class of AI Creators 양성</h4>
             
-            <p style="margin-bottom: 12px;"><strong style="color: #4ade80;">✓ 누구나 AI 크리에이터가 될 수 있습니다</strong></p>
+            <p style="margin-bottom: 12px;"><strong style="color: #4ade80;">✓ 누구나 AI 1인 기업가가 될 수 있습니다</strong></p>
             <ul style="margin-left: 20px; margin-bottom: 15px; line-height: 1.8;">
               <li>코딩, 장비, 기술 없이 AI로 콘텐츠 제작 가능</li>
               <li>교육 + 실제 도구 제공</li>
               <li>실전 수익화 방법 전수</li>
             </ul>
 
-            <p style="margin-bottom: 12px;"><strong style="color: #a78bfa;">✓ AI 크리에이터 네트워크</strong></p>
+            <p style="margin-bottom: 12px;"><strong style="color: #a78bfa;">✓ AI 1인 기업가 네트워크</strong></p>
             <ul style="margin-left: 20px; margin-bottom: 15px; line-height: 1.8;">
-              <li>크리에이터 커뮤니티에서 협력하고 성장</li>
+              <li>1인 기업가 커뮤니티에서 협력하고 성장</li>
               <li>서로의 콘텐츠와 경험 공유</li>
               <li>함께 만들어가는 AI 도시</li>
             </ul>

@@ -1,0 +1,834 @@
+import React, { useState, useRef, useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import { X, Send } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import AzureTableService from '../../services/azureTableService';
+
+// Gemini 2.5 Flash API 호출 함수
+async function callGemini(messages: Array<{ role: string; content: string }>): Promise<string> {
+  const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
+  
+  if (!apiKey) {
+    throw new Error('Gemini API 키가 필요합니다. REACT_APP_GEMINI_API_KEY를 설정해주세요.');
+  }
+
+  // 메시지를 Gemini 형식으로 변환
+  const systemPrompt = messages.find(m => m.role === 'system')?.content || '';
+  const conversationMessages = messages.filter(m => m.role !== 'system');
+  
+  const contents = conversationMessages.map(msg => ({
+    role: msg.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: msg.content }]
+  }));
+
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents,
+        systemInstruction: { parts: [{ text: systemPrompt }] },
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 500
+        }
+      })
+    }
+  );
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error?.message || 'Gemini API 호출 실패');
+  }
+
+  const data = await response.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || '응답을 생성할 수 없습니다.';
+}
+
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+interface ChatLog {
+  id: string;
+  timestamp: string;
+  question: string;
+  answer: string;
+  sessionId: string;
+}
+
+// 대화 로그 저장 함수 - Azure Table Storage
+const AZURE_TABLE_SAS_URL = 'https://aicitybuilderstorage.table.core.windows.net/aicitybotannaewon?sp=raud&st=2025-12-30T15:36:29Z&se=2027-10-07T23:51:00Z&sv=2024-11-04&sig=L03bQRwwMehqqDw%2FtmeTMDXQ4eqq%2B1k0S6nvuKOyriU%3D';
+
+const saveChatLogToAzure = async (question: string, answer: string, sessionId: string, userEmail?: string) => {
+  try {
+    const timestamp = new Date().toISOString();
+    const rowKey = `${Date.now()}_${Math.random().toString(36).substring(7)}`;
+    
+    const entity = {
+      PartitionKey: sessionId,
+      RowKey: rowKey,
+      Timestamp: timestamp,
+      Question: question.substring(0, 500), // 최대 500자
+      Answer: answer.substring(0, 2000), // 최대 2000자
+      UserEmail: userEmail || 'anonymous',
+      CreatedAt: timestamp
+    };
+
+    const response = await fetch(AZURE_TABLE_SAS_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Prefer': 'return-no-content'
+      },
+      body: JSON.stringify(entity)
+    });
+
+    if (response.ok || response.status === 204) {
+      console.log('📝 Azure Table에 대화 로그 저장 완료');
+    } else {
+      console.error('Azure Table 저장 실패:', response.status);
+    }
+  } catch (error) {
+    console.error('대화 로그 저장 실패:', error);
+  }
+};
+
+// 세션 ID 생성 (새 대화마다)
+const generateSessionId = () => `session_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+
+// 마크다운 제거 함수 - 깔끔한 텍스트만 표시
+const removeMarkdown = (text: string): string => {
+  return text
+    .replace(/\*\*([^*]+)\*\*/g, '$1')  // **볼드** → 볼드
+    .replace(/\*([^*]+)\*/g, '$1')       // *이탤릭* → 이탤릭
+    .replace(/#{1,6}\s?/g, '')           // # 헤딩 제거
+    .replace(/```[\s\S]*?```/g, '')      // 코드블록 제거
+    .replace(/`([^`]+)`/g, '$1')         // `인라인코드` → 인라인코드
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')  // [링크](url) → 링크
+    .replace(/^[-*]\s/gm, '• ')          // - 또는 * 리스트 → •
+    .replace(/^\d+\.\s/gm, '')           // 1. 숫자 리스트 제거
+    .trim();
+};
+
+// 🔧 관리자용: Azure Table에서 로그 조회하는 방법 안내
+if (typeof window !== 'undefined') {
+  (window as any).getCityGuideLogsInfo = () => {
+    console.log('📊 도시 안내원 대화 로그 조회 방법:');
+    console.log('Azure Portal → Storage Account → Tables → aicitybotannaewon');
+    console.log('또는 Azure Storage Explorer 사용');
+  };
+}
+
+// 사이트 정보 컨텍스트
+const SITE_CONTEXT = `
+당신은 "AI City Builders" 웹사이트의 도시 안내원입니다. 🏙️
+마치 미래 도시의 컨시어지(Concierge)처럼, 방문자들이 이 도시에서 길을 잃지 않도록 친절하게 안내합니다.
+말투는 정중하면서도 따뜻하게, 호텔 컨시어지처럼 전문적이면서 친근하게 대화하세요.
+
+## 🎯 역할
+- 방문자에게 강의 추천
+- 사이트 네비게이션 안내
+- 학습 경로 제안
+- 자주 묻는 질문 답변
+
+## 📚 강의 구조 (프리미엄 4단계 Step 시스템)
+
+### 프리미엄 강의 (유료)
+1. **Step 1: AI 건물주 되기** (/ai-building-course) - 45,000원 얼리버드
+   - 유튜브 CEO가 말한 "새로운 계급의 크리에이터" 되기
+   - AI로 디지털 건물을 짓고 수익화하는 방법
+   
+2. **Step 2: AI 에이전트 비기너** (/chatgpt-agent-beginner) - 95,000원
+   - Google OPAL로 여러 AI를 하나의 회사처럼 운영
+   - 콘텐츠 자동 생성 에이전트 만들기
+   
+3. **Step 3: 바이브코딩** (/vibe-coding) - 150,000원
+   - 코딩 몰라도 AI에게 말로 설명하면 코드가 완성
+   - 나만의 서비스 직접 개발하기
+   
+4. **Step 4: 1인 기업 만들기** (/solo-business) - 준비중
+   - 사업자등록, 세금, 정부지원금
+   - 1인 기업가에서 CEO로
+
+### 무료 기초 강의
+- **기초 체력 훈련소** (/ai-gym) - 바이브코딩 전 Python 기초
+- **ChatGPT의 정석** (/chatgpt-course) - ChatGPT 완전 입문
+- **AI 코딩 완전정복** (/ai-coding-course) - GitHub Copilot, Claude 등
+- **Google AI 완전정복** (/google-ai-course) - Gemini, VEO 등
+- **AI 비즈니스 전략** (/ai-business-course) - AI로 수익 창출 전략
+- **AI 교육의 격차들** (/ai-education-documentary) - 다큐멘터리
+
+### 무료 수익화 강의
+- **40대+ 직장인 ChatGPT 프롬프트 100선** (/chatgpt-prompts-40plus)
+- **AI & Money Prompt Vault** (/ai-money-master-prompts)
+- **AI 이미지 생성 프롬프트 10선** (/ai-money-image-prompts)
+- **AI 비디오 생성 프롬프트 10선** (/ai-money-video-prompts)
+- **AI 캐릭터 영상 생성** (/ai-character-video-prompts)
+- **AI 건물주 되기 프리뷰** (/ai-landlord-preview)
+
+## 🔴 라이브 안내
+- **라이브 허브**: /live 에서 모든 라이브 일정 확인
+- **무료 라이브**: /live/free
+- **Step별 라이브**: /live/step1, /live/step2 등
+
+## 👤 계정 관련
+- **로그인**: /login
+- **회원가입**: /signup
+- **내 대시보드**: /dashboard
+- **비밀번호 찾기**: /forgot-password
+
+## 💬 커뮤니티
+- **커뮤니티 허브**: /community
+- **Step별 커뮤니티**: /community/step1 등
+
+## 📞 문의
+- **FAQ**: /faq
+- **문의하기**: /contact
+- **이메일**: jay@connexionai.kr
+- **환불 정책**: /refund-policy
+
+## 🎯 추천 학습 경로
+1. **완전 초보자**: 기초 체력 훈련소 → ChatGPT의 정석 → Step 1
+2. **AI 이미 써본 분**: Step 1 → Step 2 → Step 3
+3. **코딩에 관심**: 기초 체력 훈련소 → AI 코딩 완전정복 → Step 3
+4. **빠른 수익화**: Step 1 → Step 2
+
+## 💡 응답 규칙 (매우 중요!)
+1. 항상 친절하고 따뜻하게 대화하세요
+2. 이모지를 적절히 사용하세요 (너무 많지 않게)
+3. 경로를 안내할 때는 정확한 URL을 알려주세요
+4. 모르는 내용은 솔직히 "잘 모르겠어요"라고 하고, 문의하기(/contact)를 안내하세요
+5. 대화는 한국어로 합니다
+6. 짧고 명확하게 답변하세요 (3-4문장 이내)
+7. 질문에 따라 적절한 강의나 페이지를 추천하세요
+
+## ⚠️ 포맷팅 규칙 (반드시 지키세요!)
+절대로 마크다운 문법을 사용하지 마세요! 일반 텍스트로만 답변하세요.
+금지: 별표(볼드/이탤릭), 샵(헤딩), 대시(리스트), 코드블록, 링크문법
+항상 일반 텍스트로만 답변!
+
+## 🚫 절대 하지 말아야 할 것 (매우 중요!)
+- **절대 지어서 답변하지 않기** - 위에 명시된 정보만 사용하세요
+- **없는 강의나 기능을 만들어내지 않기** - 위 목록에 없는 강의는 없다고 하세요
+- **가격을 추측하지 않기** - 위에 명시된 가격만 안내하세요
+- 결제 정보나 개인정보 요청하지 않기
+- 사이트에 없는 기능 약속하지 않기
+- 다른 경쟁 서비스 추천하지 않기
+
+## 📧 모르는 질문 대응
+확실하지 않거나 위 정보에 없는 질문은 이렇게 답변하세요:
+"그 부분은 제가 정확히 알지 못해요. 😅 jay@connexionai.kr 로 메일 주시면 자세히 안내해드릴게요!"
+`;
+
+interface CityGuideProps {
+  isOpenExternal?: boolean;
+  onClose?: () => void;
+  inline?: boolean; // 인라인 모드 (히어로 섹션에 직접 표시)
+}
+
+const CityGuide: React.FC<CityGuideProps> = ({ isOpenExternal, onClose, inline = false }) => {
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [showFloatingButton, setShowFloatingButton] = useState(false);
+  const [userInfo, setUserInfo] = useState<{ email: string; name: string } | null>(null);
+  const [enrolledCourses, setEnrolledCourses] = useState<string[]>([]);
+
+  // 로그인 정보 및 수강 내역 가져오기
+  useEffect(() => {
+    const loadUserData = async () => {
+      const storedUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
+      if (storedUserInfo) {
+        try {
+          const parsedUser = JSON.parse(storedUserInfo);
+          setUserInfo({ email: parsedUser.email, name: parsedUser.name || parsedUser.email.split('@')[0] });
+          
+          // 수강 내역 가져오기
+          const courses = await AzureTableService.getUserEnrollmentsByEmail(parsedUser.email);
+          const courseNames = courses.map(c => c.title || `Course ${c.courseId}`);
+          setEnrolledCourses(courseNames);
+        } catch (error) {
+          console.error('사용자 정보 로드 실패:', error);
+        }
+      }
+    };
+    loadUserData();
+  }, []);
+
+  // 텍스트에서 경로(/로 시작)를 클릭 가능한 링크로 변환
+  const renderMessageWithLinks = (text: string) => {
+    // /경로 패턴 찾기 (괄호 안에 있거나 단독으로 있는 경우)
+    const linkRegex = /\(?(\/[a-z0-9-]+)\)?/gi;
+    const parts = text.split(linkRegex);
+    
+    return parts.map((part, index) => {
+      if (part && part.startsWith('/')) {
+        return (
+          <span
+            key={index}
+            onClick={() => {
+              navigate(part);
+              setIsOpen(false);
+            }}
+            style={{
+              color: '#ffd700',
+              textDecoration: 'underline',
+              cursor: 'pointer',
+              fontWeight: '600'
+            }}
+          >
+            {part}
+          </span>
+        );
+      }
+      // 괄호 제거
+      return part.replace(/[()]/g, '');
+    });
+  };
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      role: 'assistant',
+      content: '안녕하세요! AI City에 오신 걸 환영해요 🏙️✨\n\n저는 여러분의 AI 여정을 도와드릴 안내원이에요.\n\n"뭐부터 시작해야 할지 모르겠어요" 하셔도 괜찮아요!\n편하게 질문해주시면 딱 맞는 길을 안내해드릴게요 😊'
+    }
+  ]);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [sessionId] = useState(() => generateSessionId());
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // 외부에서 열기 제어
+  useEffect(() => {
+    if (isOpenExternal !== undefined) {
+      setIsOpen(isOpenExternal);
+    }
+  }, [isOpenExternal]);
+
+  // 스크롤 감지 - 히어로 섹션 지나면 플로팅 버튼 표시
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      setShowFloatingButton(scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleClose = () => {
+    setIsOpen(false);
+    onClose?.();
+  };
+
+  // 채팅창 내부에서만 스크롤 (페이지 스크롤 방지)
+  const scrollToBottom = () => {
+    if (messagesEndRef.current && messagesEndRef.current.parentElement) {
+      const container = messagesEndRef.current.parentElement;
+      container.scrollTop = container.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
+
+  const handleSend = async () => {
+    if (!input.trim() || isLoading) return;
+
+    const userMessage = input.trim();
+    setInput('');
+    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+    setIsLoading(true);
+
+    try {
+      // 대화 히스토리 구성
+      const conversationHistory = messages.map(msg => ({
+        role: msg.role as 'user' | 'assistant',
+        content: msg.content
+      }));
+
+      // 개인화된 컨텍스트 생성
+      let personalizedContext = SITE_CONTEXT;
+      if (userInfo) {
+        personalizedContext += `\n\n## 👤 현재 사용자 정보 (로그인됨)
+- 이름: ${userInfo.name}
+- 수강 중인 강의: ${enrolledCourses.length > 0 ? enrolledCourses.join(', ') : '없음'}
+
+이 정보를 바탕으로 개인화된 추천을 해주세요. 예를 들어:
+- 이미 수강한 강의는 다시 추천하지 마세요
+- 수강 내역을 보고 다음 단계를 추천해주세요
+- "내 수강 현황 알려줘" 같은 질문에 정확히 답변해주세요`;
+      }
+
+      const rawResponse = await callGemini([
+        { role: 'system', content: personalizedContext },
+        ...conversationHistory,
+        { role: 'user', content: userMessage }
+      ]);
+
+      // 마크다운 제거하여 깔끔한 텍스트만 표시
+      const cleanResponse = removeMarkdown(rawResponse);
+
+      setMessages(prev => [...prev, { role: 'assistant', content: cleanResponse }]);
+      
+      // 📝 대화 로그 Azure Table에 저장
+      saveChatLogToAzure(userMessage, cleanResponse, sessionId, userInfo?.email);
+    } catch (error) {
+      console.error('CityGuide 오류:', error);
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: '죄송해요, 일시적인 오류가 발생했어요. 😅\n\n잠시 후 다시 시도해주시거나, /contact 에서 직접 문의해주세요!'
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  // 인라인 모드 - 히어로 섹션에 직접 표시
+  if (inline) {
+    return (
+      <div style={{
+        flex: 1,
+        minWidth: '300px',
+        maxWidth: '500px',
+        background: 'rgba(255,255,255,0.05)',
+        borderRadius: '16px',
+        border: '1px solid rgba(255,215,0,0.3)',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        maxHeight: '400px'
+      }}>
+        {/* 메시지 영역 */}
+        <div style={{
+          flex: 1,
+          overflowY: 'auto',
+          padding: '16px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px'
+        }}>
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              style={{
+                display: 'flex',
+                justifyContent: message.role === 'user' ? 'flex-end' : 'flex-start'
+              }}
+            >
+              <div style={{
+                maxWidth: '85%',
+                padding: '10px 14px',
+                borderRadius: message.role === 'user' ? '14px 14px 4px 14px' : '14px 14px 14px 4px',
+                background: message.role === 'user'
+                  ? 'linear-gradient(135deg, #ffd700, #ffb347)'
+                  : 'rgba(255,255,255,0.1)',
+                color: message.role === 'user' ? '#1a1a2e' : '#fff',
+                fontSize: '0.9rem',
+                lineHeight: '1.5'
+              }}>
+                {message.role === 'assistant' ? renderMessageWithLinks(message.content) : message.content}
+              </div>
+            </div>
+          ))}
+          {isLoading && (
+            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem' }}>
+              생각 중...
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* 입력 */}
+        <div style={{
+          padding: '12px',
+          borderTop: '1px solid rgba(255,255,255,0.1)',
+          display: 'flex',
+          gap: '10px'
+        }}>
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="질문을 입력하세요..."
+            disabled={isLoading}
+            style={{
+              flex: 1,
+              padding: '10px 14px',
+              borderRadius: '20px',
+              background: 'rgba(255,255,255,0.1)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              color: '#fff',
+              fontSize: '0.9rem',
+              outline: 'none'
+            }}
+          />
+          <button
+            onClick={handleSend}
+            disabled={!input.trim() || isLoading}
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              background: input.trim() ? 'linear-gradient(135deg, #ffd700, #f59e0b)' : 'rgba(255,255,255,0.1)',
+              border: 'none',
+              cursor: input.trim() ? 'pointer' : 'not-allowed',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <Send size={16} color={input.trim() ? '#1a1a2e' : 'rgba(255,255,255,0.3)'} />
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {/* 우측 하단 플로팅 버튼 - 스크롤 시에만 표시 */}
+      {!isOpen && showFloatingButton && (
+        <button
+          onClick={() => setIsOpen(true)}
+          style={{
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            zIndex: 9999,
+            background: 'linear-gradient(135deg, #ffd700, #f59e0b)',
+            border: 'none',
+            borderRadius: '50%',
+            width: '60px',
+            height: '60px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 20px rgba(255,215,0,0.4), 0 8px 32px rgba(0,0,0,0.3)',
+            transition: 'all 0.3s ease',
+            animation: 'fadeInUp 0.3s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.1)';
+            e.currentTarget.style.boxShadow = '0 6px 28px rgba(255,215,0,0.5), 0 12px 40px rgba(0,0,0,0.4)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
+            e.currentTarget.style.boxShadow = '0 4px 20px rgba(255,215,0,0.4), 0 8px 32px rgba(0,0,0,0.3)';
+          }}
+          aria-label="안내원에게 물어보기"
+        >
+          <img 
+            src={`${process.env.PUBLIC_URL}/images/main/aian.jpeg`}
+            alt="안내원"
+            style={{
+              width: '48px',
+              height: '48px',
+              borderRadius: '50%',
+              objectFit: 'cover'
+            }}
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+              const parent = e.currentTarget.parentElement;
+              if (parent) {
+                parent.innerHTML = '<span style="font-size:28px">💬</span>';
+              }
+            }}
+          />
+        </button>
+      )}
+
+      {/* 채팅창 - 화면 중앙 모달 (Portal로 body에 렌더링) */}
+      {isOpen && ReactDOM.createPortal(
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: 99999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          {/* 배경 오버레이 */}
+          <div
+            onClick={handleClose}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              background: 'rgba(0,0,0,0.7)',
+              backdropFilter: 'blur(4px)'
+            }}
+          />
+          {/* 모달 본체 */}
+          <div
+            className="city-guide-modal"
+            style={{
+              position: 'relative',
+              width: '420px',
+              maxWidth: 'calc(100vw - 32px)',
+              height: '560px',
+              maxHeight: 'calc(100vh - 100px)',
+              background: 'linear-gradient(180deg, #1a1a2e 0%, #0d0d1a 100%)',
+              borderRadius: '24px',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.6), 0 0 0 2px rgba(255,215,0,0.4), 0 0 60px rgba(255,215,0,0.15)',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              animation: 'fadeInScale 0.25s ease'
+            }}
+          >
+          {/* 헤더 - 도시 안내원 (골드) */}
+          <div
+            className="city-guide-modal-header"
+            style={{
+              padding: '16px 20px',
+              background: 'linear-gradient(135deg, rgba(255,215,0,0.12) 0%, rgba(245,158,11,0.08) 100%)',
+              borderBottom: '1px solid rgba(255,215,0,0.2)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '14px'
+            }}
+          >
+            <img 
+              src={`${process.env.PUBLIC_URL}/images/main/aian.jpeg`}
+              alt="도시 안내원"
+              style={{
+                width: '52px',
+                height: '52px',
+                borderRadius: '14px',
+                objectFit: 'cover',
+                border: '2px solid rgba(255,215,0,0.5)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+              }}
+              onError={(e) => {
+                // 이미지 없으면 이모지 폴백
+                const parent = e.currentTarget.parentElement;
+                if (parent) {
+                  e.currentTarget.style.display = 'none';
+                  const fallback = document.createElement('div');
+                  fallback.style.cssText = 'width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#ffd700,#f59e0b);display:flex;align-items:center;justify-content:center;font-size:28px;';
+                  fallback.textContent = '🏙️';
+                  parent.insertBefore(fallback, e.currentTarget);
+                }
+              }}
+            />
+            <div>
+              <div style={{ color: '#ffd700', fontWeight: '700', fontSize: '1.05rem' }}>
+                🏙️ AI City 안내원
+              </div>
+              <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.8rem' }}>
+                도시에 오신 것을 환영합니다!
+              </div>
+            </div>
+            <button
+              onClick={handleClose}
+              style={{
+                marginLeft: 'auto',
+                background: 'rgba(255,255,255,0.1)',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '8px',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'background 0.2s'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(255,255,255,0.2)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+              }}
+            >
+              <X size={18} color="rgba(255,255,255,0.8)" />
+            </button>
+          </div>
+
+          {/* 메시지 영역 */}
+          <div
+            className="city-guide-modal-messages"
+            style={{
+              flex: 1,
+              overflowY: 'auto',
+              padding: '16px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px'
+            }}
+          >
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                style={{
+                  display: 'flex',
+                  justifyContent: message.role === 'user' ? 'flex-end' : 'flex-start'
+                }}
+              >
+                <div
+                  style={{
+                    maxWidth: '85%',
+                    padding: '12px 16px',
+                    borderRadius: message.role === 'user' 
+                      ? '18px 18px 4px 18px' 
+                      : '18px 18px 18px 4px',
+                    background: message.role === 'user'
+                      ? 'linear-gradient(135deg, #ffd700, #ffb347)'
+                      : 'rgba(255,255,255,0.08)',
+                    color: message.role === 'user' ? '#1a1a2e' : '#fff',
+                    fontSize: '0.9rem',
+                    lineHeight: '1.5',
+                    whiteSpace: 'pre-wrap',
+                    wordBreak: 'break-word'
+                  }}
+                >
+                  {message.role === 'assistant' ? renderMessageWithLinks(message.content) : message.content}
+                </div>
+              </div>
+            ))}
+
+            {isLoading && (
+              <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <div
+                  style={{
+                    padding: '12px 16px',
+                    borderRadius: '18px 18px 18px 4px',
+                    background: 'rgba(255,255,255,0.08)',
+                    color: 'rgba(255,255,255,0.6)'
+                  }}
+                >
+                  <div style={{ display: 'flex', gap: '4px' }}>
+                    <span style={{ animation: 'bounce 1s infinite' }}>•</span>
+                    <span style={{ animation: 'bounce 1s infinite 0.2s' }}>•</span>
+                    <span style={{ animation: 'bounce 1s infinite 0.4s' }}>•</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* 입력 영역 */}
+          <div
+            className="city-guide-modal-input"
+            style={{
+              padding: '12px 16px',
+              borderTop: '1px solid rgba(255,255,255,0.1)',
+              display: 'flex',
+              gap: '12px',
+              alignItems: 'center'
+            }}
+          >
+            <input
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="질문을 입력하세요..."
+              disabled={isLoading}
+              style={{
+                flex: 1,
+                padding: '12px 16px',
+                borderRadius: '24px',
+                background: 'rgba(255,255,255,0.08)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                color: '#fff',
+                fontSize: '0.9rem',
+                outline: 'none',
+                transition: 'border-color 0.2s'
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(255,215,0,0.5)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+              }}
+            />
+            <button
+              onClick={handleSend}
+              disabled={!input.trim() || isLoading}
+              style={{
+                width: '44px',
+                height: '44px',
+                borderRadius: '50%',
+                background: input.trim() && !isLoading
+                  ? 'linear-gradient(135deg, #ffd700, #f59e0b)'
+                  : 'rgba(255,255,255,0.1)',
+                border: 'none',
+                cursor: input.trim() && !isLoading ? 'pointer' : 'not-allowed',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.2s'
+              }}
+            >
+              <Send size={18} color={input.trim() && !isLoading ? '#1a1a2e' : 'rgba(255,255,255,0.3)'} />
+            </button>
+          </div>
+        </div>
+        </div>,
+        document.body
+      )}
+
+      {/* CSS 애니메이션 */}
+      <style>{`
+        @keyframes fadeInScale {
+          from {
+            opacity: 0;
+            transform: scale(0.9);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes bounce {
+          0%, 60%, 100% {
+            transform: translateY(0);
+          }
+          30% {
+            transform: translateY(-4px);
+          }
+        }
+      `}</style>
+    </>
+  );
+};
+
+export default CityGuide;
+

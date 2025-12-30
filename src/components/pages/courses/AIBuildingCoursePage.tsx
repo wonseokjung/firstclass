@@ -2238,7 +2238,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   fontSize: 'clamp(0.9rem, 2vw, 1rem)',
                   opacity: '0.9'
                 }}>
-                  AI 크리에이터 비즈니스 마인드 - 단순히 AI로 콘텐츠를 만드는 것이 아니라, 어떻게 수익화하고 사업화할지 준비하는 단계
+                  AI 1인 기업가 비즈니스 마인드 - 단순히 AI로 콘텐츠를 만드는 것이 아니라, 어떻게 수익화하고 사업화할지 준비하는 단계
                 </p>
               </div>
 

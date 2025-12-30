@@ -513,7 +513,7 @@ const AIMoneyImagePromptsPage: React.FC<AIMoneyImagePromptsPageProps> = ({ onBac
             🔥 지금 바로 이미지를 생성해 보세요
           </h2>
           <p style={{ lineHeight: 1.7, opacity: 0.9 }}>
-            이 10개의 프롬프트만 있으면 썸네일 디자이너, 제품 사진작가, 광고 크리에이터가 모두 손 안에 들어옵니다.<br />
+            이 10개의 프롬프트만 있으면 썸네일 디자이너, 제품 사진작가, 광고 전문가가 모두 손 안에 들어옵니다.<br />
             필요한 프롬프트를 복사해서 Gemini, ChatGPT, Midjourney에 바로 붙여넣어 보세요.<br />
             결과가 마음에 들지 않으면 "더 밝게 해줘", "글씨를 더 키워줘" 같은 추가 요청으로 완벽하게 다듬을 수 있습니다.
           </p>

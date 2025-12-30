@@ -83,7 +83,7 @@ const STEP_INFO: { [key: string]: StepInfo } = {
     id: 'step4',
     name: 'Step 4',
     title: '1인 기업 만들기',
-    description: '크리에이터에서 CEO로! 사업자등록, 세금, 정부지원금까지.',
+    description: '1인 기업가에서 CEO로! 사업자등록, 세금, 정부지원금까지.',
     dayOfWeek: '금요일',
     time: '오후 8:00',
     courseId: 1004,

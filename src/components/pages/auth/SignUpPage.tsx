@@ -301,7 +301,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onBack }) => {
           <div className="auth-form-wrapper">
             <div className="auth-header">
               <h1 className="auth-title">회원가입</h1>
-              <p className="auth-subtitle">AI 크리에이터 여정을 시작하세요</p>
+              <p className="auth-subtitle">AI 1인 기업가 여정을 시작하세요</p>
             </div>
 
             <form onSubmit={handleSubmit} className="auth-form">

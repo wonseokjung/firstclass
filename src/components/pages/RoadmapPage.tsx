@@ -75,7 +75,7 @@ const RoadmapPage: React.FC = () => {
       title: '1인 기업 만들기',
       subtitle: 'CEO 되기',
       icon: <Building2 size={32} />,
-      description: '크리에이터에서 CEO로',
+      description: '1인 기업가에서 CEO로',
       details: '콘텐츠를 만드는 사람에서 사업을 운영하는 사람이 됩니다. 사업자등록, 세금, 정부지원금 활용까지.',
       price: '준비중',
       priceType: '',
@@ -88,7 +88,7 @@ const RoadmapPage: React.FC = () => {
         '🤝 협업 네트워크 구축',
       ],
       highlights: [
-        '콘텐츠 크리에이터에서 CEO로',
+        '콘텐츠 1인 기업가에서 CEO로',
         '안정적인 수익 구조 완성',
         'Step 3에서 만든 서비스로 사업화!'
       ],
@@ -119,7 +119,7 @@ const RoadmapPage: React.FC = () => {
           marginBottom: '24px'
         }}>
           <span style={{ color: '#000', fontWeight: '700', fontSize: '0.9rem' }}>
-            🚀 AI 크리에이터 로드맵
+            🚀 AI 1인 기업가 로드맵
           </span>
         </div>
         
@@ -130,7 +130,7 @@ const RoadmapPage: React.FC = () => {
           marginBottom: '20px',
           lineHeight: '1.2'
         }}>
-          AI 크리에이터가 되는 여정<br />
+          AI 1인 기업가가 되는 여정<br />
           <span style={{ color: '#e5c100' }}>교육 + 도구로 함께합니다</span>
         </h1>
         
@@ -142,7 +142,7 @@ const RoadmapPage: React.FC = () => {
           lineHeight: '1.7'
         }}>
           기술과 장비가 없어도 괜찮습니다.<br />
-          <strong style={{ color: '#fff' }}>AI와 함께라면 누구나 크리에이터</strong>가 될 수 있습니다.
+          <strong style={{ color: '#fff' }}>AI와 함께라면 누구나 1인 기업가</strong>가 될 수 있습니다.
         </p>
 
         {/* Progress Bar */}
@@ -460,7 +460,7 @@ const RoadmapPage: React.FC = () => {
           fontWeight: '800',
           marginBottom: '16px'
         }}>
-          AI 크리에이터가 되고 싶다면?
+          AI 1인 기업가가 되고 싶다면?
         </h2>
         <p style={{
           color: '#94a3b8',
@@ -487,7 +487,7 @@ const RoadmapPage: React.FC = () => {
             boxShadow: '0 10px 40px rgba(59, 130, 246, 0.3)'
           }}
         >
-          🚀 AI 크리에이터 시작하기
+          🚀 AI 1인 기업가 시작하기
           <ArrowRight size={22} />
         </button>
       </section>

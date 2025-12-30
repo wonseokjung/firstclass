@@ -162,7 +162,7 @@ const googleAICourse = {
           {
             id: 1,
             type: 'true-false' as const,
-            question: 'AI를 활용하면 1인 크리에이터도 고품질 콘텐츠를 제작할 수 있습니다.',
+            question: 'AI를 활용하면 1인 기업가도 고품질 콘텐츠를 제작할 수 있습니다.',
             correctAnswer: 1
           }
         ]

@@ -6,21 +6,24 @@ import PaymentComponent from './payment/PaymentComponent';
 import ComingSoonModal from '../modals/ComingSoonModal';
 import AzureTableService from '../../services/azureTableService';
 import NavigationBar from '../common/NavigationBar';
+import CityGuide from '../common/CityGuide';
+
+// 안내원 채팅 상태 관리를 위한 state
 
 // SEO 메타 태그 업데이트 함수
 const updateMetaTags = () => {
-  document.title = '🚀 AI City Builders - AI 크리에이터 양성 플랫폼 | 교육 + 도구';
+  document.title = '🚀 AI City Builders - AI 1인 기업가 양성 플랫폼 | 교육 + 도구';
   const metaDescription = document.querySelector('meta[name="description"]');
   if (metaDescription) {
-    metaDescription.setAttribute('content', 'AI City Builders - 기술이 없어도 AI로 콘텐츠를 만들고 수익화하세요! New Class of AI Creators 양성 플랫폼. 교육과 도구를 제공합니다.');
+    metaDescription.setAttribute('content', 'AI City Builders - AI 수익화의 정석! 인공지능 멘토 제이와 함께 4단계 로드맵으로 AI 1인 기업가가 되어보세요!');
   }
   const ogTitle = document.querySelector('meta[property="og:title"]');
   if (ogTitle) {
-    ogTitle.setAttribute('content', '🚀 AI City Builders - AI 크리에이터 양성 플랫폼');
+    ogTitle.setAttribute('content', '🚀 AI City Builders - AI 1인 기업가 양성 플랫폼');
   }
   const ogDescription = document.querySelector('meta[property="og:description"]');
   if (ogDescription) {
-    ogDescription.setAttribute('content', '기술과 장비가 없어도 AI로 콘텐츠를 만들고 수익화하세요! AI 멘토 제이와 함께하는 AI 크리에이터 양성 교육 + 도구 플랫폼');
+    ogDescription.setAttribute('content', 'AI 수익화의 정석! 인공지능 멘토 제이와 함께 4단계 로드맵으로 AI 1인 기업가가 되어보세요!');
   }
 };
 
@@ -75,8 +78,8 @@ const premiumClasses: Course[] = [
   // Step 3: 바이브코딩 - 수익화 확장의 첫걸음
   { id: 1003, instructor: '정원석 (AI 멘토 제이)', title: 'Step 3: 바이브코딩', subtitle: '💻 수익화 확장의 첫걸음', description: '🚀 코딩 몰라도 OK! AI에게 말로 설명하면 코드가 완성됩니다. 나만의 서비스를 직접 개발하세요!', image: `${process.env.PUBLIC_URL}/images/main/3.jpeg`, isNew: true, category: 'Premium', path: '/vibe-coding', isPremium: true, launchDate: '오픈 예정', price: 150000, originalPrice: 150000, isComingSoon: false },
 
-  // Step 4: 1인 기업 만들기 - 크리에이터에서 CEO로
-  { id: 1004, instructor: '정원석 (AI 멘토 제이)', title: 'Step 4: 1인 기업 만들기', subtitle: '👑 크리에이터에서 CEO로', description: '🏆 사업자등록, 세금, 정부지원금까지! 1인 콘텐츠 기업을 완성하는 단계', image: `${process.env.PUBLIC_URL}/images/main/4.jpeg`, isNew: true, category: 'Premium', path: '/solo-business', isPremium: true, launchDate: '준비중', price: 0, originalPrice: 0, isComingSoon: false }
+  // Step 4: 1인 기업 만들기 - 1인 기업가에서 CEO로
+  { id: 1004, instructor: '정원석 (AI 멘토 제이)', title: 'Step 4: 1인 기업 만들기', subtitle: '👑 1인 기업가에서 CEO로', description: '🏆 사업자등록, 세금, 정부지원금까지! 1인 콘텐츠 기업을 완성하는 단계', image: `${process.env.PUBLIC_URL}/images/main/4.jpeg`, isNew: true, category: 'Premium', path: '/solo-business', isPremium: true, launchDate: '준비중', price: 0, originalPrice: 0, isComingSoon: false }
 ];
 
 // ⭐️ onCourseSelect 속성 제거됨
@@ -98,6 +101,65 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
   const [userInfo, setUserInfo] = useState<any>(null);
   const [enrolledCourses, setEnrolledCourses] = useState<Set<number>>(new Set());
   const [isLoadingEnrollments, setIsLoadingEnrollments] = useState(true);
+  const [isCityGuideOpen, setIsCityGuideOpen] = useState(false);
+  const [announcement, setAnnouncement] = useState<string>('');
+
+  // 실시간 공지사항 생성 (10분마다)
+  useEffect(() => {
+    const generateAnnouncement = async () => {
+      const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
+      if (!apiKey) return;
+
+      const today = new Date();
+      const hour = today.getHours();
+      const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][today.getDay()];
+      
+      const context = `
+현재 시간: ${today.toLocaleString('ko-KR')} (${dayOfWeek}요일)
+AI City Builders 사이트 정보:
+- 매주 화요일, 목요일 저녁 8시 라이브 세션
+- Step 1: AI 건물주 되기 - 얼리버드 45,000원 (곧 정가 95,000원으로)
+- Step 2: AI 에이전트 비기너 - 95,000원
+- Step 3: 바이브코딩 - 오픈 예정
+- 무료 강의: 기초 체력 훈련소, ChatGPT의 정석 등
+- 커뮤니티: 카카오톡 오픈채팅
+
+위 정보를 바탕으로 지금 시간대에 맞는 짧은 공지사항을 1개만 생성해주세요.
+- 20~40자 이내로 짧게
+- 이모지 1개만 사용
+- 라이브 시간이 가까우면 라이브 안내
+- 얼리버드 마감 임박 등 긴급감 있는 메시지
+- 시간대별로 다른 메시지 (오전: 좋은 아침, 저녁: 라이브 등)
+마크다운 절대 금지. 일반 텍스트만.
+`;
+
+      try {
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ role: 'user', parts: [{ text: context }] }],
+              generationConfig: { temperature: 0.9, maxOutputTokens: 100 }
+            })
+          }
+        );
+        const data = await response.json();
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        if (text) setAnnouncement(text.trim());
+      } catch (error) {
+        console.error('공지 생성 실패:', error);
+      }
+    };
+
+    // 처음 로드 시 생성
+    generateAnnouncement();
+    
+    // 10분마다 새로 생성
+    const interval = setInterval(generateAnnouncement, 10 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     updateMetaTags();
@@ -270,22 +332,211 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
     <div className="masterclass-container">
       <NavigationBar onFAQClick={onFAQClick} onLoginClick={onLoginClick} onSignUpClick={onSignUpClick} />
 
+      {/* 🏙️ AI City 웰컴 히어로 섹션 - 네이비 + 골드 */}
+      <section style={{
+        position: 'relative',
+        padding: '40px 24px 40px',
+        background: 'linear-gradient(180deg, #0a0a1a 0%, #0d1527 40%, #101d30 70%, #0d1527 100%)',
+        textAlign: 'center',
+        overflow: 'hidden'
+      }}>
+        {/* 배경 그라데이션 효과 - 골드 글로우 */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'radial-gradient(ellipse at 50% 30%, rgba(255,215,0,0.08) 0%, transparent 50%), radial-gradient(ellipse at 30% 80%, rgba(255,215,0,0.05) 0%, transparent 40%), radial-gradient(ellipse at 70% 80%, rgba(255,215,0,0.05) 0%, transparent 40%)',
+          pointerEvents: 'none'
+        }} />
+
+        {/* 웰컴 메시지 */}
+        <h1 style={{
+          position: 'relative',
+          fontSize: 'clamp(1.6rem, 4.5vw, 2.5rem)',
+          fontWeight: '800',
+          color: '#ffffff',
+          marginBottom: '8px',
+          lineHeight: '1.3'
+        }}>
+          <span style={{
+            background: 'linear-gradient(135deg, #ffd700, #f59e0b)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text'
+          }}>AI City</span>에 오신 것을 환영합니다
+        </h1>
+        
+        <p style={{
+          position: 'relative',
+          fontSize: 'clamp(0.9rem, 2.2vw, 1.1rem)',
+          color: 'rgba(255,255,255,0.7)',
+          maxWidth: '550px',
+          margin: '0 auto 28px',
+          lineHeight: '1.5'
+        }}>
+          AI 수익화의 정석! 인공지능 멘토 제이와 함께<br/>
+          4단계 로드맵으로 AI 1인 기업가가 되어보세요! 🚀
+        </p>
+
+
+        {/* 안내원 이미지 + 말풍선 + 버튼 */}
+        <div className="concierge-container" style={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          {/* 안내원 + 말풍선 */}
+          <div style={{
+            position: 'relative',
+            display: 'inline-block'
+          }}>
+            <img 
+              className="concierge-image"
+              src={`${process.env.PUBLIC_URL}/images/main/aian.jpeg`}
+              alt="AI City 안내원"
+              onClick={() => setIsCityGuideOpen(true)}
+              style={{
+                width: '100%',
+                maxWidth: '420px',
+                height: 'auto',
+                borderRadius: '16px',
+                cursor: 'pointer',
+                boxShadow: '0 8px 30px rgba(0,0,0,0.4)',
+                display: 'block'
+              }}
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            />
+            
+            {/* 말풍선 - PC: 옆 */}
+            {announcement && (
+              <div className="announcement-bubble-pc" style={{
+                position: 'absolute',
+                top: '20px',
+                right: '-20px',
+                transform: 'translateX(100%)',
+                background: '#fff',
+                borderRadius: '16px 16px 16px 4px',
+                padding: '14px 18px',
+                maxWidth: '240px',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+                animation: 'fadeIn 0.5s ease'
+              }}>
+                <div style={{
+                  position: 'absolute',
+                  left: '-8px',
+                  top: '20px',
+                  width: 0,
+                  height: 0,
+                  borderTop: '8px solid transparent',
+                  borderBottom: '8px solid transparent',
+                  borderRight: '8px solid #fff'
+                }} />
+                <p style={{
+                  color: '#1a1a2e',
+                  fontSize: '0.85rem',
+                  margin: 0,
+                  lineHeight: '1.5'
+                }}>
+                  <span style={{ color: '#f59e0b', fontWeight: '700' }}>AI City 안내원 : </span>
+                  {announcement}
+                </p>
+              </div>
+            )}
+          </div>
+          
+          {/* 말풍선 - 모바일: 아래 */}
+          {announcement && (
+            <div className="announcement-bubble-mobile" style={{
+              marginTop: '16px',
+              background: '#fff',
+              borderRadius: '16px',
+              padding: '14px 18px',
+              maxWidth: '320px',
+              width: '100%',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+              animation: 'fadeIn 0.5s ease',
+              position: 'relative',
+              display: 'none'
+            }}>
+              {/* 위로 향하는 꼬리 */}
+              <div style={{
+                position: 'absolute',
+                top: '-10px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: 0,
+                height: 0,
+                borderLeft: '10px solid transparent',
+                borderRight: '10px solid transparent',
+                borderBottom: '10px solid #fff'
+              }} />
+              <p style={{
+                color: '#1a1a2e',
+                fontSize: '0.9rem',
+                margin: 0,
+                lineHeight: '1.5',
+                textAlign: 'center'
+              }}>
+                <span style={{ color: '#f59e0b', fontWeight: '700' }}>AI City 안내원 : </span>
+                {announcement}
+              </p>
+            </div>
+          )}
+          
+          <button
+            onClick={() => setIsCityGuideOpen(true)}
+            style={{
+              marginTop: '24px',
+              background: 'linear-gradient(135deg, #ffd700, #f59e0b)',
+              border: 'none',
+              borderRadius: '24px',
+              padding: '14px 32px',
+              color: '#1a1a2e',
+              fontWeight: '700',
+              fontSize: '1rem',
+              cursor: 'pointer',
+              boxShadow: '0 4px 16px rgba(255,215,0,0.3)'
+            }}
+          >
+            💬 안내원과 대화하기
+          </button>
+        </div>
+
+        {/* 애니메이션 */}
+        <style>{`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
+
+      </section>
+
+      {/* 모달 채팅 - 섹션 밖에 배치 */}
+      <CityGuide 
+        isOpenExternal={isCityGuideOpen} 
+        onClose={() => setIsCityGuideOpen(false)} 
+      />
+
       <main className="masterclass-main">
-        {/* 프리미엄 강의 - 최상단 */}
+        {/* 프리미엄 강의 - 4단계 로드맵 */}
         <section className="masterclass-section">
           <div className="section-header-mc">
             <h2 className="section-title-mc">
               <span className="highlight-category" style={{
-                background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
+                background: 'linear-gradient(135deg, #ffd700, #f59e0b)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
                 fontWeight: '800'
               }}>
-                프리미엄 강의
+                🏙️ AI City 로드맵
               </span>
-              <div style={{ fontSize: '0.8em', marginTop: '8px', fontWeight: '600', color: '#ffffff' }}>
-                AI 크리에이터가 되어 콘텐츠로 수익을 창출하세요
+              <div style={{ fontSize: '0.8em', marginTop: '8px', fontWeight: '600', color: 'rgba(255,255,255,0.8)' }}>
+                Step 1부터 차근차근 따라오세요. 당신도 AI 1인 기업가가 됩니다!
               </div>
             </h2>
             <div className="section-nav">
@@ -303,14 +554,17 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
           <div className="section-header-mc">
             <h2 className="section-title-mc">
               <span className="highlight-category" style={{
-                background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
+                background: 'linear-gradient(135deg, #3b82f6, #60a5fa)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
                 fontWeight: '800'
               }}>
-                인공지능 기초 무료 강의
+                🎓 AI 기초 트레이닝 센터
               </span>
+              <div style={{ fontSize: '0.75em', marginTop: '6px', fontWeight: '500', color: 'rgba(255,255,255,0.6)' }}>
+                무료로 AI 기초 체력을 쌓아보세요
+              </div>
             </h2>
             <div className="section-nav">
               <button className="nav-arrow" aria-label="Previous courses" onClick={() => handleGridScroll(1, 'left')}><ChevronLeft size={24} /></button>
@@ -340,12 +594,15 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
           <div className="section-header-mc">
             <h2 className="section-title-mc">
               <span className="highlight-category" style={{
-                background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
+                background: 'linear-gradient(135deg, #f59e0b, #fbbf24)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
                 fontWeight: '800'
-              }}>인공지능 수익화 무료 강의클래스</span>
+              }}>💰 AI 수익화 프롬프트 창고</span>
+              <div style={{ fontSize: '0.75em', marginTop: '6px', fontWeight: '500', color: 'rgba(255,255,255,0.6)' }}>
+                바로 복사해서 사용하는 수익화 프롬프트
+              </div>
             </h2>
             <div className="section-nav">
               <button className="nav-arrow" aria-label="Previous Money courses" onClick={() => handleGridScroll(2, 'left')}><ChevronLeft size={24} /></button>
@@ -442,6 +699,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
         onClose={() => setShowComingSoonModal(false)}
         courseTitle={comingSoonCourseTitle}
       />
+
     </div>
   );
 };

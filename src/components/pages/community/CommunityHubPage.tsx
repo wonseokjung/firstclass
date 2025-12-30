@@ -37,7 +37,7 @@ const CommunityHubPage: React.FC = () => {
     {
       step: 1,
       title: 'AI 건물주 되기',
-      subtitle: '새로운 계급의 크리에이터가 되는 첫 시작',
+      subtitle: '새로운 계급의 1인 기업가가 되는 첫 시작',
       icon: '🏠',
       path: '/community/step1',
       courseIds: ['ai-building-course', 'ai-building', '999']
@@ -61,7 +61,7 @@ const CommunityHubPage: React.FC = () => {
     {
       step: 4,
       title: '1인 기업 만들기',
-      subtitle: '크리에이터에서 CEO로',
+      subtitle: '1인 기업가에서 CEO로',
       icon: '🏢',
       path: '/community/step4',
       courseIds: ['solo-business']

@@ -98,7 +98,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
     weeks: [
       {
         title: 'Part 1 (Day 1-5)',
-        subtitle: '🧠 AI 크리에이터 비즈니스 마인드 - 단순히 AI로 콘텐츠를 만드는 것이 아니라, 어떻게 수익화하고 사업화할지 준비하는 단계',
+        subtitle: '🧠 AI 1인 기업가 비즈니스 마인드 - 단순히 AI로 콘텐츠를 만드는 것이 아니라, 어떻게 수익화하고 사업화할지 준비하는 단계',
         days: [
           { 
             day: 1, 

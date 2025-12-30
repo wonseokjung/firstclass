@@ -41,7 +41,7 @@ const clubTiers: ClubTier[] = [
     name: '월 10만원 클럽',
     icon: '💚',
     monthlyIncome: '월 10만원',
-    description: '첫 수익을 달성한 신규 크리에이터',
+    description: '첫 수익을 달성한 신규 1인 기업가',
     benefits: [
       '월 10만원 달성 배지',
       '성공 스토리 공유',
@@ -57,7 +57,7 @@ const clubTiers: ClubTier[] = [
     name: '월 100만원 클럽',
     icon: '💛',
     monthlyIncome: '월 100만원',
-    description: '부업으로 성공한 크리에이터',
+    description: '부업으로 성공한 1인 기업가',
     benefits: [
       '월 100만원 달성 배지',
       '프리미엄 커뮤니티',
@@ -74,7 +74,7 @@ const clubTiers: ClubTier[] = [
     name: '월 300만원 클럽',
     icon: '🧡',
     monthlyIncome: '월 300만원',
-    description: '본업 전환이 가능한 프로 크리에이터',
+    description: '본업 전환이 가능한 프로 1인 기업가',
     benefits: [
       '월 300만원 달성 배지',
       'VIP 커뮤니티 접근',
@@ -123,7 +123,7 @@ const ClubsPage: React.FC<ClubsPageProps> = ({ onBack }) => {
 
   return (
     <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
-      <NavigationBar onBack={onBack} breadcrumbText="AI 크리에이터 클럽" />
+      <NavigationBar onBack={onBack} breadcrumbText="AI 1인 기업가 클럽" />
 
       {/* 히어로 섹션 */}
       <div style={{
@@ -156,7 +156,7 @@ const ClubsPage: React.FC<ClubsPageProps> = ({ onBack }) => {
             fontWeight: '700',
             color: '#ffd60a'
           }}>
-            🏆 AI 크리에이터 클럽
+            🏆 AI 1인 기업가 클럽
           </div>
           
           <h1 style={{
@@ -177,7 +177,7 @@ const ClubsPage: React.FC<ClubsPageProps> = ({ onBack }) => {
             margin: '0 auto 40px'
           }}>
             월 10만원부터 1,000만원 이상까지,<br />
-            AI 콘텐츠로 수익을 만드는 크리에이터들의 실전 커뮤니티입니다.
+            AI 콘텐츠로 수익을 만드는 1인 기업가들의 실전 커뮤니티입니다.
           </p>
 
           <div style={{

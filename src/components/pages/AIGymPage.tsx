@@ -941,7 +941,8 @@ scene3 = client.models.generate_videos(
   const generateWeather = async (code: string) => {
     const cityMatch = code.match(/city\s*=\s*["']([^"']+)["']/);
     const city = cityMatch ? cityMatch[1] : '서울';
-    const prompt = `${city}의 향후 5일간 날씨 예보를 깔끔한 차트로 시각화해주세요.`;
+    const today = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' });
+    const prompt = `오늘은 ${today}입니다. ${city}의 오늘부터 향후 5일간 실시간 날씨 예보를 검색해서 깔끔하고 모던한 차트로 시각화해주세요. 정확한 날짜와 기온, 날씨 아이콘을 포함해주세요.`;
     
     if (!apiKey) return;
     setWeatherLoading(true);
@@ -949,23 +950,54 @@ scene3 = client.models.generate_videos(
     
     try {
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: { responseModalities: ['image', 'text'] }
+            tools: [{ googleSearch: {} }]
           })
         }
       );
       const data = await response.json();
+      console.log('Weather Search Response:', data);
+      
       if (data.candidates?.[0]?.content?.parts) {
+        // 검색 결과에서 텍스트 추출
+        let weatherText = '';
         for (const part of data.candidates[0].content.parts) {
+          if (part.text) {
+            weatherText += part.text;
+          }
+        }
+        
+        if (weatherText) {
+          // 검색 결과를 기반으로 이미지 생성
+          const imageResponse = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent?key=${apiKey}`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: `다음 날씨 정보를 깔끔하고 모던한 인포그래픽 차트로 시각화해주세요:\n\n${weatherText}` }] }],
+                generationConfig: { responseModalities: ['image', 'text'] }
+              })
+            }
+          );
+          const imageData = await imageResponse.json();
+          
+          if (imageData.candidates?.[0]?.content?.parts) {
+            for (const part of imageData.candidates[0].content.parts) {
           if (part.inlineData?.data) {
             setWeatherResult(`data:image/png;base64,${part.inlineData.data}`);
+                setWeatherLoading(false);
             return;
           }
+            }
+          }
+          // 이미지 생성 실패시 텍스트 결과 표시
+          setWeatherResult(weatherText);
         }
       } else if (data.error) {
         setWeatherResult(`error:${data.error.message}`);
@@ -2364,152 +2396,6 @@ for part in response.parts:
                     <div style={{ color: '#f85149' }}>{weatherResult.replace('error:', '')}</div>
                   ) : (
                     <img src={weatherResult} alt="Weather" style={{ maxWidth: '100%', borderRadius: '12px' }} />
-                  )}
-                </OutputBox>
-              )}
-            </SectionCard>
-
-            {/* Step 4: Veo 영상 1개 생성 */}
-            <SectionCard title="영상 1개 생성 (Veo 3)" step={4} emoji="🎥">
-              <p style={{ color: colors.gray, marginBottom: '15px', fontSize: '0.95rem' }}>
-                텍스트로 <strong style={{ color: colors.gold }}>8초 영상</strong>을 만들어요!
-              </p>
-
-              {/* 시각화 */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '15px',
-                marginBottom: '20px',
-                padding: '15px',
-                background: colors.navy,
-                borderRadius: '12px'
-              }}>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.5rem' }}>📝</div>
-                  <div style={{ color: colors.gray, fontSize: '0.7rem' }}>텍스트</div>
-                </div>
-                <div style={{ color: colors.gold, fontSize: '1.5rem' }}>→</div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.5rem' }}>🎬</div>
-                  <div style={{ color: colors.gold, fontSize: '0.7rem', fontWeight: 600 }}>Veo 3</div>
-                </div>
-                <div style={{ color: colors.gold, fontSize: '1.5rem' }}>→</div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.5rem' }}>▶️</div>
-                  <div style={{ color: '#4ecdc4', fontSize: '0.7rem', fontWeight: 600 }}>8초 영상</div>
-                </div>
-              </div>
-
-              <CodeEditor 
-                defaultValue={defaultCodes.veo} 
-                onRun={generateVeo} 
-                loading={veoLoading} 
-              />
-              {veoResult && (
-                <OutputBox type={veoResult.startsWith('error:') ? 'error' : 'text'}>
-                  {veoResult.startsWith('error:') ? (
-                    <div style={{ color: '#f85149' }}>{veoResult.replace('error:', '')}</div>
-                  ) : veoResult.startsWith('video:') || veoResult.startsWith('data:video') ? (
-                    <div>
-                      <div style={{ color: colors.gold, marginBottom: '10px', fontWeight: 700 }}>
-                        ✅ 영상 생성 완료! (8초)
-                      </div>
-                      <video 
-                        controls 
-                        src={veoResult.replace('video:', '')} 
-                        style={{ maxWidth: '100%', borderRadius: '12px' }}
-                      />
-                    </div>
-                  ) : (
-                    <div style={{ color: colors.gold, fontSize: '1rem' }}>{veoResult}</div>
-                  )}
-                </OutputBox>
-              )}
-            </SectionCard>
-
-            {/* Step 5: Veo 스토리 연결 */}
-            <SectionCard title="연속 영상 생성 (스토리 연결)" step={5} emoji="🎬" isNew>
-              <p style={{ color: colors.gray, marginBottom: '15px', fontSize: '0.95rem' }}>
-                여러 장면을 <strong style={{ color: colors.gold }}>이어붙여서</strong> 하나의 스토리로!
-              </p>
-
-              {/* 스토리 시각화 */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                marginBottom: '20px',
-                padding: '15px',
-                background: colors.navy,
-                borderRadius: '12px',
-                flexWrap: 'wrap'
-              }}>
-                <div style={{ 
-                  padding: '8px 12px',
-                  background: 'linear-gradient(135deg, #4ecdc4, #44a08d)',
-                  borderRadius: '8px',
-                  textAlign: 'center'
-                }}>
-                  <div style={{ fontSize: '1rem' }}>🐱🚗</div>
-                  <div style={{ color: '#fff', fontSize: '0.6rem', fontWeight: 600 }}>Scene 1</div>
-                </div>
-                <div style={{ color: colors.gold }}>+</div>
-                <div style={{ 
-                  padding: '8px 12px',
-                  background: 'linear-gradient(135deg, #95e1d3, #70c1b3)',
-                  borderRadius: '8px',
-                  textAlign: 'center'
-                }}>
-                  <div style={{ fontSize: '1rem' }}>🚗✈️</div>
-                  <div style={{ color: '#fff', fontSize: '0.6rem', fontWeight: 600 }}>Scene 2</div>
-                </div>
-                <div style={{ color: colors.gold }}>+</div>
-                <div style={{ 
-                  padding: '8px 12px',
-                  background: 'linear-gradient(135deg, #ffd93d, #ff9500)',
-                  borderRadius: '8px',
-                  textAlign: 'center'
-                }}>
-                  <div style={{ fontSize: '1rem' }}>🌈🐱</div>
-                  <div style={{ color: '#fff', fontSize: '0.6rem', fontWeight: 600 }}>Scene 3</div>
-                </div>
-                <div style={{ color: colors.gold }}>=</div>
-                <div style={{ 
-                  padding: '8px 15px',
-                  background: `linear-gradient(135deg, ${colors.gold}, ${colors.goldDark})`,
-                  borderRadius: '8px',
-                  textAlign: 'center'
-                }}>
-                  <div style={{ fontSize: '1rem' }}>🎥</div>
-                  <div style={{ color: colors.navy, fontSize: '0.6rem', fontWeight: 700 }}>22초!</div>
-                </div>
-              </div>
-
-              <CodeEditor 
-                defaultValue={defaultCodes.veoStory} 
-                onRun={generateVeoStory} 
-                loading={veoStoryLoading} 
-              />
-              {veoStoryResult && (
-                <OutputBox type={veoStoryResult.startsWith('error:') ? 'error' : 'text'}>
-                  {veoStoryResult.startsWith('error:') ? (
-                    <div style={{ color: '#f85149' }}>{veoStoryResult.replace('error:', '')}</div>
-                  ) : veoStoryResult.startsWith('video:') || veoStoryResult.startsWith('data:video') ? (
-                    <div>
-                      <div style={{ color: colors.gold, marginBottom: '10px', fontWeight: 700 }}>
-                        ✅ 스토리 영상 완료! (22초)
-                      </div>
-                      <video 
-                        controls 
-                        src={veoStoryResult.replace('video:', '')} 
-                        style={{ maxWidth: '100%', borderRadius: '12px' }}
-                      />
-                    </div>
-                  ) : (
-                    <div style={{ color: colors.gold, fontSize: '1rem' }}>{veoStoryResult}</div>
                   )}
                 </OutputBox>
               )}

@@ -2177,7 +2177,7 @@ const AIMoneyVideoPromptsPage: React.FC<AIMoneyVideoPromptsPageProps> = ({ onBac
             🎬 지금 바로 영상을 생성해 보세요
           </h2>
           <p style={{ lineHeight: 1.7, opacity: 0.9 }}>
-            이 10개의 프롬프트만 있으면 영상 PD, 광고 감독, 콘텐츠 크리에이터가 모두 손 안에 들어옵니다.<br />
+            이 10개의 프롬프트만 있으면 영상 PD, 광고 감독, 콘텐츠 제작자가 모두 손 안에 들어옵니다.<br />
             필요한 프롬프트를 복사해서 Google Veo, Runway, Pika에 바로 붙여넣어 보세요.<br />
             결과가 마음에 들지 않으면 "더 빠르게", "색감을 더 따뜻하게", "음악을 더 밝게" 같은 추가 요청으로 완벽하게 다듬을 수 있습니다.
           </p>

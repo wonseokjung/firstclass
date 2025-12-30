@@ -185,7 +185,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             }}>
               <Building2 size={32} color="#fff" style={{ marginBottom: '8px' }} />
               <p style={{ color: '#fff', fontWeight: '800', fontSize: 'clamp(1rem, 2vw, 1.2rem)', margin: 0 }}>🏙️ AI 도시</p>
-              <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.85rem', margin: '4px 0 0 0' }}>크리에이터 생태계</p>
+              <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.85rem', margin: '4px 0 0 0' }}>1인 기업가 생태계</p>
             </div>
           </div>
         </div>
@@ -393,7 +393,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
               gap: '8px'
             }}>
               <span>🏙️</span>
-              <span style={{ color: '#ffd60a' }}>AI 크리에이터 도시</span>
+              <span style={{ color: '#ffd60a' }}>AI 1인 기업가 도시</span>
             </p>
           </div>
         </div>
@@ -472,7 +472,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             marginBottom: '40px',
             fontSize: '1rem'
           }}>
-            단계별로 AI 크리에이터가 되는 여정
+            단계별로 AI 1인 기업가가 되는 여정
           </p>
 
           <div style={{
@@ -595,7 +595,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           textAlign: 'center',
           marginBottom: '16px'
         }}>
-          🚀 AI 크리에이터 양성 로드맵
+          🚀 AI 1인 기업가 양성 로드맵
         </h2>
         <p style={{
           color: '#94a3b8',
@@ -634,13 +634,13 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
               title: '💰 수익화', 
               desc: '수익형 콘텐츠 채널을 완성하고 월 수익을 창출합니다',
               color: '#e5c100',
-              highlight: 'AI 크리에이터'
+              highlight: 'AI 1인 기업가'
             },
             { 
               icon: <Globe size={32} />, 
               step: '04',
               title: '🏙️ AI 도시', 
-              desc: '크리에이터 네트워크와 함께 성장하는 생태계에 합류합니다',
+              desc: '1인 기업가 네트워크와 함께 성장하는 생태계에 합류합니다',
               color: '#8b5cf6',
               highlight: '함께 성장'
             }
@@ -763,7 +763,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                 maxWidth: '600px',
                 margin: 0
               }}>
-                <strong style={{ color: '#ffd60a' }}>AI로 콘텐츠를 만드는 크리에이터</strong>를 양성하고,<br />
+                <strong style={{ color: '#ffd60a' }}>AI로 콘텐츠를 만드는 1인 기업가</strong>를 양성하고,<br />
                 함께 <strong style={{ color: '#ffd60a' }}>AI 도시</strong>를 만들어가고 있습니다.
               </p>
 
@@ -868,7 +868,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             marginBottom: '20px',
             lineHeight: '1.3'
           }}>
-            AI 크리에이터가 되어<br />
+            AI 1인 기업가가 되어<br />
             <span style={{ color: '#ffd60a' }}>AI 도시</span>를 함께 만들어갑시다
         </h2>
 
