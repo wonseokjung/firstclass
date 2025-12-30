@@ -2,7 +2,7 @@ import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './index.css';
 import AzureTableService from './services/azureTableService';
-import SnowEffect from './components/effects/SnowEffect';
+// import SnowEffect from './components/effects/SnowEffect'; // 눈 효과 비활성화
 import { useReferralTracking } from './hooks/useReferralTracking';
 
 // ============================================
@@ -327,7 +327,7 @@ const MainPageWrapper = () => {
 
   return (
     <>
-      <SnowEffect />
+      {/* <SnowEffect /> */}
       <MainPage
         onFAQClick={() => navigate('/faq')}
         onLoginClick={() => navigate('/login')}

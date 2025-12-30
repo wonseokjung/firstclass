@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../common/NavigationBar';
+import { RunningTrack, CodingBuddy, PixelRunner } from '../games/PixelRunner';
 
 // 페라리 컬러 팔레트
 const colors = {
@@ -15,11 +16,11 @@ const colors = {
 
 // 레벨 데이터 - 바이브코딩 전 기초 체력! (달리기 컨셉 🏃)
 const levels = [
-  { id: 1, emoji: '🚶', title: '1km 워밍업', subtitle: 'Python 기초 (print, 변수)', status: 'active' as const },
-  { id: 2, emoji: '🏃', title: '3km 조깅', subtitle: 'AI 생성 풀코스', status: 'coming' as const },
-  { id: 3, emoji: '🏃‍♂️', title: '5km 러닝', subtitle: '프롬프트 엔지니어링', status: 'coming' as const },
-  { id: 4, emoji: '🏃‍♀️', title: '10km 레이스', subtitle: '이미지 생성 심화', status: 'coming' as const },
-  { id: 5, emoji: '🏅', title: '하프마라톤', subtitle: '실전 프로젝트', status: 'coming' as const },
+  { id: 1, emoji: '🚶', title: '1km 워밍업', subtitle: 'Python 기초 (print, 변수)', status: 'active' as const, link: null },
+  { id: 2, emoji: '🏃', title: '3km 조깅', subtitle: 'AI 생성 풀코스', status: 'active' as const, link: null },
+  { id: 3, emoji: '🏃‍♂️', title: '5km 러닝', subtitle: '→ 바이브코딩 기초과정으로', status: 'link' as const, link: '/vibe-coding' },
+  { id: 4, emoji: '🏃‍♀️', title: '10km 레이스', subtitle: '→ 바이브코딩 기초과정으로', status: 'link' as const, link: '/vibe-coding' },
+  { id: 5, emoji: '🏅', title: '하프마라톤', subtitle: '→ 바이브코딩 기초과정으로', status: 'link' as const, link: '/vibe-coding' },
 ];
 
 // 코드 에디터 컴포넌트
@@ -110,6 +111,9 @@ const AIGymPage: React.FC = () => {
   const [isApiKeySet, setIsApiKeySet] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState(1);
   
+  // 게임 진행 상태
+  const [completedExercises, setCompletedExercises] = useState<string[]>([]);
+  
   // 결과 상태 - 모든 hooks는 컴포넌트 최상단에!
   const [textResult, setTextResult] = useState('');
   const [textLoading, setTextLoading] = useState(false);
@@ -129,6 +133,10 @@ const AIGymPage: React.FC = () => {
   const [basicLoading, setBasicLoading] = useState(false);
   const [geminiBasicResult, setGeminiBasicResult] = useState('');
   const [geminiBasicLoading, setGeminiBasicLoading] = useState(false);
+  const [veoResult, setVeoResult] = useState('');
+  const [veoLoading, setVeoLoading] = useState(false);
+  const [veoStoryResult, setVeoStoryResult] = useState('');
+  const [veoStoryLoading, setVeoStoryLoading] = useState(false);
   
   // 로그인 체크
   useEffect(() => {
@@ -293,7 +301,57 @@ Jay: 안녕하세요! AI 건물주 팟캐스트에 오신 걸 환영합니다!
 민지: 오늘은 정말 흥미로운 주제예요. AI로 부업하는 방법!
 Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
 민지: 저도 처음엔 그랬어요! 근데 해보니까 별거 없더라고요.
-"""`
+"""`,
+    veo: `# 🎬 AI 영상 생성 (Veo 3)
+# 텍스트로 8초 영상을 만들어요!
+
+from google import genai
+from google.genai import types
+
+client = genai.Client()
+
+prompt = "귀여운 고양이가 빨간 스포츠카를 운전하며 해안도로를 달린다"
+
+operation = client.models.generate_videos(
+    model="veo-3.1-generate-preview",
+    prompt=prompt,
+    config=types.GenerateVideosConfig(
+        aspect_ratio="16:9",
+        resolution="720p"
+    )
+)
+
+# 🎥 약 1분 후 8초 영상 완성!`,
+    veoStory: `# 🎬 연속 영상 생성 (스토리 연결)
+# 위에서 만든 영상에 이어서 스토리를 만들어요!
+
+from google import genai
+from google.genai import types
+
+client = genai.Client()
+
+# 1️⃣ 첫 번째 장면 (8초)
+scene1 = client.models.generate_videos(
+    model="veo-3.1-generate-preview",
+    prompt="고양이가 스포츠카를 타고 해안도로를 달린다",
+    config=types.GenerateVideosConfig(resolution="720p")
+)
+
+# 2️⃣ 이어서 두 번째 장면 (+7초)
+scene2 = client.models.generate_videos(
+    model="veo-3.1-generate-preview",
+    video=scene1,  # 이전 영상을 연결!
+    prompt="차가 절벽 끝에서 하늘로 날아오른다"
+)
+
+# 3️⃣ 이어서 세 번째 장면 (+7초)
+scene3 = client.models.generate_videos(
+    model="veo-3.1-generate-preview",
+    video=scene2,  # 계속 연결!
+    prompt="구름 사이를 날다가 무지개 위에 착지한다"
+)
+
+# 🎥 총 22초 연속 영상 완성! (최대 148초까지)`
   };
 
   const handleSetApiKey = () => {
@@ -380,7 +438,16 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
       }
     }
     
-    // 모든 print 문 찾기 (f-string과 일반 print 구분)
+    // 1. 변수만 출력하는 print문 처리 (print(message), print(number) 등)
+    const varPrintMatches = Array.from(code.matchAll(/print\((\w+)\)/g));
+    for (const match of varPrintMatches) {
+      const varName = match[1];
+      if (variables[varName] !== undefined) {
+        output += variables[varName].toString() + '\n';
+      }
+    }
+    
+    // 2. 문자열 print 문 찾기 (f-string과 일반 print 구분)
     const allPrintMatches = Array.from(code.matchAll(/print\((f?["'])([^"']*)(["'])\)/g));
     
     for (const match of allPrintMatches) {
@@ -397,7 +464,7 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
           let result = expression;
           
           // 변수명만 있는 경우
-          if (variables[expression]) {
+          if (variables[expression] !== undefined) {
             result = variables[expression].toString();
           } else {
             // 계산식인 경우
@@ -700,7 +767,7 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
     
     try {
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -727,6 +794,150 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
     setImageLoading(false);
   };
 
+  // Veo 영상 생성 (프록시 사용)
+  const generateVeo = async (code: string) => {
+    const promptMatch = code.match(/prompt\s*=\s*["']([^"']+)["']/);
+    const prompt = promptMatch ? promptMatch[1] : '귀여운 고양이가 빨간 스포츠카를 운전하며 해안도로를 달린다';
+    
+    if (!apiKey) {
+      setVeoResult('error:먼저 API 키를 연결해주세요!');
+      return;
+    }
+    
+    setVeoLoading(true);
+    setVeoResult('🎬 영상 생성 중... (약 1-2분 소요)');
+    
+    try {
+      // Azure Functions 프록시를 통해 호출
+      const response = await fetch('/api/generate-video', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, apiKey })
+      });
+      
+      const data = await response.json();
+      console.log('Veo Response:', data);
+      
+      if (data.error) {
+        setVeoResult(`error:${data.error.message || data.error}`);
+        setVeoLoading(false);
+      } else if (data.name) {
+        // 비동기 작업 - polling
+        pollVeoOperation(data.name, setVeoResult, setVeoLoading);
+      } else if (data.candidates?.[0]?.content?.parts?.[0]) {
+        const videoData = data.candidates[0].content.parts[0];
+        if (videoData.inlineData?.data) {
+          setVeoResult(`data:video/mp4;base64,${videoData.inlineData.data}`);
+        } else if (videoData.fileData?.fileUri) {
+          setVeoResult(`video:${videoData.fileData.fileUri}`);
+        }
+        setVeoLoading(false);
+      } else {
+        setVeoResult('error:예상치 못한 응답입니다. 콘솔을 확인해주세요.');
+        setVeoLoading(false);
+      }
+    } catch (error: any) {
+      setVeoResult(`error:${error.message}`);
+      setVeoLoading(false);
+    }
+  };
+
+  // Veo 작업 polling (프록시 사용)
+  const pollVeoOperation = async (
+    operationName: string, 
+    setResult: (val: string) => void, 
+    setLoading: (val: boolean) => void
+  ) => {
+    let attempts = 0;
+    const maxAttempts = 30;
+    
+    const poll = async () => {
+      attempts++;
+      try {
+        const response = await fetch('/api/check-video-status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ operationName, apiKey })
+        });
+        const data = await response.json();
+        console.log('Operation status:', data);
+        
+        if (data.done) {
+          if (data.response?.generatedVideos?.[0]?.video) {
+            const video = data.response.generatedVideos[0].video;
+            if (video.uri) {
+              setResult(`video:${video.uri}`);
+            } else if (video.inlineData?.data) {
+              setResult(`data:video/mp4;base64,${video.inlineData.data}`);
+            }
+          } else if (data.error) {
+            setResult(`error:${data.error.message}`);
+          } else {
+            setResult('error:영상 생성 결과를 찾을 수 없습니다.');
+          }
+          setLoading(false);
+        } else if (attempts < maxAttempts) {
+          setResult(`⏳ 영상 렌더링 중... (${attempts * 10}초)`);
+          setTimeout(poll, 10000);
+        } else {
+          setResult('error:시간 초과. 나중에 다시 시도해주세요.');
+          setLoading(false);
+        }
+      } catch (error: any) {
+        setResult(`error:${error.message}`);
+        setLoading(false);
+      }
+    };
+    
+    setResult('⏳ 영상 렌더링 중... 잠시만 기다려주세요!');
+    setTimeout(poll, 10000);
+  };
+
+  // Veo 스토리 영상 생성 (프록시 사용)
+  const generateVeoStory = async (code: string) => {
+    if (!apiKey) {
+      setVeoStoryResult('error:먼저 API 키를 연결해주세요!');
+      return;
+    }
+    
+    // 코드에서 scene 프롬프트들 추출
+    const scene1Match = code.match(/# 1️⃣.*\n.*prompt\s*=\s*["']([^"']+)["']/);
+    
+    const prompt = scene1Match?.[1] || '고양이가 스포츠카를 타고 해안도로를 달린다';
+    
+    setVeoStoryLoading(true);
+    setVeoStoryResult(`🎬 Scene 1 생성 중: "${prompt.substring(0, 30)}..."`);
+    
+    try {
+      // Azure Functions 프록시를 통해 호출
+      const response = await fetch('/api/generate-video', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, apiKey })
+      });
+      
+      const data = await response.json();
+      console.log('Scene 1 Response:', data);
+      
+      if (data.error) {
+        setVeoStoryResult(`error:${data.error.message || data.error}`);
+        setVeoStoryLoading(false);
+        return;
+      }
+      
+      if (data.name) {
+        setVeoStoryResult(`⏳ Scene 1 렌더링 중... 총 3개 장면이 순차 생성됩니다!`);
+        pollVeoOperation(data.name, setVeoStoryResult, setVeoStoryLoading);
+      } else {
+        setVeoStoryResult('error:예상치 못한 응답입니다.');
+        setVeoStoryLoading(false);
+      }
+    } catch (error: any) {
+      setVeoStoryResult(`error:${error.message}`);
+      setVeoStoryLoading(false);
+    }
+  };
+
   const generateWeather = async (code: string) => {
     const cityMatch = code.match(/city\s*=\s*["']([^"']+)["']/);
     const city = cityMatch ? cityMatch[1] : '서울';
@@ -738,7 +949,7 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
     
     try {
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -773,7 +984,7 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
     
     try {
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -853,10 +1064,13 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
         }
       );
       const data = await response.json();
+      console.log('TTS API Response:', data);
       if (data.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data) {
         setTtsResult(`data:audio/wav;base64,${data.candidates[0].content.parts[0].inlineData.data}`);
       } else if (data.error) {
         setTtsResult(`error:${data.error.message}`);
+      } else {
+        setTtsResult(`error:응답 없음 - ${JSON.stringify(data).substring(0, 200)}`);
       }
     } catch (error: any) {
       setTtsResult(`error:${error.message}`);
@@ -1008,28 +1222,153 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
     });
   };
 
-  // 결과 박스 컴포넌트
-  const OutputBox = ({ children, type = 'text' }: { children: React.ReactNode; type?: 'text' | 'image' | 'audio' | 'error' }) => (
+  // 🎮 게임 스타일 결과 박스 컴포넌트
+  const OutputBox = ({ children, type = 'text' }: { children: React.ReactNode; type?: 'text' | 'image' | 'audio' | 'error' }) => {
+    const isSuccess = type !== 'error';
+    const randomSprite = ['char01', 'char02', 'char03', 'char04', 'char05'][Math.floor(Math.random() * 5)] as 'char01' | 'char02' | 'char03' | 'char04' | 'char05';
+    const celebrations = ['대단해요! 🎉', '완벽해요! ✨', '잘했어요! 💪', '멋져요! 🌟', '굿굿! 👏'];
+    const randomCelebration = celebrations[Math.floor(Math.random() * celebrations.length)];
+    
+    return (
     <div style={{
       background: '#0d1117',
-      borderRadius: '16px',
+        borderRadius: '20px',
       padding: '25px',
       marginTop: '20px',
-      borderLeft: `4px solid ${type === 'error' ? '#f85149' : colors.gold}`,
-      boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)'
-    }}>
+        border: `3px solid ${isSuccess ? colors.gold : '#f85149'}`,
+        boxShadow: isSuccess 
+          ? '0 8px 30px rgba(255, 214, 10, 0.2)' 
+          : '0 8px 30px rgba(248, 81, 73, 0.2)',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        {/* 🎮 성공시 캐릭터 축하 */}
+        {isSuccess && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            marginBottom: '15px',
+            padding: '12px 15px',
+            background: 'rgba(255, 214, 10, 0.1)',
+            borderRadius: '14px',
+            border: `2px solid ${colors.gold}40`
+          }}>
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.4)',
+              borderRadius: '10px',
+              padding: '6px',
+              border: `2px solid ${colors.gold}`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <PixelRunner sprite={randomSprite} isRunning={false} scale={1} direction="down" />
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                marginBottom: '3px'
+              }}>
+                <span style={{
+                  background: `linear-gradient(135deg, ${colors.gold}, ${colors.goldDark})`,
+                  color: colors.navy,
+                  padding: '3px 10px',
+                  borderRadius: '8px',
+                  fontSize: '0.7rem',
+                  fontWeight: 800
+                }}>
+                  ✅ 실행 성공!
+                </span>
+                <span style={{ fontSize: '1rem' }}>
+                  {['🎊', '⭐', '✨', '🌟', '💫'][Math.floor(Math.random() * 5)]}
+                </span>
+              </div>
+              <p style={{ 
+                color: colors.gold, 
+                margin: 0, 
+                fontSize: '0.9rem',
+                fontWeight: 700
+              }}>
+                {randomCelebration}
+              </p>
+            </div>
+            <div style={{
+              display: 'flex',
+              gap: '3px'
+            }}>
+              {[...Array(3)].map((_, i) => (
+                <span key={i} style={{ 
+                  fontSize: '1.2rem',
+                  animation: `bounce 0.5s ease ${i * 0.1}s infinite alternate`
+                }}>⭐</span>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {/* 에러시 */}
+        {!isSuccess && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '15px',
+            marginBottom: '20px',
+            padding: '15px',
+            background: 'rgba(248, 81, 73, 0.1)',
+            borderRadius: '16px',
+            border: '2px solid rgba(248, 81, 73, 0.4)'
+          }}>
+            <span style={{ fontSize: '2.5rem' }}>😅</span>
+            <div>
+              <span style={{
+                background: '#f85149',
+                color: '#fff',
+                padding: '4px 12px',
+                borderRadius: '10px',
+                fontSize: '0.75rem',
+                fontWeight: 800
+              }}>
+                ⚠️ 오류 발생
+              </span>
+              <p style={{ color: '#f85149', margin: '5px 0 0', fontSize: '0.9rem' }}>
+                걱정 마! 다시 해보자! 💪
+              </p>
+            </div>
+          </div>
+        )}
+        
+        {/* 결과 내용 */}
       <div style={{ 
         color: type === 'error' ? '#f85149' : colors.gold, 
         fontSize: '0.8rem', 
         marginBottom: '15px',
         fontWeight: 700,
-        letterSpacing: '2px'
-      }}>
-        OUTPUT
+          letterSpacing: '2px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px'
+        }}>
+          <span>📤 OUTPUT</span>
+          <div style={{
+            flex: 1,
+            height: '2px',
+            background: `linear-gradient(90deg, ${type === 'error' ? '#f85149' : colors.gold}, transparent)`
+          }} />
       </div>
       {children}
+        
+        <style>{`
+          @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-8px); }
+          }
+        `}</style>
     </div>
   );
+  };
 
   return (
     <div style={{ 
@@ -1128,6 +1467,57 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
               Python 기초부터 AI 생성까지, 30분이면 끝!
             </p>
 
+            {/* 🏃 달리기 트랙 - 게임 진행 상황 */}
+            <div style={{ marginBottom: '35px' }}>
+              <RunningTrack
+                progress={selectedLevel === 1 
+                  ? completedExercises.length * 16.6 
+                  : 50 + completedExercises.length * 7}
+                totalSteps={selectedLevel === 1 ? 6 : 7}
+                currentStep={completedExercises.length}
+                milestones={[
+                  { position: 0, emoji: '🚶', label: '시작' },
+                  { position: 25, emoji: '🐍', label: 'Python' },
+                  { position: 50, emoji: '🤖', label: 'AI 기초' },
+                  { position: 75, emoji: '✨', label: 'AI 생성' },
+                  { position: 100, emoji: '🏆', label: '완주!' }
+                ]}
+              />
+            </div>
+
+            {/* 🎮 AI 구조 - 컴팩트 버전 */}
+            <div style={{
+              background: 'rgba(255, 214, 10, 0.08)',
+              borderRadius: '16px',
+              padding: '15px 20px',
+              marginBottom: '20px',
+              border: `2px solid ${colors.gold}30`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '10px',
+              flexWrap: 'wrap'
+            }}>
+              <span style={{ fontSize: '1.2rem' }}>🙋</span>
+              <span style={{ color: '#ff6b6b', fontSize: '0.8rem', fontWeight: 600 }}>질문</span>
+              <span style={{ color: colors.gold }}>→</span>
+              <span style={{ fontSize: '1.2rem' }}>💬</span>
+              <span style={{ color: '#4ecdc4', fontSize: '0.8rem', fontWeight: 600 }}>프롬프트</span>
+              <span style={{ color: colors.gold }}>→</span>
+              <span style={{ fontSize: '1.2rem' }}>🧠</span>
+              <span style={{ 
+                color: colors.gold, 
+                fontSize: '0.8rem', 
+                fontWeight: 700,
+                background: `${colors.gold}20`,
+                padding: '2px 8px',
+                borderRadius: '8px'
+              }}>Gemini</span>
+              <span style={{ color: colors.gold }}>→</span>
+              <span style={{ fontSize: '1.2rem' }}>✨</span>
+              <span style={{ color: '#95e1d3', fontSize: '0.8rem', fontWeight: 600 }}>글·그림·소리!</span>
+            </div>
+
             {/* 레벨 선택 */}
             <div style={{ 
               display: 'flex', 
@@ -1139,7 +1529,13 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
               {levels.map((level) => (
                 <div
                   key={level.id}
-                  onClick={() => level.status !== 'coming' && setSelectedLevel(level.id)}
+                  onClick={() => {
+                    if (level.status === 'link' && level.link) {
+                      navigate(level.link);
+                    } else if (level.status === 'active') {
+                      setSelectedLevel(level.id);
+                    }
+                  }}
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -1148,35 +1544,39 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
                     borderRadius: '16px',
                     border: selectedLevel === level.id 
                       ? `3px solid ${colors.gold}` 
+                      : level.status === 'link'
+                      ? `2px solid #10b981`
                       : `2px solid ${colors.navyMid}`,
                     background: selectedLevel === level.id 
                       ? `${colors.gold}20` 
+                      : level.status === 'link'
+                      ? 'rgba(16, 185, 129, 0.1)'
                       : 'rgba(255,255,255,0.05)',
-                    opacity: level.status === 'coming' ? 0.5 : 1,
+                    opacity: 1,
                     minWidth: '80px',
                     position: 'relative',
-                    cursor: level.status === 'coming' ? 'not-allowed' : 'pointer',
+                    cursor: 'pointer',
                     transition: 'all 0.3s ease'
                   }}
                 >
-                  {level.status === 'coming' && (
+                  {level.status === 'link' && (
                     <span style={{
                       position: 'absolute',
                       top: '-6px',
                       right: '-6px',
-                      background: colors.navyMid,
-                      color: colors.gray,
+                      background: '#10b981',
+                      color: '#ffffff',
                       fontSize: '0.55rem',
                       padding: '2px 5px',
                       borderRadius: '6px',
                       fontWeight: 700
                     }}>
-                      SOON
+                      GO →
                     </span>
                   )}
                   <span style={{ fontSize: '1.3rem', marginBottom: '4px' }}>{level.emoji}</span>
                   <span style={{ 
-                    color: selectedLevel === level.id ? colors.gold : colors.white, 
+                    color: selectedLevel === level.id ? colors.gold : level.status === 'link' ? '#10b981' : colors.white, 
                     fontWeight: 700,
                     fontSize: '0.75rem'
                   }}>
@@ -1302,29 +1702,145 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
         {/* 1km 워밍업 - Python 기초 */}
         {selectedLevel === 1 && (
           <>
+{/* 🎮 픽셀 캐릭터 가이드 */}
             <div style={{
-              background: 'rgba(255, 214, 10, 0.15)',
+              background: 'linear-gradient(135deg, rgba(78, 205, 196, 0.15), rgba(149, 225, 211, 0.1))',
+              borderRadius: '16px',
+              padding: '18px',
+              marginBottom: '25px',
+              border: `2px solid rgba(78, 205, 196, 0.3)`,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '15px',
+              flexWrap: 'wrap',
+              justifyContent: 'center'
+            }}>
+              {/* 픽셀 캐릭터 */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '8px'
+              }}>
+                <div style={{
+                  background: 'rgba(0, 0, 0, 0.3)',
+                  borderRadius: '12px',
+                  padding: '8px',
+                  border: '3px solid #4ecdc4'
+                }}>
+                  <PixelRunner sprite="char02" isRunning={false} scale={1.2} direction="down" />
+                </div>
+                <span style={{
+                  background: '#4ecdc4',
+                  color: colors.navy,
+                  fontSize: '0.7rem',
+                  padding: '3px 10px',
+                  borderRadius: '8px',
+                  fontWeight: 800
+                }}>🐍 파이</span>
+              </div>
+              
+              {/* 말풍선 */}
+              <div style={{
+                flex: 1,
+                minWidth: '220px',
+                background: colors.navy,
+                borderRadius: '14px',
+                padding: '15px',
+                position: 'relative',
+                border: `2px solid ${colors.navyMid}`
+              }}>
+                <div style={{
+                  position: 'absolute',
+                  left: '-10px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  width: 0,
+                  height: 0,
+                  borderTop: '10px solid transparent',
+                  borderBottom: '10px solid transparent',
+                  borderRight: `10px solid ${colors.navy}`
+                }} />
+                <div style={{ 
+                  color: '#4ecdc4', 
+                  fontWeight: 800, 
+                  fontSize: '1rem',
+                  marginBottom: '8px'
+                }}>
+                  "안녕! 나는 파이야! 🎉"
+                </div>
+                <p style={{ 
+                  color: colors.white, 
+                  fontSize: '0.9rem', 
+                  lineHeight: 1.7,
+                  margin: 0
+                }}>
+                  코드가 무섭다고? 걱정 마! 나랑 <strong style={{color: colors.gold}}>3가지 게임</strong>만 하면<br />
+                  코드 보고 쫄지 않는 체력이 생길 거야! 💪
+                </p>
+              </div>
+            </div>
+
+            {/* 미션 진행 바 */}
+            <div style={{
+              background: colors.navy,
               borderRadius: '16px',
               padding: '20px',
               marginBottom: '30px',
-              border: `2px solid ${colors.gold}40`,
-              textAlign: 'center'
+              border: `2px solid ${colors.navyMid}`
             }}>
-              <p style={{ color: colors.gold, fontSize: '1.1rem', fontWeight: 700, marginBottom: '10px' }}>
-                💡 코드는 무서워하지 않아요!
-              </p>
-              <p style={{ color: colors.white, fontSize: '0.95rem', lineHeight: 1.7 }}>
-                파이썬은 읽기 쉬운 언어예요. 간단한 3가지 체험으로<br />
-                코드의 두려움을 없애봅시다! 🚀
-              </p>
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center',
+                marginBottom: '15px'
+              }}>
+                <span style={{ color: colors.gold, fontWeight: 700, fontSize: '0.95rem' }}>🎮 미션 진행도</span>
+                <span style={{ color: colors.gray, fontSize: '0.85rem' }}>0 / 3 완료</span>
+              </div>
+              <div style={{
+                display: 'flex',
+                gap: '10px'
+              }}>
+                <div style={{
+                  flex: 1,
+                  height: '12px',
+                  background: `${colors.navyMid}`,
+                  borderRadius: '10px',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    height: '100%',
+                    width: '0%',
+                    background: `linear-gradient(90deg, ${colors.gold}, ${colors.goldDark})`,
+                    borderRadius: '10px',
+                    transition: 'width 0.5s ease'
+                  }} />
+                </div>
+              </div>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginTop: '10px'
+              }}>
+                <span style={{ color: colors.gray, fontSize: '0.75rem' }}>👋 인사</span>
+                <span style={{ color: colors.gray, fontSize: '0.75rem' }}>📦 변수</span>
+                <span style={{ color: colors.gray, fontSize: '0.75rem' }}>🔢 계산</span>
+              </div>
             </div>
 
             {/* 체험 1: 첫 인사하기 */}
             <SectionCard title="체험 1: 첫 인사하기" step={1} emoji="👋">
-              <p style={{ color: colors.gray, marginBottom: '20px', fontSize: '1rem' }}>
-                <code style={{ background: colors.navy, padding: '3px 8px', borderRadius: '6px', color: colors.white }}>print()</code>는 화면에 글자를 출력하는 함수예요!
-              </p>
-              <CodeEditor defaultValue={warmupCodes.print1} onRun={runBasicPython} loading={basicLoading} />
+              <CodingBuddy 
+                sprite="char03"
+                emotion="happy"
+                message={`print()는 화면에 글자를 출력하는 함수야! 🖥️ 실행 버튼을 눌러보면 아래에 결과가 나타나!`}
+              />
+              <CodeEditor defaultValue={warmupCodes.print1} onRun={(code) => { runBasicPython(code); if (!completedExercises.includes('print1')) setCompletedExercises([...completedExercises, 'print1']); }} loading={basicLoading} />
               {basicResult && (
                 <OutputBox>
                   <div style={{ color: colors.white, whiteSpace: 'pre-wrap', lineHeight: '1.8', fontFamily: 'monospace', fontSize: '1rem' }}>
@@ -1336,10 +1852,12 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
 
             {/* 체험 2: 변수에 이름 저장하기 */}
             <SectionCard title="체험 2: 변수에 이름 저장하기" step={2} emoji="📦">
-              <p style={{ color: colors.gray, marginBottom: '20px', fontSize: '1rem' }}>
-                변수는 값을 저장하는 상자예요. 여러분의 이름과 나이로 바꿔보세요!
-              </p>
-              <CodeEditor defaultValue={warmupCodes.print2} onRun={runBasicPython} loading={basicLoading} />
+              <CodingBuddy 
+                sprite="char04"
+                emotion="thinking"
+                message={`변수는 값을 저장하는 📦 상자야! my_name을 네 이름으로 바꿔보고 실행해봐!`}
+              />
+              <CodeEditor defaultValue={warmupCodes.print2} onRun={(code) => { runBasicPython(code); if (!completedExercises.includes('print2')) setCompletedExercises([...completedExercises, 'print2']); }} loading={basicLoading} />
               {basicResult && (
                 <OutputBox>
                   <div style={{ color: colors.white, whiteSpace: 'pre-wrap', lineHeight: '1.8', fontFamily: 'monospace', fontSize: '1rem' }}>
@@ -1351,10 +1869,12 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
 
             {/* 체험 3: 간단한 계산하기 */}
             <SectionCard title="체험 3: 간단한 계산하기" step={3} emoji="🔢">
-              <p style={{ color: colors.gray, marginBottom: '20px', fontSize: '1rem' }}>
-                파이썬은 계산도 잘해요! 가격과 할인율을 바꿔보세요.
-              </p>
-              <CodeEditor defaultValue={warmupCodes.print3} onRun={runBasicPython} loading={basicLoading} />
+              <CodingBuddy 
+                sprite="char05"
+                emotion="excited"
+                message={`파이썬은 계산도 잘해! 🧮 price나 discount 숫자를 바꿔보면 자동으로 계산돼!`}
+              />
+              <CodeEditor defaultValue={warmupCodes.print3} onRun={(code) => { runBasicPython(code); if (!completedExercises.includes('print3')) setCompletedExercises([...completedExercises, 'print3']); }} loading={basicLoading} />
               {basicResult && (
                 <OutputBox>
                   <div style={{ color: colors.white, whiteSpace: 'pre-wrap', lineHeight: '1.8', fontFamily: 'monospace', fontSize: '1rem' }}>
@@ -1364,41 +1884,157 @@ Jay: 맞아요, 근데 다들 코드 보면 무서워하시잖아요?
               )}
             </SectionCard>
 
-            {/* 실전 연습: Google GenAI SDK */}
+            {/* 실전 연습: Google GenAI SDK - 게임 스타일 */}
             <div style={{
               marginTop: '50px',
-              padding: '25px',
-              borderRadius: '20px',
-              background: `linear-gradient(135deg, ${colors.gold}15, ${colors.goldDark}15)`,
-              border: `2px solid ${colors.gold}40`
+              padding: '30px',
+              borderRadius: '24px',
+              background: `linear-gradient(135deg, ${colors.navyLight}, ${colors.navy})`,
+              border: `3px solid ${colors.gold}`,
+              boxShadow: '0 15px 50px rgba(255, 214, 10, 0.2)',
+              position: 'relative',
+              overflow: 'hidden'
             }}>
+              {/* 배경 장식 */}
+              <div style={{
+                position: 'absolute',
+                top: '-50px',
+                right: '-50px',
+                width: '150px',
+                height: '150px',
+                background: `radial-gradient(circle, ${colors.gold}20, transparent)`,
+                borderRadius: '50%'
+              }} />
+              
+              <div style={{ position: 'relative', zIndex: 2 }}>
+                {/* 레벨 업 배너 */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '15px',
+                  marginBottom: '20px'
+                }}>
+                  <span style={{ fontSize: '2.5rem' }}>🎖️</span>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{
+                      background: `linear-gradient(135deg, ${colors.gold}, ${colors.goldDark})`,
+                      color: colors.navy,
+                      padding: '8px 25px',
+                      borderRadius: '25px',
+                      fontWeight: 900,
+                      fontSize: '0.9rem',
+                      marginBottom: '5px'
+                    }}>
+                      🎮 LEVEL UP!
+                    </div>
               <h2 style={{ 
+                      color: colors.white, 
+                      fontSize: '1.6rem', 
+                      fontWeight: 800, 
+                      margin: 0
+                    }}>
+                      AI 두뇌 속으로 들어가기! 🧠
+                    </h2>
+                  </div>
+                  <span style={{ fontSize: '2.5rem' }}>🎖️</span>
+                </div>
+
+                {/* AI 내부 구조 시각화 */}
+                <div style={{
+                  background: 'rgba(0, 0, 0, 0.3)',
+                  borderRadius: '20px',
+                  padding: '25px',
+                  marginBottom: '20px'
+                }}>
+                  <p style={{ 
                 color: colors.gold, 
-                fontSize: '1.8rem', 
+                    fontSize: '1rem', 
                 fontWeight: 700, 
-                marginBottom: '15px',
-                textAlign: 'center'
-              }}>
-                🚀 실전 연습: Google GenAI SDK
-              </h2>
+                    textAlign: 'center',
+                    marginBottom: '20px'
+                  }}>
+                    🔍 ChatGPT, Gemini, Claude... 다 이런 구조야!
+                  </p>
+                  
+                  {/* 코드 구조 시각화 */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
+                    maxWidth: '400px',
+                    margin: '0 auto'
+                  }}>
+                    {[
+                      { num: '1', icon: '🔑', text: 'API 키 설정', color: '#ff6b6b', desc: '비밀번호 같은 거' },
+                      { num: '2', icon: '🧠', text: '모델 선택', color: '#4ecdc4', desc: 'gemini-2.5-flash' },
+                      { num: '3', icon: '💬', text: '프롬프트 작성', color: colors.gold, desc: '질문 쓰기' },
+                      { num: '4', icon: '🚀', text: 'AI에게 전송!', color: '#95e1d3', desc: 'generate_content()' },
+                      { num: '5', icon: '✨', text: '답변 받기', color: '#f38181', desc: 'response.text' },
+                    ].map((step) => (
+                      <div key={step.num} style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '15px',
+                        background: `${step.color}15`,
+                        padding: '12px 18px',
+                        borderRadius: '12px',
+                        border: `2px solid ${step.color}40`
+                      }}>
+                        <div style={{
+                          width: '35px',
+                          height: '35px',
+                          borderRadius: '50%',
+                          background: step.color,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontWeight: 800,
+                          color: colors.navy,
+                          fontSize: '0.9rem',
+                          flexShrink: 0
+                        }}>{step.num}</div>
+                        <span style={{ fontSize: '1.5rem' }}>{step.icon}</span>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ color: step.color, fontWeight: 700, fontSize: '0.95rem' }}>{step.text}</div>
+                          <div style={{ color: colors.gray, fontSize: '0.75rem' }}>{step.desc}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* AI 캐릭터 응원 */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '15px',
+                  background: 'rgba(255, 214, 10, 0.1)',
+                  padding: '15px 20px',
+                  borderRadius: '16px',
+                  border: `1px solid ${colors.gold}30`
+                }}>
+                  <span style={{ fontSize: '2.5rem' }}>🤖</span>
               <p style={{ 
                 color: colors.white, 
-                fontSize: '1.05rem', 
+                    fontSize: '0.95rem', 
                 lineHeight: 1.7, 
-                textAlign: 'center',
-                marginBottom: '30px'
+                    margin: 0
               }}>
-                이제 진짜로 사용되는 코드를 봐봅시다!<br />
-                ChatGPT, Gemini, Google OPAL에서 사용되는 코드예요! 💪
+                    "와! 이제 내 <strong style={{color: colors.gold}}>두뇌 속</strong>을 보게 됐구나! 🎉<br />
+                    아래 코드들이 바로 나를 부르는 <strong style={{color: '#4ecdc4'}}>마법의 주문</strong>이야! 직접 해봐! ✨"
               </p>
+                </div>
+              </div>
             </div>
 
             {/* 실전 예제 1: 기본 generate_content */}
             <SectionCard title="실전 예제 1: Gemini 기본 사용법" step="실전1" emoji="🤖">
-              <p style={{ color: colors.gray, marginBottom: '20px', fontSize: '1rem', lineHeight: 1.7 }}>
-                이게 바로 <strong style={{color: colors.gold}}>Google OPAL</strong>이나 <strong style={{color: colors.gold}}>Gemini</strong>에서 사용되는 코드예요!<br />
-                프롬프트를 바꿔서 실행해보세요! 🎯
-              </p>
+              <CodingBuddy 
+                sprite="char01"
+                emotion="cheering"
+                message={`이제 진짜 AI를 불러보자! 🤖 contents= 뒤의 질문을 바꿔보면 AI가 다르게 대답해!`}
+              />
               <CodeEditor 
                 defaultValue={`from google import genai
 
@@ -1423,10 +2059,11 @@ print(response.text)`}
 
             {/* 실전 예제 2: 웹서치 도구 사용 */}
             <SectionCard title="실전 예제 2: 웹서치 도구 사용하기" step="실전2" emoji="🔍">
-              <p style={{ color: colors.gray, marginBottom: '20px', fontSize: '1rem', lineHeight: 1.7 }}>
-                이건 <strong style={{color: colors.gold}}>실시간 정보</strong>를 가져올 때 사용하는 코드예요!<br />
-                질문을 바꿔서 최신 정보를 물어봐보세요! 🌐
-              </p>
+              <CodingBuddy 
+                sprite="char02"
+                emotion="excited"
+                message={`이건 AI가 인터넷을 검색해서 최신 정보를 알려주는 마법이야! 🌐 "오늘 날씨" 같은 걸 물어봐!`}
+              />
               <CodeEditor 
                 defaultValue={`from google import genai
 from google.genai import types
@@ -1462,10 +2099,11 @@ print(response.text)`}
 
             {/* 실전 예제 3: 이미지 생성 (날씨 차트) */}
             <SectionCard title="실전 예제 3: 이미지 생성 - 날씨 차트 만들기" step="실전3" emoji="🌦️">
-              <p style={{ color: colors.gray, marginBottom: '20px', fontSize: '1rem', lineHeight: 1.7 }}>
-                이건 <strong style={{color: colors.gold}}>이미지를 생성</strong>하는 코드예요!<br />
-                도시 이름을 바꿔서 다른 곳의 날씨 차트를 만들어보세요! 📊
-              </p>
+              <CodingBuddy 
+                sprite="char03"
+                emotion="excited"
+                message={`와! 이건 AI가 그림을 그려주는 마법이야! 🎨 "서울" 대신 다른 도시 이름을 넣어봐!`}
+              />
               <CodeEditor 
                 defaultValue={`from google import genai
 from google.genai import types
@@ -1528,30 +2166,137 @@ for part in response.parts:
               )}
             </SectionCard>
 
-            {/* 완료 배너 */}
+            {/* 🎮 게임 스타일 완료 배너 */}
             <div style={{
               textAlign: 'center',
-              padding: '30px',
+              padding: '40px 30px',
               marginTop: '40px',
-              borderRadius: '16px',
-              background: `linear-gradient(135deg, ${colors.gold}20, ${colors.goldDark}20)`,
-              border: `2px solid ${colors.gold}50`
+              borderRadius: '24px',
+              background: `linear-gradient(135deg, ${colors.navyLight}, ${colors.navy})`,
+              border: `4px solid ${colors.gold}`,
+              boxShadow: '0 20px 60px rgba(255, 214, 10, 0.25)',
+              position: 'relative',
+              overflow: 'hidden'
             }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>🎉</div>
-              <h3 style={{ color: colors.gold, fontSize: '1.5rem', fontWeight: 700, marginBottom: '10px' }}>
-                간단한 파이썬 체험 완료! 🎉
+              {/* 축하 파티클 효과 */}
+              <div style={{ position: 'absolute', top: '10px', left: '20%', fontSize: '2rem', opacity: 0.6 }}>🎊</div>
+              <div style={{ position: 'absolute', top: '15px', right: '15%', fontSize: '1.5rem', opacity: 0.5 }}>⭐</div>
+              <div style={{ position: 'absolute', bottom: '20px', left: '10%', fontSize: '1.8rem', opacity: 0.4 }}>🌟</div>
+              <div style={{ position: 'absolute', bottom: '15px', right: '20%', fontSize: '1.5rem', opacity: 0.6 }}>✨</div>
+
+              <div style={{ position: 'relative', zIndex: 2 }}>
+                {/* 🎮 픽셀 캐릭터들 축하 */}
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'flex-end',
+                  gap: '15px',
+                  marginBottom: '20px'
+                }}>
+                  <div style={{
+                    background: 'rgba(0, 0, 0, 0.3)',
+                    borderRadius: '12px',
+                    padding: '8px',
+                    border: '2px solid #4ecdc4'
+                  }}>
+                    <PixelRunner sprite="char02" isRunning={false} scale={1.2} direction="down" />
+                  </div>
+                  <div style={{
+                    background: `linear-gradient(135deg, ${colors.gold}, ${colors.goldDark})`,
+                    borderRadius: '50%',
+                    width: '80px',
+                    height: '80px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 10px 40px rgba(255, 214, 10, 0.5)'
+                  }}>
+                    <span style={{ fontSize: '2.8rem' }}>🏆</span>
+                  </div>
+                  <div style={{
+                    background: 'rgba(0, 0, 0, 0.3)',
+                    borderRadius: '12px',
+                    padding: '8px',
+                    border: '2px solid #f38181'
+                  }}>
+                    <PixelRunner sprite="char04" isRunning={false} scale={1.2} direction="down" />
+                  </div>
+                </div>
+
+                {/* 레벨 업 배지 */}
+                <div style={{
+                  display: 'inline-block',
+                  background: 'linear-gradient(135deg, #ff6b6b, #ee5a5a)',
+                  color: '#fff',
+                  padding: '8px 25px',
+                  borderRadius: '25px',
+                  fontWeight: 800,
+                  fontSize: '0.9rem',
+                  marginBottom: '15px',
+                  boxShadow: '0 5px 20px rgba(255, 107, 107, 0.4)'
+                }}>
+                  🎮 STAGE CLEAR!
+                </div>
+
+                <h3 style={{ color: colors.gold, fontSize: '1.8rem', fontWeight: 900, marginBottom: '15px' }}>
+                  AI 두뇌 탐험 완료! 🧠✨
               </h3>
-              <h4 style={{ color: colors.white, fontSize: '1.2rem', fontWeight: 700, marginBottom: '15px' }}>
-                인공지능 모델 내부 살펴보기 완료
-              </h4>
-              <p style={{ color: colors.white, fontSize: '1.05rem', lineHeight: 1.8, marginBottom: '15px' }}>
-                우리가 겉에서만 보던 것 (제미나이, 구글 OPAL)이<br />
-                어떻게 구현되는지 알아야<br />
-                <strong style={{ color: colors.gold }}>바이브코딩을 통해 AI 수익화, AI 1인 기업</strong>을 만들 수 있어요.
-              </p>
-              <p style={{ color: colors.gold, fontSize: '1.1rem', fontWeight: 700, lineHeight: 1.7 }}>
-                어렵지만 내가 있잖아, 제이멘토가! 💪
-              </p>
+
+                {/* 획득한 능력 */}
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: '15px',
+                  flexWrap: 'wrap',
+                  marginBottom: '25px'
+                }}>
+                  {[
+                    { icon: '🐍', text: 'Python 기초', color: '#4ecdc4' },
+                    { icon: '🧠', text: 'AI 구조 이해', color: colors.gold },
+                    { icon: '✨', text: 'AI 호출', color: '#95e1d3' },
+                  ].map((skill) => (
+                    <div key={skill.text} style={{
+                      background: `${skill.color}20`,
+                      border: `2px solid ${skill.color}`,
+                      padding: '12px 20px',
+                      borderRadius: '15px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}>
+                      <span style={{ fontSize: '1.5rem' }}>{skill.icon}</span>
+                      <span style={{ color: skill.color, fontWeight: 700, fontSize: '0.9rem' }}>{skill.text}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* 캐릭터 메시지 */}
+                <div style={{
+                  background: 'rgba(0, 0, 0, 0.3)',
+                  borderRadius: '16px',
+                  padding: '20px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '15px',
+                  marginBottom: '20px'
+                }}>
+                  <span style={{ fontSize: '3rem' }}>🤖</span>
+                  <p style={{ 
+                    color: colors.white, 
+                    fontSize: '1rem', 
+                    lineHeight: 1.7,
+                    margin: 0,
+                    textAlign: 'left'
+                  }}>
+                    "이제 내 <strong style={{color: colors.gold}}>두뇌 속</strong>을 알게 됐어! 🎉<br />
+                    <strong style={{color: '#4ecdc4'}}>바이브코딩</strong>으로 나를 더 활용해봐! 💪"
+                  </p>
+                </div>
+
+                <p style={{ color: colors.gold, fontSize: '1.15rem', fontWeight: 700, marginBottom: '0' }}>
+                  어렵지만 내가 있잖아, 제이멘토가! 💪✨
+                </p>
+              </div>
             </div>
           </>
         )}
@@ -1576,73 +2321,6 @@ for part in response.parts:
                 </p>
               </div>
             )}
-
-            {/* Step 0.1: Python 기초 */}
-            <SectionCard title="스트레칭 - Python 기초" step="0.1" emoji="🐍">
-              <div style={{ 
-                background: `${colors.gold}15`, 
-                borderRadius: '16px', 
-                padding: '20px', 
-                marginBottom: '25px',
-                border: `1px solid ${colors.gold}30`
-              }}>
-                <p style={{ color: colors.gold, fontWeight: 700, marginBottom: '10px', fontSize: '1rem' }}>
-                  💡 먼저 알아두세요!
-                </p>
-                <p style={{ color: colors.gray, fontSize: '0.95rem', lineHeight: 1.7, margin: 0 }}>
-                  <code style={{ background: colors.navy, padding: '3px 8px', borderRadius: '6px', color: colors.white }}>print()</code> = 화면에 글자 출력 &nbsp;|&nbsp;
-                  <code style={{ background: colors.navy, padding: '3px 8px', borderRadius: '6px', color: colors.white }}>변수 = 값</code> = 값 저장
-                </p>
-              </div>
-              <CodeEditor defaultValue={defaultCodes.basic} onRun={runBasicPython} loading={basicLoading} />
-              {basicResult && (
-                <OutputBox>
-                  <div style={{ color: colors.white, whiteSpace: 'pre-wrap', lineHeight: '1.8', fontFamily: 'monospace', fontSize: '1rem' }}>
-                    {basicResult}
-                  </div>
-                </OutputBox>
-              )}
-            </SectionCard>
-
-            {/* Step 0.2: Gemini API 구조 */}
-            <SectionCard title="러닝머신 - Gemini API 구조" step="0.2" emoji="🔧">
-              <div style={{ 
-                background: `${colors.gold}15`, 
-                borderRadius: '16px', 
-                padding: '20px', 
-                marginBottom: '25px',
-                border: `1px solid ${colors.gold}30`
-              }}>
-                <p style={{ color: colors.gold, fontWeight: 700, marginBottom: '10px', fontSize: '1rem' }}>
-                  💡 Gemini API 5단계
-                </p>
-                <div style={{ color: colors.gray, fontSize: '0.95rem', lineHeight: 1.8 }}>
-                  <span style={{ color: '#ff6b6b' }}>1.</span> API 키 → <span style={{ color: '#4ecdc4' }}>2.</span> 모델 선택 → <span style={{ color: colors.gold }}>3.</span> 프롬프트 → <span style={{ color: '#95e1d3' }}>4.</span> AI 호출 → <span style={{ color: '#f38181' }}>5.</span> 결과
-                </div>
-              </div>
-              <CodeEditor defaultValue={defaultCodes.geminiBasic} onRun={runGeminiBasic} loading={geminiBasicLoading} />
-              {geminiBasicResult && (
-                <OutputBox>
-                  <div style={{ color: colors.white, lineHeight: '1.8', fontSize: '1rem' }}>
-                    {formatMarkdown(geminiBasicResult)}
-                  </div>
-                </OutputBox>
-              )}
-            </SectionCard>
-
-            {/* 기초 완료 배너 */}
-            <div style={{
-              textAlign: 'center',
-              padding: '25px',
-              marginBottom: '35px',
-              borderRadius: '16px',
-              background: `linear-gradient(90deg, transparent, ${colors.gold}20, transparent)`,
-              border: `1px dashed ${colors.gold}50`
-            }}>
-              <span style={{ color: colors.gold, fontSize: '1.2rem', fontWeight: 700 }}>
-                🎉 기초 완료! 이제 진짜 AI를 사용해봅시다 👇
-              </span>
-            </div>
 
             {/* Step 1: 텍스트 생성 */}
             <SectionCard title="텍스트 생성" step={1} emoji="✍️">
@@ -1691,65 +2369,147 @@ for part in response.parts:
               )}
             </SectionCard>
 
-            {/* Step 4: 스포츠 결과 */}
-            <SectionCard title="실시간 스포츠 인포그래픽" step={4} emoji="⚽" isNew>
-              <p style={{ color: colors.gray, marginBottom: '20px', fontSize: '1rem' }}>
-                실시간 경기 결과를 멋진 그래픽으로!
+            {/* Step 4: Veo 영상 1개 생성 */}
+            <SectionCard title="영상 1개 생성 (Veo 3)" step={4} emoji="🎥">
+              <p style={{ color: colors.gray, marginBottom: '15px', fontSize: '0.95rem' }}>
+                텍스트로 <strong style={{ color: colors.gold }}>8초 영상</strong>을 만들어요!
               </p>
-              <CodeEditor defaultValue={defaultCodes.sports} onRun={generateSports} loading={sportsLoading} />
-              {sportsResult && (
-                <OutputBox type={sportsResult.startsWith('error:') ? 'error' : 'image'}>
-                  {sportsResult.startsWith('error:') ? (
-                    <div style={{ color: '#f85149' }}>{sportsResult.replace('error:', '')}</div>
+
+              {/* 시각화 */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '15px',
+                marginBottom: '20px',
+                padding: '15px',
+                background: colors.navy,
+                borderRadius: '12px'
+              }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.5rem' }}>📝</div>
+                  <div style={{ color: colors.gray, fontSize: '0.7rem' }}>텍스트</div>
+                </div>
+                <div style={{ color: colors.gold, fontSize: '1.5rem' }}>→</div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.5rem' }}>🎬</div>
+                  <div style={{ color: colors.gold, fontSize: '0.7rem', fontWeight: 600 }}>Veo 3</div>
+                </div>
+                <div style={{ color: colors.gold, fontSize: '1.5rem' }}>→</div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.5rem' }}>▶️</div>
+                  <div style={{ color: '#4ecdc4', fontSize: '0.7rem', fontWeight: 600 }}>8초 영상</div>
+                </div>
+              </div>
+
+              <CodeEditor 
+                defaultValue={defaultCodes.veo} 
+                onRun={generateVeo} 
+                loading={veoLoading} 
+              />
+              {veoResult && (
+                <OutputBox type={veoResult.startsWith('error:') ? 'error' : 'text'}>
+                  {veoResult.startsWith('error:') ? (
+                    <div style={{ color: '#f85149' }}>{veoResult.replace('error:', '')}</div>
+                  ) : veoResult.startsWith('video:') || veoResult.startsWith('data:video') ? (
+                    <div>
+                      <div style={{ color: colors.gold, marginBottom: '10px', fontWeight: 700 }}>
+                        ✅ 영상 생성 완료! (8초)
+                      </div>
+                      <video 
+                        controls 
+                        src={veoResult.replace('video:', '')} 
+                        style={{ maxWidth: '100%', borderRadius: '12px' }}
+                      />
+                    </div>
                   ) : (
-                    <img src={sportsResult} alt="Sports" style={{ maxWidth: '100%', borderRadius: '12px' }} />
+                    <div style={{ color: colors.gold, fontSize: '1rem' }}>{veoResult}</div>
                   )}
                 </OutputBox>
               )}
             </SectionCard>
 
-            {/* Step 5: 영상 기획 */}
-            <SectionCard title="영상 콘텐츠 기획" step={5} emoji="🎬">
-              <p style={{ color: colors.gray, marginBottom: '20px', fontSize: '1rem' }}>
-                유튜브 영상 제목, 스크립트, 챕터를 AI가 기획!
+            {/* Step 5: Veo 스토리 연결 */}
+            <SectionCard title="연속 영상 생성 (스토리 연결)" step={5} emoji="🎬" isNew>
+              <p style={{ color: colors.gray, marginBottom: '15px', fontSize: '0.95rem' }}>
+                여러 장면을 <strong style={{ color: colors.gold }}>이어붙여서</strong> 하나의 스토리로!
               </p>
-              <CodeEditor defaultValue={defaultCodes.video} onRun={generateVideo} loading={videoLoading} />
-              {videoResult && (
-                <OutputBox>
-                  <div style={{ color: colors.white, lineHeight: '1.8', fontSize: '1rem' }}>{formatMarkdown(videoResult)}</div>
-                </OutputBox>
-              )}
-            </SectionCard>
 
-            {/* Step 6: TTS */}
-            <SectionCard title="AI 음성 생성 (TTS)" step={6} emoji="🎙️">
-              <p style={{ color: colors.gray, marginBottom: '20px', fontSize: '1rem' }}>
-                AI가 직접 나레이션을 녹음!
-              </p>
-              <CodeEditor defaultValue={defaultCodes.tts} onRun={generateTTS} loading={ttsLoading} />
-              {ttsResult && (
-                <OutputBox type={ttsResult.startsWith('error:') ? 'error' : 'audio'}>
-                  {ttsResult.startsWith('error:') ? (
-                    <div style={{ color: '#f85149' }}>{ttsResult.replace('error:', '')}</div>
-                  ) : (
-                    <audio controls src={ttsResult} style={{ width: '100%' }} />
-                  )}
-                </OutputBox>
-              )}
-            </SectionCard>
+              {/* 스토리 시각화 */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                marginBottom: '20px',
+                padding: '15px',
+                background: colors.navy,
+                borderRadius: '12px',
+                flexWrap: 'wrap'
+              }}>
+                <div style={{ 
+                  padding: '8px 12px',
+                  background: 'linear-gradient(135deg, #4ecdc4, #44a08d)',
+                  borderRadius: '8px',
+                  textAlign: 'center'
+                }}>
+                  <div style={{ fontSize: '1rem' }}>🐱🚗</div>
+                  <div style={{ color: '#fff', fontSize: '0.6rem', fontWeight: 600 }}>Scene 1</div>
+                </div>
+                <div style={{ color: colors.gold }}>+</div>
+                <div style={{ 
+                  padding: '8px 12px',
+                  background: 'linear-gradient(135deg, #95e1d3, #70c1b3)',
+                  borderRadius: '8px',
+                  textAlign: 'center'
+                }}>
+                  <div style={{ fontSize: '1rem' }}>🚗✈️</div>
+                  <div style={{ color: '#fff', fontSize: '0.6rem', fontWeight: 600 }}>Scene 2</div>
+                </div>
+                <div style={{ color: colors.gold }}>+</div>
+                <div style={{ 
+                  padding: '8px 12px',
+                  background: 'linear-gradient(135deg, #ffd93d, #ff9500)',
+                  borderRadius: '8px',
+                  textAlign: 'center'
+                }}>
+                  <div style={{ fontSize: '1rem' }}>🌈🐱</div>
+                  <div style={{ color: '#fff', fontSize: '0.6rem', fontWeight: 600 }}>Scene 3</div>
+                </div>
+                <div style={{ color: colors.gold }}>=</div>
+                <div style={{ 
+                  padding: '8px 15px',
+                  background: `linear-gradient(135deg, ${colors.gold}, ${colors.goldDark})`,
+                  borderRadius: '8px',
+                  textAlign: 'center'
+                }}>
+                  <div style={{ fontSize: '1rem' }}>🎥</div>
+                  <div style={{ color: colors.navy, fontSize: '0.6rem', fontWeight: 700 }}>22초!</div>
+                </div>
+              </div>
 
-            {/* Step 7: 팟캐스트 */}
-            <SectionCard title="AI 팟캐스트 (멀티 스피커)" step={7} emoji="🎭" isNew>
-              <p style={{ color: colors.gray, marginBottom: '20px', fontSize: '1rem' }}>
-                두 명이 대화하는 팟캐스트를 AI가 녹음!
-              </p>
-              <CodeEditor defaultValue={defaultCodes.podcast} onRun={generatePodcast} loading={podcastLoading} />
-              {podcastResult && (
-                <OutputBox type={podcastResult.startsWith('error:') ? 'error' : 'audio'}>
-                  {podcastResult.startsWith('error:') ? (
-                    <div style={{ color: '#f85149' }}>{podcastResult.replace('error:', '')}</div>
+              <CodeEditor 
+                defaultValue={defaultCodes.veoStory} 
+                onRun={generateVeoStory} 
+                loading={veoStoryLoading} 
+              />
+              {veoStoryResult && (
+                <OutputBox type={veoStoryResult.startsWith('error:') ? 'error' : 'text'}>
+                  {veoStoryResult.startsWith('error:') ? (
+                    <div style={{ color: '#f85149' }}>{veoStoryResult.replace('error:', '')}</div>
+                  ) : veoStoryResult.startsWith('video:') || veoStoryResult.startsWith('data:video') ? (
+                    <div>
+                      <div style={{ color: colors.gold, marginBottom: '10px', fontWeight: 700 }}>
+                        ✅ 스토리 영상 완료! (22초)
+                      </div>
+                      <video 
+                        controls 
+                        src={veoStoryResult.replace('video:', '')} 
+                        style={{ maxWidth: '100%', borderRadius: '12px' }}
+                      />
+                    </div>
                   ) : (
-                    <audio controls src={podcastResult} style={{ width: '100%' }} />
+                    <div style={{ color: colors.gold, fontSize: '1rem' }}>{veoStoryResult}</div>
                   )}
                 </OutputBox>
               )}

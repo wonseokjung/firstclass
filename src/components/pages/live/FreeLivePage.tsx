@@ -306,71 +306,80 @@ const FreeLivePage: React.FC<FreeLivePageProps> = ({ onBack }) => {
           </div>
         )}
 
-        {/* 지난 라이브 아카이브 */}
-        <div style={{ marginBottom: '30px' }}>
-          <h3 style={{ 
-            color: '#1e293b', 
-            fontSize: '1.3rem', 
-            fontWeight: '700', 
-            marginBottom: '20px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px'
-          }}>
-            <Play size={22} />
-            지난 무료 라이브
-            <span style={{
-              background: COLORS.youtube,
-              color: COLORS.white,
-              padding: '4px 10px',
-              borderRadius: '12px',
-              fontSize: '0.8rem',
-              fontWeight: '700'
-            }}>
-              {archives.length}개
-            </span>
-          </h3>
+        {/* 지난주 라이브 (최근 1개만, 7일 이내만 표시) */}
+        {(() => {
+          // 7일 이내의 아카이브만 필터링하고 가장 최신 1개만
+          const oneWeekAgo = new Date();
+          oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+          
+          const recentArchive = archives
+            .filter(archive => {
+              const archiveDate = new Date(archive.date);
+              return archiveDate >= oneWeekAgo;
+            })
+            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
+          
+          if (!recentArchive) return null;
+          
+          return (
+            <div style={{ marginBottom: '30px' }}>
+              <h3 style={{ 
+                color: '#1e293b', 
+                fontSize: '1.3rem', 
+                fontWeight: '700', 
+                marginBottom: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                <Play size={22} />
+                지난주 라이브
+                <span style={{
+                  background: COLORS.gold,
+                  color: COLORS.navy,
+                  padding: '4px 10px',
+                  borderRadius: '12px',
+                  fontSize: '0.75rem',
+                  fontWeight: '700'
+                }}>
+                  7일간 무료 공개
+                </span>
+              </h3>
 
-          {archives.length > 0 ? (
-            <div style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
-              gap: '20px' 
-            }}>
-              {archives.map((archive) => (
-                <div
-                  key={archive.id}
-                  onClick={() => window.open(`https://www.youtube.com/watch?v=${archive.youtubeId}`, '_blank')}
-                  style={{
-                    background: COLORS.navyLight,
-                    border: `1px solid ${COLORS.youtube}20`,
-                    borderRadius: '14px',
-                    overflow: 'hidden',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s'
-                  }}
-                >
-                  {/* 썸네일 */}
-                  <div style={{
-                    position: 'relative',
-                    paddingBottom: '56.25%',
-                    background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyLight})`
-                  }}>
-                    <img 
-                      src={`https://img.youtube.com/vi/${archive.youtubeId}/maxresdefault.jpg`}
-                      alt={archive.title}
-                      style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover'
-                      }}
-                      onError={(e) => {
-                        e.currentTarget.src = `https://img.youtube.com/vi/${archive.youtubeId}/hqdefault.jpg`;
-                      }}
-                    />
+              <div
+                onClick={() => window.open(`https://www.youtube.com/watch?v=${recentArchive.youtubeId}`, '_blank')}
+                style={{
+                  background: COLORS.navyLight,
+                  border: `2px solid ${COLORS.youtube}40`,
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  maxWidth: '500px'
+                }}
+              >
+                {/* 썸네일 */}
+                <div style={{
+                  position: 'relative',
+                  paddingBottom: '56.25%',
+                  background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyLight})`
+                }}>
+                  <img 
+                    src={`https://img.youtube.com/vi/${recentArchive.youtubeId}/maxresdefault.jpg`}
+                    alt={recentArchive.title}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
+                    onError={(e) => {
+                      e.currentTarget.src = `https://img.youtube.com/vi/${recentArchive.youtubeId}/hqdefault.jpg`;
+                    }}
+                  />
+                  {recentArchive.duration && (
                     <div style={{
                       position: 'absolute',
                       bottom: '10px',
@@ -381,54 +390,109 @@ const FreeLivePage: React.FC<FreeLivePageProps> = ({ onBack }) => {
                       borderRadius: '4px',
                       fontSize: '0.8rem'
                     }}>
-                      {archive.duration}
+                      {recentArchive.duration}
                     </div>
-                    <div style={{
-                      position: 'absolute',
-                      top: '10px',
-                      left: '10px',
-                      background: COLORS.youtube,
-                      color: COLORS.white,
-                      padding: '4px 8px',
-                      borderRadius: '6px',
-                      fontSize: '0.7rem',
-                      fontWeight: '700',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '4px'
-                    }}>
-                      <Youtube size={12} />
-                      FREE
-                    </div>
+                  )}
+                  <div style={{
+                    position: 'absolute',
+                    top: '10px',
+                    left: '10px',
+                    background: COLORS.youtube,
+                    color: COLORS.white,
+                    padding: '5px 10px',
+                    borderRadius: '8px',
+                    fontSize: '0.75rem',
+                    fontWeight: '700',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '5px'
+                  }}>
+                    <Youtube size={14} />
+                    FREE REPLAY
                   </div>
-                  
-                  <div style={{ padding: '15px' }}>
-                    <h4 style={{ color: COLORS.white, fontSize: '1rem', fontWeight: '600', marginBottom: '8px', lineHeight: 1.3 }}>
-                      {archive.title}
-                    </h4>
-                    <div style={{ color: COLORS.grayDark, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  {/* 재생 버튼 오버레이 */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '70px',
+                    height: '70px',
+                    background: 'rgba(255, 0, 0, 0.9)',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.4)'
+                  }}>
+                    <Play size={32} color="white" fill="white" />
+                  </div>
+                </div>
+                
+                <div style={{ padding: '20px' }}>
+                  <h4 style={{ color: COLORS.white, fontSize: '1.1rem', fontWeight: '700', marginBottom: '10px', lineHeight: 1.4 }}>
+                    {recentArchive.title}
+                  </h4>
+                  <div style={{ 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center',
+                    color: COLORS.grayDark, 
+                    fontSize: '0.85rem'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                       <Calendar size={14} />
-                      {archive.date}
+                      {recentArchive.date}
+                    </div>
+                    <div style={{ 
+                      color: COLORS.gold, 
+                      fontSize: '0.75rem',
+                      fontWeight: '600'
+                    }}>
+                      {(() => {
+                        const archiveDate = new Date(recentArchive.date);
+                        const now = new Date();
+                        const diffDays = Math.ceil((archiveDate.getTime() + 7 * 24 * 60 * 60 * 1000 - now.getTime()) / (1000 * 60 * 60 * 24));
+                        return diffDays > 0 ? `${diffDays}일 후 종료` : '곧 종료';
+                      })()}
                     </div>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
-          ) : (
+          );
+        })()}
+
+        {/* 아카이브가 없거나 7일 지났을 때 */}
+        {archives.length === 0 || !archives.some(a => new Date(a.date) >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)) ? (
+          <div style={{ marginBottom: '30px' }}>
+            <h3 style={{ 
+              color: '#1e293b', 
+              fontSize: '1.3rem', 
+              fontWeight: '700', 
+              marginBottom: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px'
+            }}>
+              <Play size={22} />
+              지난주 라이브
+            </h3>
             <div style={{
               background: COLORS.navyLight,
               borderRadius: '14px',
               padding: '40px',
               textAlign: 'center'
             }}>
-              <div style={{ fontSize: '2rem', marginBottom: '10px' }}>📼</div>
-              <p style={{ color: COLORS.gray }}>
-                아직 아카이브가 없습니다<br/>
-                첫 라이브 후 여기서 다시 볼 수 있어요!
+              <div style={{ fontSize: '2rem', marginBottom: '10px' }}>⏰</div>
+              <p style={{ color: COLORS.gray, lineHeight: 1.6 }}>
+                지난주 라이브 리플레이가 종료되었어요!<br/>
+                다음 월요일 라이브를 기다려주세요 🎉
               </p>
             </div>
-          )}
-        </div>
+          </div>
+        ) : null}
+
 
         {/* 프리미엄 라이브 안내 */}
         <div style={{

@@ -36,6 +36,14 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   const [totalBricks, setTotalBricks] = useState<number>(0);
 
   useEffect(() => {
+    // 경로 기반으로 언어 강제 설정 (영어 페이지가 아니면 한국어)
+    const isEnPath = window.location.pathname.startsWith('/en');
+    if (!isEnPath && i18n.language !== 'ko') {
+      i18n.changeLanguage('ko');
+    } else if (isEnPath && i18n.language !== 'en') {
+      i18n.changeLanguage('en');
+    }
+
     // 로그인 상태 확인
     const storedUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
     if (storedUserInfo) {
@@ -59,7 +67,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
         setUserInfo(null);
       }
     }
-  }, []);
+  }, [i18n]);
 
   const handleLogoClick = () => {
     if (onBack) {

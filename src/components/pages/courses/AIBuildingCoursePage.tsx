@@ -288,10 +288,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   marginBottom: '15px',
                   fontWeight: '900',
                   textShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
-                  background: 'linear-gradient(45deg, #0d1b2a, #1b263b)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
+                  color: '#ffffff'
                 }}>
                   Step 1: AI 건물주 되기 기초
                 </h1>
@@ -340,10 +337,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   fontWeight: '900',
                   marginBottom: '12px',
                   textShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
-                  background: 'linear-gradient(45deg, #0d1b2a, #1b263b)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
+                  color: '#ffffff'
                 }}>
                   ₩{earlyBirdPrice.toLocaleString()}
                 </div>
