@@ -111,7 +111,6 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
       if (!apiKey) return;
 
       const today = new Date();
-      const hour = today.getHours();
       const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][today.getDay()];
       
       const context = `

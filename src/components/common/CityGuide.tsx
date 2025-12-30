@@ -51,13 +51,8 @@ interface Message {
   content: string;
 }
 
-interface ChatLog {
-  id: string;
-  timestamp: string;
-  question: string;
-  answer: string;
-  sessionId: string;
-}
+// ChatLog 인터페이스는 Azure Table에서 사용됨 (참고용)
+// interface ChatLog { id, timestamp, question, answer, sessionId }
 
 // 대화 로그 저장 함수 - Azure Table Storage
 const AZURE_TABLE_SAS_URL = 'https://aicitybuilderstorage.table.core.windows.net/aicitybotannaewon?sp=raud&st=2025-12-30T15:36:29Z&se=2027-10-07T23:51:00Z&sv=2024-11-04&sig=L03bQRwwMehqqDw%2FtmeTMDXQ4eqq%2B1k0S6nvuKOyriU%3D';

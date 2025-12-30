@@ -121,21 +121,33 @@ const AIGymPage: React.FC = () => {
   const [imageLoading, setImageLoading] = useState(false);
   const [weatherResult, setWeatherResult] = useState('');
   const [weatherLoading, setWeatherLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [sportsResult, setSportsResult] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [sportsLoading, setSportsLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [videoResult, setVideoResult] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [videoLoading, setVideoLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [ttsResult, setTtsResult] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [ttsLoading, setTtsLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [podcastResult, setPodcastResult] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [podcastLoading, setPodcastLoading] = useState(false);
   const [basicResult, setBasicResult] = useState('');
   const [basicLoading, setBasicLoading] = useState(false);
   const [geminiBasicResult, setGeminiBasicResult] = useState('');
   const [geminiBasicLoading, setGeminiBasicLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [veoResult, setVeoResult] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [veoLoading, setVeoLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [veoStoryResult, setVeoStoryResult] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [veoStoryLoading, setVeoStoryLoading] = useState(false);
   
   // 로그인 체크
@@ -556,6 +568,7 @@ scene3 = client.models.generate_videos(
   };
 
   // Gemini 기초 연습
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const runGeminiBasic = async (code: string) => {
     const promptMatch = code.match(/prompt\s*=\s*["']([^"']+)["']/);
     const prompt = promptMatch ? promptMatch[1] : '안녕!';
@@ -795,6 +808,7 @@ scene3 = client.models.generate_videos(
   };
 
   // Veo 영상 생성 (프록시 사용)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const generateVeo = async (code: string) => {
     const promptMatch = code.match(/prompt\s*=\s*["']([^"']+)["']/);
     const prompt = promptMatch ? promptMatch[1] : '귀여운 고양이가 빨간 스포츠카를 운전하며 해안도로를 달린다';
@@ -894,6 +908,7 @@ scene3 = client.models.generate_videos(
   };
 
   // Veo 스토리 영상 생성 (프록시 사용)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const generateVeoStory = async (code: string) => {
     if (!apiKey) {
       setVeoStoryResult('error:먼저 API 키를 연결해주세요!');
@@ -1008,6 +1023,7 @@ scene3 = client.models.generate_videos(
     setWeatherLoading(false);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const generateSports = async (code: string) => {
     const prompt = extractPrompt(code);
     if (!apiKey || !prompt) return;
@@ -1043,6 +1059,7 @@ scene3 = client.models.generate_videos(
     setSportsLoading(false);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const generateVideo = async (code: string) => {
     const prompt = extractPrompt(code);
     if (!apiKey || !prompt) return;
@@ -1070,6 +1087,7 @@ scene3 = client.models.generate_videos(
     setVideoLoading(false);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const generateTTS = async (code: string) => {
     const styleMatch = code.match(/style\s*=\s*["']([^"']+)["']/);
     const textMatch = code.match(/text\s*=\s*["']([^"']+)["']/);
@@ -1110,6 +1128,7 @@ scene3 = client.models.generate_videos(
     setTtsLoading(false);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const generatePodcast = async (code: string) => {
     const script = extractScript(code);
     if (!apiKey || !script) return;

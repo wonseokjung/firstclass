@@ -648,5 +648,6 @@ export const LevelSelector: React.FC<LevelSelectorProps> = ({
   );
 };
 
-export default { PixelRunner, RunningTrack, CodingBuddy, Celebration, LevelSelector };
+const PixelRunnerExports = { PixelRunner, RunningTrack, CodingBuddy, Celebration, LevelSelector };
+export default PixelRunnerExports;
 
