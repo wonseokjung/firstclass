@@ -207,16 +207,31 @@ const SITE_CONTEXT = `
 ## 💡 응답 규칙 (매우 중요!)
 1. 항상 친절하고 따뜻하게 대화하세요
 2. 이모지를 적절히 사용하세요 (너무 많지 않게)
-3. 경로를 안내할 때는 정확한 URL을 알려주세요
-4. 모르는 내용은 솔직히 "잘 모르겠어요"라고 하고, 문의하기(/contact)를 안내하세요
-5. 대화는 한국어로 합니다
-6. 짧고 명확하게 답변하세요 (3-4문장 이내)
-7. 질문에 따라 적절한 강의나 페이지를 추천하세요
+3. **경로를 안내할 때는 반드시 /로 시작하는 상대 경로만 사용하세요!**
+   - ✅ 올바른 예: /live/free, /live/step1, /live/step2, /community/step1
+   - ❌ 절대 사용 금지: https://www.aicitybuilders.com/live/step2, www.aicitybuilders.com/live/step2
+   - 항상 /로 시작하는 경로만 사용하고, 도메인명이나 https://는 절대 포함하지 마세요!
+4. 링크를 표시할 때는 괄호 없이 경로만 표시하세요 (예: /live/free 또는 /live/step1)
+5. 모르는 내용은 솔직히 "잘 모르겠어요"라고 하고, 문의하기(/contact)를 안내하세요
+6. 대화는 한국어로 합니다
+7. 짧고 명확하게 답변하세요 (3-4문장 이내)
+8. 질문에 따라 적절한 강의나 페이지를 추천하세요
 
 ## ⚠️ 포맷팅 규칙 (반드시 지키세요!)
 절대로 마크다운 문법을 사용하지 마세요! 일반 텍스트로만 답변하세요.
 금지: 별표(볼드/이탤릭), 샵(헤딩), 대시(리스트), 코드블록, 링크문법
 항상 일반 텍스트로만 답변!
+
+## 🔗 링크 형식 규칙 (절대 지켜야 함!)
+- **절대 전체 URL을 사용하지 마세요!** (https://www.aicitybuilders.com/... ❌)
+- **항상 상대 경로만 사용하세요!** (/live/step2 ✅)
+- 예시:
+  - ✅ /live/free
+  - ✅ /live/step1
+  - ✅ /live/step2
+  - ✅ /community/step1
+  - ❌ https://www.aicitybuilders.com/live/step2
+  - ❌ www.aicitybuilders.com/live/step2
 
 ## 🚫 절대 하지 말아야 할 것 (매우 중요!)
 - **절대 지어서 답변하지 않기** - 위에 명시된 정보만 사용하세요
@@ -320,32 +335,44 @@ const CityGuide: React.FC<CityGuideProps> = ({ isOpenExternal, onClose, inline =
 
   // 텍스트에서 경로(/로 시작)를 클릭 가능한 링크로 변환
   const renderMessageWithLinks = (text: string) => {
-    // /경로 패턴 찾기 (괄호 안에 있거나 단독으로 있는 경우)
-    const linkRegex = /\(?(\/[a-z0-9-]+)\)?/gi;
-    const parts = text.split(linkRegex);
+    // 전체 URL 패턴도 인식 (https://www.aicitybuilders.com/... 또는 www.aicitybuilders.com/...)
+    const fullUrlRegex = /(https?:\/\/)?(www\.)?aicitybuilders\.com(\/[a-z0-9-/]+)/gi;
+    // 상대 경로 패턴
+    const relativePathRegex = /(\/[a-z0-9-/]+)/gi;
+    
+    // 먼저 전체 URL을 상대 경로로 변환
+    let processedText = text.replace(fullUrlRegex, (match, protocol, www, path) => {
+      return path; // 도메인 부분 제거하고 경로만 남김
+    });
+    
+    // 그 다음 상대 경로를 클릭 가능한 링크로 변환
+    const parts = processedText.split(relativePathRegex);
     
     return parts.map((part, index) => {
-      if (part && part.startsWith('/')) {
-        return (
-          <span
-            key={index}
-            onClick={() => {
-              navigate(part);
-              setIsOpen(false);
-            }}
-            style={{
-              color: '#ffd700',
-              textDecoration: 'underline',
-              cursor: 'pointer',
-              fontWeight: '600'
-            }}
-          >
-            {part}
-          </span>
-        );
+      if (part && part.startsWith('/') && part.length > 1) {
+        // 유효한 경로인지 확인 (최소 2글자 이상, /만 있는 경우 제외)
+        const cleanPath = part.trim();
+        if (cleanPath.length > 1 && /^\/[a-z0-9-/]+$/i.test(cleanPath)) {
+          return (
+            <span
+              key={index}
+              onClick={() => {
+                navigate(cleanPath);
+                setIsOpen(false);
+              }}
+              style={{
+                color: '#ffd700',
+                textDecoration: 'underline',
+                cursor: 'pointer',
+                fontWeight: '600'
+              }}
+            >
+              {cleanPath}
+            </span>
+          );
+        }
       }
-      // 괄호 제거
-      return part.replace(/[()]/g, '');
+      return part;
     });
   };
   const [messages, setMessages] = useState<Message[]>([
@@ -431,8 +458,8 @@ const CityGuide: React.FC<CityGuideProps> = ({ isOpenExternal, onClose, inline =
 ## 🔴 오늘 라이브 일정 (실시간 정보 - 반드시 확인!)
 ${todayLiveInfo ? 
   todayLiveInfo.isLive 
-    ? `✅ 지금 라이브 진행 중! "${todayLiveInfo.title}" (${todayLiveInfo.link})\n현재 시간: ${currentTime}, 라이브 시간: ${todayLiveInfo.time}`
-    : `📅 오늘 ${todayLiveInfo.time}에 "${todayLiveInfo.title}" 라이브 예정 (${todayLiveInfo.link})\n현재 시간: ${currentTime}, 라이브까지 남은 시간 계산 필요`
+    ? `✅ 지금 라이브 진행 중! "${todayLiveInfo.title}"\n링크: ${todayLiveInfo.link}\n현재 시간: ${currentTime}, 라이브 시간: ${todayLiveInfo.time}`
+    : `📅 오늘 ${todayLiveInfo.time}에 "${todayLiveInfo.title}" 라이브 예정\n링크: ${todayLiveInfo.link}\n현재 시간: ${currentTime}, 라이브까지 남은 시간 계산 필요`
   : '오늘은 라이브 일정이 없습니다.'}
 
 ⚠️ 라이브 관련 질문 답변 규칙 (매우 중요!):
@@ -440,7 +467,8 @@ ${todayLiveInfo ?
 2. todayLiveInfo가 null이 아니면 "오늘 라이브 있습니다!"라고 답변
 3. todayLiveInfo.isLive가 true면 "지금 라이브 진행 중입니다!"라고 답변
 4. 절대로 "오늘 라이브 없어요"라고 답변하지 마세요 (위 정보 확인 후 답변)
-5. 현재 시간(${currentTime})과 라이브 시간(${todayLiveInfo?.time || 'N/A'})을 비교해서 정확히 답변`;
+5. 현재 시간(${currentTime})과 라이브 시간(${todayLiveInfo?.time || 'N/A'})을 비교해서 정확히 답변
+6. 링크를 안내할 때는 반드시 ${todayLiveInfo?.link || '/live'} 형식으로 정확히 표시하세요 (예: /live/free, /live/step1 등)`;
       
       if (userInfo) {
         personalizedContext += `\n\n## 👤 현재 사용자 정보 (로그인됨)
