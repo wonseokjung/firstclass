@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aicitybuilders-v1.2.0'; // Network-First 전략으로 변경
+const CACHE_NAME = 'aicitybuilders-v1.3.0'; // 2026-01-01 새해 업데이트
 const urlsToCache = [
   '/',
   '/manifest.json',
