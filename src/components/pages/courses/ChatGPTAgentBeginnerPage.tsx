@@ -1256,7 +1256,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
               <h2 style={{
               fontSize: 'clamp(2rem, 4vw, 2.5rem)',
                 fontWeight: '800',
-                color: '#ffffff',
+                color: '#1b263b',
               marginBottom: '40px',
               textAlign: 'center'
             }}>
