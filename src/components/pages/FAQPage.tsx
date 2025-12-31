@@ -23,7 +23,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
   const [openItems, setOpenItems] = useState<number[]>([]);
 
   const toggleItem = (index: number) => {
-    setOpenItems(prev => 
+    setOpenItems(prev =>
       prev.includes(index) ? prev.filter(item => item !== index) : [...prev, index]
     );
   };
@@ -125,7 +125,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
 
             <p style="margin-bottom: 10px;"><strong>환불 예시:</strong></p>
             <ul style="margin-left: 20px; line-height: 1.8;">
-              <li>Step 1 (45,000원) 3일차 수강 → <strong style="color: #4ade80;">31,500원</strong> 환불</li>
+              <li>Step 1 (95,000원) 3일차 수강 → <strong style="color: #4ade80;">66,500원</strong> 환불</li>
               <li>Step 2 (95,000원) 5일차 수강 → <strong style="color: #4ade80;">47,500원</strong> 환불</li>
             </ul>
           `
@@ -404,7 +404,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
         {faqData.map((category, categoryIndex) => (
           <div key={categoryIndex} style={styles.categorySection}>
             <h2 style={{ ...styles.categoryTitle }}>
-              <div style={{ 
+              <div style={{
                 background: `linear-gradient(135deg, ${brandColors.gold}, ${brandColors.goldDark})`,
                 padding: '10px',
                 borderRadius: '10px',
@@ -414,14 +414,14 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
               </div>
               {category.category}
             </h2>
-            
+
             {category.items.map((item, itemIndex) => {
               const globalIndex = categoryIndex * 100 + itemIndex;
               const isOpen = openItems.includes(globalIndex);
-              
+
               return (
-                <div 
-                  key={itemIndex} 
+                <div
+                  key={itemIndex}
                   style={{
                     ...styles.faqItem,
                     background: isOpen ? `${brandColors.navyMid}ee` : `${brandColors.navyLight}cc`,
@@ -430,8 +430,8 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
                 >
                   <button style={styles.question} onClick={() => toggleItem(globalIndex)}>
                     <span>{item.question}</span>
-                    <ChevronDown 
-                      size={20} 
+                    <ChevronDown
+                      size={20}
                       color={brandColors.gold}
                       style={{
                         transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
@@ -440,7 +440,7 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
                       }}
                     />
                   </button>
-                  
+
                   {isOpen && (
                     <div style={styles.answer} dangerouslySetInnerHTML={{ __html: item.answer }} />
                   )}
@@ -459,14 +459,14 @@ const FAQPage: React.FC<FAQPageProps> = ({ onBack }) => {
             전문 상담원이 친절하게 도와드리겠습니다
           </p>
           <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button 
+            <button
               style={styles.button}
               onClick={() => window.location.href = 'mailto:jay@connexionai.kr'}
             >
               <Mail size={18} />
               이메일 문의
             </button>
-            <button 
+            <button
               style={{ ...styles.button, ...styles.refundButton }}
               onClick={() => navigate('/refund-policy')}
             >

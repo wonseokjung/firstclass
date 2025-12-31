@@ -14,7 +14,7 @@ const RoadmapPage: React.FC = () => {
       icon: <Sparkles size={32} />,
       description: '1960년 맨해튼 기회가 지금 유튜브에',
       details: '유튜브 CEO가 발표한 "새로운 계급의 크리에이터"가 되는 첫 시작입니다. 1960년대 맨해튼 부동산처럼, 지금 유튜브 채널이 디지털 건물입니다. 구글의 30개+ AI 도구로 수익화 콘텐츠를 만듭니다.',
-      price: '₩45,000',
+      price: '₩95,000',
       priceType: '일회성',
       color: '#3b82f6',
       gradient: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)',
@@ -103,7 +103,7 @@ const RoadmapPage: React.FC = () => {
       background: 'linear-gradient(180deg, #0a0a1a 0%, #0f1629 50%, #1a1a3a 100%)',
     }}>
       <NavigationBar />
-      
+
       {/* Hero Section */}
       <section style={{
         padding: 'clamp(40px, 8vw, 80px) clamp(15px, 3vw, 20px) clamp(30px, 6vw, 60px)',
@@ -122,7 +122,7 @@ const RoadmapPage: React.FC = () => {
             🚀 AI 1인 기업가 로드맵
           </span>
         </div>
-        
+
         <h1 style={{
           color: '#ffffff',
           fontSize: 'clamp(2rem, 5vw, 3.5rem)',
@@ -133,7 +133,7 @@ const RoadmapPage: React.FC = () => {
           AI 1인 기업가가 되는 여정<br />
           <span style={{ color: '#e5c100' }}>교육 + 도구로 함께합니다</span>
         </h1>
-        
+
         <p style={{
           color: '#94a3b8',
           fontSize: '1.1rem',
@@ -166,8 +166,8 @@ const RoadmapPage: React.FC = () => {
                   width: '50px',
                   height: '50px',
                   borderRadius: '50%',
-                  background: step.status === 'featured' ? step.gradient : 
-                             step.status === 'coming_soon' ? '#415a77' : step.color,
+                  background: step.status === 'featured' ? step.gradient :
+                    step.status === 'coming_soon' ? '#415a77' : step.color,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -216,7 +216,7 @@ const RoadmapPage: React.FC = () => {
               key={step.step}
               onClick={() => step.status !== 'coming_soon' && navigate(step.path)}
               style={{
-                background: step.status === 'featured' 
+                background: step.status === 'featured'
                   ? 'linear-gradient(135deg, #1a1a2e 0%, #1b263b 100%)'
                   : 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
                 borderRadius: '24px',
@@ -249,7 +249,7 @@ const RoadmapPage: React.FC = () => {
               )}
 
               <div style={{
-                background: step.status === 'featured' 
+                background: step.status === 'featured'
                   ? 'linear-gradient(135deg, #1a1a2e 0%, #1b263b 100%)'
                   : 'transparent',
                 borderRadius: '22px',
@@ -322,8 +322,8 @@ const RoadmapPage: React.FC = () => {
                     border: '2px solid rgba(59, 130, 246, 0.3)',
                     position: 'relative'
                   }}>
-                    <img 
-                      src={(step as any).showcaseImage} 
+                    <img
+                      src={(step as any).showcaseImage}
                       alt="압도적인 비주얼 예시"
                       style={{
                         width: '100%',
@@ -414,7 +414,7 @@ const RoadmapPage: React.FC = () => {
                       </span>
                     )}
                   </div>
-                  
+
                   {step.status !== 'coming_soon' ? (
                     <button style={{
                       background: step.status === 'featured' ? step.gradient : step.color,

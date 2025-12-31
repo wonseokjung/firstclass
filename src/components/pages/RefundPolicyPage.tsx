@@ -11,8 +11,8 @@ interface RefundPolicyPageProps {
 
 // 강의 정보
 const COURSE_INFO: { [key: string]: { name: string; price: number; totalDays: number } } = {
-  '999': { name: 'Step 1: AI 건물주 되기', price: 45000, totalDays: 10 },
-  'ai-building-course': { name: 'Step 1: AI 건물주 되기', price: 45000, totalDays: 10 },
+  '999': { name: 'Step 1: AI 건물주 되기', price: 95000, totalDays: 10 },
+  'ai-building-course': { name: 'Step 1: AI 건물주 되기', price: 95000, totalDays: 10 },
   '1002': { name: 'Step 2: AI 에이전트 비기너', price: 95000, totalDays: 10 },
   'chatgpt-agent-beginner': { name: 'Step 2: AI 에이전트 비기너', price: 95000, totalDays: 10 },
 };
@@ -36,16 +36,16 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  
+
   const calculateRefund = (course: EnrolledCourseData) => {
     const courseInfo = COURSE_INFO[course.courseId];
     if (!courseInfo) return { refundAmount: 0, usedAmount: 0, completedDays: 0, totalDays: 10, price: 0, message: '' };
-    
+
     const completedDays = course.completedDays?.length || 0;
     const pricePerDay = courseInfo.price / courseInfo.totalDays;
     const usedAmount = Math.round(pricePerDay * completedDays);
     const refundAmount = courseInfo.price - usedAmount;
-    
+
     let message = '';
     if (completedDays === 0) {
       message = '수강 시작 전 - 전액 환불';
@@ -54,14 +54,14 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
     } else {
       message = `${completedDays}일 수강 완료`;
     }
-    
-    return { 
-      refundAmount: Math.max(0, refundAmount), 
-      usedAmount, 
+
+    return {
+      refundAmount: Math.max(0, refundAmount),
+      usedAmount,
       completedDays,
       totalDays: courseInfo.totalDays,
       price: courseInfo.price,
-      message 
+      message
     };
   };
 
@@ -96,7 +96,7 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
       if (allPayments) {
         const paymentsList = JSON.parse(allPayments);
         // 해당 사용자의 결제 중 가장 최근 것 찾기
-        const userPayment = paymentsList.find((p: any) => 
+        const userPayment = paymentsList.find((p: any) =>
           p.customerEmail?.toLowerCase() === userEmail.toLowerCase()
         );
         if (userPayment?.paymentKey) {
@@ -112,14 +112,14 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
   const handleRefundSubmit = async () => {
     if (!userInfo || !selectedCourse) return;
     setIsSubmitting(true);
-    
+
     try {
       const courseInfo = COURSE_INFO[selectedCourse.courseId];
       const { refundAmount, usedAmount, completedDays, totalDays, price } = calculateRefund(selectedCourse);
-      
+
       // paymentKey 조회
       const paymentKey = findPaymentKey(userInfo.email, selectedCourse.courseId);
-      
+
       await emailjs.send('service_ca3frqd', 'template_refund', {
         to_email: 'jay@connexionai.kr',
         from_name: userInfo.name,
@@ -134,7 +134,7 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
         request_date: new Date().toLocaleString('ko-KR'),
         payment_key: paymentKey,  // 🔑 환불용 paymentKey 추가
       }, 'McMYvMBYbK-cdZ8ba');
-      
+
       setSubmitSuccess(true);
       setShowConfirmModal(false);
     } catch (error) {
@@ -322,7 +322,7 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
   return (
     <div style={styles.container}>
       <NavigationBar onBack={onBack} breadcrumbText="환불 정책" />
-      
+
       <div style={styles.content}>
         {/* 헤더 */}
         <div style={styles.header}>
@@ -335,12 +335,12 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
         {/* 환불 기준 */}
         <div style={styles.card}>
           <h2 style={styles.cardTitle}>
-            <div style={{...styles.iconCircle, background: `linear-gradient(135deg, ${brandColors.gold}, ${brandColors.goldDark})`}}>
+            <div style={{ ...styles.iconCircle, background: `linear-gradient(135deg, ${brandColors.gold}, ${brandColors.goldDark})` }}>
               <FileText size={20} color={brandColors.navy} />
             </div>
             원격교육 환불 기준
           </h2>
-          
+
           <div style={styles.policyBox}>
             <p style={{ fontSize: '1.05rem', lineHeight: '1.8', color: brandColors.cream }}>
               📌 <strong>원격교육 환불 원칙</strong> (평생교육법 시행령 별표3)
@@ -362,7 +362,7 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
             <tbody>
               <tr>
                 <td style={styles.td}><strong>수업 시작 전</strong></td>
-                <td style={{...styles.td, color: brandColors.goldLight, fontWeight: '600'}}>전액 환불 💯</td>
+                <td style={{ ...styles.td, color: brandColors.goldLight, fontWeight: '600' }}>전액 환불 💯</td>
               </tr>
               <tr>
                 <td style={styles.td}><strong>수업 시작 후</strong></td>
@@ -382,15 +382,15 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
         {/* 환불 예시 */}
         <div style={styles.card}>
           <h2 style={styles.cardTitle}>
-            <div style={{...styles.iconCircle, background: `linear-gradient(135deg, ${brandColors.gold}, ${brandColors.goldDark})`}}>
+            <div style={{ ...styles.iconCircle, background: `linear-gradient(135deg, ${brandColors.gold}, ${brandColors.goldDark})` }}>
               <Calculator size={20} color={brandColors.navy} />
             </div>
             환불 금액 예시
           </h2>
-          
+
           {[
-            { course: 'Step 1: AI 건물주 되기', price: '45,000원', days: '0일', refund: '45,000원', full: true },
-            { course: 'Step 1: AI 건물주 되기', price: '45,000원', days: '3일', refund: '31,500원', full: false },
+            { course: 'Step 1: AI 건물주 되기', price: '95,000원', days: '0일', refund: '95,000원', full: true },
+            { course: 'Step 1: AI 건물주 되기', price: '95,000원', days: '3일', refund: '66,500원', full: false },
             { course: 'Step 2: AI 에이전트 비기너', price: '95,000원', days: '0일', refund: '95,000원', full: true },
             { course: 'Step 2: AI 에이전트 비기너', price: '95,000원', days: '5일', refund: '47,500원', full: false },
           ].map((ex, idx) => (
@@ -401,8 +401,8 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
                   결제 {ex.price} | 수강 {ex.days}
                 </p>
               </div>
-              <div style={{ 
-                fontWeight: '700', 
+              <div style={{
+                fontWeight: '700',
                 fontSize: '1.1rem',
                 color: brandColors.goldLight,
                 display: 'flex',
@@ -420,7 +420,7 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
         {!submitSuccess && (
           <div style={styles.card}>
             <h2 style={styles.cardTitle}>
-              <div style={{...styles.iconCircle, background: `linear-gradient(135deg, ${brandColors.gold}, ${brandColors.goldDark})`}}>
+              <div style={{ ...styles.iconCircle, background: `linear-gradient(135deg, ${brandColors.gold}, ${brandColors.goldDark})` }}>
                 <Mail size={20} color={brandColors.navy} />
               </div>
               환불 신청
@@ -428,10 +428,10 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
 
             {!userInfo && (
               <div style={{ textAlign: 'center', padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)' }}>
-                <div style={{ 
-                  width: '80px', height: '80px', 
+                <div style={{
+                  width: '80px', height: '80px',
                   background: `linear-gradient(135deg, ${brandColors.gold}30, ${brandColors.goldDark}30)`,
-                  borderRadius: '50%', 
+                  borderRadius: '50%',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   margin: '0 auto 20px'
                 }}>
@@ -456,10 +456,10 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
 
             {userInfo && !isLoadingCourses && enrolledCourses.length === 0 && (
               <div style={{ textAlign: 'center', padding: '40px' }}>
-                <div style={{ 
-                  width: '80px', height: '80px', 
+                <div style={{
+                  width: '80px', height: '80px',
                   background: `${brandColors.navyMid}80`,
-                  borderRadius: '50%', 
+                  borderRadius: '50%',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   margin: '0 auto 20px'
                 }}>
@@ -477,7 +477,7 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
                   const { refundAmount, usedAmount, completedDays, totalDays, price, message } = calculateRefund(course);
                   const courseInfo = COURSE_INFO[course.courseId];
                   const canRefund = refundAmount > 0;
-                  
+
                   return (
                     <div key={course.courseId} style={{
                       ...styles.courseCard,
@@ -488,7 +488,7 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
                           <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#f1f5f9', marginBottom: '15px' }}>
                             {courseInfo?.name || course.title}
                           </h3>
-                          
+
                           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px', marginBottom: '20px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                               <DollarSign size={18} color={brandColors.gold} />
@@ -512,7 +512,7 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
                               </div>
                             </div>
                           </div>
-                          
+
                           <div style={{
                             background: canRefund ? `${brandColors.gold}15` : 'rgba(100, 116, 139, 0.15)',
                             padding: '15px 20px',
@@ -527,7 +527,7 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
                             </p>
                           </div>
                         </div>
-                        
+
                         <button
                           onClick={() => handleRefundRequest(course)}
                           disabled={!canRefund}
@@ -559,11 +559,11 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
                 <AlertCircle size={24} />
                 환불 신청 확인
               </h2>
-              
+
               {(() => {
                 const { refundAmount, usedAmount, completedDays, totalDays, price } = calculateRefund(selectedCourse);
                 const courseInfo = COURSE_INFO[selectedCourse.courseId];
-                
+
                 return (
                   <>
                     <div style={{ background: `${brandColors.navyMid}80`, padding: '20px', borderRadius: '12px', marginBottom: '25px' }}>
@@ -590,7 +590,7 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div style={{ marginBottom: '25px' }}>
                       <label style={{ display: 'block', marginBottom: '10px', fontWeight: '600', color: brandColors.cream }}>
                         환불 사유 (선택)
@@ -613,7 +613,7 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
                         }}
                       />
                     </div>
-                    
+
                     <p style={{ color: '#8899aa', fontSize: '0.9rem', marginBottom: '25px' }}>
                       환불 신청 시 담당자에게 자동 알림이 발송됩니다.
                       영업일 기준 3~5일 내 처리됩니다.
@@ -621,7 +621,7 @@ const RefundPolicyPage: React.FC<RefundPolicyPageProps> = ({ onBack }) => {
                   </>
                 );
               })()}
-              
+
               <div style={{ display: 'flex', gap: '15px' }}>
                 <button
                   onClick={() => { setShowConfirmModal(false); setSelectedCourse(null); setRefundReason(''); }}

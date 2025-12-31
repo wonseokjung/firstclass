@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Target, ArrowRight } from 'lucide-react';
+import { Target } from 'lucide-react';
 
 const MonthlyProjectSection: React.FC = () => {
     const navigate = useNavigate();
@@ -8,11 +8,26 @@ const MonthlyProjectSection: React.FC = () => {
     // 2026년 1월 프로젝트
     const project = {
         month: '1월',
-        theme: '숏츠 자동화 마스터',
-        steps: [
-            { step: 1, course: 'AI 건물주 되기', title: '캐릭터 이미지 생성', day: '화' },
-            { step: 2, course: 'AI 에이전트 비기너', title: '숏츠 자동화 에이전트 워크플로우', day: '수' },
-            { step: 3, course: '바이브코딩', title: '숏츠 자동화 에이전트 개발', day: '목' },
+        theme: '캐릭터 기반 콘텐츠 만들기',
+        courses: [
+            {
+                course: 'AI 건물주',
+                title: '캐릭터 이미지 생성',
+                day: '화',
+                weeks: ['인물', '3D 만화', '동물', '귀엽고 심플']
+            },
+            {
+                course: 'AI 에이전트 비기너',
+                title: '캐릭터 영상 자동화 (Google OPAL)',
+                day: '수',
+                weeks: ['인물', '3D 만화', '동물', '귀엽고 심플']
+            },
+            {
+                course: '바이브코딩',
+                title: '캐릭터 영상 자동화 (Antigravity)',
+                day: '목',
+                weeks: ['인물', '3D 만화', '동물', '귀엽고 심플']
+            },
         ]
     };
 
@@ -64,58 +79,68 @@ const MonthlyProjectSection: React.FC = () => {
                     기초 강의 + 매주 라이브 프로젝트
                 </p>
 
-                {/* Step 진행 흐름 */}
+                {/* 강의별 카드 */}
                 <div style={{
                     display: 'flex',
-                    alignItems: 'center',
+                    alignItems: 'stretch',
                     justifyContent: 'center',
                     gap: 'clamp(10px, 3vw, 20px)',
                     flexWrap: 'wrap',
                     marginBottom: '25px'
                 }}>
-                    {project.steps.map((item, idx) => (
-                        <React.Fragment key={item.step}>
-                            <div style={{
+                    {project.courses.map((item, idx) => (
+                        <div
+                            key={idx}
+                            style={{
                                 background: 'rgba(255,255,255,0.05)',
                                 border: '1px solid rgba(255,255,255,0.1)',
                                 borderRadius: '12px',
                                 padding: 'clamp(12px, 2.5vw, 16px)',
                                 minWidth: 'clamp(140px, 28vw, 180px)',
                                 textAlign: 'center'
+                            }}
+                        >
+                            <div style={{
+                                color: '#ffd60a',
+                                fontSize: '0.75rem',
+                                fontWeight: '700',
+                                marginBottom: '4px'
                             }}>
-                                <div style={{
-                                    color: '#ffd60a',
-                                    fontSize: '0.75rem',
-                                    fontWeight: '700',
-                                    marginBottom: '4px'
-                                }}>
-                                    Step {item.step} ({item.day})
-                                </div>
-                                <div style={{
-                                    color: 'rgba(255,255,255,0.6)',
-                                    fontSize: '0.7rem',
-                                    marginBottom: '6px'
-                                }}>
-                                    {item.course}
-                                </div>
-                                <div style={{
-                                    color: '#ffffff',
-                                    fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
-                                    fontWeight: '600',
-                                    lineHeight: 1.3
-                                }}>
-                                    {item.title}
-                                </div>
+                                {item.course} ({item.day})
                             </div>
-
-                            {idx < project.steps.length - 1 && (
-                                <ArrowRight
-                                    size={20}
-                                    color="rgba(255,255,255,0.3)"
-                                    style={{ flexShrink: 0 }}
-                                />
+                            <div style={{
+                                color: '#ffffff',
+                                fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
+                                fontWeight: '600',
+                                lineHeight: 1.3,
+                                marginBottom: item.weeks.length > 0 ? '8px' : '0'
+                            }}>
+                                {item.title}
+                            </div>
+                            {item.weeks.length > 0 && (
+                                <div style={{
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    gap: '4px',
+                                    justifyContent: 'center'
+                                }}>
+                                    {item.weeks.map((week, wIdx) => (
+                                        <span
+                                            key={wIdx}
+                                            style={{
+                                                background: 'rgba(255,215,0,0.15)',
+                                                color: 'rgba(255,255,255,0.7)',
+                                                fontSize: '0.65rem',
+                                                padding: '2px 6px',
+                                                borderRadius: '4px'
+                                            }}
+                                        >
+                                            {wIdx + 1}주: {week}
+                                        </span>
+                                    ))}
+                                </div>
                             )}
-                        </React.Fragment>
+                        </div>
                     ))}
                 </div>
 

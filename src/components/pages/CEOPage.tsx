@@ -22,7 +22,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
       subtitle: '배우기',
       icon: <Sparkles size={24} />,
       description: '다양한 AI 모델 + 비즈니스 마인드',
-      price: '₩45,000',
+      price: '₩95,000',
       color: '#3b82f6',
       path: '/ai-building-course'
     },
@@ -84,7 +84,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           borderRadius: '50%',
           pointerEvents: 'none'
         }} />
-        
+
         <div style={{
           display: 'flex',
           flexDirection: 'column',
@@ -105,13 +105,13 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           }}>
             <span style={{ color: '#ffd60a', fontSize: '0.9rem', fontWeight: '600' }}>
               🏙️ AI City Builders
-              </span>
+            </span>
           </div>
 
-            <h1 style={{
-              color: '#ffffff',
+          <h1 style={{
+            color: '#ffffff',
             fontSize: 'clamp(2.2rem, 6vw, 3.5rem)',
-              fontWeight: '900',
+            fontWeight: '900',
             marginBottom: '0',
             lineHeight: '1.2',
             maxWidth: '900px'
@@ -245,8 +245,8 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             position: 'relative',
             zIndex: 1
           }}>
-            "AI will create an entirely <span style={{ 
-              color: '#ffd60a', 
+            "AI will create an entirely <span style={{
+              color: '#ffd60a',
               fontWeight: '900',
               textDecoration: 'underline',
               textDecorationColor: 'rgba(251, 191, 36, 0.5)'
@@ -382,10 +382,10 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             padding: '24px 40px'
           }}>
             <p style={{ color: '#94a3b8', fontSize: '0.9rem', margin: '0 0 8px 0' }}>함께 만드는</p>
-            <p style={{ 
-              color: '#fff', 
-              fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', 
-              fontWeight: '800', 
+            <p style={{
+              color: '#fff',
+              fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+              fontWeight: '800',
               margin: 0,
               display: 'flex',
               alignItems: 'center',
@@ -405,19 +405,19 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
         maxWidth: '600px',
         margin: '0 auto'
       }}>
-        <div style={{ 
-          display: 'flex', 
-          gap: '20px', 
-          flexWrap: 'wrap', 
+        <div style={{
+          display: 'flex',
+          gap: '20px',
+          flexWrap: 'wrap',
           justifyContent: 'center',
           background: 'rgba(255,255,255,0.03)',
           padding: '20px',
           borderRadius: '16px',
           border: '1px solid rgba(255,255,255,0.1)'
         }}>
-          <a 
-            href="https://www.youtube.com/@ConnectAILAB" 
-            target="_blank" 
+          <a
+            href="https://www.youtube.com/@ConnectAILAB"
+            target="_blank"
             rel="noopener noreferrer"
             style={{
               display: 'flex',
@@ -431,9 +431,9 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             <Youtube size={20} color="#ff0000" />
             <span>Connect AI LAB</span>
           </a>
-          <a 
-            href="https://www.instagram.com/aimentorjay" 
-            target="_blank" 
+          <a
+            href="https://www.instagram.com/aimentorjay"
+            target="_blank"
             rel="noopener noreferrer"
             style={{
               display: 'flex',
@@ -521,7 +521,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                     Coming Soon
                   </div>
                 )}
-                
+
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -612,34 +612,34 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           gap: '20px'
         }}>
           {[
-            { 
-              icon: <GraduationCap size={32} />, 
+            {
+              icon: <GraduationCap size={32} />,
               step: '01',
-              title: '🎓 교육', 
+              title: '🎓 교육',
               desc: 'AI 도구 사용법부터 콘텐츠 전략까지 체계적으로 배웁니다',
               color: '#3b82f6',
               highlight: '누구나 시작 가능'
             },
-            { 
-              icon: <Wrench size={32} />, 
+            {
+              icon: <Wrench size={32} />,
               step: '02',
-              title: '🛠️ 도구', 
+              title: '🛠️ 도구',
               desc: 'AI 에이전트를 활용해 콘텐츠를 자동으로 생성합니다',
               color: '#10b981',
               highlight: '코딩 없이 자동화'
             },
-            { 
-              icon: <TrendingUp size={32} />, 
+            {
+              icon: <TrendingUp size={32} />,
               step: '03',
-              title: '💰 수익화', 
+              title: '💰 수익화',
               desc: '수익형 콘텐츠 채널을 완성하고 월 수익을 창출합니다',
               color: '#e5c100',
               highlight: 'AI 1인 기업가'
             },
-            { 
-              icon: <Globe size={32} />, 
+            {
+              icon: <Globe size={32} />,
               step: '04',
-              title: '🏙️ AI 도시', 
+              title: '🏙️ AI 도시',
               desc: '1인 기업가 네트워크와 함께 성장하는 생태계에 합류합니다',
               color: '#8b5cf6',
               highlight: '함께 성장'
@@ -733,7 +733,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
               flexDirection: 'column',
               alignItems: 'center',
               gap: '20px',
-                textAlign: 'center'
+              textAlign: 'center'
             }}>
               {/* Avatar */}
               <div style={{
@@ -744,8 +744,8 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                 overflow: 'hidden',
                 boxShadow: '0 0 40px rgba(251, 191, 36, 0.3)'
               }}>
-                <img 
-                  src="/images/jaymentor.PNG" 
+                <img
+                  src="/images/jaymentor.PNG"
                   alt="정원석 (Jay) 멘토"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   onError={(e) => {
@@ -768,11 +768,11 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
               </p>
 
               {/* 역할 배지 */}
-              <div style={{ 
-                display: 'flex', 
-                gap: '10px', 
-                flexWrap: 'wrap', 
-                justifyContent: 'center' 
+              <div style={{
+                display: 'flex',
+                gap: '10px',
+                flexWrap: 'wrap',
+                justifyContent: 'center'
               }}>
                 {[
                   '커넥젼에이아이 대표',
@@ -784,12 +784,12 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                     border: '1px solid rgba(251, 191, 36, 0.3)',
                     color: '#ffd60a',
                     padding: '8px 16px',
-                  borderRadius: '20px',
-                  fontSize: '0.85rem',
+                    borderRadius: '20px',
+                    fontSize: '0.85rem',
                     fontWeight: '600'
-                }}>
+                  }}>
                     {role}
-                </span>
+                  </span>
                 ))}
               </div>
             </div>
@@ -861,8 +861,8 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             </span>
           </div>
 
-        <h2 style={{
-          color: '#fff',
+          <h2 style={{
+            color: '#fff',
             fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
             fontWeight: '900',
             marginBottom: '20px',
@@ -870,12 +870,12 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           }}>
             AI 1인 기업가가 되어<br />
             <span style={{ color: '#ffd60a' }}>AI 도시</span>를 함께 만들어갑시다
-        </h2>
+          </h2>
 
-        <p style={{
-          color: '#94a3b8',
+          <p style={{
+            color: '#94a3b8',
             fontSize: 'clamp(1rem, 2.5vw, 1.15rem)',
-          marginBottom: '32px',
+            marginBottom: '32px',
             lineHeight: '1.8'
           }}>
             기술이 없어도 괜찮습니다.<br />
@@ -888,17 +888,17 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             justifyContent: 'center',
             flexWrap: 'wrap'
           }}>
-        <button
-          onClick={onBack}
-          style={{
+            <button
+              onClick={onBack}
+              style={{
                 background: 'linear-gradient(135deg, #ffd60a 0%, #e5c100 100%)',
-            color: '#000',
-            border: 'none',
+                color: '#000',
+                border: 'none',
                 padding: '18px 40px',
                 borderRadius: '14px',
-            fontWeight: '800',
-            fontSize: '1.1rem',
-            cursor: 'pointer',
+                fontWeight: '800',
+                fontSize: '1.1rem',
+                cursor: 'pointer',
                 boxShadow: '0 10px 40px rgba(251, 191, 36, 0.4)',
                 display: 'flex',
                 alignItems: 'center',
@@ -941,7 +941,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
               }}
             >
               🗺️ 로드맵 보기
-        </button>
+            </button>
           </div>
         </div>
       </section>
@@ -959,7 +959,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
 
       {/* Modal */}
       {selectedTranscript && (
-        <div 
+        <div
           onClick={closeTranscriptModal}
           style={{
             position: 'fixed',
@@ -975,7 +975,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
           }}
         >
           <div onClick={(e) => e.stopPropagation()} style={{ position: 'relative' }}>
-            <button 
+            <button
               onClick={closeTranscriptModal}
               style={{
                 position: 'absolute',
@@ -989,9 +989,9 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             >
               <X size={30} />
             </button>
-            <img 
-              src={selectedTranscript} 
-              alt="성적증명서" 
+            <img
+              src={selectedTranscript}
+              alt="성적증명서"
               style={{ maxWidth: '90vw', maxHeight: '90vh', borderRadius: '12px' }}
             />
           </div>

@@ -418,6 +418,72 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 
           </div>
 
+          {/* ✨ 이 강의에 포함된 것 - 간결한 버전 */}
+          <div style={{
+            background: 'linear-gradient(135deg, #0d1b2a, #1b263b)',
+            padding: 'clamp(30px, 5vw, 50px)',
+            borderRadius: '25px',
+            marginBottom: 'clamp(30px, 6vw, 50px)',
+            border: '2px solid rgba(255, 214, 10, 0.4)',
+            boxShadow: '0 15px 40px rgba(0, 0, 0, 0.2)'
+          }}>
+            <h3 style={{
+              color: '#ffd60a',
+              fontSize: 'clamp(1.4rem, 3vw, 1.8rem)',
+              fontWeight: '800',
+              textAlign: 'center',
+              marginBottom: 'clamp(25px, 4vw, 35px)'
+            }}>
+              이 강의에 포함된 것
+            </h3>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '25px'
+            }}>
+              {/* 📚 기본 강의 */}
+              <div style={{
+                background: 'rgba(255, 214, 10, 0.1)',
+                borderRadius: '20px',
+                padding: 'clamp(25px, 4vw, 35px)',
+                border: '2px solid rgba(255, 214, 10, 0.3)'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+                  <span style={{ fontSize: '2.5rem' }}>📚</span>
+                  <h4 style={{ color: '#ffd60a', fontWeight: '800', fontSize: 'clamp(1.2rem, 2.5vw, 1.4rem)', margin: 0 }}>
+                    기본 강의 10개
+                  </h4>
+                </div>
+                <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '1rem', lineHeight: 1.7, margin: 0 }}>
+                  AI로 유튜브 채널 만들고 수익화하는 방법을<br />
+                  <strong style={{ color: '#ffd60a' }}>10개 영상 강의</strong>로 체계적으로 배웁니다.<br />
+                  <span style={{ color: '#94a3b8' }}>구매 후 3개월간 무제한 시청</span>
+                </p>
+              </div>
+
+              {/* 🔴 주간 라이브 */}
+              <div style={{
+                background: 'rgba(239, 68, 68, 0.1)',
+                borderRadius: '20px',
+                padding: 'clamp(25px, 4vw, 35px)',
+                border: '2px solid rgba(239, 68, 68, 0.3)'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+                  <span style={{ fontSize: '2.5rem' }}>🔴</span>
+                  <h4 style={{ color: '#ef4444', fontWeight: '800', fontSize: 'clamp(1.2rem, 2.5vw, 1.4rem)', margin: 0 }}>
+                    매주 프로젝트 라이브
+                  </h4>
+                </div>
+                <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '1rem', lineHeight: 1.7, margin: 0 }}>
+                  <strong style={{ color: '#ef4444' }}>매주 화요일 밤 8시</strong> 실시간으로<br />
+                  함께 프로젝트를 진행합니다.<br />
+                  <span style={{ color: '#94a3b8' }}>다시보기: 해당 월에만 제공 (다음달 삭제)</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* 🎬 강의 소개 영상 */}
           <div style={{
             background: 'linear-gradient(135deg, #0d1b2a, #1b263b)',
@@ -779,7 +845,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   }}>현재 강의</div>
                   <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🏗️</div>
                   <h4 style={{ color: '#ffffff', fontWeight: '900', marginBottom: '8px', fontSize: '1.1rem' }}>Step 1</h4>
-                  <p style={{ color: '#ffffff', fontWeight: '700', fontSize: '0.95rem', margin: 0 }}>AI로 콘텐츠 만들기</p>
+                  <p style={{ color: '#ffffff', fontWeight: '700', fontSize: '0.95rem', margin: 0 }}>AI 콘텐츠 생성</p>
                 </div>
 
                 {/* Step 2 */}
@@ -869,23 +935,23 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 
             {/* 🔥 지금이 기회인 이유 */}
             <div style={{
-              background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
+              background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
               padding: 'clamp(30px, 6vw, 50px)',
               borderRadius: '25px',
               marginBottom: 'clamp(30px, 6vw, 50px)',
               border: '3px solid #ffd60a',
-              boxShadow: '0 20px 50px rgba(220, 38, 38, 0.3)'
+              boxShadow: '0 20px 50px rgba(255, 214, 10, 0.15)'
             }}>
               <div style={{ textAlign: 'center', marginBottom: '30px' }}>
                 <div style={{
                   display: 'inline-block',
-                  background: '#fff',
+                  background: 'linear-gradient(135deg, #ffd60a, #f59e0b)',
                   padding: '10px 25px',
                   borderRadius: '30px',
                   marginBottom: '20px'
                 }}>
-                  <span style={{ color: '#dc2626', fontWeight: '900', fontSize: '1rem' }}>
-                    🚨 이 기회를 놓치면 안 되는 이유
+                  <span style={{ color: '#1b263b', fontWeight: '900', fontSize: '1rem' }}>
+                    💡 이 기회를 놓치면 안 되는 이유
                   </span>
                 </div>
                 <h3 style={{
@@ -917,7 +983,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   <h4 style={{ color: '#ffd60a', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
                     구글이 다 지원해준다
                   </h4>
-                  <p style={{ color: '#fecaca', fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
+                  <p style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
                     1960년대 맨해튼에서 은행이 이자 없이 돈을 빌려줬듯이,
                     지금 구글은 <strong style={{ color: '#fff' }}>30개 이상의 AI 도구</strong>를 무료로 제공합니다.
                   </p>
@@ -934,7 +1000,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   <h4 style={{ color: '#ffd60a', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
                     경쟁이 평준화됐다
                   </h4>
-                  <p style={{ color: '#fecaca', fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
+                  <p style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
                     예전에는 SBS, KBS 같은 방송국과 경쟁해야 했지만,
                     이제 <strong style={{ color: '#fff' }}>AI 하나면 방송국 퀄리티</strong>를 혼자서 만들 수 있습니다.
                   </p>
@@ -951,7 +1017,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   <h4 style={{ color: '#ffd60a', fontWeight: '800', marginBottom: '10px', fontSize: '1.1rem' }}>
                     글로벌 시장이 열렸다
                   </h4>
-                  <p style={{ color: '#fecaca', fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
+                  <p style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
                     AI 번역·더빙으로 한국뿐 아니라
                     <strong style={{ color: '#fff' }}>미국, 일본, 중국, 전 세계</strong>를 타겟으로 콘텐츠를 만들 수 있습니다.
                   </p>
@@ -1418,14 +1484,14 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     <div style={{ textAlign: 'center', padding: '20px', background: 'rgba(255,255,255,0.08)', borderRadius: '15px' }}>
                       <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>📚</div>
                       <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', marginBottom: '5px' }}>기본 코어 강의</div>
-                      <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: '1.5rem' }}>12개</div>
-                      <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>영구 소장</div>
+                      <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: '1.5rem' }}>10개</div>
+                      <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>3개월간 무제한 시청</div>
                     </div>
                     <div style={{ textAlign: 'center', padding: '20px', background: 'rgba(251,191,36,0.15)', borderRadius: '15px', border: '2px solid rgba(251,191,36,0.4)' }}>
                       <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🔴</div>
                       <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', marginBottom: '5px' }}>주간 라이브</div>
-                      <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: '1.5rem' }}>52회/년</div>
-                      <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>3개월간 무제한 참여</div>
+                      <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: '1.5rem' }}>13회</div>
+                      <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>3개월간 참여 가능</div>
                     </div>
                   </div>
                 </div>
@@ -1449,23 +1515,23 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     marginBottom: '15px'
                   }}>
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ color: '#1e3a8a', fontSize: '0.9rem' }}>기본 강의 12개</div>
+                      <div style={{ color: '#1e3a8a', fontSize: '0.9rem' }}>기본 강의 10개</div>
                       <div style={{ color: '#1e3a8a', fontWeight: '800', fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)' }}>+</div>
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ color: '#1e3a8a', fontSize: '0.9rem' }}>라이브 52회</div>
+                      <div style={{ color: '#1e3a8a', fontSize: '0.9rem' }}>라이브 13회</div>
                       <div style={{ color: '#1e3a8a', fontWeight: '800', fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)' }}>=</div>
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ color: '#1e3a8a', fontSize: '0.9rem' }}>총 64개 콘텐츠</div>
+                      <div style={{ color: '#1e3a8a', fontSize: '0.9rem' }}>총 23개 콘텐츠</div>
                     </div>
                   </div>
                   <div style={{ textAlign: 'center', background: 'rgba(30, 58, 138, 0.15)', padding: '15px', borderRadius: '12px' }}>
-                    <span style={{ color: '#1e3a8a', fontSize: '1rem' }}>45,000원 ÷ 64개 = </span>
-                    <span style={{ color: '#dc2626', fontWeight: '900', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>703원</span>
+                    <span style={{ color: '#1e3a8a', fontSize: '1rem' }}>95,000원 ÷ 23개 = </span>
+                    <span style={{ color: '#1e40af', fontWeight: '900', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>4,130원</span>
                     <span style={{ color: '#1e3a8a', fontSize: '1rem' }}>/개</span>
                     <div style={{ color: '#1e3a8a', fontSize: '0.9rem', marginTop: '8px', fontWeight: '600' }}>
-                      ☕ 커피 반 잔 가격으로 전문 강의 1개!
+                      ☕ 커피 한 잔 가격으로 전문 강의 1개!
                     </div>
                   </div>
                 </div>
@@ -2150,7 +2216,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   lineHeight: '1.6'
                 }}>
                   A. 기본적으로는 추가 비용이 없습니다. 강의에서 사용하는 AI 도구들의
-                  무료 버전으로도 충분히 학습하고 수익 창출이 가능합니다.
+                  무료 버전으로도 충분히 학습할 수 있습니다.
                   더 고급 기능이 필요한 경우에만 선택적으로 유료 플랜을 이용하시면 됩니다.
                 </p>
               </div>
