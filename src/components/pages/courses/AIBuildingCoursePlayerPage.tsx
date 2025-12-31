@@ -44,20 +44,39 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
           // Azure 테이블에서 결제 상태 확인
           try {
             const paymentStatus = await AzureTableService.checkCoursePayment(
-              parsedUserInfo.email, 
+              parsedUserInfo.email,
               'ai-building-course'
             );
 
             if ((paymentStatus && paymentStatus.isPaid) || isTestAccount) {
+              // 🔒 수강 기간 만료 체크
+              const enrollment = paymentStatus?.enrollment;
+              if (enrollment && enrollment.accessExpiresAt) {
+                const expiresAt = new Date(enrollment.accessExpiresAt);
+                const now = new Date();
+
+                if (now > expiresAt) {
+                  // 수강 기간 만료됨
+                  const isEarlyBird = enrollment.isEarlyBird;
+                  const durationText = isEarlyBird ? '1년' : '3개월';
+
+                  alert(`⏰ 수강 기간이 만료되었습니다.\n\n결제일: ${new Date(enrollment.enrolledAt).toLocaleDateString('ko-KR')}\n만료일: ${expiresAt.toLocaleDateString('ko-KR')}\n수강 기간: ${durationText}\n\n계속 수강하시려면 다시 결제해주세요.`);
+                  window.location.href = '/ai-building-course';
+                  return;
+                }
+
+                console.log(`✅ 수강 기간 유효 - 만료일: ${expiresAt.toLocaleDateString('ko-KR')}`);
+              }
+
               setIsPaidUser(true);
-              
+
               // Azure에서 진도 불러오기
               try {
                 const progress = await AzureTableService.getCourseDayProgress(
                   parsedUserInfo.email,
                   'ai-building-course'
                 );
-                
+
                 if (progress && progress.completedDays) {
                   console.log('✅ 진도 불러오기 성공:', progress.completedDays);
                   setCompletedDays(new Set(progress.completedDays));
@@ -100,37 +119,37 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
         title: 'Part 1 (Day 1-5)',
         subtitle: '🧠 AI 1인 기업가 비즈니스 마인드 - 단순히 AI로 콘텐츠를 만드는 것이 아니라, 어떻게 수익화하고 사업화할지 준비하는 단계',
         days: [
-          { 
-            day: 1, 
-            title: '프롤로그: 맨해튼 부자 삼촌의 교훈', 
+          {
+            day: 1,
+            title: '프롤로그: 맨해튼 부자 삼촌의 교훈',
             subtitle: '맨해튼 부동산 거물 삼촌의 교훈과 AI 시대 재해석',
             hasQuiz: true,
             releaseDate: '2025-01-01'  // 1월 1일 오픈
           },
-          { 
-            day: 2, 
-            title: '경제적 자유: 잠자는 동안에도 돈이 들어오는 구조', 
+          {
+            day: 2,
+            title: '경제적 자유: 잠자는 동안에도 돈이 들어오는 구조',
             subtitle: '부동산 vs 콘텐츠, 경제적 자유의 새로운 정의 | AI 기반 콘텐츠 청사진 만들기',
             hasQuiz: true,
             releaseDate: '2025-01-02'  // 1월 2일 오픈
           },
-          { 
-            day: 3, 
-            title: '당신의 디지털 건물에는 어떤 사람이 거주하나?', 
+          {
+            day: 3,
+            title: '당신의 디지털 건물에는 어떤 사람이 거주하나?',
             subtitle: '글로벌 CPM과 수익성 분석 | AI로 타겟 고객 심층 분석하기',
             hasQuiz: true,
             releaseDate: '2025-01-03'  // 1월 3일 오픈
           },
-          { 
-            day: 4, 
-            title: '몇 층짜리 디지털 건물을 세울 것인가?', 
+          {
+            day: 4,
+            title: '몇 층짜리 디지털 건물을 세울 것인가?',
             subtitle: '대중형/니치형/혼합형 전략 | AI로 시장 분석 & 건물 콘셉트 설계',
             hasQuiz: false,
             releaseDate: '2025-01-04'  // 1월 4일 오픈
           },
-          { 
-            day: 5, 
-            title: '최종 입지 선정 & 건물 계획서 작성', 
+          {
+            day: 5,
+            title: '최종 입지 선정 & 건물 계획서 작성',
             subtitle: 'AI CITY BUILDER에 건물 계획서 넣기 | 나의 첫 디지털 건물 사업계획서 완성',
             hasQuiz: true,
             releaseDate: '2025-01-05'  // 1월 5일 오픈
@@ -141,37 +160,37 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
         title: 'Part 2 (Day 6-10)',
         subtitle: '🛠️ 실전! AI 콘텐츠 제작 - 배운 마인드를 바탕으로 실제 수익형 콘텐츠를 만들고 첫 월세를 받는 단계',
         days: [
-          { 
-            day: 6, 
-            title: '프롬프트 엔지니어링 & 이미지 생성 AI', 
+          {
+            day: 6,
+            title: '프롬프트 엔지니어링 & 이미지 생성 AI',
             subtitle: 'Google Colab으로 나노 바나나 마스터하기 | 코드 보고 쫄지 않기',
             hasQuiz: false,
             releaseDate: '2025-01-06'  // 1월 6일 오픈
           },
-          { 
-            day: 7, 
-            title: '[재료학] 사운드 & 영상 생성 AI 마스터', 
+          {
+            day: 7,
+            title: '[재료학] 사운드 & 영상 생성 AI 마스터',
             subtitle: 'ElevenLabs 음성 클로닝 | Suno AI BGM | VEO 영상 생성 완전정복',
             hasQuiz: false,
             releaseDate: '2025-01-07'  // 1월 7일 오픈
           },
-          { 
-            day: 8, 
-            title: '[시공] AI 4단계 건축 워크플로우', 
+          {
+            day: 8,
+            title: '[시공] AI 4단계 건축 워크플로우',
             subtitle: '바이럴 숏폼 & 고품질 롱폼 제작 | 멀티 플랫폼 동시 입점 전략',
             hasQuiz: true,
             releaseDate: '2025-01-08'  // 1월 8일 오픈
           },
-          { 
-            day: 9, 
-            title: '[준공식] 콘텐츠 업로드 & 데이터 분석', 
+          {
+            day: 9,
+            title: '[준공식] 콘텐츠 업로드 & 데이터 분석',
             subtitle: '핵심 지표 읽는 법 | AI 감성 분석으로 건물 리모델링',
             hasQuiz: false,
             releaseDate: '2025-01-09'  // 1월 9일 오픈
           },
-          { 
-            day: 10, 
-            title: '[첫 월세] 수익 시스템 구축 완성', 
+          {
+            day: 10,
+            title: '[첫 월세] 수익 시스템 구축 완성',
             subtitle: '애드센스 + 제휴마케팅 + 멤버십 | 허브-앤-스포크 자동화 시스템',
             hasQuiz: true,
             releaseDate: '2025-01-10'  // 1월 10일 오픈
@@ -302,7 +321,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
           </div>
 
           {/* 라이브 입장 버튼 */}
-          <div 
+          <div
             onClick={() => navigate('/live/step1')}
             style={{
               background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.9))',
@@ -438,8 +457,8 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
         {courseData.weeks.map((week, weekIndex) => {
           // Part 1: 블루, Part 2: 골드
           const isPart1 = weekIndex === 0;
-          const headerBg = isPart1 
-            ? `linear-gradient(135deg, ${COLORS.navy} 0%, ${COLORS.navyLight} 100%)` 
+          const headerBg = isPart1
+            ? `linear-gradient(135deg, ${COLORS.navy} 0%, ${COLORS.navyLight} 100%)`
             : `linear-gradient(135deg, ${COLORS.gold} 0%, ${COLORS.goldDark} 100%)`;
           const borderColor = isPart1 ? COLORS.blue : COLORS.navy;
           const titleColor = COLORS.white;
@@ -447,18 +466,18 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
           const icon = isPart1 ? '🏠' : '💰';
 
           return (
-          <div key={weekIndex} style={{
-            marginBottom: '50px'
-          }}>
-            {/* Week 헤더 */}
-            <div style={{
+            <div key={weekIndex} style={{
+              marginBottom: '50px'
+            }}>
+              {/* Week 헤더 */}
+              <div style={{
                 background: headerBg,
                 borderRadius: '20px',
                 padding: '30px 35px',
                 marginBottom: '30px',
                 border: `3px solid ${borderColor}`,
-                boxShadow: isPart1 
-                  ? `0 8px 30px ${COLORS.navy}30` 
+                boxShadow: isPart1
+                  ? `0 8px 30px ${COLORS.navy}30`
                   : `0 8px 30px ${COLORS.gold}40`,
                 position: 'relative',
                 overflow: 'hidden'
@@ -470,226 +489,226 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
                   right: '-50px',
                   width: '200px',
                   height: '200px',
-                  background: isPart1 
-                    ? `radial-gradient(circle, ${COLORS.blue}20 0%, transparent 70%)` 
+                  background: isPart1
+                    ? `radial-gradient(circle, ${COLORS.blue}20 0%, transparent 70%)`
                     : `radial-gradient(circle, ${COLORS.navy}30 0%, transparent 70%)`,
                   borderRadius: '50%'
                 }}></div>
-                
+
                 <div style={{ position: 'relative', zIndex: 1 }}>
-              <h2 style={{
+                  <h2 style={{
                     fontSize: 'clamp(1.6rem, 3vw, 2rem)',
-                fontWeight: '800',
+                    fontWeight: '800',
                     color: titleColor,
                     marginBottom: '12px',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '12px'
-              }}>
+                  }}>
                     <span style={{ fontSize: '2rem' }}>{icon}</span>
                     {week.title}
-              </h2>
-              <p style={{
+                  </h2>
+                  <p style={{
                     fontSize: 'clamp(1rem, 2vw, 1.15rem)',
                     color: subtitleColor,
-                margin: 0,
+                    margin: 0,
                     fontWeight: '600',
                     lineHeight: '1.6'
-              }}>
-                {week.subtitle}
-              </p>
+                  }}>
+                    {week.subtitle}
+                  </p>
                 </div>
-            </div>
+              </div>
 
-            {/* Day 카드들 */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
-              gap: '20px'
-            }}>
-              {week.days.map((lesson) => {
-                const isCompleted = completedDays.has(lesson.day);
-                // 🔓 Day 1~4, Day 6 열림 / Day 5, 7~10은 준비중
-                const isAvailable = lesson.day <= 4 || lesson.day === 6;
+              {/* Day 카드들 */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
+                gap: '20px'
+              }}>
+                {week.days.map((lesson) => {
+                  const isCompleted = completedDays.has(lesson.day);
+                  // 🔓 Day 1~4, Day 6 열림 / Day 5, 7~10은 준비중
+                  const isAvailable = lesson.day <= 4 || lesson.day === 6;
 
-                return (
-                  <div
-                    key={lesson.day}
-                    onClick={() => isAvailable && handleDayClick(lesson.day)}
-                    style={{
-                      background: COLORS.white,
-                      borderRadius: '15px',
-                      padding: '25px',
-                      border: isCompleted ? `2px solid ${COLORS.blue}` : `2px solid ${COLORS.navy}20`,
-                      cursor: isAvailable ? 'pointer' : 'not-allowed',
-                      transition: 'all 0.3s ease',
-                      opacity: isAvailable ? 1 : 0.7,
-                      boxShadow: `0 4px 15px ${COLORS.navy}10`,
-                      position: 'relative',
-                      overflow: 'hidden'
-                    }}
-                    onMouseOver={(e) => {
-                      if (isAvailable) {
-                        e.currentTarget.style.transform = 'translateY(-4px)';
-                        e.currentTarget.style.boxShadow = `0 8px 25px ${COLORS.navy}20`;
-                        e.currentTarget.style.borderColor = COLORS.blue;
-                      }
-                    }}
-                    onMouseOut={(e) => {
-                      if (isAvailable) {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = `0 4px 15px ${COLORS.navy}10`;
-                        e.currentTarget.style.borderColor = isCompleted ? COLORS.blue : `${COLORS.navy}20`;
-                      }
-                    }}
-                  >
-                    {/* 완료 배지 */}
-                    {isCompleted && (
-                      <div style={{
-                        position: 'absolute',
-                        top: '15px',
-                        right: '15px',
-                        background: `linear-gradient(135deg, ${COLORS.blue}, ${COLORS.blueDark})`,
-                        color: COLORS.white,
-                        padding: '6px 12px',
-                        borderRadius: '20px',
-                        fontSize: '0.85rem',
-                        fontWeight: '700',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px',
-                        boxShadow: `0 4px 12px ${COLORS.blue}40`
-                      }}>
-                        <CheckCircle size={16} />
-                        완료
-                      </div>
-                    )}
-
-                    {/* 잠금 배지 */}
-                    {!isAvailable && (
-                      <div style={{
-                        position: 'absolute',
-                        top: '15px',
-                        right: '15px',
-                        background: `linear-gradient(135deg, ${COLORS.grayMedium}, #94a3b8)`,
-                        color: COLORS.white,
-                        padding: '6px 12px',
-                        borderRadius: '20px',
-                        fontSize: '0.8rem',
-                        fontWeight: '700',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px'
-                      }}>
-                        🔒 준비중
-                      </div>
-                    )}
-
-                    {/* Day 번호 */}
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      marginBottom: '15px'
-                    }}>
-                      <div style={{
-                        width: '50px',
-                        height: '50px',
-                        background: isCompleted 
-                          ? `linear-gradient(135deg, ${COLORS.blue}, ${COLORS.blueDark})` 
-                          : (isAvailable ? `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyLight})` : `linear-gradient(135deg, ${COLORS.grayMedium}, #94a3b8)`),
-                        borderRadius: '12px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: 'white',
-                        fontSize: '1.2rem',
-                        fontWeight: '800',
-                        flexShrink: 0,
-                        boxShadow: isCompleted ? `0 4px 12px ${COLORS.blue}30` : `0 4px 12px ${COLORS.navy}20`
-                      }}>
-                        {isAvailable ? (isCompleted ? <CheckCircle size={28} /> : lesson.day) : <Lock size={24} />}
-                      </div>
-                      <div style={{ flex: 1 }}>
+                  return (
+                    <div
+                      key={lesson.day}
+                      onClick={() => isAvailable && handleDayClick(lesson.day)}
+                      style={{
+                        background: COLORS.white,
+                        borderRadius: '15px',
+                        padding: '25px',
+                        border: isCompleted ? `2px solid ${COLORS.blue}` : `2px solid ${COLORS.navy}20`,
+                        cursor: isAvailable ? 'pointer' : 'not-allowed',
+                        transition: 'all 0.3s ease',
+                        opacity: isAvailable ? 1 : 0.7,
+                        boxShadow: `0 4px 15px ${COLORS.navy}10`,
+                        position: 'relative',
+                        overflow: 'hidden'
+                      }}
+                      onMouseOver={(e) => {
+                        if (isAvailable) {
+                          e.currentTarget.style.transform = 'translateY(-4px)';
+                          e.currentTarget.style.boxShadow = `0 8px 25px ${COLORS.navy}20`;
+                          e.currentTarget.style.borderColor = COLORS.blue;
+                        }
+                      }}
+                      onMouseOut={(e) => {
+                        if (isAvailable) {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = `0 4px 15px ${COLORS.navy}10`;
+                          e.currentTarget.style.borderColor = isCompleted ? COLORS.blue : `${COLORS.navy}20`;
+                        }
+                      }}
+                    >
+                      {/* 완료 배지 */}
+                      {isCompleted && (
                         <div style={{
-                          fontSize: '0.9rem',
-                          color: COLORS.navy,
-                          fontWeight: '700',
-                          marginBottom: '4px'
-                        }}>
-                          Day {lesson.day}
-                        </div>
-                        <div style={{
+                          position: 'absolute',
+                          top: '15px',
+                          right: '15px',
+                          background: `linear-gradient(135deg, ${COLORS.blue}, ${COLORS.blueDark})`,
+                          color: COLORS.white,
+                          padding: '6px 12px',
+                          borderRadius: '20px',
                           fontSize: '0.85rem',
-                          color: COLORS.grayMedium,
+                          fontWeight: '700',
                           display: 'flex',
                           alignItems: 'center',
-                          gap: '8px'
+                          gap: '5px',
+                          boxShadow: `0 4px 12px ${COLORS.blue}40`
                         }}>
+                          <CheckCircle size={16} />
+                          완료
+                        </div>
+                      )}
+
+                      {/* 잠금 배지 */}
+                      {!isAvailable && (
+                        <div style={{
+                          position: 'absolute',
+                          top: '15px',
+                          right: '15px',
+                          background: `linear-gradient(135deg, ${COLORS.grayMedium}, #94a3b8)`,
+                          color: COLORS.white,
+                          padding: '6px 12px',
+                          borderRadius: '20px',
+                          fontSize: '0.8rem',
+                          fontWeight: '700',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '5px'
+                        }}>
+                          🔒 준비중
+                        </div>
+                      )}
+
+                      {/* Day 번호 */}
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        marginBottom: '15px'
+                      }}>
+                        <div style={{
+                          width: '50px',
+                          height: '50px',
+                          background: isCompleted
+                            ? `linear-gradient(135deg, ${COLORS.blue}, ${COLORS.blueDark})`
+                            : (isAvailable ? `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyLight})` : `linear-gradient(135deg, ${COLORS.grayMedium}, #94a3b8)`),
+                          borderRadius: '12px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: 'white',
+                          fontSize: '1.2rem',
+                          fontWeight: '800',
+                          flexShrink: 0,
+                          boxShadow: isCompleted ? `0 4px 12px ${COLORS.blue}30` : `0 4px 12px ${COLORS.navy}20`
+                        }}>
+                          {isAvailable ? (isCompleted ? <CheckCircle size={28} /> : lesson.day) : <Lock size={24} />}
+                        </div>
+                        <div style={{ flex: 1 }}>
+                          <div style={{
+                            fontSize: '0.9rem',
+                            color: COLORS.navy,
+                            fontWeight: '700',
+                            marginBottom: '4px'
+                          }}>
+                            Day {lesson.day}
+                          </div>
+                          <div style={{
+                            fontSize: '0.85rem',
+                            color: COLORS.grayMedium,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px'
+                          }}>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    {/* 제목 */}
-                    <h3 style={{
-                      fontSize: '1.1rem',
-                      fontWeight: '700',
-                      color: COLORS.navyDark,
-                      marginBottom: '8px',
-                      lineHeight: '1.4'
-                    }}>
-                      {lesson.title}
-                    </h3>
-
-                    {/* 부제목 */}
-                    {lesson.subtitle && (
-                      <p style={{
-                        fontSize: '0.85rem',
-                        color: COLORS.grayMedium,
-                        marginBottom: '15px',
-                        lineHeight: '1.5'
+                      {/* 제목 */}
+                      <h3 style={{
+                        fontSize: '1.1rem',
+                        fontWeight: '700',
+                        color: COLORS.navyDark,
+                        marginBottom: '8px',
+                        lineHeight: '1.4'
                       }}>
-                        {lesson.subtitle}
-                      </p>
-                    )}
+                        {lesson.title}
+                      </h3>
 
-                    {/* 버튼 */}
-                    {isAvailable ? (
-                      <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        paddingTop: '15px',
-                        borderTop: `1px solid ${COLORS.navy}15`
-                      }}>
-                        <span style={{
-                          color: COLORS.navy,
-                          fontSize: '0.95rem',
-                          fontWeight: '700'
+                      {/* 부제목 */}
+                      {lesson.subtitle && (
+                        <p style={{
+                          fontSize: '0.85rem',
+                          color: COLORS.grayMedium,
+                          marginBottom: '15px',
+                          lineHeight: '1.5'
                         }}>
-                          {isCompleted ? '다시 학습하기' : '학습 시작하기'}
-                        </span>
-                        <PlayCircle size={24} color={COLORS.blue} />
-                      </div>
-                    ) : (
-                      <div style={{
-                        paddingTop: '15px',
-                        borderTop: `1px solid ${COLORS.navy}15`,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: COLORS.grayMedium,
-                        fontSize: '0.9rem',
-                        fontWeight: '600'
-                      }}>
-                        🔒 강의 준비중
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                          {lesson.subtitle}
+                        </p>
+                      )}
+
+                      {/* 버튼 */}
+                      {isAvailable ? (
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          paddingTop: '15px',
+                          borderTop: `1px solid ${COLORS.navy}15`
+                        }}>
+                          <span style={{
+                            color: COLORS.navy,
+                            fontSize: '0.95rem',
+                            fontWeight: '700'
+                          }}>
+                            {isCompleted ? '다시 학습하기' : '학습 시작하기'}
+                          </span>
+                          <PlayCircle size={24} color={COLORS.blue} />
+                        </div>
+                      ) : (
+                        <div style={{
+                          paddingTop: '15px',
+                          borderTop: `1px solid ${COLORS.navy}15`,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: COLORS.grayMedium,
+                          fontSize: '0.9rem',
+                          fontWeight: '600'
+                        }}>
+                          🔒 강의 준비중
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
           );
         })}
 

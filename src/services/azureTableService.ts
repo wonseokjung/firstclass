@@ -91,6 +91,9 @@ export interface EnrolledCourse {
   completedAt?: string;
   paymentId?: string;
   learningTimeMinutes?: number;
+  // 📊 접근 기간 관련 (얼리버드 vs 정가 구분용)
+  accessDurationDays?: number; // 접근 기간 (일) - 얼리버드: 365, 정가: 90
+  isEarlyBird?: boolean; // 얼리버드 구매 여부
   // Day별 완료 상황 추적 (AI Agent 10일 과정용)
   completedDays?: number[]; // 완료한 Day 번호 배열 (예: [1, 2, 3])
   dayProgress?: { [key: number]: { completedAt: string; learningTimeMinutes?: number } }; // Day별 상세 정보
@@ -528,14 +531,14 @@ export class AzureTableService {
   // 🔒 보안: 프로덕션에서는 전체 데이터 조회 차단
   static async testAzureConnection(): Promise<boolean> {
     // 프로덕션 환경에서는 테스트 차단 (전체 데이터 노출 방지)
-    const isProduction = window.location.hostname === 'www.aicitybuilders.com' || 
-                         window.location.hostname === 'aicitybuilders.com';
-    
+    const isProduction = window.location.hostname === 'www.aicitybuilders.com' ||
+      window.location.hostname === 'aicitybuilders.com';
+
     if (isProduction) {
       devLog('🔒 보안: 프로덕션 환경에서는 연결 테스트가 차단됩니다.');
       return true; // 프로덕션에서는 그냥 성공으로 처리
     }
-    
+
     try {
       devLog('🧪 Azure Table Storage 단일 Users 테이블 SAS URL 테스트 시작...');
 
@@ -605,15 +608,15 @@ export class AzureTableService {
   // 🔒 보안: 로컬 환경에서만 사용 가능 (KISA 개인정보 보호 조치)
   static async getAllUsers(): Promise<User[]> {
     // 프로덕션 환경에서는 차단!
-    const isProduction = window.location.hostname === 'www.aicitybuilders.com' || 
-                         window.location.hostname === 'aicitybuilders.com';
-    
+    const isProduction = window.location.hostname === 'www.aicitybuilders.com' ||
+      window.location.hostname === 'aicitybuilders.com';
+
     if (isProduction) {
       devWarn('🔒 보안: 프로덕션 환경에서는 전체 사용자 조회가 차단됩니다.');
       devWarn('📍 관리자 작업은 로컬 환경(localhost)에서 진행해주세요.');
       return []; // 빈 배열 반환 - 네트워크에 데이터 노출 안 됨!
     }
-    
+
     try {
       devLog('🔍 Azure Users 테이블에서 모든 사용자 조회 중... (로컬 환경)');
 
@@ -1004,6 +1007,17 @@ export class AzureTableService {
         completedAt: new Date().toISOString()
       };
 
+      // 🗓️ 결제일 기준 접근 기간 결정
+      // 2026년 1월 1일 이전 결제: 1년 (365일) - 얼리버드
+      // 2026년 1월 1일 이후 결제: 3개월 (90일) - 정가
+      const EARLY_BIRD_CUTOFF = new Date(2026, 0, 1); // 2026-01-01
+      const now = new Date();
+      const isEarlyBirdPurchase = now < EARLY_BIRD_CUTOFF;
+      const accessDurationDays = isEarlyBirdPurchase ? 365 : 90; // 얼리버드: 1년, 정가: 3개월
+      const accessExpiresAt = new Date(Date.now() + accessDurationDays * 24 * 60 * 60 * 1000).toISOString();
+
+      devLog(`📅 접근 기간 설정: ${isEarlyBirdPurchase ? '얼리버드 (1년)' : '정가 (3개월)'} - 만료일: ${accessExpiresAt}`);
+
       // 새 수강 정보 생성
       const newEnrollment: EnrolledCourse = {
         courseId: userData.courseId,
@@ -1012,9 +1026,11 @@ export class AzureTableService {
         status: 'active',
         progress: 0, // 초기 진도 0%
         lastAccessedAt: new Date().toISOString(),
-        accessExpiresAt: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(), // 90일 후 만료
+        accessExpiresAt: accessExpiresAt, // 🔑 결제 시점에 따라 1년 또는 3개월
         paymentId: paymentId,
-        learningTimeMinutes: 0 // 초기 학습시간 0분
+        learningTimeMinutes: 0, // 초기 학습시간 0분
+        accessDurationDays: accessDurationDays, // 📊 접근 기간 명시 (추적용)
+        isEarlyBird: isEarlyBirdPurchase // 📊 얼리버드 여부 저장 (추적용)
       };
 
       // 기존 사용자 정보 조회 - 이메일로 조회
@@ -1444,26 +1460,26 @@ export class AzureTableService {
   static async getUserByReferralCode(referralCode: string): Promise<User | null> {
     try {
       // 프로덕션 환경에서는 필터 쿼리로 조회 (전체 데이터 노출 방지)
-      const isProduction = window.location.hostname === 'www.aicitybuilders.com' || 
-                           window.location.hostname === 'aicitybuilders.com';
-      
+      const isProduction = window.location.hostname === 'www.aicitybuilders.com' ||
+        window.location.hostname === 'aicitybuilders.com';
+
       if (isProduction) {
         // 필터 쿼리로 해당 추천 코드만 조회
         const baseUrl = AZURE_SAS_URLS.users;
         const filterQuery = `$filter=referralCode eq '${encodeURIComponent(referralCode)}'`;
         const url = `${baseUrl}&${filterQuery}`;
-        
+
         const response = await fetch(url, {
           method: 'GET',
           headers: { 'Accept': 'application/json' }
         });
-        
+
         if (!response.ok) return null;
         const data = await response.json();
         const userList = data.value || [];
         return userList.length > 0 ? userList[0] : null;
       }
-      
+
       // 로컬에서는 기존 방식 (전체 조회 후 필터)
       const users = await this.azureRequest('users', 'GET');
       const userList = users.value || [];
@@ -1710,7 +1726,7 @@ export class AzureTableService {
 
       // enrolledCourses 파싱
       let enrolledData = user.enrolledCourses ? JSON.parse(user.enrolledCourses) : { enrollments: [], payments: [] };
-      
+
       // 배열 형태인 경우 객체로 변환
       if (Array.isArray(enrolledData)) {
         enrolledData = { enrollments: enrolledData, payments: [] };
@@ -1720,8 +1736,8 @@ export class AzureTableService {
       const payments = enrolledData.payments || [];
 
       // 해당 강의 찾기
-      const enrollmentIndex = enrollments.findIndex((e: any) => 
-        e.courseId === courseId || 
+      const enrollmentIndex = enrollments.findIndex((e: any) =>
+        e.courseId === courseId ||
         (e.courseId === '999' && courseId === 'ai-building-course') ||
         (e.courseId === 'ai-building-course' && courseId === '999') ||
         (e.courseId === '1002' && courseId === 'chatgpt-agent-beginner') ||
@@ -1738,8 +1754,8 @@ export class AzureTableService {
       devLog('🗑️ 삭제된 강의:', removedEnrollment);
 
       // 관련 결제 정보도 삭제 (선택적)
-      const paymentIndex = payments.findIndex((p: any) => 
-        p.courseId === courseId || 
+      const paymentIndex = payments.findIndex((p: any) =>
+        p.courseId === courseId ||
         p.courseId === removedEnrollment?.courseId
       );
       if (paymentIndex !== -1) {
@@ -1905,7 +1921,11 @@ export class AzureTableService {
   }
 
   // 특정 강의의 결제 상태 확인
-  static async checkCoursePayment(email: string, courseId: string): Promise<{ isPaid: boolean, paymentInfo?: any }> {
+  static async checkCoursePayment(email: string, courseId: string): Promise<{
+    isPaid: boolean;
+    paymentInfo?: any;
+    enrollment?: EnrolledCourse;  // 수강 정보 (accessExpiresAt, isEarlyBird 등 포함)
+  }> {
     try {
       devLog('💳 강의 결제 상태 확인:', email, '→', courseId);
 
@@ -1955,8 +1975,8 @@ export class AzureTableService {
 
       const result = {
         isPaid: isEnrolled || false,
-        paymentInfo: paymentInfo || null,
-        enrollment: enrollment || null
+        paymentInfo: paymentInfo || undefined,
+        enrollment: enrollment || undefined
       };
 
       devLog('💳 결제 상태 확인 결과:', result);
@@ -2758,7 +2778,7 @@ export class AzureTableService {
   static async getPostsByCourse(courseId: string): Promise<any[]> {
     try {
       devLog(`📋 ${courseId} 게시글 조회 중...`);
-      
+
       const baseUrl = AZURE_SAS_URLS.posts.split('?')[0];
       const sasToken = AZURE_SAS_URLS.posts.split('?')[1];
       const filter = `PartitionKey eq '${courseId}'`;
@@ -2778,12 +2798,12 @@ export class AzureTableService {
 
       const data = await response.json();
       const posts = data.value || [];
-      
+
       // 최신순 정렬
-      posts.sort((a: any, b: any) => 
+      posts.sort((a: any, b: any) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
-      
+
       devLog(`✅ ${posts.length}개 게시글 조회 완료`);
       return posts;
     } catch (error: any) {
@@ -2803,7 +2823,7 @@ export class AzureTableService {
   }): Promise<{ success: boolean; postId?: string; error?: string }> {
     try {
       devLog(`📝 게시글 작성 중...`);
-      
+
       const postId = `post_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
       const now = new Date().toISOString();
 
@@ -2879,7 +2899,7 @@ export class AzureTableService {
 
       // 이미 좋아요 했는지 확인
       const alreadyLiked = likedBy.includes(userEmail);
-      
+
       if (alreadyLiked) {
         // 좋아요 취소
         likedBy = likedBy.filter(email => email !== userEmail);
@@ -2919,7 +2939,7 @@ export class AzureTableService {
   static async getCommentsByPost(postId: string): Promise<any[]> {
     try {
       devLog(`💬 ${postId} 댓글 조회 중...`);
-      
+
       const baseUrl = AZURE_SAS_URLS.comments.split('?')[0];
       const sasToken = AZURE_SAS_URLS.comments.split('?')[1];
       const filter = `PartitionKey eq '${postId}'`;
@@ -2939,12 +2959,12 @@ export class AzureTableService {
 
       const data = await response.json();
       const comments = data.value || [];
-      
+
       // 시간순 정렬
-      comments.sort((a: any, b: any) => 
+      comments.sort((a: any, b: any) =>
         new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
       );
-      
+
       devLog(`✅ ${comments.length}개 댓글 조회 완료`);
       return comments;
     } catch (error: any) {
@@ -2963,7 +2983,7 @@ export class AzureTableService {
   }): Promise<{ success: boolean; commentId?: string; error?: string }> {
     try {
       devLog(`💬 댓글 작성 중...`);
-      
+
       const commentId = `comment_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
       const now = new Date().toISOString();
 
@@ -3012,7 +3032,7 @@ export class AzureTableService {
     try {
       const baseUrl = AZURE_SAS_URLS.posts.split('?')[0];
       const sasToken = AZURE_SAS_URLS.posts.split('?')[1];
-      
+
       // 현재 게시글 조회
       const getUrl = `${baseUrl}(PartitionKey='${courseId}',RowKey='${postId}')?${sasToken}`;
       const getResponse = await fetch(getUrl, {
@@ -3100,7 +3120,7 @@ export class AzureTableService {
     try {
       // users 테이블에서 사용자 조회
       const user = await this.getUserByEmail(email);
-      
+
       if (!user) {
         devWarn(`⚠️ 사용자를 찾을 수 없습니다: ${email}`);
         return null;
@@ -3188,7 +3208,7 @@ export class AzureTableService {
       if (!user) return false;
 
       const earnedBricks = Math.floor(coursePrice * ((user.commissionRate || 10) / 100));
-      
+
       // 새 추천 내역
       const newReferral: PartnerReferral = {
         partitionKey: partnerEmail,
@@ -3234,7 +3254,7 @@ export class AzureTableService {
       if (!user || !user.referralHistory) return [];
 
       const referrals: PartnerReferral[] = JSON.parse(user.referralHistory);
-      return referrals.sort((a, b) => 
+      return referrals.sort((a, b) =>
         new Date(b.referralDate).getTime() - new Date(a.referralDate).getTime()
       );
     } catch (error: any) {
@@ -3312,7 +3332,7 @@ export class AzureTableService {
       if (!user || !user.withdrawalHistory) return [];
 
       const withdrawals: PartnerWithdrawal[] = JSON.parse(user.withdrawalHistory);
-      return withdrawals.sort((a, b) => 
+      return withdrawals.sort((a, b) =>
         new Date(b.requestDate).getTime() - new Date(a.requestDate).getTime()
       );
     } catch (error: any) {
@@ -3347,7 +3367,7 @@ export class AzureTableService {
           });
         } catch { /* ignore */ }
       }
-      
+
       devLog(`✅ 월말 정산 완료: ${partnerEmail}`);
       return true;
     } catch (error: any) {
@@ -3391,7 +3411,7 @@ export class AzureTableService {
   static async getEmailByReferralCode(referralCode: string): Promise<string | null> {
     try {
       devLog(`🔍 추천 코드로 이메일 검색: ${referralCode}`);
-      
+
       // users 테이블에서 referralCode로 검색
       const baseUrl = AZURE_SAS_URLS.users.split('?')[0];
       const sasToken = '?' + AZURE_SAS_URLS.users.split('?')[1];
@@ -3426,7 +3446,7 @@ export class AzureTableService {
   static async getAllPendingWithdrawals(): Promise<(PartnerWithdrawal & { partnerEmail: string; partnerName: string })[]> {
     try {
       devLog('🔍 대기 중인 출금 요청 조회...');
-      
+
       // 모든 사용자 조회
       const baseUrl = AZURE_SAS_URLS.users.split('?')[0];
       const sasToken = '?' + AZURE_SAS_URLS.users.split('?')[1];
@@ -3461,7 +3481,7 @@ export class AzureTableService {
       }
 
       // 최신순 정렬
-      allWithdrawals.sort((a, b) => 
+      allWithdrawals.sort((a, b) =>
         new Date(b.requestDate).getTime() - new Date(a.requestDate).getTime()
       );
 
@@ -3475,27 +3495,27 @@ export class AzureTableService {
 
   // 출금 상태 업데이트 (관리자용)
   static async updateWithdrawalStatus(
-    partnerEmail: string, 
-    withdrawalRowKey: string, 
+    partnerEmail: string,
+    withdrawalRowKey: string,
     status: 'completed' | 'rejected',
     rejectReason?: string
   ): Promise<boolean> {
     try {
       devLog(`🔄 출금 상태 업데이트: ${partnerEmail} → ${status}`);
-      
+
       const user = await this.getUserByEmail(partnerEmail);
       if (!user || !user.withdrawalHistory) return false;
 
       const withdrawals: PartnerWithdrawal[] = JSON.parse(user.withdrawalHistory);
       const targetIndex = withdrawals.findIndex(w => w.rowKey === withdrawalRowKey);
-      
+
       if (targetIndex === -1) {
         devError('❌ 출금 요청을 찾을 수 없음');
         return false;
       }
 
       const withdrawal = withdrawals[targetIndex];
-      
+
       // 상태 업데이트
       withdrawals[targetIndex] = {
         ...withdrawal,
@@ -3539,10 +3559,10 @@ export class AzureTableService {
   static async getLiveArchives(courseId: string): Promise<any[]> {
     try {
       devLog(`📺 ${courseId} 라이브 아카이브 조회 중...`);
-      
+
       // users 테이블에서 시스템 설정으로 저장된 라이브 아카이브 조회
       const systemUser = await this.getUserByEmail('system@aicitybuilders.com');
-      
+
       if (!systemUser) {
         devLog('ℹ️ 시스템 사용자가 없습니다. 빈 배열 반환.');
         return [];
@@ -3550,10 +3570,10 @@ export class AzureTableService {
 
       const allArchives = systemUser.liveArchives ? JSON.parse(systemUser.liveArchives) : [];
       const courseArchives = allArchives.filter((archive: any) => archive.courseId === courseId);
-      
+
       // 최신순 정렬
       courseArchives.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
-      
+
       devLog(`✅ ${courseId} 라이브 아카이브 ${courseArchives.length}개 조회 완료`);
       return courseArchives;
     } catch (error: any) {
@@ -3576,10 +3596,10 @@ export class AzureTableService {
   }): Promise<boolean> {
     try {
       devLog(`📺 라이브 아카이브 추가 중:`, archive.title);
-      
+
       // 시스템 사용자 조회 또는 생성
       let systemUser = await this.getUserByEmail('system@aicitybuilders.com');
-      
+
       if (!systemUser) {
         // 시스템 사용자 생성
         await this.createUser({
@@ -3592,17 +3612,17 @@ export class AzureTableService {
       }
 
       const allArchives = systemUser?.liveArchives ? JSON.parse(systemUser.liveArchives) : [];
-      
+
       const newArchive = {
         id: `live_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         ...archive,
         createdAt: new Date().toISOString()
       };
-      
+
       allArchives.push(newArchive);
-      
+
       await this.updateUserField('system@aicitybuilders.com', 'liveArchives', JSON.stringify(allArchives));
-      
+
       devLog(`✅ 라이브 아카이브 추가 완료:`, newArchive.id);
       return true;
     } catch (error: any) {
@@ -3618,9 +3638,9 @@ export class AzureTableService {
   static async deleteLiveArchive(archiveId: string): Promise<boolean> {
     try {
       devLog(`🗑️ 라이브 아카이브 삭제 중:`, archiveId);
-      
+
       const systemUser = await this.getUserByEmail('system@aicitybuilders.com');
-      
+
       if (!systemUser) {
         devError('❌ 시스템 사용자가 없습니다.');
         return false;
@@ -3628,14 +3648,14 @@ export class AzureTableService {
 
       const allArchives = systemUser.liveArchives ? JSON.parse(systemUser.liveArchives) : [];
       const filteredArchives = allArchives.filter((archive: any) => archive.id !== archiveId);
-      
+
       if (allArchives.length === filteredArchives.length) {
         devLog('ℹ️ 삭제할 아카이브를 찾지 못했습니다.');
         return false;
       }
-      
+
       await this.updateUserField('system@aicitybuilders.com', 'liveArchives', JSON.stringify(filteredArchives));
-      
+
       devLog(`✅ 라이브 아카이브 삭제 완료:`, archiveId);
       return true;
     } catch (error: any) {
@@ -3650,18 +3670,18 @@ export class AzureTableService {
   static async getAllLiveArchives(): Promise<any[]> {
     try {
       devLog(`📺 전체 라이브 아카이브 조회 중...`);
-      
+
       const systemUser = await this.getUserByEmail('system@aicitybuilders.com');
-      
+
       if (!systemUser) {
         return [];
       }
 
       const allArchives = systemUser.liveArchives ? JSON.parse(systemUser.liveArchives) : [];
-      
+
       // 최신순 정렬
       allArchives.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
-      
+
       devLog(`✅ 전체 라이브 아카이브 ${allArchives.length}개 조회 완료`);
       return allArchives;
     } catch (error: any) {
@@ -3686,7 +3706,7 @@ export class AzureTableService {
   } | null> {
     try {
       const systemUser = await this.getUserByEmail('system@aicitybuilders.com');
-      
+
       if (!systemUser) return null;
 
       const liveConfigs = systemUser.liveConfigs ? JSON.parse(systemUser.liveConfigs) : {};
@@ -3709,9 +3729,9 @@ export class AzureTableService {
   }): Promise<boolean> {
     try {
       devLog(`🔴 라이브 설정 업데이트:`, courseId, config.isLive ? 'ON' : 'OFF');
-      
+
       let systemUser = await this.getUserByEmail('system@aicitybuilders.com');
-      
+
       if (!systemUser) {
         await this.createUser({
           email: 'system@aicitybuilders.com',
@@ -3723,14 +3743,14 @@ export class AzureTableService {
       }
 
       const liveConfigs = systemUser?.liveConfigs ? JSON.parse(systemUser.liveConfigs) : {};
-      
+
       liveConfigs[courseId] = {
         ...config,
         updatedAt: new Date().toISOString()
       };
-      
+
       await this.updateUserField('system@aicitybuilders.com', 'liveConfigs', JSON.stringify(liveConfigs));
-      
+
       devLog(`✅ 라이브 설정 업데이트 완료`);
       return true;
     } catch (error: any) {
@@ -3745,7 +3765,7 @@ export class AzureTableService {
   static async getAllLiveConfigs(): Promise<{ [courseId: string]: any }> {
     try {
       const systemUser = await this.getUserByEmail('system@aicitybuilders.com');
-      
+
       if (!systemUser) return {};
 
       return systemUser.liveConfigs ? JSON.parse(systemUser.liveConfigs) : {};
