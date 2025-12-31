@@ -154,7 +154,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
             // Azure 테이블에서 결제 상태 확인
             try {
               const paymentStatus = await AzureTableService.checkCoursePayment(
-                parsedUserInfo.email, 
+                parsedUserInfo.email,
                 'chatgpt-agent-beginner'
               );
 
@@ -194,7 +194,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
 
   const handleEarlyBirdPayment = async () => {
     console.log('🔍 수강 신청 버튼 클릭 - 결제 페이지로 이동');
-    
+
     if (!isLoggedIn) {
       const confirmLogin = window.confirm('로그인이 필요한 서비스입니다. 먼저 로그인해주세요.\n\n로그인 페이지로 이동하시겠습니까?');
       if (confirmLogin) {
@@ -204,7 +204,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
       }
       return;
     }
-    
+
     // 얼리버드 가격으로 결제 페이지로 이동
     window.location.href = '/chatgpt-agent-beginner/payment?earlybird=true';
   };
@@ -338,7 +338,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
               }}>
                 코딩 몰라도, 클릭 몇 번으로 "AI가 스스로 판단하고 일하는 에이전트"를 만든다
               </p>
-              
+
               {/* 코스 설명 */}
               <div style={{
                 background: '#f8fafc',
@@ -356,7 +356,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   AI 에이전트 완전 비기너를 위한 코스. 에이전트가 무엇인지부터 다양한 에이전트 도구들을 사용해보며 나만의 인공지능 에이전트 비서를 만들기 위한 기초를 닦는다. 핵심만 모아놓은 실습위주.
                 </p>
               </div>
-              
+
               {/* 커리큘럼 변경 안내 */}
               <p style={{
                 fontSize: '0.9rem',
@@ -469,7 +469,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ fontSize: '1.5rem' }}>✅</span>
-                    <span>구매 후 1년간 이용 가능</span>
+                    <span>구매 후 3개월간 이용 가능</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ fontSize: '1.5rem' }}>✅</span>
@@ -523,7 +523,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   margin: '0',
                   fontWeight: '600'
                 }}>
-                  💳 안전한 결제 · 구매 후 1년간 이용 가능
+                  💳 안전한 결제 · 구매 후 3개월간 이용 가능
                 </p>
               </div>
             </div>
@@ -586,7 +586,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   그래서 우리는 직접 플랫폼을 만들었습니다.
                 </p>
                 <p style={{ marginBottom: '0' }}>
-                  Jay 멘토가 직접 강의를 제작하고, 중간 유통 비용 없이 여러분께 전달합니다. 
+                  Jay 멘토가 직접 강의를 제작하고, 중간 유통 비용 없이 여러분께 전달합니다.
                   이것이 바로 <strong style={{ color: '#0369a1' }}>AI City Builders</strong>의 시작입니다.
                 </p>
               </div>
@@ -611,7 +611,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   합리적인 가격
                 </h3>
                 <p style={{ fontSize: '0.95rem', color: '#64748b', lineHeight: '1.6', margin: '0' }}>
-                  중간 유통 비용 없이<br/>직접 제작·판매
+                  중간 유통 비용 없이<br />직접 제작·판매
                 </p>
               </div>
 
@@ -628,7 +628,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   실전 경험
                 </h3>
                 <p style={{ fontSize: '0.95rem', color: '#64748b', lineHeight: '1.6', margin: '0' }}>
-                  현업 AI 전문가의<br/>생생한 노하우
+                  현업 AI 전문가의<br />생생한 노하우
                 </p>
               </div>
 
@@ -645,7 +645,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   지속 성장
                 </h3>
                 <p style={{ fontSize: '0.95rem', color: '#64748b', lineHeight: '1.6', margin: '0' }}>
-                  구매 후 1년간<br/>무제한 학습
+                  구매 후 3개월간<br />무제한 학습
                 </p>
               </div>
             </div>
@@ -653,164 +653,164 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
 
           {/* 멘토 소개 - Jay 멘토 이력 */}
           <div style={{ marginBottom: 'clamp(30px, 6vw, 60px)' }}>
-              <h2 style={{
+            <h2 style={{
               fontSize: 'clamp(2rem, 4vw, 2.5rem)',
-                fontWeight: '800',
-                color: '#ffffff',
+              fontWeight: '800',
+              color: '#ffffff',
               marginBottom: 'clamp(20px, 4vw, 40px)',
               textAlign: 'center'
             }}>
               👨‍💼 멘토 소개: 정원석 (Jay)
-              </h2>
+            </h2>
 
-              {/* 멘토 프로필 요약 */}
-              <div style={{
-                background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
+            {/* 멘토 프로필 요약 */}
+            <div style={{
+              background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
               padding: 'clamp(30px, 5vw, 40px)',
-                borderRadius: '15px',
+              borderRadius: '15px',
               marginBottom: '50px',
-                border: '2px solid #0ea5e9',
-                textAlign: 'center'
-              }}>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+              border: '2px solid #0ea5e9',
+              textAlign: 'center'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 gap: '15px',
                 marginBottom: '25px',
-                  flexWrap: 'wrap'
+                flexWrap: 'wrap'
+              }}>
+                <div style={{
+                  background: '#0ea5e9',
+                  color: 'white',
+                  padding: '12px 24px',
+                  borderRadius: '25px',
+                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                  fontWeight: '600'
                 }}>
-                  <div style={{
-                    background: '#0ea5e9',
-                    color: 'white',
-                  padding: '12px 24px',
-                    borderRadius: '25px',
-                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                    fontWeight: '600'
-                  }}>
-                    🏢 커넥젼에이아이 대표
-                  </div>
-                  <div style={{
-                    background: '#0ea5e9',
-                    color: 'white',
-                  padding: '12px 24px',
-                    borderRadius: '25px',
-                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                    fontWeight: '600'
-                  }}>
-                    🎓 서울사이버대학교 대우교수
-                  </div>
-                  <div style={{
-                    background: '#0ea5e9',
-                    color: 'white',
-                  padding: '12px 24px',
-                    borderRadius: '25px',
-                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                    fontWeight: '600'
-                  }}>
-                    📱 인스타그램 30만 팔로워
-                  </div>
+                  🏢 커넥젼에이아이 대표
                 </div>
-                <p style={{
+                <div style={{
+                  background: '#0ea5e9',
+                  color: 'white',
+                  padding: '12px 24px',
+                  borderRadius: '25px',
+                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                  fontWeight: '600'
+                }}>
+                  🎓 서울사이버대학교 대우교수
+                </div>
+                <div style={{
+                  background: '#0ea5e9',
+                  color: 'white',
+                  padding: '12px 24px',
+                  borderRadius: '25px',
+                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                  fontWeight: '600'
+                }}>
+                  📱 인스타그램 30만 팔로워
+                </div>
+              </div>
+              <p style={{
                 color: '#0c4a6e',
                 fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)',
                 lineHeight: '1.8',
-                  margin: '0',
+                margin: '0',
                 fontWeight: '600'
-                }}>
-                  AI 솔루션 개발과 컨설팅을 통한 디지털 트랜스포메이션을 선도하며,<br />
-                  차세대 AI 인재 양성과 AI 지식 대중화에 힘쓰고 있습니다.
-                </p>
-              </div>
-
-              {/* 학력 섹션 */}
-              <div style={{
-              marginBottom: '50px'
               }}>
-                <h3 style={{
-                  color: '#1b263b',
+                AI 솔루션 개발과 컨설팅을 통한 디지털 트랜스포메이션을 선도하며,<br />
+                차세대 AI 인재 양성과 AI 지식 대중화에 힘쓰고 있습니다.
+              </p>
+            </div>
+
+            {/* 학력 섹션 */}
+            <div style={{
+              marginBottom: '50px'
+            }}>
+              <h3 style={{
+                color: '#1b263b',
                 fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-                  fontWeight: '800',
+                fontWeight: '800',
                 marginBottom: 'clamp(20px, 4vw, 40px)',
                 textAlign: 'center'
-                }}>
-                  🎓 학력
-                </h3>
-                
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
+              }}>
+                🎓 학력
+              </h3>
+
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
                 gap: '40px',
-                  maxWidth: '800px',
-                  margin: '0 auto'
-                }}>
-                  {/* 일리노이공대 석사 */}
-                  <div style={{
-                    background: '#ffffff',
+                maxWidth: '800px',
+                margin: '0 auto'
+              }}>
+                {/* 일리노이공대 석사 */}
+                <div style={{
+                  background: '#ffffff',
                   padding: 'clamp(15px, 3vw, 30px)',
-                    borderRadius: '15px',
-                    border: '2px solid #0ea5e9',
-                    textAlign: 'center',
-                    boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)'
-                  }}>
-                    <div style={{
-                      background: '#0ea5e9',
-                      color: 'white',
+                  borderRadius: '15px',
+                  border: '2px solid #0ea5e9',
+                  textAlign: 'center',
+                  boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)'
+                }}>
+                  <div style={{
+                    background: '#0ea5e9',
+                    color: 'white',
                     padding: '10px 20px',
                     borderRadius: '25px',
                     fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
                     fontWeight: '700',
-                      marginBottom: '20px',
-                      display: 'inline-block'
-                    }}>
-                      석사
-                    </div>
-                    <h4 style={{
-                      color: '#1b263b',
+                    marginBottom: '20px',
+                    display: 'inline-block'
+                  }}>
+                    석사
+                  </div>
+                  <h4 style={{
+                    color: '#1b263b',
                     fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)',
                     fontWeight: '800',
                     marginBottom: '10px'
-                    }}>
-                      일리노이공대
-                    </h4>
-                    <p style={{
-                      color: '#64748b',
+                  }}>
+                    일리노이공대
+                  </h4>
+                  <p style={{
+                    color: '#64748b',
                     fontSize: 'clamp(1rem, 2vw, 1.1rem)',
-                      fontWeight: '600',
+                    fontWeight: '600',
                     marginBottom: '8px'
-                    }}>
-                      Illinois Institute of Technology
-                    </p>
-                    <p style={{
-                      color: '#0ea5e9',
+                  }}>
+                    Illinois Institute of Technology
+                  </p>
+                  <p style={{
+                    color: '#0ea5e9',
                     fontSize: 'clamp(1.1rem, 2vw, 1.2rem)',
-                      fontWeight: '700',
+                    fontWeight: '700',
                     marginBottom: '25px'
+                  }}>
+                    Data Science (MS)
+                  </p>
+
+                  <div style={{
+                    background: 'rgba(14, 165, 233, 0.05)',
+                    padding: '15px',
+                    borderRadius: '10px',
+                    border: '1px solid rgba(14, 165, 233, 0.1)'
+                  }}>
+                    <h5 style={{
+                      fontSize: '1rem',
+                      fontWeight: '700',
+                      marginBottom: '10px',
+                      color: '#ffffff'
                     }}>
-                      Data Science (MS)
-                    </p>
-                    
+                      📜 Official Transcript
+                    </h5>
                     <div style={{
-                      background: 'rgba(14, 165, 233, 0.05)',
-                      padding: '15px',
-                      borderRadius: '10px',
-                      border: '1px solid rgba(14, 165, 233, 0.1)'
-                    }}>
-                      <h5 style={{
-                        fontSize: '1rem',
-                        fontWeight: '700',
-                        marginBottom: '10px',
-                        color: '#ffffff'
-                      }}>
-                        📜 Official Transcript
-                      </h5>
-                      <div style={{
-                        position: 'relative',
-                        cursor: 'pointer',
-                        borderRadius: '8px',
-                        overflow: 'hidden',
-                        border: '1px solid #e2e8f0'
-                      }}
+                      position: 'relative',
+                      cursor: 'pointer',
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      border: '1px solid #e2e8f0'
+                    }}
                       onClick={() => window.open('/images/illinoistch_graduation.png', '_blank')}
                       onMouseOver={(e) => {
                         e.currentTarget.style.transform = 'scale(1.02)';
@@ -820,101 +820,101 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                         e.currentTarget.style.transform = 'scale(1)';
                         e.currentTarget.style.boxShadow = 'none';
                       }}
-                      >
-                        <img 
-                          src="/images/illinoistch_graduation.png" 
-                          alt="일리노이공대 석사 공식 성적증명서"
-                          style={{
-                            width: '100%',
-                            height: 'auto',
-                            objectFit: 'contain',
-                            transition: 'all 0.3s ease'
-                          }}
-                        />
-                        <div style={{
-                          position: 'absolute',
-                          top: '10px',
-                          right: '10px',
-                          background: '#0ea5e9',
-                          color: 'white',
-                          padding: '5px 10px',
-                          borderRadius: '15px',
-                          fontSize: '0.8rem',
-                          fontWeight: '600'
-                        }}>
-                          클릭하여 확대
-                        </div>
+                    >
+                      <img
+                        src="/images/illinoistch_graduation.png"
+                        alt="일리노이공대 석사 공식 성적증명서"
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          objectFit: 'contain',
+                          transition: 'all 0.3s ease'
+                        }}
+                      />
+                      <div style={{
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                        background: '#0ea5e9',
+                        color: 'white',
+                        padding: '5px 10px',
+                        borderRadius: '15px',
+                        fontSize: '0.8rem',
+                        fontWeight: '600'
+                      }}>
+                        클릭하여 확대
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  {/* 바루크 컬리지 학사 */}
-                  <div style={{
-                    background: '#ffffff',
+                {/* 바루크 컬리지 학사 */}
+                <div style={{
+                  background: '#ffffff',
                   padding: 'clamp(15px, 3vw, 30px)',
-                    borderRadius: '15px',
-                    border: '2px solid #0ea5e9',
-                    textAlign: 'center',
-                    boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)'
-                  }}>
-                    <div style={{
-                      background: '#0ea5e9',
-                      color: 'white',
+                  borderRadius: '15px',
+                  border: '2px solid #0ea5e9',
+                  textAlign: 'center',
+                  boxShadow: '0 5px 15px rgba(14, 165, 233, 0.1)'
+                }}>
+                  <div style={{
+                    background: '#0ea5e9',
+                    color: 'white',
                     padding: '10px 20px',
                     borderRadius: '25px',
                     fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
                     fontWeight: '700',
-                      marginBottom: '20px',
-                      display: 'inline-block'
-                    }}>
-                      학사
-                    </div>
-                    <h4 style={{
-                      color: '#1b263b',
+                    marginBottom: '20px',
+                    display: 'inline-block'
+                  }}>
+                    학사
+                  </div>
+                  <h4 style={{
+                    color: '#1b263b',
                     fontSize: 'clamp(1.3rem, 2.5vw, 1.6rem)',
                     fontWeight: '800',
                     marginBottom: '10px'
-                    }}>
-                      뉴욕시립대
-                    </h4>
-                    <p style={{
-                      color: '#64748b',
+                  }}>
+                    뉴욕시립대
+                  </h4>
+                  <p style={{
+                    color: '#64748b',
                     fontSize: 'clamp(1rem, 2vw, 1.1rem)',
-                      fontWeight: '600',
+                    fontWeight: '600',
                     marginBottom: '8px'
-                    }}>
-                      City University of New York - Baruch College
-                    </p>
-                    <p style={{
-                      color: '#0ea5e9',
+                  }}>
+                    City University of New York - Baruch College
+                  </p>
+                  <p style={{
+                    color: '#0ea5e9',
                     fontSize: 'clamp(1.1rem, 2vw, 1.2rem)',
-                      fontWeight: '700',
+                    fontWeight: '700',
                     marginBottom: '25px'
+                  }}>
+                    Data Science (BS)
+                  </p>
+
+                  <div style={{
+                    background: 'rgba(14, 165, 233, 0.05)',
+                    padding: '15px',
+                    borderRadius: '10px',
+                    border: '1px solid rgba(14, 165, 233, 0.1)'
+                  }}>
+                    <h5 style={{
+                      fontSize: '1rem',
+                      fontWeight: '700',
+                      marginBottom: '10px',
+                      color: '#ffffff'
                     }}>
-                      Data Science (BS)
-                    </p>
-                    
+                      📜 Official Transcript
+                    </h5>
                     <div style={{
-                      background: 'rgba(14, 165, 233, 0.05)',
-                      padding: '15px',
-                      borderRadius: '10px',
-                      border: '1px solid rgba(14, 165, 233, 0.1)'
-                    }}>
-                      <h5 style={{
-                        fontSize: '1rem',
-                        fontWeight: '700',
-                        marginBottom: '10px',
-                        color: '#ffffff'
-                      }}>
-                        📜 Official Transcript
-                      </h5>
-                      <div style={{
-                        position: 'relative',
-                        cursor: 'pointer',
-                        borderRadius: '8px',
-                        overflow: 'hidden',
-                        border: '1px solid #e2e8f0'
-                      }}
+                      position: 'relative',
+                      cursor: 'pointer',
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      border: '1px solid #e2e8f0'
+                    }}
                       onClick={() => window.open('/images/baruch_graduation.png', '_blank')}
                       onMouseOver={(e) => {
                         e.currentTarget.style.transform = 'scale(1.02)';
@@ -924,55 +924,55 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                         e.currentTarget.style.transform = 'scale(1)';
                         e.currentTarget.style.boxShadow = 'none';
                       }}
-                      >
-                        <img 
-                          src="/images/baruch_graduation.png" 
-                          alt="뉴욕시립대 바루크 칼리지 학위증명서"
-                          style={{
-                            width: '100%',
-                            height: 'auto',
-                            objectFit: 'contain',
-                            transition: 'all 0.3s ease'
-                          }}
-                        />
-                        <div style={{
-                          position: 'absolute',
-                          top: '10px',
-                          right: '10px',
-                          background: '#0ea5e9',
-                          color: 'white',
-                          padding: '5px 10px',
-                          borderRadius: '15px',
-                          fontSize: '0.8rem',
-                          fontWeight: '600'
-                        }}>
-                          클릭하여 확대
-                        </div>
+                    >
+                      <img
+                        src="/images/baruch_graduation.png"
+                        alt="뉴욕시립대 바루크 칼리지 학위증명서"
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          objectFit: 'contain',
+                          transition: 'all 0.3s ease'
+                        }}
+                      />
+                      <div style={{
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                        background: '#0ea5e9',
+                        color: 'white',
+                        padding: '5px 10px',
+                        borderRadius: '15px',
+                        fontSize: '0.8rem',
+                        fontWeight: '600'
+                      }}>
+                        클릭하여 확대
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
 
             {/* 주요 경력 섹션 - 간결한 텍스트 형식 */}
-              <div style={{
-                background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
+            <div style={{
+              background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
               padding: 'clamp(30px, 5vw, 50px)',
               borderRadius: '15px',
-                border: '2px solid #e2e8f0',
+              border: '2px solid #e2e8f0',
               marginBottom: '50px'
-              }}>
-                <h3 style={{
-                  color: '#1b263b',
+            }}>
+              <h3 style={{
+                color: '#1b263b',
                 fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-                  fontWeight: '800',
-                  marginBottom: '30px',
+                fontWeight: '800',
+                marginBottom: '30px',
                 textAlign: 'center'
               }}>
                 💼 주요 경력
-                </h3>
-                
-                <div style={{
+              </h3>
+
+              <div style={{
                 maxWidth: '900px',
                 margin: '0 auto',
                 fontSize: 'clamp(1.05rem, 2vw, 1.2rem)',
@@ -999,8 +999,8 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                 </p>
                 <p style={{ marginBottom: '0', fontWeight: '500' }}>
                   <strong style={{ color: '#0ea5e9', fontSize: 'clamp(1.1rem, 2.2vw, 1.3rem)' }}>2017</strong> · ConnexionAI 설립 · 200억 규모 AI 스마트팩토리 구축 프로젝트 컨설팅
-                    </p>
-                  </div>
+                </p>
+              </div>
             </div>
           </div>
 
@@ -1066,12 +1066,12 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   실제 유튜브 컨텐츠 자동 생성 시스템을 구축하세요.<br />
                   <strong style={{ color: '#0ea5e9' }}>10일 완성</strong> 실전 수익화 에이전트 개발 과정입니다.
                 </p>
-                </div>
               </div>
             </div>
+          </div>
 
-            {/* 커리큘럼 - 깔끔한 텍스트 중심 디자인 */}
-            <div style={{
+          {/* 커리큘럼 - 깔끔한 텍스트 중심 디자인 */}
+          <div style={{
             maxWidth: '1100px',
             margin: '0 auto'
           }}>
@@ -1114,39 +1114,39 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   🎯 Part 1 (1강-5강)
                 </h4>
                 <p style={{
-                        margin: '0',
+                  margin: '0',
                   fontSize: 'clamp(1rem, 2vw, 1.2rem)',
                   opacity: '0.95',
-                            fontWeight: '600',
+                  fontWeight: '600',
                   lineHeight: '1.6'
                 }}>
                   수익화하는 인공지능 에이전트 첫걸음
-                        </p>
-                      </div>
+                </p>
+              </div>
 
-                      <div style={{
+              <div style={{
                 background: '#ffffff',
                 padding: 'clamp(25px, 4vw, 40px)',
                 borderRadius: '15px',
                 border: '2px solid #e2e8f0'
               }}>
                 {course.lessons.slice(0, 5).map((lesson: any) => (
-                <div
-                  key={lesson.id}
-                  style={{
+                  <div
+                    key={lesson.id}
+                    style={{
                       marginBottom: '30px',
                       paddingBottom: '30px',
                       borderBottom: lesson.id === 5 ? 'none' : '1px solid #e2e8f0'
                     }}
                   >
-                      <h5 style={{
+                    <h5 style={{
                       color: '#0ea5e9',
                       fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
                       fontWeight: '800',
                       marginBottom: '15px'
                     }}>
                       Day {lesson.day} · {lesson.title.replace(`Day ${lesson.day}: `, '')}
-                      </h5>
+                    </h5>
                     <div style={{
                       fontSize: 'clamp(1rem, 2vw, 1.15rem)',
                       lineHeight: '1.8',
@@ -1157,10 +1157,10 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                       </p>
                       <p style={{ marginBottom: '0', fontWeight: '500' }}>
                         <strong style={{ color: '#1b263b' }}>실습:</strong> {lesson.sections.practice}
-                        </p>
-                      </div>
-                </div>
-              ))}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -1184,39 +1184,39 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   🚀 Part 2 (6강-10강)
                 </h4>
                 <p style={{
-                        margin: '0',
+                  margin: '0',
                   fontSize: 'clamp(1rem, 2vw, 1.2rem)',
                   opacity: '0.95',
-                            fontWeight: '600',
+                  fontWeight: '600',
                   lineHeight: '1.6'
                 }}>
                   실전 수익화 컨텐츠 자동 생성 에이전트
-                        </p>
-                      </div>
+                </p>
+              </div>
 
-                      <div style={{
+              <div style={{
                 background: '#ffffff',
                 padding: 'clamp(25px, 4vw, 40px)',
                 borderRadius: '15px',
                 border: '2px solid #e2e8f0'
               }}>
                 {course.lessons.slice(5, 10).map((lesson: any) => (
-                <div
-                  key={lesson.id}
-                  style={{
+                  <div
+                    key={lesson.id}
+                    style={{
                       marginBottom: '30px',
                       paddingBottom: '30px',
                       borderBottom: lesson.id === 10 ? 'none' : '1px solid #e2e8f0'
                     }}
                   >
-                      <h5 style={{
+                    <h5 style={{
                       color: '#10b981',
                       fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
                       fontWeight: '800',
                       marginBottom: '15px'
                     }}>
                       Day {lesson.day} · {lesson.title.replace(`Day ${lesson.day}: `, '')}
-                      </h5>
+                    </h5>
                     <div style={{
                       fontSize: 'clamp(1rem, 2vw, 1.15rem)',
                       lineHeight: '1.8',
@@ -1227,10 +1227,10 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                       </p>
                       <p style={{ marginBottom: '0', fontWeight: '500' }}>
                         <strong style={{ color: '#ffffff' }}>실습:</strong> {lesson.sections.practice}
-                        </p>
-                      </div>
-                </div>
-              ))}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -1367,7 +1367,7 @@ const ChatGPTAgentBeginnerEarlyBirdPage: React.FC<ChatGPTAgentBeginnerEarlyBirdP
                   margin: '0',
                   fontWeight: '600'
                 }}>
-                  💳 안전한 결제 · 구매 후 1년간 이용 가능
+                  💳 안전한 결제 · 구매 후 3개월간 이용 가능
                 </p>
               </div>
             </div>

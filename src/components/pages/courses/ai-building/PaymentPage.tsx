@@ -22,18 +22,24 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState<'domestic' | 'international'>('domestic');
   const [isLoading, setIsLoading] = useState(false);
 
+  // 날짜 기반 가격 결정 (2026년 1월 1일부터 95,000원)
+  const PRICE_CHANGE_DATE = new Date(2026, 0, 1); // 2026-01-01
+  const now = new Date();
+  const isEarlyBird = now < PRICE_CHANGE_DATE;
+  const currentPrice = isEarlyBird ? 45000 : 95000;
+
   const courseInfo = {
     id: '999',
-    title: 'Step 1: AI 건물주 되기 기초 (얼리버드)',
+    title: isEarlyBird ? 'Step 1: AI 건물주 되기 기초 (얼리버드)' : 'Step 1: AI 건물주 되기 기초',
     subtitle: 'AI로 유튜브 채널 만들고 첫 월수익 100만원!',
-    price: 45000 // 얼리버드 가격
+    price: currentPrice
   };
 
   useEffect(() => {
     // 로그인 체크
     const checkAuth = () => {
       const storedUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
-      
+
       if (!storedUserInfo) {
         // 로그인 안 되어 있으면 로그인 페이지로
         const confirmLogin = window.confirm('로그인이 필요합니다.\n\n로그인 페이지로 이동하시겠습니까?');
@@ -64,7 +70,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
   const handlePaymentSuccess = () => {
     console.log('🎉 결제 성공!');
     alert('🎉 결제가 완료되었습니다! 강의 시청 페이지로 이동합니다.');
-    
+
     // 결제 성공 후 강의 시청 페이지로 리다이렉트
     setTimeout(() => {
       navigate('/ai-building-course-player');
@@ -79,26 +85,26 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
     }
 
     setIsLoading(true);
-    
+
     try {
       const { loadTossPayments } = await import('@tosspayments/tosspayments-sdk');
       // 도메인 기반으로 라이브/테스트 환경 감지
       // localhost만 테스트 모드, 그 외 모든 도메인은 라이브 모드
-      const isTestMode = window.location.hostname === 'localhost' || 
-                         window.location.hostname === '127.0.0.1';
-      const clientKey = isTestMode 
+      const isTestMode = window.location.hostname === 'localhost' ||
+        window.location.hostname === '127.0.0.1';
+      const clientKey = isTestMode
         ? 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq' // 🟡 테스트 키
         : 'live_ck_DnyRpQWGrNwa9QGY664O8Kwv1M9E';  // 🔴 라이브 키
-      
+
       console.log(`🔧 결제 환경: ${isTestMode ? '🟡 TEST' : '🔴 LIVE'} (도메인: ${window.location.hostname})`);
       console.log(`🔑 사용 키: ${clientKey.substring(0, 20)}...`);
-      
+
       const tossPayments = await loadTossPayments(clientKey);
-      
+
       const orderId = `order_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
-      
+
       const payment = tossPayments.payment({ customerKey: userInfo.email || 'guest' });
-      
+
       await payment.requestPayment({
         method: method as any,
         amount: { currency: 'KRW', value: courseInfo.price },
@@ -123,7 +129,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
   const handlePayPalPaymentSuccess = async (details: any) => {
     try {
       setIsLoading(true);
-      
+
       // Azure Table에 결제 정보 저장
       await AzureTableService.addPurchaseAndEnrollmentToUser({
         email: userInfo.email,
@@ -135,7 +141,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
         orderId: details.id,
         orderName: courseInfo.title
       });
-      
+
       handlePaymentSuccess();
     } catch (error) {
       console.error('PayPal 결제 저장 오류:', error);
@@ -226,15 +232,15 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           </p>
           <div style={{
             display: 'inline-block',
-            background: 'rgba(251, 191, 36, 0.2)',
-            border: '2px solid #ffd60a',
+            background: isEarlyBird ? 'rgba(251, 191, 36, 0.2)' : 'rgba(34, 197, 94, 0.2)',
+            border: `2px solid ${isEarlyBird ? '#ffd60a' : '#22c55e'}`,
             padding: 'clamp(6px, 2vw, 8px) clamp(12px, 3vw, 20px)',
             borderRadius: '25px',
-            color: '#ffd60a',
+            color: isEarlyBird ? '#ffd60a' : '#22c55e',
             fontSize: 'clamp(0.8rem, 2.5vw, 0.9rem)',
             fontWeight: '700'
           }}>
-            🔥 얼리버드 특가 진행 중
+            {isEarlyBird ? '🔥 얼리버드 특가 진행 중' : '✅ 정가 수강 가능'}
           </div>
         </div>
 
@@ -245,7 +251,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           padding: 'clamp(20px, 5vw, 40px)',
           marginBottom: 'clamp(20px, 4vw, 30px)',
           boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
-          border: '2px solid #ffd60a'
+          border: `2px solid ${isEarlyBird ? '#ffd60a' : '#22c55e'}`
         }}>
           {/* 가격 정보 */}
           <div style={{
@@ -254,14 +260,16 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             borderBottom: '2px solid #e2e8f0',
             marginBottom: 'clamp(15px, 4vw, 30px)'
           }}>
-            <div style={{
-              fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
-              color: '#94a3b8',
-              textDecoration: 'line-through',
-              marginBottom: '8px'
-            }}>
-              정가 ₩95,000
-            </div>
+            {isEarlyBird && (
+              <div style={{
+                fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
+                color: '#94a3b8',
+                textDecoration: 'line-through',
+                marginBottom: '8px'
+              }}>
+                정가 ₩95,000
+              </div>
+            )}
             <div style={{
               fontSize: 'clamp(1.8rem, 6vw, 2.8rem)',
               fontWeight: '900',
@@ -270,18 +278,20 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             }}>
               ₩{courseInfo.price.toLocaleString()}
             </div>
-            <div style={{
-              display: 'inline-block',
-              background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-              color: '#92400e',
-              padding: 'clamp(6px, 2vw, 8px) clamp(12px, 3vw, 20px)',
-              borderRadius: '20px',
-              fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)',
-              fontWeight: '800',
-              border: '2px solid #ffd60a'
-            }}>
-              💰 50,000원 할인
-            </div>
+            {isEarlyBird && (
+              <div style={{
+                display: 'inline-block',
+                background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                color: '#92400e',
+                padding: 'clamp(6px, 2vw, 8px) clamp(12px, 3vw, 20px)',
+                borderRadius: '20px',
+                fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)',
+                fontWeight: '800',
+                border: '2px solid #ffd60a'
+              }}>
+                💰 50,000원 할인
+              </div>
+            )}
           </div>
 
           {/* 결제 방법 탭 */}
@@ -299,8 +309,8 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                   flex: 1,
                   padding: 'clamp(10px, 3vw, 15px) clamp(8px, 2vw, 20px)',
                   border: 'none',
-                  background: activeTab === 'domestic' 
-                    ? 'linear-gradient(135deg, #1e40af, #3b82f6)' 
+                  background: activeTab === 'domestic'
+                    ? 'linear-gradient(135deg, #1e40af, #3b82f6)'
                     : '#f8fafc',
                   color: activeTab === 'domestic' ? '#ffffff' : '#64748b',
                   fontSize: 'clamp(0.85rem, 2.5vw, 1.1rem)',
@@ -322,8 +332,8 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                   flex: 1,
                   padding: 'clamp(10px, 3vw, 15px) clamp(8px, 2vw, 20px)',
                   border: 'none',
-                  background: activeTab === 'international' 
-                    ? 'linear-gradient(135deg, #0070ba, #003087)' 
+                  background: activeTab === 'international'
+                    ? 'linear-gradient(135deg, #0070ba, #003087)'
                     : '#f8fafc',
                   color: activeTab === 'international' ? '#ffffff' : '#64748b',
                   fontSize: 'clamp(0.85rem, 2.5vw, 1.1rem)',
@@ -531,7 +541,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             <li>• 2025년 12월 말 오픈 예정</li>
             <li>• 2026년 1월 1일부터 95,000원으로 인상</li>
             <li>• 결제 후 오픈 시 자동으로 수강 가능</li>
-            <li>• 구매일로부터 1년간 무제한 수강</li>
+            <li>• 구매일로부터 3개월간 무제한 수강</li>
             <li>• 환불 규정은 이용약관을 참고해주세요</li>
           </ul>
         </div>

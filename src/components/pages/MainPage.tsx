@@ -7,6 +7,7 @@ import ComingSoonModal from '../modals/ComingSoonModal';
 import AzureTableService from '../../services/azureTableService';
 import NavigationBar from '../common/NavigationBar';
 import CityGuide from '../common/CityGuide';
+import MonthlyProjectSection from '../common/MonthlyProjectSection';
 
 // 안내원 채팅 상태 관리를 위한 state
 
@@ -69,17 +70,17 @@ const freeMoneyClasses: Course[] = [
 
 // 프리미엄 강의 - 4단계 Step 시스템
 const premiumClasses: Course[] = [
-  // Step 1: AI 건물주 되기 - 얼리버드 45,000원 (2026년부터 95,000원)
-  { id: 999, instructor: '정원석 (AI 멘토 제이)', title: 'Step 1: AI 건물주 되기', subtitle: '🏙️ 1960년 맨해튼 기회가 지금 유튜브에', description: '유튜브 CEO가 말한 "새로운 계급의 크리에이터"가 되세요. AI로 디지털 건물을 짓고 수익화합니다.', image: `${process.env.PUBLIC_URL}/images/main/1.jpeg`, isNew: true, category: 'Premium', path: '/ai-building-course', isPremium: true, launchDate: '🔥 얼리버드 진행 중', price: 45000, originalPrice: 95000, isComingSoon: false },
+  // Step 1: AI 건물주 되기 - 맨해튼 부동산 원리로 AI 콘텐츠 채널 수익화
+  { id: 999, instructor: '정원석 (AI 멘토 제이)', title: 'Step 1: AI 건물주 되기', subtitle: 'AI로 콘텐츠 만들기 기초', description: '맨해튼 부동산 원리를 AI 콘텐츠에 적용! 무료 AI 도구로 유튜브 채널을 짓고 수익화하는 기초를 배웁니다.', image: `${process.env.PUBLIC_URL}/images/main/1.jpeg`, isNew: true, category: 'Premium', path: '/ai-building-course', isPremium: true, launchDate: '🔥 얼리버드 진행 중', price: 45000, originalPrice: 95000, isComingSoon: false },
 
-  // Step 2: AI 에이전트 비기너 - Google OPAL로 여러 AI를 하나의 회사처럼
-  { id: 1002, instructor: '정원석 (AI 멘토 제이)', title: 'Step 2: AI 에이전트 비기너', subtitle: '🤖 여러 AI를 하나의 회사처럼', description: '💎 Google OPAL로 콘텐츠 자동 생성 에이전트를 만들고 시스템화! 더 효율적인 수익 구조 완성', image: `${process.env.PUBLIC_URL}/images/main/2.jpeg`, isNew: true, category: 'Premium', path: '/chatgpt-agent-beginner', isPremium: true, launchDate: '지금 수강 가능', price: 95000, originalPrice: 95000, isComingSoon: false },
+  // Step 2: AI 에이전트 비기너 - 여러 AI를 하나의 회사처럼 자동화
+  { id: 1002, instructor: '정원석 (AI 멘토 제이)', title: 'Step 2: AI 에이전트 비기너', subtitle: '여러 AI를 하나의 회사처럼', description: 'Google OPAL로 콘텐츠 자동 생성 에이전트를 만들고 시스템화! 더 효율적인 수익 구조를 완성합니다.', image: `${process.env.PUBLIC_URL}/images/main/2.jpeg`, isNew: true, category: 'Premium', path: '/chatgpt-agent-beginner', isPremium: true, launchDate: '지금 수강 가능', price: 95000, originalPrice: 95000, isComingSoon: false },
 
-  // Step 3: 바이브코딩 - 수익화 확장의 첫걸음
-  { id: 1003, instructor: '정원석 (AI 멘토 제이)', title: 'Step 3: 바이브코딩', subtitle: '💻 수익화 확장의 첫걸음', description: '🚀 코딩 몰라도 OK! AI에게 말로 설명하면 코드가 완성됩니다. 나만의 서비스를 직접 개발하세요!', image: `${process.env.PUBLIC_URL}/images/main/3.jpeg`, isNew: true, category: 'Premium', path: '/vibe-coding', isPremium: true, launchDate: '오픈 예정', price: 150000, originalPrice: 150000, isComingSoon: false },
+  // Step 3: 바이브코딩 - Google Antigravity로 수익화 도구 직접 개발
+  { id: 1003, instructor: '정원석 (AI 멘토 제이)', title: 'Step 3: 바이브코딩', subtitle: 'AI 수익화 도구 만들기', description: 'Google Antigravity로 자동화 에이전트와 웹/앱을 직접 개발! 코딩 몰라도 AI에게 말하면 완성.', image: `${process.env.PUBLIC_URL}/images/main/3.jpeg`, isNew: true, category: 'Premium', path: '/vibe-coding', isPremium: true, launchDate: '📅 2026년 1월 8일 오픈', price: 150000, originalPrice: 150000, isComingSoon: false },
 
-  // Step 4: 1인 기업 만들기 - 1인 기업가에서 CEO로
-  { id: 1004, instructor: '정원석 (AI 멘토 제이)', title: 'Step 4: 1인 기업 만들기', subtitle: '👑 1인 기업가에서 CEO로', description: '🏆 사업자등록, 세금, 정부지원금까지! 1인 콘텐츠 기업을 완성하는 단계', image: `${process.env.PUBLIC_URL}/images/main/4.jpeg`, isNew: true, category: 'Premium', path: '/solo-business', isPremium: true, launchDate: '준비중', price: 0, originalPrice: 0, isComingSoon: false }
+  // Step 4: AI 1인 기업 만들기 - 인공지능 네이티브 회사 완성
+  { id: 1004, instructor: '정원석 (AI 멘토 제이)', title: 'Step 4: AI 1인 기업 만들기', subtitle: 'AI 네이티브 회사 완성', description: '업무 자동화, 사업자 등록, 마케팅까지 모든 것을 AI로! 인공지능 네이티브 1인 기업을 완성합니다.', image: `${process.env.PUBLIC_URL}/images/main/4.jpeg`, isNew: true, category: 'Premium', path: '/solo-business', isPremium: true, launchDate: '준비중', price: 0, originalPrice: 0, isComingSoon: false }
 ];
 
 // ⭐️ onCourseSelect 속성 제거됨
@@ -112,7 +113,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
 
       const today = new Date();
       const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][today.getDay()];
-      
+
       const context = `
 현재 시간: ${today.toLocaleString('ko-KR')} (${dayOfWeek}요일)
 AI City Builders 사이트 정보:
@@ -154,7 +155,7 @@ AI City Builders 사이트 정보:
 
     // 처음 로드 시 생성
     generateAnnouncement();
-    
+
     // 10분마다 새로 생성
     const interval = setInterval(generateAnnouncement, 10 * 60 * 1000);
     return () => clearInterval(interval);
@@ -366,7 +367,7 @@ AI City Builders 사이트 정보:
             backgroundClip: 'text'
           }}>AI City</span>에 오신 것을 환영합니다
         </h1>
-        
+
         <p style={{
           position: 'relative',
           fontSize: 'clamp(0.9rem, 2.2vw, 1.1rem)',
@@ -375,15 +376,15 @@ AI City Builders 사이트 정보:
           margin: '0 auto 28px',
           lineHeight: '1.5'
         }}>
-          AI 수익화의 정석! 인공지능 멘토 제이와 함께<br/>
+          AI 수익화의 정석! 인공지능 멘토 제이와 함께<br />
           4단계 로드맵으로 AI 1인 기업가가 되어보세요! 🚀
         </p>
 
 
         {/* 안내원 이미지 + 말풍선 + 버튼 */}
-        <div className="concierge-container" style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
+        <div className="concierge-container" style={{
+          display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center'
         }}>
@@ -392,7 +393,7 @@ AI City Builders 사이트 정보:
             position: 'relative',
             display: 'inline-block'
           }}>
-            <img 
+            <img
               className="concierge-image"
               src={`${process.env.PUBLIC_URL}/images/main/aian.jpeg`}
               alt="AI City 안내원"
@@ -408,7 +409,7 @@ AI City Builders 사이트 정보:
               }}
               onError={(e) => { e.currentTarget.style.display = 'none'; }}
             />
-            
+
             {/* 말풍선 - PC: 옆 */}
             {announcement && (
               <div className="announcement-bubble-pc" style={{
@@ -445,7 +446,7 @@ AI City Builders 사이트 정보:
               </div>
             )}
           </div>
-          
+
           {/* 말풍선 - 모바일: 아래 */}
           {announcement && (
             <div className="announcement-bubble-mobile" style={{
@@ -484,7 +485,7 @@ AI City Builders 사이트 정보:
               </p>
             </div>
           )}
-          
+
           <button
             onClick={() => setIsCityGuideOpen(true)}
             style={{
@@ -515,10 +516,13 @@ AI City Builders 사이트 정보:
       </section>
 
       {/* 모달 채팅 - 섹션 밖에 배치 */}
-      <CityGuide 
-        isOpenExternal={isCityGuideOpen} 
-        onClose={() => setIsCityGuideOpen(false)} 
+      <CityGuide
+        isOpenExternal={isCityGuideOpen}
+        onClose={() => setIsCityGuideOpen(false)}
       />
+
+      {/* 🗞️ 월간 프로젝트 신문 섹션 */}
+      <MonthlyProjectSection />
 
       <main className="masterclass-main">
         {/* 프리미엄 강의 - 4단계 로드맵 */}

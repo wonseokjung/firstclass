@@ -18,14 +18,15 @@ const COLORS = {
 };
 
 // 요일별 라이브 스케줄 (0: 일요일, 1: 월요일, ...)
-// 현재 월~수만 운영 (목요일 바이브코딩은 추후 오픈 예정)
-const WEEKLY_SCHEDULE: { [key: number]: { icon: string; title: string; color: string; isFree: boolean; link: string; time: string } | null } = {
+// Step 3 바이브코딩: 2026년 1월 8일(목) 오픈
+// Step 4 1인 기업 만들기: 추후 오픈 예정
+const WEEKLY_SCHEDULE: { [key: number]: { icon: string; title: string; color: string; isFree: boolean; link: string; time: string; openDate?: Date } | null } = {
   0: null, // 일요일 - 휴식
   1: { icon: '🆓', title: 'AI 수익화 토크', color: COLORS.youtube, isFree: true, link: '/live/free', time: '20:00' }, // 월요일
   2: { icon: '🏗️', title: 'AI 건물주 되기', color: COLORS.navy, isFree: false, link: '/live/step1', time: '20:00' }, // 화요일
   3: { icon: '🤖', title: 'AI 에이전트 비기너', color: COLORS.gold, isFree: false, link: '/live/step2', time: '20:00' }, // 수요일
-  4: null, // 목요일 - 바이브코딩 (추후 오픈 예정)
-  5: null, // 금요일 - 휴식
+  4: { icon: '💻', title: '바이브코딩', color: COLORS.purple, isFree: false, link: '/live/step3', time: '20:00', openDate: new Date(2026, 0, 8) }, // 목요일 - 2026년 1월 8일 오픈
+  5: null, // 금요일 - 1인 기업 만들기 (추후 오픈 예정)
   6: null, // 토요일 - 휴식
 };
 
@@ -58,33 +59,33 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
   const getDaysInMonth = () => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
-    
+
     const firstDayOfMonth = new Date(year, month, 1);
     const lastDayOfMonth = new Date(year, month + 1, 0);
-    
+
     const startDayOfWeek = firstDayOfMonth.getDay();
     const daysInMonth = lastDayOfMonth.getDate();
-    
+
     const days: (Date | null)[] = [];
-    
+
     // 이전 월의 날짜들 (빈 칸)
     for (let i = 0; i < startDayOfWeek; i++) {
       days.push(null);
     }
-    
+
     // 현재 월의 날짜들
     for (let day = 1; day <= daysInMonth; day++) {
       days.push(new Date(year, month, day));
     }
-    
+
     return days;
   };
 
   // 해당 날짜가 오늘인지 확인
   const isToday = (date: Date) => {
     return date.getDate() === today.getDate() &&
-           date.getMonth() === today.getMonth() &&
-           date.getFullYear() === today.getFullYear();
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear();
   };
 
   // 해당 날짜가 라이브 시작일 이후인지 확인
@@ -95,7 +96,10 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
   // 해당 날짜의 라이브 스케줄 가져오기
   const getScheduleForDate = (date: Date) => {
     if (!isAfterLiveStart(date)) return null;
-    return WEEKLY_SCHEDULE[date.getDay()];
+    const schedule = WEEKLY_SCHEDULE[date.getDay()];
+    // openDate가 있는 경우, 해당 날짜 이후에만 표시
+    if (schedule?.openDate && date < schedule.openDate) return null;
+    return schedule;
   };
 
   const days = getDaysInMonth();
@@ -107,15 +111,15 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
       <NavigationBar onBack={onBack} breadcrumbText="라이브 캘린더" />
 
       {/* 헤더 */}
-      <div style={{ 
+      <div style={{
         background: 'linear-gradient(135deg, #1e3a5f 0%, #0f2847 100%)',
         padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)',
         textAlign: 'center'
       }}>
-        <h1 style={{ 
-          color: COLORS.white, 
-          fontSize: 'clamp(1.5rem, 4vw, 2rem)', 
-          fontWeight: '800', 
+        <h1 style={{
+          color: COLORS.white,
+          fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+          fontWeight: '800',
           marginBottom: '8px',
           display: 'flex',
           alignItems: 'center',
@@ -125,12 +129,12 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
           📅 라이브 캘린더
         </h1>
         <p style={{ color: COLORS.goldLight, fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
-          매주 월~목 오후 8시 라이브
+          매주 월~목 오후 8시 라이브 (Step 4 추후 오픈)
         </p>
       </div>
 
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: 'clamp(15px, 3vw, 30px)' }}>
-        
+
         {/* 월 네비게이션 */}
         <div style={{
           display: 'flex',
@@ -158,9 +162,9 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
           </button>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-            <h2 style={{ 
-              color: COLORS.white, 
-              fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', 
+            <h2 style={{
+              color: COLORS.white,
+              fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
               fontWeight: '700',
               margin: 0
             }}>
@@ -277,12 +281,12 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
                     marginBottom: '4px'
                   }}>
                     <span style={{
-                      color: isTodayDate 
+                      color: isTodayDate
                         ? COLORS.navyDark
-                        : dayOfWeek === 0 
-                          ? '#ef4444' 
-                          : dayOfWeek === 6 
-                            ? '#3b82f6' 
+                        : dayOfWeek === 0
+                          ? '#ef4444'
+                          : dayOfWeek === 6
+                            ? '#3b82f6'
                             : '#1e293b',
                       fontSize: 'clamp(0.85rem, 2vw, 1rem)',
                       fontWeight: isTodayDate ? '700' : '500',
@@ -313,9 +317,9 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
                         minHeight: 'clamp(40px, 8vw, 60px)'
                       }}
                     >
-                      <div style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
                         gap: '4px',
                         marginBottom: '2px'
                       }}>
@@ -335,9 +339,9 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
                           </span>
                         )}
                       </div>
-                      <div style={{ 
-                        color: COLORS.white, 
-                        fontSize: 'clamp(0.6rem, 1.5vw, 0.75rem)', 
+                      <div style={{
+                        color: COLORS.white,
+                        fontSize: 'clamp(0.6rem, 1.5vw, 0.75rem)',
                         fontWeight: '600',
                         lineHeight: 1.2,
                         overflow: 'hidden',
@@ -464,6 +468,114 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
           </button>
         </div>
 
+        {/* 📅 이번 달 프로젝트 */}
+        <div style={{
+          marginTop: '20px',
+          padding: 'clamp(20px, 4vw, 30px)',
+          background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
+          borderRadius: '16px',
+          border: '2px solid rgba(240, 180, 41, 0.4)',
+          boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)'
+        }}>
+          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+            <div style={{
+              display: 'inline-block',
+              background: 'linear-gradient(135deg, #ffd60a, #f59e0b)',
+              padding: '8px 20px',
+              borderRadius: '20px',
+              marginBottom: '12px'
+            }}>
+              <span style={{ color: '#1a1a2e', fontWeight: '800', fontSize: '0.9rem' }}>
+                🎬 2026년 1월 프로젝트
+              </span>
+            </div>
+            <h3 style={{
+              color: COLORS.white,
+              fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
+              fontWeight: '800',
+              margin: '0 0 8px 0'
+            }}>
+              숏츠 자동화 마스터
+            </h3>
+            <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem', margin: 0 }}>
+              기초 강의 수강 + 매주 라이브에서 함께 만들어갑니다
+            </p>
+          </div>
+
+          {/* Step별 프로젝트 */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '15px',
+            marginBottom: '15px'
+          }}>
+            {[
+              { step: 1, title: 'AI 건물주 되기', project: '캐릭터 이미지 생성', day: '화', color: '#1e3a5f', icon: '🏗️' },
+              { step: 2, title: 'AI 에이전트 비기너', project: '숏츠 자동화 에이전트 워크플로우', day: '수', color: '#f0b429', icon: '🤖' },
+              { step: 3, title: '바이브코딩', project: '숏츠 자동화 에이전트 개발', day: '목', color: '#8b5cf6', icon: '💻' }
+            ].map((item) => (
+              <div key={item.step} style={{
+                background: 'rgba(255,255,255,0.05)',
+                borderRadius: '12px',
+                padding: '15px',
+                border: `1px solid ${item.color}50`
+              }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  marginBottom: '10px'
+                }}>
+                  <span style={{ fontSize: '1.5rem' }}>{item.icon}</span>
+                  <div>
+                    <div style={{
+                      color: item.color === '#1e3a5f' ? '#60a5fa' : item.color,
+                      fontSize: '0.75rem',
+                      fontWeight: '700'
+                    }}>
+                      Step {item.step} · {item.day}요일
+                    </div>
+                    <div style={{ color: COLORS.white, fontSize: '0.85rem', fontWeight: '600' }}>
+                      {item.title}
+                    </div>
+                  </div>
+                </div>
+                <div style={{
+                  background: `${item.color}30`,
+                  padding: '10px',
+                  borderRadius: '8px',
+                  color: COLORS.white,
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  textAlign: 'center'
+                }}>
+                  📌 {item.project}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 설명 */}
+          <div style={{
+            background: 'rgba(255,215,0,0.1)',
+            borderRadius: '10px',
+            padding: '15px',
+            border: '1px solid rgba(255,215,0,0.2)'
+          }}>
+            <p style={{
+              color: 'rgba(255,255,255,0.9)',
+              fontSize: '0.85rem',
+              lineHeight: '1.7',
+              margin: 0,
+              textAlign: 'center'
+            }}>
+              💡 <strong style={{ color: COLORS.goldLight }}>기초 강의</strong>로 기본기를 쌓고,{' '}
+              <strong style={{ color: COLORS.goldLight }}>매주 라이브</strong>에서 실전 프로젝트를 함께 완성합니다.<br />
+              프로젝트는 매달 새롭게 바뀝니다!
+            </p>
+          </div>
+        </div>
+
         {/* 안내사항 */}
         <div style={{
           marginTop: '20px',
@@ -476,9 +588,9 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
           <h4 style={{ color: COLORS.gold, fontWeight: '700', marginBottom: '10px', fontSize: '0.95rem' }}>
             📌 안내사항
           </h4>
-          <ul style={{ 
-            color: COLORS.white, 
-            fontSize: '0.85rem', 
+          <ul style={{
+            color: COLORS.white,
+            fontSize: '0.85rem',
             lineHeight: '1.8',
             margin: 0,
             paddingLeft: '18px'
@@ -486,6 +598,7 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
             <li>라이브는 매주 <strong style={{ color: COLORS.goldLight }}>월~목 오후 8시</strong>에 진행됩니다</li>
             <li>월요일 무료 라이브는 유튜브에서 시청 가능합니다</li>
             <li>프리미엄 라이브(화~목)는 해당 강의 수강생만 참여 가능합니다</li>
+            <li><strong style={{ color: COLORS.goldLight }}>Step 3 바이브코딩</strong>: 2026년 1월 8일(목) 오픈!</li>
             <li>캘린더의 이벤트를 클릭하면 해당 라이브 페이지로 이동합니다</li>
           </ul>
         </div>

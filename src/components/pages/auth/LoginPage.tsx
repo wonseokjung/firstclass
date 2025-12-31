@@ -17,7 +17,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isLoading, setIsLoading] = useState(false);
   const [showPasswordResetModal, setShowPasswordResetModal] = useState(false);
   const [rememberMe, setRememberMe] = useState(() => {
@@ -26,7 +26,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
   });
 
   const validateForm = () => {
-    const newErrors: {[key: string]: string} = {};
+    const newErrors: { [key: string]: string } = {};
 
     // 이메일 validation
     if (!formData.email) {
@@ -52,7 +52,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
       ...prev,
       [name]: value
     }));
-    
+
     // 입력 시 해당 필드의 에러 제거
     if (errors[name]) {
       setErrors(prev => ({
@@ -64,31 +64,31 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     setIsLoading(true);
-    
+
     try {
       console.log('🔐 로그인 시도:', formData.email);
-      
+
       // Azure Table Storage로 사용자 인증
       const user = await AzureTableService.validateUser(formData.email, formData.password);
-      
+
       if (!user) {
         console.error('❌ 로그인 실패: 사용자를 찾을 수 없거나 비밀번호가 일치하지 않습니다.');
         console.error('입력 이메일:', formData.email);
         console.error('입력 비밀번호 길이:', formData.password.length);
-        
-        setErrors({ 
+
+        setErrors({
           general: '이메일 또는 비밀번호가 올바르지 않습니다.\n\n디버그 정보:\n- 이메일: ' + formData.email + '\n- 비밀번호 길이: ' + formData.password.length + '자\n- 브라우저: ' + navigator.userAgent.split(' ').slice(-1)[0] + '\n\n문제가 계속되면 관리자에게 위 정보를 공유해주세요.'
         });
         setIsLoading(false);
         return;
       }
-      
+
       console.log('✅ 사용자 인증 성공:', user.email);
 
       // 세션 생성
@@ -101,9 +101,9 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
         name: user.name,
         sessionId: sessionId
       };
-      
+
       sessionStorage.setItem('aicitybuilders_user_session', JSON.stringify(userInfo));
-      
+
       // 자동 로그인 설정
       if (rememberMe) {
         localStorage.setItem('aicitybuilders_remember_me', 'true');
@@ -115,9 +115,9 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
         console.log('💾 자동 로그인 비활성화');
       }
       console.log('💾 사용자 세션 정보 저장:', userInfo);
-      
+
       alert(`${user.name}님, 환영합니다!`);
-      
+
       // 로그인 후 리다이렉트 URL 확인
       const redirectUrl = sessionStorage.getItem('redirect_after_login');
       if (redirectUrl) {
@@ -127,37 +127,37 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
       } else {
         navigate('/');
       }
-      
+
     } catch (error) {
       console.error('💥 로그인 에러:', error);
-      
+
       let debugInfo = '\n\n🔍 디버그 정보:\n';
       debugInfo += '━━━━━━━━━━━━━━━━\n';
       debugInfo += '📧 이메일: ' + formData.email + '\n';
       debugInfo += '🕐 시간: ' + new Date().toLocaleString('ko-KR') + '\n';
       debugInfo += '🌐 브라우저: ' + navigator.userAgent.split(' ').slice(-1)[0] + '\n';
-      
+
       if (error instanceof Error) {
         debugInfo += '⚠️ 에러 타입: ' + error.name + '\n';
         debugInfo += '💬 에러 메시지: ' + error.message + '\n';
-        
+
         // 네트워크 오류 특별 처리
         if (error.message.includes('네트워크') || error.message.includes('불러올 수 없습니다')) {
-          setErrors({ 
+          setErrors({
             general: '🌐 서버 연결 문제가 발생했습니다.\n\n다음을 확인해주세요:\n' +
-                    '1️⃣ 인터넷 연결 상태\n' +
-                    '2️⃣ 회원가입이 완료되었는지 확인\n' +
-                    '3️⃣ 이메일 주소가 정확한지 확인\n' +
-                    '\n잠시 후 다시 시도해주세요.\n' +
-                    '문제가 계속되면 아래 정보를 관리자에게 공유해주세요.' + debugInfo
+              '1️⃣ 인터넷 연결 상태\n' +
+              '2️⃣ 회원가입이 완료되었는지 확인\n' +
+              '3️⃣ 이메일 주소가 정확한지 확인\n' +
+              '\n잠시 후 다시 시도해주세요.\n' +
+              '문제가 계속되면 아래 정보를 관리자에게 공유해주세요.' + debugInfo
           });
         } else {
-          setErrors({ 
+          setErrors({
             general: '로그인에 실패했습니다.' + debugInfo + '\n━━━━━━━━━━━━━━━━\n관리자에게 위 정보를 공유해주세요.'
           });
         }
       } else {
-        setErrors({ 
+        setErrors({
           general: '알 수 없는 오류가 발생했습니다.' + debugInfo + '\n━━━━━━━━━━━━━━━━\n관리자에게 위 정보를 공유해주세요.'
         });
       }
@@ -187,7 +187,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
   return (
     <div className="auth-page">
       {/* 통일된 네비게이션바 */}
-      <NavigationBar 
+      <NavigationBar
         onBack={onBack}
         breadcrumbText="로그인"
         onSignUpClick={handleSignUpClick}
@@ -267,10 +267,10 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
               </div>
 
               <div className="form-options" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                <label style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '8px', 
+                <label style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
                   cursor: 'pointer',
                   fontSize: '0.95rem',
                   color: '#64748b'
@@ -289,8 +289,8 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
                   자동 로그인
                 </label>
                 <div className="forgot-password">
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     className="link-button"
                     onClick={handleForgotPasswordClick}
                   >
@@ -311,8 +311,8 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
             <div className="auth-footer">
               <p className="auth-switch">
                 계정이 없으신가요?{' '}
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="link-button primary"
                   onClick={handleSignUpClick}
                 >
@@ -326,7 +326,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onBack }) => {
             <h3>AI City Builders에서 얻을 수 있는 것</h3>
             <ul>
               <li>🚀 AI 전문가 수준의 실전 강의</li>
-              <li>💎 구매 후 1년간 이용 가능한 프리미엄 콘텐츠</li>
+              <li>💎 구매 후 3개월간 이용 가능한 프리미엄 콘텐츠</li>
               <li>🏆 수료증 및 포트폴리오 지원</li>
               <li>🌟 AI 업계 네트워킹 기회</li>
             </ul>

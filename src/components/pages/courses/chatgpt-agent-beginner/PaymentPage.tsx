@@ -33,7 +33,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
     // 로그인 체크
     const checkAuth = () => {
       const storedUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
-      
+
       if (!storedUserInfo) {
         // 로그인 안 되어 있으면 로그인 페이지로
         const confirmLogin = window.confirm('로그인이 필요합니다.\n\n로그인 페이지로 이동하시겠습니까?');
@@ -64,7 +64,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
   const handlePaymentSuccess = () => {
     console.log('🎉 결제 성공!');
     alert('🎉 결제가 완료되었습니다! 강의 시청 페이지로 이동합니다.');
-    
+
     // 결제 성공 후 강의 시청 페이지로 리다이렉트
     setTimeout(() => {
       navigate('/chatgpt-agent-beginner-player');
@@ -79,26 +79,26 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
     }
 
     setIsLoading(true);
-    
+
     try {
       const { loadTossPayments } = await import('@tosspayments/tosspayments-sdk');
       // 도메인 기반으로 라이브/테스트 환경 감지
       // localhost만 테스트 모드, 그 외 모든 도메인은 라이브 모드
-      const isTestMode = window.location.hostname === 'localhost' || 
-                         window.location.hostname === '127.0.0.1';
-      const clientKey = isTestMode 
+      const isTestMode = window.location.hostname === 'localhost' ||
+        window.location.hostname === '127.0.0.1';
+      const clientKey = isTestMode
         ? 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq' // 🟡 테스트 키
         : 'live_ck_DnyRpQWGrNwa9QGY664O8Kwv1M9E';  // 🔴 라이브 키
-      
+
       console.log(`🔧 결제 환경: ${isTestMode ? '🟡 TEST' : '🔴 LIVE'} (도메인: ${window.location.hostname})`);
       console.log(`🔑 사용 키: ${clientKey.substring(0, 20)}...`);
-      
+
       const tossPayments = await loadTossPayments(clientKey);
-      
+
       const orderId = `order_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
-      
+
       const payment = tossPayments.payment({ customerKey: userInfo.email || 'guest' });
-      
+
       await payment.requestPayment({
         method: method as any,
         amount: { currency: 'KRW', value: courseInfo.price },
@@ -123,7 +123,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
   const handlePayPalPaymentSuccess = async (details: any) => {
     try {
       setIsLoading(true);
-      
+
       // Azure Table에 결제 정보 저장
       await AzureTableService.addPurchaseAndEnrollmentToUser({
         email: userInfo.email,
@@ -135,7 +135,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
         orderId: details.id,
         orderName: courseInfo.title
       });
-      
+
       handlePaymentSuccess();
     } catch (error) {
       console.error('PayPal 결제 저장 오류:', error);
@@ -333,7 +333,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
               fontSize: '0.95rem',
               lineHeight: '1.8'
             }}>
-              <li><strong>구매 후 1년간 이용 가능</strong> - 기간 내 무제한 수강</li>
+              <li><strong>구매 후 3개월간 이용 가능</strong> - 기간 내 무제한 수강</li>
               <li><strong>무제한 시청</strong> - 횟수 제한 없이 반복 학습</li>
               <li><strong>실습 파일 제공</strong> - 모든 강의 자료 다운로드</li>
               <li><strong>수료증 발급</strong> - 강의 완료 시 수료증 제공</li>
@@ -398,8 +398,8 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                   flex: 1,
                   padding: '15px 20px',
                   border: 'none',
-                  background: activeTab === 'domestic' 
-                    ? 'linear-gradient(135deg, #0ea5e9, #0284c7)' 
+                  background: activeTab === 'domestic'
+                    ? 'linear-gradient(135deg, #0ea5e9, #0284c7)'
                     : '#f8fafc',
                   color: activeTab === 'domestic' ? '#ffffff' : '#64748b',
                   fontSize: '1.1rem',
@@ -421,8 +421,8 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                   flex: 1,
                   padding: '15px 20px',
                   border: 'none',
-                  background: activeTab === 'international' 
-                    ? 'linear-gradient(135deg, #0070ba, #003087)' 
+                  background: activeTab === 'international'
+                    ? 'linear-gradient(135deg, #0070ba, #003087)'
                     : '#f8fafc',
                   color: activeTab === 'international' ? '#ffffff' : '#64748b',
                   fontSize: '1.1rem',

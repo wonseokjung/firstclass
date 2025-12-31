@@ -41,7 +41,7 @@ const STEP_INFO: { [key: string]: StepInfo } = {
     id: 'step1',
     name: 'Step 1',
     title: 'AI 건물주 되기',
-    description: '맨해튼 부동산 비유로 배우는 AI 콘텐츠 수익화. 매주 최신 AI 도구 업데이트!',
+    description: 'AI로 콘텐츠 만들기 기초. 무료 AI 도구로 유튜브 채널을 짓고 수익화!',
     dayOfWeek: '화요일',
     time: '오후 8:00',
     courseId: 999,
@@ -55,7 +55,7 @@ const STEP_INFO: { [key: string]: StepInfo } = {
     id: 'step2',
     name: 'Step 2',
     title: 'AI 에이전트 비기너',
-    description: '이미지/영상 생성, 유튜브 채널, 나레이션 에이전트 제작 실습. 수익화 자동화!',
+    description: '여러 AI를 하나의 회사처럼! 콘텐츠 자동 생성 에이전트로 수익 구조 완성.',
     dayOfWeek: '수요일',
     time: '오후 8:00',
     courseId: 1002,
@@ -69,7 +69,7 @@ const STEP_INFO: { [key: string]: StepInfo } = {
     id: 'step3',
     name: 'Step 3',
     title: '바이브코딩',
-    description: '수익화 확장의 첫걸음! 내 사업 도구 직접 만들기',
+    description: 'Google Antigravity로 자동화 에이전트와 웹/앱을 직접 개발!',
     dayOfWeek: '목요일',
     time: '오후 8:00',
     courseId: 1003,
@@ -82,8 +82,8 @@ const STEP_INFO: { [key: string]: StepInfo } = {
   step4: {
     id: 'step4',
     name: 'Step 4',
-    title: '1인 기업 만들기',
-    description: '1인 기업가에서 CEO로! 사업자등록, 세금, 정부지원금까지.',
+    title: 'AI 1인 기업 만들기',
+    description: '업무 자동화, 사업자 등록, 마케팅까지 모든 것을 AI로! 인공지능 네이티브 회사 완성.',
     dayOfWeek: '금요일',
     time: '오후 8:00',
     courseId: 1004,
@@ -127,7 +127,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   const stepInfo = stepId ? STEP_INFO[stepId] : null;
-  
+
   // Step ID를 Azure courseId로 매핑
   const getCourseIdForStep = (step: string): string => {
     const mapping: { [key: string]: string } = {
@@ -147,10 +147,10 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
       try {
         const courseId = getCourseIdForStep(stepId);
         console.log('🔴 라이브 설정 로드 중...', courseId);
-        
+
         const config = await AzureTableService.getCurrentLiveConfig(courseId);
         console.log('📡 Azure 라이브 설정:', config);
-        
+
         if (config && config.isLive && config.liveUrl) {
           setIsLiveNow(true);
           setLiveUrl(config.liveUrl);
@@ -164,7 +164,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
         console.error('라이브 설정 로드 실패:', error);
       }
     };
-    
+
     loadLiveConfig();
 
     // 다음 라이브 날짜 계산
@@ -225,15 +225,15 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
 
       try {
         const user = JSON.parse(userSession);
-        
+
         // 테스트 계정 체크
         if (user.email === 'test10@gmail.com') {
           setHasAccess(true);
-          
+
           // Azure에서 아카이브 가져오기
           const courseIdForArchive = getCourseIdForStep(stepId || 'step1');
           const azureArchives = await AzureTableService.getLiveArchives(courseIdForArchive);
-          
+
           if (azureArchives && azureArchives.length > 0) {
             const formattedArchives: ArchiveItem[] = azureArchives.map((a: any, index: number) => ({
               id: a.RowKey || `archive-${index}`,
@@ -246,7 +246,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
             }));
             setArchives(formattedArchives);
           }
-          
+
           setIsLoading(false);
           return;
         }
@@ -259,19 +259,19 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
           courseIdForPayment,
           stepInfoCourseId: stepInfo.courseId
         });
-        
+
         const paymentStatus = await AzureTableService.checkCoursePayment(user.email, courseIdForPayment);
-        
+
         console.log('💳 결제 확인 결과:', paymentStatus);
 
         if (paymentStatus && paymentStatus.isPaid) {
           console.log('✅ 결제 확인됨! 접근 허용');
           setHasAccess(true);
-          
+
           // Azure에서 아카이브 가져오기
           const courseIdForArchive = getCourseIdForStep(stepId || 'step1');
           const azureArchives = await AzureTableService.getLiveArchives(courseIdForArchive);
-          
+
           if (azureArchives && azureArchives.length > 0) {
             // Azure 아카이브를 ArchiveItem 형식으로 변환
             const formattedArchives: ArchiveItem[] = azureArchives.map((a: any, index: number) => ({
@@ -320,11 +320,11 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
 
   if (isLoading) {
     return (
-      <div style={{ 
-        minHeight: '100vh', 
+      <div style={{
+        minHeight: '100vh',
         background: `linear-gradient(135deg, ${COLORS.navy}10, ${COLORS.grayLight})`,
-        display: 'flex', 
-        alignItems: 'center', 
+        display: 'flex',
+        alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
         gap: '20px'
@@ -347,7 +347,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
     return (
       <div style={{ minHeight: '100vh', background: COLORS.white }}>
         <NavigationBar onBack={onBack} breadcrumbText={`${stepInfo.name} 라이브`} />
-        
+
         <div style={{
           background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
           padding: '80px 20px',
@@ -371,24 +371,24 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
             }}>
               <Lock size={48} color={COLORS.white} />
             </div>
-            
-            <h1 style={{ 
-              color: COLORS.white, 
+
+            <h1 style={{
+              color: COLORS.white,
               fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
               fontWeight: '800',
               marginBottom: '15px'
             }}>
               {stepInfo.icon} {stepInfo.name} 라이브
             </h1>
-            
-            <p style={{ 
-              color: COLORS.goldLight, 
+
+            <p style={{
+              color: COLORS.goldLight,
               fontSize: '1.2rem',
               marginBottom: '30px'
             }}>
               {stepInfo.title}
             </p>
-            
+
             <div style={{
               background: 'rgba(255,255,255,0.1)',
               borderRadius: '15px',
@@ -396,12 +396,12 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
               marginBottom: '30px'
             }}>
               <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '1.1rem', lineHeight: '1.8' }}>
-                이 라이브에 참여하려면<br/>
-                <strong style={{ color: COLORS.goldLight }}>{stepInfo.name}: {stepInfo.title}</strong> 강의를<br/>
+                이 라이브에 참여하려면<br />
+                <strong style={{ color: COLORS.goldLight }}>{stepInfo.name}: {stepInfo.title}</strong> 강의를<br />
                 구매해야 합니다.
               </p>
             </div>
-            
+
             <div style={{
               display: 'flex',
               flexDirection: 'column',
@@ -427,7 +427,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
                 <span>연간 52회 라이브 + 전체 아카이브</span>
               </div>
             </div>
-            
+
             <button
               onClick={() => navigate(stepInfo.purchaseLink)}
               style={{
@@ -456,7 +456,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
   return (
     <div style={{ minHeight: '100vh', background: COLORS.white }}>
       <NavigationBar onBack={onBack} breadcrumbText={`${stepInfo.name} 라이브`} />
-      
+
       {/* 헤더 */}
       <div style={{
         background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
@@ -474,7 +474,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
           background: `radial-gradient(circle, ${COLORS.gold}20 0%, transparent 70%)`,
           borderRadius: '50%'
         }}></div>
-        
+
         <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '25px' }}>
             <div style={{
@@ -499,7 +499,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
               </p>
             </div>
           </div>
-          
+
           {/* 라이브 상태 */}
           {isLiveNow ? (
             <div style={{
@@ -567,10 +567,10 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
           )}
         </div>
       </div>
-      
+
       {/* 메인 컨텐츠 */}
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px)' }}>
-        
+
         {/* 현재 선택된 영상 또는 라이브 플레이어 */}
         <div style={{ marginBottom: '50px' }}>
           <div style={{
@@ -671,7 +671,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
                   {selectedArchive.date} · {selectedArchive.duration}
                 </p>
                 <a
-                  href={selectedArchive.youtubeId 
+                  href={selectedArchive.youtubeId
                     ? `https://www.youtube.com/watch?v=${selectedArchive.youtubeId}`
                     : `https://vimeo.com/${selectedArchive.vimeoId}`
                   }
@@ -718,163 +718,163 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
               </div>
             )}
           </div>
-          
+
         </div>
-        
+
         {/* 아카이브 섹션 */}
         {archives.length > 0 && (
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '25px' }}>
-            <Archive size={28} color={COLORS.navy} />
-            <h2 style={{ color: COLORS.navy, fontSize: '1.5rem', fontWeight: '800' }}>
-              📚 지난 라이브 다시보기
-            </h2>
-            <span style={{
-              background: COLORS.gold,
-              color: COLORS.navyDark,
-              padding: '4px 12px',
-              borderRadius: '20px',
-              fontSize: '0.85rem',
-              fontWeight: '700'
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '25px' }}>
+              <Archive size={28} color={COLORS.navy} />
+              <h2 style={{ color: COLORS.navy, fontSize: '1.5rem', fontWeight: '800' }}>
+                📚 지난 라이브 다시보기
+              </h2>
+              <span style={{
+                background: COLORS.gold,
+                color: COLORS.navyDark,
+                padding: '4px 12px',
+                borderRadius: '20px',
+                fontSize: '0.85rem',
+                fontWeight: '700'
+              }}>
+                {archives.length}개
+              </span>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+              gap: '20px'
             }}>
-              {archives.length}개
-            </span>
-          </div>
-          
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-            gap: '20px'
-          }}>
-            {archives.map((archive) => (
-              <a
-                key={archive.id}
-                href={archive.youtubeId 
-                  ? `https://www.youtube.com/watch?v=${archive.youtubeId}`
-                  : `https://vimeo.com/${archive.vimeoId}`
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  background: COLORS.white,
-                  borderRadius: '15px',
-                  overflow: 'hidden',
-                  border: `2px solid ${COLORS.navy}15`,
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  boxShadow: `0 4px 15px ${COLORS.navy}10`,
-                  textDecoration: 'none',
-                  display: 'block'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-5px)';
-                  e.currentTarget.style.boxShadow = `0 8px 25px ${COLORS.gold}30`;
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = `0 4px 15px ${COLORS.navy}10`;
-                }}
-              >
-                {/* 썸네일 */}
-                <div style={{
-                  position: 'relative',
-                  aspectRatio: '16/9',
-                  background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyLight})`,
-                  overflow: 'hidden'
-                }}>
-                  {archive.thumbnail && (
-                    <img 
-                      src={archive.thumbnail} 
-                      alt={archive.title}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        opacity: 0.8
-                      }}
-                    />
-                  )}
+              {archives.map((archive) => (
+                <a
+                  key={archive.id}
+                  href={archive.youtubeId
+                    ? `https://www.youtube.com/watch?v=${archive.youtubeId}`
+                    : `https://vimeo.com/${archive.vimeoId}`
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    background: COLORS.white,
+                    borderRadius: '15px',
+                    overflow: 'hidden',
+                    border: `2px solid ${COLORS.navy}15`,
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: `0 4px 15px ${COLORS.navy}10`,
+                    textDecoration: 'none',
+                    display: 'block'
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.style.boxShadow = `0 8px 25px ${COLORS.gold}30`;
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = `0 4px 15px ${COLORS.navy}10`;
+                  }}
+                >
+                  {/* 썸네일 */}
                   <div style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
+                    position: 'relative',
+                    aspectRatio: '16/9',
+                    background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyLight})`,
+                    overflow: 'hidden'
                   }}>
+                    {archive.thumbnail && (
+                      <img
+                        src={archive.thumbnail}
+                        alt={archive.title}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          opacity: 0.8
+                        }}
+                      />
+                    )}
                     <div style={{
-                      width: '50px',
-                      height: '50px',
-                      background: `${COLORS.gold}cc`,
-                      borderRadius: '50%',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%)',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center',
-                      transition: 'all 0.3s ease'
+                      justifyContent: 'center'
                     }}>
-                      <Play size={24} color={COLORS.white} style={{ marginLeft: '3px' }} />
+                      <div style={{
+                        width: '50px',
+                        height: '50px',
+                        background: `${COLORS.gold}cc`,
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.3s ease'
+                      }}>
+                        <Play size={24} color={COLORS.white} style={{ marginLeft: '3px' }} />
+                      </div>
+                    </div>
+
+                    {/* 에피소드 배지 */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '10px',
+                      left: '10px',
+                      background: COLORS.gold,
+                      color: COLORS.navyDark,
+                      padding: '4px 10px',
+                      borderRadius: '8px',
+                      fontSize: '0.8rem',
+                      fontWeight: '800'
+                    }}>
+                      EP.{archive.episode}
+                    </div>
+
+                    {/* 재생시간 */}
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '10px',
+                      right: '10px',
+                      background: 'rgba(0,0,0,0.7)',
+                      color: COLORS.white,
+                      padding: '4px 8px',
+                      borderRadius: '5px',
+                      fontSize: '0.8rem',
+                      fontWeight: '600'
+                    }}>
+                      {archive.duration}
                     </div>
                   </div>
-                  
-                  {/* 에피소드 배지 */}
-                  <div style={{
-                    position: 'absolute',
-                    top: '10px',
-                    left: '10px',
-                    background: COLORS.gold,
-                    color: COLORS.navyDark,
-                    padding: '4px 10px',
-                    borderRadius: '8px',
-                    fontSize: '0.8rem',
-                    fontWeight: '800'
-                  }}>
-                    EP.{archive.episode}
+
+                  {/* 정보 */}
+                  <div style={{ padding: '15px' }}>
+                    <h3 style={{
+                      color: COLORS.navyDark,
+                      fontSize: '1rem',
+                      fontWeight: '700',
+                      marginBottom: '8px',
+                      lineHeight: '1.4'
+                    }}>
+                      {archive.title}
+                    </h3>
+                    <p style={{
+                      color: COLORS.grayMedium,
+                      fontSize: '0.85rem'
+                    }}>
+                      {archive.date}
+                    </p>
                   </div>
-                  
-                  {/* 재생시간 */}
-                  <div style={{
-                    position: 'absolute',
-                    bottom: '10px',
-                    right: '10px',
-                    background: 'rgba(0,0,0,0.7)',
-                    color: COLORS.white,
-                    padding: '4px 8px',
-                    borderRadius: '5px',
-                    fontSize: '0.8rem',
-                    fontWeight: '600'
-                  }}>
-                    {archive.duration}
-                  </div>
-                </div>
-                
-                {/* 정보 */}
-                <div style={{ padding: '15px' }}>
-                  <h3 style={{
-                    color: COLORS.navyDark,
-                    fontSize: '1rem',
-                    fontWeight: '700',
-                    marginBottom: '8px',
-                    lineHeight: '1.4'
-                  }}>
-                    {archive.title}
-                  </h3>
-                  <p style={{
-                    color: COLORS.grayMedium,
-                    fontSize: '0.85rem'
-                  }}>
-                    {archive.date}
-                  </p>
-                </div>
-              </a>
-            ))}
+                </a>
+              ))}
+            </div>
+
           </div>
-          
-        </div>
         )}
-        
+
         {/* 가성비 섹션 */}
         <div style={{
           marginTop: '60px',
@@ -886,7 +886,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
           <h3 style={{ color: COLORS.goldLight, fontSize: '1.3rem', fontWeight: '700', marginBottom: '25px' }}>
             💰 {stepInfo.name} 라이브 가성비
           </h3>
-          
+
           <div style={{
             display: 'flex',
             justifyContent: 'center',
@@ -906,7 +906,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
                 라이브 1회당
               </div>
             </div>
-            
+
             <div style={{
               background: 'rgba(255,255,255,0.1)',
               borderRadius: '15px',
@@ -918,7 +918,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
                 연간 라이브
               </div>
             </div>
-            
+
             <div style={{
               background: 'rgba(255,255,255,0.1)',
               borderRadius: '15px',
@@ -933,7 +933,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
           </div>
         </div>
       </div>
-      
+
       <style>{`
         @keyframes pulse {
           0%, 100% { opacity: 1; transform: scale(1); }

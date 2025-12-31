@@ -17,8 +17,13 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
 
+  // 날짜 기반 가격 결정 (2026년 1월 1일부터 95,000원)
+  const PRICE_CHANGE_DATE = new Date(2026, 0, 1); // 2026-01-01
+  const now = new Date();
+  const isEarlyBird = now < PRICE_CHANGE_DATE;
+
   const originalPrice = 95000;
-  const earlyBirdPrice = 45000;
+  const currentPrice = isEarlyBird ? 45000 : 95000;
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -44,7 +49,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
             // Azure 테이블에서 결제 상태 확인
             try {
               const paymentStatus = await AzureTableService.checkCoursePayment(
-                parsedUserInfo.email, 
+                parsedUserInfo.email,
                 'ai-building-course'
               );
 
@@ -89,11 +94,11 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
   const handleEarlyBirdPayment = async () => {
     console.log('🔍 얼리버드 수강 신청 버튼 클릭 - 결제 페이지로 이동');
     console.log('🔍 현재 로그인 상태:', userInfo ? '로그인됨' : '로그인 안됨');
-    
+
     // 세션 정보 재확인
     const sessionUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
     const isActuallyLoggedIn = !!sessionUserInfo;
-    
+
     if (!isActuallyLoggedIn) {
       const confirmLogin = window.confirm('로그인이 필요한 서비스입니다. 먼저 로그인해주세요.\n\n로그인 페이지로 이동하시겠습니까?');
       if (confirmLogin) {
@@ -101,7 +106,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
       }
       return;
     }
-    
+
     // 결제 페이지로 이동 (ChatGPTAgentBeginner처럼 별도 결제 페이지 사용)
     console.log('✅ 결제 페이지로 이동:', '/ai-building-course/payment');
     window.location.href = '/ai-building-course/payment';
@@ -117,7 +122,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
     setIsAlreadyEnrolled(true);
     setIsPaidUser(true);
     alert('🎉 결제가 완료되었습니다! 강의 시청 페이지로 이동합니다.');
-    
+
     // 결제 성공 후 새로운 강의 시청 페이지로 리다이렉트
     setTimeout(() => {
       window.location.href = '/ai-building-course-player';
@@ -142,7 +147,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
         <PaymentComponent
           courseId="999"
           courseTitle="Step 1: AI 건물주 되기 기초 (얼리버드)"
-          price={earlyBirdPrice}
+          price={currentPrice}
           userInfo={userInfo}
           onSuccess={handlePaymentSuccess}
           onClose={handlePaymentClose}
@@ -339,7 +344,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   textShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
                   color: '#ffffff'
                 }}>
-                  ₩{earlyBirdPrice.toLocaleString()}
+                  ₩{currentPrice.toLocaleString()}
                 </div>
                 <div style={{
                   fontSize: 'clamp(0.85rem, 2.5vw, 1.1rem)',
@@ -640,9 +645,9 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     fontWeight: '500',
                     textAlign: 'left'
                   }}>
-                    1960년대, 무작정 미국으로 건너온 외삼촌은 세탁소에서 일하며 시작했습니다.<br/><br/>
+                    1960년대, 무작정 미국으로 건너온 외삼촌은 세탁소에서 일하며 시작했습니다.<br /><br />
                     당시 맨해튼은 <strong style={{ color: '#ffd60a' }}>건물을 사면 은행에서 이자 없이 돈을 빌려주던 시대</strong>였죠.
-                    10억짜리 건물을 사면 11억을 빌려줬고, 남은 1억으로 인테리어해서 세입자만 채우면 건물이 내 것이 됐습니다.<br/><br/>
+                    10억짜리 건물을 사면 11억을 빌려줬고, 남은 1억으로 인테리어해서 세입자만 채우면 건물이 내 것이 됐습니다.<br /><br />
                     그렇게 건물 하나, 두 개, 세 개... <strong style={{ color: '#ffd60a' }}>지금은 맨해튼에 수백 개의 빌딩을 가진 부동산 재벌</strong>이 되었습니다.
                   </p>
                 </div>
@@ -681,12 +686,12 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     fontWeight: '500',
                     textAlign: 'left'
                   }}>
-                    유튜브 CEO가 발표했습니다: <strong style={{ color: '#1e40af' }}>"새로운 계급의 크리에이터가 탄생할 것이다"</strong><br/><br/>
+                    유튜브 CEO가 발표했습니다: <strong style={{ color: '#1e40af' }}>"새로운 계급의 크리에이터가 탄생할 것이다"</strong><br /><br />
                     예전에는 SBS, KBS 같은 대형 방송국들이 들어오면서 퀄리티 경쟁이 너무 치열해졌죠.
-                    비싼 카메라, 스튜디오, 전문 인력 없이는 경쟁이 불가능했습니다.<br/><br/>
-                    하지만 이제 <strong style={{ color: '#1e40af' }}>AI가 모든 것을 바꿨습니다.</strong><br/>
+                    비싼 카메라, 스튜디오, 전문 인력 없이는 경쟁이 불가능했습니다.<br /><br />
+                    하지만 이제 <strong style={{ color: '#1e40af' }}>AI가 모든 것을 바꿨습니다.</strong><br />
                     구글이 <strong style={{ color: '#1e40af' }}>30가지가 넘는 AI 도구</strong>를 무료로 제공하고 있고,
-                    혼자서도 방송국 퀄리티의 콘텐츠를 만들 수 있는 시대가 열렸습니다.<br/><br/>
+                    혼자서도 방송국 퀄리티의 콘텐츠를 만들 수 있는 시대가 열렸습니다.<br /><br />
                     <span style={{
                       background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
                       padding: '8px 15px',
@@ -700,7 +705,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 </div>
 
                 {/* 강의 목표 */}
-                <div style={{ 
+                <div style={{
                   display: 'inline-block',
                   background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
                   padding: '25px 35px',
@@ -708,31 +713,31 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   border: '3px solid #1e40af',
                   marginBottom: '20px'
                 }}>
-                  <div style={{ 
-                    fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)', 
-                    fontWeight: '900', 
+                  <div style={{
+                    fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+                    fontWeight: '900',
                     color: '#1e40af',
                     marginBottom: '15px'
                   }}>
                     🎯 이 강의에서 배우는 것
                   </div>
-                  <div style={{ 
-                    fontSize: 'clamp(1rem, 2.2vw, 1.15rem)', 
-                    fontWeight: '600', 
+                  <div style={{
+                    fontSize: 'clamp(1rem, 2.2vw, 1.15rem)',
+                    fontWeight: '600',
                     color: '#1b263b',
                     lineHeight: '2',
                     textAlign: 'left'
                   }}>
-                    ✅ Part 1: 콘텐츠 비즈니스 마인드와 지식<br/>
-                    ✅ Part 2: AI 도구 실습 (이미지, 영상, 글, 목소리 생성)<br/>
-                    ✅ 매주 수강생 전용 라이브 (새로운 AI 도구 업데이트)<br/>
+                    ✅ Part 1: 콘텐츠 비즈니스 마인드와 지식<br />
+                    ✅ Part 2: AI 도구 실습 (이미지, 영상, 글, 목소리 생성)<br />
+                    ✅ 매주 수강생 전용 라이브 (새로운 AI 도구 업데이트)<br />
                     ✅ 수익화 목적의 콘텐츠 제작 전략
                   </div>
                 </div>
                 <br />
-                <span style={{ 
-                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', 
-                  fontWeight: '700', 
+                <span style={{
+                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                  fontWeight: '700',
                   color: '#1e40af',
                   background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
                   padding: '8px 18px',
@@ -870,7 +875,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   margin: 0,
                   lineHeight: '1.8'
                 }}>
-                  💡 이 4단계를 거쳐 <strong style={{ color: '#fff' }}>1인이 유니콘을 만들 수 있는 시대</strong>가 왔습니다.<br/>
+                  💡 이 4단계를 거쳐 <strong style={{ color: '#fff' }}>1인이 유니콘을 만들 수 있는 시대</strong>가 왔습니다.<br />
                   함께 성장하는 네트워크와 커뮤니티를 만들어갑니다.
                 </p>
               </div>
@@ -886,7 +891,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
               textAlign: 'center',
               boxShadow: '0 10px 40px rgba(251, 191, 36, 0.2)'
             }}>
-              <img 
+              <img
                 src={`${process.env.PUBLIC_URL}/images/aicitybuilder/Gemini_Generated_Image_p27hetp27hetp27h.jpeg`}
                 alt="AI 건물주 되기 성공 여정"
                 style={{
@@ -928,7 +933,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   marginBottom: '20px',
                   lineHeight: '1.5'
                 }}>
-                  기존 사업을 다 접고<br/>
+                  기존 사업을 다 접고<br />
                   <span style={{ color: '#ffd60a' }}>콘텐츠에 올인하는 이유</span>
                 </h3>
               </div>
@@ -951,7 +956,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     구글이 다 지원해준다
                   </h4>
                   <p style={{ color: '#fecaca', fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
-                    1960년대 맨해튼에서 은행이 이자 없이 돈을 빌려줬듯이, 
+                    1960년대 맨해튼에서 은행이 이자 없이 돈을 빌려줬듯이,
                     지금 구글은 <strong style={{ color: '#fff' }}>30개 이상의 AI 도구</strong>를 무료로 제공합니다.
                   </p>
                 </div>
@@ -968,7 +973,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     경쟁이 평준화됐다
                   </h4>
                   <p style={{ color: '#fecaca', fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
-                    예전에는 SBS, KBS 같은 방송국과 경쟁해야 했지만, 
+                    예전에는 SBS, KBS 같은 방송국과 경쟁해야 했지만,
                     이제 <strong style={{ color: '#fff' }}>AI 하나면 방송국 퀄리티</strong>를 혼자서 만들 수 있습니다.
                   </p>
                 </div>
@@ -985,7 +990,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     글로벌 시장이 열렸다
                   </h4>
                   <p style={{ color: '#fecaca', fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
-                    AI 번역·더빙으로 한국뿐 아니라 
+                    AI 번역·더빙으로 한국뿐 아니라
                     <strong style={{ color: '#fff' }}>미국, 일본, 중국, 전 세계</strong>를 타겟으로 콘텐츠를 만들 수 있습니다.
                   </p>
                 </div>
@@ -1004,9 +1009,9 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   margin: 0,
                   lineHeight: '1.8'
                 }}>
-                  💡 "근데 왜 이걸 알려주세요?"<br/>
+                  💡 "근데 왜 이걸 알려주세요?"<br />
                   <span style={{ color: '#ffd60a' }}>
-                    4단계 - 함께 성장하는 네트워크를 만들기 위해서입니다.<br/>
+                    4단계 - 함께 성장하는 네트워크를 만들기 위해서입니다.<br />
                     혼자보다 여럿이 모였을 때 시너지가 있습니다.
                   </span>
                 </p>
@@ -1041,7 +1046,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   marginBottom: '15px',
                   lineHeight: '1.4'
                 }}>
-                  콘텐츠를 "생성"하는 게 아닙니다.<br/>
+                  콘텐츠를 "생성"하는 게 아닙니다.<br />
                   <span style={{ color: '#ffd60a' }}>압도적으로 강한 주제를 "선택"</span>하는 겁니다.
                 </h3>
                 <p style={{
@@ -1051,8 +1056,8 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   maxWidth: '700px',
                   margin: '0 auto'
                 }}>
-                  누구나 AI로 이미지를 만들 수 있습니다.<br/>
-                  하지만 <strong style={{ color: '#fff' }}>"무엇을 만들어야 팔리는지"</strong> 아는 사람은 드뭅니다.<br/>
+                  누구나 AI로 이미지를 만들 수 있습니다.<br />
+                  하지만 <strong style={{ color: '#fff' }}>"무엇을 만들어야 팔리는지"</strong> 아는 사람은 드뭅니다.<br />
                   처음부터 비주얼적으로 강한 주제를 선택해야 수익화가 됩니다.
                 </p>
               </div>
@@ -1064,7 +1069,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 border: '4px solid #ffd60a',
                 boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)'
               }}>
-                <img 
+                <img
                   src="/images/step1/dog.jpeg"
                   alt="압도적인 비주얼 예시 - 센트럴파크 거대 강아지"
                   style={{
@@ -1078,10 +1083,10 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   padding: '20px',
                   textAlign: 'center'
                 }}>
-                  <span style={{ 
-                    color: '#000', 
-                    fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', 
-                    fontWeight: '800' 
+                  <span style={{
+                    color: '#000',
+                    fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                    fontWeight: '800'
                   }}>
                     🎨 이런 압도적인 비주얼을 AI로 만드는 법을 배웁니다
                   </span>
@@ -1125,7 +1130,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 maxWidth: '700px',
                 margin: '0 auto'
               }}>
-                AI 도구는 계속 바뀝니다. Gemini 3, 3.1, 3.2... 새로운 모델이 계속 나옵니다.<br/>
+                AI 도구는 계속 바뀝니다. Gemini 3, 3.1, 3.2... 새로운 모델이 계속 나옵니다.<br />
                 그래서 매주 라이브로 최신 AI 도구를 업데이트해드립니다.
               </p>
             </div>
@@ -1148,7 +1153,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   녹화 강의 (16강)
                 </h4>
                 <p style={{ color: '#a7f3d0', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
-                  Part 1: 콘텐츠 비즈니스 마인드<br/>
+                  Part 1: 콘텐츠 비즈니스 마인드<br />
                   Part 2: AI 도구 실습
                 </p>
               </div>
@@ -1166,7 +1171,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   매주 라이브 (무료)
                 </h4>
                 <p style={{ color: '#a7f3d0', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
-                  새로운 AI 도구 업데이트<br/>
+                  새로운 AI 도구 업데이트<br />
                   Q&A 및 실시간 피드백
                 </p>
               </div>
@@ -1184,7 +1189,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   수강생 커뮤니티
                 </h4>
                 <p style={{ color: '#a7f3d0', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
-                  함께 성장하는 네트워크<br/>
+                  함께 성장하는 네트워크<br />
                   멘토 제이와 직접 소통
                 </p>
               </div>
@@ -1294,7 +1299,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     <strong>난이도:</strong> 초급~중급 (AI 경험 불필요)
                   </li>
                   <li style={{ marginBottom: '8px' }}>
-                    <strong>수강 기간:</strong> 구매 후 1년간
+                    <strong>수강 기간:</strong> 구매 후 3개월간
                   </li>
                   <li style={{ marginBottom: '8px' }}>
                     <strong>업데이트:</strong> 매월 새로운 AI 도구 추가
@@ -1396,7 +1401,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 background: 'rgba(251, 191, 36, 0.15)',
                 borderRadius: '50%'
               }}></div>
-              
+
               <div style={{ position: 'relative', zIndex: 1 }}>
                 {/* 슬로건 */}
                 <div style={{
@@ -1410,25 +1415,25 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     📺 인공지능의 EBS
                   </span>
                 </div>
-                
-                <h4 style={{ 
-                  color: 'white', 
-                  fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', 
-                  fontWeight: '800', 
+
+                <h4 style={{
+                  color: 'white',
+                  fontSize: 'clamp(1.3rem, 3vw, 1.8rem)',
+                  fontWeight: '800',
                   marginBottom: '20px',
                   lineHeight: '1.4'
                 }}>
-                  🤔 인공지능이 계속 업그레이드 되는데<br/>어떻게 해야 하나요?
+                  🤔 인공지능이 계속 업그레이드 되는데<br />어떻게 해야 하나요?
                 </h4>
-                
-                <p style={{ 
-                  color: 'rgba(255, 255, 255, 0.95)', 
+
+                <p style={{
+                  color: 'rgba(255, 255, 255, 0.95)',
                   fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
                   lineHeight: '1.8',
                   marginBottom: '25px'
                 }}>
-                  ChatGPT, Claude, Gemini... <strong style={{ color: '#ffd60a' }}>매주 새로운 기능</strong>이 쏟아집니다.<br/>
-                  녹화 강의만으로는 <strong style={{ color: '#ffd60a' }}>최신 AI를 따라갈 수 없습니다.</strong><br/><br/>
+                  ChatGPT, Claude, Gemini... <strong style={{ color: '#ffd60a' }}>매주 새로운 기능</strong>이 쏟아집니다.<br />
+                  녹화 강의만으로는 <strong style={{ color: '#ffd60a' }}>최신 AI를 따라갈 수 없습니다.</strong><br /><br />
                   그래서 준비했습니다! 👇
                 </p>
 
@@ -1458,7 +1463,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                       <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🔴</div>
                       <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', marginBottom: '5px' }}>주간 라이브</div>
                       <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: '1.5rem' }}>52회/년</div>
-                      <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>1년간 무제한 참여</div>
+                      <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>3개월간 무제한 참여</div>
                     </div>
                   </div>
                 </div>
@@ -1502,7 +1507,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     </div>
                   </div>
                 </div>
-                
+
                 {/* 라이브 혜택 */}
                 <div style={{
                   display: 'grid',
@@ -1556,7 +1561,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 </div>
                 <div style={{ textAlign: 'center' }}>
                   <div style={{ fontWeight: '600', color: '#1b263b', marginBottom: '5px' }}>수강 기간</div>
-                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>1년간 접근</div>
+                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>3개월간 접근</div>
                 </div>
               </div>
             </div>
@@ -1617,7 +1622,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   borderRadius: '50%',
                   opacity: '0.5'
                 }}></div>
-                
+
                 <div style={{ position: 'relative', zIndex: 2 }}>
                   <div style={{
                     background: '#1e40af',
@@ -1632,7 +1637,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   }}>
                     🏢 부동산 뉴스
                   </div>
-                  
+
                   <h4 style={{
                     fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
                     fontWeight: '800',
@@ -1642,7 +1647,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   }}>
                     맨손으로 부동산 신화 6000만 달러의 사나이
                   </h4>
-                  
+
                   <p style={{
                     fontSize: '1rem',
                     color: '#64748b',
@@ -1653,7 +1658,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     세탁소에서 시작해 맨해튼 부동산 거물이 된 그의 비밀을
                     AI 시대에 맞게 재해석한 강의입니다.
                   </p>
-                  
+
                   <div style={{
                     background: 'rgba(255, 255, 255, 0.8)',
                     padding: '15px',
@@ -1701,7 +1706,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   borderRadius: '50%',
                   opacity: '0.5'
                 }}></div>
-                
+
                 <div style={{ position: 'relative', zIndex: 2 }}>
                   <div style={{
                     background: '#16a34a',
@@ -1716,7 +1721,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   }}>
                     🤖 AI 스타트업 뉴스
                   </div>
-                  
+
                   <h4 style={{
                     fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
                     fontWeight: '800',
@@ -1727,7 +1732,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     커넥젼에이아이 정원석 대표<br />
                     운동과 인공지능의 만남
                   </h4>
-                  
+
                   <p style={{
                     fontSize: '1rem',
                     color: '#64748b',
@@ -1738,7 +1743,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     운동과 인공지능을 결합한 혁신적인 솔루션으로
                     AI 시대의 새로운 가능성을 제시합니다.
                   </p>
-                  
+
                   <div style={{
                     background: 'rgba(255, 255, 255, 0.8)',
                     padding: '15px',
