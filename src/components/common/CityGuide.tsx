@@ -4,6 +4,17 @@ import { X, Send } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AzureTableService from '../../services/azureTableService';
 
+// 요일별 라이브 스케줄 (0: 일요일, 1: 월요일, ...)
+const WEEKLY_SCHEDULE: { [key: number]: { icon: string; title: string; isFree: boolean; link: string; time: string } | null } = {
+  0: null, // 일요일 - 휴식
+  1: { icon: '🆓', title: 'AI 수익화 토크', isFree: true, link: '/live/free', time: '20:00' }, // 월요일
+  2: { icon: '🏗️', title: 'AI 건물주 되기', isFree: false, link: '/live/step1', time: '20:00' }, // 화요일
+  3: { icon: '🤖', title: 'AI 에이전트 비기너', isFree: false, link: '/live/step2', time: '20:00' }, // 수요일
+  4: null, // 목요일 - 바이브코딩 (추후 오픈 예정)
+  5: null, // 금요일 - 휴식
+  6: null, // 토요일 - 휴식
+};
+
 // Gemini 2.5 Flash API 호출 함수
 async function callGemini(messages: Array<{ role: string; content: string }>): Promise<string> {
   const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
@@ -29,6 +40,7 @@ async function callGemini(messages: Array<{ role: string; content: string }>): P
       body: JSON.stringify({
         contents,
         systemInstruction: { parts: [{ text: systemPrompt }] },
+        tools: [{ googleSearch: {} }], // 🔍 웹 검색 기능 활성화
         generationConfig: {
           temperature: 0.7,
           maxOutputTokens: 500
@@ -231,6 +243,59 @@ const CityGuide: React.FC<CityGuideProps> = ({ isOpenExternal, onClose, inline =
   const [showFloatingButton, setShowFloatingButton] = useState(false);
   const [userInfo, setUserInfo] = useState<{ email: string; name: string } | null>(null);
   const [enrolledCourses, setEnrolledCourses] = useState<string[]>([]);
+  const [todayLiveInfo, setTodayLiveInfo] = useState<{ title: string; link: string; time: string; isLive: boolean } | null>(null);
+
+  // 오늘 라이브 일정 확인
+  useEffect(() => {
+    const checkTodayLive = async () => {
+      const today = new Date();
+      const dayOfWeek = today.getDay();
+      const schedule = WEEKLY_SCHEDULE[dayOfWeek];
+      
+      if (schedule) {
+        // Azure에서 실제 라이브 진행 여부 확인
+        try {
+          const courseId = schedule.isFree ? 'free-live' : 
+                          schedule.title.includes('건물주') ? 'ai-building-course' :
+                          schedule.title.includes('에이전트') ? 'chatgpt-agent-beginner' : '';
+          
+          if (courseId) {
+            const liveConfig = await AzureTableService.getCurrentLiveConfig(courseId);
+            const isLive = liveConfig?.isLive || false;
+            
+            setTodayLiveInfo({
+              title: schedule.title,
+              link: schedule.link,
+              time: schedule.time,
+              isLive
+            });
+          } else {
+            setTodayLiveInfo({
+              title: schedule.title,
+              link: schedule.link,
+              time: schedule.time,
+              isLive: false
+            });
+          }
+        } catch (error) {
+          console.error('라이브 확인 오류:', error);
+          setTodayLiveInfo({
+            title: schedule.title,
+            link: schedule.link,
+            time: schedule.time,
+            isLive: false
+          });
+        }
+      } else {
+        setTodayLiveInfo(null);
+      }
+    };
+    
+    checkTodayLive();
+    // 1분마다 확인 (라이브 상태가 변경될 수 있음)
+    const interval = setInterval(checkTodayLive, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   // 로그인 정보 및 수강 내역 가져오기
   useEffect(() => {
@@ -352,6 +417,31 @@ const CityGuide: React.FC<CityGuideProps> = ({ isOpenExternal, onClose, inline =
 
       // 개인화된 컨텍스트 생성
       let personalizedContext = SITE_CONTEXT;
+      
+      // 현재 시간 및 오늘 라이브 정보 추가
+      const now = new Date();
+      const koreaTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Seoul' }));
+      const currentTime = koreaTime.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+      const currentDate = koreaTime.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+      
+      personalizedContext += `\n\n## 🕐 현재 시간 정보 (매우 중요!)
+- 현재 한국 시간: ${currentDate} ${currentTime}
+- 오늘 요일: ${['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][koreaTime.getDay()]}
+
+## 🔴 오늘 라이브 일정 (실시간 정보 - 반드시 확인!)
+${todayLiveInfo ? 
+  todayLiveInfo.isLive 
+    ? `✅ 지금 라이브 진행 중! "${todayLiveInfo.title}" (${todayLiveInfo.link})\n현재 시간: ${currentTime}, 라이브 시간: ${todayLiveInfo.time}`
+    : `📅 오늘 ${todayLiveInfo.time}에 "${todayLiveInfo.title}" 라이브 예정 (${todayLiveInfo.link})\n현재 시간: ${currentTime}, 라이브까지 남은 시간 계산 필요`
+  : '오늘은 라이브 일정이 없습니다.'}
+
+⚠️ 라이브 관련 질문 답변 규칙 (매우 중요!):
+1. "오늘 라이브 있어?" 질문을 받으면 반드시 위 정보를 확인!
+2. todayLiveInfo가 null이 아니면 "오늘 라이브 있습니다!"라고 답변
+3. todayLiveInfo.isLive가 true면 "지금 라이브 진행 중입니다!"라고 답변
+4. 절대로 "오늘 라이브 없어요"라고 답변하지 마세요 (위 정보 확인 후 답변)
+5. 현재 시간(${currentTime})과 라이브 시간(${todayLiveInfo?.time || 'N/A'})을 비교해서 정확히 답변`;
+      
       if (userInfo) {
         personalizedContext += `\n\n## 👤 현재 사용자 정보 (로그인됨)
 - 이름: ${userInfo.name}
