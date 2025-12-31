@@ -152,7 +152,8 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
             title: '최종 입지 선정 & 건물 계획서 작성',
             subtitle: 'AI CITY BUILDER에 건물 계획서 넣기 | 나의 첫 디지털 건물 사업계획서 완성',
             hasQuiz: true,
-            releaseDate: '2025-01-05'  // 1월 5일 오픈
+            releaseDate: '2026-01-01',  // 1월 1일 오후 7시 업로드
+            releaseTime: '19:00'
           }
         ]
       },
@@ -172,28 +173,28 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
             title: '[재료학] 사운드 & 영상 생성 AI 마스터',
             subtitle: 'ElevenLabs 음성 클로닝 | Suno AI BGM | VEO 영상 생성 완전정복',
             hasQuiz: false,
-            releaseDate: '2025-01-07'  // 1월 7일 오픈
+            releaseDate: '2026-01-02'  // 1월 2일 업로드
           },
           {
             day: 8,
             title: '[시공] AI 4단계 건축 워크플로우',
             subtitle: '바이럴 숏폼 & 고품질 롱폼 제작 | 멀티 플랫폼 동시 입점 전략',
             hasQuiz: true,
-            releaseDate: '2025-01-08'  // 1월 8일 오픈
+            releaseDate: '2026-01-02'  // 1월 2일 업로드
           },
           {
             day: 9,
             title: '[준공식] 콘텐츠 업로드 & 데이터 분석',
             subtitle: '핵심 지표 읽는 법 | AI 감성 분석으로 건물 리모델링',
             hasQuiz: false,
-            releaseDate: '2025-01-09'  // 1월 9일 오픈
+            releaseDate: '2026-01-03'  // 1월 3일 업로드
           },
           {
             day: 10,
             title: '[첫 월세] 수익 시스템 구축 완성',
             subtitle: '애드센스 + 제휴마케팅 + 멤버십 | 허브-앤-스포크 자동화 시스템',
             hasQuiz: true,
-            releaseDate: '2025-01-10'  // 1월 10일 오픈
+            releaseDate: '2026-01-04'  // 1월 4일 업로드
           }
         ]
       }
@@ -391,23 +392,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
             </div>
           </div>
 
-          {/* 업데이트 공지 */}
-          <div style={{
-            background: `linear-gradient(135deg, ${COLORS.gold}20, ${COLORS.goldLight}15)`,
-            border: `2px solid ${COLORS.gold}50`,
-            borderRadius: '15px',
-            padding: '20px',
-            marginBottom: '20px'
-          }}>
-            <p style={{
-              fontSize: '1rem',
-              margin: 0,
-              color: 'rgba(255, 255, 255, 0.9)',
-              lineHeight: '1.6'
-            }}>
-              📅 2025년 1월 1일 오픈 예정 🔴 매주 화요일 저녁 8시 라이브 🚀
-            </p>
-          </div>
+
 
           {/* 진행률 - 골드 테마 */}
           <div style={{
@@ -528,7 +513,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
               }}>
                 {week.days.map((lesson) => {
                   const isCompleted = completedDays.has(lesson.day);
-                  // 🔓 Day 1~4, Day 6 열림 / Day 5, 7~10은 준비중
+                  // 🔓 Day 1~4, Day 6 열림 / Day 5, 7~10은 순차 업로드 예정
                   const isAvailable = lesson.day <= 4 || lesson.day === 6;
 
                   return (
@@ -584,14 +569,14 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
                         </div>
                       )}
 
-                      {/* 잠금 배지 */}
+                      {/* 잠금 배지 - 업로드 예정 날짜 표시 */}
                       {!isAvailable && (
                         <div style={{
                           position: 'absolute',
                           top: '15px',
                           right: '15px',
-                          background: `linear-gradient(135deg, ${COLORS.grayMedium}, #94a3b8)`,
-                          color: COLORS.white,
+                          background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldDark})`,
+                          color: COLORS.navy,
                           padding: '6px 12px',
                           borderRadius: '20px',
                           fontSize: '0.8rem',
@@ -600,7 +585,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
                           alignItems: 'center',
                           gap: '5px'
                         }}>
-                          🔒 준비중
+                          📅 {lesson.releaseDate ? new Date(lesson.releaseDate).toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' }) : ''} 업로드
                         </div>
                       )}
 
