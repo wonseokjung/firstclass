@@ -585,7 +585,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
                           alignItems: 'center',
                           gap: '5px'
                         }}>
-                          📅 {lesson.releaseDate ? new Date(lesson.releaseDate).toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' }) : ''} 업로드
+                          📅 {lesson.releaseDate ? new Date(lesson.releaseDate).toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' }) : ''}{(lesson as any).releaseTime === '19:00' ? ' 저녁 7시' : ''} 업로드
                         </div>
                       )}
 
