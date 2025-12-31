@@ -22,15 +22,12 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState<'domestic' | 'international'>('domestic');
   const [isLoading, setIsLoading] = useState(false);
 
-  // 날짜 기반 가격 결정 (2026년 1월 1일부터 95,000원)
-  const PRICE_CHANGE_DATE = new Date(2026, 0, 1); // 2026-01-01
-  const now = new Date();
-  const isEarlyBird = now < PRICE_CHANGE_DATE;
-  const currentPrice = isEarlyBird ? 45000 : 95000;
+  // 정가 95,000원 (2026년 1월 1일부터 적용)
+  const currentPrice = 95000;
 
   const courseInfo = {
     id: '999',
-    title: isEarlyBird ? 'Step 1: AI 건물주 되기 기초 (얼리버드)' : 'Step 1: AI 건물주 되기 기초',
+    title: 'Step 1: AI 건물주 되기 기초',
     subtitle: 'AI로 유튜브 채널 만들고 첫 월수익 100만원!',
     price: currentPrice
   };
@@ -232,15 +229,15 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           </p>
           <div style={{
             display: 'inline-block',
-            background: isEarlyBird ? 'rgba(251, 191, 36, 0.2)' : 'rgba(34, 197, 94, 0.2)',
-            border: `2px solid ${isEarlyBird ? '#ffd60a' : '#22c55e'}`,
+            background: 'rgba(34, 197, 94, 0.2)',
+            border: '2px solid #22c55e',
             padding: 'clamp(6px, 2vw, 8px) clamp(12px, 3vw, 20px)',
             borderRadius: '25px',
-            color: isEarlyBird ? '#ffd60a' : '#22c55e',
+            color: '#22c55e',
             fontSize: 'clamp(0.8rem, 2.5vw, 0.9rem)',
             fontWeight: '700'
           }}>
-            {isEarlyBird ? '🔥 얼리버드 특가 진행 중' : '✅ 정가 수강 가능'}
+            📚 3개월 수강권
           </div>
         </div>
 
@@ -251,7 +248,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
           padding: 'clamp(20px, 5vw, 40px)',
           marginBottom: 'clamp(20px, 4vw, 30px)',
           boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
-          border: `2px solid ${isEarlyBird ? '#ffd60a' : '#22c55e'}`
+          border: '2px solid #22c55e'
         }}>
           {/* 가격 정보 */}
           <div style={{
@@ -260,16 +257,6 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             borderBottom: '2px solid #e2e8f0',
             marginBottom: 'clamp(15px, 4vw, 30px)'
           }}>
-            {isEarlyBird && (
-              <div style={{
-                fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
-                color: '#94a3b8',
-                textDecoration: 'line-through',
-                marginBottom: '8px'
-              }}>
-                정가 ₩95,000
-              </div>
-            )}
             <div style={{
               fontSize: 'clamp(1.8rem, 6vw, 2.8rem)',
               fontWeight: '900',
@@ -278,20 +265,18 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             }}>
               ₩{courseInfo.price.toLocaleString()}
             </div>
-            {isEarlyBird && (
-              <div style={{
-                display: 'inline-block',
-                background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-                color: '#92400e',
-                padding: 'clamp(6px, 2vw, 8px) clamp(12px, 3vw, 20px)',
-                borderRadius: '20px',
-                fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)',
-                fontWeight: '800',
-                border: '2px solid #ffd60a'
-              }}>
-                💰 50,000원 할인
-              </div>
-            )}
+            <div style={{
+              display: 'inline-block',
+              background: 'linear-gradient(135deg, #dcfce7, #bbf7d0)',
+              color: '#166534',
+              padding: 'clamp(6px, 2vw, 8px) clamp(12px, 3vw, 20px)',
+              borderRadius: '20px',
+              fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)',
+              fontWeight: '800',
+              border: '2px solid #22c55e'
+            }}>
+              📚 3개월 무제한 수강
+            </div>
           </div>
 
           {/* 결제 방법 탭 */}
@@ -538,9 +523,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             fontSize: '0.95rem',
             lineHeight: '1.8'
           }}>
-            <li>• 2025년 12월 말 오픈 예정</li>
-            <li>• 2026년 1월 1일부터 95,000원으로 인상</li>
-            <li>• 결제 후 오픈 시 자동으로 수강 가능</li>
+            <li>• 결제 후 바로 수강 가능</li>
             <li>• 구매일로부터 3개월간 무제한 수강</li>
             <li>• 환불 규정은 이용약관을 참고해주세요</li>
           </ul>

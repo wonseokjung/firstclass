@@ -71,7 +71,7 @@ const freeMoneyClasses: Course[] = [
 // 프리미엄 강의 - 4단계 Step 시스템
 const premiumClasses: Course[] = [
   // Step 1: AI 건물주 되기 - 맨해튼 부동산 원리로 AI 콘텐츠 채널 수익화
-  { id: 999, instructor: '정원석 (AI 멘토 제이)', title: 'Step 1: AI 건물주 되기', subtitle: 'AI로 콘텐츠 만들기 기초', description: '맨해튼 부동산 원리를 AI 콘텐츠에 적용! 무료 AI 도구로 유튜브 채널을 짓고 수익화하는 기초를 배웁니다.', image: `${process.env.PUBLIC_URL}/images/main/1.jpeg`, isNew: true, category: 'Premium', path: '/ai-building-course', isPremium: true, launchDate: '🔥 얼리버드 진행 중', price: 45000, originalPrice: 95000, isComingSoon: false },
+  { id: 999, instructor: '정원석 (AI 멘토 제이)', title: 'Step 1: AI 건물주 되기', subtitle: 'AI로 콘텐츠 만들기 기초', description: '맨해튼 부동산 원리를 AI 콘텐츠에 적용! 무료 AI 도구로 유튜브 채널을 짓고 수익화하는 기초를 배웁니다.', image: `${process.env.PUBLIC_URL}/images/main/1.jpeg`, isNew: true, category: 'Premium', path: '/ai-building-course', isPremium: true, launchDate: '📚 지금 수강 가능', price: 95000, originalPrice: 95000, isComingSoon: false },
 
   // Step 2: AI 에이전트 비기너 - 여러 AI를 하나의 회사처럼 자동화
   { id: 1002, instructor: '정원석 (AI 멘토 제이)', title: 'Step 2: AI 에이전트 비기너', subtitle: '여러 AI를 하나의 회사처럼', description: 'Google OPAL로 콘텐츠 자동 생성 에이전트를 만들고 시스템화! 더 효율적인 수익 구조를 완성합니다.', image: `${process.env.PUBLIC_URL}/images/main/2.jpeg`, isNew: true, category: 'Premium', path: '/chatgpt-agent-beginner', isPremium: true, launchDate: '지금 수강 가능', price: 95000, originalPrice: 95000, isComingSoon: false },
@@ -118,7 +118,7 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
 현재 시간: ${today.toLocaleString('ko-KR')} (${dayOfWeek}요일)
 AI City Builders 사이트 정보:
 - 매주 화요일, 목요일 저녁 8시 라이브 세션
-- Step 1: AI 건물주 되기 - 얼리버드 45,000원 (곧 정가 95,000원으로)
+- Step 1: AI 건물주 되기 - 95,000원
 - Step 2: AI 에이전트 비기너 - 95,000원
 - Step 3: 바이브코딩 - 오픈 예정
 - 무료 강의: 기초 체력 훈련소, ChatGPT의 정석 등
@@ -128,7 +128,6 @@ AI City Builders 사이트 정보:
 - 20~40자 이내로 짧게
 - 이모지 1개만 사용
 - 라이브 시간이 가까우면 라이브 안내
-- 얼리버드 마감 임박 등 긴급감 있는 메시지
 - 시간대별로 다른 메시지 (오전: 좋은 아침, 저녁: 라이브 등)
 마크다운 절대 금지. 일반 텍스트만.
 `;

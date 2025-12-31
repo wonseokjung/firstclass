@@ -18,7 +18,7 @@ const WEEKLY_SCHEDULE: { [key: number]: { icon: string; title: string; isFree: b
 // Gemini 2.5 Flash API 호출 함수
 async function callGemini(messages: Array<{ role: string; content: string }>): Promise<string> {
   const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
-  
+
   if (!apiKey) {
     throw new Error('Gemini API 키가 필요합니다. REACT_APP_GEMINI_API_KEY를 설정해주세요.');
   }
@@ -26,7 +26,7 @@ async function callGemini(messages: Array<{ role: string; content: string }>): P
   // 메시지를 Gemini 형식으로 변환
   const systemPrompt = messages.find(m => m.role === 'system')?.content || '';
   const conversationMessages = messages.filter(m => m.role !== 'system');
-  
+
   const contents = conversationMessages.map(msg => ({
     role: msg.role === 'assistant' ? 'model' : 'user',
     parts: [{ text: msg.content }]
@@ -73,7 +73,7 @@ const saveChatLogToAzure = async (question: string, answer: string, sessionId: s
   try {
     const timestamp = new Date().toISOString();
     const rowKey = `${Date.now()}_${Math.random().toString(36).substring(7)}`;
-    
+
     const entity = {
       PartitionKey: sessionId,
       RowKey: rowKey,
@@ -145,7 +145,7 @@ const SITE_CONTEXT = `
 ## 📚 강의 구조 (프리미엄 4단계 Step 시스템)
 
 ### 프리미엄 강의 (유료)
-1. **Step 1: AI 건물주 되기** (/ai-building-course) - 45,000원 얼리버드
+1. **Step 1: AI 건물주 되기** (/ai-building-course) - 95,000원
    - 유튜브 CEO가 말한 "새로운 계급의 크리에이터" 되기
    - AI로 디지털 건물을 짓고 수익화하는 방법
    
@@ -270,18 +270,18 @@ const CityGuide: React.FC<CityGuideProps> = ({ isOpenExternal, onClose, inline =
       const today = new Date();
       const dayOfWeek = today.getDay();
       const schedule = WEEKLY_SCHEDULE[dayOfWeek];
-      
+
       if (schedule) {
         // Azure에서 실제 라이브 진행 여부 확인
         try {
-          const courseId = schedule.isFree ? 'free-live' : 
-                          schedule.title.includes('건물주') ? 'ai-building-course' :
-                          schedule.title.includes('에이전트') ? 'chatgpt-agent-beginner' : '';
-          
+          const courseId = schedule.isFree ? 'free-live' :
+            schedule.title.includes('건물주') ? 'ai-building-course' :
+              schedule.title.includes('에이전트') ? 'chatgpt-agent-beginner' : '';
+
           if (courseId) {
             const liveConfig = await AzureTableService.getCurrentLiveConfig(courseId);
             const isLive = liveConfig?.isLive || false;
-            
+
             setTodayLiveInfo({
               title: schedule.title,
               link: schedule.link,
@@ -309,7 +309,7 @@ const CityGuide: React.FC<CityGuideProps> = ({ isOpenExternal, onClose, inline =
         setTodayLiveInfo(null);
       }
     };
-    
+
     checkTodayLive();
     // 1분마다 확인 (라이브 상태가 변경될 수 있음)
     const interval = setInterval(checkTodayLive, 60000);
@@ -324,7 +324,7 @@ const CityGuide: React.FC<CityGuideProps> = ({ isOpenExternal, onClose, inline =
         try {
           const parsedUser = JSON.parse(storedUserInfo);
           setUserInfo({ email: parsedUser.email, name: parsedUser.name || parsedUser.email.split('@')[0] });
-          
+
           // 수강 내역 가져오기
           const courses = await AzureTableService.getUserEnrollmentsByEmail(parsedUser.email);
           const courseNames = courses.map(c => c.title || `Course ${c.courseId}`);
@@ -343,15 +343,15 @@ const CityGuide: React.FC<CityGuideProps> = ({ isOpenExternal, onClose, inline =
     const fullUrlRegex = /(https?:\/\/)?(www\.)?aicitybuilders\.com(\/[a-z0-9-/]+)/gi;
     // 상대 경로 패턴
     const relativePathRegex = /(\/[a-z0-9-/]+)/gi;
-    
+
     // 먼저 전체 URL을 상대 경로로 변환
     let processedText = text.replace(fullUrlRegex, (match, protocol, www, path) => {
       return path; // 도메인 부분 제거하고 경로만 남김
     });
-    
+
     // 그 다음 상대 경로를 클릭 가능한 링크로 변환
     const parts = processedText.split(relativePathRegex);
-    
+
     return parts.map((part, index) => {
       if (part && part.startsWith('/') && part.length > 1) {
         // 유효한 경로인지 확인 (최소 2글자 이상, /만 있는 경우 제외)
@@ -448,23 +448,23 @@ const CityGuide: React.FC<CityGuideProps> = ({ isOpenExternal, onClose, inline =
 
       // 개인화된 컨텍스트 생성
       let personalizedContext = SITE_CONTEXT;
-      
+
       // 현재 시간 및 오늘 라이브 정보 추가
       const now = new Date();
       const koreaTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Seoul' }));
       const currentTime = koreaTime.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
       const currentDate = koreaTime.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
-      
+
       personalizedContext += `\n\n## 🕐 현재 시간 정보 (매우 중요!)
 - 현재 한국 시간: ${currentDate} ${currentTime}
 - 오늘 요일: ${['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][koreaTime.getDay()]}
 
 ## 🔴 오늘 라이브 일정 (실시간 정보 - 반드시 확인!)
-${todayLiveInfo ? 
-  todayLiveInfo.isLive 
-    ? `✅ 지금 라이브 진행 중! "${todayLiveInfo.title}"\n링크: ${todayLiveInfo.link}\n현재 시간: ${currentTime}, 라이브 시간: ${todayLiveInfo.time}`
-    : `📅 오늘 ${todayLiveInfo.time}에 "${todayLiveInfo.title}" 라이브 예정\n링크: ${todayLiveInfo.link}\n현재 시간: ${currentTime}, 라이브까지 남은 시간 계산 필요`
-  : '오늘은 라이브 일정이 없습니다.'}
+${todayLiveInfo ?
+          todayLiveInfo.isLive
+            ? `✅ 지금 라이브 진행 중! "${todayLiveInfo.title}"\n링크: ${todayLiveInfo.link}\n현재 시간: ${currentTime}, 라이브 시간: ${todayLiveInfo.time}`
+            : `📅 오늘 ${todayLiveInfo.time}에 "${todayLiveInfo.title}" 라이브 예정\n링크: ${todayLiveInfo.link}\n현재 시간: ${currentTime}, 라이브까지 남은 시간 계산 필요`
+          : '오늘은 라이브 일정이 없습니다.'}
 
 ⚠️ 라이브 관련 질문 답변 규칙 (매우 중요!):
 1. "오늘 라이브 있어?" 질문을 받으면 반드시 위 정보를 확인!
@@ -473,7 +473,7 @@ ${todayLiveInfo ?
 4. 절대로 "오늘 라이브 없어요"라고 답변하지 마세요 (위 정보 확인 후 답변)
 5. 현재 시간(${currentTime})과 라이브 시간(${todayLiveInfo?.time || 'N/A'})을 비교해서 정확히 답변
 6. 링크를 안내할 때는 반드시 ${todayLiveInfo?.link || '/live'} 형식으로 정확히 표시하세요 (예: /live/free, /live/step1 등)`;
-      
+
       if (userInfo) {
         personalizedContext += `\n\n## 👤 현재 사용자 정보 (로그인됨)
 - 이름: ${userInfo.name}
@@ -495,7 +495,7 @@ ${todayLiveInfo ?
       const cleanResponse = removeMarkdown(rawResponse);
 
       setMessages(prev => [...prev, { role: 'assistant', content: cleanResponse }]);
-      
+
       // 📝 대화 로그 Azure Table에 저장
       saveChatLogToAzure(userMessage, cleanResponse, sessionId, userInfo?.email);
     } catch (error) {
@@ -653,7 +653,7 @@ ${todayLiveInfo ?
           }}
           aria-label="안내원에게 물어보기"
         >
-          <img 
+          <img
             src={`${process.env.PUBLIC_URL}/images/main/aian.jpeg`}
             alt="안내원"
             style={{
@@ -717,197 +717,197 @@ ${todayLiveInfo ?
               animation: 'fadeInScale 0.25s ease'
             }}
           >
-          {/* 헤더 - 도시 안내원 (골드) */}
-          <div
-            className="city-guide-modal-header"
-            style={{
-              padding: '16px 20px',
-              background: 'linear-gradient(135deg, rgba(255,215,0,0.12) 0%, rgba(245,158,11,0.08) 100%)',
-              borderBottom: '1px solid rgba(255,215,0,0.2)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '14px'
-            }}
-          >
-            <img 
-              src={`${process.env.PUBLIC_URL}/images/main/aian.jpeg`}
-              alt="도시 안내원"
+            {/* 헤더 - 도시 안내원 (골드) */}
+            <div
+              className="city-guide-modal-header"
               style={{
-                width: '52px',
-                height: '52px',
-                borderRadius: '14px',
-                objectFit: 'cover',
-                border: '2px solid rgba(255,215,0,0.5)',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
-              }}
-              onError={(e) => {
-                // 이미지 없으면 이모지 폴백
-                const parent = e.currentTarget.parentElement;
-                if (parent) {
-                  e.currentTarget.style.display = 'none';
-                  const fallback = document.createElement('div');
-                  fallback.style.cssText = 'width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#ffd700,#f59e0b);display:flex;align-items:center;justify-content:center;font-size:28px;';
-                  fallback.textContent = '🏙️';
-                  parent.insertBefore(fallback, e.currentTarget);
-                }
-              }}
-            />
-            <div>
-              <div style={{ color: '#ffd700', fontWeight: '700', fontSize: '1.05rem' }}>
-                🏙️ AI City 안내원
-              </div>
-              <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.8rem' }}>
-                도시에 오신 것을 환영합니다!
-              </div>
-            </div>
-            <button
-              onClick={handleClose}
-              style={{
-                marginLeft: 'auto',
-                background: 'rgba(255,255,255,0.1)',
-                border: 'none',
-                cursor: 'pointer',
-                padding: '8px',
-                borderRadius: '50%',
+                padding: '16px 20px',
+                background: 'linear-gradient(135deg, rgba(255,215,0,0.12) 0%, rgba(245,158,11,0.08) 100%)',
+                borderBottom: '1px solid rgba(255,215,0,0.2)',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'background 0.2s'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(255,255,255,0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+                gap: '14px'
               }}
             >
-              <X size={18} color="rgba(255,255,255,0.8)" />
-            </button>
-          </div>
-
-          {/* 메시지 영역 */}
-          <div
-            className="city-guide-modal-messages"
-            style={{
-              flex: 1,
-              overflowY: 'auto',
-              padding: '16px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '12px'
-            }}
-          >
-            {messages.map((message, index) => (
-              <div
-                key={index}
+              <img
+                src={`${process.env.PUBLIC_URL}/images/main/aian.jpeg`}
+                alt="도시 안내원"
                 style={{
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '14px',
+                  objectFit: 'cover',
+                  border: '2px solid rgba(255,215,0,0.5)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+                }}
+                onError={(e) => {
+                  // 이미지 없으면 이모지 폴백
+                  const parent = e.currentTarget.parentElement;
+                  if (parent) {
+                    e.currentTarget.style.display = 'none';
+                    const fallback = document.createElement('div');
+                    fallback.style.cssText = 'width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#ffd700,#f59e0b);display:flex;align-items:center;justify-content:center;font-size:28px;';
+                    fallback.textContent = '🏙️';
+                    parent.insertBefore(fallback, e.currentTarget);
+                  }
+                }}
+              />
+              <div>
+                <div style={{ color: '#ffd700', fontWeight: '700', fontSize: '1.05rem' }}>
+                  🏙️ AI City 안내원
+                </div>
+                <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.8rem' }}>
+                  도시에 오신 것을 환영합니다!
+                </div>
+              </div>
+              <button
+                onClick={handleClose}
+                style={{
+                  marginLeft: 'auto',
+                  background: 'rgba(255,255,255,0.1)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '8px',
+                  borderRadius: '50%',
                   display: 'flex',
-                  justifyContent: message.role === 'user' ? 'flex-end' : 'flex-start'
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'background 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.2)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
                 }}
               >
-                <div
-                  style={{
-                    maxWidth: '85%',
-                    padding: '12px 16px',
-                    borderRadius: message.role === 'user' 
-                      ? '18px 18px 4px 18px' 
-                      : '18px 18px 18px 4px',
-                    background: message.role === 'user'
-                      ? 'linear-gradient(135deg, #ffd700, #ffb347)'
-                      : 'rgba(255,255,255,0.08)',
-                    color: message.role === 'user' ? '#1a1a2e' : '#fff',
-                    fontSize: '0.9rem',
-                    lineHeight: '1.5',
-                    whiteSpace: 'pre-wrap',
-                    wordBreak: 'break-word'
-                  }}
-                >
-                  {message.role === 'assistant' ? renderMessageWithLinks(message.content) : message.content}
-                </div>
-              </div>
-            ))}
+                <X size={18} color="rgba(255,255,255,0.8)" />
+              </button>
+            </div>
 
-            {isLoading && (
-              <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                <div
-                  style={{
-                    padding: '12px 16px',
-                    borderRadius: '18px 18px 18px 4px',
-                    background: 'rgba(255,255,255,0.08)',
-                    color: 'rgba(255,255,255,0.6)'
-                  }}
-                >
-                  <div style={{ display: 'flex', gap: '4px' }}>
-                    <span style={{ animation: 'bounce 1s infinite' }}>•</span>
-                    <span style={{ animation: 'bounce 1s infinite 0.2s' }}>•</span>
-                    <span style={{ animation: 'bounce 1s infinite 0.4s' }}>•</span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* 입력 영역 */}
-          <div
-            className="city-guide-modal-input"
-            style={{
-              padding: '12px 16px',
-              borderTop: '1px solid rgba(255,255,255,0.1)',
-              display: 'flex',
-              gap: '12px',
-              alignItems: 'center'
-            }}
-          >
-            <input
-              ref={inputRef}
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="질문을 입력하세요..."
-              disabled={isLoading}
+            {/* 메시지 영역 */}
+            <div
+              className="city-guide-modal-messages"
               style={{
                 flex: 1,
-                padding: '12px 16px',
-                borderRadius: '24px',
-                background: 'rgba(255,255,255,0.08)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                color: '#fff',
-                fontSize: '0.9rem',
-                outline: 'none',
-                transition: 'border-color 0.2s'
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(255,215,0,0.5)';
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
-              }}
-            />
-            <button
-              onClick={handleSend}
-              disabled={!input.trim() || isLoading}
-              style={{
-                width: '44px',
-                height: '44px',
-                borderRadius: '50%',
-                background: input.trim() && !isLoading
-                  ? 'linear-gradient(135deg, #ffd700, #f59e0b)'
-                  : 'rgba(255,255,255,0.1)',
-                border: 'none',
-                cursor: input.trim() && !isLoading ? 'pointer' : 'not-allowed',
+                overflowY: 'auto',
+                padding: '16px',
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.2s'
+                flexDirection: 'column',
+                gap: '12px'
               }}
             >
-              <Send size={18} color={input.trim() && !isLoading ? '#1a1a2e' : 'rgba(255,255,255,0.3)'} />
-            </button>
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  style={{
+                    display: 'flex',
+                    justifyContent: message.role === 'user' ? 'flex-end' : 'flex-start'
+                  }}
+                >
+                  <div
+                    style={{
+                      maxWidth: '85%',
+                      padding: '12px 16px',
+                      borderRadius: message.role === 'user'
+                        ? '18px 18px 4px 18px'
+                        : '18px 18px 18px 4px',
+                      background: message.role === 'user'
+                        ? 'linear-gradient(135deg, #ffd700, #ffb347)'
+                        : 'rgba(255,255,255,0.08)',
+                      color: message.role === 'user' ? '#1a1a2e' : '#fff',
+                      fontSize: '0.9rem',
+                      lineHeight: '1.5',
+                      whiteSpace: 'pre-wrap',
+                      wordBreak: 'break-word'
+                    }}
+                  >
+                    {message.role === 'assistant' ? renderMessageWithLinks(message.content) : message.content}
+                  </div>
+                </div>
+              ))}
+
+              {isLoading && (
+                <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                  <div
+                    style={{
+                      padding: '12px 16px',
+                      borderRadius: '18px 18px 18px 4px',
+                      background: 'rgba(255,255,255,0.08)',
+                      color: 'rgba(255,255,255,0.6)'
+                    }}
+                  >
+                    <div style={{ display: 'flex', gap: '4px' }}>
+                      <span style={{ animation: 'bounce 1s infinite' }}>•</span>
+                      <span style={{ animation: 'bounce 1s infinite 0.2s' }}>•</span>
+                      <span style={{ animation: 'bounce 1s infinite 0.4s' }}>•</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* 입력 영역 */}
+            <div
+              className="city-guide-modal-input"
+              style={{
+                padding: '12px 16px',
+                borderTop: '1px solid rgba(255,255,255,0.1)',
+                display: 'flex',
+                gap: '12px',
+                alignItems: 'center'
+              }}
+            >
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="질문을 입력하세요..."
+                disabled={isLoading}
+                style={{
+                  flex: 1,
+                  padding: '12px 16px',
+                  borderRadius: '24px',
+                  background: 'rgba(255,255,255,0.08)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  color: '#fff',
+                  fontSize: '0.9rem',
+                  outline: 'none',
+                  transition: 'border-color 0.2s'
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(255,215,0,0.5)';
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+                }}
+              />
+              <button
+                onClick={handleSend}
+                disabled={!input.trim() || isLoading}
+                style={{
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '50%',
+                  background: input.trim() && !isLoading
+                    ? 'linear-gradient(135deg, #ffd700, #f59e0b)'
+                    : 'rgba(255,255,255,0.1)',
+                  border: 'none',
+                  cursor: input.trim() && !isLoading ? 'pointer' : 'not-allowed',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <Send size={18} color={input.trim() && !isLoading ? '#1a1a2e' : 'rgba(255,255,255,0.3)'} />
+              </button>
+            </div>
           </div>
-        </div>
         </div>,
         document.body
       )}

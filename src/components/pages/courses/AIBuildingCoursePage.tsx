@@ -17,13 +17,8 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
 
-  // 날짜 기반 가격 결정 (2026년 1월 1일부터 95,000원)
-  const PRICE_CHANGE_DATE = new Date(2026, 0, 1); // 2026-01-01
-  const now = new Date();
-  const isEarlyBird = now < PRICE_CHANGE_DATE;
-
-  const originalPrice = 95000;
-  const currentPrice = isEarlyBird ? 45000 : 95000;
+  // 정가 95,000원 (2026년 1월 1일부터 적용)
+  const currentPrice = 95000;
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -330,14 +325,6 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
               }}>
                 <div style={{
-                  fontSize: 'clamp(0.95rem, 3vw, 1.3rem)',
-                  textDecoration: 'line-through',
-                  marginBottom: '8px',
-                  opacity: '0.8'
-                }}>
-                  ₩{originalPrice.toLocaleString()}
-                </div>
-                <div style={{
                   fontSize: 'clamp(2rem, 8vw, 3.5rem)',
                   fontWeight: '900',
                   marginBottom: '12px',
@@ -347,7 +334,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   ₩{currentPrice.toLocaleString()}
                 </div>
                 <div style={{
-                  fontSize: 'clamp(0.85rem, 2.5vw, 1.1rem)',
+                  fontSize: 'clamp(0.95rem, 2.5vw, 1.1rem)',
                   color: '#ffd60a',
                   fontWeight: '700',
                   marginBottom: '12px',
@@ -357,32 +344,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   display: 'inline-block',
                   border: '1px solid rgba(251, 191, 36, 0.3)'
                 }}>
-                  🔥 52% 할인 (얼리버드 특가)
-                </div>
-                <div style={{
-                  fontSize: '1rem',
-                  color: '#ffd60a',
-                  fontWeight: '700',
-                  background: 'rgba(251, 191, 36, 0.15)',
-                  padding: '12px 20px',
-                  borderRadius: '12px',
-                  border: '2px solid rgba(251, 191, 36, 0.5)',
-                  display: 'inline-block',
-                  marginBottom: '10px'
-                }}>
-                  📅 강의 오픈: 2026년 1월 1일
-                </div>
-                <div style={{
-                  fontSize: '0.95rem',
-                  color: '#ffd60a',
-                  fontWeight: '600',
-                  background: 'rgba(251, 191, 36, 0.1)',
-                  padding: '10px 16px',
-                  borderRadius: '12px',
-                  border: '1px solid rgba(251, 191, 36, 0.3)',
-                  display: 'inline-block'
-                }}>
-                  ⚠️ 강의 오픈 시 95,000원으로 인상 예정
+                  📚 3개월 수강권
                 </div>
               </div>
 
@@ -437,8 +399,8 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     e.currentTarget.style.boxShadow = '0 15px 40px rgba(245, 158, 11, 0.3)';
                   }}
                 >
-                  <span style={{ fontSize: 'clamp(1rem, 3vw, 1.5rem)' }}>🔥</span>
-                  얼리버드 수강 신청
+                  <span style={{ fontSize: 'clamp(1rem, 3vw, 1.5rem)' }}>🚀</span>
+                  수강 신청하기
                 </button>
               </div>
 
@@ -450,7 +412,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 fontWeight: '600',
                 color: '#ffd60a'
               }}>
-                🎉 얼리버드 45,000원 | 📅 강의 오픈: 2026년 1월 1일
+                ✅ 지금 바로 강의를 시작하세요!
               </p>
             </div>
 
