@@ -342,23 +342,23 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 </p>
               </div>
 
-              {/* 🔴 주간 라이브 */}
+              {/* 📅 주간 라이브 */}
               <div style={{
-                background: 'rgba(239, 68, 68, 0.1)',
+                background: 'rgba(251, 191, 36, 0.1)',
                 borderRadius: '20px',
                 padding: 'clamp(25px, 4vw, 35px)',
-                border: '2px solid rgba(239, 68, 68, 0.3)'
+                border: '2px solid rgba(251, 191, 36, 0.3)'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
-                  <span style={{ fontSize: '2.5rem' }}>🔴</span>
-                  <h4 style={{ color: '#ef4444', fontWeight: '800', fontSize: 'clamp(1.2rem, 2.5vw, 1.4rem)', margin: 0 }}>
+                  <span style={{ fontSize: '2.5rem' }}>📅</span>
+                  <h4 style={{ color: '#fbbf24', fontWeight: '800', fontSize: 'clamp(1.2rem, 2.5vw, 1.4rem)', margin: 0 }}>
                     매주 프로젝트 라이브
                   </h4>
                 </div>
                 <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '1rem', lineHeight: 1.7, margin: 0 }}>
-                  <strong style={{ color: '#ef4444' }}>매주 수요일 밤 8시</strong> 실시간으로<br />
+                  <strong style={{ color: '#ffd60a' }}>매주 수요일 밤 8시</strong> 실시간으로<br />
                   함께 프로젝트를 진행합니다.<br />
-                  <span style={{ color: '#94a3b8' }}>다시보기: 해당 월에만 제공 (다음달 삭제)</span>
+                  <span style={{ color: '#94a3b8' }}>3개월간 총 13회 참여 가능</span>
                 </p>
               </div>
             </div>
@@ -895,13 +895,13 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                       <div style={{ fontSize: '2.2rem', marginBottom: '10px' }}>📚</div>
                       <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', marginBottom: '5px' }}>기본 코어 강의</div>
                       <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: 'clamp(1.3rem, 3vw, 1.5rem)' }}>10개</div>
-                      <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>10일 완성 커리큘럼</div>
+                      <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>3개월간 무제한 시청</div>
                     </div>
                     <div style={{ textAlign: 'center', padding: '20px 15px', background: 'rgba(251,191,36,0.15)', borderRadius: '15px', border: '2px solid rgba(251,191,36,0.4)' }}>
-                      <div style={{ fontSize: '2.2rem', marginBottom: '10px' }}>🔴</div>
+                      <div style={{ fontSize: '2.2rem', marginBottom: '10px' }}>📅</div>
                       <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', marginBottom: '5px' }}>주간 라이브</div>
-                      <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: 'clamp(1.3rem, 3vw, 1.5rem)' }}>52회/년</div>
-                      <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>3개월간 무제한 참여</div>
+                      <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: 'clamp(1.3rem, 3vw, 1.5rem)' }}>13회</div>
+                      <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>3개월간 참여 가능</div>
                     </div>
                   </div>
                 </div>
@@ -929,19 +929,19 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                       <div style={{ color: '#1e3a8a', fontWeight: '800', fontSize: '1.2rem' }}>+</div>
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ color: '#1e3a8a', fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)' }}>라이브 52회</div>
+                      <div style={{ color: '#1e3a8a', fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)' }}>라이브 13회</div>
                       <div style={{ color: '#1e3a8a', fontWeight: '800', fontSize: '1.2rem' }}>=</div>
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ color: '#1e3a8a', fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)' }}>총 62개 콘텐츠</div>
+                      <div style={{ color: '#1e3a8a', fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)' }}>총 23개 콘텐츠</div>
                     </div>
                   </div>
                   <div style={{ textAlign: 'center', background: 'rgba(30, 58, 138, 0.15)', padding: '15px', borderRadius: '12px' }}>
-                    <span style={{ color: '#1e3a8a', fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>95,000원 ÷ 62개 = </span>
-                    <span style={{ color: '#dc2626', fontWeight: '900', fontSize: 'clamp(1.5rem, 4vw, 1.8rem)' }}>1,532원</span>
+                    <span style={{ color: '#1e3a8a', fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>95,000원 ÷ 23개 = </span>
+                    <span style={{ color: '#1e40af', fontWeight: '900', fontSize: 'clamp(1.5rem, 4vw, 1.8rem)' }}>4,130원</span>
                     <span style={{ color: '#1e3a8a', fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>/개</span>
                     <div style={{ color: '#1e3a8a', fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)', marginTop: '8px', fontWeight: '600' }}>
-                      ☕ 커피 한 잔도 안 되는 가격으로 전문 강의!
+                      ☕ 커피 한 잔 가격으로 전문 강의 1개!
                     </div>
                   </div>
                 </div>
@@ -952,7 +952,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
                   gap: '10px'
                 }}>
-                  {['🎯 실시간 Q&A', '🔥 최신 AI 업데이트', '💻 라이브 코딩', '📁 다시보기 무제한'].map((item) => (
+                  {['🎯 실시간 Q&A', '🔥 최신 AI 업데이트', '💻 라이브 코딩', '🎯 월간 미션'].map((item) => (
                     <div key={item} style={{
                       background: 'rgba(255, 255, 255, 0.12)',
                       padding: '12px 12px',
@@ -966,6 +966,41 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                       {item}
                     </div>
                   ))}
+                </div>
+              </div>
+            </div>
+
+            {/* 강의 수강 방식 */}
+            <div style={{
+              background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
+              padding: '30px',
+              borderRadius: '15px',
+              textAlign: 'center',
+              marginBottom: '30px'
+            }}>
+              <h4 style={{ color: '#1e40af', fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)', fontWeight: '700', marginBottom: '20px' }}>
+                강의 수강 방식
+              </h4>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                gap: '20px'
+              }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontWeight: '600', color: '#1b263b', marginBottom: '5px' }}>HD 동영상</div>
+                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>기본 콘텐츠 10개</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontWeight: '600', color: '#1b263b', marginBottom: '5px' }}>주간 라이브</div>
+                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>매주 1회 진행</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontWeight: '600', color: '#1b263b', marginBottom: '5px' }}>월간 미션</div>
+                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>매월 1개 제공</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontWeight: '600', color: '#1b263b', marginBottom: '5px' }}>수강 기간</div>
+                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>3개월간 접근</div>
                 </div>
               </div>
             </div>
@@ -993,7 +1028,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 filter: 'blur(80px)'
               }}></div>
 
-              {/* 할인 뱃지 */}
+              {/* 수강권 뱃지 */}
               <div style={{
                 textAlign: 'center',
                 marginBottom: 'clamp(18px, 4vw, 25px)',
@@ -1011,7 +1046,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   border: 'clamp(1.5px, 0.4vw, 2px) solid #ffd60a',
                   boxShadow: '0 4px 15px rgba(251, 191, 36, 0.4)'
                 }}>
-                  🎉 특별 할인가
+                  📚 3개월 수강권
                 </div>
               </div>
 
@@ -1022,16 +1057,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 position: 'relative',
                 zIndex: 1
               }}>
-                <div style={{
-                  fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-                  color: '#e0f2fe',
-                  textDecoration: 'line-through',
-                  marginBottom: '10px',
-                  fontWeight: '600',
-                  opacity: 0.8
-                }}>
-                  정가 ₩150,000
-                </div>
                 <div style={{
                   fontSize: 'clamp(3.5rem, 8vw, 5rem)',
                   fontWeight: '900',
@@ -1052,7 +1077,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   fontWeight: '700',
                   border: '1px solid rgba(254, 240, 138, 0.3)'
                 }}>
-                  💰 55,000원 할인
+                  📅 기본 강의 10개 + 주간 라이브 13회
                 </div>
               </div>
 
@@ -2211,16 +2236,6 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 zIndex: 1
               }}>
                 <div style={{
-                  fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-                  color: '#e0f2fe',
-                  textDecoration: 'line-through',
-                  marginBottom: '10px',
-                  fontWeight: '600',
-                  opacity: 0.8
-                }}>
-                  정가 ₩150,000
-                </div>
-                <div style={{
                   fontSize: 'clamp(3.5rem, 8vw, 5rem)',
                   fontWeight: '900',
                   color: 'white',
@@ -2240,7 +2255,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   fontWeight: '700',
                   border: '1px solid rgba(254, 240, 138, 0.3)'
                 }}>
-                  💰 55,000원 할인
+                  📚 3개월 수강권
                 </div>
               </div>
 

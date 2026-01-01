@@ -292,16 +292,16 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             courseData = {
               id: '999',
               title: 'Step 1: AI 건물주 되기 기초',
-              price: actualAmount || 45000  // 얼리버드 45,000원
+              price: actualAmount || 95000  // 3개월 수강권 95,000원
             };
             setCourseName('Step 1: AI 건물주 되기 기초');
           } else if (effectiveCourseParam === '1002' || effectiveCourseParam === 'chatgpt-agent-beginner') {
             courseData = {
               id: '1002',
-              title: 'Google Opal 유튜브 수익화 에이전트 기초',
-              price: actualAmount || 95000  // 실제 결제 금액 사용, 없으면 정가
+              title: 'Step 2: AI 에이전트 비기너',
+              price: actualAmount || 95000  // 3개월 수강권 95,000원
             };
-            setCourseName('Google Opal 유튜브 수익화 에이전트 기초');
+            setCourseName('Step 2: AI 에이전트 비기너');
           } else {
             // 알 수 없는 courseParam - 로그 기록
             console.warn('⚠️ 알 수 없는 courseParam:', effectiveCourseParam);

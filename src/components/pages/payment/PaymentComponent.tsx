@@ -319,10 +319,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
               <span className="price">
                 ₩{price.toLocaleString()}
               </span>
-              <span className="original-price">
-                ₩299,000
-              </span>
-              <span className="discount">33% 할인</span>
+              <span className="course-period">3개월 수강권</span>
             </div>
           </div>
         </div>

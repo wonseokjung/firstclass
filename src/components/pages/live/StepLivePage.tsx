@@ -46,7 +46,7 @@ const STEP_INFO: { [key: string]: StepInfo } = {
     time: '오후 8:00',
     courseId: 999,
     vimeoEventId: '1044498498',
-    price: 45000,
+    price: 95000,
     purchaseLink: '/ai-building-course',
     icon: '🏗️',
     color: COLORS.navy

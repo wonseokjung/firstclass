@@ -17,7 +17,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
 
-  // 정가 95,000원 (2026년 1월 1일부터 적용)
+  // 3개월 수강권 95,000원
   const currentPrice = 95000;
 
   useEffect(() => {
@@ -86,8 +86,8 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
     checkAuthStatus();
   }, []);
 
-  const handleEarlyBirdPayment = async () => {
-    console.log('🔍 얼리버드 수강 신청 버튼 클릭 - 결제 페이지로 이동');
+  const handlePayment = async () => {
+    console.log('🔍 수강 신청 버튼 클릭 - 결제 페이지로 이동');
     console.log('🔍 현재 로그인 상태:', userInfo ? '로그인됨' : '로그인 안됨');
 
     // 세션 정보 재확인
@@ -141,7 +141,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
       {showPaymentModal && userInfo && (
         <PaymentComponent
           courseId="999"
-          courseTitle="Step 1: AI 건물주 되기 기초 (얼리버드)"
+          courseTitle="Step 1: AI 건물주 되기 기초"
           price={currentPrice}
           userInfo={userInfo}
           onSuccess={handlePaymentSuccess}
@@ -366,7 +366,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 }}></div>
 
                 <button
-                  onClick={handleEarlyBirdPayment}
+                  onClick={handlePayment}
                   style={{
                     position: 'relative',
                     background: 'linear-gradient(135deg, #e5c100, #d97706)',
