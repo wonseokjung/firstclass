@@ -149,10 +149,10 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
           },
           {
             day: 5,
-            title: '최종 입지 선정 & 건물 계획서 작성',
-            subtitle: 'AI CITY BUILDER에 건물 계획서 넣기 | 나의 첫 디지털 건물 사업계획서 완성',
-            hasQuiz: true,
-            releaseDate: '2026-01-01',  // 1월 1일 오후 7시 업로드
+            title: 'AI 건물주가 되기: 유튜브 채널 만들기',
+            subtitle: '유튜브 채널 생성 | Gemini로 프로필/배너 제작 | 채널 설정 완료',
+            hasQuiz: false,
+            releaseDate: '2026-01-01',  // 1월 1일 오픈
             releaseTime: '19:00'
           }
         ]
@@ -513,8 +513,8 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
               }}>
                 {week.days.map((lesson) => {
                   const isCompleted = completedDays.has(lesson.day);
-                  // 🔓 Day 1~4, Day 6 열림 / Day 5, 7~10은 순차 업로드 예정
-                  const isAvailable = lesson.day <= 4 || lesson.day === 6;
+                  // 🔓 Day 1~5, Day 6 열림 / Day 7~10은 순차 업로드 예정
+                  const isAvailable = lesson.day <= 5 || lesson.day === 6;
 
                   return (
                     <div

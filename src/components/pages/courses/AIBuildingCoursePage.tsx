@@ -2281,7 +2281,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 { day: 2, title: '경제적 자유: 잠자는 동안에도 돈이 들어오는 구조', subtitle: '부동산 vs 콘텐츠, 경제적 자유의 새로운 정의 | AI 기반 콘텐츠 청사진 만들기' },
                 { day: 3, title: '당신의 디지털 건물에는 어떤 사람이 거주하나?', subtitle: '글로벌 CPM과 수익성 분석 | AI로 타겟 고객 심층 분석하기' },
                 { day: 4, title: '몇 층짜리 디지털 건물을 세울 것인가?', subtitle: '대중형/니치형/혼합형 전략 | AI로 시장 분석 & 건물 콘셉트 설계' },
-                { day: 5, title: '최종 입지 선정 & 건물 계획서 작성', subtitle: 'AI CITY BUILDER에 건물 계획서 넣기 | 나의 첫 디지털 건물 사업계획서 완성' }
+                { day: 5, title: 'AI 건물주가 되기: 유튜브 채널 만들기', subtitle: '유튜브 채널 생성 | Gemini로 프로필/배너 제작 | 채널 설정 완료' }
               ].map((item) => (
                 <div
                   key={item.day}
