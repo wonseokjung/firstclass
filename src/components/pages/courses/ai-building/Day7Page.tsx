@@ -324,11 +324,11 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                     <CheckCircle size={16} /> 완료됨
                   </span>
                 )}
-              </div>
+            </div>
             </div>
           </div>
-        </div>
-      </div>
+          </div>
+            </div>
 
       {/* 콘텐츠 */}
       <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '40px 20px' }}>
@@ -354,10 +354,10 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
           </h2>
           <div style={{ display: 'grid', gap: '12px' }}>
             {[
-              'AI 영상 생성의 원리와 기초 이해하기',
-              'Google Veo 사용법 익히기',
-              '텍스트로 영상 만드는 프롬프트 작성법',
-              '쉬운 방법 & 어려운 방법 모두 마스터하기'
+              '🟢 초보: Gemini/OPAL에서 프롬프트로 쉽게 영상 만들기',
+              '🟡 심화: Colab 코드로 상상과 AI의 갭 줄이기',
+              '💰 API 비용 계산하는 방법 익히기',
+              '🎬 이미지 → 영상 변환 & 영상 연장하기'
             ].map((obj, idx) => (
               <div key={idx} style={{ 
                 display: 'flex', 
@@ -380,12 +380,12 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                   flexShrink: 0
                 }}>
                   {idx + 1}
-                </div>
+            </div>
                 {obj}
-              </div>
+          </div>
             ))}
           </div>
-        </div>
+            </div>
 
         {/* 비디오 섹션 */}
         <div style={{
@@ -419,7 +419,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
             }}>
               무료 & 쉬움
             </span>
-          </div>
+            </div>
 
           <div style={{ padding: '20px' }}>
             <p style={{ color: '#e2e8f0', fontSize: '0.95rem', marginBottom: '16px', lineHeight: '1.7' }}>
@@ -435,7 +435,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
                 title="Day7 강의 - 초보자 버전"
               />
-            </div>
+          </div>
           </div>
 
           {/* 🟡 심화 버전 영상 */}
@@ -489,9 +489,10 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 textAlign: 'center',
                 color: '#ffd60a'
               }}>
-                <Sparkles size={48} style={{ marginBottom: '16px', opacity: 0.8 }} />
+                <Code size={48} style={{ marginBottom: '16px', opacity: 0.8 }} />
                 <p style={{ fontSize: '1.2rem', fontWeight: '700', margin: 0 }}>🎬 심화 버전 영상</p>
-                <p style={{ fontSize: '1rem', color: '#ffd60a', marginTop: '8px', fontWeight: '600' }}>오늘 저녁 9시 30분 업로드!</p>
+                <p style={{ fontSize: '0.9rem', color: '#e2e8f0', marginTop: '10px', lineHeight: '1.5' }}>Colab으로 API 활용하기</p>
+                <p style={{ fontSize: '0.9rem', color: '#ffd60a', marginTop: '8px', fontWeight: '600' }}>🔜 곧 업로드 예정!</p>
               </div>
             </div>
           </div>
@@ -513,13 +514,30 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
             alignItems: 'center',
             gap: '12px'
           }}>
-            <Sparkles size={24} color="#ffd60a" /> 오늘의 학습: 두 가지 방법!
+            <Sparkles size={24} color="#ffd60a" /> 왜 심화 과정이 필요할까요?
           </h3>
           
+          <div style={{
+            background: 'rgba(30, 58, 138, 0.2)',
+            borderRadius: '12px',
+            padding: '20px',
+            marginBottom: '20px',
+            border: '1px solid rgba(30, 58, 138, 0.3)'
+          }}>
+            <p style={{ color: '#e2e8f0', fontSize: '1rem', margin: '0 0 12px 0', lineHeight: '1.8' }}>
+              영상을 잘 만드는 방법은 <strong style={{ color: '#ffd60a' }}>우리의 상상</strong>과 
+              <strong style={{ color: '#ffd60a' }}> AI가 학습한 것</strong>의 <strong style={{ color: '#22c55e' }}>갭을 줄이는 과정</strong>이에요!
+            </p>
+            <p style={{ color: '#cbd5e1', fontSize: '0.95rem', margin: 0, lineHeight: '1.7' }}>
+              그냥 "3D 캐릭터가 뛰어노는 영상 만들어줘"보다, 
+              <strong style={{ color: '#ffd60a' }}> 이미지를 먼저 만들고</strong> 영상으로 변환하면 
+              훨씬 더 원하는 결과를 얻을 수 있어요!
+            </p>
+          </div>
+          
           <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 24px 0', lineHeight: '1.8' }}>
-            AI 영상 생성을 배우는 두 가지 방법을 준비했어요.<br/>
-            <strong style={{ color: '#ffd60a' }}>편한 방법부터 시작</strong>하고, 
-            나중에 <strong style={{ color: '#ffd60a' }}>고급 방법</strong>도 도전해보세요!
+            <strong style={{ color: '#22c55e' }}>🟢 초보자 버전</strong>부터 시작하고, 
+            익숙해지면 <strong style={{ color: '#ffd60a' }}>🟡 심화 버전</strong>에 도전해보세요!
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
@@ -556,17 +574,17 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 }}>
                   <Sparkles size={24} color="white" />
                 </div>
-                <div>
+            <div>
                   <h4 style={{ color: '#22c55e', margin: 0, fontSize: '1.1rem' }}>쉬운 방법</h4>
                   <p style={{ color: '#e2e8f0', margin: 0, fontSize: '0.85rem' }}>Gemini / Google OPAL</p>
-                </div>
-          </div>
+              </div>
+            </div>
               <ul style={{ color: '#cbd5e1', margin: 0, paddingLeft: '18px', lineHeight: '1.9', fontSize: '0.9rem' }}>
                 <li>프롬프트만 복사해서 붙여넣기</li>
                 <li>코드 필요 없음!</li>
                 <li>바로 영상 생성 가능</li>
               </ul>
-            </div>
+          </div>
 
             {/* 어려운 방법 카드 */}
             <div style={{
@@ -612,8 +630,8 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 <li>자동화 에이전트 기초</li>
               </ul>
             </div>
-          </div>
         </div>
+      </div>
 
         {/* ✅ 방법 1: 쉬운 방법 */}
         <div style={{
@@ -647,7 +665,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
             <p style={{ color: '#e2e8f0', fontSize: '0.95rem', margin: 0, lineHeight: '1.8' }}>
               코드를 전혀 몰라도 괜찮아요! 아래 프롬프트들을 복사해서 사용해보세요.
             </p>
-          </div>
+        </div>
 
           {/* 예시 프롬프트들 */}
           <div style={{ marginBottom: '20px' }}>
@@ -774,7 +792,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 }}
               >
                 {copiedPrompt === 'cinematic' ? '✓ 복사됨!' : <><Copy size={14} /> 복사</>}
-              </button>
+          </button>
               <pre style={{
                 color: '#e2e8f0',
                 fontSize: '0.85rem',
@@ -786,7 +804,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
               }}>
                 {CINEMATIC_JSON_PROMPT}
               </pre>
-            </div>
+        </div>
 
             <div style={{
               background: 'rgba(251, 146, 60, 0.1)',
@@ -814,8 +832,8 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                     {item}
                   </span>
                 ))}
-              </div>
-            </div>
+      </div>
+    </div>
           </div>
 
           {/* 쉬운 방법 CTA 버튼들 */}
@@ -913,45 +931,180 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
           }}>
             <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px 0', lineHeight: '1.8' }}>
               코드로 직접 실습하면서 <strong style={{ color: '#ffd60a' }}>원리를 깊이 이해</strong>할 수 있어요!
-              이 방법은 나중에 <strong style={{ color: '#ffd60a' }}>자동화 에이전트</strong>를 만들 때 큰 도움이 됩니다.
+              JSON보다 더 확실한 <strong style={{ color: '#ffd60a' }}>코드 형태</strong>로 AI에게 명령하는 방법을 배웁니다.
             </p>
-            <p style={{ color: '#e2e8f0', fontSize: '0.95rem', margin: 0, lineHeight: '1.8' }}>
-              Day 6에서 배운 Colab 사용법을 바탕으로 이번에는 영상 생성을 해볼 거예요!
+            <div style={{ 
+              background: 'rgba(34, 197, 94, 0.1)', 
+              padding: '16px', 
+              borderRadius: '10px',
+              marginTop: '12px',
+              border: '1px solid rgba(34, 197, 94, 0.2)'
+            }}>
+              <p style={{ color: '#22c55e', fontWeight: '600', margin: '0 0 8px 0', fontSize: '0.95rem' }}>
+                💡 Colab 사용 팁
+              </p>
+              <ul style={{ color: '#e2e8f0', margin: 0, paddingLeft: '18px', fontSize: '0.9rem', lineHeight: '1.8' }}>
+                <li><strong>파일 → 드라이브에 사본 저장</strong>하면 내 구글 드라이브에 저장돼요!</li>
+                <li><strong>런타임 → 모두 실행</strong>하면 전체 코드를 한번에 실행할 수 있어요</li>
+                <li>모르는 코드는 <strong>AI 버튼 → 코드 설명</strong>으로 배울 수 있어요</li>
+              </ul>
+            </div>
+          </div>
+          
+          {/* 💰 API 비용 안내 */}
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(234, 88, 12, 0.05))',
+            borderRadius: '16px',
+            padding: '24px',
+            marginBottom: '20px',
+            border: '2px solid rgba(239, 68, 68, 0.3)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+              <span style={{ fontSize: '1.5rem' }}>💰</span>
+              <div>
+                <h4 style={{ color: '#f87171', margin: 0, fontSize: '1.1rem' }}>API 비용 알고 가기!</h4>
+                <p style={{ color: '#e2e8f0', margin: 0, fontSize: '0.8rem' }}>막무가내로 만들면 빈털터리 됩니다</p>
+              </div>
+            </div>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px', marginBottom: '16px' }}>
+              <div style={{ background: 'rgba(0,0,0,0.3)', padding: '14px', borderRadius: '10px', textAlign: 'center' }}>
+                <p style={{ color: '#fbbf24', fontSize: '0.75rem', margin: '0 0 4px 0' }}>Veo 3.1 Fast</p>
+                <p style={{ color: 'white', fontSize: '1.1rem', fontWeight: '700', margin: 0 }}>$0.15/초</p>
+                <p style={{ color: '#94a3b8', fontSize: '0.75rem', margin: '4px 0 0 0' }}>8초 = 약 1,680원</p>
+              </div>
+              <div style={{ background: 'rgba(0,0,0,0.3)', padding: '14px', borderRadius: '10px', textAlign: 'center' }}>
+                <p style={{ color: '#fbbf24', fontSize: '0.75rem', margin: '0 0 4px 0' }}>Veo 3.1 Standard</p>
+                <p style={{ color: 'white', fontSize: '1.1rem', fontWeight: '700', margin: 0 }}>$0.40/초</p>
+                <p style={{ color: '#94a3b8', fontSize: '0.75rem', margin: '4px 0 0 0' }}>8초 = 약 4,480원</p>
+              </div>
+              <div style={{ background: 'rgba(0,0,0,0.3)', padding: '14px', borderRadius: '10px', textAlign: 'center' }}>
+                <p style={{ color: '#22c55e', fontSize: '0.75rem', margin: '0 0 4px 0' }}>10개 영상</p>
+                <p style={{ color: 'white', fontSize: '1.1rem', fontWeight: '700', margin: 0 }}>~$32</p>
+                <p style={{ color: '#94a3b8', fontSize: '0.75rem', margin: '4px 0 0 0' }}>약 44,800원</p>
+              </div>
+            </div>
+            
+            <button
+              onClick={() => navigate('/gemini-api-calculator')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                width: '100%',
+                padding: '12px 20px',
+                background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '10px',
+                fontSize: '0.95rem',
+                fontWeight: '600',
+                cursor: 'pointer'
+              }}
+            >
+              🧮 API 가격 계산기로 미리 계산하기
+            </button>
+            
+            <p style={{ color: '#cbd5e1', fontSize: '0.85rem', margin: '12px 0 0 0', lineHeight: '1.6' }}>
+              💡 <strong>구글 클라우드 $300 무료 크레딧</strong>으로 연습하세요! 
+              나중에 스타트업이 되면 더 많은 크레딧을 신청할 수 있어요.
             </p>
           </div>
 
-          {/* Colab에서 배우는 것들 */}
+          {/* Colab에서 배우는 것들 - 상세 */}
           <div style={{
             background: 'rgba(255, 214, 10, 0.08)',
-            padding: '20px',
+            padding: '24px',
             borderRadius: '12px',
             marginBottom: '20px'
           }}>
-            <h4 style={{ color: '#ffd60a', marginBottom: '12px', fontSize: '1rem' }}>📚 Colab 노트북에서 배우는 것:</h4>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px' }}>
-              {[
-                '텍스트 → 영상 생성',
-                '이미지 → 영상 변환',
-                '시작/끝 장면 지정',
-                '영상 길이 늘리기',
-                '세로/가로 비율 조정',
-                '소리 자동 생성'
-              ].map((item, idx) => (
-                <div key={idx} style={{
-                  background: 'rgba(0,0,0,0.2)',
-                  padding: '12px',
-                  borderRadius: '8px',
-                  color: '#e2e8f0',
-                  fontSize: '0.9rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
-                }}>
-                  <span style={{ color: '#ffd60a' }}>✓</span>
-                  {item}
+            <h4 style={{ color: '#ffd60a', marginBottom: '16px', fontSize: '1.1rem' }}>📚 Colab 심화 과정에서 배우는 것:</h4>
+            
+            {/* 핵심 개념들 */}
+            <div style={{ display: 'grid', gap: '16px' }}>
+              {/* 프롬프트 & Negative 프롬프트 */}
+              <div style={{ background: 'rgba(0,0,0,0.2)', padding: '16px', borderRadius: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                  <span style={{ fontSize: '1.2rem' }}>✏️</span>
+                  <h5 style={{ color: '#ffd60a', margin: 0, fontSize: '1rem' }}>프롬프트 & Negative 프롬프트</h5>
+                </div>
+                <p style={{ color: '#e2e8f0', fontSize: '0.9rem', margin: 0, lineHeight: '1.7' }}>
+                  <strong>프롬프트</strong>: 만들고 싶은 영상 설명 (예: "해바라기 밭에서 뛰어노는 강아지")<br/>
+                  <strong style={{ color: '#f87171' }}>Negative 프롬프트</strong>: 절대 생성하지 않을 것 (예: "흐릿한, 저품질, 글자")
+                </p>
               </div>
-              ))}
+              
+              {/* 설정 옵션들 */}
+              <div style={{ background: 'rgba(0,0,0,0.2)', padding: '16px', borderRadius: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                  <span style={{ fontSize: '1.2rem' }}>⚙️</span>
+                  <h5 style={{ color: '#ffd60a', margin: 0, fontSize: '1rem' }}>설정 옵션</h5>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '8px' }}>
+                  <span style={{ color: '#e2e8f0', fontSize: '0.85rem', background: 'rgba(255,214,10,0.1)', padding: '8px', borderRadius: '6px' }}>
+                    📐 aspect_ratio: 16:9 / 9:16
+                  </span>
+                  <span style={{ color: '#e2e8f0', fontSize: '0.85rem', background: 'rgba(255,214,10,0.1)', padding: '8px', borderRadius: '6px' }}>
+                    🎥 resolution: 720p / 1080p
+                  </span>
+                </div>
+              </div>
+
+              {/* 이미지 → 영상 */}
+              <div style={{ background: 'rgba(0,0,0,0.2)', padding: '16px', borderRadius: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                  <span style={{ fontSize: '1.2rem' }}>🖼️</span>
+                  <h5 style={{ color: '#ffd60a', margin: 0, fontSize: '1rem' }}>이미지 → 영상 변환</h5>
+                </div>
+                <p style={{ color: '#e2e8f0', fontSize: '0.9rem', margin: 0, lineHeight: '1.7' }}>
+                  내가 원하는 캐릭터/장면의 <strong style={{ color: '#22c55e' }}>이미지를 먼저 생성</strong>하고,
+                  그걸 영상으로 변환하면 <strong style={{ color: '#22c55e' }}>훨씬 더 원하는 결과</strong>를 얻을 수 있어요!
+                </p>
+              </div>
+              
+              {/* 시작/끝 프레임 */}
+              <div style={{ background: 'rgba(0,0,0,0.2)', padding: '16px', borderRadius: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                  <span style={{ fontSize: '1.2rem' }}>🎬</span>
+                  <h5 style={{ color: '#ffd60a', margin: 0, fontSize: '1rem' }}>시작/끝 프레임 지정</h5>
+                </div>
+                <p style={{ color: '#e2e8f0', fontSize: '0.9rem', margin: 0, lineHeight: '1.7' }}>
+                  <strong>첫 장면</strong> 이미지와 <strong>끝 장면</strong> 이미지를 넣으면,
+                  AI가 두 장면을 <strong style={{ color: '#ffd60a' }}>자연스럽게 연결</strong>하는 영상을 만들어줘요!
+                </p>
+              </div>
+              
+              {/* 영상 길이 늘리기 */}
+              <div style={{ background: 'rgba(0,0,0,0.2)', padding: '16px', borderRadius: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                  <span style={{ fontSize: '1.2rem' }}>⏱️</span>
+                  <h5 style={{ color: '#ffd60a', margin: 0, fontSize: '1rem' }}>영상 길이 늘리기</h5>
+                </div>
+                <p style={{ color: '#e2e8f0', fontSize: '0.9rem', margin: 0, lineHeight: '1.7' }}>
+                  <strong>8초 → 16초 → 24초</strong>... 계속 연장할 수 있어요!
+                  재생 버튼을 누를 때마다 영상이 자연스럽게 이어져요.
+                </p>
+              </div>
             </div>
+          </div>
+          
+          {/* 티어 시스템 안내 */}
+          <div style={{
+            background: 'rgba(99, 102, 241, 0.1)',
+            padding: '16px',
+            borderRadius: '12px',
+            marginBottom: '20px',
+            border: '1px solid rgba(99, 102, 241, 0.3)'
+          }}>
+            <p style={{ color: '#a78bfa', fontWeight: '600', margin: '0 0 8px 0', fontSize: '0.95rem' }}>
+              📊 할당량 (Quota) 시스템
+            </p>
+            <p style={{ color: '#e2e8f0', fontSize: '0.9rem', margin: 0, lineHeight: '1.6' }}>
+              하루에 만들 수 있는 영상 수가 정해져 있어요 (약 10~20개). 
+              많이 사용할수록 <strong style={{ color: '#a78bfa' }}>티어 1 → 티어 2 → 티어 3</strong>로 
+              할당량이 늘어납니다!
+            </p>
           </div>
 
           {/* Colab CTA */}
@@ -1162,9 +1315,11 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
             marginBottom: '20px'
           }}>
             <ol style={{ color: '#cbd5e1', margin: 0, paddingLeft: '18px', lineHeight: '2.2', fontSize: '0.95rem' }}>
-              <li><strong style={{ color: '#22c55e' }}>[쉬운 방법]</strong> 프롬프트 페이지에서 마음에 드는 프롬프트 <strong>복사</strong>하기</li>
-              <li><strong style={{ color: '#22c55e' }}>[쉬운 방법]</strong> Gemini나 Google OPAL에서 <strong>영상 생성</strong>해보기</li>
-              <li><strong style={{ color: '#ffd60a' }}>[어려운 방법]</strong> Colab 노트북 열어서 <strong>코드 실행</strong>해보기</li>
+              <li><strong style={{ color: '#22c55e' }}>[초보]</strong> Gemini/OPAL에서 프롬프트로 <strong>첫 영상 생성</strong>하기</li>
+              <li><strong style={{ color: '#22c55e' }}>[초보]</strong> 세로 영상(9:16)으로 <strong>숏츠용 영상</strong> 만들어보기</li>
+              <li><strong style={{ color: '#ffd60a' }}>[심화]</strong> Colab 노트북 → 드라이브에 사본 저장 → <strong>코드 실행</strong></li>
+              <li><strong style={{ color: '#ffd60a' }}>[심화]</strong> 이미지 먼저 생성 → 영상으로 변환해보기</li>
+              <li><strong style={{ color: '#ffd60a' }}>[심화]</strong> API 가격 계산기로 <strong>비용 계산</strong>해보기</li>
               <li>만든 영상이나 경험을 아래 토론방에 <strong>공유</strong>!</li>
             </ol>
       </div>
