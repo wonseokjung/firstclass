@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Copy, CheckCircle, ChevronDown, ChevronUp, Video, Sparkles, Image, Camera, Music, MessageCircle } from 'lucide-react';
+import { Copy, CheckCircle, ChevronDown, ChevronUp, Video, Image } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../../common/NavigationBar';
 
@@ -124,8 +124,6 @@ const promptTips = [
 ];
 
 const BRAND_NAVY = '#0b1220';
-const BRAND_BLUE = '#112a70';
-const BRAND_GOLD = '#facc15';
 const CARD_BG = '#f7f8fb';
 
 const AIVideoGenerationPromptsPage: React.FC<AIVideoGenerationPromptsPageProps> = ({ onBack }) => {
