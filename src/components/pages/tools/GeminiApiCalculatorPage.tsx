@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Calculator, Sparkles, Image, Video, Volume2, Zap, DollarSign, Info, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowLeft, Calculator, Sparkles, Image, Video, Volume2, Zap, Info, ChevronDown, ChevronUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface GeminiApiCalculatorPageProps {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, PlayCircle, BookOpen, ExternalLink, Lightbulb, Target, MessageCircle, Heart, Send, User, Sparkles, Video, Code, Zap, Copy, Film, Laptop } from 'lucide-react';
+import { ArrowLeft, CheckCircle, PlayCircle, ExternalLink, Lightbulb, Target, MessageCircle, Heart, Send, User, Sparkles, Video, Code, Zap, Copy, Film } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AzureTableService from '../../../../services/azureTableService';
 
