@@ -472,107 +472,260 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
         <div style={{
           marginTop: '20px',
           padding: 'clamp(20px, 4vw, 30px)',
-          background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
-          borderRadius: '16px',
-          border: '2px solid rgba(240, 180, 41, 0.4)',
-          boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)'
+          background: 'linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 100%)',
+          borderRadius: '20px',
+          border: '1px solid rgba(255,255,255,0.1)',
+          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.3)',
+          position: 'relative' as const,
+          overflow: 'hidden'
         }}>
-          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+          {/* 배경 글로우 효과 */}
+          <div style={{
+            position: 'absolute' as const,
+            top: '-50%',
+            left: '-20%',
+            width: '200px',
+            height: '200px',
+            background: 'radial-gradient(circle, rgba(96,165,250,0.15) 0%, transparent 70%)',
+            pointerEvents: 'none' as const
+          }} />
+          <div style={{
+            position: 'absolute' as const,
+            bottom: '-30%',
+            right: '-10%',
+            width: '180px',
+            height: '180px',
+            background: 'radial-gradient(circle, rgba(250,204,21,0.12) 0%, transparent 70%)',
+            pointerEvents: 'none' as const
+          }} />
+
+          <div style={{ textAlign: 'center', marginBottom: '25px', position: 'relative' as const }}>
             <div style={{
-              display: 'inline-block',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
               background: 'linear-gradient(135deg, #ffd60a, #f59e0b)',
-              padding: '8px 20px',
-              borderRadius: '20px',
-              marginBottom: '12px'
+              padding: '10px 24px',
+              borderRadius: '25px',
+              marginBottom: '15px',
+              boxShadow: '0 4px 15px rgba(255, 214, 10, 0.3)'
             }}>
-              <span style={{ color: '#1a1a2e', fontWeight: '800', fontSize: '0.9rem' }}>
-                🎬 2026년 1월 프로젝트
+              <span style={{ fontSize: '1.3rem' }}>🎬</span>
+              <span style={{ color: '#1a1a2e', fontWeight: '800', fontSize: '1rem' }}>
+                2026년 1월 프로젝트
               </span>
             </div>
             <h3 style={{
               color: COLORS.white,
-              fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
+              fontSize: 'clamp(1.5rem, 4vw, 2rem)',
               fontWeight: '800',
-              margin: '0 0 8px 0'
+              margin: '0 0 10px 0',
+              background: 'linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
             }}>
-              숏츠 자동화 마스터
+              캐릭터 기반 콘텐츠 만들기
             </h3>
-            <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem', margin: 0 }}>
-              기초 강의 수강 + 매주 라이브에서 함께 만들어갑니다
+            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.95rem', margin: 0 }}>
+              나만의 캐릭터로 유튜브 콘텐츠를 만들어보세요!
             </p>
           </div>
 
-          {/* Step별 프로젝트 */}
+          {/* Step별 프로젝트 카드 */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '15px',
-            marginBottom: '15px'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '16px',
+            marginBottom: '20px'
           }}>
             {[
-              { step: 1, title: 'AI 건물주 되기', project: '캐릭터 이미지 생성', day: '화', color: '#1e3a5f', icon: '🏗️' },
-              { step: 2, title: 'AI 에이전트 비기너', project: '숏츠 자동화 에이전트 워크플로우', day: '수', color: '#f0b429', icon: '🤖' },
-              { step: 3, title: '바이브코딩', project: '숏츠 자동화 에이전트 개발', day: '목', color: '#8b5cf6', icon: '💻' }
+              { 
+                step: 1, 
+                title: 'AI 건물주', 
+                focus: '콘텐츠 생성',
+                project: '캐릭터 이미지 생성', 
+                day: '화', 
+                time: '밤 8시',
+                color: '#3b82f6', 
+                bgColor: 'rgba(59, 130, 246, 0.1)',
+                icon: '🏗️',
+                weeks: ['1주 실제 인물', '2주 3D 만화', '3주 동물', '4주 귀엽고 심플']
+              },
+              { 
+                step: 2, 
+                title: 'AI 에이전트', 
+                focus: '워크플로우 공부',
+                project: '캐릭터 영상 자동화', 
+                day: '수', 
+                time: '밤 8시',
+                color: '#fbbf24', 
+                bgColor: 'rgba(251, 191, 36, 0.1)',
+                icon: '🤖',
+                weeks: ['1주 인물 영상', '2주 만화 영상', '3주 동물 영상', '4주 심플 영상']
+              },
+              { 
+                step: 3, 
+                title: '바이브코딩', 
+                focus: '에이전트 개발',
+                project: '자동화 툴 직접 개발', 
+                day: '목', 
+                time: '밤 8시',
+                color: '#a855f7', 
+                bgColor: 'rgba(168, 85, 247, 0.1)',
+                icon: '💻',
+                weeks: ['1주 설계', '2주 개발', '3주 테스트', '4주 배포']
+              }
             ].map((item) => (
-              <div key={item.step} style={{
-                background: 'rgba(255,255,255,0.05)',
-                borderRadius: '12px',
-                padding: '15px',
-                border: `1px solid ${item.color}50`
-              }}>
+              <div 
+                key={item.step} 
+                onClick={() => navigate(`/live/step${item.step}`)}
+                style={{
+                  background: item.bgColor,
+                  borderRadius: '16px',
+                  padding: '20px',
+                  border: `1px solid ${item.color}30`,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  position: 'relative' as const,
+                  overflow: 'hidden'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = `0 10px 30px ${item.color}30`;
+                  e.currentTarget.style.borderColor = `${item.color}60`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                  e.currentTarget.style.borderColor = `${item.color}30`;
+                }}
+              >
+                {/* 헤더 */}
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  marginBottom: '10px'
+                  justifyContent: 'space-between',
+                  marginBottom: '12px'
                 }}>
-                  <span style={{ fontSize: '1.5rem' }}>{item.icon}</span>
-                  <div>
-                    <div style={{
-                      color: item.color === '#1e3a5f' ? '#60a5fa' : item.color,
-                      fontSize: '0.75rem',
-                      fontWeight: '700'
-                    }}>
-                      Step {item.step} · {item.day}요일
-                    </div>
-                    <div style={{ color: COLORS.white, fontSize: '0.85rem', fontWeight: '600' }}>
-                      {item.title}
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px'
+                  }}>
+                    <span style={{ fontSize: '1.8rem' }}>{item.icon}</span>
+                    <div>
+                      <div style={{
+                        background: item.color,
+                        color: item.step === 2 ? '#1a1a2e' : '#fff',
+                        padding: '3px 10px',
+                        borderRadius: '12px',
+                        fontSize: '0.7rem',
+                        fontWeight: '700',
+                        marginBottom: '4px',
+                        display: 'inline-block'
+                      }}>
+                        {item.title}
+                      </div>
+                      <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem' }}>
+                        {item.focus}
+                      </div>
                     </div>
                   </div>
+                  <div style={{ 
+                    color: 'rgba(255,255,255,0.7)', 
+                    fontSize: '0.75rem',
+                    textAlign: 'right' as const
+                  }}>
+                    매주 {item.day} {item.time}
+                  </div>
                 </div>
+
+                {/* 프로젝트명 */}
                 <div style={{
-                  background: `${item.color}30`,
-                  padding: '10px',
-                  borderRadius: '8px',
                   color: COLORS.white,
-                  fontSize: '0.9rem',
-                  fontWeight: '600',
-                  textAlign: 'center'
+                  fontSize: '1.1rem',
+                  fontWeight: '700',
+                  marginBottom: '12px'
                 }}>
                   📌 {item.project}
+                </div>
+
+                {/* 주차별 내용 */}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gap: '6px'
+                }}>
+                  {item.weeks.map((week, idx) => (
+                    <div key={idx} style={{
+                      background: 'rgba(255,255,255,0.05)',
+                      padding: '6px 10px',
+                      borderRadius: '8px',
+                      color: 'rgba(255,255,255,0.8)',
+                      fontSize: '0.75rem'
+                    }}>
+                      <span style={{ color: item.color, fontWeight: '700' }}>{week.split(' ')[0]}</span>{' '}
+                      {week.split(' ').slice(1).join(' ')}
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
           </div>
 
-          {/* 설명 */}
+          {/* 하단 정보 */}
           <div style={{
-            background: 'rgba(255,215,0,0.1)',
-            borderRadius: '10px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '20px',
+            flexWrap: 'wrap' as const,
             padding: '15px',
-            border: '1px solid rgba(255,215,0,0.2)'
+            background: 'rgba(255,255,255,0.03)',
+            borderRadius: '12px',
+            border: '1px solid rgba(255,255,255,0.05)'
           }}>
-            <p style={{
-              color: 'rgba(255,255,255,0.9)',
-              fontSize: '0.85rem',
-              lineHeight: '1.7',
-              margin: 0,
-              textAlign: 'center'
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '6px',
+              color: 'rgba(255,255,255,0.7)',
+              fontSize: '0.85rem'
             }}>
-              💡 <strong style={{ color: COLORS.goldLight }}>기초 강의</strong>로 기본기를 쌓고,{' '}
-              <strong style={{ color: COLORS.goldLight }}>매주 라이브</strong>에서 실전 프로젝트를 함께 완성합니다.<br />
-              프로젝트는 매달 새롭게 바뀝니다!
-            </p>
+              <span>📺</span>
+              <span>다시보기 <strong style={{ color: COLORS.goldLight }}>1달간</strong> 제공</span>
+            </div>
+            <div style={{ 
+              width: '1px', 
+              height: '16px', 
+              background: 'rgba(255,255,255,0.2)' 
+            }} />
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '6px',
+              color: 'rgba(255,255,255,0.7)',
+              fontSize: '0.85rem'
+            }}>
+              <span>💰</span>
+              <span>3개월 수강권 <strong style={{ color: COLORS.goldLight }}>₩95,000</strong></span>
+            </div>
+            <div style={{ 
+              width: '1px', 
+              height: '16px', 
+              background: 'rgba(255,255,255,0.2)' 
+            }} />
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '6px',
+              color: 'rgba(255,255,255,0.7)',
+              fontSize: '0.85rem'
+            }}>
+              <span>📚</span>
+              <span>기본 강의 <strong style={{ color: COLORS.goldLight }}>10개</strong> 포함</span>
+            </div>
           </div>
         </div>
 

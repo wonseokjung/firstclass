@@ -115,7 +115,7 @@ const AgentDispatchPage: React.FC<AgentDispatchPageProps> = ({ onBack }) => {
           }}>
             <Building2 size={28} color="#e5c100" />
             <h3 style={{ color: '#e5c100', fontSize: '1.3rem', fontWeight: '700', margin: 0 }}>
-              콘텐츠 1인 기업가에서 CEO로
+              칼퇴로 시작해서 AI 1인 기업 운영까지
             </h3>
           </div>
           <p style={{ color: '#e0e0e0', fontSize: '1.1rem', lineHeight: '1.7' }}>

@@ -1781,6 +1781,66 @@ export class AzureTableService {
     }
   }
 
+  // 🔄 사용자의 수강 등록일 수정 (관리자용)
+  static async updateEnrollmentDates(
+    email: string, 
+    courseId: string, 
+    newEnrolledAt: string,
+    newAccessExpiresAt: string
+  ): Promise<boolean> {
+    try {
+      devLog(`🔄 수강 등록일 수정: ${email} → ${courseId}`);
+      devLog(`📅 새 등록일: ${newEnrolledAt}, 새 만료일: ${newAccessExpiresAt}`);
+
+      const user = await this.getUserByEmail(email);
+      if (!user) {
+        devError('❌ 사용자를 찾을 수 없음:', email);
+        return false;
+      }
+
+      // enrolledCourses 파싱
+      let enrolledData = user.enrolledCourses ? JSON.parse(user.enrolledCourses) : { enrollments: [], payments: [] };
+
+      // 배열 형태인 경우 객체로 변환
+      if (Array.isArray(enrolledData)) {
+        enrolledData = { enrollments: enrolledData, payments: [] };
+      }
+
+      const enrollments = enrolledData.enrollments || [];
+      const payments = enrolledData.payments || [];
+
+      // 해당 강의 찾기
+      const courseIndex = enrollments.findIndex((c: any) => c.courseId === courseId);
+      if (courseIndex === -1) {
+        devError('❌ 해당 강의를 찾을 수 없음:', courseId);
+        return false;
+      }
+
+      // 등록일 및 만료일 수정
+      enrollments[courseIndex] = {
+        ...enrollments[courseIndex],
+        enrolledAt: newEnrolledAt,
+        accessExpiresAt: newAccessExpiresAt,
+        updatedAt: new Date().toISOString()
+      };
+
+      // 업데이트된 데이터로 저장
+      const updatedEnrolledCourses = JSON.stringify({
+        enrollments,
+        payments
+      });
+
+      // Azure에 업데이트
+      await this.updateUserField(email, 'enrolledCourses', updatedEnrolledCourses);
+      devLog(`✅ 수강 등록일 수정 완료: ${email} → ${courseId}`);
+
+      return true;
+    } catch (error: any) {
+      devError('❌ 수강 등록일 수정 실패:', error.message);
+      throw new Error(`수강 등록일 수정 실패: ${error.message}`);
+    }
+  }
+
   // 기존 사용자에게 추천 코드 생성 및 업데이트
   static async generateReferralCodeForUser(email: string): Promise<string> {
     try {

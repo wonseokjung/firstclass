@@ -273,9 +273,6 @@ const Day3Page: React.FC<Day3PageProps> = ({ onBack, onNext }) => {
                 맨해튼에서 배우는 콘텐츠 타겟팅의 비밀
               </p>
               <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
-                <span style={{ color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem' }}>
-                  <Clock size={16} /> 약 45분
-                </span>
                 {isDayCompleted && (
                   <span style={{ color: '#22c55e', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem' }}>
                     <CheckCircle size={16} /> 완료됨

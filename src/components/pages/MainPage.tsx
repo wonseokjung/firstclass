@@ -538,7 +538,7 @@ AI City Builders 사이트 정보:
                 🏙️ AI City 로드맵
               </span>
               <div style={{ fontSize: '0.8em', marginTop: '8px', fontWeight: '600', color: 'rgba(255,255,255,0.8)' }}>
-                Step 1부터 차근차근 따라오세요. 당신도 AI 1인 기업가가 됩니다!
+                필요한 강의만 골라서 수강 가능! 각 강의 ₩95,000 (3개월)
               </div>
             </h2>
             <div className="section-nav">

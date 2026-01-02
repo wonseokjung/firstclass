@@ -447,6 +447,15 @@ const AdminEnrollmentFixPage: React.FC = () => {
   const [searchEmail, setSearchEmail] = useState('');
   const [processing, setProcessing] = useState(false);
   const [editingEmail, setEditingEmail] = useState<{ oldEmail: string; newEmail: string } | null>(null);
+  
+  // 📅 등록일 변경 상태
+  const [editingEnrollmentDate, setEditingEnrollmentDate] = useState<{
+    email: string;
+    courseId: string;
+    courseTitle: string;
+    enrolledAt: string;
+    accessExpiresAt: string;
+  } | null>(null);
 
   useEffect(() => {
     const checkAdmin = async () => {
@@ -470,6 +479,52 @@ const AdminEnrollmentFixPage: React.FC = () => {
 
     checkAdmin();
   }, [navigate]);
+
+  // 📅 등록일 변경 핸들러
+  const handleUpdateEnrollmentDate = async () => {
+    if (!editingEnrollmentDate) return;
+
+    const { email, courseId, courseTitle, enrolledAt, accessExpiresAt } = editingEnrollmentDate;
+
+    if (!enrolledAt || !accessExpiresAt) {
+      alert('등록일과 만료일을 모두 입력해주세요.');
+      return;
+    }
+
+    if (!window.confirm(
+      `수강 등록일을 변경하시겠습니까?\n\n` +
+      `📧 이메일: ${email}\n` +
+      `📚 강의: ${courseTitle}\n` +
+      `📅 새 등록일: ${enrolledAt}\n` +
+      `⏰ 새 만료일: ${accessExpiresAt}`
+    )) {
+      return;
+    }
+
+    setProcessing(true);
+    try {
+      const success = await AzureTableService.updateEnrollmentDates(
+        email,
+        courseId,
+        new Date(enrolledAt).toISOString(),
+        new Date(accessExpiresAt).toISOString()
+      );
+
+      if (success) {
+        alert('✅ 등록일 변경 완료!');
+        setEditingEnrollmentDate(null);
+        // 검색 결과 새로고침
+        await handleSearch();
+      } else {
+        alert('❌ 등록일 변경 실패');
+      }
+    } catch (error: any) {
+      console.error('등록일 변경 오류:', error);
+      alert(`❌ 오류: ${error.message}`);
+    } finally {
+      setProcessing(false);
+    }
+  };
 
   // 🔍 결제자 검색 함수 (Azure만 검색, 토스는 스크립트로)
   const handleSearch = async () => {
@@ -1274,21 +1329,45 @@ const AdminEnrollmentFixPage: React.FC = () => {
                               flexWrap: 'wrap',
                               gap: '8px'
                             }}>
-                              <div>
+                              <div style={{ flex: 1 }}>
                                 <div style={{ fontWeight: '600' }}>{e.title || e.courseId}</div>
-                                <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>
-                                  📅 시작: {e.enrolledAt?.split('T')[0] || '-'}
+                                <div style={{ fontSize: '0.8rem', opacity: 0.7, display: 'flex', gap: '15px', flexWrap: 'wrap', marginTop: '4px' }}>
+                                  <span>📅 시작: {e.enrolledAt?.split('T')[0] || '-'}</span>
+                                  <span>⏰ 만료: {e.accessExpiresAt?.split('T')[0] || '-'}</span>
                                 </div>
                               </div>
-                              <span style={{
-                                background: e.status === 'active' ? '#22c55e' : '#94a3b8',
-                                padding: '4px 10px',
-                                borderRadius: '6px',
-                                fontSize: '0.8rem',
-                                fontWeight: '600'
-                              }}>
-                                {e.status === 'active' ? '수강 중' : e.status}
-                              </span>
+                              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                <button
+                                  onClick={() => setEditingEnrollmentDate({
+                                    email: searchResult.user.email,
+                                    courseId: e.courseId,
+                                    courseTitle: e.title || e.courseId,
+                                    enrolledAt: e.enrolledAt?.split('T')[0] || '',
+                                    accessExpiresAt: e.accessExpiresAt?.split('T')[0] || ''
+                                  })}
+                                  style={{
+                                    background: '#ffd60a',
+                                    color: '#1e3a8a',
+                                    border: 'none',
+                                    padding: '6px 12px',
+                                    borderRadius: '6px',
+                                    fontSize: '0.75rem',
+                                    fontWeight: '700',
+                                    cursor: 'pointer'
+                                  }}
+                                >
+                                  📅 날짜 수정
+                                </button>
+                                <span style={{
+                                  background: e.status === 'active' ? '#22c55e' : '#94a3b8',
+                                  padding: '4px 10px',
+                                  borderRadius: '6px',
+                                  fontSize: '0.8rem',
+                                  fontWeight: '600'
+                                }}>
+                                  {e.status === 'active' ? '수강 중' : e.status}
+                                </span>
+                              </div>
                             </div>
                           ))}
                         </div>
@@ -2301,6 +2380,224 @@ const AdminEnrollmentFixPage: React.FC = () => {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* 📅 등록일 변경 모달 */}
+      {editingEnrollmentDate && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0,0,0,0.8)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          padding: '20px'
+        }}>
+          <div style={{
+            background: 'linear-gradient(135deg, #1e3a8a, #3b82f6)',
+            borderRadius: '20px',
+            padding: '30px',
+            maxWidth: '500px',
+            width: '100%',
+            color: 'white'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: '800', margin: 0 }}>
+                📅 수강 등록일 변경
+              </h2>
+              <button
+                onClick={() => setEditingEnrollmentDate(null)}
+                style={{
+                  background: 'rgba(255,255,255,0.2)',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '36px',
+                  height: '36px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <X size={20} color="white" />
+              </button>
+            </div>
+
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{ background: 'rgba(255,255,255,0.1)', padding: '15px', borderRadius: '10px', marginBottom: '15px' }}>
+                <div style={{ fontSize: '0.85rem', opacity: 0.7, marginBottom: '5px' }}>📧 이메일</div>
+                <div style={{ fontSize: '1rem', fontWeight: '600' }}>{editingEnrollmentDate.email}</div>
+              </div>
+              <div style={{ background: 'rgba(255,255,255,0.1)', padding: '15px', borderRadius: '10px' }}>
+                <div style={{ fontSize: '0.85rem', opacity: 0.7, marginBottom: '5px' }}>📚 강의</div>
+                <div style={{ fontSize: '1rem', fontWeight: '600' }}>{editingEnrollmentDate.courseTitle}</div>
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gap: '15px', marginBottom: '20px' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: '600', marginBottom: '8px' }}>
+                  📅 등록일 (시작일)
+                </label>
+                <input
+                  type="date"
+                  value={editingEnrollmentDate.enrolledAt}
+                  onChange={(e) => setEditingEnrollmentDate({
+                    ...editingEnrollmentDate,
+                    enrolledAt: e.target.value
+                  })}
+                  style={{
+                    width: '100%',
+                    padding: '12px 15px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    fontSize: '1rem'
+                  }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: '600', marginBottom: '8px' }}>
+                  ⏰ 만료일
+                </label>
+                <input
+                  type="date"
+                  value={editingEnrollmentDate.accessExpiresAt}
+                  onChange={(e) => setEditingEnrollmentDate({
+                    ...editingEnrollmentDate,
+                    accessExpiresAt: e.target.value
+                  })}
+                  style={{
+                    width: '100%',
+                    padding: '12px 15px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    fontSize: '1rem'
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* 빠른 설정 버튼 */}
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{ fontSize: '0.85rem', opacity: 0.7, marginBottom: '10px' }}>⚡ 빠른 설정</div>
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => {
+                    const today = new Date();
+                    const expires = new Date(today);
+                    expires.setMonth(expires.getMonth() + 3);
+                    setEditingEnrollmentDate({
+                      ...editingEnrollmentDate,
+                      enrolledAt: today.toISOString().split('T')[0],
+                      accessExpiresAt: expires.toISOString().split('T')[0]
+                    });
+                  }}
+                  style={{
+                    padding: '8px 16px',
+                    borderRadius: '8px',
+                    border: 'none',
+                    background: 'rgba(255,255,255,0.2)',
+                    color: 'white',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer'
+                  }}
+                >
+                  오늘 + 3개월
+                </button>
+                <button
+                  onClick={() => {
+                    const today = new Date();
+                    const expires = new Date(today);
+                    expires.setFullYear(expires.getFullYear() + 1);
+                    setEditingEnrollmentDate({
+                      ...editingEnrollmentDate,
+                      enrolledAt: today.toISOString().split('T')[0],
+                      accessExpiresAt: expires.toISOString().split('T')[0]
+                    });
+                  }}
+                  style={{
+                    padding: '8px 16px',
+                    borderRadius: '8px',
+                    border: 'none',
+                    background: 'rgba(255,255,255,0.2)',
+                    color: 'white',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer'
+                  }}
+                >
+                  오늘 + 1년
+                </button>
+                <button
+                  onClick={() => {
+                    // 2025-12-31 + 1년
+                    setEditingEnrollmentDate({
+                      ...editingEnrollmentDate,
+                      enrolledAt: '2025-12-31',
+                      accessExpiresAt: '2026-12-31'
+                    });
+                  }}
+                  style={{
+                    padding: '8px 16px',
+                    borderRadius: '8px',
+                    border: 'none',
+                    background: '#ffd60a',
+                    color: '#1e3a8a',
+                    fontSize: '0.85rem',
+                    fontWeight: '700',
+                    cursor: 'pointer'
+                  }}
+                >
+                  얼리버드 (1년)
+                </button>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button
+                onClick={() => setEditingEnrollmentDate(null)}
+                style={{
+                  flex: 1,
+                  padding: '14px',
+                  borderRadius: '10px',
+                  border: '2px solid rgba(255,255,255,0.3)',
+                  background: 'transparent',
+                  color: 'white',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer'
+                }}
+              >
+                취소
+              </button>
+              <button
+                onClick={handleUpdateEnrollmentDate}
+                disabled={processing}
+                style={{
+                  flex: 2,
+                  padding: '14px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: processing ? '#94a3b8' : '#ffd60a',
+                  color: '#1e3a8a',
+                  fontSize: '1rem',
+                  fontWeight: '700',
+                  cursor: processing ? 'not-allowed' : 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px'
+                }}
+              >
+                {processing && <Loader size={18} className="animate-spin" />}
+                {processing ? '저장 중...' : '✅ 저장하기'}
+              </button>
+            </div>
           </div>
         </div>
       )}

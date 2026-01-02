@@ -19,42 +19,54 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
     {
       step: 1,
       title: 'AI 건물주 되기',
-      subtitle: '배우기',
+      subtitle: '콘텐츠 생성',
       icon: <Sparkles size={24} />,
-      description: '다양한 AI 모델 + 비즈니스 마인드',
+      description: 'AI로 콘텐츠 생성하는 방법 배우기',
       price: '₩95,000',
+      priceType: '3개월',
       color: '#3b82f6',
-      path: '/ai-building-course'
+      path: '/ai-building-course',
+      day: '화',
+      project: '캐릭터 이미지 생성'
     },
     {
       step: 2,
       title: 'AI 에이전트 비기너',
-      subtitle: '훈련하기',
+      subtitle: '워크플로우',
       icon: <Bot size={24} />,
-      description: '구글 OPAL로 멀티 AI 시스템 훈련',
+      description: 'AI 워크플로우 공부하기',
       price: '₩95,000',
-      color: '#10b981',
-      path: '/chatgpt-agent-beginner'
+      priceType: '3개월',
+      color: '#fbbf24',
+      path: '/chatgpt-agent-beginner',
+      day: '수',
+      project: '캐릭터 영상 자동화'
     },
     {
       step: 3,
-      title: 'AI 에이전트 파견소',
-      subtitle: '만들기',
+      title: '바이브코딩',
+      subtitle: '에이전트 개발',
       icon: <Zap size={24} />,
-      description: 'AI 수익화 전문 자동화 에이전트',
-      price: 'Coming Soon',
-      color: '#e5c100',
-      path: '#'
+      description: '자동화 에이전트 직접 개발하기',
+      price: '₩95,000',
+      priceType: '3개월',
+      color: '#a855f7',
+      path: '/vibe-coding',
+      day: '목',
+      project: '자동화 툴 직접 개발'
     },
     {
       step: 4,
-      title: '1인 콘텐츠 기업',
-      subtitle: '키우기',
+      title: '칼퇴 치트키',
+      subtitle: '업무 자동화',
       icon: <Building2 size={24} />,
-      description: '바이브코딩 + 사업 확장',
-      price: 'Coming Soon',
-      color: '#8b5cf6',
-      path: '#'
+      description: '칼퇴로 시작해서 AI 1인 기업 운영까지',
+      price: '₩95,000',
+      priceType: '3개월',
+      color: '#e5c100',
+      path: '/solo-business',
+      day: '금',
+      project: '준비 중'
     }
   ];
 
@@ -477,7 +489,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: '20px'
           }}>
             {roadmapSteps.map((step) => (
@@ -485,10 +497,10 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                 key={step.step}
                 onClick={() => step.path !== '#' && navigate(step.path)}
                 style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  border: step.path !== '#' ? `2px solid ${step.color}40` : '1px solid rgba(255,255,255,0.1)',
+                  background: `linear-gradient(135deg, ${step.color}10 0%, ${step.color}05 100%)`,
+                  border: `1px solid ${step.color}30`,
                   borderRadius: '20px',
-                  padding: '28px',
+                  padding: '24px',
                   cursor: step.path !== '#' ? 'pointer' : 'default',
                   transition: 'all 0.3s ease',
                   position: 'relative',
@@ -498,82 +510,122 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                   if (step.path !== '#') {
                     e.currentTarget.style.transform = 'translateY(-5px)';
                     e.currentTarget.style.boxShadow = `0 15px 40px ${step.color}30`;
+                    e.currentTarget.style.borderColor = `${step.color}60`;
                   }
                 }}
                 onMouseOut={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = 'none';
+                  e.currentTarget.style.borderColor = `${step.color}30`;
                 }}
               >
-                {/* Coming Soon 표시 */}
-                {step.path === '#' && (
-                  <div style={{
-                    position: 'absolute',
-                    top: '12px',
-                    right: '12px',
-                    background: 'rgba(255,255,255,0.1)',
-                    color: '#94a3b8',
-                    padding: '4px 10px',
-                    borderRadius: '8px',
-                    fontSize: '0.7rem',
-                    fontWeight: '600'
-                  }}>
-                    Coming Soon
-                  </div>
-                )}
-
+                {/* 헤더: 아이콘 + 타이틀 */}
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '14px',
-                  marginBottom: '18px'
+                  justifyContent: 'space-between',
+                  marginBottom: '16px'
                 }}>
-                  <div style={{
-                    width: '50px',
-                    height: '50px',
-                    borderRadius: '14px',
-                    background: step.color,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#fff',
-                    boxShadow: `0 8px 20px ${step.color}40`
-                  }}>
-                    {step.icon}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <div style={{
+                      width: '48px',
+                      height: '48px',
+                      borderRadius: '14px',
+                      background: step.color,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: step.step === 2 ? '#1a1a2e' : '#fff',
+                      boxShadow: `0 8px 20px ${step.color}40`
+                    }}>
+                      {step.icon}
+                    </div>
+                    <div>
+                      <div style={{
+                        background: step.color,
+                        color: step.step === 2 ? '#1a1a2e' : '#fff',
+                        padding: '3px 10px',
+                        borderRadius: '10px',
+                        fontSize: '0.7rem',
+                        fontWeight: '700',
+                        marginBottom: '4px',
+                        display: 'inline-block'
+                      }}>
+                        Step {step.step} · {step.subtitle}
+                      </div>
+                      <h3 style={{ color: '#fff', fontSize: '1.1rem', fontWeight: '800', margin: 0 }}>
+                        {step.title}
+                      </h3>
+                    </div>
                   </div>
-                  <div>
-                    <span style={{ color: step.color, fontSize: '0.8rem', fontWeight: '700' }}>
-                      STEP {step.step} · {step.subtitle}
-                    </span>
-                    <h3 style={{ color: '#fff', fontSize: '1.15rem', fontWeight: '800', margin: 0 }}>
-                      {step.title}
-                    </h3>
+                  <div style={{ 
+                    color: 'rgba(255,255,255,0.6)', 
+                    fontSize: '0.75rem',
+                    textAlign: 'right'
+                  }}>
+                    {step.day}요일 밤 8시
                   </div>
                 </div>
 
-                <p style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '18px', lineHeight: '1.6' }}>
+                {/* 설명 */}
+                <p style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '14px', lineHeight: '1.5' }}>
                   {step.description}
                 </p>
 
+                {/* 1월 프로젝트 */}
+                <div style={{
+                  background: 'rgba(255,255,255,0.05)',
+                  padding: '12px',
+                  borderRadius: '10px',
+                  marginBottom: '14px'
+                }}>
+                  <div style={{ 
+                    color: 'rgba(255,255,255,0.5)', 
+                    fontSize: '0.7rem', 
+                    marginBottom: '4px' 
+                  }}>
+                    📌 1월 프로젝트
+                  </div>
+                  <div style={{ 
+                    color: step.color, 
+                    fontSize: '0.95rem', 
+                    fontWeight: '700' 
+                  }}>
+                    {step.project}
+                  </div>
+                </div>
+
+                {/* 가격 + CTA */}
                 <div style={{
                   display: 'flex',
                   justifyContent: 'space-between',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  paddingTop: '10px',
+                  borderTop: '1px solid rgba(255,255,255,0.1)'
                 }}>
-                  <span style={{
-                    color: step.path !== '#' ? '#fff' : '#64748b',
-                    fontWeight: '800',
-                    fontSize: '1.15rem'
-                  }}>
-                    {step.price}
-                  </span>
+                  <div>
+                    <span style={{
+                      color: '#fff',
+                      fontWeight: '800',
+                      fontSize: '1.1rem'
+                    }}>
+                      {step.price}
+                    </span>
+                    <span style={{
+                      color: 'rgba(255,255,255,0.5)',
+                      fontSize: '0.75rem',
+                      marginLeft: '6px'
+                    }}>
+                      / {step.priceType}
+                    </span>
+                  </div>
                   {step.path !== '#' && (
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
                       gap: '6px',
                       color: step.color,
-                      fontSize: '0.9rem',
+                      fontSize: '0.85rem',
                       fontWeight: '600'
                     }}>
                       수강하기 <ArrowRight size={16} />
@@ -582,6 +634,61 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* 강의 공통 안내 */}
+          <div style={{
+            marginTop: '30px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '24px',
+            flexWrap: 'wrap',
+            padding: '20px',
+            background: 'rgba(255,255,255,0.03)',
+            borderRadius: '16px',
+            border: '1px solid rgba(255,255,255,0.1)'
+          }}>
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px',
+              color: 'rgba(255,255,255,0.7)',
+              fontSize: '0.9rem'
+            }}>
+              <span>📚</span>
+              <span>기본 강의 <strong style={{ color: '#ffd60a' }}>10개</strong></span>
+            </div>
+            <div style={{ 
+              width: '1px', 
+              height: '20px', 
+              background: 'rgba(255,255,255,0.2)' 
+            }} />
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px',
+              color: 'rgba(255,255,255,0.7)',
+              fontSize: '0.9rem'
+            }}>
+              <span>🔴</span>
+              <span>주간 라이브 <strong style={{ color: '#ffd60a' }}>13회</strong></span>
+            </div>
+            <div style={{ 
+              width: '1px', 
+              height: '20px', 
+              background: 'rgba(255,255,255,0.2)' 
+            }} />
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px',
+              color: 'rgba(255,255,255,0.7)',
+              fontSize: '0.9rem'
+            }}>
+              <span>📺</span>
+              <span>다시보기 <strong style={{ color: '#ffd60a' }}>1달</strong> 제공</span>
+            </div>
           </div>
         </div>
       </section>
@@ -953,7 +1060,7 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
         borderTop: '1px solid rgba(255,255,255,0.1)'
       }}>
         <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
-          © 2025 AI City Builders. All rights reserved.
+          © 2026 AI City Builders. All rights reserved.
         </p>
       </footer>
 

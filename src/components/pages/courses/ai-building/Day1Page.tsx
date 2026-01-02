@@ -293,9 +293,6 @@ const Day1Page: React.FC<Day1PageProps> = ({ onBack, onNext }) => {
                 1960년대 부동산 원리를 AI 콘텐츠에 적용하기
               </p>
               <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
-                <span style={{ color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem' }}>
-                  <Clock size={16} /> 약 18분
-                </span>
                 {isDayCompleted && (
                   <span style={{ color: '#22c55e', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem' }}>
                     <CheckCircle size={16} /> 완료됨

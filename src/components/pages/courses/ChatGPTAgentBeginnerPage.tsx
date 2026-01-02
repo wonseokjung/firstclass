@@ -207,11 +207,14 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 
 
   return (
-    <div className="masterclass-container">
+    <div className="masterclass-container" style={{ paddingBottom: isPaidUser ? '0' : '80px' }}>
       <NavigationBar
         onBack={onBack}
         breadcrumbText="ChatGPT AI AGENT 비기너편"
       />
+      
+      {/* 고정 결제 버튼 */}
+      <FloatingPaymentButton onClick={handleEarlyBirdPayment} isPaidUser={isPaidUser} price={coursePrice} />
 
       {/* 모든 사용자에게 강의 소개 페이지 표시 */}
       {/* 결제 전: 강의 구매 페이지 / 결제 후: "내 강의 보기" 버튼 추가 */}
@@ -2321,5 +2324,77 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
   );
 };
 
+// 고정 결제 버튼 (Floating CTA) 컴포넌트
+const FloatingPaymentButton: React.FC<{ onClick: () => void; isPaidUser: boolean; price: number }> = ({ onClick, isPaidUser, price }) => {
+  if (isPaidUser) return null;
+  
+  return (
+    <div style={{
+      position: 'fixed',
+      bottom: '0',
+      left: '0',
+      right: '0',
+      background: 'linear-gradient(135deg, #1e3a8a, #1e40af)',
+      padding: '15px 20px',
+      boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.3)',
+      zIndex: 1000,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '20px',
+      borderTop: '3px solid #ffd60a'
+    }}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '15px'
+      }}>
+        <span style={{
+          color: '#ffd60a',
+          fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+          fontWeight: '900'
+        }}>
+          ₩{price.toLocaleString()}
+        </span>
+        <span style={{
+          color: 'rgba(255, 255, 255, 0.8)',
+          fontSize: 'clamp(0.8rem, 2vw, 0.95rem)',
+          fontWeight: '600'
+        }}>
+          3개월 수강권
+        </span>
+      </div>
+      <button
+        onClick={onClick}
+        style={{
+          background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
+          color: '#1e3a8a',
+          border: 'none',
+          padding: 'clamp(12px, 3vw, 16px) clamp(25px, 5vw, 40px)',
+          fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
+          fontWeight: '900',
+          borderRadius: '12px',
+          cursor: 'pointer',
+          boxShadow: '0 4px 15px rgba(255, 214, 10, 0.4)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          animation: 'pulse 2s infinite'
+        }}
+      >
+        <span>🚀</span>
+        지금 결제하기
+      </button>
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.02); }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export { FloatingPaymentButton };
 export default ChatGPTAgentBeginnerPage;
 

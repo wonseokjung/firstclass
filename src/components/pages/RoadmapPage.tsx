@@ -15,7 +15,7 @@ const RoadmapPage: React.FC = () => {
       description: '1960년 맨해튼 기회가 지금 유튜브에',
       details: '유튜브 CEO가 발표한 "새로운 계급의 크리에이터"가 되는 첫 시작입니다. 1960년대 맨해튼 부동산처럼, 지금 유튜브 채널이 디지털 건물입니다. 구글의 30개+ AI 도구로 수익화 콘텐츠를 만듭니다.',
       price: '₩95,000',
-      priceType: '일회성',
+      priceType: '3개월',
       color: '#3b82f6',
       gradient: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)',
       features: [
@@ -35,7 +35,7 @@ const RoadmapPage: React.FC = () => {
       description: '반복 작업을 시스템으로 만들기',
       details: '콘텐츠를 매번 수동으로 만들 순 없습니다. 여러 AI를 하나의 팀처럼 연결해서 반복 작업을 자동화하는 시스템을 구축합니다.',
       price: '₩95,000',
-      priceType: '일회성',
+      priceType: '3개월',
       color: '#10b981',
       gradient: 'linear-gradient(135deg, #065f46 0%, #10b981 100%)',
       features: [
@@ -53,8 +53,8 @@ const RoadmapPage: React.FC = () => {
       icon: <Zap size={32} />,
       description: '수익화 확장의 첫걸음',
       details: '유튜브 광고 수익을 넘어서 내 사업 도구를 직접 만듭니다. 코딩 몰라도 OK! AI에게 말로 설명하면 됩니다.',
-      price: 'Coming Soon',
-      priceType: '',
+      price: '₩95,000',
+      priceType: '3개월',
       color: '#8b5cf6',
       gradient: 'linear-gradient(135deg, #5b21b6 0%, #8b5cf6 100%)',
       features: [
@@ -72,13 +72,13 @@ const RoadmapPage: React.FC = () => {
     },
     {
       step: 4,
-      title: '1인 기업 만들기',
-      subtitle: 'CEO 되기',
+      title: '칼퇴 치트키',
+      subtitle: '업무 자동화',
       icon: <Building2 size={32} />,
-      description: '1인 기업가에서 CEO로',
-      details: '콘텐츠를 만드는 사람에서 사업을 운영하는 사람이 됩니다. 사업자등록, 세금, 정부지원금 활용까지.',
-      price: '준비중',
-      priceType: '',
+      description: '칼퇴로 시작해서 AI 1인 기업 운영까지',
+      details: '콘텐츠 크리에이터에서 사업가로! 사업자등록, 세금, 정부지원금 활용까지 AI 1인 기업을 완성합니다.',
+      price: '₩95,000',
+      priceType: '3개월',
       color: '#e5c100',
       gradient: 'linear-gradient(135deg, #d4af37 0%, #e5c100 50%, #ffd60a 100%)',
       features: [
@@ -88,9 +88,9 @@ const RoadmapPage: React.FC = () => {
         '🤝 협업 네트워크 구축',
       ],
       highlights: [
-        '콘텐츠 1인 기업가에서 CEO로',
-        '안정적인 수익 구조 완성',
-        'Step 3에서 만든 서비스로 사업화!'
+        '업무 자동화 = 1인 기업 필수 스킬',
+        'AI로 반복 업무 자동화',
+        'AI 1인 기업 운영의 핵심!'
       ],
       status: 'coming_soon',
       path: '/solo-business'
@@ -138,12 +138,29 @@ const RoadmapPage: React.FC = () => {
           color: '#94a3b8',
           fontSize: '1.1rem',
           maxWidth: '600px',
-          margin: '0 auto 40px',
+          margin: '0 auto 25px',
           lineHeight: '1.7'
         }}>
           기술과 장비가 없어도 괜찮습니다.<br />
           <strong style={{ color: '#fff' }}>AI와 함께라면 누구나 1인 기업가</strong>가 될 수 있습니다.
         </p>
+
+        {/* 안내 배지 */}
+        <div style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '8px',
+          background: 'rgba(255, 215, 0, 0.15)',
+          border: '1px solid rgba(255, 215, 0, 0.3)',
+          padding: '10px 20px',
+          borderRadius: '25px',
+          marginBottom: '40px'
+        }}>
+          <span style={{ fontSize: '1rem' }}>💡</span>
+          <span style={{ color: '#ffd60a', fontSize: '0.9rem', fontWeight: '600' }}>
+            필요한 강의만 골라서 수강 가능! 각 강의 95,000원 (3개월)
+          </span>
+        </div>
 
         {/* Progress Bar */}
         <div style={{

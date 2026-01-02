@@ -146,10 +146,11 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
             <div style={{ background: 'rgba(255,255,255,0.2)', width: '60px', height: '60px', borderRadius: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: '800', color: '#0d1b2a' }}>7</div>
             <div>
               <h1 style={{ color: '#0d1b2a', fontSize: '1.5rem', margin: 0 }}>Day {lessonData.day}: {lessonData.title}</h1>
-              <div style={{ display: 'flex', gap: '15px', marginTop: '8px' }}>
-                <span style={{ color: 'rgba(255,255,255,0.8)', display: 'flex', alignItems: 'center', gap: '5px' }}><Clock size={16} /> {lessonData.duration}</span>
-                {isDayCompleted && <span style={{ color: '#22c55e', display: 'flex', alignItems: 'center', gap: '5px' }}><CheckCircle size={16} /> 완료됨</span>}
-              </div>
+              {isDayCompleted && (
+                <div style={{ display: 'flex', gap: '15px', marginTop: '8px' }}>
+                  <span style={{ color: '#22c55e', display: 'flex', alignItems: 'center', gap: '5px' }}><CheckCircle size={16} /> 완료됨</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -258,9 +258,6 @@ const Day4Page: React.FC<Day4PageProps> = ({ onBack, onNext }) => {
                 유튜브 주제 분석기로 경쟁 낮은 블루오션 찾기
               </p>
               <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
-                <span style={{ color: '#64748b', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem' }}>
-                  <Clock size={16} /> 약 60분
-                </span>
                 {isDayCompleted && (
                   <span style={{ color: '#22c55e', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem' }}>
                     <CheckCircle size={16} /> 완료됨

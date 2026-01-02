@@ -39,6 +39,16 @@ const MonthlyProjectSection: React.FC = () => {
                 color: '#10b981',
                 path: '/vibe-coding'
             },
+            {
+                course: '칼퇴 치트키',
+                title: '업무 자동화 → AI 1인 기업',
+                day: '금',
+                time: '밤 8시',
+                weeks: ['2월', '오픈', '예정', '🚀'],
+                color: '#e5c100',
+                path: '/solo-business',
+                comingSoon: true
+            },
         ]
     };
 
@@ -140,25 +150,30 @@ const MonthlyProjectSection: React.FC = () => {
                     gap: 'clamp(15px, 3vw, 25px)',
                     marginBottom: '35px'
                 }}>
-                    {project.courses.map((item, idx) => (
+                    {project.courses.map((item: any, idx) => (
                         <div
                             key={idx}
-                            onClick={() => navigate(item.path)}
+                            onClick={() => !item.comingSoon && navigate(item.path)}
                             style={{
-                                background: 'linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
+                                background: item.comingSoon 
+                                    ? 'linear-gradient(145deg, rgba(229,193,0,0.1), rgba(229,193,0,0.03))'
+                                    : 'linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
                                 border: `2px solid ${item.color}40`,
                                 borderRadius: '16px',
                                 padding: 'clamp(18px, 3vw, 24px)',
                                 textAlign: 'left',
-                                cursor: 'pointer',
+                                cursor: item.comingSoon ? 'default' : 'pointer',
                                 transition: 'all 0.3s ease',
                                 position: 'relative',
-                                overflow: 'hidden'
+                                overflow: 'hidden',
+                                opacity: item.comingSoon ? 0.85 : 1
                             }}
                             onMouseEnter={(e) => {
-                                e.currentTarget.style.transform = 'translateY(-5px)';
-                                e.currentTarget.style.boxShadow = `0 10px 30px ${item.color}30`;
-                                e.currentTarget.style.borderColor = item.color;
+                                if (!item.comingSoon) {
+                                    e.currentTarget.style.transform = 'translateY(-5px)';
+                                    e.currentTarget.style.boxShadow = `0 10px 30px ${item.color}30`;
+                                    e.currentTarget.style.borderColor = item.color;
+                                }
                             }}
                             onMouseLeave={(e) => {
                                 e.currentTarget.style.transform = 'translateY(0)';
@@ -166,6 +181,23 @@ const MonthlyProjectSection: React.FC = () => {
                                 e.currentTarget.style.borderColor = `${item.color}40`;
                             }}
                         >
+                            {/* Coming Soon 뱃지 */}
+                            {item.comingSoon && (
+                                <div style={{
+                                    position: 'absolute',
+                                    top: '10px',
+                                    right: '10px',
+                                    background: 'linear-gradient(135deg, #e5c100, #d97706)',
+                                    color: '#000',
+                                    fontSize: '0.65rem',
+                                    fontWeight: '800',
+                                    padding: '4px 10px',
+                                    borderRadius: '12px',
+                                    boxShadow: '0 2px 10px rgba(229,193,0,0.4)'
+                                }}>
+                                    2월 OPEN
+                                </div>
+                            )}
                             {/* 강의명 헤더 */}
                             <div style={{
                                 display: 'flex',
@@ -209,7 +241,7 @@ const MonthlyProjectSection: React.FC = () => {
                                 gridTemplateColumns: 'repeat(2, 1fr)',
                                 gap: '6px'
                             }}>
-                                {item.weeks.map((week, wIdx) => (
+                                {item.weeks.map((week: string, wIdx: number) => (
                                     <div
                                         key={wIdx}
                                         style={{

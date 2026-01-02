@@ -15,13 +15,22 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
   const now = new Date();
   const isOpen = now >= openDate;
 
+  const handlePayment = () => {
+    // 결제 페이지로 이동 (오픈 후)
+    window.location.href = '/vibe-coding/payment';
+  };
+
   return (
     <div style={{
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)',
-      color: '#ffffff'
+      color: '#ffffff',
+      paddingBottom: isOpen ? '80px' : '0'
     }}>
       <NavigationBar onBack={onBack} breadcrumbText="Step 3: 바이브코딩" />
+      
+      {/* 고정 결제 버튼 */}
+      <FloatingPaymentButton onClick={handlePayment} isOpen={isOpen} price={95000} />
 
       <div style={{
         display: 'flex',
@@ -76,7 +85,7 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
           border: `2px solid ${isOpen ? '#22c55e' : '#8b5cf6'}`,
           padding: '15px 30px',
           borderRadius: '50px',
-          marginBottom: '30px'
+          marginBottom: '20px'
         }}>
           <Calendar size={24} color={isOpen ? '#22c55e' : '#8b5cf6'} />
           <span style={{
@@ -85,6 +94,32 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
             fontSize: '1.2rem'
           }}>
             {isOpen ? '🎉 지금 수강 가능!' : '📅 2026년 1월 8일 오픈'}
+          </span>
+        </div>
+
+        {/* 가격 정보 */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '15px',
+          marginBottom: '30px'
+        }}>
+          <span style={{
+            fontSize: 'clamp(1.8rem, 4vw, 2.2rem)',
+            fontWeight: '900',
+            color: '#ffd60a'
+          }}>
+            ₩95,000
+          </span>
+          <span style={{
+            background: 'rgba(255, 215, 0, 0.2)',
+            color: '#ffd60a',
+            padding: '8px 16px',
+            borderRadius: '20px',
+            fontSize: '0.9rem',
+            fontWeight: '700'
+          }}>
+            3개월 수강권
           </span>
         </div>
 
@@ -264,4 +299,76 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
   );
 };
 
+// 고정 결제 버튼 (Floating CTA) 컴포넌트
+const FloatingPaymentButton: React.FC<{ onClick: () => void; isOpen: boolean; price: number }> = ({ onClick, isOpen, price }) => {
+  if (!isOpen) return null;
+  
+  return (
+    <div style={{
+      position: 'fixed',
+      bottom: '0',
+      left: '0',
+      right: '0',
+      background: 'linear-gradient(135deg, #7c3aed, #8b5cf6)',
+      padding: '15px 20px',
+      boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.3)',
+      zIndex: 1000,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '20px',
+      borderTop: '3px solid #ffd60a'
+    }}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '15px'
+      }}>
+        <span style={{
+          color: '#ffd60a',
+          fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+          fontWeight: '900'
+        }}>
+          ₩{price.toLocaleString()}
+        </span>
+        <span style={{
+          color: 'rgba(255, 255, 255, 0.8)',
+          fontSize: 'clamp(0.8rem, 2vw, 0.95rem)',
+          fontWeight: '600'
+        }}>
+          3개월 수강권
+        </span>
+      </div>
+      <button
+        onClick={onClick}
+        style={{
+          background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
+          color: '#7c3aed',
+          border: 'none',
+          padding: 'clamp(12px, 3vw, 16px) clamp(25px, 5vw, 40px)',
+          fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
+          fontWeight: '900',
+          borderRadius: '12px',
+          cursor: 'pointer',
+          boxShadow: '0 4px 15px rgba(255, 214, 10, 0.4)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          animation: 'pulse 2s infinite'
+        }}
+      >
+        <span>🚀</span>
+        지금 결제하기
+      </button>
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.02); }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export { FloatingPaymentButton };
 export default VibeCodingPage;

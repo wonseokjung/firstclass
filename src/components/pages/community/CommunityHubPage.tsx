@@ -61,7 +61,7 @@ const CommunityHubPage: React.FC = () => {
     {
       step: 4,
       title: '1인 기업 만들기',
-      subtitle: '1인 기업가에서 CEO로',
+      subtitle: '칼퇴 치트키',
       icon: '🏢',
       path: '/community/step4',
       courseIds: ['solo-business']

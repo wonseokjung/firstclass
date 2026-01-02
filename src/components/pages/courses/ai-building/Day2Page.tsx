@@ -272,9 +272,6 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
                 AI 기반 1인 기업 청사진 만들기
               </p>
               <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
-                <span style={{ color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem' }}>
-                  <Clock size={16} /> 약 50분
-                </span>
                 {isDayCompleted && (
                   <span style={{ color: '#22c55e', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem' }}>
                     <CheckCircle size={16} /> 완료됨

@@ -282,9 +282,6 @@ const Day5Page: React.FC<Day5PageProps> = ({ onBack, onNext }) => {
                 유튜브 채널 생성부터 설정까지 완벽 가이드
               </p>
               <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
-                <span style={{ color: COLORS.lightGray, display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem' }}>
-                  <Clock size={16} /> 약 60분
-                </span>
                 {isDayCompleted && (
                   <span style={{ color: COLORS.yellow, display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem', fontWeight: '600' }}>
                     <CheckCircle size={16} /> 완료됨
