@@ -163,17 +163,17 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
         days: [
           {
             day: 6,
-            title: '프롬프트 엔지니어링 & 이미지 생성 AI',
-            subtitle: 'Google Colab으로 나노 바나나 마스터하기 | 코드 보고 쫄지 않기',
+            title: 'AI 멘토 제이의 이미지 생성의 정석',
+            subtitle: '프롬프트 엔지니어링 & Google Colab 실습 | 코드 보고 쫄지 않기',
             hasQuiz: false,
             releaseDate: '2025-01-06'  // 1월 6일 오픈
           },
           {
             day: 7,
-            title: '[재료학] 사운드 & 영상 생성 AI 마스터',
-            subtitle: 'ElevenLabs 음성 클로닝 | Suno AI BGM | VEO 영상 생성 완전정복',
+            title: 'AI 멘토 제이의 영상 생성의 정석',
+            subtitle: 'Google Veo로 텍스트만으로 영상 만들기 | 쉬운 방법 & 어려운 방법',
             hasQuiz: false,
-            releaseDate: '2026-01-02'  // 1월 2일 업로드
+            releaseDate: '2026-01-01'  // 오픈됨
           },
           {
             day: 8,
@@ -513,8 +513,8 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
               }}>
                 {week.days.map((lesson) => {
                   const isCompleted = completedDays.has(lesson.day);
-                  // 🔓 Day 1~5, Day 6 열림 / Day 7~10은 순차 업로드 예정
-                  const isAvailable = lesson.day <= 5 || lesson.day === 6;
+                  // 🔓 Day 1~7 열림 / Day 8~10은 순차 업로드 예정
+                  const isAvailable = lesson.day <= 7;
 
                   return (
                     <div

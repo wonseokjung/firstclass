@@ -2364,8 +2364,8 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 
               {/* Day 6-10 */}
               {[
-                { day: 6, title: '[재료학] 텍스트 & 이미지 생성 AI 마스터', subtitle: 'ChatGPT 프롬프트 엔지니어링 | Nano Banana & ChatGPT 이미지 생성 실습' },
-                { day: 7, title: '[재료학] 사운드 & 영상 생성 AI 마스터', subtitle: 'ElevenLabs 음성 클로닝 | Suno AI BGM | VEO 영상 생성 완전정복' },
+                { day: 6, title: 'AI 멘토 제이의 이미지 생성의 정석', subtitle: '프롬프트 엔지니어링 & Google Colab 실습 | 코드 보고 쫄지 않기' },
+                { day: 7, title: 'AI 멘토 제이의 영상 생성의 정석', subtitle: 'Google Veo로 텍스트만으로 영상 만들기 | 쉬운 방법 & 어려운 방법' },
                 { day: 8, title: '[시공] AI 4단계 건축 워크플로우', subtitle: '바이럴 숏폼 & 고품질 롱폼 제작 | 멀티 플랫폼 동시 입점 전략' },
                 { day: 9, title: '[준공식] 콘텐츠 업로드 & 데이터 분석', subtitle: '핵심 지표 읽는 법 | AI 감성 분석으로 건물 리모델링' },
                 { day: 10, title: '[첫 월세] 수익 시스템 구축 완성', subtitle: '애드센스 + 제휴마케팅 + 멤버십 | 허브-앤-스포크 자동화 시스템' }

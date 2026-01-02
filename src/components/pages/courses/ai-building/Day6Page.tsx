@@ -252,10 +252,10 @@ const Day6Page: React.FC<Day6PageProps> = ({ onBack, onNext }) => {
             </div>
             <div>
               <h1 style={{ color: 'white', fontSize: '1.6rem', margin: 0, fontWeight: '700' }}>
-                프롬프트 엔지니어링 & 이미지 생성 AI
+                AI 멘토 제이의 이미지 생성의 정석
               </h1>
               <p style={{ color: '#e2e8f0', margin: '8px 0 0 0', fontSize: '1rem' }}>
-                Google Colab으로 나노 바나나 마스터하기
+                프롬프트 엔지니어링 & Google Colab 실습
               </p>
               <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
                 {isDayCompleted && (

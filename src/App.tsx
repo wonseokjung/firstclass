@@ -118,7 +118,9 @@ const ChatGPTPrompts40Page = React.lazy(() => import('./components/pages/ChatGPT
 const AIMoneyMasterPromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyMasterPromptsPage'));
 const AIMoneyImagePromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyImagePromptsPage'));
 const AIMoneyVideoPromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIMoneyVideoPromptsPage'));
+const AIVideoGenerationPromptsPage = React.lazy(() => import('./components/pages/ai-money-courses/AIVideoGenerationPromptsPage'));
 const AIRealisticCharacterVideoPage = React.lazy(() => import('./components/pages/ai-money-courses/AIRealisticCharacterVideoPage'));
+const GeminiApiCalculatorPage = React.lazy(() => import('./components/pages/tools/GeminiApiCalculatorPage'));
 const FAQPage = React.lazy(() => import('./components/pages/FAQPage'));
 const CEOPage = React.lazy(() => import('./components/pages/CEOPage'));
 const ContactPage = React.lazy(() => import('./components/pages/ContactPage'));
@@ -251,7 +253,9 @@ const ChatGPTPrompts40PageWrapped = withPageWrapper(ChatGPTPrompts40Page);
 const AIMoneyMasterPromptsPageWrapped = withPageWrapper(AIMoneyMasterPromptsPage);
 const AIMoneyImagePromptsPageWrapped = withPageWrapper(AIMoneyImagePromptsPage);
 const AIMoneyVideoPromptsPageWrapped = withPageWrapper(AIMoneyVideoPromptsPage);
+const AIVideoGenerationPromptsPageWrapped = withPageWrapper(AIVideoGenerationPromptsPage);
 const AIRealisticCharacterVideoPageWrapped = withPageWrapper(AIRealisticCharacterVideoPage);
+const GeminiApiCalculatorPageWrapped = withPageWrapper(GeminiApiCalculatorPage);
 
 // 인증 페이지
 const LoginPageWrapped = withPageWrapper(LoginPage);
@@ -555,7 +559,9 @@ function App() {
               <Route path="/ai-money-master-prompts" element={<AIMoneyMasterPromptsPageWrapped />} />
               <Route path="/ai-money-image-prompts" element={<AIMoneyImagePromptsPageWrapped />} />
               <Route path="/ai-money-video-prompts" element={<AIMoneyVideoPromptsPageWrapped />} />
+              <Route path="/ai-video-generation-prompts" element={<AIVideoGenerationPromptsPageWrapped />} />
               <Route path="/ai-character-video-prompts" element={<AIRealisticCharacterVideoPageWrapped />} />
+              <Route path="/gemini-api-calculator" element={<GeminiApiCalculatorPageWrapped />} />
 
               {/* 라이브 페이지 */}
               <Route path="/live" element={<LiveHubPageWrapped />} />
