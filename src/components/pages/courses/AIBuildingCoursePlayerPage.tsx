@@ -180,21 +180,21 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
             title: '[시공] AI 4단계 건축 워크플로우',
             subtitle: '바이럴 숏폼 & 고품질 롱폼 제작 | 멀티 플랫폼 동시 입점 전략',
             hasQuiz: true,
-            releaseDate: '2026-01-02'  // 1월 2일 업로드
+            releaseDate: '2026-01-04'  // 1월 4일 업로드
           },
           {
             day: 9,
             title: '[준공식] 콘텐츠 업로드 & 데이터 분석',
             subtitle: '핵심 지표 읽는 법 | AI 감성 분석으로 건물 리모델링',
             hasQuiz: false,
-            releaseDate: '2026-01-03'  // 1월 3일 업로드
+            releaseDate: '2026-01-05'  // 1월 5일 업로드
           },
           {
             day: 10,
             title: '[첫 월세] 수익 시스템 구축 완성',
             subtitle: '애드센스 + 제휴마케팅 + 멤버십 | 허브-앤-스포크 자동화 시스템',
             hasQuiz: true,
-            releaseDate: '2026-01-04'  // 1월 4일 업로드
+            releaseDate: '2026-01-06'  // 1월 6일 업로드
           }
         ]
       }
