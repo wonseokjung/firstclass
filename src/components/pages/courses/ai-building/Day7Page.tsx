@@ -320,7 +320,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
               </p>
               <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
                 {isDayCompleted && (
-                  <span style={{ color: '#22c55e', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem' }}>
+                  <span style={{ color: '#ffd60a', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.9rem' }}>
                     <CheckCircle size={16} /> 완료됨
                   </span>
                 )}
@@ -395,27 +395,28 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
           marginBottom: '30px',
           border: '1px solid rgba(255,255,255,0.08)'
         }}>
-          {/* 🟢 초보자 버전 영상 */}
+          {/* 📺 초보자 버전 영상 */}
           <div style={{ 
             padding: '16px 24px',
-            background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1))',
-            borderBottom: '1px solid rgba(34, 197, 94, 0.3)',
+            background: 'linear-gradient(135deg, rgba(30, 58, 138, 0.3), rgba(30, 58, 138, 0.15))',
+            borderBottom: '1px solid rgba(255, 214, 10, 0.3)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             gap: '10px'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Video size={20} color="#22c55e" />
-              <span style={{ color: '#22c55e', fontSize: '1.1rem', fontWeight: '700' }}>🟢 초보자 버전</span>
+              <Video size={20} color="#ffd60a" />
+              <span style={{ color: '#ffd60a', fontSize: '1.1rem', fontWeight: '700' }}>📺 초보자 버전</span>
             </div>
             <span style={{ 
-              background: '#22c55e', 
-              color: 'white', 
+              background: 'rgba(255, 214, 10, 0.2)', 
+              color: '#ffd60a', 
               padding: '4px 12px', 
               borderRadius: '20px', 
               fontSize: '0.75rem', 
-              fontWeight: '700' 
+              fontWeight: '700',
+              border: '1px solid rgba(255, 214, 10, 0.3)'
             }}>
               무료 & 쉬움
             </span>
@@ -423,10 +424,10 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
 
           <div style={{ padding: '20px' }}>
             <p style={{ color: '#e2e8f0', fontSize: '0.95rem', marginBottom: '16px', lineHeight: '1.7' }}>
-              <strong style={{ color: '#22c55e' }}>Gemini / Google OPAL</strong>에서 프롬프트만 복붙해서 영상 만들기!<br/>
+              <strong style={{ color: '#ffd60a' }}>Gemini / Google OPAL</strong>에서 프롬프트만 복붙해서 영상 만들기!<br/>
               코드 없이 누구나 쉽게 시작할 수 있어요.
             </p>
-            <div style={{ position: 'relative', paddingTop: '56.25%', borderRadius: '12px', overflow: 'hidden', border: '2px solid rgba(34, 197, 94, 0.3)' }}>
+            <div style={{ position: 'relative', paddingTop: '56.25%', borderRadius: '12px', overflow: 'hidden', border: '2px solid rgba(255, 214, 10, 0.3)' }}>
               <iframe 
                 src="https://player.vimeo.com/video/1150975948?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" 
                 frameBorder="0" 
@@ -485,7 +486,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
 
         {/* 🎯 두 가지 학습 방법 소개 */}
         <div style={{
-          background: 'linear-gradient(135deg, rgba(255, 214, 10, 0.15), rgba(99, 102, 241, 0.1))',
+          background: 'linear-gradient(135deg, rgba(30, 58, 138, 0.3), rgba(30, 58, 138, 0.15))',
           borderRadius: '20px',
           padding: '30px',
           marginBottom: '30px',
@@ -511,7 +512,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
           }}>
             <p style={{ color: '#e2e8f0', fontSize: '1rem', margin: '0 0 12px 0', lineHeight: '1.8' }}>
               영상을 잘 만드는 방법은 <strong style={{ color: '#ffd60a' }}>우리의 상상</strong>과 
-              <strong style={{ color: '#ffd60a' }}> AI가 학습한 것</strong>의 <strong style={{ color: '#22c55e' }}>갭을 줄이는 과정</strong>이에요!
+              <strong style={{ color: '#ffd60a' }}> AI가 학습한 것</strong>의 <strong style={{ color: '#ffd60a' }}>갭을 줄이는 과정</strong>이에요!
             </p>
             <p style={{ color: '#cbd5e1', fontSize: '0.95rem', margin: 0, lineHeight: '1.7' }}>
               그냥 "3D 캐릭터가 뛰어노는 영상 만들어줘"보다, 
@@ -521,25 +522,25 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
           </div>
           
           <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 24px 0', lineHeight: '1.8' }}>
-            <strong style={{ color: '#22c55e' }}>🟢 초보자 버전</strong>부터 시작하고, 
-            익숙해지면 <strong style={{ color: '#ffd60a' }}>🟡 심화 버전</strong>에 도전해보세요!
+            <strong style={{ color: '#ffffff' }}>📺 초보자 버전</strong>부터 시작하고, 
+            익숙해지면 <strong style={{ color: '#ffd60a' }}>🎬 심화 버전</strong>에 도전해보세요!
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
-            {/* 쉬운 방법 카드 */}
+{/* 쉬운 방법 카드 */}
             <div style={{
-              background: 'rgba(34, 197, 94, 0.1)',
+              background: 'rgba(30, 58, 138, 0.2)',
               borderRadius: '16px',
               padding: '24px',
-              border: '2px solid rgba(34, 197, 94, 0.3)',
+              border: '2px solid rgba(255, 214, 10, 0.3)',
               position: 'relative'
             }}>
               <div style={{
                 position: 'absolute',
                 top: '-12px',
                 left: '20px',
-                background: '#22c55e',
-                color: 'white',
+                background: '#ffd60a',
+                color: '#1e3a8a',
                 padding: '4px 12px',
                 borderRadius: '20px',
                 fontSize: '0.75rem',
@@ -551,20 +552,20 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 <div style={{
                   width: '50px',
                   height: '50px',
-                  background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                  background: 'linear-gradient(135deg, #1e3a8a, #0f2847)',
                   borderRadius: '12px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center'
                 }}>
-                  <Sparkles size={24} color="white" />
+                  <Sparkles size={24} color="#ffd60a" />
                 </div>
             <div>
-                  <h4 style={{ color: '#22c55e', margin: 0, fontSize: '1.1rem' }}>쉬운 방법</h4>
+                  <h4 style={{ color: '#ffd60a', margin: 0, fontSize: '1.1rem' }}>쉬운 방법</h4>
                   <p style={{ color: '#e2e8f0', margin: 0, fontSize: '0.85rem' }}>Gemini / Google OPAL</p>
               </div>
             </div>
-              <ul style={{ color: '#cbd5e1', margin: 0, paddingLeft: '18px', lineHeight: '1.9', fontSize: '0.9rem' }}>
+              <ul style={{ color: '#e2e8f0', margin: 0, paddingLeft: '18px', lineHeight: '1.9', fontSize: '0.9rem' }}>
                 <li>프롬프트만 복사해서 붙여넣기</li>
                 <li>코드 필요 없음!</li>
                 <li>바로 영상 생성 가능</li>
@@ -624,10 +625,10 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
           borderRadius: '20px',
           padding: '30px',
           marginBottom: '20px',
-          border: '2px solid rgba(34, 197, 94, 0.3)'
+          border: '2px solid rgba(255, 214, 10, 0.3)'
         }}>
           <h3 style={{ 
-            color: '#22c55e', 
+            color: '#ffd60a', 
             fontSize: '1.3rem', 
             marginBottom: '20px',
             display: 'flex',
@@ -644,7 +645,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
             marginBottom: '20px'
           }}>
             <p style={{ color: '#cbd5e1', fontSize: '1rem', margin: '0 0 16px 0', lineHeight: '1.8' }}>
-              가장 쉬운 방법이에요! <strong style={{ color: '#22c55e' }}>프롬프트만 복사</strong>해서 
+              가장 쉬운 방법이에요! <strong style={{ color: '#ffd60a' }}>프롬프트만 복사</strong>해서 
               Gemini나 Google OPAL에 붙여넣으면 바로 영상이 생성됩니다.
             </p>
             <p style={{ color: '#e2e8f0', fontSize: '0.95rem', margin: 0, lineHeight: '1.8' }}>
@@ -658,20 +659,20 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {EXAMPLE_PROMPTS.map((item, idx) => (
                 <div key={idx} style={{
-                  background: 'rgba(34, 197, 94, 0.05)',
+                  background: 'rgba(30, 58, 138, 0.15)',
                   padding: '16px',
                   borderRadius: '12px',
-                  border: '1px solid rgba(34, 197, 94, 0.2)'
+                  border: '1px solid rgba(255, 214, 10, 0.2)'
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <span style={{ color: '#22c55e', fontWeight: '600' }}>{item.title}</span>
+                      <span style={{ color: '#ffd60a', fontWeight: '600' }}>{item.title}</span>
                       <span style={{
-                        background: 'rgba(34, 197, 94, 0.2)',
+                        background: 'rgba(255, 214, 10, 0.2)',
                         padding: '2px 8px',
                         borderRadius: '4px',
                         fontSize: '0.75rem',
-                        color: '#22c55e'
+                        color: '#ffd60a'
                       }}>
                         {item.type}
                       </span>
@@ -679,7 +680,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                     <button
                       onClick={() => copyToClipboard(item.prompt, `prompt-${idx}`)}
                       style={{
-                        background: copiedPrompt === `prompt-${idx}` ? '#16a34a' : 'rgba(34, 197, 94, 0.2)',
+                        background: copiedPrompt === `prompt-${idx}` ? '#ffd60a' : 'rgba(255, 214, 10, 0.2)',
                         border: 'none',
                         color: 'white',
                         padding: '6px 12px',
@@ -713,31 +714,31 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
 
           {/* 🎬 시네마틱 JSON 프롬프트 (고급) */}
           <div style={{
-            background: 'linear-gradient(135deg, rgba(251, 146, 60, 0.1), rgba(234, 88, 12, 0.05))',
+            background: 'linear-gradient(135deg, rgba(30, 58, 138, 0.3), rgba(30, 58, 138, 0.15))',
             borderRadius: '16px',
             padding: '24px',
             marginBottom: '24px',
-            border: '2px solid rgba(251, 146, 60, 0.3)'
+            border: '2px solid rgba(255, 214, 10, 0.3)'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
               <div style={{
-                background: 'linear-gradient(135deg, #fb923c, #ea580c)',
+                background: 'linear-gradient(135deg, #1e3a8a, #0f2847)',
                 padding: '8px',
                 borderRadius: '10px'
               }}>
                 <Film size={20} color="white" />
               </div>
             <div>
-                <h4 style={{ color: '#fb923c', margin: 0, fontSize: '1.1rem' }}>시네마틱 JSON 프롬프트</h4>
+                <h4 style={{ color: '#ffd60a', margin: 0, fontSize: '1.1rem' }}>시네마틱 JSON 프롬프트</h4>
                 <p style={{ color: '#e2e8f0', margin: 0, fontSize: '0.8rem' }}>영화 같은 퀄리티를 원할 때</p>
               </div>
               <span style={{
                 marginLeft: 'auto',
-                background: 'rgba(251, 146, 60, 0.2)',
+                background: 'rgba(255, 214, 10, 0.2)',
                 padding: '4px 10px',
                 borderRadius: '20px',
                 fontSize: '0.7rem',
-                color: '#fb923c',
+                color: '#ffd60a',
                 fontWeight: '600'
               }}>
                 PRO TIP
@@ -745,7 +746,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
             </div>
             
             <p style={{ color: '#cbd5e1', fontSize: '0.9rem', marginBottom: '16px', lineHeight: '1.7' }}>
-              JSON 형식으로 세부 사항을 지정하면 <strong style={{ color: '#fb923c' }}>실사 영화 같은 퀄리티</strong>의 
+              JSON 형식으로 세부 사항을 지정하면 <strong style={{ color: '#ffd60a' }}>실사 영화 같은 퀄리티</strong>의 
               영상을 만들 수 있어요. 카메라 움직임, 조명, 분위기까지 모두 제어 가능!
             </p>
 
@@ -763,7 +764,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                   position: 'absolute',
                   top: '12px',
                   right: '12px',
-                  background: copiedPrompt === 'cinematic' ? '#22c55e' : 'rgba(251, 146, 60, 0.8)',
+                  background: copiedPrompt === 'cinematic' ? '#ffd60a' : 'rgba(255, 214, 10, 0.8)',
                   color: 'white',
                   border: 'none',
                   padding: '8px 14px',
@@ -792,12 +793,12 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
         </div>
 
             <div style={{
-              background: 'rgba(251, 146, 60, 0.1)',
+              background: 'rgba(30, 58, 138, 0.2)',
               padding: '14px',
               borderRadius: '10px',
-              border: '1px solid rgba(251, 146, 60, 0.2)'
+              border: '1px solid rgba(255, 214, 10, 0.2)'
             }}>
-              <p style={{ color: '#fb923c', fontSize: '0.85rem', margin: 0, fontWeight: '600' }}>
+              <p style={{ color: '#ffd60a', fontSize: '0.85rem', margin: 0, fontWeight: '600' }}>
                 💡 이 JSON에 포함된 요소:
               </p>
               <div style={{ 
@@ -808,7 +809,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
               }}>
                 {['카메라 움직임', '조명 설정', '환경 묘사', '디테일 요소', '모션 효과', '엔딩 장면'].map((item, i) => (
                   <span key={i} style={{
-                    background: 'rgba(251, 146, 60, 0.15)',
+                    background: 'rgba(255, 214, 10, 0.15)',
                     padding: '6px 10px',
                     borderRadius: '6px',
                     fontSize: '0.75rem',
@@ -829,7 +830,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '10px',
-                background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                 color: 'white',
                 padding: '16px 28px',
                 borderRadius: '14px',
@@ -837,7 +838,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 fontWeight: '700',
                 border: 'none',
                 cursor: 'pointer',
-                boxShadow: '0 8px 25px rgba(34, 197, 94, 0.3)'
+                boxShadow: '0 8px 25px rgba(255, 214, 10, 0.3)'
               }}
             >
               <Film size={20} />
@@ -919,13 +920,13 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
               JSON보다 더 확실한 <strong style={{ color: '#ffd60a' }}>코드 형태</strong>로 AI에게 명령하는 방법을 배웁니다.
             </p>
             <div style={{ 
-              background: 'rgba(34, 197, 94, 0.1)', 
+              background: 'rgba(30, 58, 138, 0.2)', 
               padding: '16px', 
               borderRadius: '10px',
               marginTop: '12px',
-              border: '1px solid rgba(34, 197, 94, 0.2)'
+              border: '1px solid rgba(255, 214, 10, 0.2)'
             }}>
-              <p style={{ color: '#22c55e', fontWeight: '600', margin: '0 0 8px 0', fontSize: '0.95rem' }}>
+              <p style={{ color: '#ffd60a', fontWeight: '600', margin: '0 0 8px 0', fontSize: '0.95rem' }}>
                 💡 Colab 사용 팁
               </p>
               <ul style={{ color: '#e2e8f0', margin: 0, paddingLeft: '18px', fontSize: '0.9rem', lineHeight: '1.8' }}>
@@ -938,16 +939,16 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
           
           {/* 💰 API 비용 안내 */}
           <div style={{
-            background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(234, 88, 12, 0.05))',
+            background: 'linear-gradient(135deg, rgba(30, 58, 138, 0.3), rgba(30, 58, 138, 0.15))',
             borderRadius: '16px',
             padding: '24px',
             marginBottom: '20px',
-            border: '2px solid rgba(239, 68, 68, 0.3)'
+            border: '2px solid rgba(255, 214, 10, 0.3)'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
               <span style={{ fontSize: '1.5rem' }}>💰</span>
               <div>
-                <h4 style={{ color: '#f87171', margin: 0, fontSize: '1.1rem' }}>API 비용 알고 가기!</h4>
+                <h4 style={{ color: '#ffd60a', margin: 0, fontSize: '1.1rem' }}>API 비용 알고 가기!</h4>
                 <p style={{ color: '#e2e8f0', margin: 0, fontSize: '0.8rem' }}>막무가내로 만들면 빈털터리 됩니다</p>
               </div>
             </div>
@@ -964,7 +965,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 <p style={{ color: '#94a3b8', fontSize: '0.75rem', margin: '4px 0 0 0' }}>8초 = 약 4,480원</p>
               </div>
               <div style={{ background: 'rgba(0,0,0,0.3)', padding: '14px', borderRadius: '10px', textAlign: 'center' }}>
-                <p style={{ color: '#22c55e', fontSize: '0.75rem', margin: '0 0 4px 0' }}>10개 영상</p>
+                <p style={{ color: '#ffd60a', fontSize: '0.75rem', margin: '0 0 4px 0' }}>10개 영상</p>
                 <p style={{ color: 'white', fontSize: '1.1rem', fontWeight: '700', margin: 0 }}>~$32</p>
                 <p style={{ color: '#94a3b8', fontSize: '0.75rem', margin: '4px 0 0 0' }}>약 44,800원</p>
               </div>
@@ -979,7 +980,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 gap: '8px',
                 width: '100%',
                 padding: '12px 20px',
-                background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                background: 'linear-gradient(135deg, #1e3a8a, #0f2847)',
                 color: 'white',
                 border: 'none',
                 borderRadius: '10px',
@@ -1016,7 +1017,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                 </div>
                 <p style={{ color: '#e2e8f0', fontSize: '0.9rem', margin: 0, lineHeight: '1.7' }}>
                   <strong>프롬프트</strong>: 만들고 싶은 영상 설명 (예: "해바라기 밭에서 뛰어노는 강아지")<br/>
-                  <strong style={{ color: '#f87171' }}>Negative 프롬프트</strong>: 절대 생성하지 않을 것 (예: "흐릿한, 저품질, 글자")
+                  <strong style={{ color: '#ffd60a' }}>Negative 프롬프트</strong>: 절대 생성하지 않을 것 (예: "흐릿한, 저품질, 글자")
                 </p>
               </div>
               
@@ -1043,8 +1044,8 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
                   <h5 style={{ color: '#ffd60a', margin: 0, fontSize: '1rem' }}>이미지 → 영상 변환</h5>
                 </div>
                 <p style={{ color: '#e2e8f0', fontSize: '0.9rem', margin: 0, lineHeight: '1.7' }}>
-                  내가 원하는 캐릭터/장면의 <strong style={{ color: '#22c55e' }}>이미지를 먼저 생성</strong>하고,
-                  그걸 영상으로 변환하면 <strong style={{ color: '#22c55e' }}>훨씬 더 원하는 결과</strong>를 얻을 수 있어요!
+                  내가 원하는 캐릭터/장면의 <strong style={{ color: '#ffd60a' }}>이미지를 먼저 생성</strong>하고,
+                  그걸 영상으로 변환하면 <strong style={{ color: '#ffd60a' }}>훨씬 더 원하는 결과</strong>를 얻을 수 있어요!
                 </p>
               </div>
               
@@ -1076,18 +1077,18 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
           
           {/* 티어 시스템 안내 */}
           <div style={{
-            background: 'rgba(99, 102, 241, 0.1)',
+            background: 'rgba(30, 58, 138, 0.2)',
             padding: '16px',
             borderRadius: '12px',
             marginBottom: '20px',
-            border: '1px solid rgba(99, 102, 241, 0.3)'
+            border: '1px solid rgba(255, 214, 10, 0.3)'
           }}>
-            <p style={{ color: '#a78bfa', fontWeight: '600', margin: '0 0 8px 0', fontSize: '0.95rem' }}>
+            <p style={{ color: '#ffd60a', fontWeight: '600', margin: '0 0 8px 0', fontSize: '0.95rem' }}>
               📊 할당량 (Quota) 시스템
             </p>
             <p style={{ color: '#e2e8f0', fontSize: '0.9rem', margin: 0, lineHeight: '1.6' }}>
               하루에 만들 수 있는 영상 수가 정해져 있어요 (약 10~20개). 
-              많이 사용할수록 <strong style={{ color: '#a78bfa' }}>티어 1 → 티어 2 → 티어 3</strong>로 
+              많이 사용할수록 <strong style={{ color: '#ffd60a' }}>티어 1 → 티어 2 → 티어 3</strong>로 
               할당량이 늘어납니다!
             </p>
           </div>
@@ -1122,13 +1123,13 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
           </a>
 
           <div style={{
-            background: 'rgba(239, 68, 68, 0.1)',
+            background: 'rgba(30, 58, 138, 0.2)',
             padding: '16px',
             borderRadius: '10px',
-            border: '1px solid rgba(239, 68, 68, 0.2)'
+            border: '1px solid rgba(255, 214, 10, 0.2)'
           }}>
-            <p style={{ color: '#f87171', fontWeight: '600', margin: '0 0 8px 0', fontSize: '0.95rem' }}>
-              ⚠️ 이 방법은 조금 어려울 수 있어요!
+            <p style={{ color: '#ffd60a', fontWeight: '600', margin: '0 0 8px 0', fontSize: '0.95rem' }}>
+              💡 이 방법은 조금 어려울 수 있어요!
             </p>
             <p style={{ color: '#e2e8f0', margin: 0, fontSize: '0.9rem', lineHeight: '1.6' }}>
               쉬운 방법부터 먼저 해보고, 익숙해지면 이 방법에 도전하세요.
@@ -1300,8 +1301,8 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
             marginBottom: '20px'
           }}>
             <ol style={{ color: '#cbd5e1', margin: 0, paddingLeft: '18px', lineHeight: '2.2', fontSize: '0.95rem' }}>
-              <li><strong style={{ color: '#22c55e' }}>[초보]</strong> Gemini/OPAL에서 프롬프트로 <strong>첫 영상 생성</strong>하기</li>
-              <li><strong style={{ color: '#22c55e' }}>[초보]</strong> 세로 영상(9:16)으로 <strong>숏츠용 영상</strong> 만들어보기</li>
+              <li><strong style={{ color: '#ffffff' }}>[초보]</strong> Gemini/OPAL에서 프롬프트로 <strong>첫 영상 생성</strong>하기</li>
+              <li><strong style={{ color: '#ffffff' }}>[초보]</strong> 세로 영상(9:16)으로 <strong>숏츠용 영상</strong> 만들어보기</li>
               <li><strong style={{ color: '#ffd60a' }}>[심화]</strong> Colab 노트북 → 드라이브에 사본 저장 → <strong>코드 실행</strong></li>
               <li><strong style={{ color: '#ffd60a' }}>[심화]</strong> 이미지 먼저 생성 → 영상으로 변환해보기</li>
               <li><strong style={{ color: '#ffd60a' }}>[심화]</strong> API 가격 계산기로 <strong>비용 계산</strong>해보기</li>
@@ -1310,12 +1311,12 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
       </div>
 
           <div style={{
-            background: 'rgba(34, 197, 94, 0.1)',
+            background: 'rgba(30, 58, 138, 0.2)',
             padding: '16px',
             borderRadius: '10px',
-            border: '1px solid rgba(34, 197, 94, 0.2)'
+            border: '1px solid rgba(255, 214, 10, 0.2)'
           }}>
-            <p style={{ color: '#22c55e', fontWeight: '600', margin: '0 0 8px 0', fontSize: '0.95rem' }}>
+            <p style={{ color: '#ffd60a', fontWeight: '600', margin: '0 0 8px 0', fontSize: '0.95rem' }}>
               💡 팁: 쉬운 방법부터 시작하세요!
             </p>
             <p style={{ color: '#e2e8f0', margin: 0, fontSize: '0.9rem', lineHeight: '1.6' }}>
@@ -1529,7 +1530,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
             disabled={isCompletingDay || isDayCompleted}
             style={{
               background: isDayCompleted 
-                ? 'linear-gradient(135deg, #22c55e, #16a34a)' 
+                ? 'linear-gradient(135deg, #ffd60a, #e5c100)' 
                 : 'linear-gradient(135deg, #ffd60a, #1e3a8a)',
               color: 'white',
               border: 'none',
@@ -1542,7 +1543,7 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
               alignItems: 'center',
               gap: '8px',
               boxShadow: isDayCompleted 
-                ? '0 6px 20px rgba(34, 197, 94, 0.3)'
+                ? '0 6px 20px rgba(255, 214, 10, 0.3)'
                 : '0 6px 20px rgba(255, 214, 10, 0.3)'
             }}
           >
