@@ -470,30 +470,15 @@ const Day7Page: React.FC<Day7PageProps> = ({ onBack, onNext }) => {
               <strong style={{ color: '#ffd60a' }}>Google Colab</strong>에서 코드로 세밀하게 컨트롤!<br/>
               영상 길이 조절, 이미지 합성, JSON 프롬프트 활용법을 배워요.
             </p>
-            <div style={{ 
-              position: 'relative', 
-              paddingTop: '56.25%', 
-              borderRadius: '12px', 
-              overflow: 'hidden', 
-              border: '2px solid rgba(255, 214, 10, 0.3)',
-              background: 'linear-gradient(135deg, rgba(30, 58, 138, 0.5), rgba(15, 40, 71, 0.8))',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <div style={{ 
-                position: 'absolute', 
-                top: '50%', 
-                left: '50%', 
-                transform: 'translate(-50%, -50%)',
-                textAlign: 'center',
-                color: '#ffd60a'
-              }}>
-                <Code size={48} style={{ marginBottom: '16px', opacity: 0.8 }} />
-                <p style={{ fontSize: '1.2rem', fontWeight: '700', margin: 0 }}>🎬 심화 버전 영상</p>
-                <p style={{ fontSize: '0.9rem', color: '#e2e8f0', marginTop: '10px', lineHeight: '1.5' }}>Colab으로 API 활용하기</p>
-                <p style={{ fontSize: '0.9rem', color: '#ffd60a', marginTop: '8px', fontWeight: '600' }}>🔜 곧 업로드 예정!</p>
-              </div>
+            <div style={{ position: 'relative', paddingTop: '56.25%', borderRadius: '12px', overflow: 'hidden', border: '2px solid rgba(255, 214, 10, 0.3)' }}>
+              <iframe 
+                src="https://player.vimeo.com/video/1151002459?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" 
+                frameBorder="0" 
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                referrerPolicy="strict-origin-when-cross-origin"
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                title="Day7 강의 - 심화 버전"
+              />
             </div>
           </div>
         </div>

@@ -28,7 +28,6 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
   const [isCompletingDay, setIsCompletingDay] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>('');
   const [userName, setUserName] = useState<string>('');
-  const [activeTab, setActiveTab] = useState<'theory' | 'practice'>('theory');
   const [newComment, setNewComment] = useState<string>('');
   const [discussionPosts, setDiscussionPosts] = useState<DiscussionPost[]>([]);
   const [isLoadingPosts, setIsLoadingPosts] = useState<boolean>(true);
@@ -349,85 +348,89 @@ const Day2Page: React.FC<Day2PageProps> = ({ onBack, onNext }) => {
           marginBottom: '40px',
           border: '1px solid rgba(255,255,255,0.1)'
         }}>
-          {/* 탭 헤더 */}
+          {/* 📚 이론 강의 */}
           <div style={{ 
-            display: 'flex', 
-            borderBottom: '1px solid rgba(255,255,255,0.1)',
-            background: 'rgba(15, 23, 42, 0.5)'
+            padding: '16px 24px',
+            background: 'linear-gradient(135deg, rgba(244, 63, 94, 0.2), rgba(168, 85, 247, 0.1))',
+            borderBottom: '1px solid rgba(244, 63, 94, 0.3)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '10px'
           }}>
-            <button
-              onClick={() => setActiveTab('theory')}
-              style={{
-                flex: 1,
-                padding: '18px 25px',
-                background: activeTab === 'theory' 
-                  ? 'linear-gradient(135deg, rgba(244, 63, 94, 0.2), rgba(168, 85, 247, 0.2))' 
-                  : 'transparent',
-                border: 'none',
-                color: activeTab === 'theory' ? '#f43f5e' : '#e2e8f0',
-                fontSize: '1.1rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '10px',
-                transition: 'all 0.3s',
-                borderBottom: activeTab === 'theory' ? '3px solid #f43f5e' : '3px solid transparent'
-              }}
-            >
-              <BookOpen size={22} /> 이론 강의
-            </button>
-            <button
-              onClick={() => setActiveTab('practice')}
-              style={{
-                flex: 1,
-                padding: '18px 25px',
-                background: activeTab === 'practice' 
-                  ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(59, 130, 246, 0.2))' 
-                  : 'transparent',
-                border: 'none',
-                color: activeTab === 'practice' ? '#22c55e' : '#e2e8f0',
-                fontSize: '1.1rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '10px',
-                transition: 'all 0.3s',
-                borderBottom: activeTab === 'practice' ? '3px solid #22c55e' : '3px solid transparent'
-              }}
-            >
-              <PlayCircle size={22} /> 실습 강의
-            </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <BookOpen size={20} color="#f43f5e" />
+              <span style={{ color: '#f43f5e', fontSize: '1.1rem', fontWeight: '700' }}>📚 이론 강의</span>
+            </div>
+            <span style={{ 
+              background: '#f43f5e', 
+              color: 'white', 
+              padding: '4px 12px', 
+              borderRadius: '20px', 
+              fontSize: '0.75rem', 
+              fontWeight: '700' 
+            }}>
+              AI 경제적 자유 개념
+            </span>
           </div>
 
-          {/* 비디오 콘텐츠 */}
-          <div style={{ padding: '25px' }}>
-            {activeTab === 'theory' ? (
-              <div style={{ position: 'relative', paddingTop: '56.25%', borderRadius: '16px', overflow: 'hidden' }}>
-                <iframe 
-                  src="https://player.vimeo.com/video/1148246242?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" 
-                  frameBorder="0" 
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                  title="인공지능건물주되기데이2_이론"
-                />
-              </div>
-            ) : (
-              <div style={{ position: 'relative', paddingTop: '75%', borderRadius: '16px', overflow: 'hidden' }}>
-                <iframe 
-                  src="https://player.vimeo.com/video/1148248797?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" 
-                  frameBorder="0" 
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                  title="인공지능건물주되기데이2_실습"
-                />
-              </div>
-            )}
+          <div style={{ padding: '20px' }}>
+            <p style={{ color: '#e2e8f0', fontSize: '0.95rem', marginBottom: '16px', lineHeight: '1.7' }}>
+              <strong style={{ color: '#f43f5e' }}>경제적 자유</strong>의 개념과 AI로 어떻게 달성할 수 있는지 배워요!
+            </p>
+            <div style={{ position: 'relative', paddingTop: '56.25%', borderRadius: '12px', overflow: 'hidden', border: '2px solid rgba(244, 63, 94, 0.3)' }}>
+              <iframe 
+                src="https://player.vimeo.com/video/1148246242?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" 
+                frameBorder="0" 
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                referrerPolicy="strict-origin-when-cross-origin"
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                title="인공지능건물주되기데이2_이론"
+              />
+            </div>
+          </div>
+
+          {/* 🛠️ 실습 강의 */}
+          <div style={{ 
+            padding: '16px 24px',
+            background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(59, 130, 246, 0.1))',
+            borderTop: '1px solid rgba(255,255,255,0.08)',
+            borderBottom: '1px solid rgba(34, 197, 94, 0.3)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '10px'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <PlayCircle size={20} color="#22c55e" />
+              <span style={{ color: '#22c55e', fontSize: '1.1rem', fontWeight: '700' }}>🛠️ 실습 강의</span>
+            </div>
+            <span style={{ 
+              background: '#22c55e', 
+              color: 'white', 
+              padding: '4px 12px', 
+              borderRadius: '20px', 
+              fontSize: '0.75rem', 
+              fontWeight: '700' 
+            }}>
+              따라하기
+            </span>
+          </div>
+
+          <div style={{ padding: '20px' }}>
+            <p style={{ color: '#e2e8f0', fontSize: '0.95rem', marginBottom: '16px', lineHeight: '1.7' }}>
+              <strong style={{ color: '#22c55e' }}>직접 따라하면서</strong> AI 도구 사용법을 익혀보세요!
+            </p>
+            <div style={{ position: 'relative', paddingTop: '56.25%', borderRadius: '12px', overflow: 'hidden', border: '2px solid rgba(34, 197, 94, 0.3)' }}>
+              <iframe 
+                src="https://player.vimeo.com/video/1148248797?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" 
+                frameBorder="0" 
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                referrerPolicy="strict-origin-when-cross-origin"
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                title="인공지능건물주되기데이2_실습"
+              />
+            </div>
           </div>
         </div>
 
