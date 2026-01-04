@@ -5,13 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import AzureTableService from '../../services/azureTableService';
 
 // 요일별 라이브 스케줄 (0: 일요일, 1: 월요일, ...)
-const WEEKLY_SCHEDULE: { [key: number]: { icon: string; title: string; isFree: boolean; link: string; time: string } | null } = {
+// Step 3 바이브코딩: 2026년 1월 8일(목) 오픈
+// Step 4: 추후 오픈 예정
+const WEEKLY_SCHEDULE: { [key: number]: { icon: string; title: string; isFree: boolean; link: string; time: string; openDate?: Date } | null } = {
   0: null, // 일요일 - 휴식
   1: { icon: '🆓', title: 'AI 수익화 토크', isFree: true, link: '/live/free', time: '20:00' }, // 월요일
   2: { icon: '🏗️', title: 'AI 건물주 되기', isFree: false, link: '/live/step1', time: '20:00' }, // 화요일
   3: { icon: '🤖', title: 'AI 에이전트 비기너', isFree: false, link: '/live/step2', time: '20:00' }, // 수요일
-  4: null, // 목요일 - 바이브코딩 (추후 오픈 예정)
-  5: null, // 금요일 - 휴식
+  4: { icon: '💻', title: '바이브코딩', isFree: false, link: '/live/step3', time: '20:00', openDate: new Date(2026, 0, 8) }, // 목요일 - 2026년 1월 8일 오픈
+  5: null, // 금요일 - Step 4 1인 기업 만들기 (추후 오픈 예정)
   6: null, // 토요일 - 휴식
 };
 
@@ -130,7 +132,7 @@ if (typeof window !== 'undefined') {
   };
 }
 
-// 사이트 정보 컨텍스트
+// 사이트 정보 컨텍스트 (마지막 업데이트: 2026년 1월 4일)
 const SITE_CONTEXT = `
 당신은 "AI City Builders" 웹사이트의 도시 안내원입니다. 🏙️
 Connect AI LAB에서 운영하는 AI 수익화 전문 교육 플랫폼입니다.
@@ -185,7 +187,7 @@ Connect AI LAB에서 운영하는 AI 수익화 전문 교육 플랫폼입니다.
      - 3주차: 동물 영상
      - 4주차: 심플 영상
    
-3. **Step 3: 바이브코딩** (/vibe-coding) - 95,000원
+3. **Step 3: 바이브코딩** (/vibe-coding) - 95,000원 ⭐ 2026년 1월 8일(목) 오픈!
    - 자동화 에이전트 직접 개발하기
    - 코딩 몰라도 AI에게 말로 설명하면 코드가 완성
    - 기본 강의 10개 + 주간 라이브 (목요일 밤 8시)
@@ -195,24 +197,25 @@ Connect AI LAB에서 운영하는 AI 수익화 전문 교육 플랫폼입니다.
      - 3주차: 테스트
      - 4주차: 배포
    
-4. **Step 4: 칼퇴 치트키** (/solo-business) - 95,000원
+4. **Step 4: 칼퇴 치트키** (/solo-business) - 95,000원 🔜 추후 오픈 예정
    - 업무 자동화 = AI 1인 기업 필수 스킬
    - 칼퇴로 시작해서 AI 1인 기업 운영까지
    - AI로 반복 업무 자동화
    - 자동화 인력 에이전트 구축
    - AI 1인 기업 운영의 핵심
 
-## 📅 라이브 일정 (매주)
-- 화요일 밤 8시: Step 1 (AI 건물주) 라이브
-- 수요일 밤 8시: Step 2 (AI 에이전트) 라이브
-- 목요일 밤 8시: Step 3 (바이브코딩) 라이브
-- 금요일 밤 8시: 무료 라이브 (누구나 참여 가능)
+## 📅 라이브 일정 (매주 월~목 오후 8시)
+- 월요일 밤 8시: 무료 라이브 "AI 수익화 토크" (유튜브에서 누구나 시청 가능) /live/free
+- 화요일 밤 8시: Step 1 (AI 건물주) 라이브 /live/step1
+- 수요일 밤 8시: Step 2 (AI 에이전트) 라이브 /live/step2
+- 목요일 밤 8시: Step 3 (바이브코딩) 라이브 /live/step3 ⭐ 2026년 1월 8일 오픈!
+- 금요일~일요일: 휴식 (라이브 없음)
 
 📅 **라이브 참석 못해도 OK!** 해당 월 1달간 다시보기 제공됩니다.
 
 ## 📦 수강 시 제공되는 것
 - 기본 강의 10개 (10일 완성 커리큘럼)
-- 주간 라이브 13회 (3개월간)
+- 주간 라이브 12회 (3개월간)
 - 월간 프로젝트 3개 (매월 다른 주제)
 - 전용 커뮤니티 접근권
 
@@ -240,9 +243,9 @@ Connect AI LAB에서 운영하는 AI 수익화 전문 교육 플랫폼입니다.
 - **AI 건물주 되기 프리뷰** (/ai-landlord-preview)
 
 ## 🔴 라이브 안내
-- **라이브 허브**: /live 에서 모든 라이브 일정 확인
-- **무료 라이브**: /live/free (금요일 밤 8시)
-- **Step별 라이브**: /live/step1, /live/step2, /live/step3
+- **라이브 허브**: /live 에서 모든 라이브 일정 확인 (캘린더 형식)
+- **무료 라이브**: /live/free (월요일 밤 8시, 유튜브)
+- **Step별 라이브**: /live/step1 (화), /live/step2 (수), /live/step3 (목)
 
 ## 👤 계정 관련
 - **로그인**: /login
@@ -258,7 +261,19 @@ Connect AI LAB에서 운영하는 AI 수익화 전문 교육 플랫폼입니다.
 - **FAQ**: /faq
 - **문의하기**: /contact
 - **이메일**: jay@connexionai.kr
+- **운영시간**: 평일 09:00-18:00
 - **환불 정책**: /refund-policy
+
+## 💸 환불 정책 (평생교육법 시행령 제23조 준수)
+- **수업 시작 전**: 전액 환불 💯
+- **수업 시작 후**: 결제금액 − (1일 학습비 × 학습 일수)
+- 환불 예시 (95,000원 강의, 총 10일 기준):
+  - 0일 수강 → 95,000원 환불 (전액)
+  - 3일 수강 → 66,500원 환불
+  - 5일 수강 → 47,500원 환불
+- 강의 회차를 열람하면 해당 일차는 학습한 것으로 간주
+- 환불 신청: /refund-policy 페이지에서 온라인 신청 가능 (로그인 필요)
+- 영업일 기준 3~5일 내 처리
 
 ## ❓ 자주 묻는 질문 (FAQ)
 Q: 순서대로 들어야 하나요?
@@ -271,10 +286,16 @@ Q: 코딩 몰라도 되나요?
 A: Step 1, 2는 코딩 없이 가능합니다. Step 3 바이브코딩도 AI가 코드를 작성해주니 괜찮아요!
 
 Q: 환불 가능한가요?
-A: 네, /refund-policy 에서 환불 정책을 확인하세요.
+A: 네, /refund-policy 에서 환불 신청 가능합니다. 수강 일수에 따라 환불 금액이 계산됩니다.
 
 Q: 해외에서 결제 가능한가요?
 A: 네! PayPal로 $85 USD에 결제 가능합니다.
+
+Q: Step 3 바이브코딩 언제 오픈하나요?
+A: 2026년 1월 8일 목요일에 오픈합니다! 🎉
+
+Q: Step 4는 언제 오픈하나요?
+A: 추후 오픈 예정입니다. 정확한 일정은 아직 미정이에요.
 
 ## 🎯 추천 학습 경로
 1. **완전 초보자**: 무료 강의들 → Step 1
@@ -282,6 +303,12 @@ A: 네! PayPal로 $85 USD에 결제 가능합니다.
 3. **코딩에 관심**: 기초 체력 훈련소 → Step 3
 4. **빠른 수익화**: Step 1 → Step 2
 5. **1인 사업 목표**: Step 1 → Step 2 → Step 3 → Step 4
+
+## 🎬 2026년 1월 프로젝트
+이번 달 프로젝트 주제: "캐릭터 기반 콘텐츠 만들기"
+- Step 1: 캐릭터 이미지 생성 (실제 인물, 3D 만화, 동물, 심플)
+- Step 2: 캐릭터 영상 자동화 (인물, 만화, 동물, 심플 영상)
+- Step 3: 자동화 툴 직접 개발 (설계, 개발, 테스트, 배포)
 
 ## 👨‍🏫 강사 소개
 Jay Jung (제이 정)
@@ -353,12 +380,14 @@ const CityGuide: React.FC<CityGuideProps> = ({ isOpenExternal, onClose, inline =
       const dayOfWeek = today.getDay();
       const schedule = WEEKLY_SCHEDULE[dayOfWeek];
 
-      if (schedule) {
+      // 스케줄이 있고, openDate가 있으면 해당 날짜 이후인지 확인
+      if (schedule && (!schedule.openDate || today >= schedule.openDate)) {
         // Azure에서 실제 라이브 진행 여부 확인
         try {
           const courseId = schedule.isFree ? 'free-live' :
             schedule.title.includes('건물주') ? 'ai-building-course' :
-              schedule.title.includes('에이전트') ? 'chatgpt-agent-beginner' : '';
+              schedule.title.includes('에이전트') ? 'chatgpt-agent-beginner' :
+                schedule.title.includes('바이브코딩') ? 'vibe-coding' : '';
 
           if (courseId) {
             const liveConfig = await AzureTableService.getCurrentLiveConfig(courseId);

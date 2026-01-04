@@ -5,6 +5,7 @@
   "homepage": "https://www.aicitybuilders.com",
   "dependencies": {
     "@azure/communication-email": "^1.1.0",
+    "@azure/data-tables": "^13.3.2",
     "@emailjs/browser": "^4.4.1",
     "@paypal/react-paypal-js": "^8.9.2",
     "@testing-library/dom": "^10.4.0",

@@ -521,6 +521,363 @@ AI City Builders 사이트 정보:
         onClose={() => setIsCityGuideOpen(false)}
       />
 
+      {/* 🎯 프리미엄 강의 수강권 구매 CTA 섹션 */}
+      <section style={{
+        padding: 'clamp(30px, 5vw, 50px) clamp(16px, 3vw, 24px)',
+        background: 'linear-gradient(180deg, #0d1527 0%, #0a0f1a 50%, #0d1527 100%)',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        {/* 배경 글로우 효과 */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '80%',
+          height: '100%',
+          background: 'radial-gradient(ellipse at center, rgba(255,215,0,0.06) 0%, transparent 60%)',
+          pointerEvents: 'none'
+        }} />
+
+        {/* 섹션 헤더 */}
+        <div style={{ textAlign: 'center', marginBottom: 'clamp(24px, 4vw, 40px)', position: 'relative' }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: 'linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,183,71,0.1))',
+            padding: '8px 20px',
+            borderRadius: '24px',
+            marginBottom: '12px',
+            border: '1px solid rgba(255,215,0,0.3)'
+          }}>
+            <span style={{ fontSize: '1.2rem' }}>🏆</span>
+            <span style={{ color: '#ffd700', fontWeight: '700', fontSize: '0.9rem' }}>PREMIUM COURSES</span>
+          </div>
+
+          <h2 style={{
+            fontSize: 'clamp(1.4rem, 3.5vw, 2rem)',
+            fontWeight: '800',
+            color: '#fff',
+            marginBottom: '12px'
+          }}>
+            <span style={{
+              background: 'linear-gradient(135deg, #ffd700, #f59e0b)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>AI 1인 기업가 로드맵</span> 수강권
+          </h2>
+
+          {/* 가격 강조 */}
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '12px',
+            marginBottom: '16px'
+          }}>
+            <div style={{
+              background: 'linear-gradient(135deg, #ffd700, #f59e0b)',
+              padding: '8px 20px',
+              borderRadius: '30px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}>
+              <span style={{ color: '#1a1a2e', fontWeight: '800', fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)' }}>₩95,000</span>
+              <span style={{ color: '#1a1a2e', fontSize: '0.85rem', fontWeight: '600' }}>/ 3개월</span>
+            </div>
+            <div style={{
+              background: 'rgba(34, 197, 94, 0.2)',
+              border: '2px solid rgba(34, 197, 94, 0.5)',
+              padding: '8px 16px',
+              borderRadius: '30px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              <span style={{ color: '#22c55e', fontWeight: '800', fontSize: 'clamp(1rem, 2vw, 1.1rem)' }}>월 3만원대!</span>
+              <span style={{ color: 'rgba(34, 197, 94, 0.8)', fontSize: '0.75rem' }}>하루 ~1,000원</span>
+            </div>
+          </div>
+
+          {/* 포함 내용 */}
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            gap: '16px',
+            marginBottom: '8px'
+          }}>
+            <div style={{
+              background: 'rgba(59, 130, 246, 0.15)',
+              border: '1px solid rgba(59, 130, 246, 0.3)',
+              padding: '6px 14px',
+              borderRadius: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              <span>📚</span>
+              <span style={{ color: '#60a5fa', fontSize: '0.85rem', fontWeight: '600' }}>기초 강의 10개</span>
+            </div>
+            <div style={{
+              background: 'rgba(239, 68, 68, 0.15)',
+              border: '1px solid rgba(239, 68, 68, 0.3)',
+              padding: '6px 14px',
+              borderRadius: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              <span>🔴</span>
+              <span style={{ color: '#f87171', fontSize: '0.85rem', fontWeight: '600' }}>주간 라이브 12회</span>
+            </div>
+            <div style={{
+              background: 'rgba(168, 85, 247, 0.15)',
+              border: '1px solid rgba(168, 85, 247, 0.3)',
+              padding: '6px 14px',
+              borderRadius: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              <span>🎯</span>
+              <span style={{ color: '#c084fc', fontSize: '0.85rem', fontWeight: '600' }}>월간 프로젝트 3개</span>
+            </div>
+          </div>
+
+          <p style={{
+            color: 'rgba(255,255,255,0.6)',
+            fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
+            maxWidth: '400px',
+            margin: '0 auto'
+          }}>
+            필요한 강의만 골라서 수강 가능!
+          </p>
+        </div>
+
+        {/* 4개 Step 카드 그리드 */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+          gap: 'clamp(12px, 2vw, 20px)',
+          maxWidth: '1100px',
+          margin: '0 auto',
+          position: 'relative'
+        }}>
+          {premiumClasses.map((course, index) => {
+            const stepColors = [
+              { main: '#3b82f6', light: 'rgba(59,130,246,0.15)' },  // Step 1 - Blue
+              { main: '#f59e0b', light: 'rgba(245,158,11,0.15)' },  // Step 2 - Gold
+              { main: '#8b5cf6', light: 'rgba(139,92,246,0.15)' },  // Step 3 - Purple
+              { main: '#10b981', light: 'rgba(16,185,129,0.15)' }   // Step 4 - Green
+            ];
+            const color = stepColors[index] || stepColors[0];
+            const isEnrolled = enrolledCourses.has(course.id);
+            const isComingSoon = course.launchDate?.includes('준비중');
+            const isOpeningSoon = course.launchDate?.includes('1월 8일');
+
+            return (
+              <div
+                key={course.id}
+                onClick={() => navigate(course.path)}
+                style={{
+                  background: `linear-gradient(135deg, ${color.light}, rgba(255,255,255,0.03))`,
+                  borderRadius: '16px',
+                  padding: 'clamp(16px, 2vw, 24px)',
+                  border: `1px solid ${color.main}40`,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = `0 12px 30px ${color.main}30`;
+                  e.currentTarget.style.borderColor = `${color.main}80`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                  e.currentTarget.style.borderColor = `${color.main}40`;
+                }}
+              >
+                {/* Step 번호 + 상태 배지 */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                  <div style={{
+                    background: color.main,
+                    color: '#fff',
+                    padding: '4px 12px',
+                    borderRadius: '12px',
+                    fontSize: '0.75rem',
+                    fontWeight: '800'
+                  }}>
+                    STEP {index + 1}
+                  </div>
+
+                  {isEnrolled && (
+                    <div style={{
+                      background: 'rgba(16,185,129,0.2)',
+                      color: '#10b981',
+                      padding: '4px 10px',
+                      borderRadius: '10px',
+                      fontSize: '0.7rem',
+                      fontWeight: '700'
+                    }}>✓ 수강중</div>
+                  )}
+
+                  {isOpeningSoon && !isEnrolled && (
+                    <div style={{
+                      background: 'rgba(139,92,246,0.2)',
+                      color: '#a78bfa',
+                      padding: '4px 10px',
+                      borderRadius: '10px',
+                      fontSize: '0.7rem',
+                      fontWeight: '700'
+                    }}>🔥 1/8 오픈</div>
+                  )}
+
+                  {isComingSoon && (
+                    <div style={{
+                      background: 'rgba(100,116,139,0.2)',
+                      color: '#94a3b8',
+                      padding: '4px 10px',
+                      borderRadius: '10px',
+                      fontSize: '0.7rem',
+                      fontWeight: '700'
+                    }}>준비중</div>
+                  )}
+                </div>
+
+                {/* 강의 제목 */}
+                <h3 style={{
+                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                  fontWeight: '700',
+                  color: '#fff',
+                  marginBottom: '6px',
+                  lineHeight: '1.3'
+                }}>
+                  {course.title.replace('Step 1: ', '').replace('Step 2: ', '').replace('Step 3: ', '').replace('Step 4: ', '')}
+                </h3>
+
+                {/* 서브타이틀 */}
+                <p style={{
+                  fontSize: '0.8rem',
+                  color: 'rgba(255,255,255,0.6)',
+                  marginBottom: '16px',
+                  lineHeight: '1.4'
+                }}>
+                  {course.subtitle}
+                </p>
+
+                {/* 가격 + 버튼 */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '10px',
+                  marginTop: 'auto'
+                }}>
+                  {!isComingSoon ? (
+                    <>
+                      <div>
+                        <div style={{
+                          fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
+                          fontWeight: '800',
+                          color: '#ffd700'
+                        }}>₩95,000</div>
+                        <div style={{
+                          fontSize: '0.7rem',
+                          color: '#22c55e',
+                          fontWeight: '600',
+                          marginTop: '2px'
+                        }}>월 ~3만원</div>
+                      </div>
+
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(course.path);
+                        }}
+                        style={{
+                          background: isEnrolled
+                            ? 'linear-gradient(135deg, #10b981, #059669)'
+                            : `linear-gradient(135deg, ${color.main}, ${color.main}cc)`,
+                          color: '#fff',
+                          border: 'none',
+                          padding: '10px 16px',
+                          borderRadius: '10px',
+                          fontSize: '0.8rem',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          transition: 'all 0.2s',
+                          whiteSpace: 'nowrap'
+                        }}
+                      >
+                        {isEnrolled ? '📚 이어보기' : '🛒 구매하기'}
+                      </button>
+                    </>
+                  ) : (
+                    <div style={{
+                      fontSize: '0.85rem',
+                      color: 'rgba(255,255,255,0.5)',
+                      fontWeight: '600'
+                    }}>
+                      가격 미정 • 오픈 시 알림
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* 하단 안내 */}
+        <div style={{
+          textAlign: 'center',
+          marginTop: 'clamp(20px, 3vw, 32px)',
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          gap: 'clamp(12px, 2vw, 24px)'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            color: 'rgba(255,255,255,0.6)',
+            fontSize: '0.85rem'
+          }}>
+            <span>📺</span> 주간 라이브 포함
+          </div>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            color: 'rgba(255,255,255,0.6)',
+            fontSize: '0.85rem'
+          }}>
+            <span>📅</span> 3개월 수강권
+          </div>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            color: 'rgba(255,255,255,0.6)',
+            fontSize: '0.85rem'
+          }}>
+            <span>🌏</span> 해외결제 $85 USD
+          </div>
+        </div>
+      </section>
+
       {/* 🗞️ 월간 프로젝트 신문 섹션 */}
       <MonthlyProjectSection />
 

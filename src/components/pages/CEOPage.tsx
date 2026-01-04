@@ -558,8 +558,8 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                       </h3>
                     </div>
                   </div>
-                  <div style={{ 
-                    color: 'rgba(255,255,255,0.6)', 
+                  <div style={{
+                    color: 'rgba(255,255,255,0.6)',
                     fontSize: '0.75rem',
                     textAlign: 'right'
                   }}>
@@ -579,17 +579,17 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
                   borderRadius: '10px',
                   marginBottom: '14px'
                 }}>
-                  <div style={{ 
-                    color: 'rgba(255,255,255,0.5)', 
-                    fontSize: '0.7rem', 
-                    marginBottom: '4px' 
+                  <div style={{
+                    color: 'rgba(255,255,255,0.5)',
+                    fontSize: '0.7rem',
+                    marginBottom: '4px'
                   }}>
                     📌 1월 프로젝트
                   </div>
-                  <div style={{ 
-                    color: step.color, 
-                    fontSize: '0.95rem', 
-                    fontWeight: '700' 
+                  <div style={{
+                    color: step.color,
+                    fontSize: '0.95rem',
+                    fontWeight: '700'
                   }}>
                     {step.project}
                   </div>
@@ -649,9 +649,9 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
             borderRadius: '16px',
             border: '1px solid rgba(255,255,255,0.1)'
           }}>
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
               gap: '8px',
               color: 'rgba(255,255,255,0.7)',
               fontSize: '0.9rem'
@@ -659,29 +659,29 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
               <span>📚</span>
               <span>기본 강의 <strong style={{ color: '#ffd60a' }}>10개</strong></span>
             </div>
-            <div style={{ 
-              width: '1px', 
-              height: '20px', 
-              background: 'rgba(255,255,255,0.2)' 
+            <div style={{
+              width: '1px',
+              height: '20px',
+              background: 'rgba(255,255,255,0.2)'
             }} />
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
               gap: '8px',
               color: 'rgba(255,255,255,0.7)',
               fontSize: '0.9rem'
             }}>
               <span>🔴</span>
-              <span>주간 라이브 <strong style={{ color: '#ffd60a' }}>13회</strong></span>
+              <span>주간 라이브 <strong style={{ color: '#ffd60a' }}>12회</strong></span>
             </div>
-            <div style={{ 
-              width: '1px', 
-              height: '20px', 
-              background: 'rgba(255,255,255,0.2)' 
+            <div style={{
+              width: '1px',
+              height: '20px',
+              background: 'rgba(255,255,255,0.2)'
             }} />
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
               gap: '8px',
               color: 'rgba(255,255,255,0.7)',
               fontSize: '0.9rem'

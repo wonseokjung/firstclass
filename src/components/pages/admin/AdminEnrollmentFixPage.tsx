@@ -23,39 +23,65 @@ interface Payment {
 // 🔥 토스페이먼츠 데이터 파싱 함수
 const parseTossPaymentsData = (rawText: string): Payment[] => {
   const payments: Payment[] = [];
-  const lines = rawText.split('\n').map(line => line.trim()).filter(line => line);
+  // 불필요한 텍스트 필터링
+  const skipWords = ['-', '원', '0', '완료', '취소', '대기', '농협', '신한', '국민', '우리', '하나', '카카오페이', '네이버페이', '토스', '간편결제'];
+  const lines = rawText.split('\n').map(line => line.trim()).filter(line => line && !skipWords.includes(line));
+
+  console.log('🔍 파싱할 줄 수:', lines.length);
+  console.log('🔍 파싱할 데이터:', lines);
 
   let currentPayment: Partial<Payment> = {};
+  let paymentCount = 0;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // 주문번호 찾기
-    if (line.startsWith('order_')) {
-      if (currentPayment.orderId) {
-        // 이전 결제 저장
-        if (currentPayment.orderId && currentPayment.maskedEmail && currentPayment.amount) {
-          payments.push(currentPayment as Payment);
-        }
+    // 구매자명 찾기 (한글 이름 + 마스킹: 배*영, 김*수, 홍*동 등) - 새 결제 시작점
+    const isKoreanName = /^[가-힣]\*[가-힣]{1,2}$/.test(line);
+    // 영어 이름: 소문자 포함 필수 (대문자만 있는 건 카드번호)
+    const isEnglishName = /^[A-Za-z]{2,}\*+[A-Za-z]+$/.test(line) && /[a-z]/.test(line);
+    // 카드번호 마스킹 패턴 제외 (JA****JO, 12****34 등)
+    const isCardNumber = /^[A-Z0-9]{2,}\*+[A-Z0-9]+$/.test(line);
+    
+    if ((isKoreanName || isEnglishName) && !isCardNumber) {
+      // 토스는 이름이 2번 나옴 - 이미 이름이 있고 같은 이름이면 무시
+      if (currentPayment.name === line) {
+        console.log('⏭️ 중복 이름 무시:', line);
+        continue;
       }
-      currentPayment = { orderId: line, status: 'pending' };
+      
+      console.log('✅ 이름 발견:', line);
+      // 이전 결제 저장 (이메일과 금액이 있으면)
+      if (currentPayment.name && currentPayment.maskedEmail && currentPayment.amount) {
+        payments.push(currentPayment as Payment);
+        console.log('💾 결제 저장:', currentPayment);
+      }
+      paymentCount++;
+      currentPayment = { 
+        orderId: `toss_paste_${Date.now()}_${paymentCount}`, 
+        name: line, 
+        status: 'pending' 
+      };
+    }
+    // 주문번호 찾기 (order_로 시작)
+    else if (line.startsWith('order_')) {
+      currentPayment.orderId = line;
     }
     // 이메일 찾기 (@ 포함)
     else if (line.includes('@') && !currentPayment.maskedEmail) {
       currentPayment.maskedEmail = line;
       currentPayment.realEmail = line;
+      console.log('📧 이메일 발견:', line);
     }
     // 금액 찾기 (숫자,숫자 형식)
     else if (/^\d{1,3}(,\d{3})*$/.test(line)) {
       currentPayment.amount = parseInt(line.replace(/,/g, ''));
+      console.log('💰 금액 발견:', currentPayment.amount);
     }
     // 상품명 찾기
-    else if (line.includes('Step 1:') || line.includes('AI 건물주') || line.includes('Google Opal') || line.includes('에이전트')) {
+    else if (line.includes('Step 1:') || line.includes('AI 건물주') || line.includes('Step 2:') || line.includes('에이전트') || line.includes('바이브코딩') || line.includes('얼리버드')) {
       currentPayment.productName = line;
-    }
-    // 구매자명 찾기 (한글 2-3자 + 마스킹)
-    else if (/^[가-힣]{1}\*[가-힣]{1,2}$/.test(line) || /^[A-Za-z]{2}\*+[A-Za-z]*$/.test(line)) {
-      currentPayment.name = line;
+      console.log('📦 상품명 발견:', line);
     }
     // 전화번호 찾기 (010****1234 형식)
     else if (/^010\*{4}\d{4}$/.test(line) || /^010-\*{4}-\d{4}$/.test(line)) {
@@ -68,10 +94,12 @@ const parseTossPaymentsData = (rawText: string): Payment[] => {
   }
 
   // 마지막 결제 저장
-  if (currentPayment.orderId && currentPayment.maskedEmail && currentPayment.amount) {
+  if (currentPayment.name && currentPayment.maskedEmail && currentPayment.amount) {
     payments.push(currentPayment as Payment);
+    console.log('💾 마지막 결제 저장:', currentPayment);
   }
 
+  console.log('📊 파싱 결과:', payments.length, '건', payments);
   return payments;
 };
 

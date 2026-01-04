@@ -136,7 +136,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
         onBack={onBack}
         breadcrumbText="Step 1: AI 건물주 되기 기초"
       />
-      
+
       {/* 고정 결제 버튼 */}
       <FloatingPaymentButton onClick={handlePayment} isPaidUser={isPaidUser} price={currentPrice} />
 
@@ -1493,7 +1493,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                     <div style={{ textAlign: 'center', padding: '20px', background: 'rgba(251,191,36,0.15)', borderRadius: '15px', border: '2px solid rgba(251,191,36,0.4)' }}>
                       <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🔴</div>
                       <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', marginBottom: '5px' }}>주간 라이브</div>
-                      <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: '1.5rem' }}>13회</div>
+                      <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: '1.5rem' }}>12회</div>
                       <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>3개월간 참여 가능</div>
                     </div>
                   </div>
@@ -1509,6 +1509,24 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   <h5 style={{ color: '#1e3a8a', fontSize: 'clamp(1rem, 2.2vw, 1.2rem)', fontWeight: '800', marginBottom: '15px', textAlign: 'center' }}>
                     💰 이 가격 실화? 가성비 계산
                   </h5>
+
+                  {/* 월 3만원대 강조 */}
+                  <div style={{
+                    background: 'rgba(34, 197, 94, 0.9)',
+                    borderRadius: '15px',
+                    padding: '16px 20px',
+                    marginBottom: '20px',
+                    textAlign: 'center',
+                    border: '3px solid #16a34a'
+                  }}>
+                    <div style={{ color: 'white', fontSize: 'clamp(1.3rem, 3vw, 1.6rem)', fontWeight: '900', marginBottom: '4px' }}>
+                      🔥 월 3만원대! (하루 ~1,000원)
+                    </div>
+                    <div style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.9rem' }}>
+                      95,000원 ÷ 3개월 = <strong>월 31,667원</strong>
+                    </div>
+                  </div>
+
                   <div style={{
                     display: 'flex',
                     justifyContent: 'center',
@@ -1522,16 +1540,16 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                       <div style={{ color: '#1e3a8a', fontWeight: '800', fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)' }}>+</div>
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ color: '#1e3a8a', fontSize: '0.9rem' }}>라이브 13회</div>
+                      <div style={{ color: '#1e3a8a', fontSize: '0.9rem' }}>라이브 12회</div>
                       <div style={{ color: '#1e3a8a', fontWeight: '800', fontSize: 'clamp(1.05rem, 2.3vw, 1.3rem)' }}>=</div>
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ color: '#1e3a8a', fontSize: '0.9rem' }}>총 23개 콘텐츠</div>
+                      <div style={{ color: '#1e3a8a', fontSize: '0.9rem' }}>총 22개 콘텐츠</div>
                     </div>
                   </div>
                   <div style={{ textAlign: 'center', background: 'rgba(30, 58, 138, 0.15)', padding: '15px', borderRadius: '12px' }}>
-                    <span style={{ color: '#1e3a8a', fontSize: '1rem' }}>95,000원 ÷ 23개 = </span>
-                    <span style={{ color: '#1e40af', fontWeight: '900', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>4,130원</span>
+                    <span style={{ color: '#1e3a8a', fontSize: '1rem' }}>95,000원 ÷ 22개 = </span>
+                    <span style={{ color: '#1e40af', fontWeight: '900', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>4,318원</span>
                     <span style={{ color: '#1e3a8a', fontSize: '1rem' }}>/개</span>
                     <div style={{ color: '#1e3a8a', fontSize: '0.9rem', marginTop: '8px', fontWeight: '600' }}>
                       ☕ 커피 한 잔 가격으로 전문 강의 1개!
@@ -2430,7 +2448,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
 // 고정 결제 버튼 (Floating CTA) 컴포넌트
 const FloatingPaymentButton: React.FC<{ onClick: () => void; isPaidUser: boolean; price: number }> = ({ onClick, isPaidUser, price }) => {
   if (isPaidUser) return null;
-  
+
   return (
     <div style={{
       position: 'fixed',

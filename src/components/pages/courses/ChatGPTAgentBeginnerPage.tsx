@@ -212,7 +212,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
         onBack={onBack}
         breadcrumbText="ChatGPT AI AGENT 비기너편"
       />
-      
+
       {/* 고정 결제 버튼 */}
       <FloatingPaymentButton onClick={handleEarlyBirdPayment} isPaidUser={isPaidUser} price={coursePrice} />
 
@@ -361,7 +361,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '1rem', lineHeight: 1.7, margin: 0 }}>
                   <strong style={{ color: '#ffd60a' }}>매주 수요일 밤 8시</strong> 실시간으로<br />
                   함께 프로젝트를 진행합니다.<br />
-                  <span style={{ color: '#94a3b8' }}>3개월간 총 13회 참여 가능</span>
+                  <span style={{ color: '#94a3b8' }}>3개월간 총 12회 참여 가능</span>
                 </p>
               </div>
             </div>
@@ -903,7 +903,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                     <div style={{ textAlign: 'center', padding: '20px 15px', background: 'rgba(251,191,36,0.15)', borderRadius: '15px', border: '2px solid rgba(251,191,36,0.4)' }}>
                       <div style={{ fontSize: '2.2rem', marginBottom: '10px' }}>📅</div>
                       <div style={{ color: 'white', fontWeight: '700', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', marginBottom: '5px' }}>주간 라이브</div>
-                      <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: 'clamp(1.3rem, 3vw, 1.5rem)' }}>13회</div>
+                      <div style={{ color: '#ffd60a', fontWeight: '800', fontSize: 'clamp(1.3rem, 3vw, 1.5rem)' }}>12회</div>
                       <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginTop: '5px' }}>3개월간 참여 가능</div>
                     </div>
                   </div>
@@ -919,6 +919,24 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   <h5 style={{ color: '#1e3a8a', fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', fontWeight: '800', marginBottom: '15px', textAlign: 'center' }}>
                     💰 이 가격 실화? 가성비 계산
                   </h5>
+
+                  {/* 월 3만원대 강조 */}
+                  <div style={{
+                    background: 'rgba(34, 197, 94, 0.9)',
+                    borderRadius: '15px',
+                    padding: '14px 18px',
+                    marginBottom: '18px',
+                    textAlign: 'center',
+                    border: '3px solid #16a34a'
+                  }}>
+                    <div style={{ color: 'white', fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', fontWeight: '900', marginBottom: '4px' }}>
+                      🔥 월 3만원대! (하루 ~1,000원)
+                    </div>
+                    <div style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.85rem' }}>
+                      95,000원 ÷ 3개월 = <strong>월 31,667원</strong>
+                    </div>
+                  </div>
+
                   <div style={{
                     display: 'flex',
                     justifyContent: 'center',
@@ -932,16 +950,16 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                       <div style={{ color: '#1e3a8a', fontWeight: '800', fontSize: '1.2rem' }}>+</div>
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ color: '#1e3a8a', fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)' }}>라이브 13회</div>
+                      <div style={{ color: '#1e3a8a', fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)' }}>라이브 12회</div>
                       <div style={{ color: '#1e3a8a', fontWeight: '800', fontSize: '1.2rem' }}>=</div>
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ color: '#1e3a8a', fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)' }}>총 23개 콘텐츠</div>
+                      <div style={{ color: '#1e3a8a', fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)' }}>총 22개 콘텐츠</div>
                     </div>
                   </div>
                   <div style={{ textAlign: 'center', background: 'rgba(30, 58, 138, 0.15)', padding: '15px', borderRadius: '12px' }}>
-                    <span style={{ color: '#1e3a8a', fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>95,000원 ÷ 23개 = </span>
-                    <span style={{ color: '#1e40af', fontWeight: '900', fontSize: 'clamp(1.5rem, 4vw, 1.8rem)' }}>4,130원</span>
+                    <span style={{ color: '#1e3a8a', fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>95,000원 ÷ 22개 = </span>
+                    <span style={{ color: '#1e40af', fontWeight: '900', fontSize: 'clamp(1.5rem, 4vw, 1.8rem)' }}>4,318원</span>
                     <span style={{ color: '#1e3a8a', fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>/개</span>
                     <div style={{ color: '#1e3a8a', fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)', marginTop: '8px', fontWeight: '600' }}>
                       ☕ 커피 한 잔 가격으로 전문 강의 1개!
@@ -1080,7 +1098,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                   fontWeight: '700',
                   border: '1px solid rgba(254, 240, 138, 0.3)'
                 }}>
-                  📅 기본 강의 10개 + 주간 라이브 13회
+                  📅 기본 강의 10개 + 주간 라이브 12회
                 </div>
               </div>
 
@@ -2327,7 +2345,7 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
 // 고정 결제 버튼 (Floating CTA) 컴포넌트
 const FloatingPaymentButton: React.FC<{ onClick: () => void; isPaidUser: boolean; price: number }> = ({ onClick, isPaidUser, price }) => {
   if (isPaidUser) return null;
-  
+
   return (
     <div style={{
       position: 'fixed',
