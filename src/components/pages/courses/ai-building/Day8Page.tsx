@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, PlayCircle, Target, MessageCircle, Heart, Send, User, Mic, Volume2, Wand2, Copy, Video, Code, Sparkles } from 'lucide-react';
+import { ArrowLeft, CheckCircle, PlayCircle, Target, MessageCircle, Heart, Send, User, Volume2, Wand2, Video, Code, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AzureTableService from '../../../../services/azureTableService';
 
@@ -32,7 +32,7 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
   const [discussionPosts, setDiscussionPosts] = useState<DiscussionPost[]>([]);
   const [isLoadingPosts, setIsLoadingPosts] = useState<boolean>(true);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [copiedText, setCopiedText] = useState<string | null>(null);
+
 
   const loadPosts = async (currentUserEmail?: string) => {
     try {
@@ -186,16 +186,6 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
       }
     } catch (error) {
       console.error('❌ 좋아요 처리 실패:', error);
-    }
-  };
-
-  const copyToClipboard = async (text: string, id: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedText(id);
-      setTimeout(() => setCopiedText(null), 2000);
-    } catch (error) {
-      console.error('복사 실패:', error);
     }
   };
 
