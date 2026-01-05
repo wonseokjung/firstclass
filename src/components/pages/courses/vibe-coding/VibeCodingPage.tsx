@@ -15,8 +15,8 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
 
   // 오픈일: 2026년 1월 8일
   const openDate = new Date(2026, 0, 8);
-  // 얼리버드 종료일: 2026년 2월 7일
-  const earlyBirdEndDate = new Date(2026, 1, 7, 23, 59, 59);
+  // 얼리버드 종료일: 2026년 1월 31일
+  const earlyBirdEndDate = new Date(2026, 0, 31, 23, 59, 59);
   const now = new Date();
   const isOpen = now >= openDate;
   const isEarlyBird = now >= openDate && now <= earlyBirdEndDate;
@@ -293,7 +293,7 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
                   fontSize: '0.75rem',
                   fontWeight: '800'
                 }}>
-                  🔥 얼리버드 (~2/7)
+                  🔥 얼리버드 (~1/31)
                 </div>
               )}
               {isEarlyBird && (

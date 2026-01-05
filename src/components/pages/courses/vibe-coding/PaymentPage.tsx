@@ -22,9 +22,9 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
     const [activeTab, setActiveTab] = useState<'domestic' | 'international'>('domestic');
     const [isLoading, setIsLoading] = useState(false);
 
-    // 얼리버드 기간: 2026년 1월 8일 ~ 2월 7일
+    // 얼리버드 기간: 2026년 1월 8일 ~ 1월 31일
     const openDate = new Date(2026, 0, 8);
-    const earlyBirdEndDate = new Date(2026, 1, 7, 23, 59, 59);
+    const earlyBirdEndDate = new Date(2026, 0, 31, 23, 59, 59);
     const now = new Date();
     const isEarlyBird = now >= openDate && now <= earlyBirdEndDate;
 
@@ -262,7 +262,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                                 fontWeight: '800',
                                 marginBottom: '15px'
                             }}>
-                                🔥 얼리버드 (~2/7)
+                                🔥 얼리버드 (~1/31)
                             </div>
                         )}
                         {isEarlyBird && (
