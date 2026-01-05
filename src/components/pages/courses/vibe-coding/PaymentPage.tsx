@@ -8,9 +8,6 @@ import AzureTableService from '../../../../services/azureTableService';
 // PayPal Live Client ID
 const PAYPAL_CLIENT_ID = 'AVkkDf4qSOAW0AbS6i6Gy85KbYvLLWJz93KZcm55SXCoJ8Iy5OX-aiXceZsD10poCFlkCmZYlZ1y832d';
 
-// 해외 결제 USD 고정 가격
-const USD_PRICE = 85; // $85 USD
-
 interface PaymentPageProps {
     onBack?: () => void;
 }
