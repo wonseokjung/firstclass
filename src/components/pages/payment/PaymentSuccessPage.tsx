@@ -17,7 +17,7 @@ import { COURSE_ID_TO_NAME, COURSE_ID_TO_PRICE } from '../../../hooks/useReferra
 const confirmPayment = async (paymentKey: string, orderId: string, amount: number) => {
   const isTestPayment = paymentKey.startsWith('tviva') || paymentKey.startsWith('test_');
   console.log(`💳 결제 승인 요청: ${isTestPayment ? '🟡 TEST' : '🔴 LIVE'} (paymentKey: ${paymentKey.substring(0, 10)}...)`);
-  
+
   try {
     // Azure Functions API 호출 (시크릿 키는 서버에서 처리)
     const response = await fetch('/api/confirm-payment', {
@@ -65,11 +65,11 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
 
   useEffect(() => {
     console.log('🚀 PaymentSuccessPage useEffect 시작!');
-    
+
     const processPurchase = async () => {
       try {
         console.log('🔄 processPurchase 함수 실행!');
-        
+
         // URL에서 결제 정보 가져오기
         const urlParams = new URLSearchParams(window.location.search);
         const courseParam = urlParams.get('course');
@@ -77,14 +77,14 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
         const orderId = urlParams.get('orderId');
         const amount = urlParams.get('amount');
         const actualAmount = amount ? parseInt(amount) : 0;
-        
+
         console.log('📋 URL 파라미터:', { courseParam, paymentKey, orderId, amount, actualAmount });
-        
+
         // 토스페이먼츠 결제 승인 처리 (중복 방지)
         if (paymentKey && orderId && amount) {
           // 🔴 중복 등록 방지: orderId 기반으로만 체크 (각 결제 독립적 처리)
           const orderProcessedKey = `order_processed_${orderId}`;
-          
+
           // 이미 처리된 주문인지 확인
           const existingOrder = localStorage.getItem(orderProcessedKey);
           if (existingOrder) {
@@ -93,118 +93,118 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             setIsProcessing(false);
             return; // 🔴 여기서 종료! 더 이상 진행 안 함!
           }
-          
+
           console.log('💳 토스페이먼츠 결제 승인 시작... orderId:', orderId);
-          
+
           // 처리 시작 즉시 기록 (동일 orderId 중복 방지)
           localStorage.setItem(orderProcessedKey, JSON.stringify({
             orderId,
             status: 'processing',
             startedAt: new Date().toISOString()
           }));
-            
-            try {
-              const paymentResult = await confirmPayment(paymentKey, orderId, parseInt(amount));
-              console.log('✅ 결제 승인 성공:', paymentResult);
-              
-              // 🔴 결제 상태 저장 (DONE, WAITING_FOR_DEPOSIT 등)
-              setPaymentStatus(paymentResult.status);
-              console.log(`📊 결제 상태: ${paymentResult.status}`);
-              
-              // ⭐ 마스킹 없는 전체 결제 정보 저장
-              if (paymentResult) {
-                const fullPaymentInfo = {
-                  orderId: paymentResult.orderId,
-                  paymentKey: paymentResult.paymentKey,
-                  // 고객 정보 (마스킹 없음!)
-                  customerName: paymentResult.customer?.name || paymentResult.virtualAccount?.customerName || '정보없음',
-                  customerEmail: paymentResult.customer?.email || '정보없음',
-                  customerPhone: paymentResult.customer?.phoneNumber || paymentResult.customer?.mobilePhone || '정보없음',
-                  // 결제 정보
-                  method: paymentResult.method,
-                  amount: paymentResult.totalAmount,
-                  status: paymentResult.status,
-                  // 가상계좌 정보 (있는 경우)
-                  virtualAccount: paymentResult.virtualAccount ? {
-                    accountNumber: paymentResult.virtualAccount.accountNumber,
-                    bank: paymentResult.virtualAccount.bank,
-                    customerName: paymentResult.virtualAccount.customerName,
-                    dueDate: paymentResult.virtualAccount.dueDate
-                  } : null,
-                  // 타임스탬프
-                  approvedAt: paymentResult.approvedAt || new Date().toISOString(),
-                  savedAt: new Date().toISOString()
-                };
-                
-                console.log('📝 전체 결제 정보 (마스킹 없음):', fullPaymentInfo);
-                
-                // 🔴 가상계좌인 경우 정보 저장 (입금 대기 상태)
-                if (paymentResult.status === 'WAITING_FOR_DEPOSIT' && paymentResult.virtualAccount) {
-                  setVirtualAccountInfo({
-                    bank: paymentResult.virtualAccount.bank,
-                    accountNumber: paymentResult.virtualAccount.accountNumber,
-                    customerName: paymentResult.virtualAccount.customerName,
-                    dueDate: paymentResult.virtualAccount.dueDate,
-                    amount: paymentResult.totalAmount
-                  });
-                  console.log('💰 가상계좌 발급됨 - 입금 대기 중:', paymentResult.virtualAccount);
-                }
-                
-                // 로컬 스토리지에 저장 (관리자가 확인할 수 있도록)
-                try {
-                  const storageKey = `payment_full_${orderId}`;
-                  localStorage.setItem(storageKey, JSON.stringify(fullPaymentInfo));
-                  console.log(`💾 결제 정보 저장 완료: ${storageKey}`);
-                  
-                  // 전체 결제 내역 목록에도 추가
-                  const allPayments = localStorage.getItem('all_payment_details');
-                  const paymentsList = allPayments ? JSON.parse(allPayments) : [];
-                  paymentsList.unshift(fullPaymentInfo); // 최신이 앞에
-                  
-                  // 최대 100개만 저장
-                  if (paymentsList.length > 100) {
-                    paymentsList.pop();
-                  }
-                  
-                  localStorage.setItem('all_payment_details', JSON.stringify(paymentsList));
-                  console.log('📋 전체 결제 내역 업데이트 완료');
-                } catch (storageError) {
-                  console.error('❌ 로컬 스토리지 저장 실패:', storageError);
-                }
-                
-                // 🔴🔴🔴 가상계좌(입금 대기)인 경우 Azure 등록 건너뛰기!
-                if (paymentResult.status === 'WAITING_FOR_DEPOSIT') {
-                  console.log('⏳ 가상계좌 입금 대기 중 - Azure 등록 건너뜀 (입금 확인 후 수동 등록 필요)');
-                  localStorage.setItem(orderProcessedKey, JSON.stringify({
-                    orderId,
-                    paymentKey,
-                    status: 'waiting_deposit',
-                    processedAt: new Date().toISOString()
-                  }));
-                  setIsProcessing(false);
-                  return; // 여기서 종료! Azure 등록 안 함!
-                }
+
+          try {
+            const paymentResult = await confirmPayment(paymentKey, orderId, parseInt(amount));
+            console.log('✅ 결제 승인 성공:', paymentResult);
+
+            // 🔴 결제 상태 저장 (DONE, WAITING_FOR_DEPOSIT 등)
+            setPaymentStatus(paymentResult.status);
+            console.log(`📊 결제 상태: ${paymentResult.status}`);
+
+            // ⭐ 마스킹 없는 전체 결제 정보 저장
+            if (paymentResult) {
+              const fullPaymentInfo = {
+                orderId: paymentResult.orderId,
+                paymentKey: paymentResult.paymentKey,
+                // 고객 정보 (마스킹 없음!)
+                customerName: paymentResult.customer?.name || paymentResult.virtualAccount?.customerName || '정보없음',
+                customerEmail: paymentResult.customer?.email || '정보없음',
+                customerPhone: paymentResult.customer?.phoneNumber || paymentResult.customer?.mobilePhone || '정보없음',
+                // 결제 정보
+                method: paymentResult.method,
+                amount: paymentResult.totalAmount,
+                status: paymentResult.status,
+                // 가상계좌 정보 (있는 경우)
+                virtualAccount: paymentResult.virtualAccount ? {
+                  accountNumber: paymentResult.virtualAccount.accountNumber,
+                  bank: paymentResult.virtualAccount.bank,
+                  customerName: paymentResult.virtualAccount.customerName,
+                  dueDate: paymentResult.virtualAccount.dueDate
+                } : null,
+                // 타임스탬프
+                approvedAt: paymentResult.approvedAt || new Date().toISOString(),
+                savedAt: new Date().toISOString()
+              };
+
+              console.log('📝 전체 결제 정보 (마스킹 없음):', fullPaymentInfo);
+
+              // 🔴 가상계좌인 경우 정보 저장 (입금 대기 상태)
+              if (paymentResult.status === 'WAITING_FOR_DEPOSIT' && paymentResult.virtualAccount) {
+                setVirtualAccountInfo({
+                  bank: paymentResult.virtualAccount.bank,
+                  accountNumber: paymentResult.virtualAccount.accountNumber,
+                  customerName: paymentResult.virtualAccount.customerName,
+                  dueDate: paymentResult.virtualAccount.dueDate,
+                  amount: paymentResult.totalAmount
+                });
+                console.log('💰 가상계좌 발급됨 - 입금 대기 중:', paymentResult.virtualAccount);
               }
-              
-              // 성공 시 완료 표시 (orderId 기반 localStorage)
-              localStorage.setItem(orderProcessedKey, JSON.stringify({
-                orderId,
-                paymentKey,
-                status: 'payment_confirmed',
-                processedAt: new Date().toISOString()
-              }));
-              console.log('✅ 결제 승인 완료 기록:', orderId);
-            } catch (error) {
-              console.error('❌ 결제 승인 실패:', error);
-              
-              // 실패 시 처리 기록 삭제 (재시도 가능하도록)
-              localStorage.removeItem(orderProcessedKey);
-              
-              alert('결제 승인 중 오류가 발생했습니다. 고객센터로 문의해주세요.');
-              // 실패 페이지로 리다이렉트
-              window.location.href = '/payment/fail?error=payment_confirmation_failed';
-              return;
+
+              // 로컬 스토리지에 저장 (관리자가 확인할 수 있도록)
+              try {
+                const storageKey = `payment_full_${orderId}`;
+                localStorage.setItem(storageKey, JSON.stringify(fullPaymentInfo));
+                console.log(`💾 결제 정보 저장 완료: ${storageKey}`);
+
+                // 전체 결제 내역 목록에도 추가
+                const allPayments = localStorage.getItem('all_payment_details');
+                const paymentsList = allPayments ? JSON.parse(allPayments) : [];
+                paymentsList.unshift(fullPaymentInfo); // 최신이 앞에
+
+                // 최대 100개만 저장
+                if (paymentsList.length > 100) {
+                  paymentsList.pop();
+                }
+
+                localStorage.setItem('all_payment_details', JSON.stringify(paymentsList));
+                console.log('📋 전체 결제 내역 업데이트 완료');
+              } catch (storageError) {
+                console.error('❌ 로컬 스토리지 저장 실패:', storageError);
+              }
+
+              // 🔴🔴🔴 가상계좌(입금 대기)인 경우 Azure 등록 건너뛰기!
+              if (paymentResult.status === 'WAITING_FOR_DEPOSIT') {
+                console.log('⏳ 가상계좌 입금 대기 중 - Azure 등록 건너뜀 (입금 확인 후 수동 등록 필요)');
+                localStorage.setItem(orderProcessedKey, JSON.stringify({
+                  orderId,
+                  paymentKey,
+                  status: 'waiting_deposit',
+                  processedAt: new Date().toISOString()
+                }));
+                setIsProcessing(false);
+                return; // 여기서 종료! Azure 등록 안 함!
+              }
             }
+
+            // 성공 시 완료 표시 (orderId 기반 localStorage)
+            localStorage.setItem(orderProcessedKey, JSON.stringify({
+              orderId,
+              paymentKey,
+              status: 'payment_confirmed',
+              processedAt: new Date().toISOString()
+            }));
+            console.log('✅ 결제 승인 완료 기록:', orderId);
+          } catch (error) {
+            console.error('❌ 결제 승인 실패:', error);
+
+            // 실패 시 처리 기록 삭제 (재시도 가능하도록)
+            localStorage.removeItem(orderProcessedKey);
+
+            alert('결제 승인 중 오류가 발생했습니다. 고객센터로 문의해주세요.');
+            // 실패 페이지로 리다이렉트
+            window.location.href = '/payment/fail?error=payment_confirmation_failed';
+            return;
+          }
         } else {
           // 🔴🔴🔴 보안 수정: 결제 파라미터 없으면 등록 중단!
           console.error('🚨 결제 승인 파라미터 없음 - 무단 접근 차단!');
@@ -213,19 +213,19 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           window.location.href = '/payment/fail?error=missing_payment_params';
           return; // 여기서 종료! 등록 진행 안 함!
         }
-        
+
         // 사용자 정보는 location.state에서 가져오기
         const userInfo = location.state?.user;
-        
+
         // 🔐 사용자 정보 확인 (우선순위: sessionStorage > location.state > localStorage 백업)
         let user = null;
-        
+
         // 1. sessionStorage에서 가져오기 (가장 우선)
         const sessionUserInfo = sessionStorage.getItem('aicitybuilders_user_session');
         if (sessionUserInfo) {
           user = JSON.parse(sessionUserInfo);
           console.log('✅ sessionStorage에서 사용자 정보 복구:', user?.email);
-        } 
+        }
         // 2. location.state에서 가져오기
         else if (userInfo) {
           user = userInfo;
@@ -240,11 +240,11 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               // 백업이 1시간 이내인지 확인
               const backupTime = new Date(backup.backupAt).getTime();
               const oneHourAgo = Date.now() - (60 * 60 * 1000);
-              
+
               if (backupTime > oneHourAgo) {
                 user = { email: backup.email, name: backup.name };
                 console.log('🔄 localStorage 백업에서 사용자 정보 복구:', user?.email);
-                
+
                 // sessionStorage에도 다시 저장
                 sessionStorage.setItem('aicitybuilders_user_session', JSON.stringify(user));
               } else {
@@ -255,9 +255,9 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             }
           }
         }
-        
+
         console.log('💳 결제 처리:', user?.email, '→', courseParam);
-        
+
         // 🔐 courseParam이 없으면 localStorage 백업에서 복구 시도
         let effectiveCourseParam = courseParam;
         if (!effectiveCourseParam) {
@@ -272,18 +272,18 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             }
           }
         }
-        
+
         if (user && effectiveCourseParam) {
           let courseData = {
             id: '',
             title: '',
             price: 0
           };
-          
+
           // 강의별 정보 설정 (더 많은 케이스 지원)
           if (effectiveCourseParam === 'prompt-engineering' || effectiveCourseParam === 'ai-building') {
             courseData = {
-              id: 'ai-building', 
+              id: 'ai-building',
               title: 'AI 건물 짓기 - 디지털 건축가 과정',
               price: 299000
             };
@@ -302,11 +302,18 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               price: actualAmount || 95000  // 3개월 수강권 95,000원
             };
             setCourseName('Step 2: AI 에이전트 비기너');
+          } else if (effectiveCourseParam === '1003' || effectiveCourseParam === 'vibe-coding') {
+            courseData = {
+              id: 'vibe-coding',
+              title: 'Step 3: 바이브코딩',
+              price: actualAmount || 45000  // 얼리버드 가격
+            };
+            setCourseName('Step 3: 바이브코딩');
           } else {
             // 알 수 없는 courseParam - 로그 기록
             console.warn('⚠️ 알 수 없는 courseParam:', effectiveCourseParam);
           }
-          
+
           if (courseData.id && user.email) {
             try {
               console.log('🚀 Azure 구매 처리 시작:', {
@@ -317,7 +324,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 orderId: orderId,
                 timestamp: new Date().toISOString()
               });
-              
+
               const result = await AzureTableService.addPurchaseWithReward({
                 email: user.email,
                 courseId: courseData.id,
@@ -328,20 +335,20 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 orderName: courseData.title,
                 paymentKey: paymentKey || undefined  // 🔴 환불용 paymentKey 추가
               });
-              
+
               console.log(`✅ ${courseData.title} 구매 완료, 결과:`, result);
               console.log(`✅ 결제 정보:`, {
                 payment: result.payment,
                 enrollment: result.enrollment,
                 rewardProcessed: result.rewardProcessed
               });
-              
+
               if (result.rewardProcessed) {
                 console.log('🎁 추천 리워드 지급 완료!');
               } else {
                 console.log('ℹ️ 추천인이 없어 리워드 처리를 건너뜀');
               }
-              
+
               // 🧱 파트너 브릭 적립 처리 (추천 링크로 구매한 경우)
               try {
                 const referralInfoStr = sessionStorage.getItem('referralInfo');
@@ -349,16 +356,16 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                   const referralInfo = JSON.parse(referralInfoStr);
                   const referralCode = referralInfo.referralCode;
                   const referralTimestamp = referralInfo.timestamp;
-                  
+
                   // 24시간 이내인지 확인
                   const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
                   const isWithinTime = Date.now() - referralTimestamp < TWENTY_FOUR_HOURS;
-                  
+
                   // 이미 적립된 강의인지 확인 (중복 적립 방지)
                   const purchasedCoursesStr = sessionStorage.getItem('referralPurchasedCourses') || '[]';
                   const purchasedCourses = JSON.parse(purchasedCoursesStr) as string[];
                   const alreadyPurchased = purchasedCourses.includes(courseData.id);
-                  
+
                   console.log('🔗 추천 정보 확인:', {
                     referralCode,
                     purchasedCourseId: courseData.id,
@@ -366,11 +373,11 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                     alreadyPurchased,
                     previousPurchases: purchasedCourses
                   });
-                  
+
                   if (referralCode && isWithinTime && !alreadyPurchased) {
                     // 추천 코드로 파트너 이메일 찾기
                     const partnerEmail = await AzureTableService.getEmailByReferralCode(referralCode);
-                    
+
                     if (partnerEmail && partnerEmail !== user.email) {
                       // 추천인에게 브릭 적립
                       const brickResult = await AzureTableService.addReferral(
@@ -380,7 +387,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                         courseData.title,
                         courseData.price
                       );
-                      
+
                       if (brickResult) {
                         console.log('🧱✅ 파트너 브릭 적립 완료!', {
                           partner: partnerEmail,
@@ -388,7 +395,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                           course: courseData.title,
                           bricks: Math.floor(courseData.price * 0.1)
                         });
-                        
+
                         // 적립된 강의 목록에 추가 (중복 방지)
                         purchasedCourses.push(courseData.id);
                         sessionStorage.setItem('referralPurchasedCourses', JSON.stringify(purchasedCourses));
@@ -413,11 +420,11 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               } catch (brickError) {
                 console.error('🧱❌ 브릭 적립 처리 오류:', brickError);
               }
-              
+
               // 성공 여부 확인
               if (result && result.enrollment) {
                 console.log('✅✅✅ Azure 등록 100% 성공 확인!');
-                
+
                 // 🔐 성공 후 orderId 상태 업데이트
                 if (orderId) {
                   localStorage.setItem(`order_processed_${orderId}`, JSON.stringify({
@@ -427,7 +434,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                     completedAt: new Date().toISOString()
                   }));
                 }
-                
+
                 // 🔐 결제 백업 정리 (성공했으므로 더 이상 필요 없음)
                 localStorage.removeItem('payment_user_backup');
                 console.log('🧹 결제 백업 정리 완료');
@@ -443,7 +450,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 user: { email: user.email, name: user.name },
                 timestamp: new Date().toISOString()
               });
-              
+
               // 실패 시 로컬스토리지에 기록 (관리자가 확인할 수 있도록)
               try {
                 const failedPayments = localStorage.getItem('failed_azure_payments') || '[]';
@@ -460,7 +467,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               } catch (storageError) {
                 console.error('❌ 로컬스토리지 저장 실패:', storageError);
               }
-              
+
               // 사용자에게 알림 (선택적)
               alert('⚠️ 결제는 완료되었으나, 시스템 등록 중 오류가 발생했습니다.\n고객센터(jay@connexionai.kr)로 문의해주시면 즉시 처리해드리겠습니다.\n\n주문번호: ' + (orderId || '없음'));
             }
@@ -471,7 +478,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               courseData,
               user
             });
-            
+
             // 🔴 courseData.id가 없으면 실패 기록
             if (!courseData.id) {
               console.error('❌ courseData.id가 없음 - 강의 정보를 찾을 수 없음');
@@ -498,7 +505,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             hasCourseParam: !!effectiveCourseParam,
             orderId
           });
-          
+
           // 실패 기록 저장
           try {
             const failedPayments = localStorage.getItem('failed_azure_payments') || '[]';
@@ -515,7 +522,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           } catch (e) {
             console.error('❌ 실패 기록 저장 오류:', e);
           }
-          
+
           // 사용자에게 알림
           if (orderId) {
             alert('⚠️ 결제는 완료되었으나 등록 정보가 부족합니다.\n고객센터(jay@connexionai.kr)로 주문번호와 함께 문의해주세요.\n\n주문번호: ' + orderId);
@@ -534,11 +541,11 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
   if (isProcessing) {
     return (
       <div className="masterclass-container">
-        <NavigationBar 
+        <NavigationBar
           onBack={onBack}
           breadcrumbText="결제 완료"
         />
-        
+
         <div className="flex items-center justify-center min-h-[calc(100vh-80px)] px-4">
           <div className="text-center">
             <div className="relative mb-8">
@@ -557,14 +564,14 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
   if (paymentStatus === 'WAITING_FOR_DEPOSIT' && virtualAccountInfo) {
     return (
       <div className="masterclass-container">
-        <NavigationBar 
+        <NavigationBar
           onBack={onBack}
           breadcrumbText="입금 대기"
         />
-        
-        <div style={{ 
-          maxWidth: '600px', 
-          margin: '0 auto', 
+
+        <div style={{
+          maxWidth: '600px',
+          margin: '0 auto',
           padding: 'clamp(30px, 6vw, 60px) clamp(15px, 3vw, 20px)',
           textAlign: 'center'
         }}>
@@ -591,7 +598,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           }}>
             가상계좌 발급 완료!
           </h1>
-          
+
           <p style={{
             fontSize: '1.1rem',
             color: '#e2e8f0',
@@ -615,12 +622,12 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 {virtualAccountInfo.bank}
               </div>
             </div>
-            
+
             <div style={{ marginBottom: '20px' }}>
               <div style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '5px' }}>계좌번호</div>
-              <div style={{ 
-                color: '#ffd60a', 
-                fontSize: '1.5rem', 
+              <div style={{
+                color: '#ffd60a',
+                fontSize: '1.5rem',
                 fontWeight: '800',
                 fontFamily: 'monospace',
                 letterSpacing: '2px'
@@ -628,21 +635,21 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 {virtualAccountInfo.accountNumber}
               </div>
             </div>
-            
+
             <div style={{ marginBottom: '20px' }}>
               <div style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '5px' }}>예금주</div>
               <div style={{ color: '#ffffff', fontSize: '1.2rem', fontWeight: '600' }}>
                 {virtualAccountInfo.customerName}
               </div>
             </div>
-            
+
             <div style={{ marginBottom: '20px' }}>
               <div style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '5px' }}>입금액</div>
               <div style={{ color: '#10b981', fontSize: '1.5rem', fontWeight: '800' }}>
                 ₩{virtualAccountInfo.amount?.toLocaleString()}
               </div>
             </div>
-            
+
             <div>
               <div style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '5px' }}>입금 기한</div>
               <div style={{ color: '#ef4444', fontSize: '1.1rem', fontWeight: '600' }}>
@@ -693,20 +700,20 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
 
   return (
     <div className="masterclass-container">
-      <NavigationBar 
+      <NavigationBar
         onBack={onBack}
         breadcrumbText="결제 완료"
       />
 
       {/* 성공 히어로 섹션 */}
-      <div style={{ 
-        position: 'relative', 
-        paddingTop: '80px', 
-        paddingBottom: '120px', 
+      <div style={{
+        position: 'relative',
+        paddingTop: '80px',
+        paddingBottom: '120px',
         overflow: 'hidden',
         background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f8fafc 100%)'
       }}>
-        
+
         {/* 애니메이션 파티클 */}
         <div style={{ position: 'absolute', inset: '0' }}>
           {[...Array(6)].map((_, i) => (
@@ -724,20 +731,20 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           ))}
         </div>
 
-        <div style={{ 
-          position: 'relative', 
-          maxWidth: '1024px', 
-          margin: '0 auto', 
-          textAlign: 'center', 
-          padding: '0 24px' 
+        <div style={{
+          position: 'relative',
+          maxWidth: '1024px',
+          margin: '0 auto',
+          textAlign: 'center',
+          padding: '0 24px'
         }}>
           {/* 메인 성공 아이콘 */}
           <div style={{ position: 'relative', marginBottom: '32px' }}>
-            <div style={{ 
-              width: '128px', 
-              height: '128px', 
-              margin: '0 auto', 
-              position: 'relative' 
+            <div style={{
+              width: '128px',
+              height: '128px',
+              margin: '0 auto',
+              position: 'relative'
             }}>
               <div style={{
                 position: 'absolute',
@@ -772,46 +779,46 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               }}>
                 <span style={{ fontSize: '24px' }}>🎉</span>
               </div>
-              </div>
             </div>
-            
+          </div>
+
           {/* 성공 메시지 */}
-          <h1 style={{ 
-            fontSize: '48px', 
-            fontWeight: 'bold', 
-            color: '#1b263b', 
+          <h1 style={{
+            fontSize: '48px',
+            fontWeight: 'bold',
+            color: '#1b263b',
             marginBottom: '24px'
           }}>
             결제 완료!
-            </h1>
-            
-          <p style={{ 
-            fontSize: '20px', 
-            color: '#415a77', 
-            marginBottom: '16px', 
-            lineHeight: '1.6' 
+          </h1>
+
+          <p style={{
+            fontSize: '20px',
+            color: '#415a77',
+            marginBottom: '16px',
+            lineHeight: '1.6'
           }}>
-            축하합니다! 
+            축하합니다!
             <span style={{ color: '#0ea5e9', fontWeight: '600', margin: '0 8px' }}>
               {courseName || '강의'}
             </span>
             결제가 성공적으로 완료되었습니다
           </p>
-          
-          <p style={{ 
-            fontSize: '18px', 
-            color: '#415a77', 
-            marginBottom: '48px' 
+
+          <p style={{
+            fontSize: '18px',
+            color: '#415a77',
+            marginBottom: '48px'
           }}>
             이제 바로 학습을 시작하고 새로운 스킬을 마스터해보세요! 🚀
           </p>
 
           {/* CTA 버튼들 */}
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            gap: '16px', 
-            justifyContent: 'center', 
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+            justifyContent: 'center',
             marginBottom: '64px'
           }}>
             <button
@@ -845,7 +852,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
               <span>강의 시청하기</span>
               <ArrowRight style={{ width: '20px', height: '20px' }} />
             </button>
-            
+
             <button
               onClick={onBack}
               style={{
@@ -876,10 +883,10 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             >
               <span>메인으로 돌아가기</span>
             </button>
-                  </div>
-                  </div>
-                </div>
-                
+          </div>
+        </div>
+      </div>
+
       {/* 다음 단계 안내 섹션 */}
       <div className="max-w-6xl mx-auto px-6 pb-20">
         <div className="text-center mb-16">
@@ -889,7 +896,7 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
           <p className="text-[#ccc] text-lg">
             이제 학습 여정을 시작해보세요
           </p>
-                  </div>
+        </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {[
@@ -925,18 +932,18 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
                 <p className="text-[#ccc] text-sm leading-relaxed">{step.description}</p>
-                  </div>
+              </div>
             </div>
           ))}
-                </div>
-                
+        </div>
+
         {/* 고객센터 안내 */}
         <div className="bg-gradient-to-r from-[#111] to-[#1a1a1a] border border-[#333] rounded-xl p-8 text-center">
           <div className="flex items-center justify-center mb-4">
             <div className="w-12 h-12 bg-gradient-to-br from-[#0ea5e9] to-[#a01e36] rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">💡</span>
-                  </div>
-                </div>
+            </div>
+          </div>
           <h3 className="text-xl font-bold text-white mb-4">궁금한 점이 있으시면 언제든 문의해주세요</h3>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center text-[#ccc]">
             <div className="flex items-center space-x-2">
@@ -964,17 +971,17 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
             <h4>연락처</h4>
             <p>📧 jay@connexionai.kr</p>
           </div>
-          
+
           <div className="footer-section">
             <h4>운영시간</h4>
             <p>평일 09:00-18:00</p>
             <p>주말/공휴일 휴무</p>
           </div>
         </div>
-        
+
         <div className="footer-bottom">
           <p>&copy; 2025 AI City Builders. All rights reserved.</p>
-      </div>
+        </div>
       </footer>
     </div>
   );

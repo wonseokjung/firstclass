@@ -19,8 +19,8 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
     const [activeTab, setActiveTab] = useState<'domestic' | 'international'>('domestic');
     const [isLoading, setIsLoading] = useState(false);
 
-    // 얼리버드 기간: 2026년 1월 8일 ~ 1월 31일
-    const openDate = new Date(2026, 0, 8);
+    // 얼리버드 기간: 2026년 1월 1일 ~ 1월 31일
+    const openDate = new Date(2026, 0, 1);
     const earlyBirdEndDate = new Date(2026, 0, 31, 23, 59, 59);
     const now = new Date();
     const isEarlyBird = now >= openDate && now <= earlyBirdEndDate;
