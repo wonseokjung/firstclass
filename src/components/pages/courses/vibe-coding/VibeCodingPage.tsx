@@ -576,52 +576,109 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
             fontSize: 'clamp(1.4rem, 3vw, 1.8rem)',
             fontWeight: '800',
             textAlign: 'center',
-            marginBottom: '30px'
+            marginBottom: '15px'
           }}>
-            📋 10일 커리큘럼
+            📋 커리큘럼
           </h2>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '20px'
+          <p style={{
+            color: '#94a3b8',
+            textAlign: 'center',
+            marginBottom: '30px',
+            fontSize: '1rem'
           }}>
-            {/* Part 1 */}
-            <div style={{
-              background: 'rgba(139, 92, 246, 0.15)',
-              borderRadius: '20px',
-              padding: '25px',
-              border: '2px solid rgba(139, 92, 246, 0.3)'
-            }}>
-              <h4 style={{ color: '#a78bfa', fontWeight: '800', marginBottom: '20px', fontSize: '1.1rem' }}>
-                🚀 Part 1 (Day 1-5): 기초
-              </h4>
-              <ul style={{ color: '#e2e8f0', lineHeight: 2.2, paddingLeft: '20px', margin: 0 }}>
-                <li>Day 1: 바이브코딩이 뭔가요?</li>
-                <li>Day 2: 아이디어를 앱으로</li>
-                <li>Day 3: Antigravity 실전 개발</li>
-                <li>Day 4: Figma MCP 연동</li>
-                <li>Day 5: Supabase 백엔드</li>
-              </ul>
-            </div>
+            기초 강의 10개 + 매달 새로운 프로젝트 (3개월 = 3개 서비스!)
+          </p>
 
-            {/* Part 2 */}
+          {/* 기초 강의 10개 */}
+          <div style={{
+            background: 'rgba(139, 92, 246, 0.15)',
+            borderRadius: '20px',
+            padding: '25px',
+            border: '2px solid rgba(139, 92, 246, 0.3)',
+            marginBottom: '25px'
+          }}>
+            <h4 style={{ color: '#a78bfa', fontWeight: '800', marginBottom: '20px', fontSize: '1.2rem' }}>
+              🏋️ 기초 강의 10개 (기초 근육 만들기)
+            </h4>
             <div style={{
-              background: 'rgba(6, 182, 212, 0.15)',
-              borderRadius: '20px',
-              padding: '25px',
-              border: '2px solid rgba(6, 182, 212, 0.3)'
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gap: '15px'
             }}>
-              <h4 style={{ color: '#06b6d4', fontWeight: '800', marginBottom: '20px', fontSize: '1.1rem' }}>
-                💰 Part 2 (Day 6-10): 수익화
-              </h4>
-              <ul style={{ color: '#e2e8f0', lineHeight: 2.2, paddingLeft: '20px', margin: 0 }}>
-                <li>Day 6: 수익화 전략</li>
-                <li>Day 7: 배포와 운영</li>
-                <li>Day 8: 성장 해킹</li>
-                <li>Day 9: 유지보수와 확장</li>
-                <li>Day 10: 실전 프로젝트</li>
-              </ul>
+              <div>
+                <ul style={{ color: '#e2e8f0', lineHeight: 2.2, paddingLeft: '20px', margin: 0 }}>
+                  <li><strong style={{ color: '#a78bfa' }}>Day 1-2:</strong> 기본 코딩 + 터미널 기초</li>
+                  <li><strong style={{ color: '#a78bfa' }}>Day 3:</strong> AI 모델 API 불러오기</li>
+                  <li><strong style={{ color: '#a78bfa' }}>Day 4:</strong> GitHub 만들기 & 사용법</li>
+                  <li><strong style={{ color: '#a78bfa' }}>Day 5:</strong> Microsoft Azure 가입</li>
+                </ul>
+              </div>
+              <div>
+                <ul style={{ color: '#e2e8f0', lineHeight: 2.2, paddingLeft: '20px', margin: 0 }}>
+                  <li><strong style={{ color: '#06b6d4' }}>Day 6:</strong> Google Antigravity 소개</li>
+                  <li><strong style={{ color: '#06b6d4' }}>Day 7:</strong> 프론트엔드 → Azure 배포</li>
+                  <li><strong style={{ color: '#06b6d4' }}>Day 8:</strong> 도메인 구입 & 연결</li>
+                  <li><strong style={{ color: '#06b6d4' }}>Day 9:</strong> 백엔드 테이블 & Blob</li>
+                  <li><strong style={{ color: '#06b6d4' }}>Day 10:</strong> 프론트 + 백엔드 연동</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* 월간 프로젝트 */}
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(255, 214, 10, 0.15), rgba(245, 158, 11, 0.1))',
+            borderRadius: '20px',
+            padding: '25px',
+            border: '2px solid rgba(255, 214, 10, 0.4)'
+          }}>
+            <h4 style={{ color: '#ffd60a', fontWeight: '800', marginBottom: '20px', fontSize: '1.2rem' }}>
+              🚀 매달 프로젝트 (4주 사이클로 서비스 완성!)
+            </h4>
+            <p style={{ color: '#e2e8f0', marginBottom: '20px', lineHeight: 1.8 }}>
+              매달 새로운 주제로 <strong style={{ color: '#ffd60a' }}>실제 수익화 가능한 서비스</strong>를 함께 만듭니다.<br />
+              <span style={{ color: '#94a3b8' }}>3개월 수강 = 3개 서비스 런칭! 🎉</span>
+            </p>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '12px'
+            }}>
+              {[
+                { week: '1주차', title: '기획 & 프론트엔드', desc: '아이디어 → 화면 구현', color: '#8b5cf6' },
+                { week: '2주차', title: '핵심 기능 & 디자인', desc: '기능 개발 + UI 고도화', color: '#06b6d4' },
+                { week: '3주차', title: '백엔드 연결', desc: 'DB + API 구축', color: '#22c55e' },
+                { week: '4주차', title: '결제 & 런칭', desc: '결제 연동 → 배포!', color: '#ffd60a' }
+              ].map((item) => (
+                <div key={item.week} style={{
+                  background: 'rgba(0, 0, 0, 0.3)',
+                  borderRadius: '12px',
+                  padding: '15px',
+                  borderLeft: `4px solid ${item.color}`
+                }}>
+                  <div style={{ color: item.color, fontWeight: '800', fontSize: '0.9rem', marginBottom: '5px' }}>
+                    {item.week}
+                  </div>
+                  <div style={{ color: 'white', fontWeight: '700', fontSize: '1rem', marginBottom: '3px' }}>
+                    {item.title}
+                  </div>
+                  <div style={{ color: '#94a3b8', fontSize: '0.85rem' }}>
+                    {item.desc}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.3)',
+              borderRadius: '12px',
+              padding: '15px',
+              marginTop: '15px',
+              textAlign: 'center'
+            }}>
+              <span style={{ color: '#94a3b8' }}>📺 </span>
+              <span style={{ color: '#e2e8f0' }}>라이브 참석 못해도 </span>
+              <strong style={{ color: '#ffd60a' }}>1달간 다시보기</strong>
+              <span style={{ color: '#e2e8f0' }}> 가능!</span>
             </div>
           </div>
         </div>

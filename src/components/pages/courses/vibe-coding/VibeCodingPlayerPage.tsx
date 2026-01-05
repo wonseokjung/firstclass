@@ -42,19 +42,19 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
 
           try {
             const paymentStatus = await AzureTableService.checkCoursePayment(
-              parsedUserInfo.email, 
+              parsedUserInfo.email,
               'vibe-coding'
             );
 
             if ((paymentStatus && paymentStatus.isPaid) || isTestAccount) {
               setIsPaidUser(true);
-              
+
               try {
                 const progress = await AzureTableService.getCourseDayProgress(
                   parsedUserInfo.email,
                   'vibe-coding'
                 );
-                
+
                 if (progress && progress.completedDays) {
                   setCompletedDays(new Set(progress.completedDays));
                 }
@@ -92,72 +92,72 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
     weeks: [
       {
         title: 'Part 1 (Day 1-5)',
-        subtitle: '🚀 바이브코딩 기초 - Google Antigravity 설치부터 첫 앱 배포까지',
+        subtitle: '🏋️ 기초 근육 만들기 - 코딩 기초부터 Azure 환경 구축까지',
         days: [
-          { 
-            day: 1, 
-            title: '🔥 바이브코딩이 뭔가요?', 
-            subtitle: 'Google Antigravity로 혼자서 앱 만들어 돈벌기 시작',
+          {
+            day: 1,
+            title: '💻 기본 코딩 기초 (1)',
+            subtitle: '터미널, 명령어, 파일 시스템 이해하기',
             hasQuiz: true
           },
-          { 
-            day: 2, 
-            title: '💡 아이디어를 돈이 되는 앱으로', 
-            subtitle: '아이디어 검증부터 MVP 설계까지',
+          {
+            day: 2,
+            title: '💻 기본 코딩 기초 (2)',
+            subtitle: 'Python/JS 기본 문법과 실습',
             hasQuiz: true
           },
-          { 
-            day: 3, 
-            title: '🛠️ Google Antigravity 실전 앱 개발', 
-            subtitle: 'Todo부터 커머스까지 라이브 코딩',
+          {
+            day: 3,
+            title: '🤖 AI 모델 API 불러오기',
+            subtitle: 'OpenAI, Gemini API 연결하기',
             hasQuiz: true
           },
-          { 
-            day: 4, 
-            title: '🎨 Figma MCP 연동', 
-            subtitle: '디자인을 코드로 바로 변환하기',
+          {
+            day: 4,
+            title: '📂 GitHub 만들기 & 사용법',
+            subtitle: 'Git 기초, 레포지토리, Push/Pull',
             hasQuiz: true
           },
-          { 
-            day: 5, 
-            title: '🗄️ Supabase 백엔드 구축', 
-            subtitle: '데이터베이스 없이 백엔드 완성하기',
+          {
+            day: 5,
+            title: '☁️ Microsoft Azure 가입',
+            subtitle: 'Azure 계정 생성, 리소스 그룹 이해',
             hasQuiz: true
           }
         ]
       },
       {
         title: 'Part 2 (Day 6-10)',
-        subtitle: '💰 수익화 마스터 - 배포, 마케팅, 지속 가능한 비즈니스 구축',
+        subtitle: '🚀 배포 & 통합 - Antigravity로 서비스 완성하기',
         days: [
-          { 
-            day: 6, 
-            title: '💰 수익화 전략', 
-            subtitle: 'SaaS, 커미션, 구독 모든 비즈니스 모델',
+          {
+            day: 6,
+            title: '⚡ Google Antigravity 소개',
+            subtitle: 'AI IDE 설치, 기본 사용법 익히기',
             hasQuiz: true
           },
-          { 
-            day: 7, 
-            title: '🚀 배포와 운영', 
-            subtitle: 'Vercel, Netlify로 5분만에 전세계 배포',
+          {
+            day: 7,
+            title: '🌐 프론트엔드 → Azure 배포',
+            subtitle: 'Static Web App + GitHub 연동',
             hasQuiz: true
           },
-          { 
-            day: 8, 
-            title: '📈 성장 해킹', 
-            subtitle: '사용자 확보부터 바이럴까지',
+          {
+            day: 8,
+            title: '🔗 도메인 구입 & 연결',
+            subtitle: '도메인 구매, DNS 설정, SSL 적용',
             hasQuiz: true
           },
-          { 
-            day: 9, 
-            title: '🔧 유지보수와 확장', 
-            subtitle: '사용자 피드백을 코드로 바로 반영',
+          {
+            day: 9,
+            title: '🗄️ 백엔드 테이블 & Blob',
+            subtitle: 'Azure Table Storage, Blob 저장소',
             hasQuiz: true
           },
-          { 
-            day: 10, 
-            title: '💎 실전 프로젝트', 
-            subtitle: '30분만에 수익형 앱 만들어 런칭하기',
+          {
+            day: 10,
+            title: '🔄 프론트 + 백엔드 연동',
+            subtitle: 'API 연결, 데이터 CRUD 완성',
             hasQuiz: true
           }
         ]
@@ -199,7 +199,7 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
   return (
     <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0f0a1e 0%, #1a1033 50%, #ffffff 100%)' }}>
       <NavigationBar />
-      
+
       {/* 헤더 */}
       <div style={{
         background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.2))',
@@ -226,30 +226,30 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
           >
             <ArrowLeft size={18} /> 홈으로
           </button>
-          
+
           <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginBottom: '20px' }}>
             <Code size={40} color={COLORS.purple} />
             <Terminal size={40} color={COLORS.cyan} />
             <Zap size={40} color={COLORS.gold} />
           </div>
-          
-          <h1 style={{ 
-            color: COLORS.white, 
-            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', 
+
+          <h1 style={{
+            color: COLORS.white,
+            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
             fontWeight: '800',
             marginBottom: '15px',
             lineHeight: '1.3'
           }}>
             바이브코딩으로 돈벌기
           </h1>
-          <p style={{ 
-            color: COLORS.purpleLight, 
+          <p style={{
+            color: COLORS.purpleLight,
             fontSize: 'clamp(1rem, 2vw, 1.2rem)',
             marginBottom: '30px'
           }}>
             AI 수익화 바이브코딩 · 10일 마스터 클래스
           </p>
-          
+
           {/* 진행률 */}
           <div style={{
             background: 'rgba(0,0,0,0.3)',
@@ -300,7 +300,7 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {week.days.map((day) => {
                 const isCompleted = completedDays.has(day.day);
-                
+
                 return (
                   <button
                     key={day.day}
@@ -310,10 +310,10 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
                       alignItems: 'center',
                       gap: '15px',
                       padding: '20px',
-                      background: isCompleted 
+                      background: isCompleted
                         ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(16, 185, 129, 0.1))'
                         : 'rgba(30, 41, 59, 0.5)',
-                      border: isCompleted 
+                      border: isCompleted
                         ? '1px solid rgba(34, 197, 94, 0.3)'
                         : '1px solid rgba(255, 255, 255, 0.1)',
                       borderRadius: '16px',
@@ -335,7 +335,7 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
                       width: '50px',
                       height: '50px',
                       borderRadius: '14px',
-                      background: isCompleted 
+                      background: isCompleted
                         ? 'linear-gradient(135deg, #22c55e, #16a34a)'
                         : 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
                       display: 'flex',
@@ -349,7 +349,7 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
                         <span style={{ color: 'white', fontWeight: '800', fontSize: '1.2rem' }}>{day.day}</span>
                       )}
                     </div>
-                    
+
                     <div style={{ flex: 1 }}>
                       <div style={{ color: COLORS.white, fontWeight: '700', fontSize: '1.05rem', marginBottom: '4px' }}>
                         Day {day.day}: {day.title}

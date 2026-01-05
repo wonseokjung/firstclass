@@ -221,7 +221,7 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
       badge: '변환',
       badgeColor: '#8b5cf6',
       description: '녹음한 목소리를 헬륨 보이스, 캐릭터 음성 등으로 변환하는 방법',
-      vimeoUrl: '', // 영상 URL 추가 예정
+      vimeoUrl: 'https://player.vimeo.com/video/1151496800?badge=0&autopause=0&player_id=0&app_id=58479',
     },
     {
       id: 'google-tts',
