@@ -193,6 +193,7 @@ const VibeCodingDay7Page = React.lazy(() => import('./components/pages/courses/v
 const VibeCodingDay8Page = React.lazy(() => import('./components/pages/courses/vibe-coding/Day8Page'));
 const VibeCodingDay9Page = React.lazy(() => import('./components/pages/courses/vibe-coding/Day9Page'));
 const VibeCodingDay10Page = React.lazy(() => import('./components/pages/courses/vibe-coding/Day10Page'));
+const VibeCodingPaymentPage = React.lazy(() => import('./components/pages/courses/vibe-coding/PaymentPage'));
 
 // 인증 페이지
 const LoginPage = React.lazy(() => import('./components/pages/auth/LoginPage'));
@@ -242,6 +243,7 @@ const CostOptimizationExamplesPageWrapped = withPageWrapper(CostOptimizationExam
 // 결제 페이지
 const AIBuildingPaymentPageWrapped = withPageWrapper(AIBuildingPaymentPage, '/ai-building-course');
 const ChatGPTAgentBeginnerPaymentPageWrapped = withPageWrapper(ChatGPTAgentBeginnerPaymentPage, '/chatgpt-agent-beginner');
+const VibeCodingPaymentPageWrapped = withPageWrapper(VibeCodingPaymentPage, '/vibe-coding');
 
 // 일반 페이지
 const FAQPageWrapped = withPageWrapper(FAQPage);
@@ -493,6 +495,7 @@ function App() {
               <Route path="/chatgpt-agent-beginner" element={<ChatGPTAgentBeginnerPageWrapped />} />
               <Route path="/content-business" element={<ContentBusinessPageWrapped />} />
               <Route path="/vibe-coding" element={<VibeCodingPageWrapped />} />
+              <Route path="/vibe-coding/payment" element={<VibeCodingPaymentPageWrapped />} />
               <Route path="/vibe-coding-player" element={<VibeCodingPlayerPageWrapped />} />
               <Route path="/vibe-coding/day1" element={<VibeCodingDay1PageWrapped />} />
               <Route path="/vibe-coding/day2" element={<VibeCodingDay2PageWrapped />} />
