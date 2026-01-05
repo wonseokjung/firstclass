@@ -22,13 +22,26 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
     const [activeTab, setActiveTab] = useState<'domestic' | 'international'>('domestic');
     const [isLoading, setIsLoading] = useState(false);
 
-    // 가격: 95,000원
-    const currentPrice = 95000;
+    // 얼리버드 기간: 2026년 1월 8일 ~ 2월 7일
+    const openDate = new Date(2026, 0, 8);
+    const earlyBirdEndDate = new Date(2026, 1, 7, 23, 59, 59);
+    const now = new Date();
+    const isEarlyBird = now >= openDate && now <= earlyBirdEndDate;
+
+    // 가격
+    const earlyBirdPrice = 45000;
+    const regularPrice = 95000;
+    const currentPrice = isEarlyBird ? earlyBirdPrice : regularPrice;
+
+    // 해외 가격
+    const earlyBirdUsdPrice = 40;
+    const regularUsdPrice = 85;
+    const usdPrice = isEarlyBird ? earlyBirdUsdPrice : regularUsdPrice;
 
     const courseInfo = {
         id: 'vibe-coding',
         title: 'Step 3: 바이브코딩',
-        subtitle: 'AI로 수익화 도구 직접 개발하기 · 10일 완성',
+        subtitle: 'AI로 실제 돈 버는 비즈니스 만들기',
         price: currentPrice
     };
 
@@ -58,8 +71,6 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
 
         checkAuth();
     }, [navigate]);
-
-    const usdPrice = USD_PRICE;
 
     const handlePaymentSuccess = () => {
         console.log('🎉 결제 성공!');
@@ -237,8 +248,33 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                         textAlign: 'center',
                         paddingBottom: 'clamp(15px, 4vw, 30px)',
                         borderBottom: '2px solid #e2e8f0',
-                        marginBottom: 'clamp(15px, 4vw, 30px)'
+                        marginBottom: 'clamp(15px, 4vw, 30px)',
+                        position: 'relative'
                     }}>
+                        {isEarlyBird && (
+                            <div style={{
+                                display: 'inline-block',
+                                background: '#ef4444',
+                                color: 'white',
+                                padding: '6px 16px',
+                                borderRadius: '20px',
+                                fontSize: '0.85rem',
+                                fontWeight: '800',
+                                marginBottom: '15px'
+                            }}>
+                                🔥 얼리버드 (~2/7)
+                            </div>
+                        )}
+                        {isEarlyBird && (
+                            <div style={{
+                                color: '#94a3b8',
+                                textDecoration: 'line-through',
+                                fontSize: '1.1rem',
+                                marginBottom: '5px'
+                            }}>
+                                ₩{regularPrice.toLocaleString()}
+                            </div>
+                        )}
                         <div style={{
                             fontSize: 'clamp(1.8rem, 6vw, 2.8rem)',
                             fontWeight: '900',
@@ -267,7 +303,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                                 fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)',
                                 fontWeight: '800'
                             }}>
-                                🔥 월 ~3만원
+                                {isEarlyBird ? '🔥 월 ~1.5만원' : '🔥 월 ~3만원'}
                             </div>
                         </div>
                     </div>

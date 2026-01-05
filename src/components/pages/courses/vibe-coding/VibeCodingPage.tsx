@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../../../common/NavigationBar';
-import { Code, Zap, Rocket, Terminal, Users, Calendar, CheckCircle, Play, Download, TrendingUp, Sparkles } from 'lucide-react';
+import { Code, Rocket, Terminal, Calendar } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
 
 interface VibeCodingPageProps {
@@ -11,15 +11,20 @@ interface VibeCodingPageProps {
 const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
   const navigate = useNavigate();
   const [isPaidUser, setIsPaidUser] = useState(false);
-  const [userInfo, setUserInfo] = useState<any>(null);
+  const [, setUserInfo] = useState<any>(null);
 
   // 오픈일: 2026년 1월 8일
   const openDate = new Date(2026, 0, 8);
+  // 얼리버드 종료일: 2026년 2월 7일
+  const earlyBirdEndDate = new Date(2026, 1, 7, 23, 59, 59);
   const now = new Date();
   const isOpen = now >= openDate;
+  const isEarlyBird = now >= openDate && now <= earlyBirdEndDate;
 
   // 가격
-  const coursePrice = 95000;
+  const earlyBirdPrice = 45000;
+  const regularPrice = 95000;
+  const coursePrice = isEarlyBird ? earlyBirdPrice : regularPrice;
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -172,7 +177,7 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
               fontWeight: '600',
               marginBottom: '25px'
             }}>
-              AI 수익화 도구를 직접 만들기 · 10일 완성
+              AI로 실제 돈 버는 비즈니스 만들기
             </p>
 
             {/* 오픈 상태 배지 */}
@@ -210,10 +215,9 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
                 lineHeight: 1.9,
                 margin: 0
               }}>
-                <strong style={{ color: '#8b5cf6' }}>Google Antigravity</strong>로
-                자동화 에이전트와 웹/앱을 직접 개발!<br /><br />
-                코딩을 몰라도 AI에게 말하면 완성됩니다.
-                나만의 <strong style={{ color: '#ffd60a' }}>수익화 도구</strong>를 만들어보세요.
+                단순히 AI 도구를 배우는 것에서 벗어나<br />
+                <strong style={{ color: '#ffd60a' }}>AI와 AI Agent로 개발부터 운영까지</strong> 되는<br />
+                <strong style={{ color: '#8b5cf6' }}>실제 비즈니스</strong>를 함께 만듭니다.
               </p>
             </div>
 
@@ -226,8 +230,7 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
             }}>
               {[
                 { icon: <Terminal size={20} />, label: '코딩 경험 불필요' },
-                { icon: <Zap size={20} />, label: '30분만에 앱 완성' },
-                { icon: <Rocket size={20} />, label: '실전 수익화' }
+                { icon: <Rocket size={20} />, label: 'AI 1인 기업' }
               ].map((item, idx) => (
                 <div key={idx} style={{
                   display: 'flex',
@@ -274,8 +277,35 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
             <div style={{
               background: '#1a1a2e',
               padding: '15px 30px',
-              borderRadius: '20px'
+              borderRadius: '20px',
+              position: 'relative'
             }}>
+              {isEarlyBird && (
+                <div style={{
+                  position: 'absolute',
+                  top: '-12px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  background: '#ef4444',
+                  color: 'white',
+                  padding: '4px 12px',
+                  borderRadius: '20px',
+                  fontSize: '0.75rem',
+                  fontWeight: '800'
+                }}>
+                  🔥 얼리버드 (~2/7)
+                </div>
+              )}
+              {isEarlyBird && (
+                <div style={{
+                  color: '#94a3b8',
+                  textDecoration: 'line-through',
+                  fontSize: '1rem',
+                  marginBottom: '5px'
+                }}>
+                  ₩{regularPrice.toLocaleString()}
+                </div>
+              )}
               <span style={{ color: 'white', fontSize: 'clamp(2rem, 5vw, 2.8rem)', fontWeight: '900' }}>
                 ₩{coursePrice.toLocaleString()}
               </span>
@@ -288,10 +318,10 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
               border: '3px solid #16a34a'
             }}>
               <div style={{ color: 'white', fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', fontWeight: '900' }}>
-                🔥 월 3만원대!
+                {isEarlyBird ? '🔥 월 1.5만원!' : '🔥 월 3만원대!'}
               </div>
               <div style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.85rem' }}>
-                하루 ~1,000원
+                {isEarlyBird ? '하루 ~500원' : '하루 ~1,000원'}
               </div>
             </div>
           </div>
@@ -325,6 +355,7 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
             }}>
               <span style={{ fontSize: '1.3rem' }}>🔴</span>
               <span style={{ color: '#1a1a2e', fontWeight: '700' }}>주간 라이브 12회</span>
+              <span style={{ color: '#1a1a2e', fontSize: '0.75rem' }}>(월 4회×3개월)</span>
             </div>
             <div style={{
               background: 'rgba(0, 0, 0, 0.15)',
@@ -335,7 +366,8 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
               gap: '8px'
             }}>
               <span style={{ fontSize: '1.3rem' }}>🎯</span>
-              <span style={{ color: '#1a1a2e', fontWeight: '700' }}>월간 프로젝트 3개</span>
+              <span style={{ color: '#1a1a2e', fontWeight: '700' }}>실습 프로젝트 3개</span>
+              <span style={{ color: '#1a1a2e', fontSize: '0.75rem' }}>(매달 1개 런칭)</span>
             </div>
           </div>
 
