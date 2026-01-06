@@ -239,7 +239,7 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
       badge: 'OPAL',
       badgeColor: '#06b6d4',
       description: 'Google OPAL로 대본과 오디오를 한번에 생성하는 에이전트 만들기',
-      vimeoUrl: '', // 영상 URL 추가 예정
+      vimeoUrl: 'https://player.vimeo.com/video/1151904849?badge=0&autopause=0&player_id=0&app_id=58479',
     },
     {
       id: 'elevenlabs',
