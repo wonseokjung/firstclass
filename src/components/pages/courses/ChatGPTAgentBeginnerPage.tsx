@@ -765,11 +765,31 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 height: 'clamp(60px, 12vw, 80px)',
                 background: 'linear-gradient(135deg, #1e40af, #1e3a8a)',
                 borderRadius: '50%',
-                marginBottom: 'clamp(15px, 4vw, 25px)',
+                marginBottom: 'clamp(15px, 4vw, 20px)',
                 boxShadow: '0 4px 15px rgba(30, 64, 175, 0.3)'
               }}>
                 <span style={{ fontSize: 'clamp(2rem, 5vw, 2.5rem)' }}>🤖</span>
               </div>
+
+              {/* AI 수익화의 정석 브랜드 뱃지 */}
+              <div style={{
+                display: 'inline-block',
+                background: 'linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,183,71,0.1))',
+                border: '1px solid rgba(255,215,0,0.4)',
+                borderRadius: '25px',
+                padding: '8px 18px',
+                marginBottom: '15px'
+              }}>
+                <span style={{
+                  color: '#f59e0b',
+                  fontWeight: '800',
+                  fontSize: '0.9rem',
+                  letterSpacing: '0.5px'
+                }}>
+                  🏆 AI 수익화의 정석
+                </span>
+              </div>
+
               <h1 style={{
                 fontSize: 'clamp(2rem, 4vw, 2.8rem)',
                 marginBottom: '20px',

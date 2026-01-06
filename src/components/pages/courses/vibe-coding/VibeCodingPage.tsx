@@ -149,10 +149,29 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
               height: '100px',
               background: 'linear-gradient(135deg, #1e3a5f, #ffd60a)',
               borderRadius: '50%',
-              marginBottom: '25px',
+              marginBottom: '20px',
               boxShadow: '0 15px 50px rgba(255, 214, 10, 0.4)'
             }}>
               <Code size={45} color="white" />
+            </div>
+
+            {/* AI 수익화의 정석 브랜드 뱃지 */}
+            <div style={{
+              display: 'inline-block',
+              background: 'linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,183,71,0.15))',
+              border: '1px solid rgba(255,215,0,0.5)',
+              borderRadius: '25px',
+              padding: '8px 18px',
+              marginBottom: '15px'
+            }}>
+              <span style={{
+                color: '#ffd60a',
+                fontWeight: '800',
+                fontSize: '0.9rem',
+                letterSpacing: '0.5px'
+              }}>
+                🏆 AI 수익화의 정석
+              </span>
             </div>
 
             <h1 style={{
@@ -747,7 +766,7 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
             </div>
             <div>
               <ul style={{ color: '#e2e8f0', lineHeight: 2.2, paddingLeft: '20px', margin: 0 }}>
-                <li><strong style={{ color: '#06b6d4' }}>Day 6:</strong> Google Antigravity 소개</li>
+                <li><strong style={{ color: '#06b6d4' }}>Day 6:</strong> AI Studio + Antigravity 소개</li>
                 <li><strong style={{ color: '#06b6d4' }}>Day 7:</strong> 프론트엔드 → Azure 배포</li>
                 <li><strong style={{ color: '#06b6d4' }}>Day 8:</strong> 도메인 구입 & 연결</li>
                 <li><strong style={{ color: '#06b6d4' }}>Day 9:</strong> 백엔드 테이블 & Blob</li>

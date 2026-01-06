@@ -352,6 +352,26 @@ AI City Builders 사이트 정보:
         }} />
 
         {/* 웰컴 메시지 */}
+        {/* 브랜드 뱃지 */}
+        <div style={{
+          position: 'relative',
+          display: 'inline-block',
+          background: 'linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,183,71,0.1))',
+          border: '1px solid rgba(255,215,0,0.4)',
+          borderRadius: '30px',
+          padding: '8px 20px',
+          marginBottom: '16px'
+        }}>
+          <span style={{
+            color: '#ffd700',
+            fontWeight: '800',
+            fontSize: 'clamp(0.85rem, 2vw, 1rem)',
+            letterSpacing: '1px'
+          }}>
+            🏆 AI 수익화의 정석
+          </span>
+        </div>
+
         <h1 style={{
           position: 'relative',
           fontSize: 'clamp(1.6rem, 4.5vw, 2.5rem)',
@@ -365,7 +385,7 @@ AI City Builders 사이트 정보:
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text'
-          }}>AI City</span>에 오신 것을 환영합니다
+          }}>AI City Builders</span>에 오신 것을 환영합니다
         </h1>
 
         <p style={{
@@ -376,8 +396,8 @@ AI City Builders 사이트 정보:
           margin: '0 auto 28px',
           lineHeight: '1.5'
         }}>
-          AI 수익화의 정석! 인공지능 멘토 제이와 함께<br />
-          4단계 로드맵으로 AI 1인 기업가가 되어보세요! 🚀
+          인공지능 멘토 제이와 함께<br />
+          4단계 로드맵으로 <span style={{ color: '#ffd700', fontWeight: '700' }}>AI 1인 기업가</span>가 되어보세요! 🚀
         </p>
 
 

@@ -280,12 +280,32 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   height: '90px',
                   background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
                   borderRadius: '50%',
-                  marginBottom: '25px',
+                  marginBottom: '20px',
                   boxShadow: '0 15px 40px rgba(251, 191, 36, 0.5)',
                   border: '3px solid rgba(255, 255, 255, 0.3)'
                 }}>
                   <span style={{ fontSize: '3rem' }}>🏗️</span>
                 </div>
+
+                {/* AI 수익화의 정석 브랜드 뱃지 */}
+                <div style={{
+                  display: 'inline-block',
+                  background: 'linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,183,71,0.15))',
+                  border: '1px solid rgba(255,215,0,0.5)',
+                  borderRadius: '25px',
+                  padding: '8px 18px',
+                  marginBottom: '15px'
+                }}>
+                  <span style={{
+                    color: '#ffd60a',
+                    fontWeight: '800',
+                    fontSize: '0.9rem',
+                    letterSpacing: '0.5px'
+                  }}>
+                    🏆 AI 수익화의 정석
+                  </span>
+                </div>
+
                 <h1 style={{
                   fontSize: 'clamp(2.2rem, 5vw, 3.2rem)',
                   marginBottom: '15px',

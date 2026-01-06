@@ -132,8 +132,8 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
         days: [
           {
             day: 6,
-            title: '⚡ Google Antigravity 소개',
-            subtitle: 'AI IDE 설치, 기본 사용법 익히기',
+            title: '⚡ AI Studio + Antigravity 소개',
+            subtitle: 'AI Studio로 앱 개발 + AI IDE 설치 및 사용법',
             hasQuiz: true
           },
           {

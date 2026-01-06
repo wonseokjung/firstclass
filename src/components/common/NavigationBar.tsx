@@ -98,7 +98,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
 
   // 현재 영어 페이지인지 확인 (경로 기반)
   const isEnglishPage = window.location.pathname.startsWith('/en');
-  
+
   // 언어 전환 함수 - 페이지 이동
   const toggleLanguage = () => {
     if (isEnglishPage) {
@@ -242,7 +242,16 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                 boxShadow: '0 2px 10px rgba(251, 191, 36, 0.3)'
               }}
             />
-            <span className="logo-text">AI City Builders</span>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <span className="logo-text" style={{ lineHeight: '1.2' }}>AI City Builders</span>
+              <span style={{
+                fontSize: '0.65rem',
+                color: '#ffd60a',
+                fontWeight: '700',
+                letterSpacing: '0.5px',
+                opacity: 0.9
+              }}>AI 수익화의 정석</span>
+            </div>
           </div>
         </div>
 
