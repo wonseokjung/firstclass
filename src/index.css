@@ -12,6 +12,18 @@
     opacity: 0.9;
     transform: scale(1.05);
   }
+}
+
+/* Blink Animation for LIVE Indicator */
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 10px #ef4444, 0 0 20px #ef4444;
+  }
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 5px #ef4444, 0 0 10px #ef4444;
+  }
 }                                                    
 
 /* CSS 변수로 테마 관리 - 페라리 네이비 + 골드 테마 */

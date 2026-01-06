@@ -11,6 +11,7 @@ interface Payment {
   amount: number;
   date: string;
   realEmail?: string;
+  realName?: string; // 토스에서 두 번째로 나오는 실명
   phone?: string; // 전화번호 (마스킹)
   referrerCode?: string; // 추천인 코드 (브릭 적립용)
   tid?: string; // 결제 고유 ID (TID)
@@ -23,49 +24,50 @@ interface Payment {
 // 🔥 토스페이먼츠 데이터 파싱 함수
 const parseTossPaymentsData = (rawText: string): Payment[] => {
   const payments: Payment[] = [];
-  // 불필요한 텍스트 필터링
-  const skipWords = ['-', '원', '0', '완료', '취소', '대기', '농협', '신한', '국민', '우리', '하나', '카카오페이', '네이버페이', '토스', '간편결제'];
+  // 불필요한 텍스트 필터링 - 은행명/결제수단 추가
+  const skipWords = ['-', '원', '0', '완료', '취소', '대기', '농협', '신한', '국민', '우리', '하나', '기업', '신협', '카카오페이', '네이버페이', '토스', '간편결제', 'clathou1x0'];
   const lines = rawText.split('\n').map(line => line.trim()).filter(line => line && !skipWords.includes(line));
 
   console.log('🔍 파싱할 줄 수:', lines.length);
   console.log('🔍 파싱할 데이터:', lines);
 
   let currentPayment: Partial<Payment> = {};
-  let paymentCount = 0;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // 구매자명 찾기 (한글 이름 + 마스킹: 배*영, 김*수, 홍*동 등) - 새 결제 시작점
-    const isKoreanName = /^[가-힣]\*[가-힣]{1,2}$/.test(line);
-    // 영어 이름: 소문자 포함 필수 (대문자만 있는 건 카드번호)
-    const isEnglishName = /^[A-Za-z]{2,}\*+[A-Za-z]+$/.test(line) && /[a-z]/.test(line);
-    // 카드번호 마스킹 패턴 제외 (JA****JO, 12****34 등)
-    const isCardNumber = /^[A-Z0-9]{2,}\*+[A-Z0-9]+$/.test(line);
-    
-    if ((isKoreanName || isEnglishName) && !isCardNumber) {
-      // 토스는 이름이 2번 나옴 - 이미 이름이 있고 같은 이름이면 무시
-      if (currentPayment.name === line) {
-        console.log('⏭️ 중복 이름 무시:', line);
-        continue;
-      }
-      
-      console.log('✅ 이름 발견:', line);
-      // 이전 결제 저장 (이메일과 금액이 있으면)
-      if (currentPayment.name && currentPayment.maskedEmail && currentPayment.amount) {
+    // 🔥 주문번호 발견 (order_로 시작) - 새 결제 시작!
+    if (line.startsWith('order_')) {
+      // 이전 결제가 완성되었으면 저장
+      if (currentPayment.orderId && currentPayment.maskedEmail && currentPayment.amount) {
         payments.push(currentPayment as Payment);
         console.log('💾 결제 저장:', currentPayment);
       }
-      paymentCount++;
-      currentPayment = { 
-        orderId: `toss_paste_${Date.now()}_${paymentCount}`, 
-        name: line, 
-        status: 'pending' 
+      // 새 결제 시작 - 주문번호 저장
+      currentPayment = {
+        orderId: line,
+        status: 'pending'
       };
+      console.log('🆕 새 결제 시작:', line);
+      continue;
     }
-    // 주문번호 찾기 (order_로 시작)
-    else if (line.startsWith('order_')) {
-      currentPayment.orderId = line;
+
+    // 구매자명 찾기 (한글 이름 + 마스킹: 배*영, 김*수, 홍*동 등)
+    const isKoreanName = /^[가-힣]\*[가-힣]{1,2}$/.test(line);
+    // 영어 이름: 소문자 포함 필수 (대문자만 있는 건 카드번호) - 패턴 개선
+    const isEnglishName = /^[A-Za-z]{2,}\*+[A-Za-z]+$/.test(line) && /[a-z]/.test(line);
+    // 카드번호/예금주 마스킹 패턴 제외 (JA****JO, 12****34 등) 대문자+숫자만
+    const isCardNumber = /^[A-Z0-9]{2,}\*+[A-Z0-9]+$/.test(line) && !/[a-z]/.test(line);
+
+    if ((isKoreanName || isEnglishName) && !isCardNumber) {
+      // 이미 이름이 있으면 (두 번째 이름은 실명)
+      if (!currentPayment.name) {
+        currentPayment.name = line;
+        console.log('✅ 이름 발견:', line);
+      } else if (currentPayment.name !== line) {
+        currentPayment.realName = line;
+        console.log('✅ 실명 발견:', line);
+      }
     }
     // 이메일 찾기 (@ 포함)
     else if (line.includes('@') && !currentPayment.maskedEmail) {
@@ -79,13 +81,14 @@ const parseTossPaymentsData = (rawText: string): Payment[] => {
       console.log('💰 금액 발견:', currentPayment.amount);
     }
     // 상품명 찾기
-    else if (line.includes('Step 1:') || line.includes('AI 건물주') || line.includes('Step 2:') || line.includes('에이전트') || line.includes('바이브코딩') || line.includes('얼리버드')) {
+    else if (line.includes('Step 1:') || line.includes('AI 건물주') || line.includes('Step 2:') || line.includes('에이전트') || line.includes('Step 3:') || line.includes('바이브코딩') || line.includes('얼리버드')) {
       currentPayment.productName = line;
       console.log('📦 상품명 발견:', line);
     }
     // 전화번호 찾기 (010****1234 형식)
     else if (/^010\*{4}\d{4}$/.test(line) || /^010-\*{4}-\d{4}$/.test(line)) {
       currentPayment.phone = line.replace(/-/g, '');
+      console.log('📱 전화번호 발견:', currentPayment.phone);
     }
     // 날짜 찾기
     else if (/^\d{4}-\d{2}-\d{2}/.test(line) && !currentPayment.date) {
@@ -93,8 +96,8 @@ const parseTossPaymentsData = (rawText: string): Payment[] => {
     }
   }
 
-  // 마지막 결제 저장
-  if (currentPayment.name && currentPayment.maskedEmail && currentPayment.amount) {
+  // 🔥 마지막 결제 저장 (필수!)
+  if (currentPayment.orderId && currentPayment.maskedEmail && currentPayment.amount) {
     payments.push(currentPayment as Payment);
     console.log('💾 마지막 결제 저장:', currentPayment);
   }
@@ -475,7 +478,7 @@ const AdminEnrollmentFixPage: React.FC = () => {
   const [searchEmail, setSearchEmail] = useState('');
   const [processing, setProcessing] = useState(false);
   const [editingEmail, setEditingEmail] = useState<{ oldEmail: string; newEmail: string } | null>(null);
-  
+
   // 📅 등록일 변경 상태
   const [editingEnrollmentDate, setEditingEnrollmentDate] = useState<{
     email: string;
@@ -1596,6 +1599,10 @@ const AdminEnrollmentFixPage: React.FC = () => {
                         e.courseId === '999' ||
                         e.courseId === 'ai-building-course'
                       );
+                      const hasVibeCodingCourse = enrollments.some((e: any) =>
+                        e.courseId === '1003' ||
+                        e.courseId === 'vibe-coding'
+                      );
 
                       return (
                         <tr key={index} style={{ borderBottom: '1px solid #f1f5f9' }}>
@@ -1873,6 +1880,42 @@ const AdminEnrollmentFixPage: React.FC = () => {
                                     }}
                                   >
                                     🏢 건물주
+                                  </button>
+                                )}
+                                {/* 바이브코딩 강의 추가 버튼 */}
+                                {!hasVibeCodingCourse && (
+                                  <button
+                                    onClick={async () => {
+                                      if (!window.confirm(`${user.name || user.email}에게 바이브코딩 강의를 추가하시겠습니까?\n\n💰 가격: 45,000원\n📚 강의: Step 3: 바이브코딩`)) return;
+
+                                      try {
+                                        await AzureTableService.addPurchaseAndEnrollmentToUser({
+                                          email: user.email,
+                                          courseId: 'vibe-coding',
+                                          title: 'Step 3: 바이브코딩',
+                                          amount: 45000,
+                                          paymentMethod: 'card',
+                                          orderId: `manual_vibe_${Date.now()}`,
+                                          orderName: 'Step 3: 바이브코딩'
+                                        });
+                                        alert('✅ 바이브코딩 강의가 추가되었습니다!');
+                                        loadAllUsers(); // 새로고침
+                                      } catch (error: any) {
+                                        alert(`오류: ${error.message}`);
+                                      }
+                                    }}
+                                    style={{
+                                      padding: '6px 14px',
+                                      borderRadius: '6px',
+                                      border: 'none',
+                                      background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                                      color: 'white',
+                                      fontSize: '0.85rem',
+                                      fontWeight: '600',
+                                      cursor: 'pointer'
+                                    }}
+                                  >
+                                    💻 바이브코딩
                                   </button>
                                 )}
                               </>
@@ -2298,6 +2341,10 @@ const AdminEnrollmentFixPage: React.FC = () => {
                           courseId = 'chatgpt-agent-beginner';
                           title = 'Google Opal 유튜브 수익화 에이전트 기초';
                           amount = 95000;
+                        } else if (payment.productName?.includes('Step 3') || payment.productName?.includes('바이브코딩')) {
+                          courseId = 'vibe-coding';
+                          title = 'Step 3: 바이브코딩';
+                          amount = 45000;
                         }
 
                         // 🔥 스마트 매칭으로 사용자 찾기
@@ -2324,7 +2371,8 @@ const AdminEnrollmentFixPage: React.FC = () => {
                           const alreadyHas = enrollments.some((e: any) =>
                             e.courseId === courseId ||
                             (courseId === 'ai-building-course' && e.courseId === '999') ||
-                            (courseId === 'chatgpt-agent-beginner' && e.courseId === '1002')
+                            (courseId === 'chatgpt-agent-beginner' && e.courseId === '1002') ||
+                            (courseId === 'vibe-coding' && e.courseId === '1003')
                           );
                           if (alreadyHas) {
                             console.log(`⏭️ 이미 등록됨: ${realEmail} → ${title}`);
@@ -2344,8 +2392,9 @@ const AdminEnrollmentFixPage: React.FC = () => {
                           paymentKey: payment.orderId
                         });
 
+                        const courseName = courseId === 'ai-building-course' ? '건물주' : courseId === 'vibe-coding' ? '바이브코딩' : '에이전트';
                         console.log(`✅ 등록 완료: ${realEmail} → ${title}`);
-                        results.push(`✅ ${payment.name} → ${realEmail}: ${courseId === 'ai-building-course' ? '건물주' : '에이전트'}`);
+                        results.push(`✅ ${payment.name} → ${realEmail}: ${courseName}`);
                         success++;
                       } catch (error: any) {
                         console.error(`❌ 등록 실패: ${payment.maskedEmail}`, error);

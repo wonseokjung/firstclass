@@ -352,6 +352,176 @@ AI City Builders 사이트 정보:
         }} />
 
         {/* 웰컴 메시지 */}
+
+        {/* 🔴 요일별 라이브 배너 - 프리미엄 디자인 */}
+        {(() => {
+          const today = new Date().getDay(); // 0=일, 1=월, 2=화, 3=수, 4=목, 5=금, 6=토
+
+          const liveSchedule: Record<number, { title: string; subtitle: string; link: string; emoji: string; gradient: string; shadowColor: string } | null> = {
+            1: { // 월요일
+              title: '오늘 8PM 유튜브 라이브!',
+              subtitle: 'AI 최신 뉴스 & QnA',
+              link: 'https://www.youtube.com/@CONNECT-AI-LAB/streams',
+              emoji: '📺',
+              gradient: 'linear-gradient(135deg, #ff0000, #cc0000)',
+              shadowColor: 'rgba(255, 0, 0, 0.4)'
+            },
+            2: { // 화요일
+              title: '오늘 8PM Step 1 라이브!',
+              subtitle: 'AI 건물주 되기 기초',
+              link: '/live/step1',
+              emoji: '🏗️',
+              gradient: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+              shadowColor: 'rgba(14, 165, 233, 0.4)'
+            },
+            3: { // 수요일
+              title: '오늘 8PM Step 2 라이브!',
+              subtitle: 'AI 에이전트 비기너',
+              link: '/live/step2',
+              emoji: '🤖',
+              gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+              shadowColor: 'rgba(139, 92, 246, 0.4)'
+            },
+            4: { // 목요일
+              title: '오늘 8PM Step 3 라이브!',
+              subtitle: '바이브코딩',
+              link: '/live/step3',
+              emoji: '💻',
+              gradient: 'linear-gradient(135deg, #22c55e, #16a34a)',
+              shadowColor: 'rgba(34, 197, 94, 0.4)'
+            },
+            0: null, // 일요일
+            5: null, // 금요일
+            6: null  // 토요일
+          };
+
+          const todayLive = liveSchedule[today];
+
+          if (!todayLive) return null;
+
+          const isExternal = todayLive.link.startsWith('http');
+
+          return (
+            <a
+              href={todayLive.link}
+              target={isExternal ? '_blank' : undefined}
+              rel={isExternal ? 'noopener noreferrer' : undefined}
+              className="live-banner-link"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '16px',
+                background: todayLive.gradient,
+                borderRadius: '20px',
+                padding: '16px 28px',
+                marginBottom: '24px',
+                textDecoration: 'none',
+                boxShadow: `0 8px 32px ${todayLive.shadowColor}, 0 0 0 1px rgba(255,255,255,0.1) inset`,
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                e.currentTarget.style.boxShadow = `0 12px 40px ${todayLive.shadowColor}, 0 0 0 1px rgba(255,255,255,0.2) inset`;
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow = `0 8px 32px ${todayLive.shadowColor}, 0 0 0 1px rgba(255,255,255,0.1) inset`;
+              }}
+            >
+              {/* 배경 빛 효과 */}
+              <div style={{
+                position: 'absolute',
+                top: '-50%',
+                left: '-50%',
+                width: '200%',
+                height: '200%',
+                background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%)',
+                animation: 'shimmer 3s ease-in-out infinite',
+                pointerEvents: 'none'
+              }} />
+
+              {/* 🔴 LIVE 인디케이터 */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                background: 'rgba(0,0,0,0.3)',
+                backdropFilter: 'blur(10px)',
+                padding: '8px 14px',
+                borderRadius: '25px',
+                border: '1px solid rgba(255,255,255,0.2)'
+              }}>
+                <div style={{
+                  width: '10px',
+                  height: '10px',
+                  background: '#ef4444',
+                  borderRadius: '50%',
+                  boxShadow: '0 0 10px #ef4444, 0 0 20px #ef4444',
+                  animation: 'blink 1.5s infinite'
+                }} />
+                <span style={{
+                  color: 'white',
+                  fontSize: '0.85rem',
+                  fontWeight: '800',
+                  letterSpacing: '1px'
+                }}>LIVE</span>
+              </div>
+
+              {/* 이모지 아이콘 */}
+              <div style={{
+                width: '48px',
+                height: '48px',
+                background: 'rgba(255,255,255,0.2)',
+                backdropFilter: 'blur(10px)',
+                borderRadius: '14px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1.6rem',
+                border: '1px solid rgba(255,255,255,0.3)'
+              }}>
+                {todayLive.emoji}
+              </div>
+
+              {/* 텍스트 */}
+              <div style={{ textAlign: 'left', zIndex: 1 }}>
+                <div style={{
+                  color: 'white',
+                  fontSize: 'clamp(1rem, 2.5vw, 1.15rem)',
+                  fontWeight: '800',
+                  textShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                }}>
+                  {todayLive.title}
+                </div>
+                <div style={{
+                  color: 'rgba(255,255,255,0.9)',
+                  fontSize: 'clamp(0.8rem, 2vw, 0.9rem)',
+                  marginTop: '2px'
+                }}>
+                  {todayLive.subtitle}
+                </div>
+              </div>
+
+              {/* 화살표 */}
+              <div style={{
+                background: 'rgba(255,255,255,0.2)',
+                padding: '10px 14px',
+                borderRadius: '12px',
+                color: 'white',
+                fontWeight: '700',
+                fontSize: '0.9rem',
+                marginLeft: '8px'
+              }}>
+                입장 →
+              </div>
+            </a>
+          );
+        })()}
+
         {/* 브랜드 뱃지 */}
         <div style={{
           position: 'relative',
