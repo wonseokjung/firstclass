@@ -224,12 +224,21 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
       vimeoUrl: 'https://player.vimeo.com/video/1151496800?badge=0&autopause=0&player_id=0&app_id=58479',
     },
     {
-      id: 'google-tts',
+      id: 'google-tts-studio',
       icon: <Code size={20} color="#fbbf24" />,
-      title: '🤖 Text-to-Speech (Google TTS)',
-      badge: 'Colab + OPAL',
+      title: '🤖 Google AI Studio에서 TTS',
+      badge: 'AI Studio',
       badgeColor: '#22c55e',
-      description: 'Google Colab 코드로 TTS 구현 & Google OPAL에서 쉽게 TTS 사용하기',
+      description: 'Google AI Studio에서 간단하게 Text-to-Speech 사용하기',
+      vimeoUrl: 'https://player.vimeo.com/video/1151759902?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
+    },
+    {
+      id: 'google-tts-opal',
+      icon: <Sparkles size={20} color="#fbbf24" />,
+      title: '🌟 Google OPAL에서 TTS 에이전트',
+      badge: 'OPAL',
+      badgeColor: '#06b6d4',
+      description: 'Google OPAL로 대본과 오디오를 한번에 생성하는 에이전트 만들기',
       vimeoUrl: '', // 영상 URL 추가 예정
     },
     {
