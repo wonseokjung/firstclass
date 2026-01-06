@@ -282,6 +282,56 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
         </div>
       </div>
 
+      {/* 📢 얼리버드 기간 공지 */}
+      <div style={{
+        maxWidth: '900px',
+        margin: '0 auto',
+        padding: '0 20px'
+      }}>
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(255, 183, 71, 0.15), rgba(255, 215, 0, 0.1))',
+          border: '2px solid rgba(255, 215, 0, 0.4)',
+          borderRadius: '16px',
+          padding: '20px 24px',
+          marginTop: '-20px',
+          marginBottom: '30px',
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: '16px'
+        }}>
+          <div style={{
+            background: 'linear-gradient(135deg, #ffd700, #f59e0b)',
+            borderRadius: '12px',
+            padding: '10px',
+            flexShrink: 0
+          }}>
+            <span style={{ fontSize: '1.5rem' }}>📢</span>
+          </div>
+          <div>
+            <h4 style={{
+              color: '#ffd700',
+              fontSize: '1.1rem',
+              fontWeight: '700',
+              marginBottom: '8px'
+            }}>
+              얼리버드 기간 안내
+            </h4>
+            <p style={{
+              color: 'rgba(255,255,255,0.85)',
+              fontSize: '0.95rem',
+              lineHeight: '1.6',
+              margin: 0
+            }}>
+              🎉 현재 <strong style={{ color: '#ffd700' }}>얼리버드 기간</strong>으로, 기초 강의 영상은 아직 업로드되지 않았습니다.<br />
+              매주 <strong style={{ color: '#22c55e' }}>목요일 저녁 8시 라이브</strong>를 통해 실시간 강의가 진행됩니다!<br />
+              <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem' }}>
+                라이브 참여 후 녹화본이 순차적으로 업로드될 예정입니다.
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* 강의 목록 */}
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: 'clamp(30px, 5vw, 50px) 20px' }}>
         {courseData.weeks.map((week, weekIdx) => (
