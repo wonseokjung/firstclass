@@ -68,7 +68,7 @@ const extractYouTubeId = (url: string): string | null => {
 const renderContent = (content: string) => {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const parts = content.split(urlRegex);
-  
+
   return parts.map((part, index) => {
     if (urlRegex.test(part)) {
       const youtubeId = extractYouTubeId(part);
@@ -164,7 +164,7 @@ const CommunityStepPage: React.FC = () => {
   const [newPostContent, setNewPostContent] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   // 스레드 상세
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
@@ -213,7 +213,7 @@ const CommunityStepPage: React.FC = () => {
           const user = JSON.parse(userSession);
           setIsLoggedIn(true);
           setUserInfo(user);
-          
+
           if (user?.email) {
             try {
               const azureUser = await AzureTableService.getUserByEmail(user.email);
@@ -337,7 +337,7 @@ const CommunityStepPage: React.FC = () => {
           <button onClick={() => navigate('/')} style={{
             background: theme.gold, color: theme.navy, border: 'none',
             padding: '14px 28px', borderRadius: '12px', fontWeight: '700', cursor: 'pointer'
-          }}>프리미엄 강의 보러가기 →</button>
+          }}>정석 트랙 보러가기 →</button>
         </div>
       </div>
     );
@@ -346,7 +346,7 @@ const CommunityStepPage: React.FC = () => {
   return (
     <div style={{ minHeight: '100vh', background: theme.grayLight }}>
       <NavigationBar />
-      
+
       {/* 헤더 */}
       <div style={{ background: theme.navy, padding: '20px', textAlign: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
@@ -356,7 +356,7 @@ const CommunityStepPage: React.FC = () => {
       </div>
 
       <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
-        
+
         {/* 검색바 */}
         <div style={{
           background: theme.white, borderRadius: '25px', padding: '10px 16px',
@@ -380,7 +380,7 @@ const CommunityStepPage: React.FC = () => {
             }}>✕</button>
           )}
         </div>
-        
+
         {/* 새 글 작성 (스레드 스타일) */}
         {isEnrolled && (
           <div style={{
@@ -447,7 +447,7 @@ const CommunityStepPage: React.FC = () => {
               const liked = isLikedByMe(post);
               const isFirst = index === 0;
               const isLast = index === filteredPosts.length - 1;
-              
+
               return (
                 <div
                   key={post.RowKey}
@@ -555,7 +555,7 @@ const CommunityStepPage: React.FC = () => {
             background: theme.white, borderRadius: '20px', width: '100%', maxWidth: '600px',
             marginTop: '20px', marginBottom: '20px'
           }} onClick={(e) => e.stopPropagation()}>
-            
+
             {/* 상단 바 */}
             <div style={{
               display: 'flex', justifyContent: 'space-between', alignItems: 'center',

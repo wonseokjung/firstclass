@@ -76,7 +76,7 @@ const CommunityHubPage: React.FC = () => {
           const user = JSON.parse(userSession);
           setIsLoggedIn(true);
           setUserName(user?.name || user?.email || '');
-          
+
           if (user?.email) {
             try {
               const azureUser = await AzureTableService.getUserByEmail(user.email);
@@ -88,7 +88,7 @@ const CommunityHubPage: React.FC = () => {
                 const enrollments = enrolledCoursesData?.enrollments || [];
                 const enrolled = enrollments.map((e: any) => e.courseId);
                 setEnrolledCourses(enrolled);
-                
+
                 const updatedUser = { ...user, enrolledCourses: enrolledCoursesData };
                 sessionStorage.setItem('aicitybuilders_user_session', JSON.stringify(updatedUser));
               }
@@ -130,7 +130,7 @@ const CommunityHubPage: React.FC = () => {
   return (
     <div style={{ minHeight: '100vh', background: theme.white }}>
       <NavigationBar />
-      
+
       {/* 헤더 */}
       <div style={{
         background: `linear-gradient(135deg, ${theme.navy} 0%, ${theme.navyLight} 100%)`,
@@ -139,9 +139,9 @@ const CommunityHubPage: React.FC = () => {
       }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <div style={{ fontSize: 'clamp(2.5rem, 7vw, 4rem)', marginBottom: '15px' }}>💬</div>
-          <h1 style={{ 
-            color: theme.gold, 
-            fontSize: 'clamp(1.6rem, 4vw, 2.5rem)', 
+          <h1 style={{
+            color: theme.gold,
+            fontSize: 'clamp(1.6rem, 4vw, 2.5rem)',
             fontWeight: '800',
             marginBottom: '10px'
           }}>
@@ -155,7 +155,7 @@ const CommunityHubPage: React.FC = () => {
       </div>
 
       <div style={{ maxWidth: '1100px', margin: '0 auto', padding: 'clamp(30px, 5vw, 50px) 20px' }}>
-        
+
         {/* 로그인/환영 배너 */}
         {!isLoggedIn ? (
           <div style={{
@@ -190,7 +190,7 @@ const CommunityHubPage: React.FC = () => {
             borderRadius: '16px', padding: '20px 25px', marginBottom: '35px'
           }}>
             <p style={{ color: theme.navy, fontSize: '1.05rem', margin: 0 }}>
-              👋 <strong>{userName}</strong>님, 환영합니다! 
+              👋 <strong>{userName}</strong>님, 환영합니다!
               {enrolledCourses.length > 0 ? (
                 <span style={{ color: theme.goldMuted, fontWeight: '600' }}> ({enrolledCourses.length}개 강의 수강 중)</span>
               ) : (
@@ -201,23 +201,23 @@ const CommunityHubPage: React.FC = () => {
         )}
 
         {/* 섹션 타이틀 */}
-        <h2 style={{ 
-          color: theme.navy, fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', 
+        <h2 style={{
+          color: theme.navy, fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
           fontWeight: '700', marginBottom: '25px', display: 'flex', alignItems: 'center', gap: '10px'
         }}>
           <span>📚</span> 강의별 커뮤니티
         </h2>
 
         {/* 강의 카드 그리드 */}
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
-          gap: '20px' 
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '20px'
         }}>
           {courses.map((course) => {
             const enrolled = isEnrolled(course.courseIds);
             const isComingSoon = course.step >= 3;
-            
+
             return (
               <div
                 key={course.step}
@@ -256,11 +256,11 @@ const CommunityHubPage: React.FC = () => {
                   position: 'absolute', top: '15px', right: '15px',
                   padding: '5px 12px', borderRadius: '20px',
                   fontSize: '0.75rem', fontWeight: '700',
-                  background: isComingSoon 
-                    ? '#fef3c7' 
+                  background: isComingSoon
+                    ? '#fef3c7'
                     : (enrolled ? theme.gold : theme.grayLight),
-                  color: isComingSoon 
-                    ? '#d97706' 
+                  color: isComingSoon
+                    ? '#d97706'
                     : (enrolled ? theme.navy : theme.gray)
                 }}>
                   {isComingSoon ? 'Coming Soon' : (enrolled ? '수강 중 ✓' : '미수강')}
@@ -285,9 +285,9 @@ const CommunityHubPage: React.FC = () => {
                 </div>
 
                 {/* 제목 */}
-                <h3 style={{ 
-                  color: theme.navy, 
-                  fontSize: 'clamp(1.05rem, 2.5vw, 1.25rem)', 
+                <h3 style={{
+                  color: theme.navy,
+                  fontSize: 'clamp(1.05rem, 2.5vw, 1.25rem)',
                   fontWeight: '700',
                   marginBottom: '6px'
                 }}>
@@ -295,8 +295,8 @@ const CommunityHubPage: React.FC = () => {
                 </h3>
 
                 {/* 부제목 */}
-                <p style={{ 
-                  color: theme.gray, 
+                <p style={{
+                  color: theme.gray,
                   fontSize: '0.9rem',
                   lineHeight: '1.5',
                   marginBottom: '18px'
@@ -322,18 +322,18 @@ const CommunityHubPage: React.FC = () => {
           background: theme.navy, borderRadius: '20px'
         }}>
           <h3 style={{ color: theme.gold, fontSize: '1.25rem', marginBottom: '12px' }}>
-            🎯 4단계 프리미엄 강의로 AI 콘텐츠 비즈니스를 시작하세요!
+            🎯 4단계 AI 수익화의 정석 트랙으로 AI 콘텐츠 비즈니스를 시작하세요!
           </h3>
           <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '25px', lineHeight: '1.6' }}>
-            인공지능 자동화 에이전트로 콘텐츠 비즈니스 월세 받기<br/>
+            인공지능 자동화 에이전트로 콘텐츠 비즈니스 월세 받기<br />
             STEP 1 → STEP 2 → STEP 3 → STEP 4
           </p>
           <button onClick={() => navigate('/')} style={{
-            background: theme.gold, color: theme.navy, border: 'none', 
-            padding: '14px 35px', borderRadius: '12px', fontWeight: '700', 
+            background: theme.gold, color: theme.navy, border: 'none',
+            padding: '14px 35px', borderRadius: '12px', fontWeight: '700',
             fontSize: '1rem', cursor: 'pointer'
           }}>
-            ✨ 프리미엄 강의 보러가기
+            ✨ 정석 트랙 보러가기
           </button>
         </div>
       </div>

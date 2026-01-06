@@ -69,7 +69,7 @@ const freeMoneyClasses: Course[] = [
   { id: 12, instructor: 'GEMINI API', title: '🧮 Gemini API 가격 계산기', subtitle: '모델별 비용 실시간 계산', description: 'Google Gemini API 모델별 가격을 실시간으로 계산해보세요', image: `${process.env.PUBLIC_URL}/images/gemini3.png`, isNew: true, category: '무료 도구', path: '/gemini-api-calculator', isDocumentary: false }
 ];
 
-// 프리미엄 강의 - 4단계 Step 시스템
+// AI 수익화의 정석 트랙 - 4단계 Step 시스템
 const premiumClasses: Course[] = [
   // Step 1: AI 건물주 되기 - 캐릭터 이미지 생성
   { id: 999, instructor: '정원석 (AI 멘토 제이)', title: 'Step 1: AI 건물주 되기', subtitle: '캐릭터 이미지 생성', description: '캐릭터 이미지 생성 → 영상 생성 → 목소리 생성 → 합쳐서 영상 만들고 업로드! 실제/3D/동물/귀여운 캐릭터를 만듭니다.', image: `${process.env.PUBLIC_URL}/images/main/1.jpeg`, isNew: true, category: 'Premium', path: '/ai-building-course', isPremium: true, launchDate: '📚 지금 수강 가능', price: 95000, originalPrice: 95000, isComingSoon: false },
@@ -105,6 +105,25 @@ const MainPage: React.FC<MainPageProps> = ({ onFAQClick, onLoginClick, onSignUpC
   const [isLoadingEnrollments, setIsLoadingEnrollments] = useState(true);
   const [isCityGuideOpen, setIsCityGuideOpen] = useState(false);
   const [announcement, setAnnouncement] = useState<string>('');
+
+  // 🔴 라이브 설정 (관리자 페이지에서 설정)
+  const [liveConfigs, setLiveConfigs] = useState<{ [courseId: string]: { isLive: boolean; liveUrl: string; liveTitle: string } }>({});
+
+  // 라이브 설정 불러오기
+  useEffect(() => {
+    const loadLiveConfigs = async () => {
+      try {
+        const configs = await AzureTableService.getAllLiveConfigs();
+        setLiveConfigs(configs);
+      } catch (error) {
+        console.error('라이브 설정 로드 실패:', error);
+      }
+    };
+    loadLiveConfigs();
+    // 1분마다 새로고침
+    const interval = setInterval(loadLiveConfigs, 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   // 실시간 공지사항 생성 (10분마다)
   useEffect(() => {
@@ -351,176 +370,8 @@ AI City Builders 사이트 정보:
           pointerEvents: 'none'
         }} />
 
+
         {/* 웰컴 메시지 */}
-
-        {/* 🔴 요일별 라이브 배너 - 프리미엄 디자인 */}
-        {(() => {
-          const today = new Date().getDay(); // 0=일, 1=월, 2=화, 3=수, 4=목, 5=금, 6=토
-
-          const liveSchedule: Record<number, { title: string; subtitle: string; link: string; emoji: string; gradient: string; shadowColor: string } | null> = {
-            1: { // 월요일
-              title: '오늘 8PM 유튜브 라이브!',
-              subtitle: 'AI 최신 뉴스 & QnA',
-              link: 'https://www.youtube.com/@CONNECT-AI-LAB/streams',
-              emoji: '📺',
-              gradient: 'linear-gradient(135deg, #ff0000, #cc0000)',
-              shadowColor: 'rgba(255, 0, 0, 0.4)'
-            },
-            2: { // 화요일
-              title: '오늘 8PM Step 1 라이브!',
-              subtitle: 'AI 건물주 되기 기초',
-              link: '/live/step1',
-              emoji: '🏗️',
-              gradient: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-              shadowColor: 'rgba(14, 165, 233, 0.4)'
-            },
-            3: { // 수요일
-              title: '오늘 8PM Step 2 라이브!',
-              subtitle: 'AI 에이전트 비기너',
-              link: '/live/step2',
-              emoji: '🤖',
-              gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
-              shadowColor: 'rgba(139, 92, 246, 0.4)'
-            },
-            4: { // 목요일
-              title: '오늘 8PM Step 3 라이브!',
-              subtitle: '바이브코딩',
-              link: '/live/step3',
-              emoji: '💻',
-              gradient: 'linear-gradient(135deg, #22c55e, #16a34a)',
-              shadowColor: 'rgba(34, 197, 94, 0.4)'
-            },
-            0: null, // 일요일
-            5: null, // 금요일
-            6: null  // 토요일
-          };
-
-          const todayLive = liveSchedule[today];
-
-          if (!todayLive) return null;
-
-          const isExternal = todayLive.link.startsWith('http');
-
-          return (
-            <a
-              href={todayLive.link}
-              target={isExternal ? '_blank' : undefined}
-              rel={isExternal ? 'noopener noreferrer' : undefined}
-              className="live-banner-link"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '16px',
-                background: todayLive.gradient,
-                borderRadius: '20px',
-                padding: '16px 28px',
-                marginBottom: '24px',
-                textDecoration: 'none',
-                boxShadow: `0 8px 32px ${todayLive.shadowColor}, 0 0 0 1px rgba(255,255,255,0.1) inset`,
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
-                e.currentTarget.style.boxShadow = `0 12px 40px ${todayLive.shadowColor}, 0 0 0 1px rgba(255,255,255,0.2) inset`;
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                e.currentTarget.style.boxShadow = `0 8px 32px ${todayLive.shadowColor}, 0 0 0 1px rgba(255,255,255,0.1) inset`;
-              }}
-            >
-              {/* 배경 빛 효과 */}
-              <div style={{
-                position: 'absolute',
-                top: '-50%',
-                left: '-50%',
-                width: '200%',
-                height: '200%',
-                background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%)',
-                animation: 'shimmer 3s ease-in-out infinite',
-                pointerEvents: 'none'
-              }} />
-
-              {/* 🔴 LIVE 인디케이터 */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                background: 'rgba(0,0,0,0.3)',
-                backdropFilter: 'blur(10px)',
-                padding: '8px 14px',
-                borderRadius: '25px',
-                border: '1px solid rgba(255,255,255,0.2)'
-              }}>
-                <div style={{
-                  width: '10px',
-                  height: '10px',
-                  background: '#ef4444',
-                  borderRadius: '50%',
-                  boxShadow: '0 0 10px #ef4444, 0 0 20px #ef4444',
-                  animation: 'blink 1.5s infinite'
-                }} />
-                <span style={{
-                  color: 'white',
-                  fontSize: '0.85rem',
-                  fontWeight: '800',
-                  letterSpacing: '1px'
-                }}>LIVE</span>
-              </div>
-
-              {/* 이모지 아이콘 */}
-              <div style={{
-                width: '48px',
-                height: '48px',
-                background: 'rgba(255,255,255,0.2)',
-                backdropFilter: 'blur(10px)',
-                borderRadius: '14px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '1.6rem',
-                border: '1px solid rgba(255,255,255,0.3)'
-              }}>
-                {todayLive.emoji}
-              </div>
-
-              {/* 텍스트 */}
-              <div style={{ textAlign: 'left', zIndex: 1 }}>
-                <div style={{
-                  color: 'white',
-                  fontSize: 'clamp(1rem, 2.5vw, 1.15rem)',
-                  fontWeight: '800',
-                  textShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                }}>
-                  {todayLive.title}
-                </div>
-                <div style={{
-                  color: 'rgba(255,255,255,0.9)',
-                  fontSize: 'clamp(0.8rem, 2vw, 0.9rem)',
-                  marginTop: '2px'
-                }}>
-                  {todayLive.subtitle}
-                </div>
-              </div>
-
-              {/* 화살표 */}
-              <div style={{
-                background: 'rgba(255,255,255,0.2)',
-                padding: '10px 14px',
-                borderRadius: '12px',
-                color: 'white',
-                fontWeight: '700',
-                fontSize: '0.9rem',
-                marginLeft: '8px'
-              }}>
-                입장 →
-              </div>
-            </a>
-          );
-        })()}
 
         {/* 브랜드 뱃지 */}
         <div style={{
@@ -693,6 +544,94 @@ AI City Builders 사이트 정보:
           >
             💬 안내원과 대화하기
           </button>
+
+          {/* 🔴 요일별 라이브 배너 - 안내원 버튼 아래 */}
+          {(() => {
+            const today = new Date().getDay(); // 0=일, 1=월, 2=화, 3=수, 4=목, 5=금, 6=토
+
+            // 요일별 강의 ID 매핑
+            const dayToCourseId: Record<number, string | null> = {
+              1: null,                      // 월요일: 유튜브 (별도 처리)
+              2: 'ai-building-course',       // 화요일: Step 1
+              3: 'chatgpt-agent-beginner',   // 수요일: Step 2
+              4: 'vibe-coding',              // 목요일: Step 3
+              0: null, 5: null, 6: null      // 금~일: 없음
+            };
+
+            // 🎬 Azure에서 가져온 라이브 설정 사용
+            const todayCourseId = dayToCourseId[today];
+            const activeLiveConfig = todayCourseId ? liveConfigs[todayCourseId] : null;
+
+            const todayLiveConfig: {
+              youtubeVideoId?: string;
+              customTitle?: string;
+            } = {
+              youtubeVideoId: activeLiveConfig?.isLive ? activeLiveConfig.liveUrl : undefined,
+              customTitle: activeLiveConfig?.isLive ? activeLiveConfig.liveTitle : undefined,
+            };
+
+            const liveSchedule: Record<number, { title: string; subtitle: string; link: string; emoji: string; gradient: string; shadowColor: string } | null> = {
+              1: { title: '오늘 8PM 유튜브 라이브!', subtitle: 'AI 최신 뉴스 & QnA', link: 'https://www.youtube.com/@CONNECT-AI-LAB/streams', emoji: '📺', gradient: 'linear-gradient(135deg, #ff0000, #cc0000)', shadowColor: 'rgba(255, 0, 0, 0.4)' },
+              2: { title: '오늘 8PM Step 1 라이브!', subtitle: 'AI 건물주 되기 기초', link: '/live/step1', emoji: '🏗️', gradient: 'linear-gradient(135deg, #0ea5e9, #0284c7)', shadowColor: 'rgba(14, 165, 233, 0.4)' },
+              3: { title: '오늘 8PM Step 2 라이브!', subtitle: 'AI 에이전트 비기너', link: '/live/step2', emoji: '🤖', gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)', shadowColor: 'rgba(139, 92, 246, 0.4)' },
+              4: { title: '오늘 8PM Step 3 라이브!', subtitle: '바이브코딩', link: '/live/step3', emoji: '💻', gradient: 'linear-gradient(135deg, #22c55e, #16a34a)', shadowColor: 'rgba(34, 197, 94, 0.4)' },
+              0: null, 5: null, 6: null
+            };
+
+            const todayLive = liveSchedule[today];
+            if (!todayLive) return null;
+
+            const isExternal = todayLive.link.startsWith('http');
+            const hasVideoPreview = !!todayLiveConfig.youtubeVideoId;
+            const displayTitle = todayLiveConfig.customTitle || todayLive.title;
+
+            // 🎬 YouTube 프리뷰가 있으면 확장된 카드 표시
+            if (hasVideoPreview) {
+              return (
+                <div style={{
+                  marginTop: '32px',
+                  background: 'linear-gradient(135deg, rgba(13,21,39,0.95), rgba(10,15,26,0.98))',
+                  borderRadius: '24px',
+                  padding: '24px',
+                  border: '2px solid rgba(255,215,0,0.3)',
+                  boxShadow: '0 12px 40px rgba(0,0,0,0.5), 0 0 60px rgba(255,215,0,0.1)',
+                  maxWidth: '600px',
+                  width: '100%'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#ef4444', padding: '6px 14px', borderRadius: '20px' }}>
+                      <div style={{ width: '8px', height: '8px', background: 'white', borderRadius: '50%', animation: 'blink 1.5s infinite' }} />
+                      <span style={{ color: 'white', fontSize: '0.8rem', fontWeight: '800' }}>LIVE 8PM</span>
+                    </div>
+                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem' }}>오늘</span>
+                  </div>
+                  <h3 style={{ color: '#ffd700', fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', fontWeight: '800', marginBottom: '16px', lineHeight: '1.3' }}>{displayTitle}</h3>
+                  <div style={{ position: 'relative', paddingBottom: '56.25%', borderRadius: '16px', overflow: 'hidden', marginBottom: '16px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
+                    <iframe src={`https://www.youtube.com/embed/${todayLiveConfig.youtubeVideoId}?rel=0`} title={displayTitle} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }} />
+                  </div>
+                  <a href={todayLive.link} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', background: todayLive.gradient, color: 'white', padding: '14px 28px', borderRadius: '14px', textDecoration: 'none', fontWeight: '700', fontSize: '1rem', boxShadow: `0 6px 20px ${todayLive.shadowColor}` }}>
+                    {todayLive.emoji} 라이브 입장하기 →
+                  </a>
+                </div>
+              );
+            }
+
+            // 🎯 기존 컴팩트 배너
+            return (
+              <a href={todayLive.link} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', background: todayLive.gradient, borderRadius: '20px', padding: '16px 28px', marginTop: '32px', textDecoration: 'none', boxShadow: `0 8px 32px ${todayLive.shadowColor}`, transition: 'all 0.3s ease' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(0,0,0,0.3)', padding: '8px 14px', borderRadius: '25px' }}>
+                  <div style={{ width: '10px', height: '10px', background: '#ef4444', borderRadius: '50%', boxShadow: '0 0 10px #ef4444', animation: 'blink 1.5s infinite' }} />
+                  <span style={{ color: 'white', fontSize: '0.85rem', fontWeight: '800' }}>LIVE</span>
+                </div>
+                <div style={{ width: '48px', height: '48px', background: 'rgba(255,255,255,0.2)', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem' }}>{todayLive.emoji}</div>
+                <div style={{ textAlign: 'left' }}>
+                  <div style={{ color: 'white', fontSize: 'clamp(1rem, 2.5vw, 1.15rem)', fontWeight: '800' }}>{todayLive.title}</div>
+                  <div style={{ color: 'rgba(255,255,255,0.9)', fontSize: 'clamp(0.8rem, 2vw, 0.9rem)' }}>{todayLive.subtitle}</div>
+                </div>
+                <div style={{ background: 'rgba(255,255,255,0.2)', padding: '10px 14px', borderRadius: '12px', color: 'white', fontWeight: '700' }}>입장 →</div>
+              </a>
+            );
+          })()}
         </div>
 
         {/* 애니메이션 */}
@@ -711,7 +650,7 @@ AI City Builders 사이트 정보:
         onClose={() => setIsCityGuideOpen(false)}
       />
 
-      {/* 🎯 프리미엄 강의 수강권 구매 CTA 섹션 */}
+      {/* 🎯 AI 수익화의 정석 트랙 CTA 섹션 */}
       <section style={{
         padding: 'clamp(30px, 5vw, 50px) clamp(16px, 3vw, 24px)',
         background: 'linear-gradient(180deg, #0d1527 0%, #0a0f1a 50%, #0d1527 100%)',
@@ -743,7 +682,7 @@ AI City Builders 사이트 정보:
             border: '1px solid rgba(255,215,0,0.3)'
           }}>
             <span style={{ fontSize: '1.2rem' }}>🏆</span>
-            <span style={{ color: '#ffd700', fontWeight: '700', fontSize: '0.9rem' }}>PREMIUM COURSES</span>
+            <span style={{ color: '#ffd700', fontWeight: '700', fontSize: '0.9rem' }}>AI 수익화의 정석 트랙</span>
           </div>
 
           <h2 style={{
@@ -795,51 +734,6 @@ AI City Builders 사이트 정보:
           </div>
 
           {/* 포함 내용 */}
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: '16px',
-            marginBottom: '8px'
-          }}>
-            <div style={{
-              background: 'rgba(59, 130, 246, 0.15)',
-              border: '1px solid rgba(59, 130, 246, 0.3)',
-              padding: '6px 14px',
-              borderRadius: '20px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}>
-              <span>📚</span>
-              <span style={{ color: '#60a5fa', fontSize: '0.85rem', fontWeight: '600' }}>기초 강의 10개</span>
-            </div>
-            <div style={{
-              background: 'rgba(239, 68, 68, 0.15)',
-              border: '1px solid rgba(239, 68, 68, 0.3)',
-              padding: '6px 14px',
-              borderRadius: '20px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}>
-              <span>🔴</span>
-              <span style={{ color: '#f87171', fontSize: '0.85rem', fontWeight: '600' }}>주간 라이브 12회</span>
-            </div>
-            <div style={{
-              background: 'rgba(168, 85, 247, 0.15)',
-              border: '1px solid rgba(168, 85, 247, 0.3)',
-              padding: '6px 14px',
-              borderRadius: '20px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}>
-              <span>🎯</span>
-              <span style={{ color: '#c084fc', fontSize: '0.85rem', fontWeight: '600' }}>월간 프로젝트 3개</span>
-            </div>
-          </div>
-
           <p style={{
             color: 'rgba(255,255,255,0.6)',
             fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
@@ -1091,7 +985,7 @@ AI City Builders 사이트 정보:
       <MonthlyProjectSection />
 
       <main className="masterclass-main">
-        {/* 프리미엄 강의 - 4단계 로드맵 */}
+        {/* AI 수익화의 정석 트랙 - 4단계 로드맵 */}
         <section className="masterclass-section">
           <div className="section-header-mc">
             <h2 className="section-title-mc">
@@ -1102,7 +996,7 @@ AI City Builders 사이트 정보:
                 backgroundClip: 'text',
                 fontWeight: '800'
               }}>
-                🏙️ AI City 로드맵
+                🏆 AI 수익화의 정석 트랙
               </span>
               <div style={{ fontSize: '0.8em', marginTop: '8px', fontWeight: '600', color: 'rgba(255,255,255,0.8)' }}>
                 필요한 강의만 골라서 수강 가능! 각 강의 ₩95,000 (3개월)
@@ -1252,16 +1146,18 @@ AI City Builders 사이트 정보:
         <div className="footer-bottom"><p>&copy; 2025 커넥젼에이아이이. All rights reserved.</p></div>
       </footer>
 
-      {showPaymentModal && selectedCourse && (
-        <PaymentComponent
-          courseId={selectedCourse.id.toString()}
-          courseTitle={selectedCourse.title}
-          price={selectedCourse.price || 0}
-          userInfo={userInfo}
-          onClose={handlePaymentClose}
-          onSuccess={handlePaymentSuccess}
-        />
-      )}
+      {
+        showPaymentModal && selectedCourse && (
+          <PaymentComponent
+            courseId={selectedCourse.id.toString()}
+            courseTitle={selectedCourse.title}
+            price={selectedCourse.price || 0}
+            userInfo={userInfo}
+            onClose={handlePaymentClose}
+            onSuccess={handlePaymentSuccess}
+          />
+        )
+      }
 
       <ComingSoonModal
         isOpen={showComingSoonModal}
@@ -1269,7 +1165,7 @@ AI City Builders 사이트 정보:
         courseTitle={comingSoonCourseTitle}
       />
 
-    </div>
+    </div >
   );
 };
 

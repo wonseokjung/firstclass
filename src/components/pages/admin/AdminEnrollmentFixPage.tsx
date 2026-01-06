@@ -2332,19 +2332,28 @@ const AdminEnrollmentFixPage: React.FC = () => {
                           continue;
                         }
 
-                        // 상품명으로 courseId, 금액 결정
+                        // 상품명으로 courseId, 금액 결정 (상품명 우선!)
                         let courseId = 'ai-building-course';
                         let title = 'Step 1: AI 건물주 되기 기초';
-                        let amount = 45000;
+                        let amount = payment.amount || 45000;
 
-                        if (payment.productName?.includes('Google Opal') || payment.productName?.includes('에이전트') || payment.amount === 95000) {
+                        // Step 2: 에이전트 (상품명에 에이전트, Step 2, Google Opal 포함)
+                        if (payment.productName?.includes('Step 2') || payment.productName?.includes('에이전트') || payment.productName?.includes('Google Opal')) {
                           courseId = 'chatgpt-agent-beginner';
                           title = 'Google Opal 유튜브 수익화 에이전트 기초';
-                          amount = 95000;
-                        } else if (payment.productName?.includes('Step 3') || payment.productName?.includes('바이브코딩')) {
+                          amount = payment.amount || 95000;
+                        }
+                        // Step 3: 바이브코딩
+                        else if (payment.productName?.includes('Step 3') || payment.productName?.includes('바이브코딩')) {
                           courseId = 'vibe-coding';
                           title = 'Step 3: 바이브코딩';
-                          amount = 45000;
+                          amount = payment.amount || 45000;
+                        }
+                        // Step 1: 건물주 (기본값이지만 명시적으로 확인)
+                        else if (payment.productName?.includes('Step 1') || payment.productName?.includes('건물주')) {
+                          courseId = 'ai-building-course';
+                          title = 'Step 1: AI 건물주 되기 기초';
+                          amount = payment.amount || 95000;
                         }
 
                         // 🔥 스마트 매칭으로 사용자 찾기
