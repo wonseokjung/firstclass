@@ -424,7 +424,7 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
                 color: 'rgba(255,255,255,0.8)'
               }}>
                 <Archive size={20} />
-                <span>연간 52회 라이브 + 전체 아카이브</span>
+                <span>3개월 12회 라이브 + 아카이브</span>
               </div>
             </div>
 
@@ -913,9 +913,9 @@ const StepLivePage: React.FC<StepLivePageProps> = ({ onBack }) => {
               padding: '25px 35px',
               minWidth: '150px'
             }}>
-              <div style={{ color: COLORS.gold, fontSize: '2rem', fontWeight: '800' }}>52회</div>
+              <div style={{ color: COLORS.gold, fontSize: '2rem', fontWeight: '800' }}>12회</div>
               <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.9rem', marginTop: '5px' }}>
-                연간 라이브
+                3개월 라이브
               </div>
             </div>
 
