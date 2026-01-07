@@ -96,17 +96,17 @@ module.exports = async function (context, req) {
         const paymentData = await paymentResponse.json();
         context.log('💳 토스 결제 정보:', JSON.stringify(paymentData, null, 2));
 
-        // 이메일 추출
-        const customerEmail = paymentData.customerEmail ||
+        // 이메일 추출 (metadata에서 우선, 없으면 다른 필드에서)
+        const customerEmail = paymentData.metadata?.customerEmail ||
+            paymentData.customerEmail ||
             paymentData.customer?.email ||
             paymentData.receipt?.customerEmail;
         const totalAmount = paymentData.totalAmount;
 
-        // orderId에서 courseId 추출
-        // 형식: "ai-building-course_1234567890" 또는 "order_1234567890_xxx"
-        let courseId = 'ai-building-course'; // 기본값
+        // courseId 추출 (metadata에서 우선, 없으면 orderId에서)
+        let courseId = paymentData.metadata?.courseId || 'ai-building-course';
         const orderIdParts = orderId.split('_');
-        if (COURSE_NAMES[orderIdParts[0]]) {
+        if (!paymentData.metadata?.courseId && COURSE_NAMES[orderIdParts[0]]) {
             courseId = orderIdParts[0];
         }
         const courseName = COURSE_NAMES[courseId] || courseId;

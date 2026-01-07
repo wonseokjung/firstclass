@@ -18,13 +18,13 @@ interface PaymentComponentProps {
   onSuccess: (paymentData: any) => void;
 }
 
-const PaymentComponent: React.FC<PaymentComponentProps> = ({ 
+const PaymentComponent: React.FC<PaymentComponentProps> = ({
   courseId,
-  courseTitle, 
-  price, 
+  courseTitle,
+  price,
   userInfo,
-  onClose, 
-  onSuccess 
+  onClose,
+  onSuccess
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [tossPayments, setTossPayments] = useState<any>(null);
@@ -61,7 +61,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
       .replace(/\+/g, '-')
       .replace(/\//g, '_')
       .replace(/=/g, '.');
-    
+
     // 최대 50자로 제한
     return base64.substring(0, 50);
   };
@@ -103,7 +103,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
     try {
       // 주문 ID 생성 (실제로는 서버에서 생성해야 함)
       const orderId = `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      
+
       // 결제 요청 데이터 생성
       const paymentRequest = createPaymentRequest({
         amount: price,
@@ -117,12 +117,12 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
 
       // 토스페이먼츠 JavaScript SDK 공식 사용법
       console.log('🔧 결제 객체 생성 시도...');
-      
+
       // customerKey를 안전하게 생성
       const safeCustomerKey = generateSafeCustomerKey(userInfo.email || 'anonymous@example.com');
       console.log('🔑 생성된 customerKey:', safeCustomerKey);
-      
-      const payment = tossPayments.payment({ 
+
+      const payment = tossPayments.payment({
         customerKey: safeCustomerKey
       });
 
@@ -131,7 +131,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
 
       // 카드 결제 요청 (토스페이먼츠 SDK 공식 방식)
       console.log('💳 카드 결제 요청 시도...');
-      
+
       await payment.requestPayment({
         method: "CARD",
         amount: {
@@ -187,7 +187,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
 
     try {
       const orderId = `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      
+
       const paymentData = {
         amount: price,
         orderId: orderId,
@@ -202,7 +202,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
       console.log('🔑 생성된 customerKey:', safeCustomerKey);
 
       // 결제 객체 생성 (공식 문서 방식)
-      const payment = tossPayments.payment({ 
+      const payment = tossPayments.payment({
         customerKey: safeCustomerKey
       });
 
@@ -238,6 +238,10 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
               type: '소득공제',
             },
           },
+          metadata: {
+            customerEmail: userInfo.email,
+            courseId: courseId,
+          },
         });
       } else if (method === '토스페이') {
         await payment.requestPayment({
@@ -268,8 +272,8 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
   };
 
   return (
-    <div 
-      className="payment-modal" 
+    <div
+      className="payment-modal"
       style={{
         position: 'fixed',
         top: 0,
@@ -311,7 +315,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
           <h3>결제하기</h3>
           <button className="close-btn" onClick={onClose}>✕</button>
         </div>
-        
+
         <div className="payment-info">
           <div className="course-info">
             <h4>{courseTitle}</h4>
@@ -327,8 +331,8 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
         {/* 결제 방법 선택 */}
         <div className="payment-methods">
           <h5>결제 방법 선택</h5>
-          
-          <button 
+
+          <button
             className="payment-btn primary"
             onClick={handlePayment}
             disabled={isLoading || !tossPayments}
@@ -336,7 +340,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
             {isLoading ? '결제 진행 중...' : '💳 신용카드/체크카드'}
           </button>
 
-          <button 
+          <button
             className="payment-btn"
             onClick={() => handleOtherPayment('토스페이')}
             disabled={isLoading || !tossPayments}
@@ -344,7 +348,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
             📱 토스페이
           </button>
 
-          <button 
+          <button
             className="payment-btn"
             onClick={() => handleOtherPayment('계좌이체')}
             disabled={isLoading || !tossPayments}
@@ -352,7 +356,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
             🏦 계좌이체
           </button>
 
-          <button 
+          <button
             className="payment-btn"
             onClick={() => handleOtherPayment('가상계좌')}
             disabled={isLoading || !tossPayments}
@@ -397,12 +401,12 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
               }}>
                 ${(price / KRW_TO_USD_RATE).toFixed(2)} USD
               </p>
-              <PayPalScriptProvider options={{ 
+              <PayPalScriptProvider options={{
                 clientId: PAYPAL_CLIENT_ID,
                 currency: "USD"
               }}>
                 <PayPalButtons
-                  style={{ 
+                  style={{
                     layout: "vertical",
                     color: "blue",
                     shape: "rect",
@@ -426,7 +430,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
                     if (actions.order) {
                       const details = await actions.order.capture();
                       console.log('✅ PayPal 결제 성공:', details);
-                      
+
                       // 결제 성공 처리
                       const paymentData = {
                         orderId: details.id,
@@ -438,7 +442,7 @@ const PaymentComponent: React.FC<PaymentComponentProps> = ({
                         payerEmail: details.payer?.email_address,
                         payerName: details.payer?.name?.given_name
                       };
-                      
+
                       alert(`🎉 PayPal 결제가 완료되었습니다!\n\n주문번호: ${details.id}`);
                       onSuccess(paymentData);
                     }
