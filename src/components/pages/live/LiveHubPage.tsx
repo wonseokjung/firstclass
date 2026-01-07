@@ -540,45 +540,45 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
             marginBottom: '20px'
           }}>
             {[
-              { 
-                step: 1, 
-                title: 'AI 건물주', 
+              {
+                step: 1,
+                title: 'AI 건물주',
                 focus: '콘텐츠 생성',
-                project: '캐릭터 이미지 생성', 
-                day: '화', 
+                project: '캐릭터 이미지 생성',
+                day: '화',
                 time: '밤 8시',
-                color: '#3b82f6', 
+                color: '#3b82f6',
                 bgColor: 'rgba(59, 130, 246, 0.1)',
                 icon: '🏗️',
                 weeks: ['1주 실제 인물', '2주 3D 만화', '3주 동물', '4주 귀엽고 심플']
               },
-              { 
-                step: 2, 
-                title: 'AI 에이전트', 
-                focus: '워크플로우 공부',
-                project: '캐릭터 영상 자동화', 
-                day: '수', 
+              {
+                step: 2,
+                title: 'AI 에이전트',
+                focus: '에이전트 팀 구축',
+                project: '나만의 에이전트 팀 구축',
+                day: '수',
                 time: '밤 8시',
-                color: '#fbbf24', 
+                color: '#fbbf24',
                 bgColor: 'rgba(251, 191, 36, 0.1)',
                 icon: '🤖',
-                weeks: ['1주 인물 영상', '2주 만화 영상', '3주 동물 영상', '4주 심플 영상']
+                weeks: ['1주 기획팀', '2주 디자인팀', '3주 개발팀', '4주 마케팅팀']
               },
-              { 
-                step: 3, 
-                title: '바이브코딩', 
+              {
+                step: 3,
+                title: '바이브코딩',
                 focus: '에이전트 개발',
-                project: '자동화 툴 직접 개발', 
-                day: '목', 
+                project: '자동화 툴 직접 개발',
+                day: '목',
                 time: '밤 8시',
-                color: '#a855f7', 
+                color: '#a855f7',
                 bgColor: 'rgba(168, 85, 247, 0.1)',
                 icon: '💻',
                 weeks: ['1주 설계', '2주 개발', '3주 테스트', '4주 배포']
               }
             ].map((item) => (
-              <div 
-                key={item.step} 
+              <div
+                key={item.step}
                 onClick={() => navigate(`/live/step${item.step}`)}
                 style={{
                   background: item.bgColor,
@@ -632,8 +632,8 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
                       </div>
                     </div>
                   </div>
-                  <div style={{ 
-                    color: 'rgba(255,255,255,0.7)', 
+                  <div style={{
+                    color: 'rgba(255,255,255,0.7)',
                     fontSize: '0.75rem',
                     textAlign: 'right' as const
                   }}>
@@ -686,9 +686,9 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
             borderRadius: '12px',
             border: '1px solid rgba(255,255,255,0.05)'
           }}>
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
               gap: '6px',
               color: 'rgba(255,255,255,0.7)',
               fontSize: '0.85rem'
@@ -696,14 +696,14 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
               <span>📺</span>
               <span>다시보기 <strong style={{ color: COLORS.goldLight }}>1달간</strong> 제공</span>
             </div>
-            <div style={{ 
-              width: '1px', 
-              height: '16px', 
-              background: 'rgba(255,255,255,0.2)' 
+            <div style={{
+              width: '1px',
+              height: '16px',
+              background: 'rgba(255,255,255,0.2)'
             }} />
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
               gap: '6px',
               color: 'rgba(255,255,255,0.7)',
               fontSize: '0.85rem'
@@ -711,14 +711,14 @@ const LiveHubPage: React.FC<LiveHubPageProps> = ({ onBack }) => {
               <span>💰</span>
               <span>3개월 수강권 <strong style={{ color: COLORS.goldLight }}>₩95,000</strong></span>
             </div>
-            <div style={{ 
-              width: '1px', 
-              height: '16px', 
-              background: 'rgba(255,255,255,0.2)' 
+            <div style={{
+              width: '1px',
+              height: '16px',
+              background: 'rgba(255,255,255,0.2)'
             }} />
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
               gap: '6px',
               color: 'rgba(255,255,255,0.7)',
               fontSize: '0.85rem'

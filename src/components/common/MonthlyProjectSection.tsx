@@ -23,10 +23,10 @@ const MonthlyProjectSection: React.FC = () => {
             },
             {
                 course: 'AI 에이전트 비기너',
-                title: '캐릭터 영상 자동화',
+                title: '나만의 에이전트 팀 구축',
                 day: '수',
                 time: '밤 8시',
-                weeks: ['인물 영상', '만화 영상', '동물 영상', '심플 영상'],
+                weeks: ['기획팀', '디자인팀', '개발팀', '마케팅팀'],
                 color: '#ffd60a',
                 path: '/chatgpt-agent-beginner'
             },
@@ -155,7 +155,7 @@ const MonthlyProjectSection: React.FC = () => {
                             key={idx}
                             onClick={() => !item.comingSoon && navigate(item.path)}
                             style={{
-                                background: item.comingSoon 
+                                background: item.comingSoon
                                     ? 'linear-gradient(145deg, rgba(229,193,0,0.1), rgba(229,193,0,0.03))'
                                     : 'linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
                                 border: `2px solid ${item.color}40`,
@@ -255,8 +255,8 @@ const MonthlyProjectSection: React.FC = () => {
                                             gap: '5px'
                                         }}
                                     >
-                                        <span style={{ 
-                                            color: item.color, 
+                                        <span style={{
+                                            color: item.color,
                                             fontWeight: '700',
                                             fontSize: '0.7rem'
                                         }}>

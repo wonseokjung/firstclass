@@ -32,15 +32,15 @@ const CEOPage: React.FC<CEOPageProps> = ({ onBack }) => {
     {
       step: 2,
       title: 'AI 에이전트 비기너',
-      subtitle: '워크플로우',
+      subtitle: '에이전트 팀',
       icon: <Bot size={24} />,
-      description: 'AI 워크플로우 공부하기',
+      description: '나만의 AI 에이전트 팀 구축하기',
       price: '₩95,000',
       priceType: '3개월',
       color: '#fbbf24',
       path: '/chatgpt-agent-beginner',
       day: '수',
-      project: '캐릭터 영상 자동화'
+      project: '나만의 에이전트 팀 구축'
     },
     {
       step: 3,
