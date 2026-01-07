@@ -606,9 +606,61 @@ AI City Builders 사이트 정보:
                     <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem' }}>오늘</span>
                   </div>
                   <h3 style={{ color: '#ffd700', fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', fontWeight: '800', marginBottom: '16px', lineHeight: '1.3' }}>{displayTitle}</h3>
-                  <div style={{ position: 'relative', paddingBottom: '56.25%', borderRadius: '16px', overflow: 'hidden', marginBottom: '16px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
-                    <iframe src={`https://www.youtube.com/embed/${todayLiveConfig.youtubeVideoId}?rel=0`} title={displayTitle} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }} />
-                  </div>
+
+                  {/* YouTube 썸네일 이미지 (클릭시 라이브 페이지로 이동) */}
+                  <a
+                    href={todayLive.link}
+                    target={isExternal ? '_blank' : undefined}
+                    rel={isExternal ? 'noopener noreferrer' : undefined}
+                    style={{
+                      display: 'block',
+                      position: 'relative',
+                      paddingBottom: '56.25%',
+                      borderRadius: '16px',
+                      overflow: 'hidden',
+                      marginBottom: '16px',
+                      boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <img
+                      src={`https://img.youtube.com/vi/${todayLiveConfig.youtubeVideoId}/hqdefault.jpg`}
+                      alt={displayTitle}
+                      style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '100%',
+                        minHeight: '100%',
+                        objectFit: 'cover'
+                      }}
+                    />
+                    {/* 재생 버튼 오버레이 */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '68px',
+                      height: '48px',
+                      background: 'rgba(255,0,0,0.9)',
+                      borderRadius: '12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <div style={{
+                        width: 0,
+                        height: 0,
+                        borderLeft: '18px solid white',
+                        borderTop: '11px solid transparent',
+                        borderBottom: '11px solid transparent',
+                        marginLeft: '4px'
+                      }} />
+                    </div>
+                  </a>
+
                   <a href={todayLive.link} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', background: todayLive.gradient, color: 'white', padding: '14px 28px', borderRadius: '14px', textDecoration: 'none', fontWeight: '700', fontSize: '1rem', boxShadow: `0 6px 20px ${todayLive.shadowColor}` }}>
                     {todayLive.emoji} 라이브 입장하기 →
                   </a>
