@@ -837,10 +837,24 @@ const AdminEnrollmentFixPage: React.FC = () => {
           console.log(`✅ 매칭 성공: ${payment.name} (${payment.maskedEmail}) → ${matchedUser.name} (${matchedUser.email})`);
           matchLog.push(`✅ ${payment.name}: ${payment.maskedEmail} → ${matchedUser.name} (${matchedUser.email})`);
 
-          // 결제 금액에 따라 강의 결정
-          const isAIBuildingCourse = payment.amount === 45000;
-          const courseId = isAIBuildingCourse ? 'ai-building-course' : '1002';
-          const courseTitle = isAIBuildingCourse ? 'Step 1: AI 건물주 되기 기초' : 'Google Opal 유튜브 수익화 에이전트 기초';
+          // productName이나 금액으로 강의 결정
+          const productName = payment.productName || '';
+          let courseId = 'ai-building-course';
+          let courseTitle = 'Step 1: AI 건물주 되기 기초';
+
+          if (productName.includes('바이브코딩') || productName.includes('Step 3')) {
+            courseId = 'vibe-coding';
+            courseTitle = 'Step 3: 바이브코딩';
+          } else if (productName.includes('에이전트') || productName.includes('Step 2')) {
+            courseId = 'chatgpt-agent-beginner';
+            courseTitle = 'Step 2: AI 에이전트 비기너';
+          } else if (productName.includes('건물주') || productName.includes('Step 1') ||
+            payment.amount === 45000 || payment.amount === 95000) {
+            courseId = 'ai-building-course';
+            courseTitle = 'Step 1: AI 건물주 되기 기초';
+          }
+
+          const isAIBuildingCourse = courseId === 'ai-building-course';
 
           // 이미 강의가 있는지 확인
           if (matchedUser.enrolledCourses) {
@@ -954,10 +968,24 @@ const AdminEnrollmentFixPage: React.FC = () => {
         return;
       }
 
-      // 결제 금액에 따라 강의 결정
-      const isAIBuildingCourse = payment.amount === 45000;
-      const courseId = isAIBuildingCourse ? 'ai-building-course' : '1002';
-      const courseTitle = isAIBuildingCourse ? 'Step 1: AI 건물주 되기 기초' : 'Google Opal 유튜브 수익화 에이전트 기초';
+      // productName이나 금액으로 강의 결정
+      const productName = payment.productName || '';
+      let courseId = 'ai-building-course';
+      let courseTitle = 'Step 1: AI 건물주 되기 기초';
+
+      if (productName.includes('바이브코딩') || productName.includes('Step 3')) {
+        courseId = 'vibe-coding';
+        courseTitle = 'Step 3: 바이브코딩';
+      } else if (productName.includes('에이전트') || productName.includes('Step 2')) {
+        courseId = 'chatgpt-agent-beginner';
+        courseTitle = 'Step 2: AI 에이전트 비기너';
+      } else if (productName.includes('건물주') || productName.includes('Step 1') ||
+        payment.amount === 45000 || payment.amount === 95000) {
+        courseId = 'ai-building-course';
+        courseTitle = 'Step 1: AI 건물주 되기 기초';
+      }
+
+      const isAIBuildingCourse = courseId === 'ai-building-course';
 
       // 이미 등록되어 있는지 확인
       if (user.enrolledCourses) {
