@@ -41,37 +41,55 @@ module.exports = async function (context, req) {
 
     try {
         const webhookData = req.body;
-        context.log('📦 웹훅 데이터:', JSON.stringify(webhookData, null, 2));
+        context.log('📦 웹훅 전체 데이터:', JSON.stringify(webhookData, null, 2));
 
-        // 웹훅 타입 확인 (DONE = 결제 완료)
-        const eventType = webhookData.eventType || webhookData.status;
+        // 토스 DEPOSIT_CALLBACK 형식: { eventType, createdAt, data: { Payment 객체 } }
+        const eventType = webhookData.eventType;
+        context.log('📌 이벤트 타입:', eventType);
 
-        if (eventType !== 'DONE' && eventType !== 'PAYMENT_STATUS_CHANGED') {
-            context.log(`⏭️ 무시하는 이벤트 타입: ${eventType}`);
+        // DEPOSIT_CALLBACK 이벤트만 처리
+        if (eventType !== 'DEPOSIT_CALLBACK') {
+            context.log(`⏭️ DEPOSIT_CALLBACK이 아님, 무시: ${eventType}`);
             context.res = {
                 status: 200,
                 headers,
-                body: JSON.stringify({ success: true, message: `이벤트 타입 ${eventType} 무시됨` })
+                body: JSON.stringify({ success: true, message: `이벤트 ${eventType} 무시됨` })
+            };
+            return;
+        }
+
+        // Payment 객체 추출
+        const payment = webhookData.data;
+        if (!payment) {
+            context.log('❌ payment 데이터 없음');
+            context.res = { status: 200, headers, body: JSON.stringify({ success: true, message: 'data 없음' }) };
+            return;
+        }
+
+        context.log('💳 Payment 데이터:', JSON.stringify(payment, null, 2));
+
+        // 결제 상태 확인 (DONE = 입금 완료)
+        const status = payment.status;
+        if (status !== 'DONE') {
+            context.log(`⏭️ 입금 완료가 아님: ${status}`);
+            context.res = {
+                status: 200,
+                headers,
+                body: JSON.stringify({ success: true, message: `상태 ${status} - 입금 대기 중` })
             };
             return;
         }
 
         // 결제 정보 추출
-        const paymentData = webhookData.data || webhookData;
-        const { orderId, status, method, totalAmount, customerEmail, customerName } = paymentData;
+        const orderId = payment.orderId;
+        const totalAmount = payment.totalAmount;
+        // 이메일은 여러 위치에 있을 수 있음
+        const customerEmail = payment.customerEmail ||
+            payment.customer?.email ||
+            payment.receipt?.customerEmail ||
+            payment.virtualAccount?.customerEmail;
 
-        // 가상계좌 입금 완료 확인
-        if (status !== 'DONE') {
-            context.log(`⏭️ 아직 입금 완료가 아님: ${status}`);
-            context.res = {
-                status: 200,
-                headers,
-                body: JSON.stringify({ success: true, message: '입금 대기 중' })
-            };
-            return;
-        }
-
-        context.log(`✅ 입금 완료 확인: orderId=${orderId}, amount=${totalAmount}, email=${customerEmail}`);
+        context.log(`✅ 입금 완료: orderId=${orderId}, amount=${totalAmount}, email=${customerEmail}`);
 
         // orderId에서 강의 ID 추출 (예: "ai-building-course_1234567890")
         const courseId = orderId.split('_')[0];
