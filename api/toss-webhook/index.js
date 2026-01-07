@@ -41,66 +41,84 @@ module.exports = async function (context, req) {
 
     try {
         const webhookData = req.body;
-        context.log('📦 웹훅 전체 데이터:', JSON.stringify(webhookData, null, 2));
+        context.log('📦 웹훅 데이터:', JSON.stringify(webhookData, null, 2));
 
-        // 토스 DEPOSIT_CALLBACK 형식: { eventType, createdAt, data: { Payment 객체 } }
-        const eventType = webhookData.eventType;
-        context.log('📌 이벤트 타입:', eventType);
+        // 실제 DEPOSIT_CALLBACK 형식: { createdAt, secret, orderId, status, transactionKey }
+        const { orderId, status, transactionKey } = webhookData;
 
-        // DEPOSIT_CALLBACK 이벤트만 처리
-        if (eventType !== 'DEPOSIT_CALLBACK') {
-            context.log(`⏭️ DEPOSIT_CALLBACK이 아님, 무시: ${eventType}`);
-            context.res = {
-                status: 200,
-                headers,
-                body: JSON.stringify({ success: true, message: `이벤트 ${eventType} 무시됨` })
-            };
-            return;
-        }
+        context.log(`📌 orderId: ${orderId}, status: ${status}`);
 
-        // Payment 객체 추출
-        const payment = webhookData.data;
-        if (!payment) {
-            context.log('❌ payment 데이터 없음');
-            context.res = { status: 200, headers, body: JSON.stringify({ success: true, message: 'data 없음' }) };
-            return;
-        }
-
-        context.log('💳 Payment 데이터:', JSON.stringify(payment, null, 2));
-
-        // 결제 상태 확인 (DONE = 입금 완료)
-        const status = payment.status;
+        // 입금 완료 확인
         if (status !== 'DONE') {
             context.log(`⏭️ 입금 완료가 아님: ${status}`);
             context.res = {
                 status: 200,
                 headers,
-                body: JSON.stringify({ success: true, message: `상태 ${status} - 입금 대기 중` })
+                body: JSON.stringify({ success: true, message: `상태 ${status} 대기 중` })
             };
             return;
         }
 
-        // 결제 정보 추출
-        const orderId = payment.orderId;
-        const totalAmount = payment.totalAmount;
-        // 이메일은 여러 위치에 있을 수 있음
-        const customerEmail = payment.customerEmail ||
-            payment.customer?.email ||
-            payment.receipt?.customerEmail ||
-            payment.virtualAccount?.customerEmail;
+        // 토스 API로 결제 정보 조회 (이메일 가져오기)
+        const secretKey = process.env.TOSS_LIVE_SECRET_KEY;
 
-        context.log(`✅ 입금 완료: orderId=${orderId}, amount=${totalAmount}, email=${customerEmail}`);
+        if (!secretKey) {
+            context.log('❌ TOSS_LIVE_SECRET_KEY 환경변수 없음');
+            context.res = {
+                status: 200,
+                headers,
+                body: JSON.stringify({ success: false, message: '시크릿 키 없음 - 수동 등록 필요', orderId })
+            };
+            return;
+        }
 
-        // orderId에서 강의 ID 추출 (예: "ai-building-course_1234567890")
-        const courseId = orderId.split('_')[0];
+        // 토스 API로 결제 정보 조회
+        const basicAuth = Buffer.from(`${secretKey}:`).toString('base64');
+        const paymentResponse = await fetch(`https://api.tosspayments.com/v1/payments/orders/${orderId}`, {
+            headers: {
+                'Authorization': `Basic ${basicAuth}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!paymentResponse.ok) {
+            context.log('❌ 토스 API 조회 실패:', paymentResponse.status);
+            const errorText = await paymentResponse.text();
+            context.log('❌ 에러 내용:', errorText);
+            context.res = {
+                status: 200,
+                headers,
+                body: JSON.stringify({ success: false, message: '토스 API 조회 실패', orderId })
+            };
+            return;
+        }
+
+        const paymentData = await paymentResponse.json();
+        context.log('💳 토스 결제 정보:', JSON.stringify(paymentData, null, 2));
+
+        // 이메일 추출
+        const customerEmail = paymentData.customerEmail ||
+            paymentData.customer?.email ||
+            paymentData.receipt?.customerEmail;
+        const totalAmount = paymentData.totalAmount;
+
+        // orderId에서 courseId 추출
+        // 형식: "ai-building-course_1234567890" 또는 "order_1234567890_xxx"
+        let courseId = 'ai-building-course'; // 기본값
+        const orderIdParts = orderId.split('_');
+        if (COURSE_NAMES[orderIdParts[0]]) {
+            courseId = orderIdParts[0];
+        }
         const courseName = COURSE_NAMES[courseId] || courseId;
+
+        context.log(`✅ 입금 완료: orderId=${orderId}, email=${customerEmail}, courseId=${courseId}`);
 
         if (!customerEmail) {
             context.log('❌ 이메일 정보 없음');
             context.res = {
-                status: 400,
+                status: 200,
                 headers,
-                body: JSON.stringify({ success: false, error: '이메일 정보 없음' })
+                body: JSON.stringify({ success: false, message: '이메일 없음 - 수동 등록 필요', orderId })
             };
             return;
         }
@@ -204,7 +222,7 @@ module.exports = async function (context, req) {
             paymentId: orderId,
             courseId: courseId,
             amount: totalAmount,
-            method: method || '가상계좌',
+            method: '가상계좌',
             paidAt: now,
             status: 'completed'
         });
