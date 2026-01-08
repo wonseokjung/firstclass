@@ -74,7 +74,7 @@ const STEP_INFO: { [key: string]: StepInfo } = {
     time: '오후 8:00',
     courseId: 1003,
     vimeoEventId: '1044498498',
-    price: null,
+    price: 45000,
     purchaseLink: '/vibe-coding',
     icon: '💻',
     color: '#8b5cf6'
