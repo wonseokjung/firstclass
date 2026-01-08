@@ -135,6 +135,9 @@ const LiveHubPage = React.lazy(() => import('./components/pages/live/LiveHubPage
 const StepLivePage = React.lazy(() => import('./components/pages/live/StepLivePage'));
 const FreeLivePage = React.lazy(() => import('./components/pages/live/FreeLivePage'));
 
+// 숙제 페이지
+const HomeworkPage = React.lazy(() => import('./components/pages/homework/HomeworkPage'));
+
 // 커뮤니티 페이지
 const CommunityHubPage = React.lazy(() => import('./components/pages/community/CommunityHubPage'));
 const CommunityStepPage = React.lazy(() => import('./components/pages/community/CommunityStepPage'));
@@ -275,6 +278,7 @@ const FreeLivePageWrapped = withPageWrapper(FreeLivePage, '/');
 const CommunityHubPageWrapped = withSuspense(CommunityHubPage);
 const CommunityStepPageWrapped = withSuspense(CommunityStepPage);
 const ForgotPasswordPageWrapped = withSuspense(ForgotPasswordPage);
+const HomeworkPageWrapped = withSuspense(HomeworkPage);
 
 // Day 페이지들 - ChatGPT Agent Beginner
 const Day1PageWrapped = withDayPageWrapper(Day1Page, 1);
@@ -570,6 +574,9 @@ function App() {
               <Route path="/live" element={<LiveHubPageWrapped />} />
               <Route path="/live/free" element={<FreeLivePageWrapped />} />
               <Route path="/live/:stepId" element={<StepLivePageWrapped />} />
+
+              {/* 숙제 */}
+              <Route path="/homework" element={<HomeworkPageWrapped />} />
 
               {/* 커뮤니티 */}
               <Route path="/community" element={<CommunityHubPageWrapped />} />
