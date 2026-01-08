@@ -54,7 +54,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
   });
   const [, setRewardData] = useState<RewardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   // 닉네임 편집
   const [isEditingName, setIsEditingName] = useState(false);
   const [newName, setNewName] = useState('');
@@ -77,12 +77,12 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
         console.log('🔍 대시보드에서 수강 정보 조회 시작:', parsedUserInfo.email);
         const enrollments = await AzureTableService.getUserEnrollmentsByEmail(parsedUserInfo.email);
         console.log('📋 대시보드에서 가져온 수강 정보:', enrollments);
-        
+
         // 구매한 강의 정보 가져오기
         console.log('🛒 대시보드에서 구매 내역 조회 시작:', parsedUserInfo.email);
         const purchases = await AzureTableService.getUserPurchasedCourses(parsedUserInfo.email);
         console.log('💳 대시보드에서 가져온 구매 내역:', purchases);
-        
+
         // 각 구매 항목의 필드를 상세히 출력
         purchases.forEach((purchase, idx) => {
           console.log(`📦 구매 항목 ${idx + 1} - 모든 필드:`, Object.keys(purchase));
@@ -104,7 +104,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
             status: purchase.status
           });
         });
-        
+
         const stats: UserStats = {
           totalCourses: enrollments.length,
           completedCourses: enrollments.filter((course: any) => course.status === 'completed').length,
@@ -141,15 +141,15 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
     try {
       const success = await AzureTableService.updateUserField(userInfo.email, 'name', newName.trim());
-      
+
       if (success) {
         // 업데이트 성공
         setUserInfo({ ...userInfo, name: newName.trim() });
-        
+
         // 세션 스토리지도 업데이트
         const updatedSession = { ...userInfo, name: newName.trim() };
         sessionStorage.setItem('aicitybuilders_user_session', JSON.stringify(updatedSession));
-        
+
         setIsEditingName(false);
         alert('닉네임이 변경되었습니다! ✨');
       } else {
@@ -225,11 +225,11 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
   if (isLoading) {
     return (
       <div className="masterclass-container" style={{ background: COLORS.white, minHeight: '100vh' }}>
-        <NavigationBar 
+        <NavigationBar
           onBack={onBack}
           breadcrumbText="내 학습 현황"
         />
-        <section style={{ 
+        <section style={{
           background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
           padding: 'clamp(30px, 6vw, 60px) 0',
         }}>
@@ -259,13 +259,13 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
   return (
     <div className="masterclass-container">
       {/* 통일된 네비게이션바 */}
-      <NavigationBar 
+      <NavigationBar
         onBack={onBack}
         breadcrumbText="내 학습 현황"
       />
 
       {/* 대시보드 히어로 섹션 - 브랜드 컬러 */}
-      <section style={{ 
+      <section style={{
         background: `linear-gradient(135deg, ${COLORS.navy} 0%, ${COLORS.navyDark} 100%)`,
         padding: 'clamp(40px, 8vw, 80px) 0',
         position: 'relative',
@@ -312,15 +312,15 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
           zIndex: 2
         }}>
           {/* 웰컴 메시지 */}
-          <div style={{ 
+          <div style={{
             textAlign: 'center',
             marginBottom: 'clamp(30px, 5vw, 50px)'
           }}>
             {/* 닉네임 편집 모드 */}
             {isEditingName ? (
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
                 justifyContent: 'center',
                 gap: '12px',
                 marginBottom: '15px',
@@ -390,15 +390,15 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 </button>
               </div>
             ) : (
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
                 justifyContent: 'center',
                 gap: '15px',
                 marginBottom: '15px',
                 flexWrap: 'wrap'
               }}>
-                <h1 style={{ 
+                <h1 style={{
                   fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
                   fontWeight: '900',
                   color: '#ffffff',
@@ -440,7 +440,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 </button>
               </div>
             )}
-            <p style={{ 
+            <p style={{
               fontSize: 'clamp(1rem, 2vw, 1.2rem)',
               color: 'rgba(255, 255, 255, 0.95)',
               marginBottom: '0',
@@ -469,17 +469,17 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               boxShadow: `0 10px 30px ${COLORS.navy}15`,
               cursor: 'pointer'
             }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = `0 15px 40px ${COLORS.navy}25`;
-              e.currentTarget.style.borderColor = COLORS.gold;
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = `0 10px 30px ${COLORS.navy}15`;
-              e.currentTarget.style.borderColor = `${COLORS.gold}30`;
-            }}>
-              <div style={{ 
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = `0 15px 40px ${COLORS.navy}25`;
+                e.currentTarget.style.borderColor = COLORS.gold;
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = `0 10px 30px ${COLORS.navy}15`;
+                e.currentTarget.style.borderColor = `${COLORS.gold}30`;
+              }}>
+              <div style={{
                 background: `linear-gradient(135deg, ${COLORS.navy}, ${COLORS.navyDark})`,
                 borderRadius: '50%',
                 width: 'clamp(56px, 10vw, 72px)',
@@ -492,16 +492,16 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               }}>
                 <BookOpen size={28} color={COLORS.gold} />
               </div>
-              <h3 style={{ 
-                color: COLORS.grayMedium, 
-                fontSize: 'clamp(0.85rem, 1.5vw, 1rem)', 
+              <h3 style={{
+                color: COLORS.grayMedium,
+                fontSize: 'clamp(0.85rem, 1.5vw, 1rem)',
                 marginBottom: '10px',
                 fontWeight: '600',
                 letterSpacing: '0.5px'
               }}>
                 총 수강 강의
               </h3>
-              <p style={{ 
+              <p style={{
                 color: COLORS.navy,
                 fontSize: 'clamp(2rem, 5vw, 2.8rem)',
                 fontWeight: '900',
@@ -509,9 +509,9 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               }}>
                 {userStats.totalCourses}
               </p>
-              <p style={{ 
-                color: COLORS.grayMedium, 
-                fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)', 
+              <p style={{
+                color: COLORS.grayMedium,
+                fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)',
                 margin: 0,
                 fontWeight: '500'
               }}>
@@ -530,17 +530,17 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               boxShadow: `0 10px 30px ${COLORS.navy}15`,
               cursor: 'pointer'
             }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = `0 15px 40px ${COLORS.navy}25`;
-              e.currentTarget.style.borderColor = COLORS.gold;
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = `0 10px 30px ${COLORS.navy}15`;
-              e.currentTarget.style.borderColor = `${COLORS.gold}30`;
-            }}>
-              <div style={{ 
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = `0 15px 40px ${COLORS.navy}25`;
+                e.currentTarget.style.borderColor = COLORS.gold;
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = `0 10px 30px ${COLORS.navy}15`;
+                e.currentTarget.style.borderColor = `${COLORS.gold}30`;
+              }}>
+              <div style={{
                 background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldDark})`,
                 borderRadius: '50%',
                 width: 'clamp(56px, 10vw, 72px)',
@@ -553,16 +553,16 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               }}>
                 <Play size={28} color={COLORS.navyDark} />
               </div>
-              <h3 style={{ 
-                color: COLORS.grayMedium, 
-                fontSize: 'clamp(0.85rem, 1.5vw, 1rem)', 
+              <h3 style={{
+                color: COLORS.grayMedium,
+                fontSize: 'clamp(0.85rem, 1.5vw, 1rem)',
                 marginBottom: '10px',
                 fontWeight: '600',
                 letterSpacing: '0.5px'
               }}>
                 수강 중
               </h3>
-              <p style={{ 
+              <p style={{
                 color: COLORS.gold,
                 fontSize: 'clamp(2rem, 5vw, 2.8rem)',
                 fontWeight: '900',
@@ -570,9 +570,9 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               }}>
                 {userStats.inProgressCourses}
               </p>
-              <p style={{ 
-                color: COLORS.grayMedium, 
-                fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)', 
+              <p style={{
+                color: COLORS.grayMedium,
+                fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)',
                 margin: 0,
                 fontWeight: '500'
               }}>
@@ -591,17 +591,17 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               boxShadow: `0 10px 30px ${COLORS.navy}15`,
               cursor: 'pointer'
             }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = `0 15px 40px ${COLORS.navy}25`;
-              e.currentTarget.style.borderColor = COLORS.gold;
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = `0 10px 30px ${COLORS.navy}15`;
-              e.currentTarget.style.borderColor = `${COLORS.gold}30`;
-            }}>
-              <div style={{ 
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = `0 15px 40px ${COLORS.navy}25`;
+                e.currentTarget.style.borderColor = COLORS.gold;
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = `0 10px 30px ${COLORS.navy}15`;
+                e.currentTarget.style.borderColor = `${COLORS.gold}30`;
+              }}>
+              <div style={{
                 background: `linear-gradient(135deg, ${COLORS.navyLight}, ${COLORS.navy})`,
                 borderRadius: '50%',
                 width: 'clamp(56px, 10vw, 72px)',
@@ -614,16 +614,16 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               }}>
                 <Award size={28} color={COLORS.goldLight} />
               </div>
-              <h3 style={{ 
-                color: COLORS.grayMedium, 
-                fontSize: 'clamp(0.85rem, 1.5vw, 1rem)', 
+              <h3 style={{
+                color: COLORS.grayMedium,
+                fontSize: 'clamp(0.85rem, 1.5vw, 1rem)',
                 marginBottom: '10px',
                 fontWeight: '600',
                 letterSpacing: '0.5px'
               }}>
                 완료한 강의
               </h3>
-              <p style={{ 
+              <p style={{
                 color: COLORS.navyLight,
                 fontSize: 'clamp(2rem, 5vw, 2.8rem)',
                 fontWeight: '900',
@@ -631,9 +631,9 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               }}>
                 {userStats.completedCourses}
               </p>
-              <p style={{ 
-                color: COLORS.grayMedium, 
-                fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)', 
+              <p style={{
+                color: COLORS.grayMedium,
+                fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)',
                 margin: 0,
                 fontWeight: '500'
               }}>
@@ -652,15 +652,15 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               boxShadow: `0 10px 30px ${COLORS.navy}30`,
               cursor: 'pointer'
             }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = `0 15px 40px ${COLORS.navy}50`;
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = `0 10px 30px ${COLORS.navy}30`;
-            }}>
-              <div style={{ 
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = `0 15px 40px ${COLORS.navy}50`;
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = `0 10px 30px ${COLORS.navy}30`;
+              }}>
+              <div style={{
                 background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldDark})`,
                 borderRadius: '50%',
                 width: 'clamp(56px, 10vw, 72px)',
@@ -673,16 +673,16 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               }}>
                 <Clock size={28} color={COLORS.navyDark} />
               </div>
-              <h3 style={{ 
-                color: 'rgba(255, 255, 255, 0.8)', 
-                fontSize: 'clamp(0.85rem, 1.5vw, 1rem)', 
+              <h3 style={{
+                color: 'rgba(255, 255, 255, 0.8)',
+                fontSize: 'clamp(0.85rem, 1.5vw, 1rem)',
                 marginBottom: '10px',
                 fontWeight: '600',
                 letterSpacing: '0.5px'
               }}>
                 총 학습 시간
               </h3>
-              <p style={{ 
+              <p style={{
                 color: COLORS.goldLight,
                 fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                 fontWeight: '900',
@@ -690,9 +690,9 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               }}>
                 {formatTime(userStats.totalLearningTime)}
               </p>
-              <p style={{ 
-                color: 'rgba(255, 255, 255, 0.7)', 
-                fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)', 
+              <p style={{
+                color: 'rgba(255, 255, 255, 0.7)',
+                fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)',
                 margin: 0,
                 fontWeight: '500'
               }}>
@@ -706,8 +706,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
 
       {/* 수강 중인 강의 섹션 */}
-      <section style={{ 
-        padding: 'clamp(60px, 10vw, 100px) 0', 
+      <section style={{
+        padding: 'clamp(60px, 10vw, 100px) 0',
         background: COLORS.white
       }}>
         <div style={{
@@ -724,8 +724,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               marginBottom: '20px',
               boxShadow: `0 4px 15px ${COLORS.navy}40`
             }}>
-              <span style={{ 
-                fontSize: '0.9rem', 
+              <span style={{
+                fontSize: '0.9rem',
                 color: COLORS.goldLight,
                 fontWeight: '700',
                 letterSpacing: '0.5px'
@@ -733,7 +733,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 MY LEARNING
               </span>
             </div>
-            <h2 style={{ 
+            <h2 style={{
               fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
               fontWeight: '900',
               marginBottom: '15px',
@@ -741,7 +741,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
             }}>
               📚 나의 학습 여정
             </h2>
-            <p style={{ 
+            <p style={{
               fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
               color: COLORS.grayMedium,
               maxWidth: '600px',
@@ -770,180 +770,182 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 const displayTitle = courseTitleMap[course.title] || course.title;
 
                 return (
-                <div key={index} style={{
-                  background: COLORS.white,
-                  border: `2px solid ${COLORS.gold}20`,
-                  borderRadius: '20px',
-                  padding: 'clamp(24px, 4vw, 32px)',
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer',
-                  boxShadow: `0 8px 25px ${COLORS.navy}10`,
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-8px)';
-                  e.currentTarget.style.boxShadow = `0 15px 40px ${COLORS.navy}20`;
-                  e.currentTarget.style.borderColor = COLORS.gold;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = `0 8px 25px ${COLORS.navy}10`;
-                  e.currentTarget.style.borderColor = `${COLORS.gold}20`;
-                }}
-                >
-                  <div style={{ marginBottom: '20px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '15px' }}>
-                      <h3 style={{ 
-                        fontSize: '1.2rem',
-                        fontWeight: '600',
-                        color: '#1b263b',
-                        margin: 0,
-                        flex: 1
-                      }}>
-                        {displayTitle}
-                      </h3>
-                      <span style={{
-                        padding: '4px 12px',
-                        borderRadius: '12px',
-                        fontSize: '0.8rem',
-                        fontWeight: '500',
-                        background: course.status === 'active' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(245, 158, 11, 0.2)',
-                        color: course.status === 'active' ? '#10b981' : '#e5c100',
-                        border: `1px solid ${course.status === 'active' ? '#10b981' : '#e5c100'}`
-                      }}>
-                        {course.status === 'active' ? '🔥 수강 중' : 
-                         course.status === 'completed' ? '✅ 완료' : '⏸️ 일시정지'}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <div style={{ marginBottom: '25px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                      <span style={{ fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)', color: '#64748b', fontWeight: '600' }}>진행률</span>
-                      <span style={{ 
-                        fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)', 
-                        fontWeight: '700', 
-                        color: '#0ea5e9',
-                        background: 'rgba(14, 165, 233, 0.1)',
-                        padding: '4px 10px',
-                        borderRadius: '8px'
-                      }}>
-                        {course.progress || 0}%
-                      </span>
-                    </div>
-                    <div style={{
-                      width: '100%',
-                      height: '10px',
-                      background: '#e0f2fe',
-                      borderRadius: '10px',
-                      overflow: 'hidden',
-                      boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.06)'
-                    }}>
-                      <div style={{
-                        width: `${course.progress || 0}%`,
-                        height: '100%',
-                        background: 'linear-gradient(90deg, #0ea5e9, #0284c7)',
-                        transition: 'width 0.5s ease',
-                        borderRadius: '10px',
-                        boxShadow: '0 2px 4px rgba(14, 165, 233, 0.3)'
-                      }} />
-                    </div>
-                  </div>
-                  
-                  <div style={{ marginBottom: '25px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                        <Calendar size={14} color="#666666" />
-                        <span style={{ fontSize: '0.8rem', color: '#666666' }}>
-                          {new Date(course.enrolledAt).toLocaleDateString()}
+                  <div key={index} style={{
+                    background: COLORS.white,
+                    border: `2px solid ${COLORS.gold}20`,
+                    borderRadius: '20px',
+                    padding: 'clamp(24px, 4vw, 32px)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    boxShadow: `0 8px 25px ${COLORS.navy}10`,
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-8px)';
+                      e.currentTarget.style.boxShadow = `0 15px 40px ${COLORS.navy}20`;
+                      e.currentTarget.style.borderColor = COLORS.gold;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = `0 8px 25px ${COLORS.navy}10`;
+                      e.currentTarget.style.borderColor = `${COLORS.gold}20`;
+                    }}
+                  >
+                    <div style={{ marginBottom: '20px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '15px' }}>
+                        <h3 style={{
+                          fontSize: '1.2rem',
+                          fontWeight: '600',
+                          color: '#1b263b',
+                          margin: 0,
+                          flex: 1
+                        }}>
+                          {displayTitle}
+                        </h3>
+                        <span style={{
+                          padding: '4px 12px',
+                          borderRadius: '12px',
+                          fontSize: '0.8rem',
+                          fontWeight: '500',
+                          background: course.status === 'active' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(245, 158, 11, 0.2)',
+                          color: course.status === 'active' ? '#10b981' : '#e5c100',
+                          border: `1px solid ${course.status === 'active' ? '#10b981' : '#e5c100'}`
+                        }}>
+                          {course.status === 'active' ? '🔥 수강 중' :
+                            course.status === 'completed' ? '✅ 완료' : '⏸️ 일시정지'}
                         </span>
                       </div>
-                      {course.learningTimeMinutes && (
+                    </div>
+
+                    <div style={{ marginBottom: '25px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                        <span style={{ fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)', color: '#64748b', fontWeight: '600' }}>진행률</span>
+                        <span style={{
+                          fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)',
+                          fontWeight: '700',
+                          color: '#0ea5e9',
+                          background: 'rgba(14, 165, 233, 0.1)',
+                          padding: '4px 10px',
+                          borderRadius: '8px'
+                        }}>
+                          {course.progress || 0}%
+                        </span>
+                      </div>
+                      <div style={{
+                        width: '100%',
+                        height: '10px',
+                        background: '#e0f2fe',
+                        borderRadius: '10px',
+                        overflow: 'hidden',
+                        boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.06)'
+                      }}>
+                        <div style={{
+                          width: `${course.progress || 0}%`,
+                          height: '100%',
+                          background: 'linear-gradient(90deg, #0ea5e9, #0284c7)',
+                          transition: 'width 0.5s ease',
+                          borderRadius: '10px',
+                          boxShadow: '0 2px 4px rgba(14, 165, 233, 0.3)'
+                        }} />
+                      </div>
+                    </div>
+
+                    <div style={{ marginBottom: '25px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                          <Clock size={14} color="#666666" />
+                          <Calendar size={14} color="#666666" />
                           <span style={{ fontSize: '0.8rem', color: '#666666' }}>
-                            {formatTime(course.learningTimeMinutes)}
+                            {new Date(course.enrolledAt).toLocaleDateString()}
                           </span>
                         </div>
-                      )}
+                        {course.learningTimeMinutes && (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                            <Clock size={14} color="#666666" />
+                            <span style={{ fontSize: '0.8rem', color: '#666666' }}>
+                              {formatTime(course.learningTimeMinutes)}
+                            </span>
+                          </div>
+                        )}
+                      </div>
                     </div>
+
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        console.log('🔘 이어서 학습 버튼 클릭됨!');
+                        console.log('📚 강의 정보:', {
+                          courseId: course.courseId,
+                          title: course.title,
+                          status: course.status
+                        });
+
+                        // 강의 플레이어 페이지로 이동
+                        const courseRoutes: { [key: string]: string } = {
+                          '1002': '/chatgpt-agent-beginner/player',
+                          'chatgpt-agent-beginner': '/chatgpt-agent-beginner/player',
+                          '999': '/ai-building-course/player',
+                          'ai-building': '/ai-building-course/player',
+                          'ai-building-course': '/ai-building-course/player',
+                          'workflow-automation': '/ai-building-course/player',
+                          'prompt-engineering': '/ai-building-course/player',
+                          'test12345': '/chatgpt-agent-beginner/player',
+                          '1003': '/vibe-coding-player',
+                          'vibe-coding': '/vibe-coding-player'
+                        };
+                        const route = courseRoutes[course.courseId] || '/chatgpt-agent-beginner/player';
+
+                        console.log('🚀 이동할 경로:', route);
+
+                        try {
+                          navigate(route);
+                          console.log('✅ navigate 호출 성공');
+                        } catch (error) {
+                          console.error('❌ navigate 오류:', error);
+                          alert('페이지 이동 중 오류가 발생했습니다. 새로고침 후 다시 시도해주세요.');
+                        }
+                      }}
+                      className="watch-trailer-btn"
+                      style={{
+                        width: '100%',
+                        padding: 'clamp(12px, 2vw, 16px)',
+                        borderRadius: '12px',
+                        border: 'none',
+                        background: course.status === 'completed'
+                          ? 'linear-gradient(135deg, #e5c100, #d97706)'
+                          : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                        color: '#ffffff',
+                        fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        boxShadow: course.status === 'completed'
+                          ? '0 4px 15px rgba(245, 158, 11, 0.3)'
+                          : '0 4px 15px rgba(14, 165, 233, 0.3)'
+                      }}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.02)';
+                        e.currentTarget.style.boxShadow = course.status === 'completed'
+                          ? '0 6px 20px rgba(245, 158, 11, 0.4)'
+                          : '0 6px 20px rgba(14, 165, 233, 0.4)';
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.boxShadow = course.status === 'completed'
+                          ? '0 4px 15px rgba(245, 158, 11, 0.3)'
+                          : '0 4px 15px rgba(14, 165, 233, 0.3)';
+                      }}>
+                      <Play size={18} />
+                      {course.status === 'completed' ? '다시 보기' : '이어서 학습'}
+                    </button>
                   </div>
-                  
-                  <button 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      
-                      console.log('🔘 이어서 학습 버튼 클릭됨!');
-                      console.log('📚 강의 정보:', {
-                        courseId: course.courseId,
-                        title: course.title,
-                        status: course.status
-                      });
-                      
-                      // 강의 플레이어 페이지로 이동
-                      const courseRoutes: { [key: string]: string } = {
-                        '1002': '/chatgpt-agent-beginner/player',
-                        'chatgpt-agent-beginner': '/chatgpt-agent-beginner/player',
-                        '999': '/ai-building-course/player',
-                        'ai-building': '/ai-building-course/player',
-                        'ai-building-course': '/ai-building-course/player',
-                        'workflow-automation': '/ai-building-course/player',
-                        'prompt-engineering': '/ai-building-course/player',
-                        'test12345': '/chatgpt-agent-beginner/player'
-                      };
-                      const route = courseRoutes[course.courseId] || '/chatgpt-agent-beginner/player';
-                      
-                      console.log('🚀 이동할 경로:', route);
-                      
-                      try {
-                        navigate(route);
-                        console.log('✅ navigate 호출 성공');
-                      } catch (error) {
-                        console.error('❌ navigate 오류:', error);
-                        alert('페이지 이동 중 오류가 발생했습니다. 새로고침 후 다시 시도해주세요.');
-                      }
-                    }}
-                    className="watch-trailer-btn" 
-                    style={{
-                      width: '100%',
-                      padding: 'clamp(12px, 2vw, 16px)',
-                      borderRadius: '12px',
-                      border: 'none',
-                      background: course.status === 'completed' 
-                        ? 'linear-gradient(135deg, #e5c100, #d97706)'
-                        : 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-                      color: '#ffffff',
-                      fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
-                      fontWeight: '700',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '8px',
-                      boxShadow: course.status === 'completed'
-                        ? '0 4px 15px rgba(245, 158, 11, 0.3)'
-                        : '0 4px 15px rgba(14, 165, 233, 0.3)'
-                    }}
-                    onMouseOver={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.02)';
-                      e.currentTarget.style.boxShadow = course.status === 'completed'
-                        ? '0 6px 20px rgba(245, 158, 11, 0.4)'
-                        : '0 6px 20px rgba(14, 165, 233, 0.4)';
-                    }}
-                    onMouseOut={(e) => {
-                      e.currentTarget.style.transform = 'scale(1)';
-                      e.currentTarget.style.boxShadow = course.status === 'completed'
-                        ? '0 4px 15px rgba(245, 158, 11, 0.3)'
-                        : '0 4px 15px rgba(14, 165, 233, 0.3)';
-                    }}>
-                    <Play size={18} />
-                    {course.status === 'completed' ? '다시 보기' : '이어서 학습'}
-                  </button>
-                </div>
-              );
+                );
               })}
             </div>
           ) : (
@@ -965,7 +967,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               }}>
                 <BookOpen size={48} color="white" />
               </div>
-              <h3 style={{ 
+              <h3 style={{
                 fontSize: '1.4rem',
                 fontWeight: '600',
                 color: '#1b263b',
@@ -973,7 +975,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               }}>
                 아직 수강 중인 강의가 없습니다
               </h3>
-              <p style={{ 
+              <p style={{
                 color: '#666666',
                 fontSize: '1rem',
                 marginBottom: 'clamp(15px, 3vw, 30px)',
@@ -981,7 +983,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               }}>
                 새로운 강의를 시작해서 AI 마스터의 길을 걸어보세요!
               </p>
-              <button 
+              <button
                 onClick={onBack}
                 className="watch-trailer-btn"
                 style={{
@@ -1009,8 +1011,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
       {/* 구매한 강의 섹션 */}
       {userStats.purchasedCourses.length > 0 && (
-        <section style={{ 
-          padding: 'clamp(60px, 10vw, 100px) 0', 
+        <section style={{
+          padding: 'clamp(60px, 10vw, 100px) 0',
           background: 'linear-gradient(180deg, #0d1b2a 0%, #1b263b 100%)'
         }}>
           <div style={{
@@ -1027,8 +1029,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 marginBottom: '20px',
                 boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
               }}>
-                <span style={{ 
-                  fontSize: '0.9rem', 
+                <span style={{
+                  fontSize: '0.9rem',
                   color: '#ffffff',
                   fontWeight: '700',
                   letterSpacing: '0.5px'
@@ -1036,7 +1038,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   MY PURCHASES
                 </span>
               </div>
-              <h2 style={{ 
+              <h2 style={{
                 fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
                 fontWeight: '900',
                 marginBottom: '15px',
@@ -1044,7 +1046,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               }}>
                 💳 구매한 강의
               </h2>
-              <p style={{ 
+              <p style={{
                 fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
                 color: '#94a3b8',
                 maxWidth: '600px',
@@ -1065,13 +1067,15 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               {userStats.purchasedCourses.map((purchase, index) => {
                 // 강의 정보 매핑 (courseId 기반)
                 const courseInfoMap: { [key: string]: string } = {
-                  '1002': 'Google Opal 유튜브 수익화 에이전트 기초',
-                  'chatgpt-agent-beginner': 'Google Opal 유튜브 수익화 에이전트 기초',
+                  '1002': 'Step 2: Google Opal 유튜브 수익화 에이전트 기초',
+                  'chatgpt-agent-beginner': 'Step 2: Google Opal 유튜브 수익화 에이전트 기초',
                   '999': 'Step 1: AI 건물주 되기 기초',
-                  'ai-building': 'AI 건물 짓기 - 디지털 건축가 과정',
+                  'ai-building': 'Step 1: AI 건물주 되기 기초',
                   'ai-building-course': 'Step 1: AI 건물주 되기 기초',
-                  'workflow-automation': 'AI 건물 짓기 - 디지털 건축가 과정',
-                  'prompt-engineering': 'AI 건물 짓기 - 디지털 건축가 과정'
+                  'workflow-automation': 'Step 1: AI 건물주 되기 기초',
+                  'prompt-engineering': 'Step 1: AI 건물주 되기 기초',
+                  '1003': 'Step 3: 바이브코딩',
+                  'vibe-coding': 'Step 3: 바이브코딩'
                 };
 
                 // 옛날 이름 매핑 (title 기반)
@@ -1081,12 +1085,12 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
                 // 강의명 결정 (우선순위: courseId 매핑 > 저장된 이름의 매핑 > 저장된 이름 그대로)
                 let displayCourseName = courseInfoMap[purchase.courseId];
-                
+
                 if (!displayCourseName) {
                   const savedName = purchase.courseName || purchase.courseTitle || purchase.orderName;
                   displayCourseName = savedName ? (titleMap[savedName] || savedName) : '강의';
                 }
-                
+
                 // 디버깅: 강의명이 어떻게 결정되었는지 로그
                 console.log(`🎯 강의 ${index + 1} 이름 결정:`, {
                   courseId: purchase.courseId,
@@ -1104,7 +1108,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                     || purchase.completedAt                // 2순위: completedAt
                     || purchase.purchasedAt                // 3순위: purchasedAt
                     || purchase.timestamp;                 // 4순위: timestamp
-                  
+
                   if (dateValue) {
                     const date = new Date(dateValue);
                     if (!isNaN(date.getTime())) {
@@ -1116,154 +1120,156 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 }
 
                 return (
-                <div key={index} style={{
-                  background: 'white',
-                  border: '2px solid #e2e8f0',
-                  borderRadius: '20px',
-                  padding: 'clamp(24px, 4vw, 32px)',
-                  transition: 'all 0.3s ease',
-                  boxShadow: '0 8px 25px rgba(16, 185, 129, 0.12)',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-8px)';
-                  e.currentTarget.style.boxShadow = '0 15px 40px rgba(16, 185, 129, 0.2)';
-                  e.currentTarget.style.borderColor = '#10b981';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(16, 185, 129, 0.12)';
-                  e.currentTarget.style.borderColor = '#e2e8f0';
-                }}
-                >
-                  {/* 상단 배지 */}
-                  <div style={{
-                    position: 'absolute',
-                    top: '20px',
-                    right: '20px',
-                    background: 'linear-gradient(135deg, #10b981, #059669)',
-                    color: '#ffffff',
-                    padding: '6px 14px',
+                  <div key={index} style={{
+                    background: 'white',
+                    border: '2px solid #e2e8f0',
                     borderRadius: '20px',
-                    fontSize: '0.75rem',
-                    fontWeight: '700',
-                    boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
-                  }}>
-                    ✓ 결제완료
-                  </div>
-
-                  <div style={{ marginBottom: '20px', paddingRight: '80px' }}>
-                    <h3 style={{ 
-                      fontSize: '1.2rem',
-                      fontWeight: '700',
-                      color: '#1b263b',
-                      marginBottom: '12px'
-                    }}>
-                      {displayCourseName}
-                    </h3>
+                    padding: 'clamp(24px, 4vw, 32px)',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 8px 25px rgba(16, 185, 129, 0.12)',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-8px)';
+                      e.currentTarget.style.boxShadow = '0 15px 40px rgba(16, 185, 129, 0.2)';
+                      e.currentTarget.style.borderColor = '#10b981';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(16, 185, 129, 0.12)';
+                      e.currentTarget.style.borderColor = '#e2e8f0';
+                    }}
+                  >
+                    {/* 상단 배지 */}
                     <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                      marginBottom: '8px'
+                      position: 'absolute',
+                      top: '20px',
+                      right: '20px',
+                      background: 'linear-gradient(135deg, #10b981, #059669)',
+                      color: '#ffffff',
+                      padding: '6px 14px',
+                      borderRadius: '20px',
+                      fontSize: '0.75rem',
+                      fontWeight: '700',
+                      boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
                     }}>
-                      <Calendar size={16} color="#64748b" />
-                      <span style={{ fontSize: '0.9rem', color: '#64748b' }}>
-                        구매일: {displayDate}
-                      </span>
+                      ✓ 결제완료
                     </div>
-                  </div>
-                  
-                  <div style={{
-                    borderTop: '1px solid #f1f5f9',
-                    paddingTop: '20px',
-                    marginTop: '20px'
-                  }}>
 
-                    {purchase.paymentMethod && (
-                      <div style={{
-                        background: '#f8fafc',
-                        padding: '12px',
-                        borderRadius: '10px',
-                        marginBottom: '15px'
-                      }}>
-                        <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '4px' }}>
-                          결제 수단
-                        </div>
-                        <div style={{ fontSize: '0.95rem', fontWeight: '600', color: '#1b263b' }}>
-                          {purchase.paymentMethod === 'CARD' || purchase.paymentMethod === 'card' 
-                            ? '💳 카드 결제' 
-                            : purchase.paymentMethod}
-                        </div>
-                      </div>
-                    )}
-
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        
-                        console.log('🔘 강의 시작하기 버튼 클릭됨!');
-                        console.log('💳 구매 정보:', {
-                          courseId: purchase.courseId,
-                          courseName: displayCourseName,
-                          amount: purchase.amount
-                        });
-                        
-                        // 강의 플레이어 페이지로 이동
-                        const courseRoutes: { [key: string]: string } = {
-                          '1002': '/chatgpt-agent-beginner/player',
-                          'chatgpt-agent-beginner': '/chatgpt-agent-beginner/player',
-                          '999': '/ai-building-course/player',
-                          'ai-building': '/ai-building-course/player',
-                          'ai-building-course': '/ai-building-course/player',
-                          'workflow-automation': '/ai-building-course/player',
-                          'prompt-engineering': '/ai-building-course/player'
-                        };
-                        const route = courseRoutes[purchase.courseId] || '/chatgpt-agent-beginner/player';
-                        
-                        console.log('🚀 이동할 경로:', route);
-                        
-                        try {
-                          navigate(route);
-                          console.log('✅ navigate 호출 성공');
-                        } catch (error) {
-                          console.error('❌ navigate 오류:', error);
-                          alert('페이지 이동 중 오류가 발생했습니다. 새로고침 후 다시 시도해주세요.');
-                        }
-                      }}
-                      style={{
-                        width: '100%',
-                        padding: '14px',
-                        borderRadius: '12px',
-                        border: 'none',
-                        background: 'linear-gradient(135deg, #10b981, #059669)',
-                        color: '#ffffff',
-                        fontSize: '1rem',
+                    <div style={{ marginBottom: '20px', paddingRight: '80px' }}>
+                      <h3 style={{
+                        fontSize: '1.2rem',
                         fontWeight: '700',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
+                        color: '#1b263b',
+                        marginBottom: '12px'
+                      }}>
+                        {displayCourseName}
+                      </h3>
+                      <div style={{
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
                         gap: '8px',
-                        boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
-                      }}
-                      onMouseOver={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(16, 185, 129, 0.4)';
-                      }}
-                      onMouseOut={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.3)';
-                      }}
-                    >
-                      <Play size={18} />
-                      강의 시작하기
-                    </button>
+                        marginBottom: '8px'
+                      }}>
+                        <Calendar size={16} color="#64748b" />
+                        <span style={{ fontSize: '0.9rem', color: '#64748b' }}>
+                          구매일: {displayDate}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div style={{
+                      borderTop: '1px solid #f1f5f9',
+                      paddingTop: '20px',
+                      marginTop: '20px'
+                    }}>
+
+                      {purchase.paymentMethod && (
+                        <div style={{
+                          background: '#f8fafc',
+                          padding: '12px',
+                          borderRadius: '10px',
+                          marginBottom: '15px'
+                        }}>
+                          <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '4px' }}>
+                            결제 수단
+                          </div>
+                          <div style={{ fontSize: '0.95rem', fontWeight: '600', color: '#1b263b' }}>
+                            {purchase.paymentMethod === 'CARD' || purchase.paymentMethod === 'card'
+                              ? '💳 카드 결제'
+                              : purchase.paymentMethod}
+                          </div>
+                        </div>
+                      )}
+
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+
+                          console.log('🔘 강의 시작하기 버튼 클릭됨!');
+                          console.log('💳 구매 정보:', {
+                            courseId: purchase.courseId,
+                            courseName: displayCourseName,
+                            amount: purchase.amount
+                          });
+
+                          // 강의 플레이어 페이지로 이동
+                          const courseRoutes: { [key: string]: string } = {
+                            '1002': '/chatgpt-agent-beginner/player',
+                            'chatgpt-agent-beginner': '/chatgpt-agent-beginner/player',
+                            '999': '/ai-building-course/player',
+                            'ai-building': '/ai-building-course/player',
+                            'ai-building-course': '/ai-building-course/player',
+                            'workflow-automation': '/ai-building-course/player',
+                            'prompt-engineering': '/ai-building-course/player',
+                            '1003': '/vibe-coding-player',
+                            'vibe-coding': '/vibe-coding-player'
+                          };
+                          const route = courseRoutes[purchase.courseId] || '/chatgpt-agent-beginner/player';
+
+                          console.log('🚀 이동할 경로:', route);
+
+                          try {
+                            navigate(route);
+                            console.log('✅ navigate 호출 성공');
+                          } catch (error) {
+                            console.error('❌ navigate 오류:', error);
+                            alert('페이지 이동 중 오류가 발생했습니다. 새로고침 후 다시 시도해주세요.');
+                          }
+                        }}
+                        style={{
+                          width: '100%',
+                          padding: '14px',
+                          borderRadius: '12px',
+                          border: 'none',
+                          background: 'linear-gradient(135deg, #10b981, #059669)',
+                          color: '#ffffff',
+                          fontSize: '1rem',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '8px',
+                          boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
+                        }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-2px)';
+                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(16, 185, 129, 0.4)';
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.3)';
+                        }}
+                      >
+                        <Play size={18} />
+                        강의 시작하기
+                      </button>
+                    </div>
                   </div>
-                </div>
                 );
               })}
             </div>
@@ -1273,8 +1279,8 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
 
       {/* 학습 진행률 요약 섹션 */}
       {userStats.enrolledCourses.length > 0 && (
-        <section style={{ 
-          background: 'linear-gradient(135deg, #f8fafc, #e2e8f0)', 
+        <section style={{
+          background: 'linear-gradient(135deg, #f8fafc, #e2e8f0)',
           padding: 'clamp(30px, 6vw, 60px) 0',
           borderTop: '1px solid #e2e8f0'
         }}>
@@ -1292,7 +1298,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               borderRadius: '12px',
               padding: '40px'
             }}>
-              <h3 style={{ 
+              <h3 style={{
                 fontSize: '1.6rem',
                 fontWeight: '600',
                 marginBottom: 'clamp(15px, 3vw, 30px)',
@@ -1321,14 +1327,14 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   justifyContent: 'center',
                   flexDirection: 'column'
                 }}>
-                  <span style={{ 
+                  <span style={{
                     fontSize: '2rem',
                     fontWeight: '700',
                     color: 'var(--color-primary)'
                   }}>
                     {getProgressPercentage()}%
                   </span>
-                  <span style={{ 
+                  <span style={{
                     fontSize: '0.8rem',
                     color: '#666666',
                     marginTop: '5px'
@@ -1337,7 +1343,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                   </span>
                 </div>
               </div>
-              <p style={{ 
+              <p style={{
                 fontSize: '1rem',
                 color: '#666666',
                 marginBottom: '10px'
@@ -1345,7 +1351,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
                 전체 <strong style={{ color: '#1b263b' }}>{userStats.totalCourses}개</strong> 강의 중 <strong style={{ color: '#1b263b' }}>{userStats.completedCourses}개</strong>를 완료했습니다!
               </p>
               {userStats.inProgressCourses > 0 && (
-                <p style={{ 
+                <p style={{
                   fontSize: '0.9rem',
                   color: '#666666'
                 }}>
@@ -1364,7 +1370,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
             <h3>AI City Builders</h3>
             <p>정원석의 정석 시리즈로 시작하는 AI 마스터 여정</p>
           </div>
-          
+
           <div className="footer-section">
             <h4>빠른 링크</h4>
             <ul>
@@ -1373,7 +1379,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
               <li><a href="/faq">FAQ</a></li>
             </ul>
           </div>
-          
+
           <div className="footer-section">
             <h4>고객 지원</h4>
             <ul>
@@ -1383,7 +1389,7 @@ const UserDashboardPage: React.FC<UserDashboardPageProps> = ({ onBack }) => {
             </ul>
           </div>
         </div>
-        
+
         <div className="footer-bottom">
           <p>&copy; 2025 커넥젼에이아이이. All rights reserved.</p>
         </div>
