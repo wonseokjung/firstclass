@@ -254,7 +254,7 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
     {
       id: 'elevenlabs',
       icon: <Sparkles size={20} color="#fbbf24" />,
-      title: '🎤 ElevenLabs + 내 목소리 AI 모델',
+      title: '🎤 ElevenLabs + 구글 TTS로 사투리 만들기',
       badge: '음성 복제',
       badgeColor: '#f59e0b',
       description: 'ElevenLabs로 다양한 AI 음성 사용 & 내 목소리를 학습시켜 AI 모델 만들기',
