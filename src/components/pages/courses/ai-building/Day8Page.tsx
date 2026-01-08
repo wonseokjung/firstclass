@@ -258,7 +258,7 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
       badge: '음성 복제',
       badgeColor: '#f59e0b',
       description: 'ElevenLabs로 다양한 AI 음성 사용 & 내 목소리를 학습시켜 AI 모델 만들기',
-      vimeoUrl: '', // 영상 URL 추가 예정
+      vimeoUrl: 'https://player.vimeo.com/video/1152500703?badge=0&autopause=0&player_id=0&app_id=58479',
     }
   ];
 
