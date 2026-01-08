@@ -37,7 +37,7 @@ const AdminDashboardPage: React.FC = () => {
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
   const [emailSubject, setEmailSubject] = useState('');
   const [emailContent, setEmailContent] = useState('');
-  
+
   // 수강 정보 수정 모달 (향후 사용 예정)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showEnrollmentModal, setShowEnrollmentModal] = useState(false);
@@ -47,19 +47,19 @@ const AdminDashboardPage: React.FC = () => {
   const [enrollmentUserData, setEnrollmentUserData] = useState<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [enrollmentLoading, setEnrollmentLoading] = useState(false);
-  
+
   // 출금 관리
   const [pendingWithdrawals, setPendingWithdrawals] = useState<(PartnerWithdrawal & { partnerEmail: string; partnerName: string })[]>([]);
   const [withdrawalLoading, setWithdrawalLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<'users' | 'withdrawals' | 'partners' | 'refunds'>('users');
-  
+
   // 환불 관리
   const [refundPayments, setRefundPayments] = useState<any[]>([]);
   const [refundLoading, setRefundLoading] = useState(false);
   const [manualPaymentKey, setManualPaymentKey] = useState('');
   const [manualRefundAmount, setManualRefundAmount] = useState('');
   const [manualCustomerInfo, setManualCustomerInfo] = useState('');
-  
+
   // 파트너 통계
   const [partnerStats, setPartnerStats] = useState({
     totalPartners: 0,
@@ -105,7 +105,7 @@ const AdminDashboardPage: React.FC = () => {
     try {
       // allUsers에서 모든 purchases 추출
       const allPurchases: any[] = [];
-      
+
       allUsers.forEach(user => {
         if (user.purchases && user.purchases.length > 0) {
           user.purchases.forEach((purchase: any) => {
@@ -121,12 +121,12 @@ const AdminDashboardPage: React.FC = () => {
           });
         }
       });
-      
+
       // 최신 순으로 정렬
-      allPurchases.sort((a, b) => 
+      allPurchases.sort((a, b) =>
         new Date(b.approvedAt).getTime() - new Date(a.approvedAt).getTime()
       );
-      
+
       setRefundPayments(allPurchases);
       console.log('✅ Azure에서 결제 내역 로드:', allPurchases.length, '건');
     } catch (error) {
@@ -141,11 +141,11 @@ const AdminDashboardPage: React.FC = () => {
       `이메일: ${payment.customerEmail}\n` +
       `금액: ${payment.amount?.toLocaleString()}원\n\n` +
       `환불 후에는 취소할 수 없습니다.`;
-    
+
     if (!window.confirm(confirmMsg)) return;
 
     setRefundLoading(true);
-    
+
     try {
       // 1. 토스페이먼츠 환불 API 호출
       const response = await fetch('/api/cancel-payment', {
@@ -175,16 +175,16 @@ const AdminDashboardPage: React.FC = () => {
       }
 
       // 3. 화면에서 상태 업데이트
-      setRefundPayments(prev => 
-        prev.map(p => 
-          p.paymentKey === payment.paymentKey 
+      setRefundPayments(prev =>
+        prev.map(p =>
+          p.paymentKey === payment.paymentKey
             ? { ...p, status: 'CANCELED', canceledAt: new Date().toISOString() }
             : p
         )
       );
 
       alert(`✅ 환불 완료!\n\n${payment.customerName}님 (${payment.amount?.toLocaleString()}원)`);
-      
+
     } catch (error: any) {
       console.error('❌ 환불 처리 실패:', error);
       alert(`❌ 환불 실패: ${error.message}`);
@@ -205,11 +205,11 @@ const AdminDashboardPage: React.FC = () => {
       `고객정보: ${manualCustomerInfo || '미입력'}\n` +
       `금액: ${manualRefundAmount ? Number(manualRefundAmount).toLocaleString() + '원' : '전액 환불'}\n\n` +
       `환불 후에는 취소할 수 없습니다.`;
-    
+
     if (!window.confirm(confirmMsg)) return;
 
     setRefundLoading(true);
-    
+
     try {
       const response = await fetch('/api/cancel-payment', {
         method: 'POST',
@@ -228,12 +228,12 @@ const AdminDashboardPage: React.FC = () => {
       }
 
       alert(`✅ 환불 완료!\n\n주문번호: ${result.data?.orderId || 'N/A'}`);
-      
+
       // 입력 필드 초기화
       setManualPaymentKey('');
       setManualRefundAmount('');
       setManualCustomerInfo('');
-      
+
     } catch (error: any) {
       console.error('❌ 수동 환불 실패:', error);
       alert(`❌ 환불 실패: ${error.message}`);
@@ -247,7 +247,7 @@ const AdminDashboardPage: React.FC = () => {
     setIsLoading(true);
     try {
       const users = await AzureTableService.getAllUsers();
-      
+
       const userData: UserData[] = users.map(user => {
         let enrolledCourses: any[] = [];
         let purchases: any[] = [];
@@ -296,10 +296,10 @@ const AdminDashboardPage: React.FC = () => {
       });
 
       setIsLoading(false);
-      
+
       // 출금 요청도 함께 로드
       await loadPendingWithdrawals();
-      
+
       // 파트너 통계도 함께 로드
       await loadPartnerStats();
     } catch (error) {
@@ -326,15 +326,15 @@ const AdminDashboardPage: React.FC = () => {
   const loadPartnerStats = async () => {
     try {
       const users = await AzureTableService.getAllUsers();
-      
+
       // 파트너 데이터가 있는 사용자 필터링
-      const partners = users.filter(user => 
+      const partners = users.filter(user =>
         user.referralCode || (user.totalBricks && user.totalBricks > 0)
       );
-      
+
       // 활동 중인 파트너 (추천 1건 이상)
       const activePartners = partners.filter(p => (p.referralCount || 0) > 0);
-      
+
       // 통계 계산
       const stats = {
         totalPartners: partners.length,
@@ -344,9 +344,9 @@ const AdminDashboardPage: React.FC = () => {
         totalBricksWithdrawn: partners.reduce((sum, p) => sum + (p.withdrawnBricks || 0), 0),
         totalReferrals: partners.reduce((sum, p) => sum + (p.referralCount || 0), 0)
       };
-      
+
       setPartnerStats(stats);
-      
+
       // 파트너 목록 (브릭 많은 순)
       const partnerList = partners
         .map(p => ({
@@ -361,9 +361,9 @@ const AdminDashboardPage: React.FC = () => {
           createdAt: p.createdAt
         }))
         .sort((a, b) => b.totalBricks - a.totalBricks);
-      
+
       setAllPartners(partnerList);
-      
+
       console.log('✅ 파트너 통계 로드 완료:', stats);
     } catch (error) {
       console.error('파트너 통계 로드 실패:', error);
@@ -373,7 +373,7 @@ const AdminDashboardPage: React.FC = () => {
   // 출금 승인
   const handleApproveWithdrawal = async (partnerEmail: string, withdrawalRowKey: string) => {
     if (!window.confirm('출금을 승인하시겠습니까? 실제 계좌 이체 후 승인해주세요.')) return;
-    
+
     try {
       const success = await AzureTableService.updateWithdrawalStatus(partnerEmail, withdrawalRowKey, 'completed');
       if (success) {
@@ -392,7 +392,7 @@ const AdminDashboardPage: React.FC = () => {
   const handleRejectWithdrawal = async (partnerEmail: string, withdrawalRowKey: string) => {
     const reason = window.prompt('거절 사유를 입력하세요:');
     if (!reason) return;
-    
+
     try {
       const success = await AzureTableService.updateWithdrawalStatus(partnerEmail, withdrawalRowKey, 'rejected', reason);
       if (success) {
@@ -413,7 +413,7 @@ const AdminDashboardPage: React.FC = () => {
 
     // 검색어 필터
     if (searchQuery) {
-      filtered = filtered.filter(user => 
+      filtered = filtered.filter(user =>
         user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
@@ -421,11 +421,16 @@ const AdminDashboardPage: React.FC = () => {
 
     // 강의 필터
     if (selectedCourse !== 'all') {
-      filtered = filtered.filter(user => 
-        user.enrolledCourses.some(course => 
-          course.courseId === selectedCourse || 
-          (course.courseId === 'chatgpt-agent-beginner' && selectedCourse === '1002')
-        )
+      filtered = filtered.filter(user =>
+        user.enrolledCourses.some(course => {
+          const courseIdMap: { [key: string]: string[] } = {
+            'ai-building-course': ['ai-building-course', '999'],
+            'chatgpt-agent-beginner': ['chatgpt-agent-beginner', '1002'],
+            'vibe-coding': ['vibe-coding', '1003']
+          };
+          const mappedIds = courseIdMap[selectedCourse] || [selectedCourse];
+          return mappedIds.includes(course.courseId);
+        })
       );
     }
 
@@ -473,12 +478,12 @@ const AdminDashboardPage: React.FC = () => {
     // mailto 링크 생성 (BCC로 발송)
     const bccEmails = Array.from(selectedUsers).join(',');
     const mailtoLink = `mailto:jay@connexionai.kr?bcc=${encodeURIComponent(bccEmails)}&subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailContent)}`;
-    
+
     // 이메일 클라이언트 열기
     window.location.href = mailtoLink;
-    
+
     alert(`✅ 이메일 클라이언트가 열립니다.\n\n${selectedUsers.size}명의 사용자가 BCC로 추가되었습니다.`);
-    
+
     // 모달 닫기
     setShowEmailModal(false);
     setEmailSubject('');
@@ -505,7 +510,7 @@ const AdminDashboardPage: React.FC = () => {
 
     try {
       const success = await AzureTableService.adminChangePassword(selectedUserEmail, newPassword);
-      
+
       if (success) {
         alert('✅ 비밀번호가 성공적으로 변경되었습니다!');
         setShowPasswordModal(false);
@@ -523,7 +528,7 @@ const AdminDashboardPage: React.FC = () => {
   // 이메일 목록 복사
   const copyAllEmails = () => {
     const emails = filteredUsers.map(user => user.email).join(', ');
-    
+
     navigator.clipboard.writeText(emails).then(() => {
       alert(`✅ ${filteredUsers.length}개의 이메일 주소가 클립보드에 복사되었습니다!\n\n이메일 클라이언트의 BCC 필드에 붙여넣으세요.`);
     }).catch(err => {
@@ -837,8 +842,8 @@ const AdminDashboardPage: React.FC = () => {
               padding: '14px 28px',
               borderRadius: '12px',
               border: 'none',
-              background: activeTab === 'users' 
-                ? 'linear-gradient(135deg, #3b82f6, #2563eb)' 
+              background: activeTab === 'users'
+                ? 'linear-gradient(135deg, #3b82f6, #2563eb)'
                 : 'white',
               color: activeTab === 'users' ? 'white' : '#64748b',
               fontSize: '1rem',
@@ -847,8 +852,8 @@ const AdminDashboardPage: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              boxShadow: activeTab === 'users' 
-                ? '0 4px 15px rgba(59, 130, 246, 0.4)' 
+              boxShadow: activeTab === 'users'
+                ? '0 4px 15px rgba(59, 130, 246, 0.4)'
                 : '0 2px 8px rgba(0,0,0,0.1)',
               transition: 'all 0.2s ease'
             }}
@@ -862,8 +867,8 @@ const AdminDashboardPage: React.FC = () => {
               padding: '14px 28px',
               borderRadius: '12px',
               border: 'none',
-              background: activeTab === 'partners' 
-                ? 'linear-gradient(135deg, #8b5cf6, #7c3aed)' 
+              background: activeTab === 'partners'
+                ? 'linear-gradient(135deg, #8b5cf6, #7c3aed)'
                 : 'white',
               color: activeTab === 'partners' ? 'white' : '#64748b',
               fontSize: '1rem',
@@ -872,8 +877,8 @@ const AdminDashboardPage: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              boxShadow: activeTab === 'partners' 
-                ? '0 4px 15px rgba(139, 92, 246, 0.4)' 
+              boxShadow: activeTab === 'partners'
+                ? '0 4px 15px rgba(139, 92, 246, 0.4)'
                 : '0 2px 8px rgba(0,0,0,0.1)',
               transition: 'all 0.2s ease'
             }}
@@ -886,8 +891,8 @@ const AdminDashboardPage: React.FC = () => {
               padding: '14px 28px',
               borderRadius: '12px',
               border: 'none',
-              background: activeTab === 'withdrawals' 
-                ? 'linear-gradient(135deg, #f97316, #ea580c)' 
+              background: activeTab === 'withdrawals'
+                ? 'linear-gradient(135deg, #f97316, #ea580c)'
                 : 'white',
               color: activeTab === 'withdrawals' ? 'white' : '#64748b',
               fontSize: '1rem',
@@ -896,8 +901,8 @@ const AdminDashboardPage: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              boxShadow: activeTab === 'withdrawals' 
-                ? '0 4px 15px rgba(249, 115, 22, 0.4)' 
+              boxShadow: activeTab === 'withdrawals'
+                ? '0 4px 15px rgba(249, 115, 22, 0.4)'
                 : '0 2px 8px rgba(0,0,0,0.1)',
               transition: 'all 0.2s ease',
               position: 'relative'
@@ -934,8 +939,8 @@ const AdminDashboardPage: React.FC = () => {
               padding: '14px 28px',
               borderRadius: '12px',
               border: 'none',
-              background: activeTab === 'refunds' 
-                ? 'linear-gradient(135deg, #ef4444, #dc2626)' 
+              background: activeTab === 'refunds'
+                ? 'linear-gradient(135deg, #ef4444, #dc2626)'
                 : 'white',
               color: activeTab === 'refunds' ? 'white' : '#64748b',
               fontSize: '1rem',
@@ -944,8 +949,8 @@ const AdminDashboardPage: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              boxShadow: activeTab === 'refunds' 
-                ? '0 4px 15px rgba(239, 68, 68, 0.4)' 
+              boxShadow: activeTab === 'refunds'
+                ? '0 4px 15px rgba(239, 68, 68, 0.4)'
                 : '0 2px 8px rgba(0,0,0,0.1)',
               transition: 'all 0.2s ease'
             }}
@@ -957,336 +962,337 @@ const AdminDashboardPage: React.FC = () => {
         {/* 사용자 관리 탭 */}
         {activeTab === 'users' && (
           <>
-        {/* 필터 & 검색 */}
-        <div style={{
-          background: 'white',
-          borderRadius: '15px',
-          padding: '25px',
-          marginBottom: '30px',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-        }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '15px'
-          }}>
-            <div style={{ position: 'relative' }}>
-              <Search size={20} style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
-              <input
-                type="text"
-                placeholder="이메일 또는 이름 검색..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '12px 12px 12px 45px',
-                  borderRadius: '10px',
-                  border: '2px solid #e2e8f0',
-                  fontSize: '1rem',
-                  outline: 'none'
-                }}
-              />
-            </div>
-
-            <select
-              value={selectedCourse}
-              onChange={(e) => setSelectedCourse(e.target.value)}
-              style={{
-                padding: '12px',
-                borderRadius: '10px',
-                border: '2px solid #e2e8f0',
-                fontSize: '1rem',
-                outline: 'none',
-                cursor: 'pointer'
-              }}
-            >
-              <option value="all">모든 강의</option>
-              <option value="1002">ChatGPT AI AGENT 비기너편</option>
-              <option value="ai-building">AI 건물 짓기</option>
-            </select>
-
-            <button
-              onClick={loadAllUsers}
-              style={{
-                padding: '12px 20px',
-                borderRadius: '10px',
-                border: 'none',
-                background: '#0ea5e9',
-                color: 'white',
-                fontSize: '1rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px'
-              }}
-            >
-              <RefreshCw size={18} />
-              새로고침
-            </button>
-
-            <button
-              onClick={downloadCSV}
-              style={{
-                padding: '12px 20px',
-                borderRadius: '10px',
-                border: 'none',
-                background: '#10b981',
-                color: 'white',
-                fontSize: '1rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px'
-              }}
-            >
-              <Download size={18} />
-              CSV 다운로드
-            </button>
-
-            <button
-              onClick={copyAllEmails}
-              style={{
-                padding: '12px 20px',
-                borderRadius: '10px',
-                border: 'none',
-                background: '#e5c100',
-                color: 'white',
-                fontSize: '1rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                transition: 'all 0.2s'
-              }}
-              onMouseOver={(e) => e.currentTarget.style.background = '#d97706'}
-              onMouseOut={(e) => e.currentTarget.style.background = '#e5c100'}
-            >
-              📋 이메일 복사 ({filteredUsers.length})
-            </button>
-
-            <button
-              onClick={() => setShowEmailModal(true)}
-              disabled={selectedUsers.size === 0}
-              style={{
-                padding: '12px 20px',
-                borderRadius: '10px',
-                border: 'none',
-                background: selectedUsers.size > 0 ? '#8b5cf6' : '#94a3b8',
-                color: 'white',
-                fontSize: '1rem',
-                fontWeight: '600',
-                cursor: selectedUsers.size > 0 ? 'pointer' : 'not-allowed',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                transition: 'all 0.2s'
-              }}
-              onMouseOver={(e) => {
-                if (selectedUsers.size > 0) {
-                  e.currentTarget.style.background = '#7c3aed';
-                }
-              }}
-              onMouseOut={(e) => {
-                if (selectedUsers.size > 0) {
-                  e.currentTarget.style.background = '#8b5cf6';
-                }
-              }}
-            >
-              📧 이메일 발송 ({selectedUsers.size})
-            </button>
-          </div>
-        </div>
-
-        {/* 유저 테이블 */}
-        <div style={{
-          background: 'white',
-          borderRadius: '15px',
-          padding: '25px',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-          overflowX: 'auto'
-        }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '20px' }}>
-            👥 사용자 목록 ({filteredUsers.length}명)
-          </h2>
-          
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
-                <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>
+            {/* 필터 & 검색 */}
+            <div style={{
+              background: 'white',
+              borderRadius: '15px',
+              padding: '25px',
+              marginBottom: '30px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+            }}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                gap: '15px'
+              }}>
+                <div style={{ position: 'relative' }}>
+                  <Search size={20} style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
                   <input
-                    type="checkbox"
-                    checked={selectedUsers.size === filteredUsers.length && filteredUsers.length > 0}
-                    onChange={toggleSelectAll}
+                    type="text"
+                    placeholder="이메일 또는 이름 검색..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                     style={{
-                      width: '18px',
-                      height: '18px',
-                      cursor: 'pointer'
+                      width: '100%',
+                      padding: '12px 12px 12px 45px',
+                      borderRadius: '10px',
+                      border: '2px solid #e2e8f0',
+                      fontSize: '1rem',
+                      outline: 'none'
                     }}
                   />
-                </th>
-                <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>이메일</th>
-                <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>이름</th>
-                <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>🔗 추천인</th>
-                <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>가입일</th>
-                <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>수강 강의</th>
-                <th style={{ padding: '12px', textAlign: 'right', color: '#64748b', fontWeight: '600' }}>총 결제액</th>
-                <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>진행률</th>
-                <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>마지막 접속</th>
-                <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>비밀번호</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredUsers.map((user, index) => (
-                <tr key={index} style={{
-                  borderBottom: '1px solid #f1f5f9',
-                  cursor: 'pointer',
-                  transition: 'background 0.2s',
-                  background: selectedUsers.has(user.email) ? '#f0f9ff' : 'transparent'
-                }}
-                onMouseOver={(e) => {
-                  if (!selectedUsers.has(user.email)) {
-                    e.currentTarget.style.background = '#f8fafc';
-                  }
-                }}
-                onMouseOut={(e) => {
-                  if (!selectedUsers.has(user.email)) {
-                    e.currentTarget.style.background = 'transparent';
-                  }
-                }}
+                </div>
+
+                <select
+                  value={selectedCourse}
+                  onChange={(e) => setSelectedCourse(e.target.value)}
+                  style={{
+                    padding: '12px',
+                    borderRadius: '10px',
+                    border: '2px solid #e2e8f0',
+                    fontSize: '1rem',
+                    outline: 'none',
+                    cursor: 'pointer'
+                  }}
                 >
-                  <td style={{ padding: '12px', textAlign: 'center' }}>
-                    <input
-                      type="checkbox"
-                      checked={selectedUsers.has(user.email)}
-                      onChange={() => toggleUserSelection(user.email)}
-                      onClick={(e) => e.stopPropagation()}
-                      style={{
-                        width: '18px',
-                        height: '18px',
-                        cursor: 'pointer'
-                      }}
-                    />
-                  </td>
-                  <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.9rem' }}>
-                    {user.email}
-                  </td>
-                  <td style={{ padding: '12px' }}>{user.name}</td>
-                  <td style={{ padding: '12px', textAlign: 'center' }}>
-                    {user.referredBy ? (
-                      <span style={{
-                        background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
-                        color: '#1b263b',
-                        padding: '4px 10px',
-                        borderRadius: '8px',
-                        fontSize: '0.75rem',
-                        fontWeight: '700',
-                        fontFamily: 'monospace',
-                        display: 'inline-block',
-                        boxShadow: '0 2px 4px rgba(251, 191, 36, 0.3)'
-                      }}>
-                        🧱 {user.referredBy}
-                      </span>
-                    ) : (
-                      <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>-</span>
-                    )}
-                  </td>
-                  <td style={{ padding: '12px', fontSize: '0.9rem', color: '#64748b' }}>
-                    {new Date(user.createdAt).toLocaleDateString('ko-KR')}
-                  </td>
-                  <td style={{ padding: '12px' }}>
-                    {user.enrolledCourses.length > 0 ? (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                        {user.enrolledCourses.map((course, idx) => (
-                          <span key={idx} style={{
-                            background: '#e0f2fe',
-                            color: '#0369a1',
-                            padding: '4px 8px',
-                            borderRadius: '6px',
-                            fontSize: '0.85rem',
-                            fontWeight: '600'
-                          }}>
-                            {course.title || course.courseId}
-                          </span>
-                        ))}
-                      </div>
-                    ) : (
-                      <span style={{ color: '#94a3b8' }}>-</span>
-                    )}
-                  </td>
-                  <td style={{ padding: '12px', textAlign: 'right', fontWeight: '600' }}>
-                    {user.totalSpent > 0 ? `₩${user.totalSpent.toLocaleString()}` : '-'}
-                  </td>
-                  <td style={{ padding: '12px', textAlign: 'center' }}>
-                    <div style={{
-                      background: user.completedDays > 0 ? '#dcfce7' : '#f1f5f9',
-                      color: user.completedDays > 0 ? '#166534' : '#64748b',
-                      padding: '4px 12px',
-                      borderRadius: '20px',
-                      fontSize: '0.85rem',
-                      fontWeight: '600',
-                      display: 'inline-block'
-                    }}>
-                      {user.completedDays}/15
-                    </div>
-                  </td>
-                  <td style={{ padding: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#64748b' }}>
-                    {user.lastAccessedAt ? new Date(user.lastAccessedAt).toLocaleDateString('ko-KR') : '-'}
-                  </td>
-                  <td style={{ padding: '12px', textAlign: 'center' }}>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedUserEmail(user.email);
-                        setShowPasswordModal(true);
-                      }}
-                      style={{
-                        padding: '6px 12px',
-                        borderRadius: '8px',
-                        border: 'none',
-                        background: '#e5c100',
-                        color: 'white',
-                        fontSize: '0.85rem',
-                        fontWeight: '600',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s'
-                      }}
+                  <option value="all">모든 강의</option>
+                  <option value="ai-building-course">Step 1: AI 건물주 되기</option>
+                  <option value="chatgpt-agent-beginner">Step 2: AI 에이전트 비기너</option>
+                  <option value="vibe-coding">Step 3: 바이브코딩</option>
+                </select>
+
+                <button
+                  onClick={loadAllUsers}
+                  style={{
+                    padding: '12px 20px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    background: '#0ea5e9',
+                    color: 'white',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px'
+                  }}
+                >
+                  <RefreshCw size={18} />
+                  새로고침
+                </button>
+
+                <button
+                  onClick={downloadCSV}
+                  style={{
+                    padding: '12px 20px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    background: '#10b981',
+                    color: 'white',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px'
+                  }}
+                >
+                  <Download size={18} />
+                  CSV 다운로드
+                </button>
+
+                <button
+                  onClick={copyAllEmails}
+                  style={{
+                    padding: '12px 20px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    background: '#e5c100',
+                    color: 'white',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    transition: 'all 0.2s'
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.background = '#d97706'}
+                  onMouseOut={(e) => e.currentTarget.style.background = '#e5c100'}
+                >
+                  📋 이메일 복사 ({filteredUsers.length})
+                </button>
+
+                <button
+                  onClick={() => setShowEmailModal(true)}
+                  disabled={selectedUsers.size === 0}
+                  style={{
+                    padding: '12px 20px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    background: selectedUsers.size > 0 ? '#8b5cf6' : '#94a3b8',
+                    color: 'white',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    cursor: selectedUsers.size > 0 ? 'pointer' : 'not-allowed',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    transition: 'all 0.2s'
+                  }}
+                  onMouseOver={(e) => {
+                    if (selectedUsers.size > 0) {
+                      e.currentTarget.style.background = '#7c3aed';
+                    }
+                  }}
+                  onMouseOut={(e) => {
+                    if (selectedUsers.size > 0) {
+                      e.currentTarget.style.background = '#8b5cf6';
+                    }
+                  }}
+                >
+                  📧 이메일 발송 ({selectedUsers.size})
+                </button>
+              </div>
+            </div>
+
+            {/* 유저 테이블 */}
+            <div style={{
+              background: 'white',
+              borderRadius: '15px',
+              padding: '25px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+              overflowX: 'auto'
+            }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '20px' }}>
+                👥 사용자 목록 ({filteredUsers.length}명)
+              </h2>
+
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
+                    <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>
+                      <input
+                        type="checkbox"
+                        checked={selectedUsers.size === filteredUsers.length && filteredUsers.length > 0}
+                        onChange={toggleSelectAll}
+                        style={{
+                          width: '18px',
+                          height: '18px',
+                          cursor: 'pointer'
+                        }}
+                      />
+                    </th>
+                    <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>이메일</th>
+                    <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>이름</th>
+                    <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>🔗 추천인</th>
+                    <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>가입일</th>
+                    <th style={{ padding: '12px', textAlign: 'left', color: '#64748b', fontWeight: '600' }}>수강 강의</th>
+                    <th style={{ padding: '12px', textAlign: 'right', color: '#64748b', fontWeight: '600' }}>총 결제액</th>
+                    <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>진행률</th>
+                    <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>마지막 접속</th>
+                    <th style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontWeight: '600' }}>비밀번호</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredUsers.map((user, index) => (
+                    <tr key={index} style={{
+                      borderBottom: '1px solid #f1f5f9',
+                      cursor: 'pointer',
+                      transition: 'background 0.2s',
+                      background: selectedUsers.has(user.email) ? '#f0f9ff' : 'transparent'
+                    }}
                       onMouseOver={(e) => {
-                        e.currentTarget.style.background = '#d97706';
-                        e.currentTarget.style.transform = 'scale(1.05)';
+                        if (!selectedUsers.has(user.email)) {
+                          e.currentTarget.style.background = '#f8fafc';
+                        }
                       }}
                       onMouseOut={(e) => {
-                        e.currentTarget.style.background = '#e5c100';
-                        e.currentTarget.style.transform = 'scale(1)';
+                        if (!selectedUsers.has(user.email)) {
+                          e.currentTarget.style.background = 'transparent';
+                        }
                       }}
                     >
-                      🔐 변경
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                      <td style={{ padding: '12px', textAlign: 'center' }}>
+                        <input
+                          type="checkbox"
+                          checked={selectedUsers.has(user.email)}
+                          onChange={() => toggleUserSelection(user.email)}
+                          onClick={(e) => e.stopPropagation()}
+                          style={{
+                            width: '18px',
+                            height: '18px',
+                            cursor: 'pointer'
+                          }}
+                        />
+                      </td>
+                      <td style={{ padding: '12px', fontFamily: 'monospace', fontSize: '0.9rem' }}>
+                        {user.email}
+                      </td>
+                      <td style={{ padding: '12px' }}>{user.name}</td>
+                      <td style={{ padding: '12px', textAlign: 'center' }}>
+                        {user.referredBy ? (
+                          <span style={{
+                            background: 'linear-gradient(135deg, #ffd60a, #e5c100)',
+                            color: '#1b263b',
+                            padding: '4px 10px',
+                            borderRadius: '8px',
+                            fontSize: '0.75rem',
+                            fontWeight: '700',
+                            fontFamily: 'monospace',
+                            display: 'inline-block',
+                            boxShadow: '0 2px 4px rgba(251, 191, 36, 0.3)'
+                          }}>
+                            🧱 {user.referredBy}
+                          </span>
+                        ) : (
+                          <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>-</span>
+                        )}
+                      </td>
+                      <td style={{ padding: '12px', fontSize: '0.9rem', color: '#64748b' }}>
+                        {new Date(user.createdAt).toLocaleDateString('ko-KR')}
+                      </td>
+                      <td style={{ padding: '12px' }}>
+                        {user.enrolledCourses.length > 0 ? (
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            {user.enrolledCourses.map((course, idx) => (
+                              <span key={idx} style={{
+                                background: '#e0f2fe',
+                                color: '#0369a1',
+                                padding: '4px 8px',
+                                borderRadius: '6px',
+                                fontSize: '0.85rem',
+                                fontWeight: '600'
+                              }}>
+                                {course.title || course.courseId}
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          <span style={{ color: '#94a3b8' }}>-</span>
+                        )}
+                      </td>
+                      <td style={{ padding: '12px', textAlign: 'right', fontWeight: '600' }}>
+                        {user.totalSpent > 0 ? `₩${user.totalSpent.toLocaleString()}` : '-'}
+                      </td>
+                      <td style={{ padding: '12px', textAlign: 'center' }}>
+                        <div style={{
+                          background: user.completedDays > 0 ? '#dcfce7' : '#f1f5f9',
+                          color: user.completedDays > 0 ? '#166534' : '#64748b',
+                          padding: '4px 12px',
+                          borderRadius: '20px',
+                          fontSize: '0.85rem',
+                          fontWeight: '600',
+                          display: 'inline-block'
+                        }}>
+                          {user.completedDays}/15
+                        </div>
+                      </td>
+                      <td style={{ padding: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#64748b' }}>
+                        {user.lastAccessedAt ? new Date(user.lastAccessedAt).toLocaleDateString('ko-KR') : '-'}
+                      </td>
+                      <td style={{ padding: '12px', textAlign: 'center' }}>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedUserEmail(user.email);
+                            setShowPasswordModal(true);
+                          }}
+                          style={{
+                            padding: '6px 12px',
+                            borderRadius: '8px',
+                            border: 'none',
+                            background: '#e5c100',
+                            color: 'white',
+                            fontSize: '0.85rem',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s'
+                          }}
+                          onMouseOver={(e) => {
+                            e.currentTarget.style.background = '#d97706';
+                            e.currentTarget.style.transform = 'scale(1.05)';
+                          }}
+                          onMouseOut={(e) => {
+                            e.currentTarget.style.background = '#e5c100';
+                            e.currentTarget.style.transform = 'scale(1)';
+                          }}
+                        >
+                          🔐 변경
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
 
-          {filteredUsers.length === 0 && (
-            <div style={{
-              textAlign: 'center',
-              padding: '60px 20px',
-              color: '#94a3b8'
-            }}>
-              <Users size={48} style={{ marginBottom: '20px', opacity: 0.5 }} />
-              <p style={{ fontSize: '1.1rem', fontWeight: '600' }}>
-                검색 결과가 없습니다
-              </p>
+              {filteredUsers.length === 0 && (
+                <div style={{
+                  textAlign: 'center',
+                  padding: '60px 20px',
+                  color: '#94a3b8'
+                }}>
+                  <Users size={48} style={{ marginBottom: '20px', opacity: 0.5 }} />
+                  <p style={{ fontSize: '1.1rem', fontWeight: '600' }}>
+                    검색 결과가 없습니다
+                  </p>
+                </div>
+              )}
             </div>
-          )}
-        </div>
           </>
         )}
 
@@ -1298,9 +1304,9 @@ const AdminDashboardPage: React.FC = () => {
             padding: '30px',
             boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
           }}>
-            <div style={{ 
-              display: 'flex', 
-              justifyContent: 'space-between', 
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
               alignItems: 'center',
               marginBottom: '25px'
             }}>
@@ -1354,8 +1360,8 @@ const AdminDashboardPage: React.FC = () => {
                         <div style={{ fontSize: '0.85rem', color: '#64748b' }}>{withdrawal.partnerEmail}</div>
                       </td>
                       <td style={{ padding: '15px', textAlign: 'right' }}>
-                        <span style={{ 
-                          fontWeight: '700', 
+                        <span style={{
+                          fontWeight: '700',
                           color: '#f97316',
                           fontSize: '1.1rem'
                         }}>
@@ -1567,7 +1573,7 @@ const AdminDashboardPage: React.FC = () => {
                   </thead>
                   <tbody>
                     {allPartners.map((partner, index) => (
-                      <tr key={partner.email} style={{ 
+                      <tr key={partner.email} style={{
                         borderBottom: '1px solid #f1f5f9',
                         background: index < 3 ? `rgba(251, 191, 36, ${0.15 - index * 0.04})` : 'transparent'
                       }}>
@@ -1579,8 +1585,8 @@ const AdminDashboardPage: React.FC = () => {
                           ) : index === 2 ? (
                             <span style={{ fontSize: '1.5rem' }}>🥉</span>
                           ) : (
-                            <span style={{ 
-                              fontWeight: '700', 
+                            <span style={{
+                              fontWeight: '700',
                               color: '#64748b',
                               fontSize: '1rem'
                             }}>
@@ -1593,10 +1599,10 @@ const AdminDashboardPage: React.FC = () => {
                           <div style={{ fontSize: '0.85rem', color: '#64748b' }}>{partner.email}</div>
                         </td>
                         <td style={{ padding: '15px' }}>
-                          <span style={{ 
-                            fontFamily: 'monospace', 
-                            background: '#f1f5f9', 
-                            padding: '4px 8px', 
+                          <span style={{
+                            fontFamily: 'monospace',
+                            background: '#f1f5f9',
+                            padding: '4px 8px',
                             borderRadius: '6px',
                             color: '#1b263b',
                             fontWeight: '600'
@@ -1605,8 +1611,8 @@ const AdminDashboardPage: React.FC = () => {
                           </span>
                         </td>
                         <td style={{ padding: '15px', textAlign: 'right' }}>
-                          <span style={{ 
-                            fontWeight: '800', 
+                          <span style={{
+                            fontWeight: '800',
                             color: '#e5c100',
                             fontSize: '1.1rem',
                             background: partner.totalBricks > 0 ? 'linear-gradient(135deg, #fffbeb, #fef3c7)' : 'transparent',
@@ -1627,7 +1633,7 @@ const AdminDashboardPage: React.FC = () => {
                           </span>
                         </td>
                         <td style={{ padding: '15px', textAlign: 'center' }}>
-                          <span style={{ 
+                          <span style={{
                             background: partner.referralCount > 0 ? '#dbeafe' : '#f1f5f9',
                             color: partner.referralCount > 0 ? '#1e40af' : '#64748b',
                             padding: '6px 12px',
@@ -1672,9 +1678,9 @@ const AdminDashboardPage: React.FC = () => {
             padding: '30px',
             boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
           }}>
-            <div style={{ 
-              display: 'flex', 
-              justifyContent: 'space-between', 
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
               alignItems: 'center',
               marginBottom: '25px'
             }}>
@@ -1721,9 +1727,9 @@ const AdminDashboardPage: React.FC = () => {
               marginBottom: '30px',
               border: '2px solid #fecaca'
             }}>
-              <h3 style={{ 
-                fontSize: '1.2rem', 
-                fontWeight: '700', 
+              <h3 style={{
+                fontSize: '1.2rem',
+                fontWeight: '700',
                 marginBottom: '20px',
                 color: '#dc2626',
                 display: 'flex',
@@ -1732,16 +1738,16 @@ const AdminDashboardPage: React.FC = () => {
               }}>
                 🔑 수동 환불 (paymentKey 직접 입력)
               </h3>
-              <p style={{ 
-                fontSize: '0.9rem', 
-                color: '#991b1b', 
+              <p style={{
+                fontSize: '0.9rem',
+                color: '#991b1b',
                 marginBottom: '20px',
                 lineHeight: '1.6'
               }}>
-                📧 이메일로 받은 환불 신청의 paymentKey를 입력하여 직접 환불 처리합니다.<br/>
+                📧 이메일로 받은 환불 신청의 paymentKey를 입력하여 직접 환불 처리합니다.<br />
                 ⚠️ paymentKey는 토스페이먼츠 대시보드에서도 확인 가능합니다.
               </p>
-              
+
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: '#7f1d1d', marginBottom: '8px' }}>
@@ -1781,7 +1787,7 @@ const AdminDashboardPage: React.FC = () => {
                   />
                 </div>
               </div>
-              
+
               <div style={{ display: 'flex', gap: '15px', alignItems: 'flex-end' }}>
                 <div style={{ flex: 1 }}>
                   <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: '#7f1d1d', marginBottom: '8px' }}>
@@ -1808,8 +1814,8 @@ const AdminDashboardPage: React.FC = () => {
                     padding: '12px 30px',
                     borderRadius: '10px',
                     border: 'none',
-                    background: refundLoading || !manualPaymentKey.trim() 
-                      ? '#fca5a5' 
+                    background: refundLoading || !manualPaymentKey.trim()
+                      ? '#fca5a5'
                       : 'linear-gradient(135deg, #ef4444, #dc2626)',
                     color: 'white',
                     fontSize: '1rem',
@@ -1844,7 +1850,7 @@ const AdminDashboardPage: React.FC = () => {
                   </thead>
                   <tbody>
                     {refundPayments.map((payment, index) => (
-                      <tr key={payment.paymentKey || index} style={{ 
+                      <tr key={payment.paymentKey || index} style={{
                         borderBottom: '1px solid #f1f5f9',
                         background: payment.status === 'CANCELED' ? '#fef2f2' : 'transparent'
                       }}>

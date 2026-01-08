@@ -21,6 +21,7 @@ const COLORS = {
 const COURSES = [
   { id: 'ai-building-course', name: '🏠 AI 건물주 되기', color: COLORS.blue, dayOfWeek: '화요일' },
   { id: 'chatgpt-agent-beginner', name: '🤖 AI 에이전트 비기너', color: COLORS.cyan, dayOfWeek: '수요일' },
+  { id: 'vibe-coding', name: '💻 바이브코딩', color: '#8b5cf6', dayOfWeek: '목요일' },
 ];
 
 interface LiveConfig {
@@ -36,7 +37,7 @@ const LiveControlPage: React.FC = () => {
   const [liveConfigs, setLiveConfigs] = useState<{ [courseId: string]: LiveConfig }>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
-  
+
   // 폼 상태
   const [formData, setFormData] = useState<{ [courseId: string]: { url: string; title: string } }>({});
 
@@ -49,7 +50,7 @@ const LiveControlPage: React.FC = () => {
     try {
       const configs = await AzureTableService.getAllLiveConfigs();
       setLiveConfigs(configs);
-      
+
       // 폼 데이터 초기화
       const initialFormData: { [courseId: string]: { url: string; title: string } } = {};
       COURSES.forEach(course => {
@@ -81,13 +82,13 @@ const LiveControlPage: React.FC = () => {
     try {
       // 유튜브 URL에서 ID 추출
       const youtubeId = extractYoutubeId(form.url);
-      
+
       await AzureTableService.updateLiveConfig(courseId, {
         isLive: true,
         liveUrl: youtubeId || form.url,
         liveTitle: form.title
       });
-      
+
       alert(`🔴 라이브가 시작되었습니다!\n\n"${form.title}"\n\n수강생들이 이제 라이브를 볼 수 있습니다.`);
       await loadAllConfigs();
     } catch (error) {
@@ -125,7 +126,7 @@ const LiveControlPage: React.FC = () => {
         liveUrl: '',
         liveTitle: ''
       });
-      
+
       alert(`✅ 라이브가 종료되었습니다!\n\n"${config.liveTitle}"\n\n📺 아카이브에 자동 저장되었습니다.`);
       await loadAllConfigs();
     } catch (error) {
@@ -182,7 +183,7 @@ const LiveControlPage: React.FC = () => {
   return (
     <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${COLORS.navy} 0%, ${COLORS.navyLight} 100%)` }}>
       <NavigationBar />
-      
+
       <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '2rem' }}>
         {/* 헤더 */}
         <div style={{ marginBottom: '2rem' }}>
@@ -202,7 +203,7 @@ const LiveControlPage: React.FC = () => {
             <ChevronLeft size={20} />
             어드민으로 돌아가기
           </button>
-          
+
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
             <Radio size={32} color={COLORS.red} />
             <h1 style={{ color: COLORS.white, fontSize: '2rem', margin: 0 }}>
@@ -242,7 +243,7 @@ const LiveControlPage: React.FC = () => {
                       {course.dayOfWeek} 20:00
                     </p>
                   </div>
-                  
+
                   {/* 라이브 상태 표시 */}
                   <div style={{
                     display: 'flex',
@@ -296,7 +297,7 @@ const LiveControlPage: React.FC = () => {
                         {config?.liveUrl}
                       </p>
                     </div>
-                    
+
                     <button
                       onClick={() => handleEndLive(course.id)}
                       disabled={saving === course.id}
@@ -347,7 +348,7 @@ const LiveControlPage: React.FC = () => {
                         }}
                       />
                     </div>
-                    
+
                     <div style={{ marginBottom: '1rem' }}>
                       <label style={{ color: COLORS.gray, fontSize: '0.9rem', display: 'block', marginBottom: '0.5rem' }}>
                         라이브 제목
@@ -372,7 +373,7 @@ const LiveControlPage: React.FC = () => {
                         }}
                       />
                     </div>
-                    
+
                     <button
                       onClick={() => handleStartLive(course.id)}
                       disabled={saving === course.id}
