@@ -4,7 +4,6 @@ import { CheckCircle, Clock, Gift, Users, ChevronRight, X, Upload, Link as LinkI
 import NavigationBar from '../../common/NavigationBar';
 import AzureTableService from '../../../services/azureTableService';
 
-// 브랜드 컬러
 const COLORS = {
     navy: '#1e3a5f',
     navyLight: '#2d4a6f',
@@ -16,6 +15,14 @@ const COLORS = {
     purple: '#8b5cf6',
     orange: '#f97316'
 };
+
+// 강의별 설정
+const STEPS = [
+    { id: 'all', name: '전체', icon: '📚', color: COLORS.gold },
+    { id: 'step1', name: 'Step 1: AI 건물주', icon: '🏠', color: '#3b82f6' },
+    { id: 'step2', name: 'Step 2: AI 에이전트', icon: '🤖', color: '#22c55e' },
+    { id: 'step3', name: 'Step 3: 바이브코딩', icon: '💻', color: COLORS.purple },
+];
 
 interface Homework {
     id: string;
@@ -51,6 +58,7 @@ const HomeworkPage: React.FC = () => {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [earnedBricks, setEarnedBricks] = useState(0);
     const [streakBonus, setStreakBonus] = useState(0);
+    const [selectedStep, setSelectedStep] = useState('all');
 
     // 샘플 데이터 (나중에 Azure에서 가져오기)
     const sampleHomeworks: Homework[] = [
@@ -105,6 +113,20 @@ const HomeworkPage: React.FC = () => {
                 comment: 'ChatGPT로 처음 대본 써봤는데 생각보다 잘 나왔어요!',
                 submittedAt: '2026-01-06T18:00:00'
             }
+        },
+        {
+            id: 'hw-step3-w1',
+            stepId: 'step3',
+            stepName: 'Step 3: 바이브코딩',
+            week: 1,
+            title: 'Antigravity로 간단한 웹페이지 만들기',
+            description: 'Antigravity를 사용해서 간단한 자기소개 웹페이지를 만들어보세요. 완성된 결과물 스크린샷이나 링크를 공유해주세요!',
+            deadline: '2026-01-16T20:00:00',
+            reward: 15,
+            completedBy: [
+                { name: '한소희', completedAt: '2026-01-09T11:00:00' },
+                { name: '조현아', completedAt: '2026-01-09T10:30:00' },
+            ]
         }
     ];
 
@@ -218,8 +240,13 @@ const HomeworkPage: React.FC = () => {
         }
     };
 
-    const activeHomeworks = homeworks.filter(hw => !hw.isCompleted && new Date(hw.deadline) > new Date());
-    const completedHomeworks = homeworks.filter(hw => hw.isCompleted);
+    // 강의별로 필터링
+    const filteredHomeworks = selectedStep === 'all'
+        ? homeworks
+        : homeworks.filter(hw => hw.stepId === selectedStep);
+
+    const activeHomeworks = filteredHomeworks.filter(hw => !hw.isCompleted && new Date(hw.deadline) > new Date());
+    const completedHomeworks = filteredHomeworks.filter(hw => hw.isCompleted);
 
     if (isLoading) {
         return (
@@ -278,6 +305,56 @@ const HomeworkPage: React.FC = () => {
             </div>
 
             <div style={{ maxWidth: '1000px', margin: '0 auto', padding: 'clamp(20px, 4vw, 40px)' }}>
+
+                {/* 강의별 탭 */}
+                <div style={{
+                    display: 'flex',
+                    gap: '10px',
+                    marginBottom: '30px',
+                    overflowX: 'auto',
+                    paddingBottom: '5px'
+                }}>
+                    {STEPS.map(step => (
+                        <button
+                            key={step.id}
+                            onClick={() => setSelectedStep(step.id)}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                padding: '12px 20px',
+                                borderRadius: '12px',
+                                border: selectedStep === step.id
+                                    ? `2px solid ${step.color}`
+                                    : '2px solid rgba(255,255,255,0.2)',
+                                background: selectedStep === step.id
+                                    ? `${step.color}20`
+                                    : 'rgba(255,255,255,0.05)',
+                                color: selectedStep === step.id ? step.color : 'rgba(255,255,255,0.7)',
+                                fontSize: '0.95rem',
+                                fontWeight: '600',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s',
+                                whiteSpace: 'nowrap'
+                            }}
+                        >
+                            <span>{step.icon}</span>
+                            {step.name}
+                            {step.id !== 'all' && (
+                                <span style={{
+                                    background: selectedStep === step.id ? step.color : 'rgba(255,255,255,0.2)',
+                                    color: selectedStep === step.id ? 'white' : 'rgba(255,255,255,0.6)',
+                                    padding: '2px 8px',
+                                    borderRadius: '10px',
+                                    fontSize: '0.75rem',
+                                    fontWeight: '700'
+                                }}>
+                                    {homeworks.filter(hw => hw.stepId === step.id && !hw.isCompleted && new Date(hw.deadline) > new Date()).length}
+                                </span>
+                            )}
+                        </button>
+                    ))}
+                </div>
 
                 {/* 진행 중인 숙제 */}
                 <section style={{ marginBottom: '40px' }}>
