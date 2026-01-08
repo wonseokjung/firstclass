@@ -352,52 +352,31 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
                 const isCompleted = completedDays.has(day.day);
 
                 return (
-                  <button
+                  <div
                     key={day.day}
-                    onClick={() => handleDayClick(day.day)}
                     style={{
                       display: 'flex',
                       alignItems: 'center',
                       gap: '15px',
                       padding: '20px',
-                      background: isCompleted
-                        ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(16, 185, 129, 0.1))'
-                        : 'rgba(30, 41, 59, 0.5)',
-                      border: isCompleted
-                        ? '1px solid rgba(34, 197, 94, 0.3)'
-                        : '1px solid rgba(255, 255, 255, 0.1)',
+                      background: 'rgba(30, 41, 59, 0.5)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
                       borderRadius: '16px',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease',
                       textAlign: 'left',
                       width: '100%'
-                    }}
-                    onMouseOver={(e) => {
-                      e.currentTarget.style.transform = 'translateX(8px)';
-                      e.currentTarget.style.borderColor = COLORS.purple;
-                    }}
-                    onMouseOut={(e) => {
-                      e.currentTarget.style.transform = 'translateX(0)';
-                      e.currentTarget.style.borderColor = isCompleted ? 'rgba(34, 197, 94, 0.3)' : 'rgba(255, 255, 255, 0.1)';
                     }}
                   >
                     <div style={{
                       width: '50px',
                       height: '50px',
                       borderRadius: '14px',
-                      background: isCompleted
-                        ? 'linear-gradient(135deg, #22c55e, #16a34a)'
-                        : 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                      background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       flexShrink: 0
                     }}>
-                      {isCompleted ? (
-                        <CheckCircle size={24} color="white" />
-                      ) : (
-                        <span style={{ color: 'white', fontWeight: '800', fontSize: '1.2rem' }}>{day.day}</span>
-                      )}
+                      <span style={{ color: 'white', fontWeight: '800', fontSize: '1.2rem' }}>{day.day}</span>
                     </div>
 
                     <div style={{ flex: 1 }}>
@@ -409,10 +388,37 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
                       </div>
                     </div>
 
-                    <PlayCircle size={24} color={isCompleted ? COLORS.green : COLORS.purple} />
-                  </button>
+                    <span style={{
+                      background: 'rgba(139, 92, 246, 0.2)',
+                      color: COLORS.purpleLight,
+                      padding: '6px 12px',
+                      borderRadius: '8px',
+                      fontSize: '0.8rem',
+                      fontWeight: '600'
+                    }}>
+                      준비중
+                    </span>
+                  </div>
                 );
               })}
+            </div>
+
+            {/* 커리큘럼 변경 안내 */}
+            <div style={{
+              marginTop: '15px',
+              padding: '12px 16px',
+              background: 'rgba(139, 92, 246, 0.1)',
+              borderRadius: '10px',
+              border: '1px dashed rgba(139, 92, 246, 0.3)'
+            }}>
+              <p style={{
+                color: COLORS.grayMedium,
+                fontSize: '0.85rem',
+                margin: 0,
+                textAlign: 'center'
+              }}>
+                📌 커리큘럼은 수강생 피드백과 최신 기술 트렌드에 따라 변경될 수 있습니다.
+              </p>
             </div>
           </div>
         ))}
