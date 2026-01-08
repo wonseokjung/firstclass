@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import NavigationBar from '../../common/NavigationBar';
+import WhyThreeMonthsFAQ from '../../common/WhyThreeMonthsFAQ';
 import AzureTableService from '../../../services/azureTableService';
 
 interface ChatGPTAgentBeginnerPageProps {
@@ -1010,6 +1011,9 @@ const ChatGPTAgentBeginnerPage: React.FC<ChatGPTAgentBeginnerPageProps> = ({ onB
                 </div>
               </div>
             </div>
+
+            {/* 왜 3개월인가요? FAQ */}
+            <WhyThreeMonthsFAQ />
 
             {/* 강의 수강 방식 */}
             <div style={{

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../../../common/NavigationBar';
+import WhyThreeMonthsFAQ from '../../../common/WhyThreeMonthsFAQ';
 import { Code, Rocket, Terminal, Calendar } from 'lucide-react';
 import AzureTableService from '../../../../services/azureTableService';
 
@@ -635,6 +636,11 @@ const VibeCodingPage: React.FC<VibeCodingPageProps> = ({ onBack }) => {
             </ul>
           </div>
         </div>
+      </div>
+
+      {/* 왜 3개월인가요? FAQ */}
+      <div style={{ marginBottom: '40px' }}>
+        <WhyThreeMonthsFAQ />
       </div>
 
       {/* 📺 인공지능의 EBS 섹션 */}

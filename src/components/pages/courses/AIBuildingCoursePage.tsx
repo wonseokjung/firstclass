@@ -2261,6 +2261,35 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                   더 고급 기능이 필요한 경우에만 선택적으로 유료 플랜을 이용하시면 됩니다.
                 </p>
               </div>
+
+              {/* FAQ - 왜 3개월인가요? */}
+              <div style={{
+                background: '#f0f9ff',
+                padding: '25px',
+                borderRadius: '15px',
+                border: '1px solid #bae6fd'
+              }}>
+                <h4 style={{
+                  color: '#0369a1',
+                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                  fontWeight: '700',
+                  marginBottom: '10px'
+                }}>
+                  Q. 왜 수강 기간이 3개월인가요?
+                </h4>
+                <p style={{
+                  color: '#1b263b',
+                  margin: '0',
+                  lineHeight: '1.8'
+                }}>
+                  A. <strong>AI 분야는 변화 속도가 매우 빠릅니다.</strong><br />
+                  6개월 전 영상도 이미 많은 부분이 바뀌어 있을 정도예요.<br /><br />
+                  저희는 <strong>기초 강의도 주기적으로 재촬영</strong>하고,
+                  <strong>매주 라이브로 최신 트렌드를 반영</strong>합니다.<br /><br />
+                  오래된 영상을 무제한으로 보는 것보다,
+                  <strong>3개월간 최신 콘텐츠로 집중 학습</strong>하는 게 AI 분야에서는 훨씬 효과적입니다.
+                </p>
+              </div>
             </div>
           </div>
 
