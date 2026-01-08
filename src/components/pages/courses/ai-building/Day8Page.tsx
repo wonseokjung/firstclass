@@ -532,15 +532,16 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
             alignItems: 'center',
             gap: '12px'
           }}>
-            <Volume2 size={24} color="#fbbf24" /> 콘텐츠 음성 제작 4가지 방법 정리
+            <Volume2 size={24} color="#fbbf24" /> 콘텐츠 음성 제작 5가지 방법 정리
           </h3>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px' }}>
             {[
               { num: 1, icon: '🎙️', title: '직접 녹음', desc: '마이크로 내 목소리 녹음', color: '#3b82f6' },
               { num: 2, icon: '🎭', title: '스피치 트랜스폼', desc: '녹음한 목소리 변환/필터', color: '#8b5cf6' },
               { num: 3, icon: '🤖', title: 'Google TTS', desc: '텍스트 → 음성 (무료)', color: '#22c55e' },
-              { num: 4, icon: '🎤', title: 'ElevenLabs', desc: '내 목소리 AI 복제', color: '#f59e0b' }
+              { num: 4, icon: '💻', title: '코드로 TTS', desc: 'Colab으로 다양한 설정', color: '#f97316' },
+              { num: 5, icon: '🎤', title: 'ElevenLabs', desc: '내 목소리 AI 복제', color: '#f59e0b' }
             ].map((method) => (
               <div key={method.num} style={{
                 background: `linear-gradient(135deg, ${method.color}20, ${method.color}10)`,
