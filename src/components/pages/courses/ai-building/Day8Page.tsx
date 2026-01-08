@@ -242,6 +242,16 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
       vimeoUrl: 'https://player.vimeo.com/video/1151908153?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
     },
     {
+      id: 'code-tts',
+      icon: <Code size={20} color="#22d3ee" />,
+      title: '💻 코드로 TTS 생성하기 (매우 중요)',
+      badge: 'Colab',
+      badgeColor: '#f97316',
+      description: '코드로 TTS를 다양하게 변경하고 커스터마이징하는 방법',
+      vimeoUrl: 'https://player.vimeo.com/video/1152441377?badge=0&autopause=0&player_id=0&app_id=58479',
+      colabUrl: 'https://drive.google.com/file/d/1gnOn1J_A7pIpLkdUVwR_qULDMqcfEfUe/view?usp=sharing',
+    },
+    {
       id: 'elevenlabs',
       icon: <Sparkles size={20} color="#fbbf24" />,
       title: '🎤 ElevenLabs + 내 목소리 AI 모델',
@@ -465,6 +475,42 @@ const Day8Page: React.FC<Day8PageProps> = ({ onBack, onNext }) => {
                     </div>
                   )}
                 </div>
+
+                {/* Colab 버튼 */}
+                {(section as any).colabUrl && (
+                  <a
+                    href={(section as any).colabUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '10px',
+                      marginTop: '15px',
+                      padding: '15px 25px',
+                      background: 'linear-gradient(135deg, #f97316, #ea580c)',
+                      color: 'white',
+                      fontWeight: '700',
+                      fontSize: '1rem',
+                      borderRadius: '12px',
+                      textDecoration: 'none',
+                      transition: 'all 0.3s',
+                      border: '2px solid transparent'
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(249, 115, 22, 0.4)';
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
+                    <Code size={20} />
+                    📓 Colab 노트북 열기
+                  </a>
+                )}
               </div>
             </div>
           ))}
