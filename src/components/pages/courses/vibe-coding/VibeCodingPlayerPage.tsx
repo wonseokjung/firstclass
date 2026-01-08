@@ -332,6 +332,75 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
         </div>
       </div>
 
+      {/* 🔴 1월 라이브 안내 */}
+      <div style={{
+        maxWidth: '900px',
+        margin: '0 auto',
+        padding: '0 20px'
+      }}>
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1))',
+          border: '2px solid rgba(239, 68, 68, 0.4)',
+          borderRadius: '16px',
+          padding: '25px',
+          marginBottom: '30px'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '15px' }}>
+            <span style={{ fontSize: '2rem' }}>🔴</span>
+            <h4 style={{
+              color: '#ef4444',
+              fontSize: '1.3rem',
+              fontWeight: '800',
+              margin: 0
+            }}>
+              1월은 라이브로 만나요!
+            </h4>
+          </div>
+
+          <p style={{
+            color: 'rgba(255,255,255,0.9)',
+            fontSize: '1rem',
+            lineHeight: '1.8',
+            margin: '0 0 20px 0'
+          }}>
+            🗓 <strong style={{ color: '#22c55e' }}>매주 목요일 저녁 8시</strong>, 제이 멘토와 함께하는 실시간 라이브!<br />
+            👥 커뮤니티 멤버들과 <strong style={{ color: COLORS.cyan }}>함께 프로젝트를 진행</strong>하며 배워요.<br />
+            💡 라이브에서 질문하고, 피드백 받고, 함께 성장하세요!
+          </p>
+
+          <button
+            onClick={() => navigate('/live/step3')}
+            style={{
+              width: '100%',
+              padding: '16px 24px',
+              background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+              border: 'none',
+              borderRadius: '12px',
+              color: 'white',
+              fontSize: '1.1rem',
+              fontWeight: '700',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '10px',
+              boxShadow: '0 4px 20px rgba(239, 68, 68, 0.4)',
+              transition: 'all 0.3s'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-3px)';
+              e.currentTarget.style.boxShadow = '0 8px 30px rgba(239, 68, 68, 0.5)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 20px rgba(239, 68, 68, 0.4)';
+            }}
+          >
+            🔴 라이브 페이지로 이동
+          </button>
+        </div>
+      </div>
+
       {/* 강의 목록 */}
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: 'clamp(30px, 5vw, 50px) 20px' }}>
         {courseData.weeks.map((week, weekIdx) => (
