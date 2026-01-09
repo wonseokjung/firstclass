@@ -235,35 +235,25 @@ const MonthlyProjectSection: React.FC = () => {
                                 {item.title}
                             </h4>
 
-                            {/* 주차별 내용 */}
+                            {/* 주차별 내용 - 간소화 */}
                             <div style={{
-                                display: 'grid',
-                                gridTemplateColumns: 'repeat(2, 1fr)',
+                                display: 'flex',
+                                flexWrap: 'wrap',
                                 gap: '6px'
                             }}>
                                 {item.weeks.map((week: string, wIdx: number) => (
-                                    <div
+                                    <span
                                         key={wIdx}
                                         style={{
                                             background: `${item.color}15`,
                                             color: 'rgba(255,255,255,0.85)',
-                                            fontSize: '0.75rem',
-                                            padding: '6px 10px',
-                                            borderRadius: '6px',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '5px'
+                                            fontSize: '0.7rem',
+                                            padding: '4px 8px',
+                                            borderRadius: '5px'
                                         }}
                                     >
-                                        <span style={{
-                                            color: item.color,
-                                            fontWeight: '700',
-                                            fontSize: '0.7rem'
-                                        }}>
-                                            {wIdx + 1}주
-                                        </span>
-                                        {week}
-                                    </div>
+                                        <span style={{ color: item.color, fontWeight: '700' }}>{wIdx + 1}주</span> {week}
+                                    </span>
                                 ))}
                             </div>
                         </div>

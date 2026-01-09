@@ -1075,7 +1075,7 @@ AI City Builders 사이트 정보:
                 backgroundClip: 'text',
                 fontWeight: '800'
               }}>
-                🎓 AI 기초 트레이닝 센터
+                AI 기초 체력 만들기 트랙
               </span>
               <div style={{ fontSize: '0.75em', marginTop: '6px', fontWeight: '500', color: 'rgba(255,255,255,0.6)' }}>
                 무료로 AI 기초 체력을 쌓아보세요
@@ -1114,7 +1114,7 @@ AI City Builders 사이트 정보:
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
                 fontWeight: '800'
-              }}>💰 AI 수익화 프롬프트 창고</span>
+              }}>AI 수익화 프롬프트 훈련 트랙</span>
               <div style={{ fontSize: '0.75em', marginTop: '6px', fontWeight: '500', color: 'rgba(255,255,255,0.6)' }}>
                 바로 복사해서 사용하는 수익화 프롬프트
               </div>
