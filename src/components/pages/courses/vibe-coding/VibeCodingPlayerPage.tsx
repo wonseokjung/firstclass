@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PlayCircle, CheckCircle, Code, Zap, Terminal, ArrowLeft } from 'lucide-react';
+import { Code, Zap, Terminal, ArrowLeft } from 'lucide-react';
 import NavigationBar from '../../../common/NavigationBar';
 import AzureTableService from '../../../../services/azureTableService';
 
@@ -167,12 +167,6 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
 
   const totalDays = 10;
   const progressPercentage = (completedDays.size / totalDays) * 100;
-
-  const handleDayClick = (day: number) => {
-    if (day >= 1 && day <= 10) {
-      navigate(`/vibe-coding/day${day}`);
-    }
-  };
 
   if (!isPaidUser) {
     return (
@@ -465,8 +459,6 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {week.days.map((day) => {
-                const isCompleted = completedDays.has(day.day);
-
                 return (
                   <div
                     key={day.day}

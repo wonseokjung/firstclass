@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { CheckCircle, Clock, Gift, Users, ChevronRight, X, Upload, Link as LinkIcon, MessageSquare, Trophy, Flame } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { CheckCircle, Clock, ChevronRight, X, Link as LinkIcon, MessageSquare, Flame } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
-import AzureTableService from '../../../services/azureTableService';
 
 const COLORS = {
     navy: '#1e3a5f',
@@ -43,10 +41,9 @@ interface Homework {
 }
 
 const HomeworkPage: React.FC = () => {
-    const navigate = useNavigate();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [, setIsLoggedIn] = useState(false);
     const [userName, setUserName] = useState('');
-    const [userEmail, setUserEmail] = useState('');
+    const [, setUserEmail] = useState('');
     const [totalBricks, setTotalBricks] = useState(0);
     const [homeworks, setHomeworks] = useState<Homework[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -61,7 +58,7 @@ const HomeworkPage: React.FC = () => {
     const [selectedStep, setSelectedStep] = useState('all');
 
     // 샘플 데이터 (나중에 Azure에서 가져오기)
-    const sampleHomeworks: Homework[] = [
+    const sampleHomeworks: Homework[] = useMemo(() => [
         {
             id: 'hw-step1-w3',
             stepId: 'step1',
@@ -128,7 +125,7 @@ const HomeworkPage: React.FC = () => {
                 { name: '조현아', completedAt: '2026-01-09T10:30:00' },
             ]
         }
-    ];
+    ], []);
 
     useEffect(() => {
         const loadUserData = async () => {
@@ -154,7 +151,7 @@ const HomeworkPage: React.FC = () => {
         };
 
         loadUserData();
-    }, []);
+    }, [sampleHomeworks]);
 
     const getTimeRemaining = (deadline: string) => {
         const now = new Date();
