@@ -368,6 +368,53 @@ const VibeCodingPlayerPage: React.FC<VibeCodingPlayerPageProps> = ({ onBack }) =
             💡 라이브에서 질문하고, 피드백 받고, 함께 성장하세요!
           </p>
 
+          {/* 4주 프로젝트 진행표 */}
+          <div style={{
+            background: 'rgba(15, 23, 42, 0.8)',
+            borderRadius: '16px',
+            padding: '20px',
+            marginBottom: '20px',
+            border: '1px solid rgba(139, 92, 246, 0.3)'
+          }}>
+            <h5 style={{
+              color: COLORS.cyan,
+              fontSize: '1.1rem',
+              fontWeight: '700',
+              marginBottom: '15px',
+              textAlign: 'center'
+            }}>
+              🚀 나의 첫 서비스 런칭하기
+            </h5>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: '10px'
+            }}>
+              {[
+                { week: 1, title: '설계', icon: '📐' },
+                { week: 2, title: '개발', icon: '💻' },
+                { week: 3, title: '테스트', icon: '🧪' },
+                { week: 4, title: '배포', icon: '🚀' }
+              ].map((item) => (
+                <div key={item.week} style={{
+                  background: 'rgba(30, 41, 59, 0.8)',
+                  padding: '12px 16px',
+                  borderRadius: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px'
+                }}>
+                  <span style={{ color: COLORS.cyan, fontWeight: '700', fontSize: '0.9rem' }}>
+                    {item.week}주
+                  </span>
+                  <span style={{ color: 'white', fontWeight: '600' }}>
+                    {item.icon} {item.title}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <button
             onClick={() => navigate('/live/step3')}
             style={{
