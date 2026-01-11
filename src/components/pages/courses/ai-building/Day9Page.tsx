@@ -781,7 +781,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
                     }}>
                       <PlayCircle size={48} style={{ opacity: 0.3, marginBottom: '10px' }} />
                       <span style={{ fontSize: '0.95rem', fontWeight: '600' }}>강의 영상 준비 중입니다</span>
-                      <span style={{ fontSize: '0.8rem', marginTop: '5px' }}>1월 11일 오후 3시까지 순차적으로 업로드 됩니다. 🎬</span>
+                      <span style={{ fontSize: '0.8rem', marginTop: '5px' }}>1월 11일 오후 7시에 업로드 됩니다. 🎬</span>
                     </div>
                   )}
                 </div>
