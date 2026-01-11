@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, PlayCircle, Target, MessageCircle, Heart, Send, User, Brain, Sparkles, Image, Video, Mic, Scissors, Upload, BarChart3, Copy } from 'lucide-react';
+import { ArrowLeft, CheckCircle, PlayCircle, Target, MessageCircle, Heart, Send, User, Brain, Sparkles, Image, Video, Mic, Scissors, Upload, BarChart3, Copy, BookOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AzureTableService from '../../../../services/azureTableService';
 
@@ -204,6 +204,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
   };
 
 
+  // 영상 섹션 데이터
   const videoSections = [
     {
       id: 'hamzzi-analysis',
@@ -234,22 +235,14 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
       vimeoUrl: 'https://player.vimeo.com/video/1153276085?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
     },
     {
-      id: 'capcut-audio',
-      icon: <Mic size={20} color="#22c55e" />,
-      title: '🎙️ 캡컷(CapCut): AI 오디오 만들기',
-      badge: '오디오',
-      badgeColor: '#22c55e',
-      description: '캡컷의 AI 기능을 활용하여 영상에 어울리는 오디오와 내레이션 생성하기',
-      vimeoUrl: '', // 영상 준비중
-    },
-    {
-      id: 'capcut-editing',
+      id: 'capcut-master',
       icon: <Scissors size={20} color="#ef4444" />,
-      title: '🎬 캡컷(CapCut): 컷 편집 & 페이싱',
-      badge: '편집',
+      title: '🎬 캡컷(CapCut): 오디오 & 컷 페이싱 이론 적용',
+      badge: '마스터 클래스',
       badgeColor: '#ef4444',
-      description: '생성한 장면별 영상과 오디오를 합치고, 지루할 틈 없는 컷 페이싱(Pacing) 적용하기',
-      vimeoUrl: '', // 영상 준비중
+      description: 'AI 오디오를 생성하고, 헐리우드 영화의 편집 호흡(Cut Pacing) 이론을 적용하여 시청자의 집중력을 유지하는 영상을 만듭니다.',
+      vimeoUrl: '', // 본영상 준비중
+      previewUrl: 'https://player.vimeo.com/video/1153286261?badge=0&autopause=0&player_id=0&app_id=58479',
     },
     {
       id: 'upload-ai-pattern',
@@ -348,6 +341,45 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
 
       {/* 콘텐츠 */}
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '40px 20px' }}>
+
+        {/* 📚 오늘의 교재 버튼 */}
+        <a
+          href="https://jaijung.notion.site/Day9-2e5b0dd7632380c38b52f5983e1d46af?source=copy_link"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px',
+            background: 'white',
+            color: '#1e40af',
+            padding: '16px',
+            borderRadius: '16px',
+            textDecoration: 'none',
+            fontWeight: '700',
+            fontSize: '1.05rem',
+            border: '2px solid #dbeafe',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+            marginBottom: '30px',
+            transition: 'all 0.2s ease',
+            cursor: 'pointer'
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(37, 99, 235, 0.1), 0 4px 6px -2px rgba(37, 99, 235, 0.05)';
+            e.currentTarget.style.borderColor = '#2563eb';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
+            e.currentTarget.style.borderColor = '#dbeafe';
+          }}
+        >
+          <BookOpen size={24} color="#2563eb" />
+          <span>Day 9 강의 교재 보러가기 (Notion)</span>
+          <ArrowLeft size={18} style={{ transform: 'rotate(180deg)', marginLeft: 'auto' }} />
+        </a>
 
         {/* 🎯 Day 9 미션 */}
         <div style={{
@@ -647,6 +679,41 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
                 <p style={{ color: '#4b5563', fontSize: '0.95rem', marginBottom: '15px', lineHeight: '1.6' }}>
                   {section.description}
                 </p>
+
+                {/* 미리보기 영상 영역 */}
+                {section.previewUrl && (
+                  <div style={{ marginBottom: '25px' }}>
+                    <div style={{
+                      background: '#eff6ff',
+                      padding: '15px',
+                      borderRadius: '12px',
+                      border: '1px solid #bfdbfe',
+                      marginBottom: '15px'
+                    }}>
+                      <h4 style={{ margin: '0 0 10px 0', fontSize: '0.95rem', color: '#1e40af', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <PlayCircle size={18} /> 이 영상을 함께 만들어볼 거예요!
+                      </h4>
+                      <div style={{
+                        position: 'relative',
+                        paddingTop: '56.25%',
+                        borderRadius: '8px',
+                        overflow: 'hidden',
+                        background: '#000'
+                      }}>
+                        <iframe
+                          src={section.previewUrl}
+                          frameBorder="0"
+                          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                          referrerPolicy="strict-origin-when-cross-origin"
+                          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                          title="Preview Video"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+
 
 
 
