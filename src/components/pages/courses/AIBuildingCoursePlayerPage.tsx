@@ -177,15 +177,15 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
           },
           {
             day: 8,
-            title: '[시공] AI 4단계 건축 워크플로우',
-            subtitle: '🎙️ 오디오 생성 영상 4개로 확장! | 바이럴 숏폼 & 고품질 롱폼 제작',
+            title: '[심화] 고품질 영상 & 오디오 워크플로우',
+            subtitle: '나노바나나 프로 & Sora | AI 오디오 생성 및 영상 확장',
             hasQuiz: true,
             releaseDate: '2026-01-04'  // 1월 4일 업로드
           },
           {
             day: 9,
-            title: '[준공식] 콘텐츠 업로드 & 데이터 분석',
-            subtitle: '핵심 지표 읽는 법 | AI 감성 분석으로 건물 리모델링',
+            title: '[실전] 편집 & 수익화: 캡컷(CapCut) & PPL 광고',
+            subtitle: '헐리우드 컷 페이싱 | 캐릭터와 제품 합성으로 광고 만들기',
             hasQuiz: false,
             releaseDate: '2026-01-07'  // 1월 7일 업로드
           },
