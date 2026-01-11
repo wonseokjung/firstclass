@@ -349,6 +349,26 @@ const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onBack }) => {
                 console.log('ℹ️ 추천인이 없어 리워드 처리를 건너뜀');
               }
 
+              // 🧱 브릭 사용 차감 처리 (카드 결제 + 브릭 부분 사용한 경우)
+              const usedBricksParam = urlParams.get('useBricks');
+              if (usedBricksParam) {
+                const usedBricks = parseInt(usedBricksParam);
+                if (usedBricks > 0) {
+                  try {
+                    const spendResult = await AzureTableService.spendBricks(
+                      user.email,
+                      usedBricks,
+                      `강의 결제 할인: ${courseData.title}`
+                    );
+                    if (spendResult) {
+                      console.log(`🧱✅ 브릭 차감 완료: ${usedBricks} Bricks`);
+                    }
+                  } catch (brickSpendError) {
+                    console.error('🧱❌ 브릭 차감 실패:', brickSpendError);
+                  }
+                }
+              }
+
               // 🧱 파트너 브릭 적립 처리 (추천 링크로 구매한 경우)
               try {
                 const referralInfoStr = sessionStorage.getItem('referralInfo');

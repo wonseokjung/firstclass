@@ -98,7 +98,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
       setIsLoading(true);
       try {
         // 1. 브릭 차감
-        const success = await AzureTableService.useBricks(userInfo.email, useBricksAmount, `강의 결제: ${courseInfo.title}`);
+        const success = await AzureTableService.spendBricks(userInfo.email, useBricksAmount, `강의 결제: ${courseInfo.title}`);
         if (!success) throw new Error('브릭 차감 실패');
 
         // 2. 수강 등록

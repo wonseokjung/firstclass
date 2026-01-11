@@ -3906,7 +3906,7 @@ export class AzureTableService {
   /**
    * 브릭 사용하여 차감
    */
-  static async useBricks(email: string, amount: number, reason: string): Promise<boolean> {
+  static async spendBricks(email: string, amount: number, reason: string): Promise<boolean> {
     const user = await this.getUserByEmail(email);
     if (!user) return false;
 
