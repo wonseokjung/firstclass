@@ -222,7 +222,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
       badge: '이미지 생성',
       badgeColor: '#8b5cf6',
       description: '나노바나나로 캐릭터 생성 → 장면 이미지 편집(한글 배경) → Veo 3.1로 영상화 → 유튜브 분석 후 시나리오 생성',
-      vimeoUrl: '', // 영상 준비중
+      vimeoUrl: 'https://player.vimeo.com/video/1153265464?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
     },
     {
       id: 'nano-banana-pro-sora',
