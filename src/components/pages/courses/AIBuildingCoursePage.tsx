@@ -2434,7 +2434,7 @@ const AIBuildingCoursePage: React.FC<AIBuildingCoursePageProps> = ({ onBack }) =
                 { day: 6, title: 'AI 멘토 제이의 이미지 생성의 정석', subtitle: '프롬프트 엔지니어링 & Google Colab 실습 | 코드 보고 쫄지 않기' },
                 { day: 7, title: 'AI 멘토 제이의 영상 생성의 정석', subtitle: 'Google Veo로 텍스트만으로 영상 만들기 | 쉬운 방법 & 어려운 방법' },
                 { day: 8, title: '[심화] 고품질 영상 & 오디오 워크플로우', subtitle: '나노바나나 프로 & Sora | AI 오디오 생성 및 영상 확장' },
-                { day: 9, title: '[실전] 편집 & 수익화: 캡컷(CapCut) & PPL 광고', subtitle: '헐리우드 컷 페이싱 | 캐릭터와 제품 합성으로 광고 만들기' },
+                { day: 9, title: '[실전] 편집 & 수익화: 캡컷(CapCut) & PPL 광고', subtitle: 'Sora+Veo+CapCut 풀 프로세스 | 제품 광고 제작 & 유튜브 업로드 실전' },
                 { day: 10, title: '[완공] AI 수익화 파이프라인 완성 & 축하', subtitle: '롱폼→숏츠 호환 | 판매 웹사이트 제작 | 조회수 분석 | 비즈니스 연결의 첫걸음' }
               ].map((item) => (
                 <div

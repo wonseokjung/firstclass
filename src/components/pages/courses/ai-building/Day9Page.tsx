@@ -250,7 +250,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
       title: '📦 캐릭터로 제품 광고 만들기: 강아지 껌 PPL',
       badge: '수익화 실전',
       badgeColor: '#059669',
-      description: '내 캐릭터와 실제 판매 제품(강아지 껌)을 합성하여 자연스러운 광고 영상을 만드는 워크플로우입니다.',
+      description: '캐릭터와 제품(강아지 껌)을 합성하여 광고제작 후 유튜브 업로드까지! (Tools: Nano Banana Pro + AI Studio + Veo 3.1 + Sora + CapCut)',
       vimeoUrl: 'https://player.vimeo.com/video/1153310148?badge=0&autopause=0&player_id=0&app_id=58479',
       // imageUrl: '/images/course/day9/product_ppl_workflow.png', // 영상이 있으므로 주석 처리
     }
