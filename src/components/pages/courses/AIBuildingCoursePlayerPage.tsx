@@ -187,14 +187,14 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
             title: '[준공식] 콘텐츠 업로드 & 데이터 분석',
             subtitle: '핵심 지표 읽는 법 | AI 감성 분석으로 건물 리모델링',
             hasQuiz: false,
-            releaseDate: '2026-01-07'  // 1월 7일 업로드 (Day 8 확장으로 일정 조정)
+            releaseDate: '2026-01-07'  // 1월 7일 업로드
           },
           {
             day: 10,
-            title: '[첫 월세] 수익 시스템 구축 완성',
-            subtitle: '애드센스 + 제휴마케팅 + 멤버십 | 허브-앤-스포크 자동화 시스템',
+            title: '[완공] AI 수익화 파이프라인 완성 & 축하',
+            subtitle: '롱폼→숏츠 호환 | 판매 웹사이트 제작 | 조회수 분석 | 비즈니스 연결의 첫걸음',
             hasQuiz: true,
-            releaseDate: '2026-01-08'  // 1월 8일 업로드 (Day 8 확장으로 일정 조정)
+            releaseDate: '2026-01-08'  // 1월 8일 업로드
           }
         ]
       }
