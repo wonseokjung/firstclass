@@ -240,7 +240,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
       title: '🎬 캡컷(CapCut): 오디오 & 컷 페이싱 이론 적용',
       badge: '마스터 클래스',
       badgeColor: '#ef4444',
-      description: 'AI 오디오를 생성하고, 헐리우드 영화의 편집 호흡(Cut Pacing) 이론을 적용하여 시청자의 집중력을 유지하는 영상을 만듭니다.',
+      description: 'AI 오디오 생성 및 헐리우드 컷 페이싱 이론 + 핑크노이즈 연구를 적용하여 시청 지속 시간을 극대화하는 비밀을 공개합니다.',
       vimeoUrl: '', // 본영상 준비중
       previewUrl: 'https://player.vimeo.com/video/1153286261?badge=0&autopause=0&player_id=0&app_id=58479',
     },

@@ -185,7 +185,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
           {
             day: 9,
             title: '[실전] 편집 & 수익화: 캡컷(CapCut) & PPL 광고',
-            subtitle: 'Sora+Veo+CapCut 풀 프로세스 | 제품 광고 제작 & 유튜브 업로드 실전',
+            subtitle: 'Sora+Veo+CapCut 풀 프로세스 | 핑크노이즈 연구 적용 & 유튜브 실전 업로드',
             hasQuiz: false,
             releaseDate: '2026-01-07'  // 1월 7일 업로드
           },
