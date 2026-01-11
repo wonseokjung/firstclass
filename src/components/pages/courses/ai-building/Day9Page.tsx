@@ -231,7 +231,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
       badge: '영상 생성',
       badgeColor: '#ec4899',
       description: '나노바나나 프로로 캐릭터+장면 생성 → ChatGPT Sora를 사용하여 고품질 영상 생성하기',
-      vimeoUrl: '', // 영상 준비중
+      vimeoUrl: 'https://player.vimeo.com/video/1153276085?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
     },
     {
       id: 'capcut-audio',
