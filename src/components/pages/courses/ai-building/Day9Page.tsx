@@ -243,24 +243,6 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
       description: 'AI 오디오를 생성하고, 헐리우드 영화의 편집 호흡(Cut Pacing) 이론을 적용하여 시청자의 집중력을 유지하는 영상을 만듭니다.',
       vimeoUrl: '', // 본영상 준비중
       previewUrl: 'https://player.vimeo.com/video/1153286261?badge=0&autopause=0&player_id=0&app_id=58479',
-    },
-    {
-      id: 'upload-ai-pattern',
-      icon: <Upload size={20} color="#06b6d4" />,
-      title: '🚀 유튜브 업로드 & AI 패턴 분석',
-      badge: '업로드',
-      badgeColor: '#06b6d4',
-      description: '유튜브에 영상을 업로드하고, AI Studio를 사용하여 콘텐츠를 분석하고 패턴 파악하기',
-      vimeoUrl: '', // 영상 준비중
-    },
-    {
-      id: 'data-analysis',
-      icon: <BarChart3 size={20} color="#f59e0b" />,
-      title: '📊 데이터 분석: 업로드 후 성과 측정',
-      badge: '성과 분석',
-      badgeColor: '#f59e0b',
-      description: '업로드 후 실제 데이터 분석을 통해 조회수, 시청 지속 시간 등 성과 측정하기',
-      vimeoUrl: '', // 영상 준비중
     }
   ];
 
@@ -810,42 +792,7 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
 
 
 
-        {/* 유용한 링크 */}
-        <div style={{
-          background: 'white',
-          borderRadius: '16px',
-          padding: '25px',
-          marginBottom: '25px',
-          border: '1px solid #e5e7eb',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
-        }}>
-          <h3 style={{ color: '#1f2937', fontSize: '1.1rem', marginBottom: '15px' }}>🔗 유용한 링크</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px' }}>
-            {[
-              { href: 'https://studio.youtube.com', icon: '🎬', name: 'YouTube Studio', desc: '콘텐츠 관리', color: '#dc2626' },
-              { href: 'https://www.youtube.com/analytics', icon: '📊', name: 'YouTube Analytics', desc: '데이터 분석', color: '#16a34a' },
-              { href: 'https://chatgpt.com', icon: '🤖', name: 'ChatGPT', desc: 'AI 감성 분석', color: '#7c3aed' },
-              { href: 'https://aistudio.google.com', icon: '✨', name: 'Google AI Studio', desc: 'Gemini 활용', color: '#d97706' }
-            ].map((link, idx) => (
-              <a key={idx} href={link.href} target="_blank" rel="noopener noreferrer" style={{
-                background: '#f9fafb',
-                border: '1px solid #e5e7eb',
-                borderRadius: '10px',
-                padding: '12px',
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px'
-              }}>
-                <span style={{ fontSize: '1.3rem' }}>{link.icon}</span>
-                <div>
-                  <div style={{ color: link.color, fontWeight: '600', fontSize: '0.9rem' }}>{link.name}</div>
-                  <div style={{ color: '#6b7280', fontSize: '0.75rem' }}>{link.desc}</div>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
+
 
         {/* 토론 섹션 */}
         <div style={{
