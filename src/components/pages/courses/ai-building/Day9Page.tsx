@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, PlayCircle, Target, MessageCircle, Heart, Send, User, Brain, Sparkles, Image, Video, Scissors, Copy, BookOpen } from 'lucide-react';
+import { ArrowLeft, CheckCircle, PlayCircle, Target, MessageCircle, Heart, Send, User, Brain, Sparkles, Image, Video, Scissors, Copy, BookOpen, ShoppingBag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AzureTableService from '../../../../services/azureTableService';
 
@@ -243,6 +243,16 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
       description: 'AI 오디오를 생성하고, 헐리우드 영화의 편집 호흡(Cut Pacing) 이론을 적용하여 시청자의 집중력을 유지하는 영상을 만듭니다.',
       vimeoUrl: '', // 본영상 준비중
       previewUrl: 'https://player.vimeo.com/video/1153286261?badge=0&autopause=0&player_id=0&app_id=58479',
+    },
+    {
+      id: 'product-ppl-workflow',
+      icon: <ShoppingBag size={20} color="#059669" />,
+      title: '📦 캐릭터로 제품 광고 만들기: 강아지 껌 PPL',
+      badge: '수익화 실전',
+      badgeColor: '#059669',
+      description: '내 캐릭터와 실제 판매 제품(강아지 껌)을 합성하여 자연스러운 광고 영상을 만드는 워크플로우입니다.',
+      vimeoUrl: '',
+      imageUrl: '/images/course/day9/product_ppl_workflow.png', // 이미지 파일 필요
     }
   ];
 
@@ -759,6 +769,21 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
                   {section.vimeoUrl ? (
                     <iframe
                       src={section.vimeoUrl}
+                      frameBorder="0"
+                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                      title={section.title}
+                    />
+                  ) : (section as any).imageUrl ? (
+                    <img
+                      src={(section as any).imageUrl}
+                      alt={section.title}
+                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', background: '#f9fafb' }}
+                    />
+                  ) : (section as any).previewUrl ? (
+                    <iframe
+                      src={(section as any).previewUrl}
                       frameBorder="0"
                       allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                       referrerPolicy="strict-origin-when-cross-origin"
