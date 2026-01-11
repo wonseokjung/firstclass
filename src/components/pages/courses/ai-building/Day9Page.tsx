@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, PlayCircle, Target, MessageCircle, Heart, Send, User, Brain, Sparkles, Image, Video, Mic, Scissors, Upload, BarChart3 } from 'lucide-react';
+import { ArrowLeft, CheckCircle, PlayCircle, Target, MessageCircle, Heart, Send, User, Brain, Sparkles, Image, Video, Mic, Scissors, Upload, BarChart3, Copy, Download } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AzureTableService from '../../../../services/azureTableService';
 
@@ -204,7 +204,6 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
   };
 
 
-  // 영상 섹션 데이터
   const videoSections = [
     {
       id: 'hamzzi-analysis',
@@ -223,6 +222,8 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
       badgeColor: '#8b5cf6',
       description: '나노바나나로 캐릭터 생성 → 장면 이미지 편집(한글 배경) → Veo 3.1로 영상화 → 유튜브 분석 후 시나리오 생성',
       vimeoUrl: 'https://player.vimeo.com/video/1153265464?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
+      image: '/images/day9-dog-sample.jpg', // 실습용 이미지
+      prompt: 'A cute, highly stylized 3D caricature of inputimage, featuring a slightly oversized head, big glossy eyes, and soft rounded facial features. Rendered in a clean Pixar-inspired style with smooth textures and gentle ambient lighting. Subtle shadows and a simple pastel background keep the focus entirely on the character’s charm.',
     },
     {
       id: 'nano-banana-pro-sora',
@@ -647,6 +648,72 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
                 <p style={{ color: '#4b5563', fontSize: '0.95rem', marginBottom: '15px', lineHeight: '1.6' }}>
                   {section.description}
                 </p>
+
+                {/* 실습용 이미지 영역 */}
+                {section.image && (
+                  <div style={{ marginBottom: '20px', background: '#f8fafc', padding: '15px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                      <span style={{ fontSize: '0.9rem', fontWeight: '700', color: '#475569', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Image size={16} color="#0ea5e9" /> 실습용 이미지 (우클릭하여 '이미지 저장'을 눌러주세요)
+                      </span>
+                    </div>
+                    <div style={{
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      border: '1px solid #e2e8f0',
+                      maxWidth: '300px' // 너무 크지 않게 제한
+                    }}>
+                      <img src={section.image} alt="실습용 이미지" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                    </div>
+                  </div>
+                )}
+
+                {/* 프롬프트 영역 */}
+                {section.prompt && (
+                  <div style={{ marginBottom: '20px', background: '#f8fafc', padding: '15px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                      <span style={{ fontSize: '0.9rem', fontWeight: '700', color: '#475569', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Sparkles size={16} color="#8b5cf6" /> 이 강의에 사용된 프롬프트
+                      </span>
+                      <button
+                        onClick={() => {
+                          const textToCopy = section.prompt || '';
+                          navigator.clipboard.writeText(textToCopy);
+                          alert('프롬프트가 복사되었습니다! ✨');
+                        }}
+                        style={{
+                          background: 'white',
+                          border: '1px solid #cbd5e1',
+                          borderRadius: '6px',
+                          padding: '4px 10px',
+                          fontSize: '0.8rem',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          color: '#475569',
+                          fontWeight: '600',
+                          transition: 'all 0.2s'
+                        }}
+                      >
+                        <Copy size={14} /> 복사하기
+                      </button>
+                    </div>
+                    <div style={{
+                      fontSize: '0.9rem',
+                      color: '#334155',
+                      lineHeight: '1.6',
+                      background: 'white',
+                      padding: '12px',
+                      borderRadius: '8px',
+                      border: '1px dashed #cbd5e1',
+                      wordBreak: 'break-word',
+                      fontFamily: 'monospace'
+                    }}>
+                      {section.prompt}
+                    </div>
+                  </div>
+                )}
                 <div style={{
                   position: 'relative',
                   paddingTop: '56.25%',
