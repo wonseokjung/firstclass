@@ -514,7 +514,7 @@ const AIBuildingCoursePlayerPage: React.FC<AIBuildingCoursePlayerPageProps> = ({
                 {week.days.map((lesson) => {
                   const isCompleted = completedDays.has(lesson.day);
                   // 🔓 Day 1~8 열림 / Day 9~10은 순차 업로드 예정
-                  const isAvailable = lesson.day <= 8;
+                  const isAvailable = lesson.day <= 9;
 
                   return (
                     <div
