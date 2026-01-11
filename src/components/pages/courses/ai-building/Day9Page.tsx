@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, PlayCircle, Target, MessageCircle, Heart, Send, User, BarChart3, Upload, TrendingUp, LineChart, Brain, Youtube, Sparkles } from 'lucide-react';
+import { ArrowLeft, CheckCircle, PlayCircle, Target, MessageCircle, Heart, Send, User, Brain, Sparkles, Image, Video, Mic, Scissors, Upload, BarChart3 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AzureTableService from '../../../../services/azureTableService';
 
@@ -216,58 +216,58 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
       vimeoUrl: 'https://player.vimeo.com/video/1153255731?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
     },
     {
-      id: 'intro-upload',
-      icon: <Upload size={20} color="#0891b2" />,
-      title: '📤 인트로: 콘텐츠 업로드 가이드',
+      id: 'nano-banana-basic',
+      icon: <Image size={20} color="#8b5cf6" />,
+      title: '🎨 나노바나나: 캐릭터 생성부터 시나리오까지',
+      badge: '이미지 생성',
+      badgeColor: '#8b5cf6',
+      description: '나노바나나로 캐릭터 생성 → 장면 이미지 편집(한글 배경) → Veo 3.1로 영상화 → 유튜브 분석 후 시나리오 생성',
+      vimeoUrl: '', // 영상 준비중
+    },
+    {
+      id: 'nano-banana-pro-sora',
+      icon: <Video size={20} color="#ec4899" />,
+      title: '✨ 나노바나나 프로 & Sora: 고품질 장면 생성',
+      badge: '영상 생성',
+      badgeColor: '#ec4899',
+      description: '나노바나나 프로로 캐릭터+장면 생성 → ChatGPT Sora를 사용하여 고품질 영상 생성하기',
+      vimeoUrl: '', // 영상 준비중
+    },
+    {
+      id: 'capcut-audio',
+      icon: <Mic size={20} color="#22c55e" />,
+      title: '🎙️ 캡컷(CapCut): AI 오디오 만들기',
+      badge: '오디오',
+      badgeColor: '#22c55e',
+      description: '캡컷의 AI 기능을 활용하여 영상에 어울리는 오디오와 내레이션 생성하기',
+      vimeoUrl: '', // 영상 준비중
+    },
+    {
+      id: 'capcut-editing',
+      icon: <Scissors size={20} color="#ef4444" />,
+      title: '🎬 캡컷(CapCut): 컷 편집 & 페이싱',
+      badge: '편집',
+      badgeColor: '#ef4444',
+      description: '생성한 장면별 영상과 오디오를 합치고, 지루할 틈 없는 컷 페이싱(Pacing) 적용하기',
+      vimeoUrl: '', // 영상 준비중
+    },
+    {
+      id: 'upload-ai-pattern',
+      icon: <Upload size={20} color="#06b6d4" />,
+      title: '🚀 유튜브 업로드 & AI 패턴 분석',
       badge: '업로드',
-      badgeColor: '#0891b2',
-      description: '유튜브에 첫 영상 업로드하기 - 제목, 설명, 태그, 썸네일 설정 완벽 가이드',
-      vimeoUrl: 'https://player.vimeo.com/video/1152692067?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
+      badgeColor: '#06b6d4',
+      description: '유튜브에 영상을 업로드하고, AI Studio를 사용하여 콘텐츠를 분석하고 패턴 파악하기',
+      vimeoUrl: '', // 영상 준비중
     },
     {
-      id: 'youtube-studio',
-      icon: <Youtube size={20} color="#dc2626" />,
-      title: '🎬 YouTube Studio 핵심 기능',
-      badge: 'Studio',
-      badgeColor: '#dc2626',
-      description: 'YouTube Studio의 핵심 기능 - 대시보드, 콘텐츠 관리, 재생목록, 자막 설정',
-      vimeoUrl: 'https://player.vimeo.com/video/1152698458?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
-    },
-    {
-      id: 'analytics-basics',
-      icon: <BarChart3 size={20} color="#16a34a" />,
-      title: '📊 YouTube Analytics 기초',
-      badge: '분석',
-      badgeColor: '#16a34a',
-      description: '핵심 지표 읽는 법 - 조회수, 시청 지속 시간, CTR, 구독자 분석',
-      vimeoUrl: 'https://player.vimeo.com/video/1152720051?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
-    },
-    {
-      id: 'retention-deep',
-      icon: <LineChart size={20} color="#7c3aed" />,
-      title: '📉 시청자 유지율 심층 분석',
-      badge: '유지율',
-      badgeColor: '#7c3aed',
-      description: '이탈 구간 파악하고 콘텐츠 개선하기 - 그래프 해석 방법',
-      vimeoUrl: 'https://player.vimeo.com/video/1152720195?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
-    },
-    {
-      id: 'ai-sentiment',
-      icon: <Brain size={20} color="#d97706" />,
-      title: '🤖 AI로 댓글 감성 분석',
-      badge: 'AI 분석',
-      badgeColor: '#d97706',
-      description: 'ChatGPT/Gemini로 시청자 댓글을 분석하여 콘텐츠 인사이트 도출하기',
-      vimeoUrl: 'https://player.vimeo.com/video/1152720306?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
-    },
-    {
-      id: 'improvement',
-      icon: <TrendingUp size={20} color="#db2777" />,
-      title: '🚀 데이터 기반 콘텐츠 개선',
-      badge: '개선 전략',
-      badgeColor: '#db2777',
-      description: '분석 결과를 바탕으로 다음 영상 기획 및 채널 성장 전략 수립',
-      vimeoUrl: 'https://player.vimeo.com/video/1152720419?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
+      id: 'data-analysis',
+      icon: <BarChart3 size={20} color="#f59e0b" />,
+      title: '📊 데이터 분석: 업로드 후 성과 측정',
+      badge: '성과 분석',
+      badgeColor: '#f59e0b',
+      description: '업로드 후 실제 데이터 분석을 통해 조회수, 시청 지속 시간 등 성과 측정하기',
+      vimeoUrl: '', // 영상 준비중
     }
   ];
 
@@ -652,94 +652,47 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
                   paddingTop: '56.25%',
                   borderRadius: '10px',
                   overflow: 'hidden',
-                  background: '#f3f4f6'
+                  background: '#f3f4f6',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: '1px solid #e5e7eb'
                 }}>
-                  <iframe
-                    src={section.vimeoUrl}
-                    frameBorder="0"
-                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                    title={section.title}
-                  />
+                  {section.vimeoUrl ? (
+                    <iframe
+                      src={section.vimeoUrl}
+                      frameBorder="0"
+                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                      title={section.title}
+                    />
+                  ) : (
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#9ca3af',
+                      background: '#f9fafb'
+                    }}>
+                      <PlayCircle size={48} style={{ opacity: 0.3, marginBottom: '10px' }} />
+                      <span style={{ fontSize: '0.95rem', fontWeight: '600' }}>강의 영상 준비 중입니다</span>
+                      <span style={{ fontSize: '0.8rem', marginTop: '5px' }}>1월 11일 오후 3시까지 순차적으로 업로드 됩니다. 🎬</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* 핵심 지표 요약 */}
-        <div style={{
-          background: 'white',
-          borderRadius: '16px',
-          padding: '25px',
-          marginBottom: '25px',
-          border: '1px solid #e5e7eb',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
-        }}>
-          <h3 style={{ color: '#1f2937', fontSize: '1.2rem', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <BarChart3 size={22} color="#16a34a" /> YouTube 핵심 지표 (KPI) 정리
-          </h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px' }}>
-            {[
-              { icon: '👁️', title: '조회수', desc: '도달 범위 측정', bg: '#eff6ff' },
-              { icon: '⏱️', title: '시청 지속 시간', desc: '콘텐츠 품질 측정', bg: '#f0fdf4' },
-              { icon: '📈', title: 'CTR (클릭률)', desc: '썸네일/제목 효과', bg: '#fffbeb' },
-              { icon: '🔔', title: '구독 전환율', desc: '팬 확보 효율', bg: '#fdf2f8' },
-              { icon: '📉', title: '시청자 유지율', desc: '콘텐츠 집중도', bg: '#f5f3ff' }
-            ].map((kpi, idx) => (
-              <div key={idx} style={{
-                background: kpi.bg,
-                padding: '15px',
-                borderRadius: '12px',
-                textAlign: 'center'
-              }}>
-                <div style={{ fontSize: '1.8rem', marginBottom: '8px' }}>{kpi.icon}</div>
-                <h4 style={{ color: '#1f2937', margin: '0 0 4px 0', fontSize: '0.95rem', fontWeight: '700' }}>{kpi.title}</h4>
-                <p style={{ color: '#6b7280', margin: 0, fontSize: '0.8rem' }}>{kpi.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
 
-        {/* AI 프롬프트 */}
-        <div style={{
-          background: 'white',
-          borderRadius: '16px',
-          padding: '25px',
-          marginBottom: '25px',
-          border: '1px solid #e5e7eb',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
-        }}>
-          <h3 style={{ color: '#d97706', fontSize: '1.1rem', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Brain size={22} /> AI 댓글 감성 분석 프롬프트
-          </h3>
-          <div style={{ background: '#1f2937', borderRadius: '10px', padding: '18px' }}>
-            <pre style={{
-              color: '#34d399',
-              fontFamily: 'monospace',
-              fontSize: '0.85rem',
-              lineHeight: '1.7',
-              margin: 0,
-              whiteSpace: 'pre-wrap',
-              wordBreak: 'break-word'
-            }}>
-              {`다음 YouTube 댓글들을 분석해주세요:
-
-[댓글 목록 붙여넣기]
-
-분석해줄 내용:
-1. 긍정/부정/중립 비율
-2. 가장 많이 언급된 키워드 TOP 5
-3. 시청자가 원하는 콘텐츠 방향
-4. 개선해야 할 점
-5. 다음 영상 기획 아이디어 3가지`}
-            </pre>
-          </div>
-          <p style={{ color: '#6b7280', fontSize: '0.9rem', marginTop: '12px' }}>
-            💡 <strong>TIP:</strong> ChatGPT, Gemini, Claude 모두 사용 가능합니다. 댓글이 많으면 50-100개 정도 샘플링해서 분석하세요.
-          </p>
-        </div>
 
         {/* 유용한 링크 */}
         <div style={{
