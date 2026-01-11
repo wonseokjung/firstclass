@@ -21,9 +21,14 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeTab, setActiveTab] = useState<'domestic' | 'international'>('domestic');
   const [isLoading, setIsLoading] = useState(false);
+  const [availableBricks, setAvailableBricks] = useState(0);
+  const [useBricksAmount, setUseBricksAmount] = useState(0);
 
   // 정가 95,000원 (2026년 1월 1일부터 적용)
   const currentPrice = 95000;
+
+  // 최종 결제 금액 (0원 미만 안 됨)
+  const finalPrice = Math.max(0, currentPrice - useBricksAmount);
 
   const courseInfo = {
     id: '999',
@@ -52,6 +57,11 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
         const parsed = JSON.parse(storedUserInfo);
         setUserInfo(parsed);
         setIsLoggedIn(true);
+
+        // 브릭 정보 로드
+        AzureTableService.getUserBricks(parsed.email).then(bricks => {
+          setAvailableBricks(bricks);
+        });
       } catch (error) {
         console.error('사용자 정보 파싱 오류:', error);
         navigate('/login');
@@ -81,6 +91,38 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
       return;
     }
 
+    // 전액 브릭 결제 (0원) 로직
+    if (finalPrice === 0 && useBricksAmount > 0) {
+      if (!window.confirm(`${useBricksAmount.toLocaleString()} 브릭을 사용하여 전액 결제하시겠습니까?`)) return;
+
+      setIsLoading(true);
+      try {
+        // 1. 브릭 차감
+        const success = await AzureTableService.useBricks(userInfo.email, useBricksAmount, `강의 결제: ${courseInfo.title}`);
+        if (!success) throw new Error('브릭 차감 실패');
+
+        // 2. 수강 등록
+        await AzureTableService.addPurchaseAndEnrollmentToUser({
+          email: userInfo.email,
+          courseId: courseInfo.id,
+          title: courseInfo.title,
+          amount: 0,
+          paymentMethod: 'brick',
+          externalPaymentId: `brick_${Date.now()}`,
+          orderId: `order_${Date.now()}`,
+          orderName: courseInfo.title
+        });
+
+        handlePaymentSuccess();
+      } catch (error) {
+        console.error(error);
+        alert('결제 처리 중 오류가 발생했습니다.');
+      } finally {
+        setIsLoading(false);
+      }
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -104,10 +146,10 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
 
       await payment.requestPayment({
         method: method as any,
-        amount: { currency: 'KRW', value: courseInfo.price },
+        amount: { currency: 'KRW', value: finalPrice },
         orderId: orderId,
         orderName: courseInfo.title,
-        successUrl: `${window.location.origin}/payment/success?course=${courseInfo.id}`,
+        successUrl: `${window.location.origin}/payment/success?course=${courseInfo.id}&useBricks=${useBricksAmount}`,
         failUrl: `${window.location.origin}/payment/fail`,
         customerEmail: userInfo.email,
         customerName: userInfo.name || userInfo.displayName || '고객'
@@ -277,6 +319,63 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
             }}>
               📚 3개월 무제한 수강
             </div>
+
+            {/* 브릭 사용 (할인) UI */}
+            {activeTab === 'domestic' && (
+              <div style={{ marginTop: '20px', padding: '20px', background: '#f0f9ff', borderRadius: '15px', border: '2px solid #bae6fd' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+                  <span style={{ fontWeight: '700', color: '#0369a1', fontSize: '1.1rem' }}>🧱 브릭 사용 (할인)</span>
+                  <span style={{ fontWeight: '700', color: '#0c4a6e' }}>보유: {availableBricks.toLocaleString()} Bricks</span>
+                </div>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                  <input
+                    type="number"
+                    value={useBricksAmount || ''}
+                    onChange={(e) => {
+                      let val = parseInt(e.target.value) || 0;
+                      if (val > availableBricks) val = availableBricks;
+                      if (val < 0) val = 0;
+                      if (val > currentPrice) val = currentPrice;
+                      setUseBricksAmount(val);
+                    }}
+                    style={{
+                      flex: 1,
+                      padding: '12px',
+                      borderRadius: '10px',
+                      border: '2px solid #e2e8f0',
+                      fontSize: '1rem',
+                      fontWeight: '600',
+                      color: '#1e293b'
+                    }}
+                    placeholder="0"
+                  />
+                  <button
+                    onClick={() => setUseBricksAmount(availableBricks > currentPrice ? currentPrice : availableBricks)}
+                    style={{
+                      background: '#0284c7',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '10px',
+                      padding: '12px 20px',
+                      fontWeight: '700',
+                      cursor: 'pointer',
+                      whiteSpace: 'nowrap'
+                    }}
+                  >
+                    전액 사용
+                  </button>
+                </div>
+
+                {useBricksAmount > 0 && (
+                  <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px solid #bae6fd', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#0369a1' }}>최종 결제 금액</span>
+                    <span style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0284c7' }}>
+                      ₩{finalPrice.toLocaleString()}
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* 결제 방법 탭 */}
@@ -363,7 +462,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ onBack }) => {
                     }}
                   >
                     <CreditCard size={20} />
-                    {isLoading ? '처리 중...' : `카드 결제 ₩${courseInfo.price.toLocaleString()}`}
+                    {isLoading ? '처리 중...' : finalPrice === 0 ? '✨ 브릭으로 전액 결제하기' : `카드 결제 ₩${finalPrice.toLocaleString()}`}
                   </button>
 
                   <button

@@ -211,6 +211,7 @@ export interface User {
   // 라이브 관련 필드 (시스템 사용자용)
   liveArchives?: string; // 라이브 아카이브 JSON 문자열
   liveConfigs?: string; // 라이브 설정 JSON 문자열
+  homeworks?: string; // 과제 제출 내역 JSON 문자열
 }
 
 // 기존 분리된 테이블 인터페이스들은 Users 테이블에 통합되어 더 이상 사용하지 않음
@@ -1783,8 +1784,8 @@ export class AzureTableService {
 
   // 🔄 사용자의 수강 등록일 수정 (관리자용)
   static async updateEnrollmentDates(
-    email: string, 
-    courseId: string, 
+    email: string,
+    courseId: string,
     newEnrolledAt: string,
     newAccessExpiresAt: string
   ): Promise<boolean> {
@@ -3833,6 +3834,118 @@ export class AzureTableService {
       devError(`❌ 전체 라이브 설정 조회 실패:`, error.message);
       return {};
     }
+  }
+
+  // === 📚 과제 및 브릭 시스템 ===
+
+  /**
+   * 과제 제출 정보 저장
+   */
+  static async saveHomeworkSubmission(email: string, submission: any): Promise<void> {
+    const user = await this.getUserByEmail(email);
+    if (!user) throw new Error('사용자를 찾을 수 없습니다.');
+
+    const homeworks = user.homeworks ? JSON.parse(user.homeworks) : [];
+
+    // 기존 제출 확인 (같은 과제 재제출 시 업데이트)
+    const existingIndex = homeworks.findIndex((h: any) => h.id === submission.id);
+
+    const newSubmission = {
+      ...submission,
+      submittedAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+
+    if (existingIndex >= 0) {
+      homeworks[existingIndex] = { ...homeworks[existingIndex], ...newSubmission };
+    } else {
+      homeworks.push(newSubmission);
+    }
+
+    // 사용자 정보 업데이트
+    await this.updateUserField(email, 'homeworks', JSON.stringify(homeworks));
+    devLog('✅ 과제 제출 저장 완료:', submission.title);
+  }
+
+  /**
+   * 사용자에게 브릭 지급
+   */
+  static async addBricksToUser(email: string, amount: number, reason: string): Promise<number> {
+    const user = await this.getUserByEmail(email);
+    if (!user) throw new Error('사용자를 찾을 수 없습니다.');
+
+    const currentBricks = user.totalBricks || 0;
+    const newBricks = currentBricks + amount;
+
+    // 리워드 히스토리 업데이트
+    const history = user.rewardHistory ? JSON.parse(user.rewardHistory) : [];
+    history.push({
+      id: `brick_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+      amount: amount,
+      type: 'earned',
+      sourceType: 'homework_reward',
+      note: reason,
+      status: 'completed',
+      createdAt: new Date().toISOString()
+    });
+
+    const updatedUser = {
+      ...user,
+      totalBricks: newBricks,
+      rewardHistory: JSON.stringify(history),
+      updatedAt: new Date().toISOString()
+    };
+
+    const entityId = `${user.partitionKey}|${user.rowKey}`;
+    await this.azureRequestWithMerge('users', updatedUser, entityId);
+
+    devLog(`✅ 브릭 지급 완료: +${amount} (총 ${newBricks})`);
+    return newBricks;
+  }
+
+  /**
+   * 브릭 사용하여 차감
+   */
+  static async useBricks(email: string, amount: number, reason: string): Promise<boolean> {
+    const user = await this.getUserByEmail(email);
+    if (!user) return false;
+
+    const currentBricks = user.totalBricks || 0;
+    if (currentBricks < amount) return false;
+
+    const newBricks = currentBricks - amount;
+
+    const history = user.rewardHistory ? JSON.parse(user.rewardHistory) : [];
+    history.push({
+      id: `use_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+      amount: -amount,
+      type: 'spent',
+      sourceType: 'course_purchase',
+      note: reason,
+      status: 'completed',
+      createdAt: new Date().toISOString()
+    });
+
+    const updatedUser = {
+      ...user,
+      totalBricks: newBricks,
+      rewardHistory: JSON.stringify(history),
+      updatedAt: new Date().toISOString()
+    };
+
+    const entityId = `${user.partitionKey}|${user.rowKey}`;
+    await this.azureRequestWithMerge('users', updatedUser, entityId);
+
+    devLog(`✅ 브릭 사용 완료: -${amount} (남은 브릭 ${newBricks})`);
+    return true;
+  }
+
+  /**
+   * 사용자 브릭 조회
+   */
+  static async getUserBricks(email: string): Promise<number> {
+    const user = await this.getUserByEmail(email);
+    return user?.totalBricks || 0;
   }
 }
 

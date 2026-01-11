@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { CheckCircle, Clock, ChevronRight, X, Link as LinkIcon, MessageSquare, Flame } from 'lucide-react';
 import NavigationBar from '../../common/NavigationBar';
+import AzureTableService from '../../../services/azureTableService';
 
 const COLORS = {
     navy: '#1e3a5f',
@@ -43,7 +44,7 @@ interface Homework {
 const HomeworkPage: React.FC = () => {
     const [, setIsLoggedIn] = useState(false);
     const [userName, setUserName] = useState('');
-    const [, setUserEmail] = useState('');
+    const [userEmail, setUserEmail] = useState('');
     const [totalBricks, setTotalBricks] = useState(0);
     const [homeworks, setHomeworks] = useState<Homework[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -137,8 +138,14 @@ const HomeworkPage: React.FC = () => {
                     setUserName(user.name || user.email.split('@')[0]);
                     setUserEmail(user.email);
 
-                    // 브릭 수 가져오기 (실제로는 Azure에서)
-                    setTotalBricks(120);
+                    // 브릭 수 가져오기
+                    try {
+                        const bricks = await AzureTableService.getUserBricks(user.email);
+                        setTotalBricks(bricks);
+                    } catch (e) {
+                        console.error('브릭 로드 실패', e);
+                        setTotalBricks(0);
+                    }
                 }
 
                 // 숙제 목록 로드 (실제로는 Azure에서)
@@ -196,13 +203,23 @@ const HomeworkPage: React.FC = () => {
         setIsSubmitting(true);
 
         try {
-            // TODO: Azure에 숙제 제출 저장
-            await new Promise(resolve => setTimeout(resolve, 1000)); // 시뮬레이션
+            // Azure에 숙제 제출 저장
+            await AzureTableService.saveHomeworkSubmission(userEmail, {
+                id: selectedHomework.id,
+                title: selectedHomework.title,
+                link: submitLink,
+                comment: submitComment,
+                week: selectedHomework.week
+            });
 
             // 브릭 적립
             const baseReward = selectedHomework.reward;
             const streak = 3; // TODO: 실제 연속 완료 횟수 계산
             const bonus = streak >= 3 ? 5 : 0;
+            const totalReward = baseReward + bonus;
+
+            const newTotalBricks = await AzureTableService.addBricksToUser(userEmail, totalReward, `과제 완료: ${selectedHomework.title}`);
+            setTotalBricks(newTotalBricks); // UI 업데이트
 
             setEarnedBricks(baseReward);
             setStreakBonus(bonus);
