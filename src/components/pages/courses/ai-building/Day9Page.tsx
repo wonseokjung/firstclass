@@ -251,8 +251,8 @@ const Day9Page: React.FC<Day9PageProps> = ({ onBack, onNext }) => {
       badge: '수익화 실전',
       badgeColor: '#059669',
       description: '내 캐릭터와 실제 판매 제품(강아지 껌)을 합성하여 자연스러운 광고 영상을 만드는 워크플로우입니다.',
-      vimeoUrl: '',
-      imageUrl: '/images/course/day9/product_ppl_workflow.png', // 이미지 파일 필요
+      vimeoUrl: 'https://player.vimeo.com/video/1153310148?badge=0&autopause=0&player_id=0&app_id=58479',
+      // imageUrl: '/images/course/day9/product_ppl_workflow.png', // 영상이 있으므로 주석 처리
     }
   ];
 
